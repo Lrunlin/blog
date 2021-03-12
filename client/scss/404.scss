@@ -1,0 +1,74 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  background-color: black;
+}
+main {
+  text-align: center;
+  color: white;
+  margin-top: 10vh;
+  h1 {
+    font-size: 105px;
+  }
+  p {
+    margin-top: 5vh;
+  }
+}
+header {
+  position: relative;
+  margin-top: 10vh;
+  img {
+    width: 150px;
+    z-index: 999 !important;
+    position: absolute;
+    left: calc((100vw - 150px) / 2);
+    animation: astronaut 5s infinite;
+  }
+}
+footer {
+  width: 100vw;
+  height: 25vh;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  background-image: url(../image/earth.png);
+  background-size: 100% 100% !important;
+}
+.back {
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  display: block;
+  border: 1px solid white;
+  position: fixed;
+  bottom: 5vh;
+  left: calc((100vw - 150px) / 2);
+  z-index: 999 !important;
+  padding: 2px;
+  &:hover {
+    transition: 1s;
+    background-color: white;
+    color: black;
+  }
+}
+@media screen and (max-width: 600px) {
+  footer {
+    height: 98px;
+  }
+}
+@keyframes astronaut {
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}

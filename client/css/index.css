@@ -1,0 +1,75 @@
+article#article {
+  background-color: white;
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding-bottom: 30px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+article#article .code-number {
+  width: 30px;
+  padding: 10px 0px;
+  height: calc(100% - 60px);
+  background: #454a52;
+  border-bottom-left-radius: 5px;
+  position: absolute;
+  left: 0px;
+  top: 40px;
+  color: #999999;
+  font-size: 16px;
+  text-align: center;
+  user-select: none;
+}
+article#article .code-number span {
+  display: block;
+  line-height: 18px;
+}
+article#article pre {
+  width: auto !important;
+  position: relative;
+  color: #cb4b16 !important;
+  border-radius: 5px;
+  background: #21252a;
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.4);
+  padding: 50px 10px 10px 40px;
+  font-size: 16px;
+  margin: 20px auto;
+}
+article#article pre .code-title {
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  color: white !important;
+  background-color: black;
+  margin-bottom: 10px;
+  z-index: 99;
+  border-top-left-radius: 5px;
+  user-select: none;
+  border-top-right-radius: 5px;
+}
+article#article pre .code-copy {
+  position: absolute;
+  color: white;
+  top: 8px;
+  right: 20px;
+  z-index: 9999;
+  font-size: 14px;
+  padding: 3px 4px;
+  border: 1px solid white;
+  border-radius: 4px;
+}
+article#article pre .bar {
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
+  float: left;
+}

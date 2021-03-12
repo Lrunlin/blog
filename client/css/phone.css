@@ -1,0 +1,258 @@
+article#article {
+  background-color: white;
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding-bottom: 30px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+article#article .code-number {
+  width: 30px;
+  padding: 10px 0px;
+  height: calc(100% - 60px);
+  background: #454a52;
+  border-bottom-left-radius: 5px;
+  position: absolute;
+  left: 0px;
+  top: 40px;
+  color: #999999;
+  font-size: 16px;
+  text-align: center;
+  user-select: none;
+}
+article#article .code-number span {
+  display: block;
+  line-height: 18px;
+}
+article#article pre {
+  width: auto !important;
+  position: relative;
+  color: #cb4b16 !important;
+  border-radius: 5px;
+  background: #21252a;
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.4);
+  padding: 50px 10px 10px 40px;
+  font-size: 16px;
+  margin: 20px auto;
+}
+article#article pre .code-title {
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  color: white !important;
+  background-color: black;
+  margin-bottom: 10px;
+  z-index: 99;
+  border-top-left-radius: 5px;
+  user-select: none;
+  border-top-right-radius: 5px;
+}
+article#article pre .code-copy {
+  position: absolute;
+  color: white;
+  top: 8px;
+  right: 20px;
+  z-index: 9999;
+  font-size: 14px;
+  padding: 3px 4px;
+  border: 1px solid white;
+  border-radius: 4px;
+}
+article#article pre .bar {
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
+  float: left;
+}
+
+a:hover, a:visited, a:active {
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-user-select: none;
+  -moz-user-focus: none;
+  -moz-user-select: none;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+  background-color: #f5f7f9;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+}
+body::-webkit-scrollbar {
+  display: none !important;
+}
+
+header .github-corner {
+  color: white;
+  position: absolute;
+  z-index: 999;
+  right: 0px;
+  top: 0px;
+}
+
+aside {
+  width: 100vw;
+  height: 50vw;
+  color: white !important;
+  position: relative;
+  background-image: url("../image/header-blackground.jpg");
+  background-size: 100% 100% !important;
+}
+aside .head .name {
+  position: absolute;
+  text-align: center;
+  width: 80vw;
+  left: 10vw;
+  top: 28vw;
+}
+aside .head .mes {
+  display: none !important;
+}
+aside .writer {
+  position: absolute;
+  top: 0px;
+}
+aside .writer .face-box {
+  text-align: center;
+}
+aside .writer .face-box .face {
+  width: 20vw !important;
+  border-radius: 50%;
+  margin-left: 40vw;
+  margin-top: 5vw;
+}
+aside .show {
+  width: 100%;
+  height: 10vw;
+  display: flex;
+  position: absolute;
+  top: 40vw;
+  background-color: rgba(148, 148, 148, 0.4);
+}
+aside .show a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 25%;
+  height: 10vw;
+  line-height: 10vw;
+  text-align: center;
+  font-size: 13px;
+}
+aside #addPhone {
+  height: 10vw;
+  width: 10vw;
+  position: absolute;
+  top: 25vw;
+  right: 5vw;
+  transition: 0.5s;
+}
+aside #addPhone img {
+  width: 100% !important;
+  height: 10vw;
+}
+
+article#article {
+  background-color: white;
+  padding: 0px 10px;
+  width: auto !important;
+}
+article#article pre {
+  overflow: scroll;
+  width: 80vw !important;
+}
+
+footer {
+  background-color: black;
+  padding: 10px 0px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+footer #light span {
+  opacity: 0.4;
+}
+footer a {
+  color: white;
+  letter-spacing: 3px;
+}
+
+#tools {
+  width: 100%;
+  height: 70vw;
+  background-color: white;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  z-index: 99 !important;
+  border-radius: 4vw 4vw 0px 0px;
+}
+#tools .tool {
+  flex: 1;
+  flex: 0 0 25%;
+  height: 25vw;
+  text-align: center;
+  margin-top: 10px;
+}
+#tools .tool:active {
+  background-color: #f3f3f3;
+}
+#tools .tool img {
+  width: 60%;
+}
+#tools .tool p {
+  margin: 0px;
+  font-size: 14px;
+}
+#tools .tool a {
+  color: black;
+  text-decoration: none;
+  font-size: 14;
+  outline: none;
+  user-select: none;
+}
+#tools #close {
+  width: 100%;
+  height: calc(70vw - 25vw * 2 - 10px * 2 - 1px);
+  line-height: calc(70vw - 25vw * 2 - 10px * 2 - 1px);
+  text-align: center;
+  border-top: 1px solid black;
+}
+#tools #close:active {
+  background-color: #f3f3f3;
+}
+
+#layer {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9 !important;
+}
+
+#wxQrcode {
+  width: 50vw;
+  position: fixed;
+  top: 15vw;
+  left: 25vw;
+  z-index: 99;
+}

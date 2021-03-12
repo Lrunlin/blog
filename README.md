@@ -1,2 +1,16 @@
-# blog
-个人博客:管理系统，jQuery模板，node映射文件，nodeapi接口，vue门户页面
+
+## 个人博客系统（长期更新）
+
+主要使用vue，node-express，scss,jquery,mysql
+
+源码：
+
+1.个人博客管理系统（root）
+
+2.博客门户页面（home）
+
+3.node后台接口（api）
+
+4.node接口处理资源管理（assets）
+
+5.express文章页面处理（blog）
