@@ -36,7 +36,7 @@
 </template>
 <script setup>
 import { ref, watchEffect } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { Base64 } from "js-base64";
 
@@ -49,6 +49,7 @@ import updataHtml from "@/modules/function/updataHtml.js";
 import updataArticle from "@/modules/article/updata-article";
 
 let route = useRoute();
+let vueRouter = useRouter();
 let store = useStore();
 let thisRouter = route.query.router;
 
@@ -59,6 +60,7 @@ let isShow = ref();
 let introduce = ref("");
 let setHtml = ref(""); //获取的HTML
 let time;
+let idrouter;
 readRouter({ router: thisRouter }).then((res) => {
   // 根据路由请求并赋值
   let data = res.data;
@@ -68,6 +70,7 @@ readRouter({ router: thisRouter }).then((res) => {
     data.isShow ? true : false,
     data.introduce,
   ];
+  idrouter = data.router;
   type.value = data.type;
   /*
    ?为子组件传输字符串，数据有子组件处理
@@ -114,8 +117,23 @@ function updataArticleFun() {
     isTop: isTop.value,
     isShow: isShow.value,
     time: time,
+    idrouter: idrouter,
   }).then((res) => {
-    console.log(res);
+    if (res.res) {
+      ElMessage({
+        message: "修改成功",
+        type: "success",
+      });
+      vueRouter.push({
+        path: "/update-article",
+        query: { router: router.value },
+      });
+    } else {
+      ElMessage({
+        message: "修改失败",
+        type: "error",
+      });
+    }
   });
 }
 </script>

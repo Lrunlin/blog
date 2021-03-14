@@ -19,7 +19,7 @@ router.post('/updata-article', (req, res) => {
     article='${req.body.article}',
     isTop=${req.body.isTop},
     isShow=${req.body.isShow},
-    time='${req.body.time}'  WHERE router='${req.body.router}';`
+    time='${req.body.time}'  WHERE router='${req.body.idrouter}';`
     mysql.query(sql, function (err, result) {
         res.json({
             res: typeof result == "object",

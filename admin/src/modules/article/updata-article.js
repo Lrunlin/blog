@@ -15,7 +15,8 @@ async function updataArticle(getData) {
             article: Base64.encode(document.getElementById('changeHtml').innerHTML),
             isTop: getData.isTop,
             isShow: getData.isShow,
-            time: getData.time
+            time: getData.time,
+            idrouter:getData.idrouter
         }
     }).then(res => {
         data = res.data;
