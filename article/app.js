@@ -11,19 +11,30 @@ app.use(express.static(__dirname + '/public'))
 // https://github.com/dankogai/js-base64
 let mysql = require('./modules/mysql')
 let createPc = require('./modules/createPc')
+let createPhone = require('./modules/createPhone')
+let NoFound = require('./modules/NoFound')
+
+
 app.get('/*', function (req, res) {
     res.set('Content-Type', 'text/html')
     res.type('text/html')
+    let isPhone = /(iphone|ipod|ipad|android)/.test(req.headers["user-agent"].toLowerCase());
     let path = req.path;
     let router = path.substr(1, path.length - 1)
     mysql.query(`select * from article where router='${router}'`, function (err, result) {
-        if (result.length) {
-            // 判断手机电脑
-            res.send(createPc(result[0]))
-
-
+        if (result) {
+            if (result.length) {
+                // 判断手机电脑
+                if (!isPhone) {
+                    res.send(createPc(result[0]))
+                } else {
+                    res.send(createPhone(result[0]))
+                }
+            } else {
+                res.send(NoFound(result[0]))
+            }
         } else {
-            // 404
+            res.send(NoFound())
         }
     })
 

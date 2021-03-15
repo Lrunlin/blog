@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+function NoFound(data) {
+    let html=`
+    <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -24,3 +26,7 @@
     </footer>
 </body>
 </html>
+    `
+    return html;
+}
+module.exports = NoFound;

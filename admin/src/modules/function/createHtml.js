@@ -35,6 +35,8 @@ function createHtml(data) {
     }
 
     let pre = document.querySelectorAll("#changeHtml pre");
+    let codeTitle = document.getElementsByClassName('code-title');
+
     if (pre.length) {
         for (let index = 0; index < pre.length; index++) {
             const el = pre[index];
@@ -46,16 +48,18 @@ function createHtml(data) {
                 title.innerHTML = el.getAttribute("type");
                 title.className = "code-title";
                 el.insertBefore(title, code);
-            }
-        }
-        let codeTitle = document.getElementsByClassName('code-title');
-        for (let i = 0; i < codeTitle.length; i++) {
-            codeTitle[i].innerHTML += `
+
+
+
+
+                codeTitle[index].innerHTML += `
             <div class="bar" style="background: red;"></div>
             <div class="bar" style="background: green;"></div>
             <div class="bar" style="background: yellow;"></div>
             `;
+            }
         }
+
     }
     return images;
 }
