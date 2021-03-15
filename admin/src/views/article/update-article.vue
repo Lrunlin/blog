@@ -39,7 +39,7 @@ import { ref, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { Base64 } from "js-base64";
-
+import { ElMessage } from "element-plus";
 import updataEditor from "@/components/updata-editor";
 import typeSelect from "@/components/typeSelect";
 import readRouter from "@/modules/article/read-router.js";
@@ -123,15 +123,20 @@ function updataArticleFun() {
       ElMessage({
         message: "修改成功",
         type: "success",
+        customClass:'elAlert'
       });
-      vueRouter.push({
-        path: "/update-article",
-        query: { router: router.value },
-      });
+      // 需要对路由进行判断：如果是空路由就回到阅读页面，如果是自定义路由就按照参数跳转
+      setTimeout(() => {
+        vueRouter.push({
+          path: router.value!=""?"/update-article":"/read-article",
+          query: { router: router.value },
+        });
+      }, 2000);
     } else {
       ElMessage({
         message: "修改失败",
         type: "error",
+        customClass:'elAlert'
       });
     }
   });

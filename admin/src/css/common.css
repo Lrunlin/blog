@@ -78,3 +78,7 @@
   margin-left: 15px;
   float: left;
 }
+
+.elAlert {
+  z-index: 999999 !important;
+}

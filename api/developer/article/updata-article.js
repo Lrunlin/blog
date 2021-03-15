@@ -13,7 +13,7 @@ router.post('/updata-article', (req, res) => {
     let router = test.test(req.body.router) ? req.body.router : time.toString(32);
 
     let sql = `UPDATE article SET 
-    router='${req.body.router}',
+    router='${router}',
     type='${req.body.type}',
     introduce = '${req.body.introduce}',
     article='${req.body.article}',

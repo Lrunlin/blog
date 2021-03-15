@@ -1,40 +1,22 @@
-<!DOCTYPE html>
+function createPc(data) {
+const {Base64} = require('js-base64');    let html = `
+    <!DOCTYPE html>
 <html lang="zn-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
     <meta name="renderer" content="webkit">
     <meta name="application name" content="web博客分享">
-    <meta name="keywords" content="关键词，隔开">
-    <meta name="description" content="文章说明">
+    <meta name="keywords" content="${data.type}">
+    <meta name="description" content="${data.introduce}">
     <meta name="author" content="作者信息">
     <meta name="copyright" content="版权信息">
-    <!-- 设置footer为bottom在设置body的padding-bottom -->
     <style>
-        html {
-            font-size: 16px;
-        }
-
-        /* body > * {
-            animation: show 0.6s forwards;
-        }
-
-        @keyframes show {
-            0% {
-                transform: translateY(-30px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
-        } */
-
         /* 做一个页面起始的动画效果 */
     </style>
-    <link rel="stylesheet" href="./css/phone.css">
+    <link rel="stylesheet" href="./css/pc.css">
     <link rel="stylesheet" href="./css/highLight.css">
-    <title>模板文件</title>
+    <title>${data.introduce}</title>
 </head>
 <body>
     <header>
@@ -55,6 +37,7 @@
             <!-- 侧边栏顶部的黑色 -->
             <div class="head">
                 <div class="name">名字还没想好</div>
+                <div class="mes pc">消息也没想好</div>
             </div>
             <div class="show">
                 <a href="https://liurl.xyz" class="router-link-active">首页</a>
@@ -68,14 +51,22 @@
                 <div class="face-box">
                     <img src="./image/writer-face.jpg" alt="作者头像" class="face">
                 </div>
-            </div>
-            <div id="addPhone" class="phone">
-                <img data-src="./image/add.png" alt="移动端点击工具箱按钮">
+                <div class="class pc">
+                    <a href="">
+                        <p>11</p>
+                        文章
+                    </a>
+                    <a href="">
+                        <p>11</p>
+                        分类
+                    </a>
+                </div>
             </div>
         </aside>
         <article id="article">
             <!-- 这里写文章内容 -->
 
+${Base64.decode(data.article)}
 
 
 
@@ -112,40 +103,30 @@
         </div>
     </footer>
     <!-- 右下角按钮 -->
-    <div id="tools" style="display: none;" class="phone">
-        <div class="tool" id="wechatPhone">
-            <img data-src="./image/wechat.png" alt="微信图标">
-            <p>点击添加微信</p>
+    <div id="add" class="pc">
+        <div id="add-box">
+            <div id="wechat">
+                <img data-src="./image/wechat.png" alt="微信图片">
+                <p>微信</p>
+                <div id="wechat-qrcode">
+                    <img data-src="./image/wechat-code.jpg" alt="微信二维码图片" title="扫一扫添加微信">
+                </div>
+            </div>
+            <div id="qq">
+                <img data-src="./image/QQ.png" alt="QQ图片">
+                <p>QQ</p>
+            </div>
         </div>
-        <div class="tool" id="qqPhone">
-            <img data-src="./image/QQ.png" alt="QQ图标">
-            <p>添加QQ</p>
-        </div>
-        <div class="tool">
-            <a href="https://github.com/Lrunlin" target="_blank" rel="nofollow">
-                <img data-src="./image/GitHub.png" alt="点击前往作者github">
-                <p>前往GitHub</p>
-            </a>
-        </div>
-        <div class="tool">
-            <a rel="nofollow" href="https://twitter.com/share?text=填上你的标题&url=点击访问这个网址" target="_blank">
-                <img data-src="./image/twitter.png" alt="点击分享到推特">
-                <p>分享到twitter</p>
-            </a>
-        </div>
-        <div class="tool">
-            <!-- 占位 -->
-        </div>
-        <div id="close">
-            关闭
+        <div id="addBtn">
+            <img data-src="./image/add.png" alt="PC端更多图标" class="add-image">
         </div>
     </div>
-    <!--遮罩层-->
-    <div id="layer" style="display: none;"></div>
-    <!--微信二维码-->
-    <img data-src="./image/wechat-code.jpg" id="wxQrcode" style="display: none;" alt="扫描二维码添加好友">
     <script src="./js/jquery.js"></script>
     <script type="module" src="./js/index.js"></script>
-    <script type="module" src="./js/phone.js"></script>
+    <script type="module" src="./js/pc.js"></script>
 </body>
 </html>
+    `
+    return html;
+}
+module.exports = createPc;
