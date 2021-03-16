@@ -16,6 +16,7 @@ app.use(fileUpload());
 
 
 
+app.use('/', require('./developer/logn/logn-in')); //账号登录
 
 
 

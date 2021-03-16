@@ -21,7 +21,7 @@
             <span>代码编辑</span>
           </template>
           <el-menu-item index="/">编辑器</el-menu-item>
-          <el-menu-item index="/previewPage">页面预览</el-menu-item>
+          <el-menu-item index="/previewPage" disabled=true>页面预览(待开发)</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template #title>

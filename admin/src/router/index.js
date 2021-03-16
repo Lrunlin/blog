@@ -35,6 +35,10 @@ const routes = [{
   path: '/previewPage',
   name: 'previewPage',
   component: () => import('@/views/editorHtml/previewPage.vue')
+}, {
+  path: '/logn',
+  name: 'logn',
+  component: () => import('@/views/logn')
 }, ]
 const router = createRouter({
   // history: createWebHistory(process.env.BASE_URL),

@@ -1,6 +1,4 @@
 //  npm install --save js-base64
-
-
 const express = require('express');
 const app = express();
 // 资源跨域
@@ -24,7 +22,6 @@ app.get('/*', function (req, res) {
     mysql.query(`select * from article where router='${router}'`, function (err, result) {
         if (result) {
             if (result.length) {
-                // 判断手机电脑
                 if (!isPhone) {
                     res.send(createPc(result[0]))
                 } else {
@@ -37,9 +34,6 @@ app.get('/*', function (req, res) {
             res.send(NoFound())
         }
     })
-
-
-
 })
 
 
