@@ -9,14 +9,27 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
 import lognIn from "@/modules/function/logn";
+let router = useRouter();
 let admin = ref("");
 let password = ref("");
 let test = /^[\s\S]*.*[^\s][\s\S]*$/;
 function logn() {
   if (test.test(admin.value) && test.test(password.value)) {
     lognIn({ admin: admin.value, password: password.value }).then((res) => {
-      console.log(res);
+      if (res.res) {
+        let time = new Date().getTime();
+        let warranty = new Date(time + 259200000);
+        document.cookie = `admin=${JSON.stringify({admin:res.admin,password:res.password})}; expires=${warranty}`;
+        router.replace("/");
+      } else {
+        ElMessage({
+          message: "账号或密码错误",
+          type: "error",
+        });
+      }
     });
   } else {
     ElMessage({
@@ -27,7 +40,7 @@ function logn() {
 }
 </script>
 <style scoped lang='scss'>
-$width:300px;
+$width: 300px;
 .logn {
   widows: 100vw;
   height: 100vh;

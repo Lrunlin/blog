@@ -21,7 +21,9 @@
             <span>代码编辑</span>
           </template>
           <el-menu-item index="/">编辑器</el-menu-item>
-          <el-menu-item index="/previewPage" disabled=true>页面预览(待开发)</el-menu-item>
+          <el-menu-item index="/previewPage" :disabled="true"
+            >页面预览(待开发)</el-menu-item
+          >
         </el-submenu>
         <el-submenu index="3">
           <template #title>
@@ -29,9 +31,7 @@
             <span>文章管理</span>
           </template>
           <el-menu-item index="/read-article">文章查询</el-menu-item>
-          <el-menu-item index="/type">
-            文章类型管理
-          </el-menu-item>
+          <el-menu-item index="/type"> 文章类型管理 </el-menu-item>
         </el-submenu>
       </el-menu>
     </el-col>
@@ -72,15 +72,7 @@ export default {
   border-right: 0px !important;
 }
 
-// 动画：导航栏缩回
 .animate-zoom {
-  animation: zoom 0.3s forwards linear;
-}
-@keyframes zoom {
-  0% {
-  }
-  100% {
-    width: 65px;
-  }
+  width: 64px;
 }
 </style>
