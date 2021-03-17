@@ -13,7 +13,7 @@ router.post('/uploadAsset', (req, res) => {
     writerStream.end();
     writerStream.on('finish', function (err) {
         let development = req.hostname == "localhost"; //环境判断(开发);
-        let data = development ? `http://127.0.0.1:5500/assets/temporary/${fileName}` : `https://liurl.xyz/assets/temporary/${fileName}`
+        let data = development ? `http://127.0.0.1:5500/assets/temporary/${fileName}` : `https://blogweb.cn/assets/temporary/${fileName}`
         res.json({
             "errno": 0,
             "data": [data]

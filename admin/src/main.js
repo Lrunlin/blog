@@ -10,7 +10,7 @@ import VueAxios from 'vue-axios'
 axios.defaults.baseURL =
     (process.env.NODE_ENV == "development") ?
     "http://localhost:3000/" :
-    "https://blogapi.liurl.xyz"
+    "https://blog-api.blogweb.cn"
 
 // elemetnPlus
 import ElementPlus from 'element-plus';

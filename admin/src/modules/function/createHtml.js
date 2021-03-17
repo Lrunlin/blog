@@ -48,15 +48,6 @@ function createHtml(data) {
                 title.innerHTML = el.getAttribute("type");
                 title.className = "code-title";
                 el.insertBefore(title, code);
-
-
-
-
-                codeTitle[index].innerHTML += `
-            <div class="bar" style="background: red;"></div>
-            <div class="bar" style="background: green;"></div>
-            <div class="bar" style="background: yellow;"></div>
-            `;
             }
         }
 

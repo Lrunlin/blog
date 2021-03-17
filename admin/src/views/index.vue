@@ -13,7 +13,7 @@ import navigation from "@/components/navigation.vue";
 import { useRouter } from "vue-router";
 import lognIn from "@/modules/function/logn";
 import { ref } from "vue";
-let show = ref(true);
+let show = ref(false);
 
 let router = useRouter();
 if (document.cookie.indexOf("admin=") == -1) {

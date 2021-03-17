@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/public'))
 let mysql = require('./modules/mysql')
 let createPc = require('./modules/createPc')
 let createPhone = require('./modules/createPhone')
-let NoFound = require('./modules/NoFound')
+let NoFound = require('./modules/NoFound');
 
 
 app.get('/*', function (req, res) {
@@ -23,9 +23,11 @@ app.get('/*', function (req, res) {
         if (result) {
             if (result.length) {
                 if (!isPhone) {
-                    res.send(createPc(result[0]))
+                    let pc = createPc(result[0]);
+                    res.send(pc)
                 } else {
-                    res.send(createPhone(result[0]))
+                    let phone = createPhone(result[0]);
+                    res.send(phone)
                 }
             } else {
                 res.send(NoFound(result[0]))
@@ -35,11 +37,5 @@ app.get('/*', function (req, res) {
         }
     })
 })
-
-
-
-
-
-
 
 app.listen(2999, () => console.log("app.js运行"))

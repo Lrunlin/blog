@@ -20,6 +20,17 @@ for (let index = 0; index < pre.length; index++) {
         num.innerHTML += `<span>${i+1}</span>`
     }
 }
+
+
+$.each($('.code-title'), function (i, el) { 
+    $(el).append(`
+     <div class="bar" style="background: red;"></div>
+            <div class="bar" style="background: green;"></div>
+            <div class="bar" style="background: yellow;"></div>
+    `)
+});
+
+
 /* 
  ?点击按钮通过copy模块来复制对应索引值的代码
  !必须获取text不能是HTML因为有代码高亮

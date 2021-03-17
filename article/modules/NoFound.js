@@ -20,7 +20,7 @@ function NoFound(data) {
     <header>
         <img src="./image/astronaut.png" class="astronaut" alt="404页面宇航员展示图">
     </header>
-    <a href="https://blogweb.xyz" class="back">点击返回首页</a>
+    <a href="https://blogweb.cn" class="back">点击返回首页</a>
     <footer>
 
     </footer>
