@@ -61,20 +61,13 @@ article#article pre .code-title .bar {
   position: absolute;
   top: 15px;
 }
-article#article pre .code-title .bar:nth-child(1) {
-  left: 20px;
-}
-article#article pre .code-title .bar:nth-child(2) {
-  left: 50px;
-}
-article#article pre .code-title .bar:nth-child(3) {
-  left: 80px;
-}
 article#article pre .code-copy {
   position: absolute;
   color: white;
   top: 8px;
   right: 20px;
+  height: 16px !important;
+  line-height: 16px !important;
   z-index: 9999;
   font-size: 14px;
   padding: 3px 4px;
