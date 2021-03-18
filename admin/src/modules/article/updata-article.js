@@ -11,12 +11,13 @@ async function updataArticle(getData) {
         data: {
             router: getData.router,
             type: getData.type,
+            title: getData.title,
             introduce: getData.introduce,
             article: Base64.encode(document.getElementById('changeHtml').innerHTML),
             isTop: getData.isTop,
             isShow: getData.isShow,
             time: getData.time,
-            idrouter:getData.idrouter
+            idrouter: getData.idrouter
         }
     }).then(res => {
         data = res.data;

@@ -6,7 +6,9 @@
         placeholder="自定义路由（没有就自动生成）"
       ></el-input>
     </el-form-item>
-
+    <el-form-item label="文章标题">
+      <el-input v-model="title" placeholder="文章title"></el-input>
+    </el-form-item>
     <div class="select">
       <el-form-item label="是否置顶">
         <el-switch v-model="isTop"></el-switch>
@@ -54,6 +56,7 @@ let store = useStore();
 let thisRouter = route.query.router;
 
 let type = ref(""); //作为传值用的
+let title = ref("");
 let router = ref("");
 let isTop = ref();
 let isShow = ref();
@@ -64,11 +67,12 @@ let idrouter;
 readRouter({ router: thisRouter }).then((res) => {
   // 根据路由请求并赋值
   let data = res.data;
-  [router.value, isTop.value, isShow.value, introduce.value] = [
+  [router.value, title.value,isTop.value, isShow.value, introduce.value] = [
     data.router,
+    Base64.decode(data.title),
     data.isTop ? true : false,
     data.isShow ? true : false,
-    data.introduce,
+    Base64.decode(data.introduce),
   ];
   idrouter = data.router;
   type.value = data.type;
@@ -112,8 +116,9 @@ function updataArticleFun() {
   });
   updataArticle({
     router: router.value,
+    title:Base64.encode(title.value),
     type: type.value,
-    introduce: introduce.value,
+    introduce: Base64.encode(introduce.value),
     isTop: isTop.value,
     isShow: isShow.value,
     time: time,
@@ -123,12 +128,12 @@ function updataArticleFun() {
       ElMessage({
         message: "修改成功",
         type: "success",
-        customClass:'elAlert'
+        customClass: "elAlert",
       });
       // 需要对路由进行判断：如果是空路由就回到阅读页面，如果是自定义路由就按照参数跳转
       setTimeout(() => {
         vueRouter.push({
-          path: router.value!=""?"/update-article":"/read-article",
+          path: router.value != "" ? "/update-article" : "/read-article",
           query: { router: router.value },
         });
       }, 2000);
@@ -136,7 +141,7 @@ function updataArticleFun() {
       ElMessage({
         message: "修改失败",
         type: "error",
-        customClass:'elAlert'
+        customClass: "elAlert",
       });
     }
   });
@@ -161,5 +166,6 @@ function updataArticleFun() {
 }
 .introduce {
   width: 280px !important;
+  
 }
 </style>

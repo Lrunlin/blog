@@ -13,6 +13,9 @@
         placeholder="自定义路由（没有就自动生成）"
       ></el-input>
     </el-form-item>
+    <el-form-item label="文章标题">
+      <el-input v-model="title" placeholder="文章title"></el-input>
+    </el-form-item>
     <div class="select">
       <el-form-item label="是否置顶">
         <el-switch v-model="isTop"></el-switch>
@@ -51,6 +54,7 @@ import createArticleFun from "@/modules/function/createArticle";
 let store = useStore();
 let vueRouter = useRouter();
 let router = ref(""); //路由
+let title = ref("");
 let isTop = ref(false); //是否置顶
 let isShow = ref(true); //是否显示
 let introduce = ref(""); //简介
@@ -65,7 +69,11 @@ function setType(typeValue) {
 let timer;
 function create() {
   let test = /^[\s\S]*.*[^\s][\s\S]*$/;
-  if (test.test(introduce.value) == false || test.test(type.value) == false) {
+  if (
+    test.test(introduce.value) == false ||
+    test.test(type.value) == false ||
+    test.test(title.value) == false
+  ) {
     ElMessage.error({
       message: `请将内容填全`,
       type: "error",
@@ -73,10 +81,11 @@ function create() {
   } else {
     createArticleFun({
       router: router.value,
+      title: Base64.encode(title.value),
       type: type.value,
       isTop: isTop.value,
       isShow: isShow.value,
-      introduce: introduce.value,
+      introduce: Base64.encode(introduce.value),
       html: html,
       path: store.state.assets,
       assetsApi: store.state.assetsapi,

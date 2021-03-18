@@ -15,16 +15,18 @@ router.post('/updata-article', (req, res) => {
     let sql = `UPDATE article SET 
     router='${router}',
     type='${req.body.type}',
+    title='${req.body.title}',
     introduce = '${req.body.introduce}',
     article='${req.body.article}',
     isTop=${req.body.isTop},
     isShow=${req.body.isShow},
     time='${req.body.time}'  WHERE router='${req.body.idrouter}';`
+    console.log(sql);
     mysql.query(sql, function (err, result) {
         res.json({
             res: typeof result == "object",
             data: result
         })
     })
-})
+})   
 module.exports = router;

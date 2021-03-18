@@ -2,7 +2,7 @@ import axios from 'axios'
 
 async function readArticle(getData) {
     let data;
-   await axios({
+    await axios({
         url: '/read-article',
         method: "POST",
         data: {

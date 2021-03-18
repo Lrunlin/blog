@@ -6,17 +6,14 @@ const {Base64} = require('js-base64');    let html = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <meta name="application name" content="web博客分享">
+    <meta name="application name" content="web博客分享:${Base64.decode(data.title)},写于：${data.time}">
     <meta name="keywords" content="${data.type}">
-    <meta name="description" content="${data.introduce}">
-    <meta name="author" content="作者信息">
-    <meta name="copyright" content="版权信息">
-    <style>
-        /* 做一个页面起始的动画效果 */
-    </style>
+    <meta name="description" content="${Base64.decode(data.introduce)}">
+    <meta name="author" content="菜鸡老刘">
+    <meta name="copyright" content="菜鸡老刘：blog.blogweb.cn">
     <link rel="stylesheet" href="./css/pc.css">
     <link rel="stylesheet" href="./css/highLight.css">
-    <title>${data.introduce}</title>
+    <title>${Base64.decode(data.title)}</title>
 </head>
 <body>
     <header>
@@ -40,23 +37,23 @@ const {Base64} = require('js-base64');    let html = `
                 <div class="mes pc">消息也没想好</div>
             </div>
             <div class="show">
-                <a href="https://liurl.xyz" class="router-link-active">首页</a>
-                <a href="">文章分类
+                <a href="https://blogweb.cn" class="router-link-active">首页</a>
+                <a href = "https://blogweb.cn" > 文章分类
                     <span id="type">(个数)</span>
                 </a>
-                <a href="">API分享</a>
-                <a href="">关于作者</a>
+                <a href="https://blogweb.cn">API分享</a>
+                <a href="https://blogweb.cn">关于作者</a>
             </div>
             <div class="writer" id="writer">
                 <div class="face-box">
                     <img src="./image/writer-face.jpg" alt="作者头像" class="face">
                 </div>
                 <div class="class pc">
-                    <a href="">
+                    <a href = "https://blogweb.cn" >
                         <p>11</p>
                         文章
                     </a>
-                    <a href="">
+                    <a href = "https://blogweb.cn" >
                         <p>11</p>
                         分类
                     </a>

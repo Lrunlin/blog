@@ -13,12 +13,11 @@ import navigation from "@/components/navigation.vue";
 import { useRouter } from "vue-router";
 import lognIn from "@/modules/function/logn";
 import { ref } from "vue";
-let show = ref(false);
+let show = ref(true);
 
 let router = useRouter();
 if (document.cookie.indexOf("admin=") == -1) {
-  alert("系统在beta版本期间不强制登录");
-  // router.replace("logn");
+  router.replace("logn");
 } else {
   // 获取cookie进行二次验证
   const cookies = document.cookie.split(";");
@@ -31,12 +30,12 @@ if (document.cookie.indexOf("admin=") == -1) {
             show.value = false;
           } else {
             alert("怀疑您伪造cookie请您重新登录");
-            // router.replace("logn");
+            router.replace("logn");
           }
         })
         .catch((code) => {
           alert("网络请求错误");
-          // router.replace("logn");
+          router.replace("logn");
         });
     }
   });

@@ -20,15 +20,15 @@
       </template>
     </el-table-column>
     <el-table-column prop="type" label="类型" width="180"> </el-table-column>
-    <el-table-column label="介绍" width="220">
+    <el-table-column label="标题" width="220">
       <template v-slot="scope">
         <el-tooltip
           class="item"
           effect="dark"
-          :content="scope.row.introduce"
+          :content="Base64.decode(scope.row.title)"
           placement="top"
         >
-          <p class="introduceTitle">{{ scope.row.introduce }}</p>
+          <p class="introduceTitle">{{ Base64.decode(scope.row.title) }}</p>
         </el-tooltip>
       </template>
     </el-table-column>
@@ -82,7 +82,6 @@ import readArticle from "@/modules/article/read-article";
 import deleteArticleSelectRouter from "@/modules/article/delete-article-selectRouter";
 import deleteArticle from "@/modules/article/delete-article";
 import deleteAssets from "@/modules/article/delete-assets";
-import { listLanguages } from "highlight.js";
 let store = useStore();
 let select = ref("desc");
 let options = ref([

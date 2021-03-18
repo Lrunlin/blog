@@ -3,14 +3,6 @@ let pre = document.getElementsByTagName('pre');
 for (let index = 0; index < pre.length; index++) {
     const el = pre[index];
     const code = el.getElementsByTagName('*')[0];
-    for (let index = 0; index < pre.length; index++) {
-        const el = pre[index];
-        const copy = document.createElement("div");
-        copy.className = "code-copy";
-        copy.innerText = '复制'
-        el.insertBefore(copy, code);
-
-    }
     const num = document.createElement('div');
     num.className = 'code-number'
     el.insertBefore(num, code)
@@ -22,11 +14,23 @@ for (let index = 0; index < pre.length; index++) {
 }
 
 
-$.each($('.code-title'), function (i, el) { 
+
+let title = document.getElementsByClassName('code-title');
+for (let i = 0; i < title.length; i++) {
+    const copy = document.createElement("div");
+    copy.className = "code-copy";
+    copy.innerText = '复制';
+    title[i].append(copy)
+}
+
+
+
+
+$.each($('.code-title'), function (i, el) {
     $(el).append(`
-     <div class="bar" style="background: red;"></div>
-            <div class="bar" style="background: green;"></div>
-            <div class="bar" style="background: yellow;"></div>
+     <div class="bar" style="background: red;left: 20px;"></div>
+            <div class="bar" style="background: green;left: 50px;"></div>
+            <div class="bar" style="background: yellow;left: 80px;"></div>
     `)
 });
 

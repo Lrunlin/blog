@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 async function createArticle(getData) {
+    console.log(getData);
     let data;
     await axios({
         method: "POST",
@@ -8,6 +9,7 @@ async function createArticle(getData) {
         data: {
             router: getData.router,
             type: getData.type,
+            title: getData.title,
             introduce: getData.introduce,
             article: getData.article,
             isTop: getData.isTop,

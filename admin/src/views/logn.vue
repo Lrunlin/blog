@@ -22,7 +22,7 @@ function logn() {
       if (res.res) {
         let time = new Date().getTime();
         let warranty = new Date(time + 259200000);
-        document.cookie = `admin=${JSON.stringify({admin:res.admin,password:res.password})}; expires=${warranty}`;
+        document.cookie = `"admin=${JSON.stringify({admin:res.admin,password:res.password})}; expires=${warranty}"`;
         router.replace("/");
       } else {
         ElMessage({

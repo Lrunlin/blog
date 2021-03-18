@@ -22,6 +22,7 @@ async function createArticleFun(data) {
         type: data.type,
         introduce: data.introduce,
         article: Base64.encode(document.getElementById("changeHtml").innerHTML),
+        title:data.title,
         isTop: data.isTop,
         isShow: data.isShow,
     }).then((res) => {
@@ -37,7 +38,7 @@ async function createArticleFun(data) {
                     images: images,
                 }).then((res) => {});
             }
-             state = true;
+            state = true;
         } else {
             ElMessage.error({
                 message: `添加失败`,
@@ -48,8 +49,3 @@ async function createArticleFun(data) {
     return state;
 }
 export default createArticleFun;
-
-
-
-
-

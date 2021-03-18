@@ -10,14 +10,14 @@ function createPhone(data) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
     <meta name="renderer" content="webkit">
-    <meta name="application name" content="web博客分享">
+    <meta name="application name" content="web博客分享:${Base64.decode(data.title)},写于：${data.time}">
     <meta name="keywords" content="${data.type}">
-    <meta name="description" content="${data.introduce}">
-    <meta name="author" content="作者信息">
-    <meta name="copyright" content="版权信息">
+    <meta name="description" content="${Base64.decode(data.introduce)}">
+    <meta name="author" content="菜鸡老刘">
+    <meta name="copyright" content="菜鸡老刘：blog.blogweb.cn">
     <link rel="stylesheet" href="./css/phone.css">
     <link rel="stylesheet" href="./css/highLight.css">
-    <title>${data.introduce}</title>
+    <title>${Base64.decode(data.title)}</title>
 </head>
 <body>
     <header>
@@ -40,12 +40,12 @@ function createPhone(data) {
                 <div class="name">名字还没想好</div>
             </div>
             <div class="show">
-                <a href="https://liurl.xyz" class="router-link-active">首页</a>
-                <a href="">文章分类
+                <a href="https://blogweb.cn" class="router-link-active">首页</a>
+                <a href = "https://blogweb.cn" > 文章分类
                     <span id="type">(个数)</span>
                 </a>
-                <a href="">API分享</a>
-                <a href="">关于作者</a>
+                <a href="https://blogweb.cn">API分享</a>
+                <a href="https://blogweb.cn">关于作者</a>
             </div>
             <div class="writer" id="writer">
                 <div class="face-box">
