@@ -1,5 +1,5 @@
 <template>
-  <el-row :class="animate">
+  <el-row :style="{ width: setWidth }">
     <el-col>
       <el-menu
         :uniqueOpened="true"
@@ -37,24 +37,19 @@
     </el-col>
   </el-row>
 </template>
-<script>
+<script setup>
 import { ref, onUnmounted } from "vue";
-export default {
-  setup() {
-    document.body.style.paddingLeft = "200px"; //添加paddingLeft
-    let isCollapse = ref(false); //是否伸缩
-    let animate = ref(""); //设置导航栏动画
-    function zoom() {
-      isCollapse.value = !isCollapse.value;
-      document.body.style.paddingLeft = isCollapse.value ? "65px" : "200px";
-      animate.value = isCollapse.value ? "animate-zoom" : "";
-    }
-    onUnmounted(() => {
-      document.body.style.paddingLeft = "0px";
-    });
-    return { isCollapse, zoom, animate };
-  },
-};
+document.body.style.paddingLeft = "200px"; //添加paddingLeft
+let isCollapse = ref(false); //是否伸缩
+let setWidth = ref("200px"); //设置导航栏动画
+function zoom() {
+  isCollapse.value = !isCollapse.value;
+  document.body.style.paddingLeft = isCollapse.value ? "65px" : "200px";
+  setWidth.value=isCollapse.value ? "65px" : "200px"
+}
+onUnmounted(() => {
+  document.body.style.paddingLeft = "0px";
+});
 </script>
 <style scoped lang='scss'>
 .el-row {

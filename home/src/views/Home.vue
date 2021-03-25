@@ -1,6 +1,6 @@
 <template>
   <headCom></headCom>
-  <router-view class="main"></router-view>
+  <!-- <router-view class="main"></router-view> -->
 </template>
 <script setup>
 // import { ref } from "vue";

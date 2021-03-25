@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1:3306
--- 生成日期： 2021-03-16 02:36:55
+-- 生成日期： 2021-03-18 14:52:06
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.2.18
 
@@ -36,6 +36,13 @@ CREATE TABLE IF NOT EXISTS `admin` (
   PRIMARY KEY (`admin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `admin`
+--
+
+INSERT INTO `admin` (`admin`, `password`, `time`) VALUES
+('admin', 'password', '2021-03-16 10:56:28');
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `isTop` tinyint(1) DEFAULT NULL,
   `isShow` tinyint(1) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
+  `title` varchar(100) NOT NULL,
   PRIMARY KEY (`router`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

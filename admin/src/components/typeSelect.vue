@@ -5,6 +5,7 @@
     v-model="types"
     placeholder="请选择"
     @change="getType"
+    popper-class="setZIndex"
   >
     <el-option
       v-for="item in options"
@@ -16,7 +17,7 @@
   </el-select>
 </template>
 <script setup>
-import { ref, defineEmit, defineProps, onUpdated} from "vue";
+import { ref, defineEmit, defineProps, onUpdated } from "vue";
 import readType from "@/modules/type/read-type";
 
 let props = defineProps({
@@ -29,17 +30,20 @@ readType().then((res) => {
   options.value = res.data;
 });
 
+
 /*
  !更新次数过多会报错，用一个变量控制只修改一次
 */
 let isUpdata = true;
 onUpdated(() => {
   if (props.setType && isUpdata) {
-    types.value = props.setType.indexOf(",") == -1 ? [props.setType] : props.setType.split(",");
+    types.value =
+      props.setType.indexOf(",") == -1
+        ? [props.setType]
+        : props.setType.split(",");
     isUpdata = false;
   }
 });
-
 const emit = defineEmit();
 function getType() {
   emit("getType", Object.values(types.value).join(","));
@@ -50,4 +54,5 @@ function getType() {
   margin: 0px !important;
   width: 350px;
 }
+
 </style>

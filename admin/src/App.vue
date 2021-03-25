@@ -3,7 +3,7 @@
 </template>
 
 <style lang="scss">
-body{
+body {
   margin: 0px;
   padding: 0px;
 }

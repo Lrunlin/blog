@@ -58,7 +58,24 @@ onMounted(() => {
       ),
     },
   ];
-
+  instance.config.languageType = [
+    "JavaScript",
+    "VUE",
+    "HTML",
+    "C",
+    "C#",
+    "C++",
+    "CSS",
+    "nodeJS",
+    "Java",
+    "JSON",
+    "TypeScript",
+    "SQL",
+    "Go",
+    "PHP",
+    "Python",
+    "代码部分",
+  ];
   instance.create();
   instance.txt.html(props.html);
 });

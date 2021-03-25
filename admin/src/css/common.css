@@ -1,8 +1,3 @@
-@keyframes body-zoom {
-  100% {
-    padding-left: 60px;
-  }
-}
 .updata-editor {
   background-color: white;
   width: 100%;
@@ -81,4 +76,8 @@
 
 .elAlert {
   z-index: 999999 !important;
+}
+
+.setZIndex {
+  z-index: 99999 !important;
 }

@@ -1,4 +1,6 @@
 <template>
+<!-- https://imququ.com/ -->
+<!-- 安这个样式改 -->
   <div class="head-box">
     <div class="box">
       <router-link to="/">首页</router-link>
