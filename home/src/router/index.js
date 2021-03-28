@@ -12,15 +12,24 @@ const routes = [{
   children: [{
     path: '/',
     name: 'index',
-    component: () => import('../views/index.vue')
+    component: () => import('../views/index.vue'),
+    meta: {
+      title: '菜鸡老刘|首页'
+    }
   }, {
     path: '/search',
     name: 'search',
-    component: () => import('../views/search.vue')
+    component: () => import('../views/search.vue'),
+    meta: {
+      title: '菜鸡老刘|搜索文章'
+    }
   }, {
     path: '/about',
     name: 'about',
-    component: () => import('../views/about.vue')
+    component: () => import('../views/about.vue'),
+    meta: {
+      title: '菜鸡老刘|关于作者'
+    }
   }]
 }, ]
 

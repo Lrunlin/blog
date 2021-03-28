@@ -115,6 +115,7 @@ header {
   left: 0px;
   width: 100vw;
   height: 100vh;
+  z-index: 9999;
   background: rgb(0, 0, 0, 0.3);
   line-height: 100vh;
   text-align: center;

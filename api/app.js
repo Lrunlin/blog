@@ -13,15 +13,22 @@ app.use(bodyParser.urlencoded({
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
+const {
+    Base64
+} = require('js-base64');
 
 
-// app.all('*', function (req, res, next) {
-//     if (req.headers['referer'].indexOf("blogweb.cn") != -1) {
-//         next()
-//     } else {
-//         res.status(404);
-//     }
-// })
+app.all('*', function (req, res, next) {
+    let param = req.body.check || req.query.check;
+    //判断是否自己的域名，判断localhost是默认开发环境
+    let isRequest = req.headers['referer'].indexOf("blogweb.cn") != -1 || req.headers['referer'].indexOf("localhost") != -1;
+    let isParam = Math.abs(+Base64.decode(param) - new Date().getTime()) < 20000;
+    if (isRequest && isParam) {
+        next()
+    } else {
+        res.status(503);
+    }
+})
 
 
 

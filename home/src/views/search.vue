@@ -18,10 +18,11 @@
     </header>
     <nav>
       <el-tag
-        v-for="item in types"
+        v-for="(item, index) in types"
         :key="item.type"
         :title="'查看关于' + item.type + '的文章'"
-        @click="readTypeArticle(item.type)"
+        @click="readTypeArticle(item.type),acticeType=index"
+        :style="{ background: index === acticeType ? '#daebff' : '' }"
       >
         {{ item.type }}
       </el-tag>
@@ -59,8 +60,10 @@ let store = useStore();
 let route = useRoute();
 
 let types = ref();
+let acticeType = ref("");
 readType().then((res) => {
   types.value = res.data;
+  console.log(res);
 });
 let articleData = ref([]);
 
