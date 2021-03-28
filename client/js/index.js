@@ -1,4 +1,4 @@
-import copy from "../modules/copy.js";
+import copy from '../modules/copy.js';
 let pre = document.getElementsByTagName('pre');
 for (let index = 0; index < pre.length; index++) {
     const el = pre[index];
@@ -25,7 +25,7 @@ for (let i = 0; i < title.length; i++) {
 
 
 
-
+//代码块添加三个小点
 $.each($('.code-title'), function (i, el) {
     $(el).append(`
      <div class="bar" style="background: red;left: 20px;"></div>
@@ -33,6 +33,8 @@ $.each($('.code-title'), function (i, el) {
             <div class="bar" style="background: yellow;left: 80px;"></div>
     `)
 });
+
+
 
 
 /* 

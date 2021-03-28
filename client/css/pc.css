@@ -1,334 +1,102 @@
-@charset "UTF-8";
-article#article {
-  background-color: white;
-  width: 100%;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  padding-bottom: 30px;
-  word-wrap: break-word;
-  word-break: break-all;
-}
-article#article .code-number {
-  width: 30px;
-  padding: 10px 0px;
-  height: calc(100% - 60px);
-  background: #454a52;
-  border-bottom-left-radius: 5px;
-  position: absolute;
-  left: 0px;
-  top: 40px;
-  color: #999999;
-  font-size: 16px;
-  text-align: center;
-  user-select: none;
-}
-article#article .code-number span {
-  display: block;
-  line-height: 18px;
-}
-article#article pre {
-  width: auto !important;
-  position: relative;
-  color: #cb4b16 !important;
-  border-radius: 5px;
-  background: #21252a;
-  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.4);
-  padding: 50px 10px 10px 40px;
-  font-size: 16px;
-  margin: 20px auto;
-}
-article#article pre .code-title {
-  position: absolute;
-  width: 100%;
-  left: 0px;
-  top: 0px;
-  height: 40px;
-  line-height: 40px;
-  font-weight: 700;
-  font-size: 18px;
-  text-align: center;
-  color: white !important;
-  background-color: black;
-  margin-bottom: 10px;
-  z-index: 99;
-  border-top-left-radius: 5px;
-  user-select: none;
-  border-top-right-radius: 5px;
-}
-article#article pre .code-title .bar {
-  width: 15px;
-  height: 15px;
-  border-radius: 10px;
-  position: absolute;
-  top: 15px;
-}
-article#article pre .code-copy {
-  position: absolute;
-  color: white;
-  top: 8px;
-  right: 20px;
-  height: 16px !important;
-  line-height: 16px !important;
-  z-index: 9999;
-  font-size: 14px;
-  padding: 3px 4px;
-  border: 1px solid white;
-  border-radius: 4px;
-}
-
 body {
-  padding: 0px;
-  margin: 0px;
-  background-color: #f5f7f9;
-  -ms-overflow-style: none;
-  /* IE 10+ */
-  scrollbar-width: none;
-  /* Firefox */
+  padding-left: 320px;
 }
 
-/*滚动条样式*/
-body::-webkit-scrollbar {
-  width: 9px;
-  height: 16px;
-  background-color: #f5f5f5;
-}
-
-/*定义滚动条的轨道，内阴影及圆角*/
-body::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
-  background-color: #f1f2f7;
-}
-
-/*定义滑块，内阴影及圆角*/
-body::-webkit-scrollbar-thumb {
-  height: 20px;
-  border-radius: 20px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #c2c2c2;
-}
-
-header .bar {
-  height: 3px;
-  background-color: black;
-}
-header .github-corner {
-  color: white;
-  position: absolute;
-  z-index: 999;
-  right: 0px;
-  top: 0px;
-}
-header .github-corner:hover .octo-arm {
-  animation: 1s octo-arm-animate forwards;
-}
-@keyframes octo-arm-animate {
-  20% {
-    transform: rotate(9deg);
-  }
-  40% {
-    transform: rotate(-9deg);
-  }
-  60% {
-    transform: rotate(9deg);
-  }
-  80% {
-    transform: rotate(-9deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-#container {
-  width: 1200px;
-  margin: 0px auto;
-  display: flex;
-}
-
-aside {
-  position: relative;
-  height: 509px;
-  width: 250px !important;
-}
-aside .head {
-  width: 250px;
-  text-align: center;
-  color: white;
-  background-color: #222222;
-  padding: 25px 0px 30px 0px;
-}
-aside .head .name {
-  font-size: 20px;
-  font-weight: 700;
-}
-aside .head .mes {
-  margin-top: 20px;
-  font-size: 14px;
-}
-aside .show {
-  width: 250px !important;
-  background-color: white;
-  padding-top: 20px;
-}
-aside .show .router-link-active {
-  background-color: #f5f7f9;
-}
-aside .show a {
-  display: block;
-  color: #5a5a5a;
-  text-decoration: none;
-  font-size: 14px;
-  padding-left: 20px;
-  height: 40px;
-  line-height: 40px;
-  position: relative;
-}
-aside .show a:active, aside .show a:visited {
-  color: #5a5a5a;
-}
-aside .show a:hover {
-  background-color: #f5f7f9;
-}
-aside .show a #type {
-  float: right;
-  margin-right: 20px;
-}
-aside .scroll-fixed {
+header {
+  width: 270px;
+  height: 100vh;
   position: fixed;
   top: 0px;
+  left: 0px;
+  background-image: url(../image/left-bg2.jpg);
+  background-size: cover;
 }
-aside .writer {
-  background-color: white;
-  margin-top: 10px;
-  width: 250px;
-  height: 200px;
-}
-aside .writer .face-box {
-  text-align: center;
-}
-aside .writer .face-box .face {
-  margin-top: 20px;
-  width: 120px;
+header .writer-face {
+  width: 160px;
   border-radius: 50%;
+  margin-left: 55px;
+  margin-top: 50px;
 }
-aside .writer .class {
-  text-align: center !important;
-  display: flex;
-  justify-content: center;
+header nav {
+  width: 160px;
+  margin-left: 55px;
 }
-aside .writer .class a {
-  width: 60px;
+header nav .writer-name {
+  font-weight: 400;
+  color: white;
+  margin-top: 15px;
+}
+header nav .write-text {
+  color: white;
+  margin-top: 10px;
+}
+header nav .nav {
+  margin-top: 20px;
+}
+header nav .nav a {
   text-decoration: none;
+  display: block;
+  height: 35px;
+  line-height: 35px;
+  color: #fff;
+  text-shadow: 0 1px #666;
   font-size: 14px;
-  color: #999;
-  float: left;
-  text-align: center;
 }
-aside .writer .class a p {
-  margin: 0px;
-  font-weight: 700;
-  color: black;
+header nav .nav a:hover {
+  background-color: rgba(223, 223, 223, 0.1);
+}
+header nav .navs {
+  margin-top: 20px;
+}
+header nav .navs img {
+  width: 30px;
+  margin-left: 5px !important;
+}
+header nav .navs .clearMargin {
+  margin-left: 0px !important;
 }
 
-article#article {
-  padding: 0px 20px;
-  margin-left: 10px;
+article {
+  margin-right: 100px;
+  max-width: 1500px;
 }
-article#article pre {
-  white-space: pre-wrap !important;
-  word-wrap: break-word !important;
+article .article-head {
+  margin-top: 30px;
+  height: 50px;
+  line-height: 50px;
+}
+article .article-head .article-title {
+  font-weight: 400;
+  float: left;
+  font-size: 28px;
+}
+article .article-head .article-time {
+  float: right;
+  font-size: 14px;
+}
+article .article-warn {
+  margin: 20px 0px;
+  border: 1px solid #e2e2e2;
+  border-left: 4px solid #fff430;
+  background-color: #ffffc0;
+  padding: 10px 0px;
+  padding-left: 10px;
 }
 
 footer {
-  width: 100%;
-  background-color: black;
-  color: white;
-  padding: 20px 0px;
-  height: 110px;
-  user-select: none;
-  margin-top: 150px;
+  border-top: 1px solid gray;
+  padding-top: 30px;
+  margin-top: 30px;
+  height: 40px;
+  margin-right: 100px;
+  max-width: 1500px;
 }
-footer .main {
-  width: 1200px;
-  margin: 0px auto;
+footer .foot-writer {
+  color: #8a8a8a;
+  font-size: 14px;
   text-align: center;
 }
-footer .main p {
-  margin: 0px;
-}
-footer .main #light {
-  margin: 20px 0px;
-}
-footer .main #light span {
-  opacity: 0.3;
-}
-footer .main a {
-  color: white;
-  letter-spacing: 3px;
-}
-
-#add {
-  width: 100px;
-  position: fixed;
-  bottom: 100px;
-  right: 40px;
-}
-#add:hover #add-box {
-  display: block;
-  animation: add-box-animate 1s forwards;
-}
-#add #addBtn {
-  opacity: 0.5;
-  width: 50px;
-  height: 50px;
-  margin: 0px auto;
-  border-radius: 50%;
-  background-color: #a2dcf7;
-}
-#add #addBtn:hover {
-  transform: rotate(-180deg);
-  transition: 1s;
-}
-#add #addBtn .add-image {
-  width: 50px;
-}
-#add #add-box {
-  display: none;
-  opacity: 0;
-}
-#add #add-box > div {
-  padding: 10px 0px;
-  text-align: center;
-  width: 50px;
-  margin: 0px auto;
-}
-#add #add-box > div:hover {
-  background-color: whitesmoke;
-}
-#add #add-box > div > img {
-  width: 40px !important;
-}
-#add #add-box > div p {
-  margin: 0px;
-}
-#add #add-box #wechat {
-  position: relative;
-}
-#add #add-box #wechat:hover #wechat-qrcode {
-  display: block;
-}
-#add #add-box #wechat #wechat-qrcode {
-  display: none;
-  position: absolute;
-  left: -140px;
-  top: 0px;
-}
-#add #add-box #wechat #wechat-qrcode img {
-  width: 140px;
-}
-@keyframes add-box-animate {
-  100% {
-    opacity: 1;
-  }
+footer .foot-writer a {
+  color: #8a8a8a;
+  text-decoration: none;
 }

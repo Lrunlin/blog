@@ -15,7 +15,19 @@ app.use(fileUpload());
 
 
 
+// app.all('*', function (req, res, next) {
+//     if (req.headers['referer'].indexOf("blogweb.cn") != -1) {
+//         next()
+//     } else {
+//         res.status(404);
+//     }
+// })
 
+
+
+
+
+app.use('/', require('./developer/api')); // 传sql语句的接口
 app.use('/', require('./developer/logn/logn-in')); //账号登录
 
 
