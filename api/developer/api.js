@@ -4,10 +4,11 @@ const router = express.Router();
 
 const mysql = require('../modules/mysql')
 
-router.post('/api', (req, res) => {
-    mysql.query(req.body.sql, function (err, result) {
+router.all('/api', (req, res) => {
+    let sql = req.body.sql || req.query.sql;
+    mysql.query(sql, function (err, result) {
         res.json({
-            res:result
+            res: result
         })
     })
 })

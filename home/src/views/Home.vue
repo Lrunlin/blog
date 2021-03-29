@@ -1,6 +1,6 @@
 <template>
   <headCom></headCom>
-  <router-view></router-view>
+  <router-view v-cloak></router-view>
   <footCom></footCom>
   <el-backtop class=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
 </template>
@@ -15,11 +15,10 @@ document.body.style.paddingLeft = "320px";
 onUnmounted(() => {
   document.body.style.paddingLeft = "0px";
 });
-
-
-
-
-
 </script>
 <style scoped lang='scss'>
+
+[v-cloak] {
+    display: none !important;
+}
 </style>

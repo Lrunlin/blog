@@ -63,7 +63,6 @@ let types = ref();
 let acticeType = ref("");
 readType().then((res) => {
   types.value = res.data;
-  console.log(res);
 });
 let articleData = ref([]);
 

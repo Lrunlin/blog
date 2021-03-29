@@ -18,20 +18,20 @@ axios.defaults.baseURL =
     "https://blog-api.blogweb.cn"
 
 
-
+ //拦截器，添加一个验证信息
 axios.interceptors.request.use((request) => {
     // 判断上传方式，在判断是否有参数，如果没有就定义一个空值，然后赋值在将post请求转化为正常的字符串
     if (request.method == 'post') {
         if (!request.data) {
             request.data = {}
         }
-        request.data.check = Base64.encode((new Date().getTime())) //拦截器，添加一个验证信息
+        request.data.check = Base64.encode((new Date().getTime()))
         request.data = QS.stringify(request.data)
     } else {
-        if (!request.query) {
-            request.query = {}
+        if (!request.params) {
+            request.params = {}
         }
-        request.data.check = Base64.encode((new Date().getTime())) //拦截器，添加一个验证信息
+        request.params.check = Base64.encode((new Date().getTime()))
     }
     return request;
 }, function (error) {

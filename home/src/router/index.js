@@ -14,23 +14,30 @@ const routes = [{
     name: 'index',
     component: () => import('../views/index.vue'),
     meta: {
-      title: '菜鸡老刘|首页'
+      title: '首页'
     }
   }, {
     path: '/search',
     name: 'search',
     component: () => import('../views/search.vue'),
     meta: {
-      title: '菜鸡老刘|搜索文章'
+      title: '搜索文章'
     }
   }, {
     path: '/about',
     name: 'about',
     component: () => import('../views/about.vue'),
     meta: {
-      title: '菜鸡老刘|关于作者'
+      title: '关于作者'
     }
-  }]
+  }, {
+    path: '/resume',
+    name: 'resume',
+    component: () => import('../views/resume.vue'),
+    meta: {
+      title: '简历'
+    }
+  }, ]
 }, ]
 
 const router = createRouter({

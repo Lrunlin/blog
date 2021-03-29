@@ -1,3 +1,4 @@
 module.exports = {
-  publicPath: './home/'
+  publicPath: './',
+  assetsDir: './home'
 }
