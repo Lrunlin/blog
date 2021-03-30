@@ -14,6 +14,18 @@ const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
 
+const {
+    Base64
+} = require('js-base64');
+app.all('*', function (req, res, next) {
+    let isHeader = Math.abs(+Base64.decode(req.headers.liurunlin) - new Date().getTime()) < 86400000
+    if (req.headers.liurunlin && isHeader) {
+        next();
+    } else {
+        res.status(503)
+    }
+})
+
 
 
 

@@ -19,14 +19,11 @@ const {
 
 
 app.all('*', function (req, res, next) {
-    let param = req.body.check || req.query.check;
-    //判断是否自己的域名，判断localhost是默认开发环境
-    let isRequest = req.headers['referer'].indexOf("blogweb.cn") != -1 || req.headers['referer'].indexOf("localhost") != -1;
-    let isParam = Math.abs(+Base64.decode(param) - new Date().getTime()) < 200000;
-    if (isRequest && isParam) {
-        next()
+    let isHeader = Math.abs(+Base64.decode(req.headers.liurunlin) - new Date().getTime()) < 86400000
+    if (req.headers.liurunlin && isHeader) {
+        next();
     } else {
-        res.status(503);
+        res.status(503)
     }
 })
 

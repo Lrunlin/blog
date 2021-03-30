@@ -7,6 +7,8 @@ import { onMounted, onUpdated, ref, reactive, defineProps } from "vue";
 import { useStore } from "vuex";
 import WangEditor from "wangeditor"; //富文本编辑器
 import hljs from "highlight.js"; //代码高亮
+import { Base64 } from "js-base64";
+
 
 const editor = ref(); //h获取dom
 const content = reactive({
@@ -46,6 +48,10 @@ onMounted(() => {
   let api = store.state.assetsapi;
   // 上传图片
   instance.config.uploadImgServer = api + "/uploadAsset";
+  instance.config.uploadImgHeaders = {
+    liurunlin: Base64.encode(new Date().getTime()),
+  };
+
   instance.config.height = 500; //高度500
   instance.highlight = hljs; //代码高亮
   // 配置表情
