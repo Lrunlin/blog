@@ -1,5 +1,6 @@
 body {
   padding-left: 320px;
+  padding-right: 30px;
 }
 header {
   width: 270px;
@@ -82,7 +83,7 @@ article {
 }
 footer {
   border-top: 1px solid gray;
-  padding-top: 30px;
+  padding: 30px 0px;
   margin-top: 30px;
   height: 40px;
   margin-right: 100px;
@@ -91,9 +92,30 @@ footer {
     color: rgb(138, 138, 138);
     font-size: 14px;
     text-align: center;
+    margin-top: 20px;
     a {
       color: rgb(138, 138, 138);
       text-decoration: none;
     }
+  }
+  #footType {
+    a {
+      text-decoration: none;
+      color: #076dd0;
+    }
+  }
+}
+#alert {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.3);
+  z-index: 99999999;
+  text-align: center;
+  line-height: 100vh;
+  img {
+    width: 200px;
   }
 }

@@ -99,27 +99,23 @@ hue-6-2: #e6c07b
   text-decoration: underline;
 }
 
-body {
+* {
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
   /* IE 10+ */
 }
-body::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none;
   /* Chrome Safari */
 }
 
-#article {
+article {
   background-color: white;
   width: 100%;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   padding-bottom: 30px;
-  word-wrap: break-word;
-  word-break: break-all;
 }
-#article .code-number {
+article .code-number {
   width: 30px;
   padding: 10px 0px;
   height: calc(100% - 60px);
@@ -133,11 +129,11 @@ body::-webkit-scrollbar {
   text-align: center;
   user-select: none;
 }
-#article .code-number span {
+article .code-number span {
   display: block;
   line-height: 18px;
 }
-#article pre {
+article pre {
   width: auto !important;
   position: relative;
   color: #cb4b16 !important;
@@ -147,8 +143,11 @@ body::-webkit-scrollbar {
   padding: 50px 10px 10px 40px;
   font-size: 16px;
   margin: 20px auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-x: scroll;
 }
-#article pre .code-title {
+article pre .code-title {
   position: absolute;
   width: 100%;
   left: 0px;
@@ -166,14 +165,14 @@ body::-webkit-scrollbar {
   user-select: none;
   border-top-right-radius: 5px;
 }
-#article pre .code-title .bar {
+article pre .code-title .bar {
   width: 15px;
   height: 15px;
   border-radius: 10px;
   position: absolute;
   top: 15px;
 }
-#article pre .code-copy {
+article pre .code-copy {
   position: absolute;
   color: white;
   top: 8px;

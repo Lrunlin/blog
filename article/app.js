@@ -8,9 +8,9 @@ app.use(cors())
 app.use(express.static(__dirname + '/public'))
 // https://github.com/dankogai/js-base64
 let mysql = require('./modules/mysql')
-let createPc = require('./modules/createPc')
-let createPhone = require('./modules/createPhone')
 let NoFound = require('./modules/NoFound');
+let createHtml = require('./modules/createHtml');
+
 
 
 app.get('/*', function (req, res) {
@@ -22,15 +22,9 @@ app.get('/*', function (req, res) {
     mysql.query(`select * from article where router='${router}'`, function (err, result) {
         if (result) {
             if (result.length) {
-                if (!isPhone) {
-                    let pc = createPc(result[0]);
-                    res.send(pc)
-                } else {
-                    let phone = createPhone(result[0]);
-                    res.send(phone)
-                }
+                res.send(createHtml(result[0], isPhone ? "phone" : "pc"))
             } else {
-                res.send(NoFound(result[0]))
+                res.send(NoFound())
             }
         } else {
             res.send(NoFound())

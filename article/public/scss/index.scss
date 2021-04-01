@@ -1,11 +1,19 @@
-article#article {
+* {
+  padding: 0px;
+  margin: 0px;
+}
+@import "./highLight.scss";
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
+}
+article {
   background-color: white;
   width: 100%;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   padding-bottom: 30px;
-  word-wrap: break-word;
-  word-break: break-all;
   .code-number {
     width: 30px;
     padding: 10px 0px;
@@ -34,6 +42,9 @@ article#article {
     padding: 50px 10px 10px 40px;
     font-size: 16px;
     margin: 20px auto;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-x: scroll;
     .code-title {
       position: absolute;
       width: 100%;
@@ -58,21 +69,14 @@ article#article {
         position: absolute;
         top: 15px;
       }
-      .bar:nth-child(1) {
-        left: 20px;
-      }
-      .bar:nth-child(2) {
-        left: 50px;
-      }
-      .bar:nth-child(3) {
-        left: 80px;
-      }
     }
     .code-copy {
       position: absolute;
       color: white;
       top: 8px;
       right: 20px;
+      height: 16px !important;
+      line-height: 16px !important;
       z-index: 9999;
       font-size: 14px;
       padding: 3px 4px;

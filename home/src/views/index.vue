@@ -42,7 +42,7 @@ import { useStore } from "vuex";
 let store = useStore();
 
 let articleLength = ref("");
-api(`select * from article where isShow=1`).then((res) => {
+api(`select * from article where isShow=1;`).then((res) => {
   articleLength.value = Math.ceil(res.res.length / 10);
 });
 

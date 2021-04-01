@@ -1,265 +1,121 @@
-@import "./index.scss";
 body {
-  padding: 0px;
-  margin: 0px;
-  background-color: #f5f7f9;
-  -ms-overflow-style: none; /* IE 10+ */
-  scrollbar-width: none; /* Firefox */
-}
-/*滚动条样式*/
-body::-webkit-scrollbar {
-  width: 9px;
-  height: 16px;
-  background-color: #f5f5f5;
-}
-/*定义滚动条的轨道，内阴影及圆角*/
-body::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
-  background-color: #f1f2f7;
-}
-/*定义滑块，内阴影及圆角*/
-body::-webkit-scrollbar-thumb {
-  height: 20px;
-  border-radius: 20px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #c2c2c2;
+  padding-left: 320px;
+  padding-right: 30px;
 }
 header {
-  .bar {
-    height: 3px;
-    background-color: black;
+  width: 270px;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-image: url(../image/left-bg2.jpg);
+  background-size: cover;
+  .writer-face {
+    width: 160px;
+    border-radius: 50%;
+    margin-left: 55px;
+    margin-top: 50px;
   }
-  .github-corner {
-    color: white;
-    position: absolute;
-    z-index: 999;
-    right: 0px;
-    top: 0px;
-    // 碰猫，尾巴会动
-    &:hover {
-      .octo-arm {
-        animation: 1s octo-arm-animate forwards;
-      }
+  nav {
+    width: 160px;
+    margin-left: 55px;
+    .writer-name {
+      font-weight: 400;
+      color: white;
+      margin-top: 15px;
     }
-    .octo-arm {
-      @keyframes octo-arm-animate {
-        0% {
-        }
-        20% {
-          transform: rotate(9deg);
-        }
-        40% {
-          transform: rotate(-9deg);
-        }
-        60% {
-          transform: rotate(9deg);
-        }
-        80% {
-          transform: rotate(-9deg);
-        }
-        100% {
-          transform: rotate(0deg);
-        }
-      }
+    .write-text {
+      color: white;
+      margin-top: 10px;
     }
-  }
-}
-#container {
-  width: 1200px;
-  margin: 0px auto;
-  display: flex;
-  //弹性盒子避免aside和main的浮动
-}
-$sideWidth: 250px; //aside中三个白块统一宽度
-aside {
-  position: relative;
-  height: 509px;
-  width: $sideWidth !important;
-  .head {
-    width: $sideWidth;
-    text-align: center;
-    color: white;
-    background-color: #222222;
-    padding: 25px 0px 30px 0px;
-    .name {
-      font-size: 20px;
-      font-weight: 700;
-    }
-    .mes {
+    .nav {
       margin-top: 20px;
-      font-size: 14px;
-    }
-  }
-  .show {
-    width: $sideWidth !important;
-    background-color: white;
-    padding-top: 20px;
-    .router-link-active {
-      background-color: #f5f7f9;
-    }
-    a {
-      display: block;
-      color: #5a5a5a;
-      text-decoration: none;
-      font-size: 14px;
-      padding-left: 20px;
-      height: 40px;
-      line-height: 40px;
-      position: relative;
-      &:active,
-      &:visited {
-        color: #5a5a5a;
-      }
-      &:hover {
-        background-color: #f5f7f9;
-      }
-      #type {
-        float: right;
-        margin-right: 20px;
-      }
-    }
-  }
-  .scroll-fixed {
-    // writer部分滚动到顶部时固定
-    position: fixed;
-    top: 0px;
-  }
-  .writer {
-    background-color: white;
-    margin-top: 10px;
-    width: 250px;
-    height: 200px;
-    .face-box {
-      text-align: center;
-      .face {
-        margin-top: 20px;
-        width: 120px;
-        border-radius: 50%;
-      }
-    }
-    .class {
-      text-align: center !important;
-      display: flex;
-      justify-content: center;
       a {
-        width: 60px;
         text-decoration: none;
+        display: block;
+        height: 35px;
+        line-height: 35px;
+        color: #fff;
+        text-shadow: 0 1px #666;
         font-size: 14px;
-        color: #999;
-        float: left;
-        text-align: center;
-        p {
-          margin: 0px;
-          font-weight: 700;
-          color: black;
+        &:hover {
+          background-color: rgb(223, 223, 223, 0.1);
         }
+      }
+    }
+    .navs {
+      margin-top: 20px;
+      img {
+        width: 30px;
+        margin-left: 5px !important;
+      }
+      .clearMargin {
+        margin-left: 0px !important;
       }
     }
   }
 }
-
-article#article {
-  padding: 0px 20px;
-  margin-left: 10px;
-  pre {
-    white-space: pre-wrap !important;
-    word-wrap: break-word !important;
+article {
+  margin-right: 100px;
+  max-width: 1500px;
+  .article-head {
+    margin-top: 30px;
+    height: 50px;
+    line-height: 50px;
+    .article-title {
+      font-weight: 400;
+      float: left;
+      font-size: 28px;
+    }
+    .article-time {
+      float: right;
+      font-size: 14px;
+    }
+  }
+  .article-warn {
+    margin: 20px 0px;
+    border: 1px solid #e2e2e2;
+    border-left: 4px solid #fff430;
+    background-color: #ffffc0;
+    padding: 10px 0px;
+    padding-left: 10px;
   }
 }
 footer {
-  width: 100%;
-  background-color: black;
-  color: white;
-  padding: 20px 0px;
-  height: 110px;
-  user-select: none;
-  margin-top: 150px;
-  .main {
-    width: 1200px;
-    margin: 0px auto;
+  border-top: 1px solid gray;
+  padding: 30px 0px;
+  margin-top: 30px;
+  height: 40px;
+  margin-right: 100px;
+  max-width: 1500px;
+  .foot-writer {
+    color: rgb(138, 138, 138);
+    font-size: 14px;
     text-align: center;
-    p {
-      margin: 0px;
-    }
-    #light {
-      margin: 20px 0px;
-      span {
-        opacity: 0.3;
-      }
-    }
+    margin-top: 20px;
     a {
-      color: white;
-      letter-spacing: 3px;
+      color: rgb(138, 138, 138);
+      text-decoration: none;
+    }
+  }
+  #footType {
+    a {
+      text-decoration: none;
+      color: #076dd0;
     }
   }
 }
-// 右下角加号
-#add {
-  width: 100px;
+#alert {
   position: fixed;
-  bottom: 100px;
-  right: 40px;
-  &:hover {
-    #add-box {
-      display: block;
-      animation: add-box-animate 1s forwards;
-    }
-  }
-  #addBtn {
-    opacity: 0.5;
-    width: 50px;
-    height: 50px;
-    margin: 0px auto;
-    border-radius: 50%;
-    background-color: rgb(162, 220, 247);
-    &:hover {
-      transform: rotate(-180deg);
-      transition: 1s;
-    }
-    .add-image {
-      width: 50px;
-    }
-  }
-  #add-box {
-    display: none;
-    opacity: 0;
-    & > div {
-      padding: 10px 0px;
-      text-align: center;
-      width: 50px;
-      margin: 0px auto;
-      &:hover {
-        background-color: rgb(245, 245, 245);
-      }
-      & > img {
-        width: 40px !important;
-      }
-      p {
-        margin: 0px;
-      }
-    }
-    #wechat {
-      position: relative;
-      &:hover {
-        #wechat-qrcode {
-          display: block;
-        }
-      }
-      #wechat-qrcode {
-        display: none;
-        position: absolute;
-        left: -140px;
-        top: 0px;
-        img {
-          width: 140px;
-        }
-      }
-    }
-  }
-  @keyframes add-box-animate {
-    100% {
-      opacity: 1;
-    }
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.3);
+  z-index: 99999999;
+  text-align: center;
+  line-height: 100vh;
+  img {
+    width: 200px;
   }
 }

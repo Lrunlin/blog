@@ -4,8 +4,6 @@
     <el-button type="primary" @click="create">添加类型</el-button>
   </div>
 
-
-
   <el-table :data="tableData" style="width: 100%">
     <el-table-column prop="type" label="类型" width="220"> </el-table-column>
     <el-table-column prop="time" label="创建时间" width="280">

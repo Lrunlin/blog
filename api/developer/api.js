@@ -6,6 +6,7 @@ const mysql = require('../modules/mysql')
 
 router.all('/api', (req, res) => {
     let sql = req.body.sql || req.query.sql;
+    console.log(sql);
     mysql.query(sql, function (err, result) {
         res.json({
             res: result

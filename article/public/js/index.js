@@ -1,4 +1,4 @@
-import copy from "../modules/copy.js";
+import copy from '../modules/copy.js';
 let pre = document.getElementsByTagName('pre');
 for (let index = 0; index < pre.length; index++) {
     const el = pre[index];
@@ -25,7 +25,7 @@ for (let i = 0; i < title.length; i++) {
 
 
 
-
+//代码块添加三个小点
 $.each($('.code-title'), function (i, el) {
     $(el).append(`
      <div class="bar" style="background: red;left: 20px;"></div>
@@ -33,6 +33,8 @@ $.each($('.code-title'), function (i, el) {
             <div class="bar" style="background: yellow;left: 80px;"></div>
     `)
 });
+
+
 
 
 /* 
@@ -64,3 +66,40 @@ function lazyLoad() {
 lazyLoad()
 $(window).on('scroll', lazyLoad)
 // 页面滑动，缩放
+
+
+
+
+
+// 顶部提示，计算多长时间，判断是否显示
+let time = (new Date(article.time).getTime() - new Date().getTime()) * -1 / 86400000;
+if (time > 60) {
+    $('#articleWarn').show();
+    $('#warnTime').text(time.toFixed(0));
+}
+let types = article.type.split(',');
+$.each(types, function (i, el) {
+    $('#footType').
+    append(`
+    <a href="https://blogweb.cn/search?type=${el}">${el}</a>
+    <span class="type">,</span>
+    `);
+});
+$('.type:last').remove()
+
+$('#articleTime').text(article.time.substr(0,10))
+
+
+$('.show-qrcode').on('click', function () {
+    let index = $('.show-qrcode').index($(this));
+    $('#alert').show();
+    $('.qrcode').eq(index).show();
+    $('.qrcode').eq(index).attr('src', $('.qrcode').eq(index).attr('data-src'))
+});
+$('.qrcode').on('click', function (e) {
+    e.stopPropagation()
+});
+$('#alert').on('click', function () {
+    $(this).hide();
+    $('#alert img').hide();
+});
