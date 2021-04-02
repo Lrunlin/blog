@@ -6,7 +6,6 @@ function createPhone(data,assets) {
     <!DOCTYPE html>
 <html>
 <head>
-    <!-- https://imququ.com/post/reduce-ttfb-on-thinkjs3-website.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
@@ -14,15 +13,16 @@ function createPhone(data,assets) {
     <meta name="keywords" content="${data.type}">
     <meta name="description" content="${Base64.decode(data.introduce)}">
     <meta name="author" content="刘润霖">
-    <meta name="copyright" content="刘润霖://blogweb.cn">
+    <meta name="copyright" content="刘润霖:https://blogweb.cn">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/${assets}.css">
     <title>${Base64.decode(data.title)}</title>
 </head>
 <body>
-  <!-- 代码是写出来给人看的附带能在机器上运行 -->
+    <!-- 代码是写出来给人看的附带能在机器上运行 -->
+    <!-- 本文写于${data.time} -->
     <header>
-        <img src="./image/writer-face.png" alt="左侧导航栏作者头像" class="writer-face">
+        <img data-src="./image/writer-face.png" alt="左侧导航栏作者头像" class="writer-face">
         <nav>
             <h1 class="writer-name">刘润霖</h1>
             <p class="write-text">WEB开发</p>
@@ -34,13 +34,13 @@ function createPhone(data,assets) {
             </div>
             <div class="navs">
                 <a href="https://github.com/Lrunlin">
-                    <img src="./image/github.png" alt="作者GitHub" class="clearMargin">
+                    <img data-src="./image/github.png" alt="作者GitHub" class="clearMargin">
                 </a>
                 <a href="javascript:;">
-                    <img src="./image/wechat.png" alt="作者微信" class="show-qrcode">
+                    <img data-src="./image/wechat.png" alt="作者微信" class="show-qrcode">
                 </a>
                 <a href="javascript:;">
-                    <img src="./image/qq.png" alt="作者QQ" class="show-qrcode">
+                    <img data-src="./image/qq.png" alt="作者QQ" class="show-qrcode">
                 </a>
             </div>
         </nav>
@@ -50,11 +50,11 @@ function createPhone(data,assets) {
             <h1 class="article-title">
                 ${Base64.decode(data.title)}
             </h1>
-            <div class="article-time">
+            <div class="article-time" id="articleTime">
                 2021-03-23
             </div>
         </div>
-${Base64.decode(data.article)}
+        ${Base64.decode(data.article)}
     </article>
     <footer>
         <p class="foot-title">
@@ -80,7 +80,7 @@ ${Base64.decode(data.article)}
     </script>
     <script src="./js/jquery.js"></script>
     <script src="./js/index.js" type="module"></script>
-    <script src="./js/${assets}.js"></script>
+    <script src="./js/pc.js"></script>
 </body>
 </html>
     `

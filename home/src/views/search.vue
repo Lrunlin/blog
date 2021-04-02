@@ -21,7 +21,7 @@
         v-for="(item, index) in types"
         :key="item.type"
         :title="'查看关于' + item.type + '的文章'"
-        @click="readTypeArticle(item.type),acticeType=index"
+        @click="readTypeArticle(item.type), (acticeType = index)"
         :style="{ background: index === acticeType ? '#daebff' : '' }"
       >
         {{ item.type }}
@@ -55,6 +55,7 @@ import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import readType from "@/modules/read-type";
 import api from "@/modules/api";
+
 
 let store = useStore();
 let route = useRoute();
@@ -121,6 +122,9 @@ nav {
   .el-tag {
     margin-left: 10px;
     cursor: pointer;
+    &:first-child {
+      margin-left: 0px;
+    }
     &:hover {
       background: #daebff;
     }

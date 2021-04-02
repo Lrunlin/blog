@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta name="application name" content="${Base64.decode(data.title)}">
-    <meta name="keywords" content="${Base64.decode(data.type)}">
+    <meta name="keywords" content="${data.type}">
     <meta name="description" content="${Base64.decode(data.introduce)}">
     <meta name="author" content="刘润霖">
     <meta name="copyright" content="刘润霖://blogweb.cn">
@@ -17,7 +17,7 @@
 <body>
     <!-- 代码是写出来给人看的附带能在机器上运行 -->
     <header>
-        <img src="./image/writer-face.png" alt="左侧导航栏作者头像" class="writer-face">
+        <img data-src="./image/writer-face.png" alt="左侧导航栏作者头像" class="writer-face">
         <nav>
             <h1 class="writer-name">刘润霖</h1>
             <p class="write-text">WEB开发</p>
@@ -29,13 +29,13 @@
             </div>
             <div class="navs">
                 <a href="https://github.com/Lrunlin">
-                    <img src="./image/github.png" alt="作者GitHub" class="clearMargin">
+                    <img data-src="./image/github.png" alt="作者GitHub" class="clearMargin">
                 </a>
                 <a href="javascript:;">
-                    <img src="./image/wechat.png" alt="作者微信" class="show-qrcode">
+                    <img data-src="./image/wechat.png" alt="作者微信" class="show-qrcode">
                 </a>
                 <a href="javascript:;">
-                    <img src="./image/qq.png" alt="作者QQ" class="show-qrcode">
+                    <img data-src="./image/qq.png" alt="作者QQ" class="show-qrcode">
                 </a>
             </div>
         </nav>

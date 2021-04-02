@@ -87,7 +87,7 @@ $.each(types, function (i, el) {
 });
 $('.type:last').remove()
 
-$('#articleTime').text(article.time.substr(0,10))
+$('#articleTime').text(article.time.substr(0, 10))
 
 
 $('.show-qrcode').on('click', function () {
@@ -103,3 +103,11 @@ $('#alert').on('click', function () {
     $(this).hide();
     $('#alert img').hide();
 });
+
+
+
+let style = ["color:red", "font-size:30px"].join(";");
+console.log(
+    "%c本人有偿代写：html,css,js,jQuery，vue，node,mysql,毕业设计，作业，公司小项目，可添加QQ：1974109227，微信：webzhizuo",
+    style
+);

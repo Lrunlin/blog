@@ -10,7 +10,9 @@
       </div>
       <div class="article-text">{{ Base64.decode(item.introduce) }}</div>
       <p class="read">
-        <a :href="store.state.articleUrl + item.router" target="_blank">阅读全文»</a>
+        <a :href="store.state.articleUrl + item.router" target="_blank"
+          >阅读全文»</a
+        >
       </p>
     </article>
     <div class="article-foot">
