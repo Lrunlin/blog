@@ -6,15 +6,9 @@
         v-model="keyword"
         clearable
         class="search-text"
-        @keydown.enter="search"
+        @input="search"
       >
       </el-input>
-      <el-button
-        icon="el-icon-search"
-        circle
-        class="search-button"
-        @click="search"
-      ></el-button>
     </header>
     <nav>
       <el-tag
@@ -48,14 +42,13 @@
   ></el-empty>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { Base64 } from "js-base64";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import readType from "@/modules/read-type";
 import api from "@/modules/api";
-
 
 let store = useStore();
 let route = useRoute();
@@ -86,20 +79,24 @@ function readTypeArticle(type) {
 if (route.query.type) {
   readTypeArticle(route.query.type);
 }
+
 let keyword = ref("");
+let article = [];
+onMounted(() => {
+  api(`SELECT * from article WHERE isShow=1 ORDER by time DESC;`).then(
+    (res) => {
+      article = res.res;
+    }
+  );
+});
+
 function search() {
+  articleData.value = [];
   let test = /^[\s\S]*.*[^\s][\s\S]*$/;
-  api(
-    `SELECT * from article  WHERE introduce LIKE '%${Base64.encode(
-      keyword.value
-    )}%' and isShow=1 ORDER by time DESC;`
-  ).then((res) => {
-    articleData.value = res.res;
-    if (!test.test(keyword.value)) {
-      ElMessage({
-        message: "检测到你未输入关键词，为您查询所有文章",
-        type: "success",
-      });
+  article.forEach((item) => {
+    let article = Base64.decode(item.title) + Base64.decode(item.introduce);
+    if (article.indexOf(keyword.value) != -1) {
+      articleData.value.push(item);
     }
   });
 }
