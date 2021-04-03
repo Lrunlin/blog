@@ -137,6 +137,10 @@ nav {
   height: 50px;
   line-height: 50px;
   .article-title {
+    width: calc(100% - 150px);
+    overflow: hidden; //超出的文本隐藏
+    text-overflow: ellipsis; //溢出用省略号显示
+    white-space: nowrap; //溢出不换行
     font-weight: 400;
     font-size: 32px;
     color: #333;

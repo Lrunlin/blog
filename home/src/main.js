@@ -36,7 +36,7 @@ import 'element-plus/lib/theme-chalk/index.css';
 router.beforeEach((to, from, next) => {
     //  路由发生变化修改页面title 
     if (to.meta.title) {
-        document.title = to.meta.title
+        document.title = '刘润霖||web博客' + to.meta.title
     }
     next()
 })

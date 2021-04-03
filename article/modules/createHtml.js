@@ -17,6 +17,7 @@ function createPhone(data,assets) {
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/${assets}.css">
     <title>${Base64.decode(data.title)}</title>
+    <link rel="shortcut icon" href="./image/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- 代码是写出来给人看的附带能在机器上运行 -->

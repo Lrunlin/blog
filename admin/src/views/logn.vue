@@ -3,7 +3,7 @@
     <div class="logn-box">
       <el-input v-model="admin" placeholder="请输入管理员账号"></el-input>
       <el-input v-model="password" placeholder="请输入管理员密码"></el-input>
-      <el-button type="primary" @click="logn">主要按钮</el-button>
+      <el-button type="primary" @click="logn">登录</el-button>
     </div>
   </div>
 </template>

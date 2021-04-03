@@ -14,7 +14,7 @@ const routes = [{
     name: 'index',
     component: () => import('../views/index.vue'),
     meta: {
-      title: '首页'
+      title: ''
     }
   }, {
     path: '/search',
