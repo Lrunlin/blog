@@ -11,12 +11,13 @@
     <meta name="author" content="刘润霖">
     <meta name="copyright" content="刘润霖://blogweb.cn">
     <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/pc.css">
+    <link rel="stylesheet" href="./css/phone.css">
     <link rel="shortcut icon" href="./image/favicon.ico" type="image/x-icon">
     <title>${Base64.decode(data.title)}</title>
 </head>
 <body>
     <!-- 代码是写出来给人看的附带能在机器上运行 -->
+    <!-- 本文写于${data.time} -->
     <header>
         <img data-src="./image/writer-face.png" alt="左侧导航栏作者头像" class="writer-face">
         <nav>
@@ -52,6 +53,7 @@
         </div>
         ${Base64.decode(data.article)}
     </article>
+
     <footer>
         <p class="foot-title">
             发布于
@@ -77,5 +79,17 @@
     <script src="./js/jquery.js"></script>
     <script src="./js/index.js" type="module"></script>
     <script src="./js/pc.js"></script>
+
+
+
+    <script src="./js/base.js"></script>
+    <script>
+        $('article').html(Base64.decode(
+            `PHByZSB0eXBlPSJKYXZhU2NyaXB0Ij48Y29kZT4gICAgPHNwYW4gY2xhc3M9ImhsanMtdGFnIj4mbHQ7PHNwYW4gY2xhc3M9ImhsanMtbmFtZSI+c2NyaXB0PC9zcGFuPiA8c3BhbiBjbGFzcz0iaGxqcy1hdHRyIj5zcmM8L3NwYW4+PTxzcGFuIGNsYXNzPSJobGpzLXN0cmluZyI+Ii4vanMvYmFzZS5qcyI8L3NwYW4+Jmd0Ozwvc3Bhbj48c3BhbiBjbGFzcz0iaGxqcy10YWciPiZsdDsvPHNwYW4gY2xhc3M9ImhsanMtbmFtZSI+c2NyaXB0PC9zcGFuPiZndDs8L3NwYW4+CiAgICA8c3BhbiBjbGFzcz0iaGxqcy10YWciPiZsdDs8c3BhbiBjbGFzcz0iaGxqcy1uYW1lIj5zY3JpcHQ8L3NwYW4+Jmd0Ozwvc3Bhbj48c3BhbiBjbGFzcz0iamF2YXNjcmlwdCI+CiAgICAgICAgICAgPC9zcGFuPjxzcGFuIGNsYXNzPSJobGpzLXRhZyI+Jmx0Oy88c3BhbiBjbGFzcz0iaGxqcy1uYW1lIj5zY3JpcHQ8L3NwYW4+Jmd0Ozwvc3Bhbj48L2NvZGU+PC9wcmU+`
+        ));
+        $('article').append(Base64.decode(
+            `PHByZSB0eXBlPSJKYXZhU2NyaXB0Ij48Y29kZT4gICAgPHNwYW4gY2xhc3M9ImhsanMtdGFnIj4mbHQ7PHNwYW4gY2xhc3M9ImhsanMtbmFtZSI+c2NyaXB0PC9zcGFuPiA8c3BhbiBjbGFzcz0iaGxqcy1hdHRyIj5zcmM8L3NwYW4+PTxzcGFuIGNsYXNzPSJobGpzLXN0cmluZyI+Ii4vanMvYmFzZS5qcyI8L3NwYW4+Jmd0Ozwvc3Bhbj48c3BhbiBjbGFzcz0iaGxqcy10YWciPiZsdDsvPHNwYW4gY2xhc3M9ImhsanMtbmFtZSI+c2NyaXB0PC9zcGFuPiZndDs8L3NwYW4+CiAgICA8c3BhbiBjbGFzcz0iaGxqcy10YWciPiZsdDs8c3BhbiBjbGFzcz0iaGxqcy1uYW1lIj5zY3JpcHQ8L3NwYW4+Jmd0Ozwvc3Bhbj48c3BhbiBjbGFzcz0iamF2YXNjcmlwdCI+CiAgICAgICAgICAgPC9zcGFuPjxzcGFuIGNsYXNzPSJobGpzLXRhZyI+Jmx0Oy88c3BhbiBjbGFzcz0iaGxqcy1uYW1lIj5zY3JpcHQ8L3NwYW4+Jmd0Ozwvc3Bhbj48L2NvZGU+PC9wcmU+`
+        ));
+    </script>
 </body>
 </html>

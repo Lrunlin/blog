@@ -33,6 +33,10 @@
           <el-menu-item index="/read-article">文章查询</el-menu-item>
           <el-menu-item index="/type"> 文章类型管理 </el-menu-item>
         </el-submenu>
+        <el-menu-item index="/changeDom">
+          <i class="el-icon-scissors"></i>
+          DOM修改
+        </el-menu-item>
       </el-menu>
     </el-col>
   </el-row>
@@ -45,7 +49,7 @@ let setWidth = ref("200px"); //设置导航栏动画
 function zoom() {
   isCollapse.value = !isCollapse.value;
   document.body.style.paddingLeft = isCollapse.value ? "65px" : "200px";
-  setWidth.value=isCollapse.value ? "65px" : "200px"
+  setWidth.value = isCollapse.value ? "65px" : "200px";
 }
 onUnmounted(() => {
   document.body.style.paddingLeft = "0px";

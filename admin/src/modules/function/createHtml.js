@@ -33,25 +33,6 @@ function createHtml(data) {
             }
         });
     }
-
-    let pre = document.querySelectorAll("#changeHtml pre");
-    let codeTitle = document.getElementsByClassName('code-title');
-
-    if (pre.length) {
-        for (let index = 0; index < pre.length; index++) {
-            const el = pre[index];
-            if (el.getAttribute('data-handle') != "true") {
-                el.setAttribute("data-handle", "true");
-                const code = el.getElementsByTagName("*")[0];
-                // 弄标题
-                const title = document.createElement("div");
-                title.innerHTML = el.getAttribute("type");
-                title.className = "code-title";
-                el.insertBefore(title, code);
-            }
-        }
-
-    }
     return images;
 }
 export default createHtml;

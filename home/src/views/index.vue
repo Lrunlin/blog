@@ -1,11 +1,6 @@
 <template>
   <!-- 多嵌套一层，取消掉不显示的博文，避免if和for使用在同一层 -->
   <div class="index">
-    <el-skeleton :rows="4" animated v-if="isAwait" />
-    <el-skeleton :rows="4" animated v-if="isAwait" />
-    <el-skeleton :rows="4" animated v-if="isAwait" />
-    <el-skeleton :rows="4" animated v-if="isAwait" />
-    <el-skeleton :rows="4" animated v-if="isAwait" />
     <article class="box" v-for="(item, index) in articleData" :key="index">
       <div class="article-head">
         <a class="article-title" :href="store.state.articleUrl + item.router">{{
@@ -51,7 +46,6 @@ let store = useStore();
 // 查询文章信息，将初始值设置为-1，后每次查询都将索引值++
 let articleData = ref([]);
 let index = ref(-1);
-let isAwait = ref(true);
 function getArticle(i, isAdd) {
   console.time('ajax')
   isAdd ? index.value++ : index.value--;
@@ -62,7 +56,6 @@ function getArticle(i, isAdd) {
     }, ${i * 10 + 10};`
   ).then((res) => {
     if (res.res) {
-      isAwait.value = false;
       articleData.value = res.res;
       console.timeEnd('ajax')
     }

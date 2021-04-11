@@ -19,8 +19,7 @@ body::-webkit-scrollbar {
 if (process.env.NODE_ENV != "development") {
   let style = ["color:red", "font-size:30px"].join(";");
   console.log(
-    // "%chtml,css,js,jQuery，vue，node,mysql,毕业设计，作业，公司小项目，可添加QQ：1974109227，微信：webzhizuo",
-    "%c其实我也不知道这里写啥",
+    "%c页面是vue3组合式api 使用scriptsetup提案写的，至于为啥devtools不亮，我也不知道",
     style
   );
 }

@@ -50,6 +50,8 @@ app.use('/', require('./developer/article/delete-article-selectRouter')); // 删
 app.use('/', require('./developer/article/delete-article')); // 删除文章
 app.use('/', require('./developer/article/read-router')); // 修改文章之前获取文章数据根据路由查询
 app.use('/', require('./developer/article/updata-article')); // 修改文章（仅更新数据）
+app.use('/', require('./developer/article/updata-article-text')); // 修改文章（仅更新数据）
+
 
 
 

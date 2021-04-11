@@ -3,7 +3,7 @@ function createPhone(data,assets) {
         Base64
     } = require('js-base64');
     let html = `
-    <!DOCTYPE html>
+   <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,11 +13,11 @@ function createPhone(data,assets) {
     <meta name="keywords" content="${data.type}">
     <meta name="description" content="${Base64.decode(data.introduce)}">
     <meta name="author" content="刘润霖">
-    <meta name="copyright" content="刘润霖:https://blogweb.cn">
+    <meta name="copyright" content="刘润霖://blogweb.cn">
     <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/${assets}.css">
-    <title>${Base64.decode(data.title)}</title>
+    <link rel="stylesheet" href="./css/pc.css">
     <link rel="shortcut icon" href="./image/favicon.ico" type="image/x-icon">
+    <title>${Base64.decode(data.title)}</title>
 </head>
 <body>
     <!-- 代码是写出来给人看的附带能在机器上运行 -->
@@ -57,6 +57,7 @@ function createPhone(data,assets) {
         </div>
         ${Base64.decode(data.article)}
     </article>
+
     <footer>
         <p class="foot-title">
             发布于

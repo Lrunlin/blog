@@ -52,6 +52,11 @@ article {
     text-align: center;
     margin-bottom: 20px;
   }
+  .article-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 footer {
   padding: 30px 0px;

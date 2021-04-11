@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="head">
     <el-input placeholder="请输入类型" v-model="type" clearable> </el-input>
     <el-button type="primary" @click="create">添加类型</el-button>
   </div>
@@ -72,7 +72,7 @@ function removeType(type, index) {
 }
 </script>
 <style scoped lang='scss'>
-div {
+.head {
   margin-top: 20px;
   margin-left: 30px;
 }

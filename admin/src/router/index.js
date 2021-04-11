@@ -29,13 +29,13 @@ const routes = [{
       path: '/update-article',
       name: 'update-article',
       component: () => import('@/views/article/update-article')
+    }, {
+      path: '/changeDom',
+      name: 'changeDom',
+      component: () => import('@/views/editorHtml/changeDom')
     },
   ]
-}, {
-  path: '/previewPage',
-  name: 'previewPage',
-  component: () => import('@/views/editorHtml/previewPage.vue')
-}, {
+},{
   path: '/logn',
   name: 'logn',
   component: () => import('@/views/logn')

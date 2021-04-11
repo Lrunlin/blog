@@ -1,40 +1,25 @@
 import copy from '../modules/copy.js';
-let pre = document.getElementsByTagName('pre');
-for (let index = 0; index < pre.length; index++) {
-    const el = pre[index];
-    const code = el.getElementsByTagName('*')[0];
-    const num = document.createElement('div');
-    num.className = 'code-number'
-    el.insertBefore(num, code)
-    let height = num.offsetHeight - 20; //减去padding
-    // 用总高度除每个文字的高度{我也不知道为啥除18，用开发者工具查是18}
-    for (let i = 0; i < (height / 18).toFixed(0); i++) {
-        num.innerHTML += `<span>${i+1}</span>`
-    }
-}
 
 
-
-let title = document.getElementsByClassName('code-title');
-for (let i = 0; i < title.length; i++) {
-    const copy = document.createElement("div");
-    copy.className = "code-copy";
-    copy.innerText = '复制';
-    title[i].append(copy)
-}
-
-
-
-//代码块添加三个小点
-$.each($('.code-title'), function (i, el) {
-    $(el).append(`
-     <div class="bar" style="background: red;left: 20px;"></div>
+// 处理代码块添加dom
+$("article pre").append(`<div class="code-number"></div>`)
+// 弄标题
+$.each($("article pre"), function (i, el) {
+    $(el).append(`<div class="code-title">${$(el).attr('type')}
+            <div class="code-copy">复制</div>
+            <div class="bar" style="background: red;left: 20px;"></div>
             <div class="bar" style="background: green;left: 50px;"></div>
             <div class="bar" style="background: yellow;left: 80px;"></div>
-    `)
+    </div>`)
 });
-
-
+// 添加数字
+$.each($('.code-number'), function (i, el) {
+    let height = el.offsetHeight - 20; //减去padding（顶部的标题块）
+    //代码块侧边行数： 用总高度除每个文字的高度{span行高设置的18}
+    for (let i = 0; i < (height / 18).toFixed(0); i++) {
+        $(el).append(`<span>${i+1}</span>`)
+    }
+});
 
 
 /* 
@@ -77,6 +62,7 @@ if (time > 60) {
     $('#articleWarn').show();
     $('#warnTime').text(time.toFixed(0));
 }
+// 设置底部类型跳转
 let types = article.type.split(',');
 $.each(types, function (i, el) {
     $('#footType').
@@ -106,8 +92,9 @@ $('#alert').on('click', function () {
 
 
 
+
 let style = ["color:red", "font-size:30px"].join(";");
 console.log(
-    "%c本人有偿代写：html,css,js,jQuery，vue，node,mysql,毕业设计，作业，公司小项目，可添加QQ：1974109227，微信：webzhizuo",
+    "%c有偿代写：html,css,js,jQuery，vue，node,mysql,毕业设计，作业，公司小项目，可添加QQ：1974109227，微信：webzhizuo",
     style
 );

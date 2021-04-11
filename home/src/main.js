@@ -17,7 +17,7 @@ axios.defaults.baseURL =
     "https://blog-api.blogweb.cn"
 
 
- //拦截器，添加一个验证信息
+//拦截器，添加一个验证信息
 axios.interceptors.request.use((request) => {
     request.headers.liurunlin = Base64.encode(new Date().getTime());
     return request;
@@ -40,6 +40,8 @@ router.beforeEach((to, from, next) => {
     }
     next()
 })
+
+
 
 
 createApp(App)
