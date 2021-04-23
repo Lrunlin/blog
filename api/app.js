@@ -35,9 +35,6 @@ app.use('/', require('./developer/api')); // 传sql语句的接口
 app.use('/', require('./developer/logn/logn-in')); //账号登录
 
 
-
-
-
 app.use('/', require('./developer/type/create-type')); // 添加文章类型
 app.use('/', require('./developer/type/read-type')); // 读取文章类型
 app.use('/', require('./developer/type/delete-type')); // 删除文章类型

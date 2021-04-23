@@ -1,0 +1,17 @@
+@import "~antd/dist/antd.css";
+
+* {
+  padding: 0px;
+  margin: 0px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (min-width: 600px) {
+  body {
+    padding-left: 320px;
+  }
+}

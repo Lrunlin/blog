@@ -2,7 +2,7 @@ import axios from 'axios';
 async function api(sql) {
     let data;
     await axios({
-        method: sql.toLowerCase().indexOf('select') != -1 ? 'get' : 'post',
+        method: sql.toLowerCase().indexOf('select') !== -1 ? 'get' : 'post',
         url: '/api',
         data: {
             sql: sql
