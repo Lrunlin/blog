@@ -54,7 +54,11 @@ class Head extends Component {
             >
               作者简历
             </NavLink>
-            <NavLink exact to="/about" onClick={() => this.setTitle("关于作者")}>
+            <NavLink
+              exact
+              to="/about"
+              onClick={() => this.setTitle("关于作者")}
+            >
               关于
             </NavLink>
           </div>

@@ -3,6 +3,10 @@
     padding: 5px 0px;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #fff;
+    max-width: 1500px;
+    &:last-child {
+      border-bottom: 0px !important;
+    }
     .article-head {
       height: 50px;
       line-height: 50px;

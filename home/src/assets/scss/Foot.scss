@@ -1,6 +1,25 @@
+@media screen and (min-width: 600px) {
+  footer#foot {
+    border-top: 1px solid gray;
+    margin-top: 30px;
+    height: 80px;
+    line-height: 80px;
+    max-width: 1500px;
+    text-align: center;
+    .foot-writer {
+      color: rgb(138, 138, 138);
+      font-size: 14px;
+      a {
+        color: rgb(138, 138, 138);
+        text-decoration: none;
+      }
+    }
+  }
+}
 @media screen and (max-width: 600px) {
   footer#foot {
     margin-top: 40px;
+    margin-bottom: 30px;
     height: 50px;
     line-height: 50px;
     width: 100vw;
@@ -15,29 +34,15 @@
     }
   }
 }
-@media screen and (min-width: 600px) {
-  footer#foot {
-    border-top: 1px solid gray;
-    padding: 30px 0px;
-    margin-top: 30px;
-    height: 40px;
-    margin-right: 100px;
-    max-width: 1500px;
-    .foot-writer {
-      color: rgb(138, 138, 138);
-      font-size: 14px;
-      text-align: center;
-      margin-top: 20px;
-      a {
-        color: rgb(138, 138, 138);
-        text-decoration: none;
-      }
-    }
-    #footType {
-      a {
-        text-decoration: none;
-        color: #076dd0;
-      }
-    }
+.articleSvgActive svg{
+  animation: articleSvgActive .5s forwards;
+  color: red;
+}
+@keyframes articleSvgActive {
+  50% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }

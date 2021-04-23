@@ -1,0 +1,218 @@
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+  background: #282c34;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #98c379;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+#articleShow {
+  background-color: white;
+  width: 100%;
+  padding-bottom: 30px;
+}
+#articleShow .code-number {
+  width: 30px;
+  padding: 10px 0px;
+  height: calc(100% - 40px);
+  background: #454a52;
+  border-bottom-left-radius: 5px;
+  position: absolute;
+  left: 0px;
+  top: 40px;
+  color: #999999;
+  font-size: 16px;
+  text-align: center;
+  user-select: none;
+}
+#articleShow .code-number span {
+  display: block;
+  line-height: 18px;
+}
+#articleShow pre {
+  width: auto !important;
+  position: relative;
+  color: #cb4b16 !important;
+  border-radius: 5px;
+  background: #21252a;
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.4);
+  padding: 50px 10px 10px 40px;
+  font-size: 16px;
+  margin: 20px auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-x: scroll;
+}
+#articleShow pre .code-title {
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  color: white !important;
+  background-color: black;
+  margin-bottom: 10px;
+  z-index: 99;
+  border-top-left-radius: 5px;
+  user-select: none;
+  border-top-right-radius: 5px;
+}
+#articleShow pre .code-title .bar {
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  position: absolute;
+  top: 15px;
+}
+#articleShow pre .code-copy {
+  position: absolute;
+  color: white;
+  top: 8px;
+  right: 20px;
+  height: 26px !important;
+  line-height: 16px !important;
+  z-index: 9999;
+  font-size: 14px;
+  padding: 3px 4px;
+  border: 1px solid white;
+  border-radius: 4px;
+}
+
+@media screen and (min-width: 600px) {
+  #articleShow article {
+    margin-right: 100px;
+    max-width: 1500px;
+  }
+  #articleShow article .article-head {
+    margin-top: 30px;
+    height: 50px;
+    line-height: 50px;
+  }
+  #articleShow article .article-head .article-title {
+    font-weight: 400;
+    float: left;
+    font-size: 28px;
+  }
+  #articleShow article .article-head .article-time {
+    float: right;
+    font-size: 14px;
+  }
+  #articleShow article .article-warn {
+    margin: 20px 0px;
+    border: 1px solid #e2e2e2;
+    border-left: 4px solid #fff430;
+    background-color: #ffffc0;
+    padding: 10px 0px;
+    padding-left: 10px;
+  }
+}
+@media screen and (max-width: 600px) {
+  #articleShow article {
+    width: 90vw;
+    margin: 0px auto;
+    margin-top: 20px;
+  }
+  #articleShow article .article-head {
+    clear: both;
+    height: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #articleShow article .article-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

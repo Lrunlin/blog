@@ -1,0 +1,126 @@
+@import "highLight.scss";
+#articleShow {
+  background-color: white;
+  width: 100%;
+  padding-bottom: 30px;
+  .code-number {
+    width: 30px;
+    padding: 10px 0px;
+    height: calc(100% - 40px);
+    background: #454a52;
+    border-bottom-left-radius: 5px;
+    position: absolute;
+    left: 0px;
+    top: 40px;
+    color: #999999;
+    font-size: 16px;
+    text-align: center;
+    user-select: none;
+    span {
+      display: block;
+      line-height: 18px;
+    }
+  }
+  pre {
+    width: auto !important;
+    position: relative;
+    color: #cb4b16 !important;
+    border-radius: 5px;
+    background: #21252a;
+    box-shadow: 0 0 20px 5px rgb(0 0 0 / 40%);
+    padding: 50px 10px 10px 40px;
+    font-size: 16px;
+    margin: 20px auto;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-x: scroll;
+    .code-title {
+      position: absolute;
+      width: 100%;
+      left: 0px;
+      top: 0px;
+      height: 40px;
+      line-height: 40px;
+      font-weight: 700;
+      font-size: 18px;
+      text-align: center;
+      color: white !important;
+      background-color: black;
+      margin-bottom: 10px;
+      z-index: 99;
+      border-top-left-radius: 5px;
+      user-select: none;
+      border-top-right-radius: 5px;
+      .bar {
+        width: 15px;
+        height: 15px;
+        border-radius: 10px;
+        position: absolute;
+        top: 15px;
+      }
+    }
+    .code-copy {
+      position: absolute;
+      color: white;
+      top: 8px;
+      right: 20px;
+      height: 26px !important;
+      line-height: 16px !important;
+      z-index: 9999;
+      font-size: 14px;
+      padding: 3px 4px;
+      border: 1px solid white;
+      border-radius: 4px;
+    }
+  }
+}
+@media screen and (min-width: 600px) {
+  #articleShow {
+    article {
+      margin-right: 100px;
+      max-width: 1500px;
+      .article-head {
+        margin-top: 30px;
+        height: 50px;
+        line-height: 50px;
+        .article-title {
+          font-weight: 400;
+          float: left;
+          font-size: 28px;
+        }
+        .article-time {
+          float: right;
+          font-size: 14px;
+        }
+      }
+      .article-warn {
+        margin: 20px 0px;
+        border: 1px solid #e2e2e2;
+        border-left: 4px solid #fff430;
+        background-color: #ffffc0;
+        padding: 10px 0px;
+        padding-left: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  #articleShow {
+    article {
+      width: 90vw;
+      margin: 0px auto;
+      margin-top: 20px;
+      .article-head {
+        clear: both;
+        height: 50px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .article-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

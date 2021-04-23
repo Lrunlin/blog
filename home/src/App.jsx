@@ -2,16 +2,13 @@ import React, { Suspense, lazy } from "react";
 import "./App.scss";
 import Head from "./components/Head";
 import Foot from "./components/Foot";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-// import Index from "./page/index";
-// import Search from "./page/search";
-// import Resume from "./page/resume";
-// import About from "./page/about";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const Index = lazy(() => import("./page/index"));
 const Search = lazy(() => import("./page/search"));
 const Resume = lazy(() => import("./page/resume"));
 const About = lazy(() => import("./page/about"));
+const ArticleShow = lazy(() => import("./page/ArticleShow"));
 
 function App() {
   if (process.env.NODE_ENV === "production") {
@@ -22,16 +19,21 @@ function App() {
   }
 
   return (
-    <Router>
-      <Head></Head>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Route path="/" exact component={Index}></Route>
-        <Route path="/search" exact component={Search}></Route>
-        <Route path="/resume" exact component={Resume}></Route>
-        <Route path="/about" exact component={About}></Route>
-      </Suspense>
-      <Foot></Foot>
-    </Router>
+    <>
+      <Router>
+        <Head></Head>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route path="/" exact component={Index}></Route>
+            <Route path="/search" component={Search}></Route>
+            <Route path="/resume" component={Resume}></Route>
+            <Route path="/about" component={About}></Route>
+            <Route path="*" component={ArticleShow}></Route>
+          </Switch>
+        </Suspense>
+        <Foot></Foot>
+      </Router>
+    </>
   );
 }
 
