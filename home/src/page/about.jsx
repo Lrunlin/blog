@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "@/assets/scss/about.scss";
+
 class About extends Component {
-  //   constructor(props) {
-  //     super(props);
-  //   }
+  componentDidMount() {
+    document.title = "刘润霖||关于作者";
+  }
   render() {
     return (
       <div id="about">

@@ -1,0 +1,59 @@
+#messgae .mes-head {
+  height: 60px;
+  line-height: 60px;
+}
+#messgae .mes-head .logn-in {
+  float: right;
+  margin-right: 40px;
+  margin-top: 10px;
+}
+#messgae .mes-head .logn-in span {
+  margin-right: 20px;
+}
+#messgae .mes-head img {
+  cursor: pointer;
+  width: 40px;
+  border-radius: 50%;
+}
+#messgae .mes-head .signed-in span {
+  margin-right: 20px;
+}
+#messgae .send {
+  display: block;
+  margin-top: 20px;
+  width: 95%;
+  margin-bottom: 30px;
+}
+
+#showMes .mes .mes-userdata {
+  width: 100%;
+  display: flex;
+}
+#showMes .mes .mes-userdata .mes-face {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+}
+#showMes .mes .mes-userdata .mes-text {
+  width: 100%;
+}
+#showMes .mes .mes-userdata .mes-text .mes-name {
+  width: 100px !important;
+  display: inline-block;
+}
+#showMes .mes .mes-userdata .mes-text .mes-time {
+  width: 100px !important;
+  display: inline-block;
+}
+#showMes .mes .mes-userdata .mes-text .mes-reply {
+  color: #00a2ff;
+  cursor: pointer;
+}
+#showMes .mes .mes-userdata .mes-text .mes-reply:hover {
+  text-decoration: underline;
+}
+#showMes .mes-showMes {
+  margin: 0px;
+  margin-left: 10px;
+  color: #2f00ff;
+}

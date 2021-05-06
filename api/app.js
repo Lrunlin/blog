@@ -52,6 +52,7 @@ app.use('/', require('./developer/article/updata-article-text')); // 修改文�
 
 
 
+app.use('/', require('./developer/logn/github-logn-in')); //用户使用github登录
 
 
 

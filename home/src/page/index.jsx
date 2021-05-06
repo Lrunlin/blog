@@ -32,7 +32,9 @@ class Index extends Component {
       }
     );
   }
+
   componentDidMount() {
+    document.title = "刘润霖||WEB博客";
     api(`select * from article WHERE isShow=1 ORDER by time DESC;`).then(
       res => {
         this.setState({

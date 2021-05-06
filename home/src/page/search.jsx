@@ -21,6 +21,7 @@ class Search extends Component {
   }
   //   组件挂载之后就获取全部数组，然后查询,并察看类型
   componentDidMount() {
+    document.title="刘润霖||搜索文章"
     api(`
     select * from article where isShow=1;
     select type from articletype;
