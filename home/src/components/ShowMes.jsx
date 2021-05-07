@@ -50,7 +50,6 @@ class ShowMes extends Component {
     return (
       <div
         className="mes"
-        style={{ marginLeft: data.father !== "null" ? "50px" : "0px" }}
       >
         <div className="mes-userdata">
           <img src={data.face} alt={`用户的头像`} className="mes-face" />

@@ -20,12 +20,12 @@ class Editor extends Component {
       if (this.editor.txt.text().length > 100) {
         this.editor.txt.text(this.editor.txt.text().substr(0, 100));
       }
-      this.props.setMes(this.editor.txt.html());
+      this.props.setMes(this.editor.txt.html(), this.editor.txt.text());
     };
     this.editor.create();
   }
   render() {
-    return <div id="div1" ref={this.editorDom} style={{ width: "95%" }}></div>;
+    return <div id="div1" ref={this.editorDom}></div>;
   }
 }
 export default Editor;

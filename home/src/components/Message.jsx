@@ -14,6 +14,7 @@ class Message extends Component {
   state = {
     data: [],
     userData: null,
+    isDisabled: true,
   };
 
   getData = () => {
@@ -76,16 +77,17 @@ class Message extends Component {
     return true;
   }
 
-  fatherId = null; //回复人（father字段）
-  message = mes => {
+  fatherId = null; //回复人ID（father字段）
+  message = (mes, text) => {
+    let switchText = text.replace(/&nbsp;/g, ""); //处理&nbsp;全局匹配然后换成空
     this.setState({
       mes: Base64.encode(mes),
       //富文本的输入内容
+      isDisabled: !!!/^[\s\S]*.*[^\s][\s\S]*$/.test(switchText),
+      //判断是否有传来内容
     });
-    this.isDisabled = !!!mes.length;
   };
   father = null; //只是判断文字的显示，变量不进数据库
-  isDisabled = true; //是否取消按钮的点击
   // name和father仅为展示消息，不做数据库存储
   setReply = (name, father, id) => {
     this.father = father;
@@ -136,13 +138,13 @@ class Message extends Component {
             <CloseOutlined onClick={() => this.setReply(null, null, null)} />
           ) : null}
         </p>
-        <Editor setMes={this.message} />
+        <Editor setMes={this.message} switchDisabled={this.switchDisabled} />
         <Button
           type="primary"
           children="发送评论"
           icon={<SendOutlined rotate="-90" />}
           className="send"
-          disabled={this.isDisabled && !this.state.userData?.user}
+          disabled={this.state.isDisabled || !this.state.userData?.user}
           onClick={this.comment}
         />
         <ShowMes data={this.state.data} setReply={this.setReply} />

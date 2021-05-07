@@ -23,19 +23,9 @@
       }
     }
   }
-  .send {
-    display: block;
-    margin-top: 20px;
-    width: 95%;
-    margin-bottom: 30px;
-  }
 }
 #showMes {
   .mes {
-    // margin: {
-    //   top: 10px;
-    //   bottom: 5px;
-    // }
     .mes-userdata {
       width: 100%;
       display: flex;
@@ -68,5 +58,43 @@
     margin: 0px;
     margin-left: 10px;
     color: rgb(47, 0, 255);
+  }
+}
+@media screen and (min-width: 600px) {
+  #div1 {
+    width: 95%;
+  }
+  .send {
+    display: block;
+    margin-top: 20px;
+    width: 95%;
+    margin-bottom: 30px;
+  }
+  .mes-children{
+    .mes{
+      margin-left: 50px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #div1 {
+    width: 95%;
+    margin: 0px auto;
+  }
+  .send {
+    display: block;
+    margin: 0px auto;
+    margin-top: 20px;
+    width: 95%;
+    margin-bottom: 30px;
+  }
+  .mes{
+    margin-left: 5%;
+  }
+  .mes-children{
+    .mes{
+      margin-left: 10%;
+    }
   }
 }
