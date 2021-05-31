@@ -1,0 +1,24 @@
+$color: lighten(
+  $color: #3f3f3f,
+  $amount: 10,
+);
+.input {
+  background-color: $color;
+  border-color: $color;
+  &::placeholder {
+    color: #3f3f3f;
+  }
+}
+.blank {
+  color: #0c0c0c;
+  margin-top: 70px;
+}
+.tag {
+  color: $color;
+  background-color: #1b1b1b;
+  border-color: black !important;
+  margin-top: 30px;
+}
+.tag_active {
+  color: white !important;
+}

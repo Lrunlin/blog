@@ -1,5 +1,5 @@
 {
-  "name": "blog",
+  "name": "admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,14 +8,13 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "element-plus": "^1.0.2-beta.28",
-    "highlight.js": "^10.5.0",
-    "js-base64": "^3.6.0",
-    "qs": "^6.10.1",
+    "element-plus": "^1.0.2-beta.44",
     "vue": "^3.0.0",
+    "vue-axios": "^3.2.4",
     "vue-router": "^4.0.0-0",
+    "vue3-cookies": "^1.0.1",
     "vuex": "^4.0.0-0",
-    "wangeditor": "^4.6.3"
+    "wangeditor": "^4.7.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-router": "~4.5.0",

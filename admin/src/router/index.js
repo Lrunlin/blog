@@ -1,48 +1,29 @@
 import {
   createRouter,
-  createWebHistory,
-  createWebHashHistory
+  createWebHistory
 } from 'vue-router'
 
 const routes = [{
   path: '/',
-  name: 'index',
-  component: () => import('../views/index.vue'),
-  children: [{
-      path: '',
-      name: 'write',
-      component: () => import('@/views/editorHtml/acticle')
-    },
-    {
-      path: '/finish',
-      name: 'finish',
-      component: () => import('@/views/editorHtml/finish')
-    }, {
-      path: '/type',
-      name: 'type',
-      component: () => import('@/views/type/type')
-    }, {
-      path: '/read-article',
-      name: 'read-article',
-      component: () => import('@/views/article/read-article')
-    }, {
-      path: '/update-article',
-      name: 'update-article',
-      component: () => import('@/views/article/update-article')
-    }, {
-      path: '/changeDom',
-      name: 'changeDom',
-      component: () => import('@/views/editorHtml/changeDom')
-    },
-  ]
-},{
-  path: '/logn',
-  name: 'logn',
-  component: () => import('@/views/logn')
+  name: 'Home',
+  component: () => import('../views/Home'),
+   children:[
+     {
+       //  path: '/writer',
+       path:'',
+       name: 'writer',
+       component: () => import('../views/writer')
+     }
+   ]
+}, {
+  path: '/logn-in',
+  name: 'logn-in',
+  component: () => import('../views/logn-in')
 }, ]
+
 const router = createRouter({
-  // history: createWebHistory(process.env.BASE_URL),
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
 export default router

@@ -8,7 +8,6 @@ import { useStore } from "vuex";
 import WangEditor from "wangeditor"; //富文本编辑器
 import hljs from "highlight.js"; //代码高亮
 import { Base64 } from "js-base64";
-
 const editor = ref(); //h获取dom
 const content = reactive({
   html: "",
@@ -34,13 +33,11 @@ onMounted(() => {
     "todo",
     "justify",
     "quote",
-    "emoticon",
     "image",
     "table",
     "code",
     "splitLine",
   ];
-
   // 设置代码语言
   instance.config.languageType = [
     "JavaScript",
@@ -61,37 +58,17 @@ onMounted(() => {
     "Python",
     "代码部分",
   ];
-
   // 环境判断提交对应地址
   let api = store.state.assetsapi;
   // 上传图片
-  instance.config.uploadImgServer = api + "/uploadAsset";
-  instance.config.uploadImgHeaders = {
-    liurunlin:Base64.encode(new Date().getTime())
-  };
-
+  instance.config.uploadImgServer = api + "/upload-asset";
   instance.config.height = 500; //高度500
   instance.highlight = hljs; //代码高亮
-  // 配置表情
-  instance.config.emotions = [
-    {
-      title: "选择表情",
-      type: "emoji",
-      content: "😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😓 😪 😴 🙄 🤔 😬 🤐".split(
-        /\s/
-      ),
-    },
-  ];
-
   instance.create();
   instance.txt.html(store.state.html);
 });
-// setInterval(() => {
-//   console.log(instance.txt.html());
-// }, 1000);
 onBeforeUnmount(() => {
   store.commit("setHtml", instance.txt.html());
 });
 // 生成时候读取vuex的数据，走时候存上
 </script>
-
