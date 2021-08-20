@@ -1,0 +1,40 @@
+.header {
+  $height: 60px;
+  background-color: white;
+  height: $height;
+  width: 100vw;
+  line-height: $height;
+  position: relative;
+  nav {
+    display: none;
+  }
+}
+.header_switch_ico {
+  position: absolute !important;
+  top: 10px;
+  right: 20px;
+}
+.header_active {
+  height: 220px;
+  nav {
+    width: 100vw !important;
+    display: block;
+    border-bottom: 1px solid #bfbfbf;
+    background-color: white;
+    a {
+      width: 100vw;
+      height: 40px;
+      display: block;
+      color: #999;
+      line-height: 40px;
+      padding-left: 20px;
+      font-size: 16px;
+    }
+  }
+}
+.logo {
+  h1 {
+    margin-left: 10px;
+    display: inline;
+  }
+}

@@ -1,11 +1,6 @@
-.footer {
-  color: #999;
-  text-align: center;
-  font-size: 14px;
-  margin-top: 40px;
-  padding: 30px 0px;
-  border-top: 1px solid #999;
-  a {
-    color: #999;
-  }
+@media screen and (min-width: 576px) {
+  @import "./pc.scss";
+}
+@media screen and (max-width: 576px) {
+  @import "./phone.scss";
 }

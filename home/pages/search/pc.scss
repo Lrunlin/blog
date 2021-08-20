@@ -1,0 +1,14 @@
+.types {
+  padding-left: 10px;
+  padding-top: 10px;
+  background-color: white;
+  .type_ico {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  .type_active {
+    color: #0072ec;
+    background: #c0ebff;
+    border-color: #54beff;
+  }
+}

@@ -5,7 +5,9 @@ let fs = require('fs');
 router.post('/delete-assets', (req, res) => {
     let images = req.body.images;
     for (let i = 0; i < images.length; i++) {
-        fs.unlink(`./image/${images[i]}`, function () {})
+        try {
+            fs.unlink(`./image/${images[i]}`, function () {})
+        } catch {}
     };
     res.json({
         res: true

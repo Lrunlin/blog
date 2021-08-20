@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap:https://sitemap.blogweb.cn/sitemap.xml

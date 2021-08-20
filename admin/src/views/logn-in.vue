@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="box">
-      <h2>登录</h2>
+      <h2>刘润霖博客管理系统</h2>
       <div class="input-item">
         <i class="el-icon-user"></i>
         <input
@@ -30,7 +30,7 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import { Base64 } from "js-base64";
 import { ElMessage } from "element-plus";
-
+import jsCookie from "js-cookie";
 let router = useRouter();
 let admin = ref("");
 let password = ref("");
@@ -39,11 +39,10 @@ function lognIn() {
     .post(`/logn-in`, { admin: admin.value, password: password.value })
     .then((res) => {
       if (res.data.success) {
-        let cookieAdmin = Base64.encode(admin.value + "刘润霖");
-        let cookiePassword = Base64.encode(password.value + "刘润霖");
-        // vue3Cookie.set("admin", cookieAdmin);
-        // vue3Cookie.set("password", cookiePassword);
-        router.resolve("/");
+        jsCookie.set("admin", admin.value);
+        jsCookie.set("password", password.value);
+        jsCookie.set("token", res.data.data);
+        router.replace("/");
       } else {
         ElMessage.error("账号或密码输入错误");
       }
@@ -96,6 +95,7 @@ function lognIn() {
     color: white;
     cursor: pointer;
     background: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+    user-select: none;
   }
 }
 </style>

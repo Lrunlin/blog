@@ -1,0 +1,35 @@
+.header {
+  $height: 60px;
+  background-color: white;
+  height: $height;
+  width: 100vw;
+  line-height: $height;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 9999999999 !important;
+  .nav {
+    width: 1200px;
+    height: $height;
+    margin: 0px auto;
+  }
+  .logo {
+    h1 {
+      margin-left: 20px;
+      font-weight: 400px;
+      font-size: 30px;
+      display: inline;
+    }
+    span {
+      color: #999;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+  }
+  nav {
+    a {
+      color: #999;
+      margin-left: 20px;
+    }
+  }
+}

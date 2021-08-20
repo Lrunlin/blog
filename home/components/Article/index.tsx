@@ -1,66 +1,64 @@
+import { Fragment, useState, useMemo } from "react";
 import Link from "next/link";
-import { CalendarOutlined, RightOutlined } from "@ant-design/icons";
-import { Base64 } from "js-base64";
+import { FieldTimeOutlined, FileTextOutlined } from "@ant-design/icons";
+import { Tag } from "antd";
 import style from "./index.module.scss";
-const Article = ({ data }: { data: object[] }) => {
-  //生成标签函数
-  const tag = (type: string[]) => {
-    return (
-      <>
-        {type.map((item: string, index: number) => {
-          return (
-            // 根据索引值判断如果是20，就不加margin-left，否则加上30
-            <span
-              className={style.tag}
-              style={{ marginLeft: index ? "30px" : "20px" }}
-              key={item}
-            >
-              <Link href={`/search?type=${item}`}>
-                <a>
-                  <div className={style.tag_head}>
-                    <div className={style.tag_round}></div>
-                  </div>
-                  <div className={style.tag_body}>{item}</div>
-                </a>
-              </Link>
-            </span>
-          );
-        })}
-      </>
-    );
-  };
+/*
+ @params data{object[]}:渲染的数据
+ @params className:article{string}标签额外添加的类
+*/
+
+export default function Article({
+  data,
+  className,
+}: {
+  data: any[];
+  className?: string;
+}) {
 
   return (
-    <main className={style.article_container}>
-      {data.map((item: any, index: number) => {
+    <Fragment>
+      {data.map((item, index) => {
         return (
-          <article key={item.router} className={style.article}>
-            <header>
-              <h1 className="title">
-                <a href={`/article/${item.router}`}>
-                  {Base64.decode(item.title)}
-                </a>
-              </h1>
-              <time>
-                <CalendarOutlined />
-                {item.time.substring(0, 10)}
-              </time>
-            </header>
-            <h2>
-              <div className={style.introduce}>文章介绍</div>
-              <p>{Base64.decode(item.introduce)}</p>
-            </h2>
-            <footer>
-              <div>{tag(item.type.split(","))}</div>
-              <a href={`/article/${item.router}`} className={style.link}>
-                阅读全文
-                <RightOutlined />
-              </a>
-            </footer>
+          // 动态接收一个className，参数为可选参数
+          <article
+            key={item.router}
+            className={style.article + ` ${className || ""}`}
+          >
+            <h1 className={style.title}>
+              <Link href={`/article/${item.router}`}>
+                <a>{item.title}</a>
+              </Link>
+            </h1>
+            <div className="types pc">
+              {item.type.split(",").map((item: string, index) => {
+                return (
+                  <Link href={`/search/${item}`} key={item}>
+                    <a>
+                      <Tag color="blue">{item}</Tag>
+                    </a>
+                  </Link>
+                );
+              })}
+            </div>
+            <time>
+              <FieldTimeOutlined />
+              {item.time.substring(0, 10)}
+            </time>
+            <div className={style.introduce}>
+              {item.introduce}
+            </div>
+            <div className={style.article_footer}>
+              <div className={style.article_link}>
+                <FileTextOutlined />
+                <Link href={`/article/${item.router}`}>
+                  <a>查看文章&gt;</a>
+                </Link>
+              </div>
+            </div>
           </article>
         );
       })}
-    </main>
+    </Fragment>
   );
-};
-export default Article;
+}

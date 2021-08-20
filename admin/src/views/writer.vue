@@ -1,10 +1,18 @@
 <template>
   <Editor></Editor>
-  <el-button type="primary" block>写完了</el-button>
+  <el-button type="primary" block @click="finishWrite">写完了</el-button>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import Editor from "@/components/editor";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+let store = useStore();
+let router = useRouter();
+
+function finishWrite() {
+  router.push("/finish");
+}
 </script>
 <style scoped lang='scss'>
 .el-button {

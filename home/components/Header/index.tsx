@@ -1,107 +1,92 @@
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import React, { useState, useEffect, useRef } from "react";
 import style from "./index.module.scss";
 import Link from "next/link";
+// import router from "next/router";
+import { Col, Row, BackTop, Button } from "antd";
 import {
   HomeOutlined,
   SearchOutlined,
-  StockOutlined,
   UserOutlined,
+  DeploymentUnitOutlined,
+  MenuUnfoldOutlined,
 } from "@ant-design/icons";
-
+import axios from "axios";
 export default function Header() {
-  const [code, setCode] = useState<string | boolean>(false);
-
-  let imgData = [
-    {
-      src: "github",
-      url: "https://github.com/Lrunlin",
-    },
-    {
-      src: "qq",
-    },
-    {
-      src: "wechat",
-    },
-  ];
-  // 随机展示一个背景图片
-  const bg = `https://blogweb.cn/files/background/bg-${
-    Math.floor(Math.random() * 6) + 1
-  }.jpg`;
-  const headerDom: any = React.createRef();
   useEffect(() => {
-    headerDom.current.style.backgroundImage = `url(${bg})`;
-    document.body.style.paddingLeft = "270px";
+    // todo 随机展示一个词条
+    axios.get("/message").then(res => {
+      const index: number = Math.floor(Math.random() * res.data.data.length);
+      const style = [
+        `background:#585858;
+      color:white;
+      border-top-left-radius:3px;
+      border-bottom-left-radius:3px;
+      padding:3px
+      `,
+        `background:#4dc71f;
+      color:white;
+      border-top-right-radius:3px;
+      border-bottom-right-radius:3px;
+      padding:3px
+      `,
+      ];
+      console.log(`%cauthor:%c刘润霖`, ...style);
+      console.log(`%cURL:%cblogweb.cn`, ...style);
+      console.log(
+        `%cTechnology stack:%cNextJs,Vue3,Node-Express,MySql`,
+        ...style
+      );
+      console.log(`%cmessage:%c${res.data.data[index].message}`, ...style);
+    });
   }, []);
 
+  const [active, setActive] = useState<boolean>(false);
   return (
-    <header className={style.header} ref={headerDom}>
-      <div className={style.face_box}>
-        <Image
-          src="/assets/writer-face.png"
-          alt="作者头像"
-          width={150}
-          height={150}
-          className={style.face}
-        />
-      </div>
-      <div className={style.name}>
-        <h2>刘润霖</h2>
-        <p>WEB开发</p>
-      </div>
-      <nav>
-        <Link href="/">
-          <a>
-            <HomeOutlined />
-            <span>首页</span>
-          </a>
-        </Link>
-        <Link href="/search">
-          <a>
-            <SearchOutlined />
-            <span>搜索</span>
-          </a>
-        </Link>
-        <Link href="/updata-log">
-          <a>
-            <StockOutlined />
-            <span>更新日志</span>
-          </a>
-        </Link>
-        <Link href="/about">
-          <a>
-            <UserOutlined />
-            <span>关于作者</span>
-          </a>
-        </Link>
-      </nav>
-      <div className={style.foot}>
-        {imgData.map((item: { src: string; url: string }, index: number) => {
-          return (
-            <a
-              href={item.url || null}
-              key={item.src}
-              target={item.src == "github" ? "_black" : null}
-            >
-              <img
-                onClick={() => !item.url && setCode(item.src)}
-                // 只有QQ和微信两个有效，因为这两个没有url所以是true
-                src={`/assets/${item.src}.png`}
-                alt={`作者的${item.src}`}
-              />
-            </a>
-          );
-        })}
-      </div>
-      <div
-        className={style.layer}
-        style={{ display: code ? "block" : "none" }}
-        onClick={() => setCode(false)}
+    <header className={style.header + ` ${active ? style.header_active : ""}`}>
+      <Button
+        type="primary"
+        className={`phone ${style.header_switch_ico}`}
+        onClick={() => setActive(!active)}
       >
-        {code && (
-          <img src={`/assets/${code}-qrcode.jpg`} alt="联系方式二维码" />
-        )}
-      </div>
+        <MenuUnfoldOutlined />
+      </Button>
+      <Row justify="space-between" className={style.nav}>
+        <Col sm={8} className={style.logo}>
+          <h1>
+            <a href="/">刘润霖</a>
+          </h1>
+          <span>
+           原创文章&nbsp;博客无需抄袭
+          </span>
+        </Col>
+
+        <Col sm={6}>
+          <nav>
+            <Link href="/">
+              <a>
+                <HomeOutlined />
+                首页
+              </a>
+            </Link>
+            <Link href="/search">
+              <a>
+                <SearchOutlined /> 搜索文章
+              </a>
+            </Link>
+            <Link href="/about">
+              <a>
+                <UserOutlined /> 关于作者
+              </a>
+            </Link>
+            <Link href="/rss">
+              <a className="phone">
+                <DeploymentUnitOutlined /> 订阅
+              </a>
+            </Link>
+          </nav>
+        </Col>
+      </Row>
+      <BackTop />
     </header>
   );
 }

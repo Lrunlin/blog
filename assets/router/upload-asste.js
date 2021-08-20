@@ -1,29 +1,42 @@
 const express = require('express')
 const app = express()
-let router = express.Router();
-let fs = require('fs');
-let images = require("images");
-router.post('/uploadAsset', (req, res) => {
-    let name = Object.keys(req.files)[0] //传来的文件名字
-    let type = name.split('.')[name.split('.').length - 1] //后缀
-    let fileName = new Date().getTime().toString(32) + '.' + type; //存成这个名字
-    let path = `./temporary/${fileName}`;
-    let writerStream = fs.createWriteStream(path);
-    writerStream.write(req.files[name].data, 'UTF8');
-    writerStream.end();
-    writerStream.on('finish', function (err) {
-        let development = req.hostname == "localhost"; //环境判断(开发);
-        let data = development ? `http://127.0.0.1:5500/assets/temporary/${fileName}` : `https://blogweb.cn/assets/temporary/${fileName}`
-        res.json({
-            "errno": 0,
-            "data": [data]
-        })
-        // 压缩
-        images(`./temporary/${fileName}`)
-            // .draw(images("./assets/img-logo.jpg"), 10, 10) 水印
-            .save(`./temporary/${fileName}`, {
-                quality: 50
-            });
-    });
+const router = express.Router();
+const fs = require('fs');
+const images = require("images"); //压缩图片
+const multer = require('multer') //上传图片
+const sizeOf = require('image-size'); //获取图片宽高
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './temporary')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+const upload = multer({
+    storage: storage
+})
+
+router.post('/upload-assets', upload.single('image'), (req, res) => {
+    const imageName = req.file.originalname; //图片原本的名字
+    let returnName = +new Date() + '.jpg' //返回的名字
+    let data = req.hostname == "localhost" ? `http://localhost:3456/temporary/${returnName}` : `https://assets.blogweb.cn/temporary/${returnName}`
+    res.json({
+        "errno": 0,
+        "data": [data]
+    })
+    const imageData = sizeOf(`./temporary/${imageName}`); //获取图片宽高，主要用于打水印时计算位置
+    //水印宽235高84
+    images(`./temporary/${imageName}`)
+        .draw(images("./assets/logo.png"), imageData.width - (235 + 30), imageData.height - (84 + 30))//两边留出30像素的位置
+        .save(`./temporary/${returnName}`, {
+            quality: 60
+        });
+    fs.unlinkSync(`./temporary/${imageName}`) //删除原照片
+    setTimeout(() => {
+        try {
+            fs.unlinkSync(`./temporary/${returnName}`);
+        } catch {}
+    }, 3600000);
 })
 module.exports = router;

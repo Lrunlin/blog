@@ -1,0 +1,27 @@
+.article {
+  background-color: white;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.title {
+  color: #1e90ff;
+  font-size: 30px !important;
+  font-weight: 400;
+}
+.article_footer {
+  height: 25px;
+  color: #999;
+  font-size: 14px;
+  .article_link {
+    float: right;
+    margin-right: 20px;
+  }
+}
+.introduce {
+  // max-height: 100px;
+  text-overflow: ellipsis;
+  display: -webkit-box; //作为弹性伸缩盒子模型显示。
+  -webkit-box-orient: vertical; //设置伸缩盒子的子元素排列方式--从上到下垂直排列
+  -webkit-line-clamp: 3; //显示的行
+  overflow:hidden;
+}

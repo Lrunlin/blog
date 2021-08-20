@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
 const router = express.Router()
-let pool = require('../../modules/pool')
+const pool = require('../../modules/pool')
+const md5 = require('md5');
 router.post('/logn-in', async (req, res) => {
     let {
         admin,
@@ -11,6 +12,7 @@ router.post('/logn-in', async (req, res) => {
     res.json({
         success: !!rows.length,
         message: '登录',
+        data: !!rows.length ? md5(`刘润霖0621${admin}刘润霖0621${password}`) : null
     })
 })
 module.exports = router;

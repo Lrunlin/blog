@@ -1,0 +1,13 @@
+#alert {
+  position: absolute;
+  z-index: 999999 !important;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+.icon {
+  font-size: 32px;
+  margin-top: 200px;
+  color: #1890ff;
+}
