@@ -2,7 +2,7 @@ import { useState, Fragment } from "react";
 import { Button, Input, Modal, message } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import style from "./index.module.scss";
-import Head from '../../modules/Head'
+import Head from '@/modules/Head'
 import axios from "axios";
 function rss() {
   // 全局配置message

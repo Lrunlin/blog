@@ -18,3 +18,11 @@
     margin-right: 20px;
   }
 }
+.introduce {
+  // max-height: 100px;
+  text-overflow: ellipsis;
+  display: -webkit-box; //作为弹性伸缩盒子模型显示。
+  -webkit-box-orient: vertical; //设置伸缩盒子的子元素排列方式--从上到下垂直排列
+  -webkit-line-clamp: 3; //显示的行
+  overflow:hidden;
+}

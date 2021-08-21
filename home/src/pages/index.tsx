@@ -1,9 +1,11 @@
 import axios from "axios";
 import { Pagination } from "antd";
 import { useState, useEffect } from "react";
-import Article from "../components/Article";
-import style from "../style/index.module.scss";
-import Head from "../modules/Head";
+import Article from "@/components/Article";
+import style from "@/style/index.module.scss";
+import Head from "@/modules/Head";
+
+
 interface article {
   router?: string;
   type?: string;

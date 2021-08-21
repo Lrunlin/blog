@@ -3,7 +3,7 @@ import { Empty } from "antd";
 import style from "./index.module.scss";
 import { Tag } from "antd";
 import axios from "axios";
-import Head from "../../modules/Head";
+import Head from "@/modules/Head";
 interface article {
   router?: string;
   type?: string;
@@ -88,7 +88,7 @@ function Article({ data }: { data: article }) {
   return (
     <>
       {Head({
-        title: articleData ? articleData.title : "没有找到对应的文章",
+        title: articleData ? articleData.title : "Not found",
         keywords: articleData ? articleData.type : "Not found,刘润霖,404",
         description: articleData
           ? articleData.introduce

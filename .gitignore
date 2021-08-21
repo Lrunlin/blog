@@ -1,1 +1,4 @@
 node_modules
+api/session/*
+assets/temporary/*
+assets/image/*

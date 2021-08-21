@@ -1,6 +1,6 @@
 import { useState, Fragment } from "react";
 import style from "./index.module.scss";
-import Head from "../../modules/Head";
+import Head from "@/modules/Head";
 
 function about() {
   return (

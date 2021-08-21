@@ -1,14 +1,14 @@
 import { Row } from "antd";
-import Header from "/components/Header";
-import Footer from "/components/Footer";
-import Aside from "/components/Aside";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Aside from "@/components/Aside";
 import router from "next/router";
 
 import "antd/dist/antd.css";
-import "../style/style.scss";
-import "../style/highLight.scss";
-import style from "../style/style.module.scss";
-import "/modules/axios";
+import "@/style/style.scss";
+import "@/style/highLight.scss";
+import style from "@/style/style.module.scss";
+import "@/modules/axios";
 import { useState } from "react";
 
 import { LoadingOutlined } from "@ant-design/icons";

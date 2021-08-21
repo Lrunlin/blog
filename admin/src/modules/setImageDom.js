@@ -1,5 +1,4 @@
 import jquery from "jquery";
-import axios from 'axios';
 import store from '@/store';
 
 /*

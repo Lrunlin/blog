@@ -20,23 +20,42 @@ const upload = multer({
 router.post('/upload-assets', upload.single('image'), (req, res) => {
     const imageName = req.file.originalname; //图片原本的名字
     let returnName = +new Date() + '.jpg' //返回的名字
-    let data = req.hostname == "localhost" ? `http://localhost:3456/temporary/${returnName}` : `https://assets.blogweb.cn/temporary/${returnName}`
+    let data = req.hostname == "localhost" ? `http://localhost:3456/temporary/${returnName}` : `https://assets.blogweb.cn/temporary/${returnName}`;
     res.json({
         "errno": 0,
-        "data": [data]
+        "data": data
     })
-    const imageData = sizeOf(`./temporary/${imageName}`); //获取图片宽高，主要用于打水印时计算位置
-    //水印宽235高84
+
+    const imageData = images(`./temporary/${imageName}`).size(); //获取图片宽高
+
+    //修改水印宽度
+    images(`./assets/logo.png`)
+        .size((imageData.width / 5))
+        .save(`./assets/logo.png`);
+
+    // 水印大小
+    const logoData = {
+        width: imageData.width / 5, //235
+        height: (imageData.width / 5) / 235 * 80 //80
+    }
+    //打印位置
+    const drawData = {
+        left: imageData.width - logoData.width - (imageData.width * 0.05),
+        top: imageData.height - logoData.height - (imageData.height * 0.05),
+        // 上下空余的位置5%的位置
+    }
+
     images(`./temporary/${imageName}`)
-        .draw(images("./assets/logo.png"), imageData.width - (235 + 30), imageData.height - (84 + 30))//两边留出30像素的位置
+        .draw(images("./assets/logo.png"), drawData.left, drawData.top)
         .save(`./temporary/${returnName}`, {
             quality: 60
         });
+
     fs.unlinkSync(`./temporary/${imageName}`) //删除原照片
     setTimeout(() => {
         try {
             fs.unlinkSync(`./temporary/${returnName}`);
         } catch {}
-    }, 3600000);
+    }, 86400000);
 })
 module.exports = router;

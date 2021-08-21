@@ -1,24 +1,26 @@
-import { Fragment, useState, useMemo } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Link from "next/link";
 import { FieldTimeOutlined, FileTextOutlined } from "@ant-design/icons";
-import { Tag } from "antd";
+import { Tag, Skeleton } from "antd";
 import style from "./index.module.scss";
 /*
  @params data{object[]}:渲染的数据
  @params className:article{string}标签额外添加的类
 */
-
-export default function Article({
-  data,
-  className,
-}: {
+interface articleComponent {
   data: any[];
   className?: string;
-}) {
+}
 
+export default function Article({ data, className }: articleComponent) {
+  const [articleData, setArticleData] = useState<any>(data);
+  const [lock, setLock] = useState<boolean>(false); //凡是introduce被服务器渲染出来，让他在客户端渲染
+  useEffect(() => {
+    setLock(true);
+  }, []);
   return (
     <Fragment>
-      {data.map((item, index) => {
+      {articleData.map((item, index) => {
         return (
           // 动态接收一个className，参数为可选参数
           <article
@@ -45,9 +47,11 @@ export default function Article({
               <FieldTimeOutlined />
               {item.time.substring(0, 10)}
             </time>
-            <div className={style.introduce}>
-              {item.introduce}
-            </div>
+            {lock ? (
+              <div className={style.introduce}>{item.introduce}</div>
+            ) : (
+              ""
+            )}
             <div className={style.article_footer}>
               <div className={style.article_link}>
                 <FileTextOutlined />

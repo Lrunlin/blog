@@ -4,8 +4,8 @@ import { Input, Tag, Empty } from "antd";
 import axios from "axios";
 import { SearchOutlined, TagsOutlined } from "@ant-design/icons";
 import style from "./index.module.scss";
-import Article from "../../components/Article";
-import Head from "../../modules/Head";
+import Article from "@/components/Article";
+import Head from "@/modules/Head";
 
 interface article {
   router?: string;
