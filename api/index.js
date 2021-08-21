@@ -46,13 +46,13 @@ app.all('*', function (req, res, next) {
         // 校验重复签名
         if (sign) {
             try {
-                fs.statSync(`./session/${sign}`);
+                fs.statSync(`./session/${sign}.json`);
                 result = false;
             } catch (error) {
-                fs.writeFileSync(`./session/${sign}`, req._parsedUrl.pathname || "")
+                fs.writeFileSync(`./session/${sign}.json`, req._parsedUrl.pathname || "")
                 setTimeout(() => {
                     try {
-                        fs.unlinkSync(`./session/${sign}`)
+                        fs.unlinkSync(`./session/${sign}.json`)
                     } catch {}
                 }, 86400000);
             }

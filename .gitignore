@@ -1,4 +1,5 @@
 node_modules
-api/session/*
-assets/temporary/*
-assets/image/*
+api/session/*.json
+assets/temporary/*.jpg
+assets/temporary/*.png
+assets/image/*.jpg
