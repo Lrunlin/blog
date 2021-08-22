@@ -29,7 +29,6 @@ let type = ref("");
 let test = /^[\s\S]*.*[^\s][\s\S]*$/;
 axios.get("/type").then((res) => {
   data.value = res.data.data;
-  console.log(data.value);
 });
 function save() {
   axios.post("/type", { type: type.value }).then((res) => {

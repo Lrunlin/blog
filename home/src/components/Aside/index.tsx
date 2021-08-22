@@ -3,6 +3,7 @@ import Link from "next/link";
 // import router from "next/router";
 import { useState, useEffect } from "react";
 import style from "./index.module.scss";
+import Icon from "@/components/Icon";
 import { Tag, Tooltip, Divider, Row } from "antd";
 import {
   GithubOutlined,
@@ -23,11 +24,11 @@ export default function Aside() {
     },
     {
       type: "cyan",
-      text: "React.js",
+      text: "React",
     },
     {
       type: "cyan",
-      text: "antd",
+      text: "Antd",
     },
     {
       type: "cyan",
@@ -38,12 +39,6 @@ export default function Aside() {
       text: "小白",
     },
   ];
-  const [rotate, setRotate] = useState<number>(0);
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      setRotate(document.documentElement.scrollTop);
-    });
-  }, []);
   return (
     <aside className={style.container}>
       <div className={style.face_box}>
@@ -71,18 +66,22 @@ export default function Aside() {
       <Row justify="space-around" className={style.contact}>
         <Tooltip placement="top" title="LRunLin的GitHUb">
           <a href="https://github.com/Lrunlin/" target="_blank">
-            <GithubOutlined style={{ transform: `rotate(${rotate}deg)` }} />
+            <Icon icon={<GithubOutlined />} />
           </a>
         </Tooltip>
         <Tooltip placement="top" title="QQ:1974109227">
-          <QqOutlined />
+          <span>
+            <Icon icon={<QqOutlined />} />
+          </span>
         </Tooltip>
         <Tooltip placement="top" title="微信:webdaizuo">
-          <WechatOutlined />
+          <span>
+            <Icon icon={<WechatOutlined />} />
+          </span>
         </Tooltip>
         <Tooltip placement="top" title="353575900@qq.com">
           <a href="mailto:353575900@qq.com" rel="external nofollow">
-            <MailFilled />
+            <Icon icon={<MailFilled />} />
           </a>
         </Tooltip>
       </Row>
@@ -90,9 +89,9 @@ export default function Aside() {
       <Row justify="space-around" className={style.contact}>
         <Link href="/rss">
           <a>
-            <Tooltip placement="top" title="订阅和下载文章内容">
+            <Icon>
               <DeploymentUnitOutlined className={style.icon} />
-            </Tooltip>
+            </Icon>
           </a>
         </Link>
       </Row>

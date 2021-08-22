@@ -1,7 +1,10 @@
 <template>
   <el-form label-width="80px">
     <el-form-item label="文章路由">
-      <el-input v-model="router" placeholder="不建议修改路由（不利于SEO）"></el-input>
+      <el-input
+        v-model="router"
+        placeholder="不建议修改路由（不利于SEO）"
+      ></el-input>
       <span v-if="idDisabled">
         <i class="el-icon-warning-outline"></i>
         有重复的路由了，换一个吧</span
@@ -75,6 +78,7 @@ axios.get("/article", { params: { key: "router" } }).then((res) => {
   dangerRouter.value = res.data.data.map((item) => item.router);
 });
 
+//初始 化数据
 axios.get(`/article/${articleRouter}`).then((res) => {
   const data = res.data.data[0];
   router.value = data.router;
@@ -110,7 +114,6 @@ function updataArticle() {
         vueRouter.push("/");
       } else {
         ElMessage.success("更新失败");
-        console.log(res);
       }
     });
   } else {
@@ -119,7 +122,7 @@ function updataArticle() {
 }
 
 onUnmounted(() => {
-  store.commit("setHtml","")
+  store.commit("setHtml", "");
 });
 </script>
 <style scoped lang='scss'>

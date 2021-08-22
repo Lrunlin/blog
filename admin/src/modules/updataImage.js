@@ -8,7 +8,7 @@ todo 用于文章更新时的处理图片（删除，更新）
 */
 export default function updataImage(newHtml, oldHtml) {
     let newArr = []; //修改后的图片
-    let oldArr = []; //取出来的图片
+    let oldArr = []; //取出来的图片(数据库)
     jquery.each(jquery(oldHtml).find('img'), function (i, el) {
         oldArr.push(jquery(el).attr('src').replace(`${store.state.assetsapi}/image/`, ''))
     });
@@ -19,7 +19,7 @@ export default function updataImage(newHtml, oldHtml) {
             newArr.push(jquery(el).attr('src').replace(`${store.state.assetsapi}/image/`, ''))
         }
     });
-    
+
     let move = newArr.filter(item => !oldArr.includes(item));
     let remove = oldArr.filter(item => !newArr.includes(item));
     axios.post(store.state.assetsapi + '/delete-assets', {

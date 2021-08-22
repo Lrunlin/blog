@@ -1,8 +1,10 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { FieldTimeOutlined, FileTextOutlined } from "@ant-design/icons";
 import { Tag, Skeleton } from "antd";
+import Icon from "@/components/Icon";
 import style from "./index.module.scss";
+
 /*
  @params data{object[]}:渲染的数据
  @params className:article{string}标签额外添加的类
@@ -13,8 +15,8 @@ interface articleComponent {
 }
 
 export default function Article({ data, className }: articleComponent) {
-  const [articleData, setArticleData] = useState<any>(data);
-  const [lock, setLock] = useState<boolean>(false); //凡是introduce被服务器渲染出来，让他在客户端渲染
+  const articleData = useMemo(() => data, [data]); //文章数据
+  const [lock, setLock] = useState<boolean>(false); //防止introduce被服务器渲染出来，让他在客户端渲染
   useEffect(() => {
     setLock(true);
   }, []);
@@ -44,7 +46,7 @@ export default function Article({ data, className }: articleComponent) {
               })}
             </div>
             <time>
-              <FieldTimeOutlined />
+              <Icon icon={<FieldTimeOutlined />} />
               {item.time.substring(0, 10)}
             </time>
             {lock ? (
@@ -54,7 +56,7 @@ export default function Article({ data, className }: articleComponent) {
             )}
             <div className={style.article_footer}>
               <div className={style.article_link}>
-                <FileTextOutlined />
+                <Icon icon={<FileTextOutlined />} />
                 <Link href={`/article/${item.router}`}>
                   <a>查看文章&gt;</a>
                 </Link>

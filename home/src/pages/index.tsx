@@ -5,7 +5,6 @@ import Article from "@/components/Article";
 import style from "@/style/index.module.scss";
 import Head from "@/modules/Head";
 
-
 interface article {
   router?: string;
   type?: string;
@@ -26,6 +25,7 @@ export default function Home({ data }) {
       SetMax(res.data.data);
     });
   }, []);
+
   function switchPage(page: number) {
     axios.get(`/article-page/${page}`).then(res => {
       setArticleData(res.data.data);
@@ -57,7 +57,7 @@ Home.getInitialProps = async () => {
   let data;
   await axios
     .get("/article-page/1", {
-      params: { key: "router,title,article,type,introduce,time" },
+      params: { key: "router,title,type,introduce,time" },
     })
     .then(res => {
       data = res.data.data;

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./index.module.scss";
 import Link from "next/link";
 // import router from "next/router";
 import { Col, Row, BackTop, Button } from "antd";
+import Icon from "@/components/Icon";
 import {
   HomeOutlined,
   SearchOutlined,
@@ -48,39 +49,42 @@ export default function Header() {
         className={`phone ${style.header_switch_ico}`}
         onClick={() => setActive(!active)}
       >
-        <MenuUnfoldOutlined />
+        <Icon icon={<MenuUnfoldOutlined />} />
       </Button>
       <Row justify="space-between" className={style.nav}>
         <Col sm={8} className={style.logo}>
           <h1>
             <a href="/">刘润霖</a>
           </h1>
-          <span>
-           原创文章&nbsp;博客无需抄袭
-          </span>
+          <span>原创文章&nbsp;博客无需抄袭</span>
         </Col>
 
         <Col sm={6}>
           <nav>
             <Link href="/">
               <a>
-                <HomeOutlined />
+                <Icon>
+                  <HomeOutlined />
+                </Icon>
                 首页
               </a>
             </Link>
             <Link href="/search">
               <a>
-                <SearchOutlined /> 搜索文章
+                <Icon icon={<SearchOutlined />} />
+                搜索文章
               </a>
             </Link>
             <Link href="/about">
               <a>
-                <UserOutlined /> 关于作者
+                <Icon icon={<UserOutlined />} />
+                关于作者
               </a>
             </Link>
             <Link href="/rss">
               <a className="phone">
-                <DeploymentUnitOutlined /> 订阅
+                <Icon icon={<DeploymentUnitOutlined />} />
+                订阅
               </a>
             </Link>
           </nav>

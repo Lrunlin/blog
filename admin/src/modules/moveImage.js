@@ -10,7 +10,7 @@ export default function moveImage() {
         imageHub.push(src);
     });
     let data;
-     axios.post(`${assets}/moveTemporaryImages`, {
+    axios.post(`${assets}/moveTemporaryImages`, {
         images: imageHub
     })
     return data;

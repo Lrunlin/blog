@@ -71,13 +71,7 @@ function Article({ data }: { data: article }) {
           <time>{article.time}</time>
         </div>
         <article
-          dangerouslySetInnerHTML={{
-            __html: article.article.replace(
-              /\/blogweb.cn\/assets/g,
-              "/file.blogweb.cn/assets"
-            ),
-            // !有的图片地址是旧地址，给他转换一下
-          }}
+          dangerouslySetInnerHTML={{ __html: article.article }}
         ></article>
       </main>
     );
