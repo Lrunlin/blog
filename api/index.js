@@ -24,7 +24,7 @@ const md5 = require('md5');
 const {
     decode
 } = require('js-base64');
-
+let tokenHub = [];
 app.all('*', function (req, res, next) {
     let result = false;
     const token = req.headers.authorization;
@@ -45,19 +45,15 @@ app.all('*', function (req, res, next) {
         }
         // 校验重复签名
         if (sign) {
-            try {
-                fs.statSync(`./session/${sign}.json`);
-                result = false;
-            } catch (error) {
-                fs.writeFileSync(`./session/${sign}.json`, req._parsedUrl.pathname || "")
+            if (tokenHub.includes(sign)) {
+                result = false
+            } else {
+                tokenHub.push(sign)
                 setTimeout(() => {
-                    try {
-                        fs.unlinkSync(`./session/${sign}.json`)
-                    } catch {}
-                }, 86400000);
+                    tokenHub.splice(1, 1)
+                }, 7200000);
             }
         }
-
     }
     result ? next() : (res.status(500), res.end())
 })
@@ -103,5 +99,4 @@ var filePath = path.resolve('./route');
 fileDisplay(filePath);
 
 
-app.use('/', require('./route/type/read-type'))
 app.listen(3000, () => console.log(`博客接口运行`))

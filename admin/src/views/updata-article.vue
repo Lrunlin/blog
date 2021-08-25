@@ -48,7 +48,7 @@
   </el-form>
 </template>
 <script setup>
-import { ref, computed, onUnmounted, reactive, toRaw } from "vue";
+import { ref, computed, onUnmounted, reactive, toRaw, watch } from "vue";
 import { ElMessage } from "element-plus";
 import axios from "axios";
 import { encode } from "js-base64";
@@ -63,6 +63,9 @@ import updataImage from "@/modules/updataImage";
 
 import typeCom from "@/components/type";
 import editorCom from "@/components/editor";
+
+import moment from "moment";
+
 let vueRouter = useRouter();
 let route = useRoute();
 let store = useStore();
@@ -106,6 +109,7 @@ axios.get(`/article/${articleRouter}`).then((res) => {
 
   Object.assign(articleData, data);
 });
+
 function updataArticle() {
   // 发布文章
   setImageDom({ html: store.state.html, type: articleData.type }); //处理图片问题
@@ -116,7 +120,7 @@ function updataArticle() {
   data.title = encode(articleData.title);
   data.introduce = encode(articleData.introduce);
   data.article = encode(document.getElementById("set_image").innerHTML);
-
+  data.time = moment(data.time).format("YYYY-MM-DD");
   if (notEmpty(articleData)) {
     axios.put(`/article/${articleRouter}`, data).then((res) => {
       if (res.data.success) {

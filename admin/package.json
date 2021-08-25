@@ -13,6 +13,7 @@
     "jquery": "^3.6.0",
     "js-base64": "^3.6.1",
     "js-cookie": "^2.2.1",
+    "moment": "^2.29.1",
     "vue": "^3.0.0",
     "vue-axios": "^3.2.4",
     "vue-cookies": "^1.7.4",
