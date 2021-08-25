@@ -2,7 +2,7 @@
   <el-form label-width="80px">
     <el-form-item label="文章路由">
       <el-input
-        v-model="router"
+        v-model="articleData.router"
         placeholder="不建议修改路由（不利于SEO）"
       ></el-input>
       <span v-if="idDisabled">
@@ -11,33 +11,44 @@
       >
     </el-form-item>
     <el-form-item label="文章标题">
-      <el-input v-model="title" placeholder="输入文章标题"></el-input>
+      <el-input
+        v-model="articleData.title"
+        placeholder="输入文章标题"
+      ></el-input>
     </el-form-item>
     <el-form-item label="权重设置">
       <span>是否置顶</span>
-      <el-switch v-model="isTop"></el-switch>
+      <el-switch v-model="articleData.isTop"></el-switch>
       <span>是否展示</span>
-      <el-switch v-model="isShow"></el-switch>
+      <el-switch v-model="articleData.isShow"></el-switch>
+    </el-form-item>
+    <el-form-item label="修改时间">
+      <el-date-picker
+        v-model="articleData.time"
+        type="date"
+        placeholder="选择日期"
+      >
+      </el-date-picker>
     </el-form-item>
     <el-form-item label="文章介绍">
       <el-input
-        v-model="introduce"
+        v-model="articleData.introduce"
         type="textarea"
         :rows="2"
         placeholder="输入文章介绍"
       ></el-input>
     </el-form-item>
     <el-form-item label="文章类型">
-      <typeCom @setType="setType" :type="type"></typeCom>
+      <typeCom @setType="setType" :type="articleData.type"></typeCom>
     </el-form-item>
-    <editorCom :html="html"></editorCom>
+    <editorCom :html="articleData.html"></editorCom>
     <el-button type="primary" @click="updataArticle" :disabled="idDisabled"
       >发布文章</el-button
     >
   </el-form>
 </template>
 <script setup>
-import { ref, computed, onUnmounted } from "vue";
+import { ref, computed, onUnmounted, reactive, toRaw } from "vue";
 import { ElMessage } from "element-plus";
 import axios from "axios";
 import { encode } from "js-base64";
@@ -55,21 +66,26 @@ import editorCom from "@/components/editor";
 let vueRouter = useRouter();
 let route = useRoute();
 let store = useStore();
-let html = ref(""); //保存的HTML
-let router = ref("");
+
+let articleData = reactive({
+  html: "",
+  router: "",
+  title: "",
+  introduce: "",
+  type: "",
+  isTop: false,
+  isShow: true,
+  time: "",
+});
+
 let articleRouter = route.query.router; //文章路由（防止修改路由）
-let title = ref("");
-let introduce = ref("");
-let type = ref("");
-let isTop = ref(false);
-let isShow = ref(true);
 function setType(value) {
-  type.value = value;
+  articleData.type = value;
 }
 
 let idDisabled = computed(() => {
-  return dangerRouter.value.includes(router.value)
-    ? !(router.value == articleRouter)
+  return dangerRouter.value.includes(articleData.router)
+    ? !(articleData.router == articleRouter)
     : false;
 });
 
@@ -80,35 +96,31 @@ axios.get("/article", { params: { key: "router" } }).then((res) => {
 
 //初始 化数据
 axios.get(`/article/${articleRouter}`).then((res) => {
-  const data = res.data.data[0];
-  router.value = data.router;
-  title.value = data.title;
-  isShow.value = !!data.isShow;
-  isTop.value = !!data.isTop;
-  introduce.value = data.introduce;
-  type.value = data.type;
-  html.value = resetImage(data.article);
-});
+  let data = res.data.data[0];
+  //处理HTML
+  data.html = resetImage(data.article);
+  delete data.article;
+  //将权重设置转为布尔
+  data.isTop = !!data.isTop;
+  data.isShow = !!data.isShow;
 
+  Object.assign(articleData, data);
+});
 function updataArticle() {
   // 发布文章
-  setImageDom({ html: store.state.html, type: type.value }); //处理图片问题
-  let data = {
-    router: /^[\s\S]*.*[^\s][\s\S]*$/.test(router.value)
-      ? router.value
-      : +new Date() + "",
-    title: encode(title.value),
-    introduce: encode(introduce.value),
-    type: type.value,
-    article: encode(document.getElementById("set_image").innerHTML),
-    isTop: isTop.value,
-    isShow: isShow.value,
-  };
+  setImageDom({ html: store.state.html, type: articleData.type }); //处理图片问题
+  let data = toRaw(articleData);
+  data.router = /^[\s\S]*.*[^\s][\s\S]*$/.test(articleData.router)
+    ? articleData.router
+    : +new Date() + "";
+  data.title = encode(articleData.title);
+  data.introduce = encode(articleData.introduce);
+  data.article = encode(document.getElementById("set_image").innerHTML);
 
-  if (notEmpty(data)) {
+  if (notEmpty(articleData)) {
     axios.put(`/article/${articleRouter}`, data).then((res) => {
       if (res.data.success) {
-        updataImage(store.state.html, html.value);
+        updataImage(store.state.html, articleData.html);
         ElMessage.success("更新成功");
         store.commit("setHtml", "");
         vueRouter.push("/");

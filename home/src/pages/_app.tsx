@@ -10,10 +10,9 @@ import "@/style/highLight.scss";
 import style from "@/style/style.module.scss";
 import "@/modules/axios";
 import { useState } from "react";
-
 import { LoadingOutlined } from "@ant-design/icons";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }, res, req) {
   router.events.on("routeChangeStart", () => {
     setLoading("block");
   });

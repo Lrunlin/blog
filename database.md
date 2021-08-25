@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `article`(
    `article` MEDIUMTEXT NOT NULL,
    `isTop`Boolean,
    `isShow`Boolean,
-   `time` DATETIME,
+   `time` DATE,
    PRIMARY KEY ( `router` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 插入：文章路由，文章类型，文章介绍，文章主要内容，是否置顶，是否展示，时间

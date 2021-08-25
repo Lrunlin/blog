@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from "react";
 import style from "./index.module.scss";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import router from "next/router";
 import { Col, Row, BackTop, Button } from "antd";
 import Icon from "@/components/Icon";
+
 import {
   HomeOutlined,
   SearchOutlined,
   UserOutlined,
   DeploymentUnitOutlined,
-  MenuUnfoldOutlined,
 } from "@ant-design/icons";
+
 import axios from "axios";
+
+interface nav {
+  label: string;
+  url: string;
+  icon: JSX.Element;
+  isPhone?: boolean;
+}
+
 export default function Header() {
   useEffect(() => {
     // todo 随机展示一个词条
@@ -41,16 +51,31 @@ export default function Header() {
     });
   }, []);
 
-  const [active, setActive] = useState<boolean>(false);
+  const data: nav[] = [
+    {
+      label: "首页",
+      url: "/",
+      icon: <HomeOutlined />,
+    },
+    {
+      label: "搜索文章",
+      url: "/search",
+      icon: <SearchOutlined />,
+    },
+    {
+      label: "订阅",
+      url: "/rss",
+      icon: <DeploymentUnitOutlined />,
+      isPhone: true,
+    },
+    {
+      label: "关于作者",
+      url: "/about",
+      icon: <UserOutlined />,
+    },
+  ];
   return (
-    <header className={style.header + ` ${active ? style.header_active : ""}`}>
-      <Button
-        type="primary"
-        className={`phone ${style.header_switch_ico}`}
-        onClick={() => setActive(!active)}
-      >
-        <Icon icon={<MenuUnfoldOutlined />} />
-      </Button>
+    <header className={style.header}>
       <Row justify="space-between" className={style.nav}>
         <Col sm={8} className={style.logo}>
           <h1>
@@ -59,34 +84,23 @@ export default function Header() {
           <span>原创文章&nbsp;博客无需抄袭</span>
         </Col>
 
-        <Col sm={6}>
+        <Col sm={6} className={style.phone_nav}>
           <nav>
-            <Link href="/">
-              <a>
-                <Icon>
-                  <HomeOutlined />
-                </Icon>
-                首页
-              </a>
-            </Link>
-            <Link href="/search">
-              <a>
-                <Icon icon={<SearchOutlined />} />
-                搜索文章
-              </a>
-            </Link>
-            <Link href="/about">
-              <a>
-                <Icon icon={<UserOutlined />} />
-                关于作者
-              </a>
-            </Link>
-            <Link href="/rss">
-              <a className="phone">
-                <Icon icon={<DeploymentUnitOutlined />} />
-                订阅
-              </a>
-            </Link>
+            {data.map((item: nav) => {
+              return (
+                <Link href={item.url} key={item.url}>
+                  <a
+                    className={
+                      (!!item.isPhone && "phone") +
+                      ` ${useRouter().asPath == item.url && style.active}`
+                    }
+                  >
+                    <Icon icon={item.icon} />
+                    <span className="pc">{item.label}</span>
+                  </a>
+                </Link>
+              );
+            })}
           </nav>
         </Col>
       </Row>

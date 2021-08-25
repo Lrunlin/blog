@@ -2,7 +2,7 @@ import { useState, Fragment } from "react";
 import { Button, Input, Modal, message } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import style from "./index.module.scss";
-import Head from '@/modules/Head'
+import Head from "@/modules/Head";
 import axios from "axios";
 function rss() {
   // 全局配置message
@@ -17,8 +17,7 @@ function rss() {
   const [emailData, setEmailData] = useState<{ rss?: boolean; label?: string }>(
     {}
   ); //用户登记状态
-  const [userCode, setUserCode] = useState<string>(""); //用户输入的二维码
-
+  const [userCode, setUserCode] = useState<string>(""); //用户输入的验证码
   const adownloadDataJson = () => {
     //? 一段下载的代码，暂时不是很理解
     // todo 主要是解决非同源下载文件问题
@@ -83,26 +82,16 @@ function rss() {
       message.error("请输入正确验证码");
     }
   };
-
   const testEmail =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return (
     <div className={style.container}>
       {Head({
-        title: '刘润霖||订阅文章',
-        keywords: 'RSS,订阅文章,邮箱,JSON',
-        description: '刘润霖博客页面，页面可以下载全部文章的JSON文件，可以留下你的邮箱在我们发布文章时会邮箱通知你，并且提供对应文章的Markdown。',
+        title: "刘润霖||订阅文章",
+        keywords: "RSS,订阅文章,邮箱,JSON",
+        description:
+          "刘润霖博客页面，页面可以下载全部文章的JSON文件，可以留下你的邮箱在我们发布文章时会邮箱通知你，并且提供对应文章的Markdown。",
       })}
-      <Button
-        type="primary"
-        shape="round"
-        icon={<DownloadOutlined />}
-        size="small"
-        title="下载全部文章JSON格式"
-        onClick={adownloadDataJson}
-      >
-        下载全部文章
-      </Button>
       <div>
         <Input
           placeholder="请输入邮箱以便查询邮箱订阅状态"

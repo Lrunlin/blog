@@ -17,15 +17,19 @@ export default function updataImage(newHtml, oldHtml) {
             newArr.push(jquery(el).attr('src').replace(`${store.state.assetsapi}/temporary/`, ''))
         } else {
             newArr.push(jquery(el).attr('src').replace(`${store.state.assetsapi}/image/`, ''))
-        }
+        };
     });
 
     let move = newArr.filter(item => !oldArr.includes(item));
     let remove = oldArr.filter(item => !newArr.includes(item));
-    axios.post(store.state.assetsapi + '/delete-assets', {
-        images: remove
-    })
-    axios.post(store.state.assetsapi + '/moveTemporaryImages', {
-        images: move
-    })
+    if (move.length) {
+        axios.post(store.state.assetsapi + '/moveTemporaryImages', {
+            images: move
+        })
+    }
+    if (remove.length) {
+        axios.post(store.state.assetsapi + '/delete-assets', {
+            images: remove
+        })
+    }
 }

@@ -27,9 +27,14 @@
     }
   }
   nav {
+    display: flex;
+    justify-content: space-between;
     a {
       color: #999;
       margin-left: 20px;
+    }
+    .active {
+      font-weight: 700;
     }
   }
 }

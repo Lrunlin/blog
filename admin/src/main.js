@@ -11,6 +11,7 @@ import {
 } from 'element-plus'
 import axios from 'axios';
 import vueAxios from 'vue-axios';
+
 axios.defaults.baseURL = process.env.NODE_ENV === "production" ?
     'https://blog-api.blogweb.cn' :
     "http://localhost:3000/";
@@ -29,14 +30,15 @@ axios.interceptors.request.use(function (config) {
     config.headers.authorization = encode(JSON.stringify(data))
     return config;
 });
-
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 
 createApp(App)
     .use(store)
     .use(router)
     .use(ElementPlus, {
-        zIndex: 30000
+        zIndex: 30000,
+        locale: zhCn,
     })
     .use(vueAxios, axios)
     .mount('#app')

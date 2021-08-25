@@ -11,16 +11,14 @@ todo 删除文章时删除图片
 export default function deleteImage(html) {
     let assets = store.state.assetsapi;
     let imageHub = [];
-    if (jquery('#delete_image')) {
-        jquery('#delete_image').remove()
-    }
-    jquery('body').append(`<div id="delete_image" style="display:none;">${html}</div>`)
-    const img = jquery('#delete_image img');
+    const img = jquery(html).find('img')
     jquery.each(img, function (i, el) {
         const src = jquery(el).attr('data-src').replace(assets + '/image/', '');
         imageHub.push(src);
     });
-    axios.post(`${assets}/delete-assets`, {
-        images: imageHub
-    }).then(res => {});
-}
+    if (imageHub.length) {
+        axios.post(`${assets}/delete-assets`, {
+            images: imageHub
+        })
+    }
+};

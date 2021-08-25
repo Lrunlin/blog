@@ -10,8 +10,11 @@ export default function moveImage() {
         imageHub.push(src);
     });
     let data;
-    axios.post(`${assets}/moveTemporaryImages`, {
-        images: imageHub
-    })
+    //!只有需要处理的图片大于1才发送移动图片请求
+    if (imageHub.length) {
+        axios.post(`${assets}/moveTemporaryImages`, {
+            images: imageHub
+        })
+    }
     return data;
 }
