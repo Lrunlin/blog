@@ -8,8 +8,8 @@ router.post('/send-email', (req, res) => {
     const to = req.body.email;
     let transporter = nodemailer.createTransport({
         service: 'qq',
-        // port: 465,
-        // secureConnection: true,
+        port: 465,
+        secureConnection: true,
         auth: {
             user: '353575900@qq.com',
             pass: 'mcnntrlfnjkjcaae',
@@ -23,7 +23,6 @@ router.post('/send-email', (req, res) => {
         html: `您的验证码为:${code}`
     };
     transporter.sendMail(mailOptions, (error, info) => {
-        console.log(1);
         if (error) {
             res.json({
                 success: false,
@@ -36,8 +35,5 @@ router.post('/send-email', (req, res) => {
             data: code
         })
     });
-    res.json({
-        success: false
-    })
 })
 module.exports = router;

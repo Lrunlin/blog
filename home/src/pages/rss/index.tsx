@@ -1,6 +1,7 @@
-import { useState, Fragment } from "react";
-import { Button, Input, Modal, message } from "antd";
+import { useState, useRef, useCallback } from "react";
+import { Button, Input, message } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
+import Icon from "@/components/Icon";
 import style from "./index.module.scss";
 import Head from "@/modules/Head";
 import axios from "axios";
@@ -12,27 +13,26 @@ function rss() {
   });
   //文本框输入的邮箱
   const [email, setEmail] = useState<string>("");
+  const userEmail = useRef<string>(""); //在发送验证码成功后将用户邮箱缓存
   const [code, setCode] = useState<string | boolean>(false); //验证码
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false); //弹窗显示
-  const [emailData, setEmailData] = useState<{ rss?: boolean; label?: string }>(
-    {}
-  ); //用户登记状态
+  const [isRss, setIsRss] = useState<boolean>(true); //用户登记状态
   const [userCode, setUserCode] = useState<string>(""); //用户输入的验证码
-  const adownloadDataJson = () => {
-    //? 一段下载的代码，暂时不是很理解
-    // todo 主要是解决非同源下载文件问题
-    const eleLink = document.createElement("a");
-    eleLink.download = "article.json";
-    eleLink.style.display = "none";
-    const blob = new Blob([axios.defaults.baseURL + "files/article.json"]);
-    eleLink.href = URL.createObjectURL(blob);
-    document.body.appendChild(eleLink);
-    eleLink.click();
-    document.body.removeChild(eleLink);
-  };
-
+  //todo下载
+  function download() {
+    axios("/download-article").then(res => {
+      const eleLink = document.createElement("a");
+      eleLink.download = "article.json";
+      eleLink.style.display = "none";
+      const blob = new Blob([res.data.data]);
+      eleLink.href = URL.createObjectURL(blob);
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      document.body.removeChild(eleLink);
+    });
+  }
+  // todo 发送验证码
   const onSendCode = () => {
-    axios.post("/send-email", { email: email }).then(res => {
+    axios.post("/send-email", { email: userEmail.current }).then(res => {
       if (res.data.success) {
         setCode(res.data.data);
         message.success("发送成功，请注意查收邮件");
@@ -43,36 +43,33 @@ function rss() {
   };
   // todo 察看用户登记状态
   const emailSwitchState = () => {
-    axios.get("/rss/" + email).then(res => {
-      setEmailData({
-        rss: res.data.success,
-        label: res.data.success
-          ? "是否取消订阅？"
-          : `使用此邮箱:${email}订阅博客文章？`,
+    if (userEmail.current == email) {
+      message.warning("请不要连续向相同邮箱发送验证码");
+    } else {
+      userEmail.current = email;
+      axios.get("/rss/" + userEmail.current).then(res => {
+        setIsRss(res.data.success);
+        onSendCode();
       });
-      onSendCode();
-      setIsModalVisible(true);
-    });
+    }
   };
-  // todo 发送并存储验证码
 
+  // todo 验证验证码，并进行 订阅/取消操作
   const checkCode = () => {
-    if (userCode == code) {
+    if (userCode == code && test.test(userCode)) {
       //?如果已经订阅就删除，如果没订阅就订阅上
-      if (emailData.rss) {
-        axios.delete("/rss/" + email).then(res => {
+      if (isRss) {
+        axios.delete("/rss/" + userEmail.current).then(res => {
           if (res.data.success) {
             message.success("您已取消订阅");
-            setIsModalVisible(false);
           } else {
             message.error("取消失败");
           }
         });
       } else {
-        axios.post("/rss", { email: email }).then(res => {
+        axios.post("/rss", { email: userEmail.current }).then(res => {
           if (res.data.success) {
             message.success("订阅成功");
-            setIsModalVisible(false);
           } else {
             message.error("订阅失败");
           }
@@ -84,15 +81,27 @@ function rss() {
   };
   const testEmail =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  let test = /^[\s\S]*.*[^\s][\s\S]*$/; //非空
   return (
     <div className={style.container}>
       {Head({
         title: "刘润霖||订阅文章",
         keywords: "RSS,订阅文章,邮箱,JSON",
         description:
-          "刘润霖博客页面，页面可以下载全部文章的JSON文件，可以留下你的邮箱在我们发布文章时会邮箱通知你，并且提供对应文章的Markdown。",
+          "博客订阅页面，页面可以下载全部文章的JSON文件，可以留下你的邮箱在我们发布文章时会将文章标题、文章介绍、文章地址等信息发送至您的邮箱。",
       })}
       <div>
+        <div>
+          <Button
+            type="primary"
+            shape="round"
+            title="下载全部文章为JSON文件"
+            onClick={download}
+          >
+            <Icon icon={<DownloadOutlined />} />
+            下载文章
+          </Button>
+        </div>
         <Input
           placeholder="请输入邮箱以便查询邮箱订阅状态"
           className={style.email_input}
@@ -105,23 +114,36 @@ function rss() {
           disabled={!testEmail.test(email)}
           className={style.email_button}
         >
-          请输入邮箱
+          发送验证码
         </Button>
       </div>
-      <Modal
-        title={emailData.label}
-        visible={isModalVisible}
-        onOk={checkCode}
-        onCancel={() => setIsModalVisible(false)}
+      <Input
+        placeholder="请输入收到的验证码"
+        className={style.email_input}
+        // 只要数字，输入时候过滤一下
+        onInput={(e: any) =>
+          isNaN(+e.target.value)
+            ? (e.target.value = e.target.value).substring(0, userCode.length)
+            : setUserCode(e.target.value)
+        }
+        maxLength={4}
+      />
+      <Button
+        type="primary"
+        shape="round"
+        className={style.email_button}
+        onClick={checkCode}
+        disabled={!code}
+        title={
+          !code
+            ? "请输入邮箱并发送验证码"
+            : `${userEmail.current}${isRss ? "取消订阅" : "订阅"}`
+        }
       >
-        <Input
-          placeholder="请输入收到的验证码"
-          className={style.email_input}
-          onInput={(e: any) => setUserCode(e.target.value)}
-        />
-      </Modal>
+        {!code ? "请输入邮箱" : isRss ? "取消订阅" : "订阅"}
+      </Button>
       <main>
-        订阅成功，在本站更新文章后，我们会将对应的Markdown下载地址和文章地址发送至您的邮箱。
+        订阅成功，在本站更新文章后，文章标题、文章介绍、文章地址发送至您的邮箱。
       </main>
     </div>
   );

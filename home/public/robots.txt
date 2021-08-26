@@ -1,3 +1,3 @@
 User-agent: *
-Disallow:
+Disallow:/_next/
 Sitemap:https://sitemap.blogweb.cn/sitemap.xml
