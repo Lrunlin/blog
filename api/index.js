@@ -3,16 +3,14 @@ const app = express()
 
 
 // 接收post请求
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
     extended: false
 }));
+app.use(express.json());
 
 
-const fs = require('fs');
+app.use('/robots.txt', express.static('./file/robots.txt'));
 
-app.use('/files', express.static('files'));
 
 
 const cors = require('cors');
@@ -61,8 +59,7 @@ app.all('*', function (req, res, next) {
 
 
 
-let routes = fs.readdirSync('./route')
-
+const fs = require('fs');
 function fileDisplay(filePath) {
     fs.readdir(filePath, function (err, files) {
         if (err) {

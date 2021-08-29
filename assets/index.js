@@ -5,18 +5,19 @@ const fs = require('fs')
 const cors = require('cors');
 app.use(cors())
 // 接收post请求
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
     extended: false
 }));
+app.use(express.json());
 
 app.use(cookieParser())
 
 
 app.use('/temporary', express.static('./temporary'));
 app.use('/image', express.static('./image'));
+app.use('/robots.txt', express.static('./assets/robots.txt'));
+
 
 
 

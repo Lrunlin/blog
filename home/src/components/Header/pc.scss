@@ -9,7 +9,8 @@
   left: 0px;
   z-index: 9999999999 !important;
   .nav {
-    width: 1200px;
+    max-width: 1600px;
+    min-width: 1100px;
     height: $height;
     margin: 0px auto;
   }
@@ -29,6 +30,7 @@
   nav {
     display: flex;
     justify-content: space-between;
+    margin-right: 30px;
     a {
       color: #999;
       margin-left: 20px;

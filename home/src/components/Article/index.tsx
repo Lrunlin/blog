@@ -17,9 +17,13 @@ interface articleComponent {
 export default function Article({ data, className }: articleComponent) {
   const articleData = useMemo(() => data, [data]); //文章数据
   const [lock, setLock] = useState<boolean>(false); //防止introduce被服务器渲染出来，让他在客户端渲染
+
   useEffect(() => {
-    setLock(true);
+    setTimeout(() => {
+      setLock(true);
+    }, 1);
   }, []);
+
   return (
     <Fragment>
       {articleData.map((item, index) => {
@@ -52,7 +56,7 @@ export default function Article({ data, className }: articleComponent) {
             {lock ? (
               <div className={style.introduce}>{item.introduce}</div>
             ) : (
-              ""
+              <Skeleton />
             )}
             <div className={style.article_footer}>
               <div className={style.article_link}>

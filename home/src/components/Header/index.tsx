@@ -3,7 +3,7 @@ import style from "./index.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // import router from "next/router";
-import { Col, Row, BackTop, Button } from "antd";
+import { Col, Row, BackTop } from "antd";
 import Icon from "@/components/Icon";
 
 import {
@@ -89,6 +89,7 @@ export default function Header() {
             {data.map((item: nav) => {
               return (
                 <Link href={item.url} key={item.url}>
+                  {/* 判断是否phone和active */}
                   <a
                     className={
                       (!!item.isPhone && "phone") +

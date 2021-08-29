@@ -65,9 +65,11 @@ export default function Aside() {
       <Divider>社交账号</Divider>
       <Row justify="space-around" className={style.contact}>
         <Tooltip placement="top" title="LRunLin的GitHUb">
-          <a href="https://github.com/Lrunlin/" target="_blank">
-            <Icon icon={<GithubOutlined />} />
-          </a>
+          <span>
+            <a href="https://github.com/Lrunlin/" target="_blank">
+              <Icon icon={<GithubOutlined />} />
+            </a>
+          </span>
         </Tooltip>
         <Tooltip placement="top" title="QQ:1974109227">
           <span>
@@ -80,9 +82,11 @@ export default function Aside() {
           </span>
         </Tooltip>
         <Tooltip placement="top" title="353575900@qq.com">
-          <a href="mailto:353575900@qq.com" rel="external nofollow">
-            <Icon icon={<MailFilled />} />
-          </a>
+          <span>
+            <a href="mailto:353575900@qq.com" rel="external nofollow">
+              <Icon icon={<MailFilled />} />
+            </a>
+          </span>
         </Tooltip>
       </Row>
       <Divider>订阅</Divider>
