@@ -13,8 +13,6 @@ import {
   DeploymentUnitOutlined,
 } from "@ant-design/icons";
 
-import axios from "axios";
-
 interface nav {
   label: string;
   url: string;
@@ -24,31 +22,26 @@ interface nav {
 
 export default function Header() {
   useEffect(() => {
-    // todo 随机展示一个词条
-    axios.get("/message").then(res => {
-      const index: number = Math.floor(Math.random() * res.data.data.length);
-      const style = [
-        `background:#585858;
+    const style = [
+      `background:#585858;
       color:white;
       border-top-left-radius:3px;
       border-bottom-left-radius:3px;
       padding:3px
       `,
-        `background:#4dc71f;
+      `background:#4dc71f;
       color:white;
       border-top-right-radius:3px;
       border-bottom-right-radius:3px;
       padding:3px
       `,
-      ];
-      console.log(`%cauthor:%c刘润霖`, ...style);
-      console.log(`%cURL:%cblogweb.cn`, ...style);
-      console.log(
-        `%cTechnology stack:%cNextJs,Vue3,Node-Express,MySql`,
-        ...style
-      );
-      console.log(`%cmessage:%c${res.data.data[index].message}`, ...style);
-    });
+    ];
+    console.log(`%cauthor:%c刘润霖`, ...style);
+    console.log(`%cURL:%cblogweb.cn`, ...style);
+    console.log(
+      `%cTechnology stack:%cNextJs,Vue3,Node-Express,MySql`,
+      ...style
+    );
   }, []);
 
   const data: nav[] = [
@@ -63,7 +56,7 @@ export default function Header() {
       icon: <SearchOutlined />,
     },
     {
-      label: "订阅",
+      label: "订阅", 
       url: "/rss",
       icon: <DeploymentUnitOutlined />,
       isPhone: true,
@@ -81,7 +74,9 @@ export default function Header() {
           <h1>
             <a href="/">刘润霖</a>
           </h1>
-          <span>原创文章&nbsp;博客无需抄袭</span>
+          <span>
+            原创文章&nbsp;<span style={{color:'white'}}>博客无需抄袭</span>
+          </span>
         </Col>
 
         <Col sm={6} className={style.phone_nav}>

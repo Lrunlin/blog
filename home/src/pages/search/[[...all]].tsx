@@ -19,7 +19,6 @@ interface article {
 }
 function search({ data, type }: { data: object[]; type: object[] }) {
   let router = useRouter();
-
   const [articleData, setArticleData] = useState<object[]>(data);
   //? 关于类型可以将可以将文章类型转为数组在对比传来的参数防止javascript和Java这种类型的名字出现重合
   //类型过滤文章内容(监听所选中的类型变化)
@@ -31,6 +30,7 @@ function search({ data, type }: { data: object[]; type: object[] }) {
     setTypeTagActive(type);
     setArticleData(temporaryData);
   }
+
   //格式： blogweb.cn/search/React
   useEffect(() => {
     if (router.query?.all) {
@@ -44,8 +44,7 @@ function search({ data, type }: { data: object[]; type: object[] }) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       let temporaryData = data.filter((item: article, index: number) => {
-        let stringData =
-          item.title.toLowerCase() + item.introduce.toLowerCase();
+        let stringData = item.title.toLowerCase() + item.introduce.toLowerCase();
         return stringData.indexOf(value.toLowerCase()) != -1; //返回布尔判断是否含有关键词
       });
       setArticleData(temporaryData);
@@ -74,7 +73,7 @@ function search({ data, type }: { data: object[]; type: object[] }) {
           return (
             <Tag
               color="blue"
-              key={item.type}
+              key={item.type + Math.random()}
               className={typeTagActive == item.type ? style.type_active : ""}
               onClick={() => typeFilterData(item.type)}
             >
@@ -98,7 +97,12 @@ function search({ data, type }: { data: object[]; type: object[] }) {
 search.getInitialProps = async () => {
   let data = { data: null, type: null };
   await axios
-    .get("/article", { params: { ksy: "type,time,title,introduce,router" } })
+    .get("/article", {
+      params: {
+        key: ["type", "time", "title", "introduce", "router"],
+        show: true,
+      },
+    })
     .then(res => {
       data.data = res.data.data;
     });

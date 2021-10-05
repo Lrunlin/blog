@@ -1,60 +1,92 @@
 <template>
-  <el-row class="tac">
-    <el-col>
-      <el-menu
-        :uniqueOpened="true"
-        :default-active="route.path"
-        class="el-menu-vertical-demo"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-        :router="true"
-      >
-        <el-menu-item index="/">
-          <i class="el-icon-house"></i>
-          首页</el-menu-item
-        >
-        <el-submenu index="1">
-          <template #title>
-            <i class="el-icon-notebook-1"></i>
-            <span>文章处理</span>
-          </template>
-          <el-menu-item index="/writer">写文章</el-menu-item>
-          <el-menu-item index="/read-article">文章展示</el-menu-item>
-        </el-submenu>
-        <el-submenu index="2">
-          <template #title>
-            <i class="el-icon-notebook-2"></i>
-            <span>记事本</span>
-          </template>
-          <el-menu-item index="/message">词条</el-menu-item>
-        </el-submenu>
-        <el-submenu index="3">
-          <template #title>
-            <i class="el-icon-s-check"></i>
-            <span>文章类型</span>
-          </template>
-          <el-menu-item index="/type">类型</el-menu-item>
-        </el-submenu>
-        <el-submenu index="4">
-          <template #title>
-            <i class="el-icon-s-data"></i>
-            <span>文章分析</span>
-          </template>
-          <el-menu-item index="/type-analysis">类型分析</el-menu-item>
-        </el-submenu>
-      </el-menu>
-    </el-col>
-  </el-row>
+  <el-menu
+    :uniqueOpened="true"
+    :defaultActive="route.path || '/'"
+    class="el-menu-vertical-demo"
+    background-color="#545c64"
+    text-color="#fff"
+    active-text-color="#ffd04b"
+    router
+  >
+    <el-sub-menu index="1">
+      <template #title>
+        <el-icon :size="16">
+          <Notebook />
+        </el-icon>
+        <span>文章管理</span>
+      </template>
+      <el-menu-item index="/write">写文章</el-menu-item>
+      <el-menu-item index="/article">文章详情</el-menu-item>
+    </el-sub-menu>
+
+    <el-menu-item index="/type">
+      <el-icon :size="16">
+        <Operation />
+      </el-icon>
+      <span>文章类型</span>
+    </el-menu-item>
+    <el-menu-item index="/message">
+      <el-icon :size="16">
+        <Comment />
+      </el-icon>
+      <span>留言处理</span>
+    </el-menu-item>
+
+    <el-menu-item index="/log">
+      <el-icon :size="16">
+        <Document />
+      </el-icon>
+      <span>日志</span>
+    </el-menu-item>
+
+    <el-menu-item index="/assets">
+      <el-icon :size="16">
+        <Folder />
+      </el-icon>
+      <span>静态资源</span>
+    </el-menu-item>
+
+    <el-menu-item index="/rss">
+      <el-icon :size="16">
+        <Position />
+      </el-icon>
+      <span>订阅列表</span>
+    </el-menu-item>
+
+    <el-sub-menu index="2">
+      <template #title>
+        <el-icon :size="16"> <document-copy /> </el-icon>
+        <span>文章获取</span>
+      </template>
+      <el-menu-item index="/create-copy">文章借鉴</el-menu-item>
+      <el-menu-item index="/copy">任务查询</el-menu-item>
+    </el-sub-menu>
+    <el-sub-menu index="3">
+      <template #title>
+        <el-icon :size="16">
+          <More />
+        </el-icon>
+        <span>系统设置</span>
+      </template>
+      <el-menu-item index="/os/data">系统信息</el-menu-item>
+    </el-sub-menu>
+  </el-menu>
 </template>
 <script setup>
-import { onMounted, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useStore } from "vuex";
-import jsCookie from "js-cookie";
-let router = useRouter();
+import { ref, onMounted, onUnmounted } from "vue";
+import {
+  Notebook,
+  Operation,
+  Comment,
+  More,
+  DocumentCopy,
+  Position,
+  Document,
+  Folder
+} from "@element-plus/icons";
+
+import { useRoute } from "vue-router";
 let route = useRoute();
-let store = useStore();
 onMounted(() => {
   document.body.style.paddingLeft = "200px";
 });
@@ -63,14 +95,23 @@ onUnmounted(() => {
 });
 </script>
 <style scoped lang='scss'>
-.el-row {
+.el-menu {
   width: 200px;
+  height: 100vh;
   position: fixed;
   top: 0px;
   left: 0px;
 }
-.el-col,
-.el-menu {
-  height: 100vh;
+</style>
+<style lang="scss">
+.el-sub-menu__title,
+.el-menu-item {
+  display: flex !important;
+  align-items: center;
+  .el-icon {
+    margin-right: 10px;
+    position: relative;
+    top: -2px;
+  }
 }
 </style>

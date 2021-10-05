@@ -3,6 +3,7 @@ import { Empty } from "antd";
 import style from "./index.module.scss";
 import { Tag } from "antd";
 import axios from "axios";
+
 import Head from "@/modules/Head";
 interface article {
   router?: string;
@@ -62,6 +63,7 @@ function Article({ data }: { data: article }) {
     };
   }, []);
   const articleData: article | undefined = data[0];
+
   const articleContainer = (article: article) => {
     return (
       <main className={style.container}>
@@ -70,15 +72,11 @@ function Article({ data }: { data: article }) {
           {!!article.isTop && <Tag color="blue">置顶</Tag>}
           <time>{article.time}</time>
         </div>
-        <article
-          dangerouslySetInnerHTML={{ __html: article.article }}
-        ></article>
+        <article dangerouslySetInnerHTML={{ __html: article.article }}></article>
       </main>
     );
   };
-  const notFound = () => (
-    <Empty description="没有找到对应的文章，去首页看看吧" />
-  );
+  const notFound = () => <Empty description="没有找到对应的文章，去首页看看吧" />;
   return (
     <>
       {Head({
@@ -92,12 +90,14 @@ function Article({ data }: { data: article }) {
     </>
   );
 }
-Article.getInitialProps = async ({ asPath }) => {
-  let data;
-  const router = asPath.replace("/article/", "");
+Article.getInitialProps = async ({ asPath }: { asPath: string }) => {
+  let data: any;
+  const router: string = asPath.replace("/article/", "");
   await axios
-    .get(`/article/${router}`, {
-      params: { key: "router,article,isTop,type,introduce,title,time" },
+    .get(`/article/router/${router}`, {
+      params: {
+        key: ["router", "article", "isTop", "type", "introduce", "title", "time"],
+      },
     })
     .then(res => {
       data = res.data.data;

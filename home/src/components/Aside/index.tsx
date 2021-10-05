@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 // import router from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import style from "./index.module.scss";
 import Icon from "@/components/Icon";
+import Message from "@/components/Message";
 import { Tag, Tooltip, Divider, Row } from "antd";
 import {
   GithubOutlined,
@@ -11,6 +12,7 @@ import {
   WechatOutlined,
   MailFilled,
   DeploymentUnitOutlined,
+  FormOutlined,
 } from "@ant-design/icons";
 export default function Aside() {
   const tagData = [
@@ -39,16 +41,11 @@ export default function Aside() {
       text: "小白",
     },
   ];
+  const [messageActive, setEessageActive] = useState<boolean>(false); //是否展示留言
   return (
     <aside className={style.container}>
       <div className={style.face_box}>
-        <Image
-          src="/face.png"
-          alt="刘润霖头像"
-          width={130}
-          height={130}
-          className={style.face}
-        />
+        <Image src="/face.png" alt="刘润霖头像" width={130} height={130} className={style.face} />
         <Link href="https://admin.blogweb.cn/">
           <h1 className={style.name}>刘润霖</h1>
         </Link>
@@ -63,7 +60,7 @@ export default function Aside() {
         </div>
       </div>
       <Divider>社交账号</Divider>
-      <Row justify="space-around" className={style.contact}>
+      <Row className={style.contact}>
         <Tooltip placement="top" title="LRunLin的GitHUb">
           <span>
             <a href="https://github.com/Lrunlin/" target="_blank">
@@ -89,16 +86,28 @@ export default function Aside() {
           </span>
         </Tooltip>
       </Row>
-      <Divider>订阅</Divider>
-      <Row justify="space-around" className={style.contact}>
+      <Divider>订阅|留言</Divider>
+      <Row className={style.contact}>
         <Link href="/rss">
-          <a>
-            <Icon>
-              <DeploymentUnitOutlined className={style.icon} />
-            </Icon>
-          </a>
+          <Tooltip placement="top" title="订阅文章">
+            <a>
+              <Icon>
+                <DeploymentUnitOutlined className={style.icon} />
+              </Icon>
+            </a>
+          </Tooltip>
         </Link>
+        <Tooltip placement="top" title="留言">
+          <span>
+            <Icon>
+              <FormOutlined className={style.icon} onClick={() => setEessageActive(true)} />
+            </Icon>
+          </span>
+        </Tooltip>
       </Row>
+      {messageActive && (
+        <Message switchMessageState={(state: boolean) => setEessageActive(state)} />
+      )}
     </aside>
   );
 }

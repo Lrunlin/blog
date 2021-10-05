@@ -4,6 +4,7 @@
   position: fixed;
   top: 70px;
   width: 260px;
+  z-index: 999;
 }
 .face_box {
   text-align: center;
@@ -30,6 +31,8 @@
   font-size: 24px;
   height: 30px;
   display: flex !important;
+  justify-content: space-around;
+  align-items: center;
   a {
     //取消默认的line-height
     line-height: 0px !important;

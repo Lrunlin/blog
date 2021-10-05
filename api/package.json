@@ -1,21 +1,33 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
+  "description": "博客接口",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon --watch ./src ./src/index.js"
   },
-  "author": "",
+  "_moduleAliases": {
+    "@": "./src"
+  },
+  "author": "刘润霖",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.4",
+    "cheerio": "^1.0.0-rc.10",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "ip": "^1.1.5",
     "js-base64": "^3.6.1",
+    "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
-    "mysql2": "^2.2.5",
-    "nodemailer": "^6.6.2",
-    "nodemon": "^2.0.7"
+    "module-alias": "^2.2.2",
+    "moment": "^2.29.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.3.0",
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.12",
+    "superagent": "^6.1.0"
   }
 }

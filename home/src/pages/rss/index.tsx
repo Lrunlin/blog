@@ -1,10 +1,12 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button, Input, message } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import Icon from "@/components/Icon";
 import style from "./index.module.scss";
 import Head from "@/modules/Head";
 import axios from "axios";
+import router from "next/router";
+
 function rss() {
   // 全局配置message
   message.config({
@@ -19,11 +21,11 @@ function rss() {
   const [userCode, setUserCode] = useState<string>(""); //用户输入的验证码
   //todo下载
   function download() {
-    axios("/download-article").then(res => {
-      const eleLink = document.createElement("a");
+    axios.get("/article/download").then(res => {
+      const eleLink: HTMLAnchorElement = document.createElement("a");
       eleLink.download = "article.json";
       eleLink.style.display = "none";
-      const blob = new Blob([res.data.data]);
+      const blob: Blob = new Blob([res.data.data]);
       eleLink.href = URL.createObjectURL(blob);
       document.body.appendChild(eleLink);
       eleLink.click();
@@ -45,13 +47,13 @@ function rss() {
   const emailSwitchState = () => {
     if (userEmail.current == email) {
       message.warning("请不要连续向相同邮箱发送验证码");
-    } else {
-      userEmail.current = email;
-      axios.get("/rss/" + userEmail.current).then(res => {
-        setIsRss(res.data.success);
-        onSendCode();
-      });
+      return false;
     }
+    userEmail.current = email;
+    axios.get(`/rss/${userEmail.current}`).then(res => {
+      setIsRss(res.data.success);
+      onSendCode();
+    });
   };
 
   // todo 验证验证码，并进行 订阅/取消操作
@@ -59,19 +61,25 @@ function rss() {
     if (userCode == code && test.test(userCode)) {
       //?如果已经订阅就删除，如果没订阅就订阅上
       if (isRss) {
-        axios.delete("/rss/" + userEmail.current).then(res => {
+        axios.delete("/rss/" + userEmail.current, { params: { code: userCode } }).then(res => {
           if (res.data.success) {
             message.success("您已取消订阅");
+            setUserCode("");
+            setEmail("");
+            setCode("");
           } else {
-            message.error("取消失败");
+            message.error(res.data.message);
           }
         });
       } else {
-        axios.post("/rss", { email: userEmail.current }).then(res => {
+        axios.post("/rss", { email: userEmail.current,code:userCode }).then(res => {
           if (res.data.success) {
             message.success("订阅成功");
+            setUserCode("");
+            setEmail("");
+            setCode("");
           } else {
-            message.error("订阅失败");
+            message.error(res.data.message);
           }
         });
       }
@@ -92,17 +100,13 @@ function rss() {
       })}
       <div>
         <div>
-          <Button
-            type="primary"
-            shape="round"
-            title="下载全部文章为JSON文件"
-            onClick={download}
-          >
+          <Button type="primary" shape="round" title="下载全部文章为JSON文件" onClick={download}>
             <Icon icon={<DownloadOutlined />} />
             下载文章
           </Button>
         </div>
         <Input
+          value={email}
           placeholder="请输入邮箱以便查询邮箱订阅状态"
           className={style.email_input}
           onInput={(e: any) => setEmail(e.target.value)}
@@ -120,12 +124,9 @@ function rss() {
       <Input
         placeholder="请输入收到的验证码"
         className={style.email_input}
+        value={userCode}
         // 只要数字，输入时候过滤一下
-        onInput={(e: any) =>
-          isNaN(+e.target.value)
-            ? (e.target.value = e.target.value).substring(0, userCode.length)
-            : setUserCode(e.target.value)
-        }
+        onInput={(e: any) => (isNaN(+e.target.value) ? false : setUserCode(e.target.value))}
         maxLength={4}
       />
       <Button
@@ -135,16 +136,12 @@ function rss() {
         onClick={checkCode}
         disabled={!code}
         title={
-          !code
-            ? "请输入邮箱并发送验证码"
-            : `${userEmail.current}${isRss ? "取消订阅" : "订阅"}`
+          !code ? "请输入邮箱并发送验证码" : `${userEmail.current}${isRss ? "取消订阅" : "订阅"}`
         }
       >
         {!code ? "请输入邮箱" : isRss ? "取消订阅" : "订阅"}
       </Button>
-      <main>
-        订阅成功，在本站更新文章后，文章标题、文章介绍、文章地址发送至您的邮箱。
-      </main>
+      <main>订阅成功，在本站更新文章后，文章标题、文章介绍、文章地址发送至您的邮箱。</main>
     </div>
   );
 }

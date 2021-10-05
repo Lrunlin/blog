@@ -2,3 +2,4 @@ node_modules
 assets/temporary/*.jpg
 assets/temporary/*.png
 assets/image/*.jpg
+api/public/log/*.json

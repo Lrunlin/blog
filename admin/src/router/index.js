@@ -1,54 +1,109 @@
+//导入路由相关的函数
 import {
-  createRouter,
-  createWebHistory,
-  createWebHashHistory
+    createRouter,
+    createWebHashHistory,
+    createWebHistory
 } from 'vue-router'
 
+
 const routes = [{
-  path: '/',
-  name: 'Home',
-  component: () => import('../views/Home'),
-  children: [{
-    path: '/',
-    name: 'index',
-    component: () => import('../views/index')
-  }, {
-    path: '/writer',
-    name: 'writer',
-    component: () => import('../views/writer')
-  }, {
-    path: '/finish',
-    name: 'finish',
-    component: () => import('../views/finish')
-  }, {
-    path: '/read-article',
-    name: ' read-article',
-    component: () => import('../views/read-article')
-  }, {
-    path: '/updata-article',
-    name: ' updata-article',
-    component: () => import('../views/updata-article')
-  }, {
-    path: '/message',
-    name: ' message',
-    component: () => import('../views/message')
-  }, {
-    path: '/type',
-    name: ' type',
-    component: () => import('../views/type')
-  }, {
-    path: '/type-analysis',
-    name: 'type-analysis',
-    component: () => import('../views/type-analysis')
-  }]
+    path: '/sign',
+    component: () => import('@/view/admin/sign.vue'),
+    meta: {
+        title: '登录'
+    }
 }, {
-  path: '/logn-in',
-  name: 'logn-in',
-  component: () => import('../views/logn-in')
-}, ]
+    path: '/',
+    component: () => import('@/view/Home.vue'),
+    children: [{
+        path: '',
+        component: () => import('@/view/Index.vue'),
+        meta: {
+            title: "首页"
+        }
+    }, {
+        path: '/article',
+        component: () => import('@/view/article/Article.vue'),
+        meta: {
+            title: "查询文章"
+        }
+    }, {
+        path: '/updata-article',
+        component: () => import('@/view/article/UpdataArticle.vue'),
+        meta: {
+            title: "修改文章 "
+        }
+    }, {
+        path: '/write',
+        component: () => import('@/view/article/CreateArticle.vue'),
+        meta: {
+            title: "写文章"
+        }
+    }, {
+        path: '/option',
+        component: () => import('@/view/article/Option.vue'),
+        meta: {
+            title: "文章配置"
+        }
+    }, {
+        path: '/type',
+        component: () => import('@/view/type/Index.vue'),
+        meta: {
+            title: "文章类型处理"
+        }
+    }, {
+        path: '/message',
+        component: () => import('@/view/message/Index.vue'),
+        meta: {
+            title: "留言处理"
+        }
+    }, {
+        path: '/os/data',
+        component: () => import('@/view/os/Data.vue'),
+        meta: {
+            title: "服务器信息"
+        }
+    }, {
+        path: '/create-copy',
+        component: () => import('@/view/copy/CreateCopy.vue'),
+        meta: {
+            title: "文章借鉴"
+        }
+    }, {
+        path: '/copy',
+        component: () => import('@/view/copy/Copy.vue'),
+        meta: {
+            title: "任务查询"
+        }
+    }, {
+        path: '/rss',
+        component: () => import('@/view/rss/Index.vue'),
+        meta: {
+            title: "订阅查询"
+        }
+    }, {
+        path: '/updata-admin',
+        component: () => import('@/view/admin/UpdataAdmin.vue'),
+        meta: {
+            title: "账号密码修改"
+        }
+    }, {
+        path: '/log',
+        component: () => import('@/view/log/Index.vue'),
+        meta: {
+            title: "日志"
+        }
+    }, {
+        path: '/assets',
+        component: () => import('@/view/assets/Index.vue'),
+        meta: {
+            title: "静态文件察看"
+        }
+    }]
+}]
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+    history: createWebHashHistory(),
+    routes,
 })
 
-export default router
+export default router;

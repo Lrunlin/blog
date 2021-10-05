@@ -1,10 +1,9 @@
-import axios from "axios";
 import { Pagination } from "antd";
 import { useState, useEffect } from "react";
 import Article from "@/components/Article";
 import style from "@/style/index.module.scss";
 import Head from "@/modules/Head";
-
+import axios from "axios";
 interface article {
   router?: string;
   type?: string;
@@ -15,22 +14,21 @@ interface article {
   isShow?: boolean;
   title?: string;
 }
-export default function Home({ data }) {
+export default function Home({ data, max }) {
   //文章数据
   const [articleData, setArticleData] = useState<article[]>(data);
   //文章总条数
-  const [max, SetMax] = useState<number>(1);
-  useEffect(() => {
-    axios.get("/article-max").then(res => {
-      SetMax(res.data.data);
-    });
-  }, []);
 
   function switchPage(page: number) {
-    axios.get(`/article-page/${page}`).then(res => {
+    axios.get(`/article/page/${page}`, { params: { show: true } }).then(res => {
       setArticleData(res.data.data);
     });
   }
+  useEffect(() => {
+    setTimeout(() => {
+      axios.get("/article/page/1", {});
+    }, 2000);
+  }, []);
   return (
     <>
       {Head({
@@ -55,14 +53,17 @@ export default function Home({ data }) {
 }
 Home.getInitialProps = async () => {
   let data;
+  let max;
   await axios
-    .get("/article-page/1", {
-      params: { key: "router,title,type,introduce,time" },
+    .get("/article/page/1", {
+      params: { key: ["router", "title", "type", "introduce", "time"] },
     })
     .then(res => {
       data = res.data.data;
+      max = res.data.max;
     });
   return {
-    data: data,
+    data,
+    max,
   };
 };

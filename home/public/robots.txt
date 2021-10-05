@@ -1,3 +1,4 @@
 User-agent: *
 Disallow:/_next/
+Disallow:/search/
 Sitemap:https://sitemap.blogweb.cn/sitemap.xml

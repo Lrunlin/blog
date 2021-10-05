@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useMemo, useRef } from "react";
+import { Fragment, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { FieldTimeOutlined, FileTextOutlined } from "@ant-design/icons";
 import { Tag, Skeleton } from "antd";
@@ -6,8 +6,8 @@ import Icon from "@/components/Icon";
 import style from "./index.module.scss";
 
 /*
- @params data{object[]}:渲染的数据
- @params className:article{string}标签额外添加的类
+ @params data:object[]:渲染的数据
+ @params className?:string标签额外添加的类
 */
 interface articleComponent {
   data: any[];
@@ -21,7 +21,7 @@ export default function Article({ data, className }: articleComponent) {
   useEffect(() => {
     setTimeout(() => {
       setLock(true);
-    }, 1);
+    }, 10);
   }, []);
 
   return (
@@ -33,15 +33,15 @@ export default function Article({ data, className }: articleComponent) {
             key={item.router}
             className={style.article + ` ${className || ""}`}
           >
-            <h1 className={style.title}>
+            <h2 className={style.title}>
               <Link href={`/article/${item.router}`}>
                 <a>{item.title}</a>
               </Link>
-            </h1>
+            </h2>
             <div className="types pc">
-              {item.type.split(",").map((item: string, index) => {
+              {item.type.map((item: string, index) => {
                 return (
-                  <Link href={`/search/${item}`} key={item}>
+                  <Link href={`/search/${item}`} key={item+Math.random()}>
                     <a>
                       <Tag color="blue">{item}</Tag>
                     </a>
@@ -51,7 +51,7 @@ export default function Article({ data, className }: articleComponent) {
             </div>
             <time>
               <Icon icon={<FieldTimeOutlined />} />
-              {item.time.substring(0, 10)}
+              {item.time}
             </time>
             {lock ? (
               <div className={style.introduce}>{item.introduce}</div>

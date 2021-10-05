@@ -1,0 +1,33 @@
+.message_container {
+  position: fixed;
+  top: 0px !important;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999 !important;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.message {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  width: 500px;
+  margin: 0px auto;
+  animation: message_active .5s forwards;
+  h2 {
+    text-align: center;
+  }
+  .message_input {
+    margin-top: 10px;
+  }
+  button {
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+  }
+}
+@keyframes message_active {
+  to {
+    margin-top: 50px;
+  }
+}
