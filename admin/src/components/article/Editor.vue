@@ -1,3 +1,4 @@
+
 <template>
   <div ref="editorDom" class="editor"></div>
 </template>

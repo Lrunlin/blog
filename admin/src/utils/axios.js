@@ -9,6 +9,7 @@ axios.interceptors.request.use(function (config) {
     config.headers.authorization = localStorage.token;
     return config;
 }, function (error) {
+    store.commit('switchLoad', false)
     return Promise.reject(error);
 });
 
@@ -18,6 +19,7 @@ axios.interceptors.response.use(function (response) {
     }
     return response;
 }, function (error) {
+    store.commit('switchLoad', false)
     return Promise.reject(error);
 });
 

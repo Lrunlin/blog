@@ -37,7 +37,7 @@
   </el-table>
 </template>
 <script setup>
-import { ref,useAttrs } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";
 
