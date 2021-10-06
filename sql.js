@@ -2,7 +2,7 @@
  const {
      encode
  } = require('js-base64');
- //  直接数据库硬塞数据
+ //  直接数据库塞数据
  const pool = mysql.createPool({
      host: 'localhost',
      user: 'root',

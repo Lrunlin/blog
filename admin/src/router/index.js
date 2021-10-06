@@ -85,7 +85,7 @@ const routes = [{
         path: '/updata-admin',
         component: () => import('@/view/admin/UpdataAdmin.vue'),
         meta: {
-            title: "账号密码修改"
+            title: "密码修改"
         }
     }, {
         path: '/log',

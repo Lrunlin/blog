@@ -69,6 +69,7 @@
         <span>系统设置</span>
       </template>
       <el-menu-item index="/os/data">系统信息</el-menu-item>
+      <el-menu-item index="/updata-admin">修改密码</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
