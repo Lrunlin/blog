@@ -38,10 +38,8 @@ export default function Header() {
     ];
     console.log(`%cauthor:%c刘润霖`, ...style);
     console.log(`%cURL:%cblogweb.cn`, ...style);
-    console.log(
-      `%cTechnology stack:%cNextJs,Vue3,Node-Express,MySql`,
-      ...style
-    );
+    console.log(`%cTechnology stack:%cNextJs,Vue3,Node-Express,MySql`, ...style);
+    console.log("如果你对本站源码感兴趣,不妨添加联系方式一起研究");
   }, []);
 
   const data: nav[] = [
@@ -56,7 +54,7 @@ export default function Header() {
       icon: <SearchOutlined />,
     },
     {
-      label: "订阅", 
+      label: "订阅",
       url: "/rss",
       icon: <DeploymentUnitOutlined />,
       isPhone: true,
@@ -75,7 +73,7 @@ export default function Header() {
             <a href="/">刘润霖</a>
           </h1>
           <span>
-            原创文章&nbsp;<span style={{color:'white'}}>博客无需抄袭</span>
+            原创文章&nbsp;<span style={{ color: "white" }}>博客无需抄袭</span>
           </span>
         </Col>
 

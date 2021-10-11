@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>
+        订阅<%title%>
+    </title>
+    <style>
+        <%style%>
+    </style>
+</head>
+<body>
+    <header>
+        <success>
+            <svg t="1633760097246" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="2433" width="128" height="128">
+                <path
+                    d="M512 85.333333c235.637333 0 426.666667 191.029333 426.666667 426.666667S747.637333 938.666667 512 938.666667 85.333333 747.637333 85.333333 512 276.362667 85.333333 512 85.333333z m182.613333 297.354667a32 32 0 0 0-45.258666 0.032L458.922667 573.44l-84.341334-83.989333a32 32 0 0 0-45.162666 45.344l106.986666 106.549333a32 32 0 0 0 45.226667-0.064l213.013333-213.333333a32 32 0 0 0-0.032-45.258667z"
+                    p-id="2434" fill="#1afa29"></path>
+            </svg>
+        </success>
+        <error>
+            <svg t="1633760386218" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="3538" width="128" height="128">
+                <path
+                    d="M827.392 195.584q65.536 65.536 97.792 147.456t32.256 167.936-32.256 167.936-97.792 147.456-147.456 98.304-167.936 32.768-168.448-32.768-147.968-98.304-98.304-147.456-32.768-167.936 32.768-167.936 98.304-147.456 147.968-97.792 168.448-32.256 167.936 32.256 147.456 97.792zM720.896 715.776q21.504-21.504 18.944-49.152t-24.064-49.152l-107.52-107.52 107.52-107.52q21.504-21.504 24.064-49.152t-18.944-49.152-51.712-21.504-51.712 21.504l-107.52 106.496-104.448-104.448q-21.504-20.48-49.152-23.04t-49.152 17.92q-21.504 21.504-21.504 52.224t21.504 52.224l104.448 104.448-104.448 104.448q-21.504 21.504-21.504 51.712t21.504 51.712 49.152 18.944 49.152-24.064l104.448-104.448 107.52 107.52q21.504 21.504 51.712 21.504t51.712-21.504z"
+                    p-id="3539" fill="#f00f0f"></path>
+            </svg>
+        </error>
+    </header>
+
+    <p class="result">
+        <b>操作<success>成功</success>
+            <error>失败</error>
+        </b>
+    </p>
+    <p class="message">
+        <%message%>
+    </p>
+    <button class="btn_link" id="btnLink">
+        返回首页
+    </button>
+    <script>
+        let dom = '<%state%>' == 'success' ? 'error' : 'success'; //被隐藏的标签
+        let hideDom = document.querySelectorAll(dom);
+        hideDom.forEach(item => {
+            item.style.display = "none";
+        })
+        document.title = `订阅${dom=='success'?'失败':'成功'}`;
+        document.getElementById('btnLink').addEventListener('click', function () {
+            window.location.href = "https://blogweb.cn";
+        })
+    </script>
+</body>
+</html>

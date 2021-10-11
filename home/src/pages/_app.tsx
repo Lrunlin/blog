@@ -4,9 +4,9 @@ import Footer from "@/components/Footer";
 import Aside from "@/components/Aside";
 import router from "next/router";
 
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
+// import "@/style/highLight.scss";
 import "@/style/style.scss";
-import "@/style/highLight.scss";
 import style from "@/style/style.module.scss";
 import "@/modules/axios";
 import { useState } from "react";
@@ -22,6 +22,13 @@ function MyApp({ Component, pageProps }, res, req) {
   router.events.on("routeChangeError", () => {
     setLoading("none");
   });
+
+  //简单的一个小彩蛋
+  console.liurunlin = function () {
+    console.log("没人会发现这个函数");
+    return "刘润霖：blogweb.cn";
+  };
+
   const [loading, setLoading] = useState("none");
   return (
     <>

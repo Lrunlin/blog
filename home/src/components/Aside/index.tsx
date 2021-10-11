@@ -22,7 +22,7 @@ export default function Aside() {
     },
     {
       type: "red",
-      text: "WEB博客",
+      text: "WEB前端博客",
     },
     {
       type: "cyan",
@@ -35,10 +35,6 @@ export default function Aside() {
     {
       type: "cyan",
       text: "Next.js",
-    },
-    {
-      type: "purple",
-      text: "小白",
     },
   ];
   const [messageActive, setEessageActive] = useState<boolean>(false); //是否展示留言

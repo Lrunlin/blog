@@ -5,12 +5,9 @@ const jwt = require('jsonwebtoken');
 let blackList = [];//黑名单，修改密码后在这里存一天
 
 function auth(req, res, next) {
-    if (blackList.some(item => item == req.headers.authorization)) {
+    if (blackList.includes(req.headers.authorization)) {
         res.status(401);
         res.end();
-        setTimeout(() => {
-            blackList = blackList.filter(item => item != req.headers.authorization)
-        }, 86400000);
         return false;
     }
     jwt.verify(req.headers.authorization, global.key, function (err, decoded) {

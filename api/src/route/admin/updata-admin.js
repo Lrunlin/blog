@@ -11,7 +11,14 @@ router.put('/admin', global.auth, async (req, res) => {
     const [data] = await pool.query(sql);
     let success = !!data.affectedRows;
     //将header加入黑名单
-    if (success) blackList.push(req.headers.authorization);
+    if (success) {
+        blackList.push(req.headers.authorization);
+        setTimeout(() => {
+            blackList = blackList.filter(item => item != req.headers.authorization);
+            blackList.shift()
+        }, 86400000);
+    }
+
     res.json({
         success: success,
         message: success ? '修改成功' : '修改失败'

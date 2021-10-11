@@ -1,0 +1,26 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+header {
+  margin-top: 30px;
+  text-align-last: center;
+}
+.result,
+.message {
+  text-align: center;
+}
+button.btn_link {
+  display: block;
+  margin: 0px auto;
+  margin-top: 30px;
+  width: 80px;
+  border: 1px solid rgb(218, 218, 218);
+  background-color: #91d5ff;
+  color: white;
+  border-radius: 10px;
+  height: 40px;
+  &:hover {
+    background-color: #096dd9;
+  }
+}

@@ -26,6 +26,6 @@
      pool.query(sql)
      index++
      console.log(index);
- }, 2000);
+ }, 20);
  //  }
  //  console.timeEnd('timer')

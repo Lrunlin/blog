@@ -1,5 +1,5 @@
 import { Pagination } from "antd";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Article from "@/components/Article";
 import style from "@/style/index.module.scss";
 import Head from "@/modules/Head";
@@ -14,7 +14,12 @@ interface article {
   isShow?: boolean;
   title?: string;
 }
-export default function Home({ data, max }) {
+interface propsType {
+  data:article[],
+  max:number
+}
+
+export default function Home({ data, max }: propsType) {
   //文章数据
   const [articleData, setArticleData] = useState<article[]>(data);
   //文章总条数
@@ -24,11 +29,6 @@ export default function Home({ data, max }) {
       setArticleData(res.data.data);
     });
   }
-  useEffect(() => {
-    setTimeout(() => {
-      axios.get("/article/page/1", {});
-    }, 2000);
-  }, []);
   return (
     <>
       {Head({

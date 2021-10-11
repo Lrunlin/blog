@@ -12,3 +12,7 @@ declare module "*.jpg" {
   const content: any;
   export = content;
 }
+
+interface Console {
+  liurunlin: Function;
+}
