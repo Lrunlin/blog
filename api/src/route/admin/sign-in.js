@@ -4,9 +4,13 @@ const router = express.Router();
 const pool = require("@/modules/pool");
 const md5 = require('md5');
 const jwt = require('jsonwebtoken')
+const fs = require('fs');
+const path = require('path');
+
 
 
 router.get('/admin', async (req, res) => {
+    let privateKey = fs.readFileSync(path.join(__dirname, '../../store/key/private.pem')).toString();
     let {
         admin,
         password
@@ -24,7 +28,8 @@ router.get('/admin', async (req, res) => {
 
     let token = success ? jwt.sign({
         admin: encodeAdmin,
-    }, global.key, {
+    }, privateKey, {
+        algorithm: 'RS256',
         expiresIn: '1d',
     }) : '';
 

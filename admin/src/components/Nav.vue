@@ -55,14 +55,6 @@
 
     <el-sub-menu index="2">
       <template #title>
-        <el-icon :size="16"> <document-copy /> </el-icon>
-        <span>文章获取</span>
-      </template>
-      <el-menu-item index="/create-copy">文章借鉴</el-menu-item>
-      <el-menu-item index="/copy">任务查询</el-menu-item>
-    </el-sub-menu>
-    <el-sub-menu index="3">
-      <template #title>
         <el-icon :size="16">
           <More />
         </el-icon>

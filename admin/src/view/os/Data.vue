@@ -1,8 +1,8 @@
 <template>
   <header>
     <span>系统名称：{{ osData.os_name }}</span>
-    <span>闲置内存：{{ osData.memory_blank }}</span>
-    <span>全部内存：{{ osData.memory_total }}</span>
+    <span>闲置内存：{{ osData.blank }}</span>
+    <span>全部内存：{{ osData.total }}</span>
     <span>启动时长:{{ osData.time }}</span>
   </header>
   <div id="Echarts1" style="width: 500px; height: 500px"></div>
@@ -13,9 +13,28 @@ import * as echarts from "echarts";
 import axios from "axios";
 import moment from "moment";
 let osData = ref({});
+
+const formatSize = (fileSize) => {
+  let result = ''
+  if (fileSize >= 1048576) {
+    result = fileSize % 1048576 === 0 ? fileSize / 1048576 + 'MB' : Math.trunc(fileSize / 1048576) + 'MB'
+  } else if (fileSize >= 1024) {
+    result = fileSize % 1024 === 0 ? fileSize / 1024 + 'KB' : Math.trunc(fileSize / 1024) + 'KB'
+  } else {
+    result = fileSize + 'B'
+  }
+  return result;
+}
+
+const formatData = (data) => {
+  data.total = formatSize(data.memory_total)
+  data.blank = formatSize(data.memory_blank)
+  return data;
+}
+
 axios.get("/os").then((res) => {
   res.data.data.time = `${(res.data.data.time / 60 / 60).toFixed(1)}h`;
-  osData.value = res.data.data;
+  osData.value = formatData(res.data.data);
 });
 
 let option = {
@@ -106,6 +125,8 @@ let option = {
     },
   ],
 };
+
+
 let timer;
 onMounted(() => {
   var chartDom = document.getElementById("Echarts1");
@@ -114,7 +135,7 @@ onMounted(() => {
   timer = setInterval(() => {
     axios.get("/os").then((res) => {
       res.data.data.time = `${(res.data.data.time / 60 / 60).toFixed(1)}h`;
-      osData.value = res.data.data;
+      osData.value = formatData(res.data.data);
       option.series[0].data[0].value =
         (
           (osData.value.memory_total - osData.value.memory_blank) /

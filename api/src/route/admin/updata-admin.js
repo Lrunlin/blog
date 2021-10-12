@@ -3,7 +3,9 @@ const app = express();
 const router = express.Router();
 const md5 = require('md5');
 const pool = require("@/modules/pool");
-const blackList = require('@/modules/auth').blackList;
+const {
+    addBlackList
+} = require('@/store/blackList')
 
 router.put('/admin', global.auth, async (req, res) => {
     let password = req.body.password;
@@ -11,13 +13,7 @@ router.put('/admin', global.auth, async (req, res) => {
     const [data] = await pool.query(sql);
     let success = !!data.affectedRows;
     //将header加入黑名单
-    if (success) {
-        blackList.push(req.headers.authorization);
-        setTimeout(() => {
-            blackList = blackList.filter(item => item != req.headers.authorization);
-            blackList.shift()
-        }, 86400000);
-    }
+    if (success) addBlackList(req.headers.authorization)
 
     res.json({
         success: success,

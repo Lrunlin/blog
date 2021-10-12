@@ -1,16 +1,22 @@
 /*
 todo 用于需要登录的接口上判断用户是否携带了token
+ http://www.metools.info/code/c80.html
 */
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
-let blackList = [];//黑名单，修改密码后在这里存一天
+const path = require('path')
+const {
+    hasBlackList
+} = require('@/store/blackList');
+let publicKey = fs.readFileSync(path.join(__dirname, '../store/key/public.pem')).toString();
 
 function auth(req, res, next) {
-    if (blackList.includes(req.headers.authorization)) {
+    if (hasBlackList(req.headers.authorization)) {
         res.status(401);
         res.end();
         return false;
     }
-    jwt.verify(req.headers.authorization, global.key, function (err, decoded) {
+    jwt.verify(req.headers.authorization, publicKey, function (err, decoded) {
         if (decoded) {
             req.admin = decoded.admin;
             next()
@@ -21,4 +27,3 @@ function auth(req, res, next) {
     });
 }
 module.exports = auth;
-module.exports.blackList = blackList;

@@ -10,9 +10,7 @@
   >
     <el-table-column label="日期" width="140">
       <template v-slot="scope">
-        <span>
-          {{ scope.row.date }}
-        </span>
+        <span>{{ scope.row.date }}</span>
       </template>
     </el-table-column>
     <el-table-column prop="ip" label="IP" width="180" />
@@ -33,9 +31,7 @@
     </el-table-column>
   </el-table>
   <el-dialog v-model="dialogVisible" title="确定清空日志？" width="30%">
-    <h2 style="color: red; font-weight: 700">
-      这将使你的日志无法恢复，请谨慎操作
-    </h2>
+    <h2 style="color: red; font-weight: 700">这将使你的日志无法恢复，请谨慎操作</h2>
     <el-input v-model="userCode" placeholder="验证码" />
     <el-input v-model="code" disabled />
     <template #footer>
@@ -49,8 +45,7 @@
               : ''
           "
           :disabled="code != userCode"
-          >确定清空</el-button
-        >
+        >确定清空</el-button>
       </span>
     </template>
   </el-dialog>
@@ -58,7 +53,11 @@
 <script setup>
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
+import { useRouter } from 'vue-router';
 import axios from "axios";
+
+let router = useRouter();
+
 let tableData = ref([]);
 let data;
 axios.get("/log").then((res) => {
@@ -86,6 +85,7 @@ function remove(data) {
     if (res.data.success) {
       tableData.value.splice(+data.id, 1);
       ElMessage.success(res.data.message);
+      router.go(0);
     } else {
       ElMessage.error(res.data.message);
     }
@@ -99,6 +99,7 @@ function logClear() {
   axios.delete("/log/clear").then((res) => {
     ElMessage.success(res.data.message);
     dialogVisible.value = false;
+    router.go(0);
   });
 }
 </script>

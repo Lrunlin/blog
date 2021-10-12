@@ -5,7 +5,6 @@ const fs = require('fs');
 const moment = require('moment');
 
 router.get('/assets', async (req, res) => {
-
     const formatSize = (fileSize) => {
         let result = ''
         if (fileSize >= 1048576) {
@@ -28,10 +27,12 @@ router.get('/assets', async (req, res) => {
             time: moment(fileData.birthtime).format('yyyy-MM-DD hh:mm')
         }
     })
+
     res.json({
         success: true,
         message:'查询静态文件',
         data: data
-    })
+    });
+    
 })
 module.exports = router;

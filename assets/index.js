@@ -5,24 +5,21 @@ const fs = require('fs')
 const cors = require('cors');
 app.use(cors())
 // 接收post请求
-const cookieParser = require('cookie-parser');
 app.use(express.urlencoded({
     extended: false
 }));
 app.use(express.json());
 
-app.use(cookieParser())
-
+let publicKey = fs.readFileSync('./assets/public.pem').toString();//公钥
 
 app.use('/temporary', express.static('./temporary'));
 app.use('/image', express.static('./image'));
 app.use('/robots.txt', express.static('./assets/robots.txt'));
 
 
-global.key = "刘润霖博客设置cookie的key用于验证是否登录或者对一些信息使用MD5、ASE进行加密";
 const jwt = require('jsonwebtoken');
 app.all('*',(req, res, next) => {
-    jwt.verify(req.headers.authorization, global.key, function (err, decoded) {
+    jwt.verify(req.headers.authorization, publicKey, function (err, decoded) {
         if (decoded) {
             next()
         } else {
