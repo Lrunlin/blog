@@ -42,7 +42,7 @@ router.post('/send-email', async (req, res) => {
     let salt = md5(Math.random() + '' + new Date());
     let token = md5(to + mode + salt);
     let query = `?email=${encode(to)}&mode=${mode}&token=${token}`;
-    let href = ['localhost', '127.0.0.1'].find(item => req.headers.origin.includes(item)) ?
+    let href = ['localhost', '127.0.0.1'].some(item => req.headers.origin.includes(item)) ?
         `http://localhost:3000` :
         `https://blog-api.blogweb.cn`;
 

@@ -21,7 +21,7 @@ const upload = multer({
 router.post('/assets', upload.single('image'), async (req, res) => {
     const path = req.file.path; //图片原本的名字
     const name = req.file.filename;
-    let data = ['localhost', '127.0.0.1'].find(item => req.headers.origin.includes(item)) ?
+    let data = ['localhost', '127.0.0.1'].some(item => req.headers.origin.includes(item)) ?
         `http://localhost:3456/temporary/${name}` : `https://assets.blogweb.cn/temporary/${name}`;
     res.json({
         errno: 0,

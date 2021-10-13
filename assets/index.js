@@ -10,7 +10,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 
-let publicKey = fs.readFileSync('./assets/public.pem').toString();//公钥
+let publicKey = fs.readFileSync('./assets/public.pem').toString(); //公钥
 
 app.use('/temporary', express.static('./temporary'));
 app.use('/image', express.static('./image'));
@@ -18,7 +18,7 @@ app.use('/robots.txt', express.static('./assets/robots.txt'));
 
 
 const jwt = require('jsonwebtoken');
-app.all('*',(req, res, next) => {
+app.all('*', (req, res, next) => {
     jwt.verify(req.headers.authorization, publicKey, function (err, decoded) {
         if (decoded) {
             next()
