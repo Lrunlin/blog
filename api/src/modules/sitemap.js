@@ -12,10 +12,11 @@ const header = `<?xml version="1.0" encoding="UTF-8"?>
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >`
-let body = '';
 const footer = `\n</urlset>`
 
 async function siteMap() {
+    let body = '';
+
     let list = [{
         href: '',
         priority: '1'
@@ -32,7 +33,7 @@ async function siteMap() {
     let [data] = await pool.query(`select router from article;`);
     data.forEach(item => {
         list.push({
-            href: item.router,
+            href: `article/${item.router}`,
             priority: '0.7'
         })
     })
