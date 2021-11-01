@@ -21,12 +21,9 @@ const upload = multer({
 router.post('/assets', upload.single('image'), async (req, res) => {
     const path = req.file.path; //图片原本的名字
     const name = req.file.filename;
-    let data = ['localhost', '127.0.0.1'].some(item => req.headers.origin.includes(item)) ?
+    let data = process.env.ENV == 'dev' ?
         `http://localhost:3456/temporary/${name}` : `https://assets.blogweb.cn/temporary/${name}`;
-    res.json({
-        errno: 0,
-        data: data
-    })
+
 
     //处理水印
     let size = images(path).size() //根据图片宽度动态 设置修改水印的宽度
@@ -47,6 +44,11 @@ router.post('/assets', upload.single('image'), async (req, res) => {
         .save(path, {
             quality: 60
         });
+
+    res.json({
+        errno: 0,
+        data: data
+    });
 
     fs.unlinkSync(watermark)
     setTimeout(() => {

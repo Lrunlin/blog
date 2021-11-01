@@ -23,6 +23,7 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-axios.defaults.baseURL = process.env.NODE_ENV === "production" ?
-    'https://blog-api.blogweb.cn' :
-    "http://localhost:3000/";
+// axios.defaults.baseURL = process.env.NODE_ENV === "production" ?
+//     'https://blog-api.blogweb.cn' :
+//     "http://localhost:3000/";
+axios.defaults.baseURL = "http://localhost:3000/";

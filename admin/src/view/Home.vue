@@ -12,6 +12,8 @@ import { useRouter, useRoute } from "vue-router";
 let router = useRouter();
 let route = useRoute();
 
+
+
 </script>
 <style scoped lang='scss'>
 </style>

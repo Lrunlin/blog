@@ -22,6 +22,7 @@ export default defineConfig({
   open: true, // 浏览器自动打开
   base: './', // 生产环境下的公共路径
   build: {
+    chunkSizeWarningLimit:1024,//大于1mb警报
     terserOptions: {
       compress: {
         drop_console: true,

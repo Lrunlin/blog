@@ -87,6 +87,24 @@ const routes = [{
         meta: {
             title: "静态文件察看"
         }
+    }, {
+        path: '/create-copy',
+        component: () => import('@/view/copy/CreateCopy.vue'),
+        meta: {
+            title: "文章借鉴"
+        }
+    }, {
+        path: '/copy',
+        component: () => import('@/view/copy/Copy.vue'),
+        meta: {
+            title: "任务查询"
+        }
+    }, {
+        path: '/comment',
+        component: () => import('@/view/comment.vue'),
+        meta: {
+            title: "评论管理"
+        }
     }]
 }]
 const router = createRouter({

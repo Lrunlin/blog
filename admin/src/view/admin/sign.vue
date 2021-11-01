@@ -8,7 +8,7 @@
       </div>
       <div class="form_item">
         <Key class="form_icon" />
-        <input type="text" v-model="form.password" class="form_input" />
+        <input type="password" v-model="form.password" class="form_input" />
       </div>
       <button class="form_btn" @click="sign">登录</button>
     </div>

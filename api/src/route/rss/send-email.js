@@ -11,7 +11,6 @@ const {
     encode,
     decode
 } = require('js-base64');
-
 router.post('/send-email', async (req, res) => {
     const to = req.body.email;
 
@@ -42,9 +41,10 @@ router.post('/send-email', async (req, res) => {
     let salt = md5(Math.random() + '' + new Date());
     let token = md5(to + mode + salt);
     let query = `?email=${encode(to)}&mode=${mode}&token=${token}`;
-    let href = ['localhost', '127.0.0.1'].some(item => req.headers.origin.includes(item)) ?
+    let href = process.env.ENV == 'dev' ?
         `http://localhost:3000` :
         `https://blog-api.blogweb.cn`;
+
 
     let mailOptions = {
         from: '353575900@qq.com',
@@ -60,33 +60,27 @@ router.post('/send-email', async (req, res) => {
         <div>本站首页:<a href="https://blogweb.cn">博客首页</a></div>
         `
     };
-    if (to) {
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                res.json({
-                    success: false,
-                    message: '发送验证码失败'
-                })
-                return false;
-            };
-            res.cookie('throttle', to, {
-                httpOnly: false,
-                secure: true,
-                path: '/',
-                maxAge: 60000,
-            })
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
             res.json({
-                success: true,
-                message: '发送成功',
+                success: false,
+                message: '发送验证码失败'
             })
-            setRssEmail(encode(to), salt);
-        });
-    } else {
+            return false;
+        };
+        res.cookie('throttle', to, {
+            httpOnly: false,
+            secure: true,
+            path: '/',
+            maxAge: 60000,
+        })
         res.json({
             success: true,
-            message: '请输入邮箱'
+            message: '发送成功',
         })
-    };
+        setRssEmail(encode(to), salt);
+    });
 })
 
 module.exports = router;

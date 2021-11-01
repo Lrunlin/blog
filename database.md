@@ -81,3 +81,21 @@ CREATE TABLE IF NOT EXISTS `message`(
    PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+## 评论 ##
+<!-- CREATE TABLE IF NOT EXISTS `comment`(
+   `id` VARCHAR(40) NOT NULL,
+   `token` VARCHAR(100) NOT NULL,
+   `content` TEXT NOT NULL,
+   `time` DATE,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8; -->
+
+CREATE TABLE IF NOT EXISTS `comment`(
+   `id` VARCHAR(40) NOT NULL,
+   `token` VARCHAR(100) NOT NULL,
+   `face` VARCHAR(100) NOT NULL,
+   `name` VARCHAR(100) NOT NULL,
+   `content` TEXT NOT NULL,
+   `time` DATE,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

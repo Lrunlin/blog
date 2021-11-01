@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "dev": "cross-env ENV=dev nodemon  index.js",
+    "start": "cross-env ENV=pro nodemon --watch ./router ./index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "image-size": "^1.0.0",
     "images": "^3.2.3",
@@ -20,6 +21,8 @@
     "moment": "^2.29.1",
     "multer": "^1.4.2",
     "nodemon": "^2.0.7",
-    "sharp": "^0.29.1"
+    "pn": "^1.1.0",
+    "sharp": "0.29.1",
+    "svg2png": "^4.1.1"
   }
 }

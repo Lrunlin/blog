@@ -17,16 +17,14 @@ async function createLog(req, res, next) {
     if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '{"data":[]}'); // todo 写入时先判断有误对应的文件夹
 
     let result = await res.once('finish', calResponseTime);
-
     let log = {
         id: +new Date() + ((Math.random() + '').toString(32)),
         ip: getIp(),
         path: req.path,
         method: req.method,
         responseTime: calResponseTime(),
-        time: moment().format('yyyy-MM-DD HH:mm:ss')
+        time: moment().format('yyyy-MM-DD HH:mm:ss'),
     }
-
     let logData = JSON.parse(fs.readFileSync(filePath).toString());
     logData.data.unshift(log)
     fs.writeFileSync(filePath, JSON.stringify(logData))

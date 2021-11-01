@@ -26,15 +26,19 @@ export default function Aside() {
     },
     {
       type: "cyan",
-      text: "React",
-    },
-    {
-      type: "cyan",
       text: "Antd",
     },
     {
       type: "cyan",
       text: "Next.js",
+    },
+    {
+      type: "cyan",
+      text: "Hooks",
+    },
+    {
+      type: "cyan",
+      text: "Express",
     },
   ];
   const [messageActive, setEessageActive] = useState<boolean>(false); //是否展示留言

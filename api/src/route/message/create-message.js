@@ -16,8 +16,11 @@ router.post('/message', async (req, res) => {
             req.socket.remoteAddress ||
             req.connection.socket.remoteAddress;
     }
-    address = ""
-    let ip = ['localhost', '127.0.0.1'].some(item => req.headers.origin.includes(item)) ? '42.249.23.230' : getClientIp(req); //判断是否内网，换ip
+    address = "";
+    let href = process.env.ENV == 'dev' ? '42.249.23.230' : getClientIp(req); //判断是否内网，换ip
+
+
+
     await axios.get(`https://api.map.baidu.com/location/ip?ak=LC742jDXOpX0YK7zCujnaYYBUiifRHBT&ip=${ip}&coor=bd09ll`).then(res => {
         if (res.data.status == 0) {
             let {

@@ -6,18 +6,12 @@ import { useRouter } from "next/router";
 import { Col, Row, BackTop } from "antd";
 import Icon from "@/components/Icon";
 
-import {
-  HomeOutlined,
-  SearchOutlined,
-  UserOutlined,
-  DeploymentUnitOutlined,
-} from "@ant-design/icons";
+import { HomeOutlined, SearchOutlined, UserOutlined, AppstoreOutlined } from "@ant-design/icons";
 
 interface nav {
   label: string;
   url: string;
   icon: JSX.Element;
-  isPhone?: boolean;
 }
 
 export default function Header() {
@@ -54,10 +48,9 @@ export default function Header() {
       icon: <SearchOutlined />,
     },
     {
-      label: "订阅",
-      url: "/rss",
-      icon: <DeploymentUnitOutlined />,
-      isPhone: true,
+      label: "广场",
+      url: "/square",
+      icon: <AppstoreOutlined />,
     },
     {
       label: "关于作者",
@@ -73,22 +66,18 @@ export default function Header() {
             <a href="/">刘润霖</a>
           </h1>
           <span>
-            原创文章&nbsp;<span style={{ color: "white" }}>博客无需抄袭</span>
+            原创文章
+            {/* &nbsp;<span style={{ color: "white" }}>博客无需抄袭</span> */}
           </span>
         </Col>
 
-        <Col sm={6} className={style.phone_nav}>
+        <Col sm={8} className={style.phone_nav}>
           <nav>
             {data.map((item: nav) => {
               return (
                 <Link href={item.url} key={item.url}>
-                  {/* 判断是否phone和active */}
-                  <a
-                    className={
-                      (!!item.isPhone && "phone") +
-                      ` ${useRouter().asPath == item.url && style.active}`
-                    }
-                  >
+                  {/* 判断是否active */}
+                  <a className={`${useRouter().asPath == item.url && style.active}`}>
                     <Icon icon={item.icon} />
                     <span className="pc">{item.label}</span>
                   </a>

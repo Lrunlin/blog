@@ -6,7 +6,9 @@ const md5 = require('md5');
 const jwt = require('jsonwebtoken')
 const fs = require('fs');
 const path = require('path');
-
+const {
+    PRIVETEKEY
+} = require('@/store/key')
 
 
 router.get('/admin', async (req, res) => {
@@ -28,7 +30,7 @@ router.get('/admin', async (req, res) => {
 
     let token = success ? jwt.sign({
         admin: encodeAdmin,
-    }, privateKey, {
+    }, PRIVETEKEY, {
         algorithm: 'RS256',
         expiresIn: '1d',
     }) : '';

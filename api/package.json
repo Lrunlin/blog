@@ -4,7 +4,8 @@
   "description": "博客接口",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch ./src ./src/index.js"
+    "dev": "cross-env ENV=dev nodemon --watch ./src ./src/index.js",
+    "start": "cross-env ENV=pro nodemon --watch ./src ./src/index.js"
   },
   "_moduleAliases": {
     "@": "./src"
@@ -13,9 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.4",
+    "btoa": "^1.2.1",
     "cheerio": "^1.0.0-rc.10",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "ip": "^1.1.5",
     "js-base64": "^3.6.1",
@@ -28,6 +31,7 @@
     "mysql2": "^2.3.0",
     "nodemailer": "^6.6.3",
     "nodemon": "^2.0.12",
+    "puppeteer": "^10.4.0",
     "superagent": "^6.1.0"
   }
 }
