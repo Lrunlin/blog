@@ -61,6 +61,15 @@ function search({ data, type }: { data: object[]; type: object[] }) {
           "刘润霖WEB个人博客,本站可以搜索文章,内容为日常技术文章,成果物毕业设计分享,本章源代码更新。" +
           `${routerType ? description : ""}`,
       })}
+      {/* <Head
+        title={"刘润霖||搜索文章" + `${routerType ? "||" + routerType : ""}`}
+        keywords={`搜索文章,${routerType ? routerType : ""}`}
+        description={
+          "刘润霖WEB个人博客,本站可以搜索文章,内容为日常技术文章,成果物毕业设计分享,本章源代码更新。" +
+          `${routerType ? description : ""}`
+        }
+      /> */}
+
       <Input
         size="large"
         placeholder="请输入文章关键词"
@@ -96,16 +105,9 @@ function search({ data, type }: { data: object[]; type: object[] }) {
 
 search.getInitialProps = async () => {
   let data = { data: null, type: null };
-  await axios
-    .get("/article", {
-      params: {
-        key: ["type", "time", "title", "introduce", "router"],
-        show: true,
-      },
-    })
-    .then(res => {
-      data.data = res.data.data;
-    });
+  await axios.get("/article").then(res => {
+    data.data = res.data.data;
+  });
   await axios.get("/type").then(res => {
     data.type = res.data.data;
   });

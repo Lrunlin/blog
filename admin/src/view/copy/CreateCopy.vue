@@ -6,21 +6,11 @@
   <el-form label-width="100px">
     <el-form-item label="文章类型">
       <el-select v-model="form.type" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.text"
-          :label="item.text"
-          :value="item.href"
-        />
+        <el-option v-for="item in options" :key="item.text" :label="item.text" :value="item.href" />
       </el-select>
     </el-form-item>
     <el-form-item label="个数">
-      <el-input-number
-        v-model="form.number"
-        :min="1"
-        :max="100"
-        label="查询个数"
-      />
+      <el-input-number v-model="form.number" :min="1" :max="100" label="查询个数" />
     </el-form-item>
     <el-form-item label="禁止图片">
       <el-switch v-model="form.noImage" />

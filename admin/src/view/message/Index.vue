@@ -1,28 +1,18 @@
 <template>
   <el-table :data="tableData" style="width: 100%">
-    <el-table-column prop="contact" label="联系方式" width="180">
-    </el-table-column>
+    <el-table-column prop="contact" label="联系方式" width="180"></el-table-column>
     <el-table-column prop="content" label="留言内容" width="180">
       <template v-slot="scope">
-        <el-tooltip
-          effect="dark"
-          :content="scope.row.content"
-          placement="top-start"
-        >
+        <el-tooltip effect="dark" :content="scope.row.content" placement="top-start">
           <div class="overflow">{{ scope.row.content }}</div>
         </el-tooltip>
       </template>
     </el-table-column>
-    <el-table-column prop="address" label="地址"> </el-table-column>
-    <el-table-column prop="time" label="日期" width="180"> </el-table-column>
+    <el-table-column prop="address" label="地址"></el-table-column>
+    <el-table-column prop="time" label="日期" width="180"></el-table-column>
     <el-table-column label="操作" width="180">
       <template v-slot="scope">
-        <el-button
-          type="primary"
-          icon="el-icon-view"
-          circle
-          @click="viewMessage(scope.row)"
-        ></el-button>
+        <el-button type="primary" icon="el-icon-view" circle @click="viewMessage(scope.row)"></el-button>
         <el-button
           type="danger"
           icon="el-icon-delete"
@@ -33,20 +23,12 @@
     </el-table-column>
   </el-table>
   <el-dialog title="留言展示" v-model="currentDisplay" width="30%">
-    <div>
-      {{ currentDisplay.contact }}
-    </div>
-    <div>
-      {{ currentDisplay.content }}
-    </div>
-    <div>
-      {{ currentDisplay.time }}
-    </div>
+    <div>{{ currentDisplay.contact }}</div>
+    <div>{{ currentDisplay.content }}</div>
+    <div>{{ currentDisplay.time }}</div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="currentDisplay = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="currentDisplay = false">确 定</el-button>
       </span>
     </template>
   </el-dialog>

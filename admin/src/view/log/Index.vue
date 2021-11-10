@@ -1,3 +1,5 @@
+<!-- author:谭玉美 -->
+
 <template>
   <el-button type="danger" @click="dialogVisible = true">清空日志</el-button>
 

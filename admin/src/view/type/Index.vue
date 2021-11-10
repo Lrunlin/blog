@@ -1,19 +1,17 @@
 <template>
+  <!-- element-plus -->
   <el-form label-width="80px">
     <el-form-item label="添加类型">
       <el-input v-model="type" placeholder="填写文章类型"></el-input>
       <el-button type="primary" @click="create">添加</el-button>
     </el-form-item>
   </el-form>
+  <!-- 显示的数据展示表格 -->
   <el-table :data="store.state.type.typeData" style="width: 100%">
     <el-table-column label="类型">
       <template v-slot="scope">
-        <el-tooltip
-          effect="dark"
-          :content="`添加时间:${scope.row.time}`"
-          placement="top"
-        >
-          <span> {{ scope.row.type }} </span>
+        <el-tooltip effect="dark" :content="`添加时间:${scope.row.time}`" placement="top">
+          <span @click="activeType = scope.row.type">{{ scope.row.type }}</span>
         </el-tooltip>
       </template>
     </el-table-column>
@@ -28,9 +26,23 @@
       </template>
     </el-table-column>
   </el-table>
+  <!-- 弹窗修改类型 -->
+  <el-dialog v-model="activeType" title="确定修改文章类型？" width="30%">
+    <span>
+      修改
+      <span style="font-weight: 700;">{{ activeType }}</span> 为：
+    </span>
+    <el-input v-model="updataType" placeholder="填写文章类型(禁止特殊字符)"></el-input>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="activeType = false" type="danger">关闭</el-button>
+        <el-button type="primary" :disabled="isDisabled" @click="updata">修改</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
 import axios from 'axios';
 import { ElMessage } from "element-plus";
@@ -66,6 +78,33 @@ function remove(type, index) {
     }
   });
 }
+
+//判断弹窗中的确认按钮是否可以点击 ，要求非空并且没有特殊符号
+let isDisabled = computed(() => {
+  let isSymbol = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、]/im.test(updataType.value)
+  let isEmpty = !/^[\s\S]*.*[^\s][\s\S]*$/.test(updataType.value);
+  return isSymbol || isEmpty;
+});
+
+let updataType = ref('');//修改类型的文本框中的值
+let activeType = ref(false);
+//关闭弹窗时清除输入框内容
+watch(activeType, function (newValue) {
+  if (!newValue) updataType.value = ""
+})
+function updata() {
+  axios.put(`/type/${activeType.value}`, { type: updataType.value }).then(res => {
+    ElMessage({
+      message: res.data.message,
+      type: res.data.success ? 'success' : 'error',
+    })
+    if (res.data.success) {
+      activeType.value = false;
+      store.dispatch("getType");
+    }
+  })
+};
+
 </script>
 <style scoped lang='scss'>
 .el-form {

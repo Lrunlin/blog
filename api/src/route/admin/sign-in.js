@@ -12,7 +12,6 @@ const {
 
 
 router.get('/admin', async (req, res) => {
-    let privateKey = fs.readFileSync(path.join(__dirname, '../../store/key/private.pem')).toString();
     let {
         admin,
         password

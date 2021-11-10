@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { FieldTimeOutlined, FileTextOutlined } from "@ant-design/icons";
-import { Tag, Skeleton } from "antd";
+import { FieldTimeOutlined, FileTextOutlined, LikeOutlined } from "@ant-design/icons";
+import { Tag, Skeleton, Badge } from "antd";
 import Icon from "@/components/Icon";
 import style from "./index.module.scss";
 
@@ -29,10 +29,8 @@ export default function Article({ data, className }: articleComponent) {
       {articleData.map((item, index) => {
         return (
           // 动态接收一个className，参数为可选参数
-          <article
-            key={item.router}
-            className={style.article + ` ${className || ""}`}
-          >
+          <article key={item.router} className={style.article + ` ${className || ""}`}>
+            {item.isTop && <Badge.Ribbon text={<LikeOutlined />}></Badge.Ribbon>}
             <h2 className={style.title}>
               <Link href={`/article/${item.router}`}>
                 <a>{item.title}</a>
@@ -41,7 +39,7 @@ export default function Article({ data, className }: articleComponent) {
             <div className="types pc">
               {item.type.map((item: string, index) => {
                 return (
-                  <Link href={`/search/${item}`} key={item+Math.random()}>
+                  <Link href={`/search/${item}`} key={item + Math.random()}>
                     <a>
                       <Tag color="blue">{item}</Tag>
                     </a>
@@ -53,11 +51,7 @@ export default function Article({ data, className }: articleComponent) {
               <Icon icon={<FieldTimeOutlined />} />
               {item.time}
             </time>
-            {lock ? (
-              <div className={style.introduce}>{item.introduce}</div>
-            ) : (
-              <Skeleton />
-            )}
+            {lock ? <div className={style.introduce}>{item.introduce}</div> : <Skeleton />}
             <div className={style.article_footer}>
               <div className={style.article_link}>
                 <Icon icon={<FileTextOutlined />} />

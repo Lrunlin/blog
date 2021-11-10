@@ -26,17 +26,18 @@ const formatSize = (fileSize) => {
   return result;
 }
 
+//格式化所占空间大小
 const formatData = (data) => {
   data.total = formatSize(data.memory_total)
   data.blank = formatSize(data.memory_blank)
   return data;
 }
-
+//请求相关信息
 axios.get("/os").then((res) => {
   res.data.data.time = `${(res.data.data.time / 60 / 60).toFixed(1)}h`;
   osData.value = formatData(res.data.data);
 });
-
+//echarts图表
 let option = {
   series: [
     {
@@ -126,7 +127,7 @@ let option = {
   ],
 };
 
-
+//DOM渲染后一秒钟请求一次
 let timer;
 onMounted(() => {
   var chartDom = document.getElementById("Echarts1");
@@ -145,11 +146,11 @@ onMounted(() => {
     });
   }, 1000);
 });
-
+//组件销毁时删除定时器
 onUnmounted(() => {
   clearInterval(timer);
 });
-</script>
+                                                                                                                                                                                                                 </script>
 <style scoped lang='scss'>
 #Echarts1 {
   margin: 0px auto;

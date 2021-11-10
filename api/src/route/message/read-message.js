@@ -1,3 +1,4 @@
+/*author:田蕤实*/
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -17,11 +18,3 @@ router.get('/message', global.auth, async (req, res) => {
     })
 })
 module.exports = router;
-// CREATE TABLE IF NOT EXISTS `message`(
-//    `id` VARCHAR(50) NOT NULL,
-//    `content` TEXT NOT NULL,
-//    `contact` VARCHAR(200) NOT NULL,
-//    `address` VARCHAR(200) NOT NULL,
-//    `time` DATETIME,
-//    PRIMARY KEY ( `id` )
-// )ENGINE=InnoDB DEFAULT CHARSET=utf8;

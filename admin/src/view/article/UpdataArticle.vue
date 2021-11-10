@@ -76,7 +76,8 @@ axios.get(`/article/router/${route.query.router}`).then((res) => {
 // 判断非空
 let notEmpty = computed(() => {
   let _ref = { ...form }; //触发响应式
-  let testForm = JSON.parse(JSON.stringify(form));
+  let testForm = JSON.parse(JSON.stringify(form));//要求深拷贝/Object.assign()
+  
   testForm.article = store.state.html;
   testForm.type = store.state.type.type;
   testForm.router = "router"; //router不校验写一个让他非空

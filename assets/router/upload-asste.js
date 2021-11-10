@@ -1,3 +1,5 @@
+/*author:吴庆泽*/
+
 const express = require('express')
 const app = express()
 const router = express.Router();
@@ -36,9 +38,11 @@ router.post('/assets', upload.single('image'), async (req, res) => {
     //获取水印宽度计算水印位置
     let sizeWatermark = images(watermark).size();
     let position = {
+        //位置（距离右下各30像素）
         top: size.width - (sizeWatermark.width + 30),
         left: size.height - (sizeWatermark.height + 30),
     }
+    //正式处理图片（打水印，压缩）
     await images(path)
         .draw(images(watermark), position.top, position.left)
         .save(path, {
@@ -50,7 +54,8 @@ router.post('/assets', upload.single('image'), async (req, res) => {
         data: data
     });
 
-    fs.unlinkSync(watermark)
+    fs.unlinkSync(watermark)//删除水印图片
+    //一天后尝试直接删除图片
     setTimeout(() => {
         try {
             fs.unlinkSync(path);

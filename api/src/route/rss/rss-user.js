@@ -1,3 +1,4 @@
+/*author:丁光禹*/
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -58,11 +59,13 @@ router.get('/rss-user', async (req, res) => {
         template('message', '你的地址已失效可能是你的等待时间超过了30分钟，或者是您已经点击过此链接，请返回至订阅页面查看')
         res.send(_html);
         return false;
-    }
+    };
+
     let [data] = await pool.query(mode == 'delete' ? deleteRss : createRss)
 
     //todo 通过token邮箱没问题进行数据库操作
     if (!!data.affectedRows) {
+        //成功
         template('state', 'success')
         template('message', `${mode=='delete'?'取消订阅':'订阅'}成功`)
         res.send(_html);

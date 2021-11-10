@@ -30,6 +30,7 @@ router.get('/user', async (req, res) => {
             }
         }).then(response => {
             let isSuccess = !!response.data.login;
+            console.log(response.data);
             res.json({
                 success: isSuccess,
                 data: response.data

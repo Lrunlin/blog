@@ -37,8 +37,27 @@ app.use(cors({
   credentials: true,
 }));
 
+const responseTime = function () {
+  return function (req, res, next) {
+    let _startTime = new Date() // 获取时间 t1
+    let calResponseTime = function () {
+      let now = new Date();
+      req.time = now - _startTime;
+    }
+    res.once('finish', calResponseTime);
+    return next();
+  }
+}
+app.use(responseTime())
+
+
+
 const createLog = require('@/modules/createLog');
 app.use(createLog)
+
+
+
+
 
 function fileDisplay(filePath) {
   let files = fs.readdirSync(filePath);
@@ -62,8 +81,5 @@ const filePath = path.resolve('./src/route');
 fileDisplay(filePath)
 
 const siteMap = require('@/modules/sitemap.js'); //生成网站地图
-const {
-  atobPolyfill
-} = require("js-base64");
 
 app.listen(3000, () => console.log(`run`));

@@ -19,9 +19,6 @@ router.post('/news/web', async (req, res) => {
         pageData.data.result.forEach(async (item) => {
             let newHtml = await axios.get(item.path);
             const $ = cheerio.load(newHtml.data);
-            const image = await axios.get(item.image, {
-                responseType: 'arraybuffer'
-            });
             item.html = $('.post_body').html();
             item.introduce = $('.post_body').text().substring(0, 200);
             item.path = md5(+new Date() + '' + Math.random());

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "moduleResolution": "node",
+    "strict": true,
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true, // 不允许隐式的 any 类型
+    "removeComments": true // 删除注释
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

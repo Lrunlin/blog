@@ -1,3 +1,4 @@
+<!-- author:王长增 -->
 <template>
   <el-table :data="tableData" style="width: 100%">
     <el-table-column label="配置介绍" width="180">

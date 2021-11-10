@@ -1,7 +1,7 @@
 import { Pagination } from "antd";
 import { useState } from "react";
 import Article from "@/components/Article";
-import style from "@/style/index.module.scss";
+// import style from "@/style/index.module.scss";
 import Head from "@/modules/Head";
 import axios from "axios";
 interface article {
@@ -15,8 +15,8 @@ interface article {
   title?: string;
 }
 interface propsType {
-  data:article[],
-  max:number
+  data: article[];
+  max: number;
 }
 
 export default function Home({ data, max }: propsType) {
@@ -37,10 +37,17 @@ export default function Home({ data, max }: propsType) {
         description:
           "刘润霖的个人博客WEB相关,记录日常开发有趣的事情,刷题时分享结果与思路,分享成果物,博客会长期更新,频繁更新本站开发技术以及源代码,网站整体由刘润霖个人开发。 刘润霖--WEB博客",
       })}
-      <main className={style.container}>
+
+      <main>
         <Article data={articleData} />
       </main>
-      <div className={style.pagination}>
+      <div>
+        <style jsx>{`
+          div {
+            text-align: center;
+            margin-top: 30px;
+          }
+        `}</style>
         <Pagination
           showSizeChanger={false}
           total={Math.ceil(max)}
@@ -54,14 +61,10 @@ export default function Home({ data, max }: propsType) {
 Home.getInitialProps = async () => {
   let data;
   let max;
-  await axios
-    .get("/article/page/1", {
-      params: { key: ["router", "title", "type", "introduce", "time"] },
-    })
-    .then(res => {
-      data = res.data.data;
-      max = res.data.max;
-    });
+  await axios.get("/article/page/1").then(res => {
+    data = res.data.data;
+    max = res.data.max;
+  });
   return {
     data,
     max,

@@ -1,3 +1,4 @@
+/*author:丁光禹*/
 const express = require('express')
 const app = express()
 const router = express.Router()
@@ -13,7 +14,7 @@ const {
 } = require('js-base64');
 router.post('/send-email', async (req, res) => {
     const to = req.body.email;
-
+    // 1. 判断邮箱格式， 如果不合格就取消发送并且提醒前端
     let test = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!test.test(to)) {
         res.json({
@@ -22,8 +23,6 @@ router.post('/send-email', async (req, res) => {
         })
         return false;
     }
-
-
 
     const sql = `SELECT email FROM rss WHERE email='${encode(to)}';`;
     let [data] = await pool.query(sql);
@@ -37,6 +36,8 @@ router.post('/send-email', async (req, res) => {
             pass: 'mcnntrlfnjkjcaae',
         }
     });
+
+
     let mode = data.length ? 'delete' : 'post';
     let salt = md5(Math.random() + '' + new Date());
     let token = md5(to + mode + salt);
@@ -60,7 +61,7 @@ router.post('/send-email', async (req, res) => {
         <div>本站首页:<a href="https://blogweb.cn">博客首页</a></div>
         `
     };
-
+    //发送
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             res.json({
@@ -74,7 +75,7 @@ router.post('/send-email', async (req, res) => {
             secure: true,
             path: '/',
             maxAge: 60000,
-        })
+        });
         res.json({
             success: true,
             message: '发送成功',

@@ -1,3 +1,4 @@
+/*author:梁文瀚*/
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -7,7 +8,7 @@ router.post('/type', global.auth, async (req, res) => {
     let type = req.body.type;
     const sql = `INSERT INTO articletype ( type, time )
                        VALUES
-                       ('${type}',NOW());`
+                       ('${type}',NOW());`;
     try {
         const [data] = await pool.query(sql);
         res.json({

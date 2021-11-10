@@ -1,3 +1,5 @@
+<!-- author:孙畅 -->
+
 <template>
     <div class="form">
         <el-input v-model="password" placeholder="请输入新密码" />

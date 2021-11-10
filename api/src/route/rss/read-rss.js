@@ -1,3 +1,4 @@
+/*author:丁光禹*/
 const express = require('express')
 const app = express()
 const router = express.Router()
@@ -7,7 +8,6 @@ const {
 } = require('js-base64');
 let pool = require('@/modules/pool')
 router.get('/rss', global.auth, async (req, res) => {
-    const email = req.params.email;
     const key = req.query.key;
     const sql = `SELECT ${key?key.join(','):'*'} FROM rss;`;
     const [data] = await pool.query(sql);

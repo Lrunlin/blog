@@ -3,7 +3,7 @@ const app = express();
 const router = express.Router();
 const os = require('os')
 router.get('/os', async (req, res) => {
-    
+
     const osData = {
         os_name: os.type(),
         memory_total: os.totalmem(),

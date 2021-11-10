@@ -53,7 +53,8 @@ router.post('/spider', global.auth, async (req, res) => {
             page++;
         })
         return href;
-    }
+    };
+
 
     function getArticleData() {
         getPage().then(res => {
@@ -95,6 +96,7 @@ router.post('/spider', global.auth, async (req, res) => {
                     if (save) {
                         data.push(_data)
                         task[taskName].current = data.length;
+                        console.log(global.task);
                         if (data.length == number) {
                             //清除定时器并在任务中删除，编写文件
                             clearInterval(task[taskName].timer)
@@ -112,5 +114,5 @@ router.post('/spider', global.auth, async (req, res) => {
         })
     }
     getArticleData();
-})
+});
 module.exports = router;
