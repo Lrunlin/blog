@@ -8,108 +8,93 @@ import {
 
 const routes = [{
     path: '/sign',
-    component: () => import('@/view/admin/sign.vue'),
-    meta: {
-        title: '登录'
-    }
+    component: () => import('@/page/Sign.vue'),
 }, {
     path: '/',
-    component: () => import('@/view/Home.vue'),
+    component: () => import('@/layout/Home.vue'),
     children: [{
         path: '',
-        component: () => import('@/view/article/Article.vue'),
+        component: () => import('@/page/Index.vue'),
         meta: {
-            title: "首页"
+            title: '首页'
         }
     }, {
-        path: '/article',
-        component: () => import('@/view/article/Article.vue'),
+        path: '/github',
+        component: () => import('@/page/GitHub.vue'),
         meta: {
-            title: "查询文章"
-        }
-    }, {
-        path: '/updata-article',
-        component: () => import('@/view/article/UpdataArticle.vue'),
-        meta: {
-            title: "修改文章 "
-        }
-    }, {
-        path: '/write',
-        component: () => import('@/view/article/CreateArticle.vue'),
-        meta: {
-            title: "写文章"
-        }
-    }, {
-        path: '/option',
-        component: () => import('@/view/article/Option.vue'),
-        meta: {
-            title: "文章配置"
-        }
-    }, {
-        path: '/type',
-        component: () => import('@/view/type/Index.vue'),
-        meta: {
-            title: "文章类型处理"
-        }
-    }, {
-        path: '/message',
-        component: () => import('@/view/message/Index.vue'),
-        meta: {
-            title: "留言处理"
-        }
-    }, {
-        path: '/os/data',
-        component: () => import('@/view/os/Data.vue'),
-        meta: {
-            title: "服务器信息"
-        }
-    }, {
-        path: '/rss',
-        component: () => import('@/view/rss/Index.vue'),
-        meta: {
-            title: "订阅查询"
-        }
-    }, {
-        path: '/updata-admin',
-        component: () => import('@/view/admin/UpdataAdmin.vue'),
-        meta: {
-            title: "密码修改"
-        }
-    }, {
-        path: '/log',
-        component: () => import('@/view/log/Index.vue'),
-        meta: {
-            title: "日志"
-        }
-    }, {
-        path: '/assets',
-        component: () => import('@/view/assets/Index.vue'),
-        meta: {
-            title: "静态文件察看"
-        }
-    }, {
-        path: '/create-copy',
-        component: () => import('@/view/copy/CreateCopy.vue'),
-        meta: {
-            title: "文章借鉴"
-        }
-    }, {
-        path: '/copy',
-        component: () => import('@/view/copy/Copy.vue'),
-        meta: {
-            title: "任务查询"
+            title: '仓库信息'
         }
     }, {
         path: '/comment',
-        component: () => import('@/view/comment.vue'),
+        component: () => import('@/page/Comment.vue'),
         meta: {
-            title: "评论管理"
+            title: '评论'
+        }
+    }, {
+        path: '/type',
+        component: () => import('@/page/Type.vue'),
+        meta: {
+            title: '文章类型'
+        }
+    }, {
+        path: '/assets',
+        component: () => import('@/page/Assets.vue'),
+        meta: {
+            title: '静态资源'
+        }
+    }, {
+        path: '/create-api',
+        component: () => import('@/page/api/ApiCreate.vue'),
+        meta: {
+            title: '创建API'
+        }
+    }, {
+        path: '/api',
+        component: () => import('@/page/api/Api.vue'),
+        meta: {
+            title: 'API'
+        }
+    }, {
+        path: '/api/:id',
+        component: () => import('@/page/api/ApiUpdate.vue'),
+        meta: {
+            title: '指定API查询',
+        }
+    }, {
+        path: '/create-article',
+        component: () => import('@/page/article/CreateArticle.vue'),
+        meta: {
+            title: '发布文章'
+        }
+    }, {
+        path: '/article',
+        component: () => import('@/page/article/Article.vue'),
+        meta: {
+            title: '文章管理'
+        }
+    }, {
+        path: '/article/:id',
+        component: () => import('@/page/article/UpdateArticle.vue'),
+        meta: {
+            title: '文章更新'
+        }
+    }, {
+        path: '/tube',
+        component: () => import('@/page/article/Tube.vue'),
+        meta: {
+            title: '文章导出导入'
+        }
+    }, {
+        path: '/password',
+        component: () => import('@/page/UpdatePassword.vue'),
+        meta: {
+            title: '修改密码'
         }
     }]
 }]
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
-})
+});
 
 export default router;

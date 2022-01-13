@@ -1,4 +1,2 @@
 User-agent: *
 Disallow: /
-allow:/sitemap.xml
-Sitemap: <https://blog-api.blogweb.cn/sitemap.xml>

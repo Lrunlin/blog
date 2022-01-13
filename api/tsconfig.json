@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "ES2015",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "moduleResolution": "node",
+    "removeComments": true, //取消注释
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true, // 不允许隐式的 any 类型
+    "typeRoots": ["./types"]
+  }
+}

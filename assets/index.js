@@ -1,5 +1,3 @@
-/*author:吴庆泽*/
-
 const express = require('express');
 const app = express();
 const fs = require('fs')
@@ -14,15 +12,16 @@ app.use(express.json());
 
 let publicKey = fs.readFileSync('./assets/public.pem').toString(); //公钥
 
-app.use('/temporary', express.static('./temporary'));
-app.use('/image', express.static('./image'));
-app.use('/robots.txt', express.static('./assets/robots.txt'));
-
 
 const jwt = require('jsonwebtoken');
+app.use('/', express.static('public'));
+
+
+
 app.all('*', (req, res, next) => {
     jwt.verify(req.headers.authorization, publicKey, function (err, decoded) {
         if (decoded) {
+            req.userId = decoded.userId;
             next()
         } else {
             res.status(401);
@@ -34,10 +33,13 @@ app.all('*', (req, res, next) => {
 
 
 
-app.use('/', require('./router/upload-asste')); // 资源上传
-app.use('/', require('./router/moveTemporaryImages')); // 文章添加移动临时文件到正式文件夹
+app.use('/', require('./router/upload-asstes')); // 资源上传
 app.use('/', require('./router/delete-assets')); // 删除文章时候删除文件
 app.use('/', require('./router/read-assets')); // 查询资源
+app.use('/', require('./router/upload-github')); // 上传GitHub图片
+app.use('/', require('./router/update-assets')); // 更新资源图片
+app.use('/', require('./router/upload-face')); // 用户上传头像
+app.use('/', require('./router/read-user-face')); // 获取用户头像
 
 
 
