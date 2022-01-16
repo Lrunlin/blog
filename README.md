@@ -1,6 +1,6 @@
 # 个人博客系统（长期更新）
 
-主要使用 Vue3，NextJs，react，Node-Express，Scss,MySQl
+主要使用 Vue3，NextJs，React，Node-Express，Scss,MySQl
 
 ## 源码：
 
