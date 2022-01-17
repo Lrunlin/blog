@@ -5,6 +5,7 @@ interface storeTypes {
   userData: userData;
   setUserData: Dispatch<userData>;
   assetsPath: string;
+  CDN:string;
 }
 
 let storeObj = {};

@@ -50,9 +50,12 @@ const HelperIcon: FunctionComponent<helperIconTypes> = props => {
   return (
     <>
       <style jsx>{`
-        .container {
+        .helper-container_item {
           width: 20%;
           text-align: center;
+          max-width: 1300px;
+          margin: 0px auto;
+          padding-bottom: 20px;
         }
         .helper-icon_image {
           width: 64px;
@@ -81,7 +84,7 @@ const HelperIcon: FunctionComponent<helperIconTypes> = props => {
           letter-spacing: 1px;
         }
       `}</style>
-      <div className="container">
+      <div className="helper-container_item">
         <div className="helper-icon_image">
           <Image src={`/image/${props.icon}`} width={45} height={45} alt="展示ICON" />
         </div>

@@ -7,7 +7,7 @@ import css from "styled-jsx/css";
 const Style = css`
   .banner-container {
     height: 600px;
-    width: 100vw;
+    width: 100%;
     background-repeat: repeat-y;
     background-image: url(/image/banner.jpg);
   }

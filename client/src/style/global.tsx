@@ -3,25 +3,28 @@ function Style() {
   return (
     <>
       <style jsx global>{`
-        html,
-        body {
-          scroll-behavior: smooth; /* 锚点滚动 */
-        }
         body {
           background-color: #f5f5f5;
-          scrollbar-width: none; /* Firefox */
-          -ms-overflow-style: none; /* IE 10+ */
         }
         body::-webkit-scrollbar {
-          display: none; /* Chrome Safari */
+          transition: 0.2s;
+          width: 6px;
+          height: 6px;
         }
+        body::-webkit-scrollbar-thumb {
+          background: #777;
+          border-radius: 4px;
+        }
+        body::-webkit-scrollbar-track {
+          border-radius: 10px;
+        }
+
         .container {
-          width: 100vw;
+          width: 100%;
           max-width: 1300px;
           margin: 0px auto;
           padding-bottom: 20px;
         }
-     
       `}</style>
     </>
   );

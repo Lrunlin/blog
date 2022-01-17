@@ -17,7 +17,7 @@ const Face: FunctionComponent<propsTypes> = props => {
   useEffect(() => {
     const getImage = async () => {
       axios.get(`${store.assetsPath}/user/face`).then(res => {
-       if(res.data.success) setUserFaceData(`${store.assetsPath}/face/${res.data.data}`);
+       if(res.data.success) setUserFaceData(`${store.CDN}/face/${res.data.data}`);
       });
     };
     props.userId && props.userId != "admin" && getImage();

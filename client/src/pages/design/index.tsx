@@ -52,16 +52,24 @@ const Home: NextPage = () => {
     <>
       <Head
         title="前端路上-技术博客 | 网站Web前端 | 网站设计"
-        description="技术博客用于日常技术文章分享,游客可以编辑文章进行共享,网站开放部分API接口,所有文章均为原创,并且分享可做项目类型和日常开源分享。"
-        keyword={["首页", "介绍", "Web前端", "React.js"]}
+        description="技术文章分享、个人简历以及网站页面设计"
+        keyword={["首页", "介绍", "Web前端", "React.js", "页面设计"]}
       />
-      <Nav />
-      <Index />
-      <About />
-      <Example />
-      <Helper />
-      <Contact />
-      <Footer />
+      <style jsx global>{`
+        html,
+        body {
+          scroll-behavior: smooth; /* 锚点滚动 */
+        }
+      `}</style>
+      <div style={{ maxWidth: "100%" }}>
+        <Nav />
+        <Index />
+        <About />
+        <Example />
+        <Helper />
+        <Contact />
+        <Footer />
+      </div>
     </>
   );
 };

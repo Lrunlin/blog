@@ -4,6 +4,7 @@ axios.defaults.baseURL =
 axios.interceptors.request.use(
   function (config) {
     config.headers.authorization = localStorage.token;
+    config.headers['Cache-Control'] = 'no-cache';
     return config;
   },
   function (error) {

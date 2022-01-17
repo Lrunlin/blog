@@ -21,6 +21,10 @@ router.get("/article/page/:page", async (req: Request, res: Response, next: Next
     where.author = "admin";
   }
 
+  console.log({
+    [(1 < 0 ? "a" : undefined) as any]: "1",
+  });
+
   Article.hasMany(Comment);
   Comment.belongsTo(Article, { foreignKey: "articleId", targetKey: "id" });
   const { count, rows } = await Article.findAndCountAll({
@@ -54,7 +58,6 @@ router.get("/article/page/:page", async (req: Request, res: Response, next: Next
     message: `查询第${page}页的文章`,
     total: count,
     data: rows.map(item => {
-
       //!查询列表时候需要introduce删除article无法生成introduce，所以数据库操作时候保留article返回数据时候删除article
       //?防止传输数据过大
       return {
