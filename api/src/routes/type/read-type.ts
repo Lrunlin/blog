@@ -2,7 +2,7 @@ import express, { NextFunction, Response, Request } from "express";
 const app = express();
 const router = express.Router();
 import { Type } from "@/db";
-let decorate = ["推荐", "资讯", "前端", "后端"]; //侧边栏的固定栏目
+let decorate = ["资讯", "前端", "后端"]; //侧边栏的固定栏目
 router.get("/type", async (req: Request, res: Response, next: NextFunction) => {
   let rows = await Type.findAll();
 

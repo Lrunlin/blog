@@ -100,7 +100,7 @@ const ArticleImage: FunctionComponent<ArticleImageTypes> = props => {
 };
 
 /** 单个文章展示组件*/
-const ArticleItem: FunctionComponent<articlePageTypes> = props => {
+const ArticleItem: FunctionComponent<articlePageTypes> = memo(props => {
   /** 文章跳转的超链接标签*/
   const ArticleLink: FunctionComponent = articleLinkProps => {
     return (
@@ -146,7 +146,7 @@ const ArticleItem: FunctionComponent<articlePageTypes> = props => {
       </article>
     </>
   );
-};
+});
 
 /** 输入文章相关数组展示大概文章内容*/
 const Article: FunctionComponent<propsTypes> = props => {

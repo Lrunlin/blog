@@ -36,7 +36,6 @@ router.put("/article/:id", adminAuth, async (req: Request, res: Response, next: 
       });
     })
     .catch(err => {
-      console.log(err);
       res.json({
         success: false,
         message: "修改失败",

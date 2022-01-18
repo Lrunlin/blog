@@ -15,7 +15,6 @@ router.post(
       delete item.content;
       return item;
     });
-    console.log(_data);
 
     Article.bulkCreate(_data)
       .then(rows => {
@@ -25,7 +24,6 @@ router.post(
         });
       })
       .catch(err => {
-        console.log(err);
 
         res.json({
           success: true,

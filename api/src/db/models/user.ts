@@ -32,4 +32,3 @@ export default sequelize.define<UserInstance>(
   }
 );
 
-// sequelize-auto -o "./models" -d blog_alpha -h localhost -u root -p 3306 -x 123 -e mysql -l ts

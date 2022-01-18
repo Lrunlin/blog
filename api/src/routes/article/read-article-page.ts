@@ -21,9 +21,6 @@ router.get("/article/page/:page", async (req: Request, res: Response, next: Next
     where.author = "admin";
   }
 
-  console.log({
-    [(1 < 0 ? "a" : undefined) as any]: "1",
-  });
 
   Article.hasMany(Comment);
   Comment.belongsTo(Article, { foreignKey: "articleId", targetKey: "id" });

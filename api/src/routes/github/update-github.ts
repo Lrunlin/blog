@@ -16,7 +16,6 @@ router.put("/github/:id",adminAuth, async (req: Request, res: Response, next: Ne
       });
     })
     .catch(err => {
-      console.log(err);
       res.json({
         success: false,
         message: "操作执行错误",
