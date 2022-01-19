@@ -10,7 +10,7 @@ router.get('/user/face', async (req, res) => {
     fs.exists(`${dir}/${req.userId}.webp`, function (exists) {
         res.json({
             success: exists,
-            message: exists ? '用户没有上传过头像' : '获取头像成功',
+            message: exists ? '获取头像成功' : '用户没有上传过头像',
             data: `${req.userId}.webp`
         })
     })

@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE == 'true'
+  enabled: process.env.ANALYZE === 'true',
 });
 
 module.exports = withBundleAnalyzer({
@@ -16,7 +16,7 @@ module.exports = withBundleAnalyzer({
     };
     return config;
   },
-  assetPrefix:process.env.NODE_ENV === 'production' ? 'https://cdn.blogweb.cn' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://cdn.blogweb.cn' : '',
   async headers() {
     return [{
       source: '/:all*(svg|jpg|png|css|js|webp)',

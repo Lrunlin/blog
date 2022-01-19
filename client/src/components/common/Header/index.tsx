@@ -187,9 +187,10 @@ const Header: FunctionComponent = () => {
     <div className="header-container">
       <style jsx={true}>{Style}</style>
       <style jsx global>{`
-      body{
-padding-top:70px;
-      }`}</style>
+        body {
+          padding-top: 70px;
+        }
+      `}</style>
       <header className="container">
         <nav>
           <img src="/favicon.svg" className="logo" alt="logo" />

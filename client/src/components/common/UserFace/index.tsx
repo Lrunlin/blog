@@ -14,6 +14,8 @@ const Face: FunctionComponent<propsTypes> = props => {
   const [userFaceData, setUserFaceData] = useState(
     props.userId == "admin" ? "/image/admin-face-default.png" : "/image/user-face-default.png"
   );
+  console.log(props);
+  
   useEffect(() => {
     const getImage = async () => {
       axios.get(`${store.assetsPath}/user/face`).then(res => {

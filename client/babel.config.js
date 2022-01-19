@@ -49,7 +49,7 @@ let config = {
 
 if (process.env.NODE_ENV === 'production') {
     config.plugins.push('transform-remove-console')
-}
+};
 
 
 module.exports = config
