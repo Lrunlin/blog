@@ -68,9 +68,10 @@ router.post('/assets/github', adminAuth, upload.single('image'), async (req, res
 setTimeout(() => {
     let url = process.env.ENV == 'dev' ?
         `http://localhost:3000` : `https://blog-api.blogweb.cn`;
-    axios.get(`${url}/github/project`).then(res => {
+    axios.get(`${url}/github`).then(res => {
         let assetsPath = process.env.ENV === "pro" ? "https://assets.blogweb.cn" : "http://localhost:3456"
         let _data = res.data.data.map(item => item.image.replace(`${assetsPath}/github/`, ''))
+        console.log(_data);
         let assetsDir = fs.readdirSync(dir)
         assetsDir.forEach(item => {
             if (!_data.includes(item)) fs.unlinkSync(`${dir}/${item}`);

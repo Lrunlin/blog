@@ -95,7 +95,7 @@ const Article: FunctionComponent<articleProps> = props => {
   }, []);
   return (
     <>
-      <Head title={data.title} description={data.introduce.substring(0, 100)} keyword={data.type} />
+      <Head title={`${data.title}-前端路上`} description={data.introduce.substring(0, 100)} keyword={data.type} />
       <CodeStyle />
       <style jsx>{Style}</style>
       <style jsx global>{`

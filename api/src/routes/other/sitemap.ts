@@ -14,7 +14,7 @@ setTimeout(() => {
   }).then(res => {
     rows = res;
   });
-}, 604_800_000);
+}, 3_600_000);
 router.get("/sitemap", async (req: Request, res: Response, next: NextFunction) => {
   res.json({
     success: true,

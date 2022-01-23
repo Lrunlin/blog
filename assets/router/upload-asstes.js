@@ -35,12 +35,12 @@ const upload = multer({
 router.post('/assets', upload.single('image'), async (req, res) => {
     const path = req.file.path; //图片原本的名字
 
-    const name = `${md5(req.file.filename+(+new Date()))}.jpg`
+    const name = `${md5(req.file.filename+(+new Date()))}.webp`
     let data = process.env.ENV == 'dev' ?
         `http://localhost:3456/image/${name}` : `https://assets.blogweb.cn/image/${name}`;
 
     sharp(path)
-        .jpeg({
+        .webp({
             quality: 50
         }).toFile(`${dir}/${name}`, (err, info) => {
             if (err) {

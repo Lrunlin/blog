@@ -91,19 +91,6 @@ const navList: navListTypes[] = [
   },
 ];
 
-/** 文章搜索函数*/
-const articleArticle = (text: string): boolean | void => {
-  if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(text)) {
-    return false;
-  }
-  router.push({
-    pathname: "/search",
-    query: {
-      text: text,
-    },
-  });
-};
-
 //修改一个data的格式
 interface responseUserData extends response<userData> {
   data: userData;
@@ -114,12 +101,44 @@ function signOut() {
   localStorage.removeItem("token");
   router.reload();
 }
+/** 顶部搜索框组件*/
+const SearchInput: FunctionComponent = memo(() => {
+  const [search, setSearch] = useState<string>(""); //搜索框内容
+  /** 文章搜索函数*/
+  const articleArticle = (text: string): boolean | void => {
+    if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(text)) {
+      return false;
+    }
+    router.push({
+      pathname: "/search",
+      query: {
+        text: text,
+      },
+    });
+  };
+  return (
+    <Input
+      style={{
+        width: "280px",
+        height: "32px",
+        borderRadius: "20px",
+        backgroundColor: "#f0f1f4",
+      }}
+      value={search}
+      placeholder="搜索内容"
+      bordered={false}
+      prefix={<SearchOutlined />}
+      maxLength={20}
+      onChange={e => setSearch(e.target.value)}
+      onPressEnter={e => articleArticle(search)}
+    />
+  );
+});
 
 const Header: FunctionComponent = () => {
   let router = useRouter();
   let { userData, setUserData } = useContext(Context);
 
-  const [search, setSearch] = useState<string>(""); //搜索框内容
   const [isLayerShow, setLayerState] = useState<boolean>(false); //登录注册弹窗是否展示
 
   useEffect(() => {
@@ -139,7 +158,7 @@ const Header: FunctionComponent = () => {
       margin-right: 10px;
     }
   `;
-  const UserSelect: FunctionComponent = () => {
+  const UserSelect: FunctionComponent = memo(() => {
     const menu = (
       <Menu>
         <Menu.Item icon={<UserOutlined />} key="个人中心">
@@ -181,7 +200,7 @@ const Header: FunctionComponent = () => {
         </Dropdown>
       </>
     );
-  };
+  });
 
   return (
     <div className="header-container">
@@ -200,21 +219,7 @@ const Header: FunctionComponent = () => {
             </Link>
           ))}
         </nav>
-        <Input
-          style={{
-            width: "280px",
-            height: "32px",
-            borderRadius: "20px",
-            backgroundColor: "#f0f1f4",
-          }}
-          value={search}
-          placeholder="搜索内容"
-          bordered={false}
-          prefix={<SearchOutlined />}
-          maxLength={20}
-          onChange={e => setSearch(e.target.value)}
-          onPressEnter={e => articleArticle(search)}
-        />
+        <SearchInput />
         <div className="header-user">
           <div className="compile">
             <Tooltip placement="bottomRight" title={userData?.sign ? "发布文章" : "请登录"}>

@@ -1,5 +1,6 @@
 node_modules
 assets/image/*.jpg
+assets/image/*.webp
 dist
 .next
 .vscode

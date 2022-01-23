@@ -14,12 +14,11 @@ const Face: FunctionComponent<propsTypes> = props => {
   const [userFaceData, setUserFaceData] = useState(
     props.userId == "admin" ? "/image/admin-face-default.png" : "/image/user-face-default.png"
   );
-  console.log(props);
-  
+
   useEffect(() => {
     const getImage = async () => {
       axios.get(`${store.assetsPath}/user/face`).then(res => {
-       if(res.data.success) setUserFaceData(`${store.CDN}/face/${res.data.data}`);
+        if (res.data.success) setUserFaceData(`${store.CDN}/face/${res.data.data}`);
       });
     };
     props.userId && props.userId != "admin" && getImage();
@@ -38,4 +37,4 @@ const Face: FunctionComponent<propsTypes> = props => {
     </>
   );
 };
-export default memo(Face);
+export default Face;
