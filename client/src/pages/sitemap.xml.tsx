@@ -14,12 +14,9 @@ const header = `<?xml version="1.0" encoding="UTF-8"?>
 const footer = `\n</urlset>`;
 const list = [
   {
-    router: "",
+    router:"",
   },
-  {
-    router: "search",
-  },
-  { router: "api" },
+  { router: "open-api" },
   { router: "design" },
   {
     router: "comment",
