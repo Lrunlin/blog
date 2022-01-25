@@ -14,12 +14,14 @@ const header = `<?xml version="1.0" encoding="UTF-8"?>
 const footer = `\n</urlset>`;
 const list = [
   {
-    router:"",
+    router: "",
+    weight: 1,
   },
-  { router: "open-api" },
-  { router: "design" },
+  { router: "design", weight: 0.9 },
+  { router: "open-api", weight: 0.8 },
   {
     router: "comment",
+    weight: 0.8,
   },
 ];
 export default class SiteMap extends Component {
@@ -30,7 +32,7 @@ export default class SiteMap extends Component {
       return `
     <url>
      <loc>https://blogweb.cn/${url}</loc>
-     <priority>${(item as any).time ? "0.7" : "0.8"}</priority>
+     <priority>${(item as any).weight || 0.8}</priority>
      <lastmod>${moment((item as any).time).format("YYYY-MM-DD")}</lastmod>
      <changefreq>weekly</changefreq>
     </url>`;
