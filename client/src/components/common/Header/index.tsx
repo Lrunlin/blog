@@ -1,28 +1,18 @@
 import { memo, useState, useEffect, useContext } from "react";
 import type { FunctionComponent } from "react";
-import router, { useRouter } from "next/router";
-import Link from "next/link";
-import { Tooltip, Input, message, Menu, Dropdown } from "antd";
-import {
-  FormOutlined,
-  SearchOutlined,
-  UserOutlined,
-  PoweroffOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { useRouter } from "next/router";
+import { Tooltip, message } from "antd";
+import { FormOutlined } from "@ant-design/icons";
 import axios from "axios";
 import css from "styled-jsx/css";
-import setClassName from "classnames";
 import Logn from "./Logn";
 import { Context } from "@/store";
 import type { response, userData } from "@/types";
-import UserFace from "@/components/common/UserFace";
 import If from "@/utils/If";
+import SearchInput from "./SearchInput";
+import Nav from "./Nav";
+import UserSelect from "./UserSelect";
 
-interface navListTypes {
-  href: string;
-  text: string;
-}
 const Style = css`
   .header-container {
     height: 60px;
@@ -41,18 +31,7 @@ const Style = css`
     align-items: center;
     padding: 0px 10px;
   }
-  nav {
-    width: 360px;
-    a {
-      margin-left: 25px !important;
-      color: #333;
-    }
-  }
-  .logo {
-    width: 32px;
-    height: 32px;
-    opacity: 0.6;
-  }
+
   .compile {
     width: 30px;
     height: 30px;
@@ -72,68 +51,10 @@ const Style = css`
   }
 `;
 
-const navList: navListTypes[] = [
-  {
-    href: "/",
-    text: "首页",
-  },
-  {
-    href: "/design",
-    text: "Design",
-  },
-  {
-    href: "/comment",
-    text: "随便说说",
-  },
-  {
-    href: "/open-api",
-    text: "开放API",
-  },
-];
-
 //修改一个data的格式
 interface responseUserData extends response<userData> {
   data: userData;
 }
-
-//*暂时不加退出将token加入黑名单的功能
-function signOut() {
-  localStorage.removeItem("token");
-  router.reload();
-}
-/** 顶部搜索框组件*/
-const SearchInput: FunctionComponent = memo(() => {
-  const [search, setSearch] = useState<string>(""); //搜索框内容
-  /** 文章搜索函数*/
-  const articleArticle = (text: string): boolean | void => {
-    if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(text)) {
-      return false;
-    }
-    router.push({
-      pathname: "/search",
-      query: {
-        text: text,
-      },
-    });
-  };
-  return (
-    <Input
-      style={{
-        width: "280px",
-        height: "32px",
-        borderRadius: "20px",
-        backgroundColor: "#f0f1f4",
-      }}
-      value={search}
-      placeholder="搜索内容"
-      bordered={false}
-      prefix={<SearchOutlined />}
-      maxLength={20}
-      onChange={e => setSearch(e.target.value)}
-      onPressEnter={e => articleArticle(search)}
-    />
-  );
-});
 
 const Header: FunctionComponent = () => {
   let router = useRouter();
@@ -152,55 +73,7 @@ const Header: FunctionComponent = () => {
       });
     }
   }, []);
-  const PropsStyle = css.global`
-    .header_user-face {
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-  `;
-  const UserSelect: FunctionComponent = memo(() => {
-    const menu = (
-      <Menu>
-        <Menu.Item icon={<UserOutlined />} key="个人中心">
-          <Link href={`/user/${userData.email}`}>
-            <div>个人中心</div>
-          </Link>
-        </Menu.Item>
-        <Menu.Item icon={<SettingOutlined />} key="设置">
-          <Link href={`/set`}>
-            <div>设置</div>
-          </Link>
-        </Menu.Item>
-        <Menu.Item icon={<PoweroffOutlined />} key="退出登录" onClick={signOut}>
-          <>退出登录</>
-        </Menu.Item>
-      </Menu>
-    );
 
-    return (
-      <>
-        <style jsx>{`
-          #userSelectDom {
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-          }
-        `}</style>
-        <style jsx>{PropsStyle}</style>
-        <Dropdown
-          overlay={menu}
-          placement="bottomCenter"
-          getPopupContainer={() => document.getElementById("userSelectDom") as HTMLElement}
-          //由于固定定位的原因需要修改下指定定位节点
-        >
-          <div id="userSelectDom">
-            <UserFace userId={userData.email} width={30} height={30} className="header_user-face" />
-            <span>{userData.email}</span>
-          </div>
-        </Dropdown>
-      </>
-    );
-  });
 
   return (
     <div className="header-container">
@@ -211,14 +84,7 @@ const Header: FunctionComponent = () => {
         }
       `}</style>
       <header className="container">
-        <nav>
-          <img src="/favicon.svg" className="logo" alt="logo" />
-          {navList.map(item => (
-            <Link href={item.href} key={item.text}>
-              <a className={setClassName({ active: router.pathname == item.href })}>{item.text}</a>
-            </Link>
-          ))}
-        </nav>
+        <Nav />
         <SearchInput />
         <div className="header-user">
           <div className="compile">

@@ -56,10 +56,6 @@ router.post('/assets', upload.single('image'), async (req, res) => {
             }
             fs.unlinkSync(`${dir}/${req.file.filename}`)
         })
-    setTimeout(() => {
-        try {
-            fs.unlinkSync(`${dir}/${name}`);
-        } catch {}
-    }, 86400000);
+
 })
 module.exports = router;
