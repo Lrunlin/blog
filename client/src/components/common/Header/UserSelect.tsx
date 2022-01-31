@@ -28,12 +28,12 @@ const UserSelect: FunctionComponent = memo(() => {
     <Menu>
       <Menu.Item icon={<UserOutlined />} key="个人中心">
         <Link href={`/user/${userData.email}`}>
-          <>个人中心</>
+          <div>个人中心</div>
         </Link>
       </Menu.Item>
       <Menu.Item icon={<SettingOutlined />} key="设置">
         <Link href="/set">
-          <>设置</>
+          <div>设置</div>
         </Link>
       </Menu.Item>
       <Menu.Item icon={<PoweroffOutlined />} key="退出登录" onClick={signOut}>

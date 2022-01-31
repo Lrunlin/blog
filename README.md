@@ -5,12 +5,9 @@
 ## 源码：
 
 1.  个人博客管理系统（admin）
-
 2.  博客门户页面（client）
-
-3.  node 后台接口（api）
-
-4.  node 接口处理资源管理（assets）
+3.  Node.js 后台接口（api）
+4.  Node.js 接口处理资源管理（assets）
 
 ## 用户端
 
@@ -28,7 +25,7 @@
 ### 说明
 
 1.  首页和搜索页面的文章介绍文字，防止影响 SEO 使用 NoSSR 实现客户端渲染
-2.  sitemap.xml 使用Next.js路由形式实现，相关数据服务器缓存 7 天更新
+2.  SiteMap.xml 使用 Next.js 路由形式实现，相关数据服务器缓存 1 小时更新
 
 ## 管理系统
 

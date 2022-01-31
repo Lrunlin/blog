@@ -1,11 +1,12 @@
-import { useState, useEffect, FunctionComponent, memo, useContext, createContext } from "react";
+import { useState, useEffect, memo, useContext, createContext } from "react";
+import type { FunctionComponent } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import type { NextPage, GetServerSideProps } from "next";
-import { Result, Button, Empty, Table, Pagination, message } from "antd";
+import { Button, Empty, Table, Pagination, message } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { GithubOutlined } from "@ant-design/icons";
-
+import Skeleton from "./Skeleton";
 import Layout from "@/layout/Main";
 import Head from "@/utils/Head";
 import If from "@/utils/If";
@@ -13,6 +14,7 @@ import Article from "@/components/common/Article";
 import UserFace from "@/components/common/UserFace";
 import type { response, article } from "@/types";
 import { Context } from "@/store";
+import Error from "./Error";
 
 interface propsType {
   id: string | undefined;
@@ -120,7 +122,6 @@ const UserArticle: FunctionComponent<userArticleTypes> = props => {
   const [data, setData] = useState<article[]>(props.data);
   function removeArticle(id: string) {
     axios.delete<response>(`/article/${id}`).then(res => {
-      console.log(res.data);
       if (res.data.success) {
         message.success("删除成功");
         setData(arr => arr.filter(item => item.id != id));
@@ -173,6 +174,7 @@ const UserArticle: FunctionComponent<userArticleTypes> = props => {
         }}
         rowKey="id"
       />
+
       {/* 为了引入对应的css */}
       {false && <Pagination total={0} />}
     </>
@@ -192,14 +194,13 @@ const Main: FunctionComponent = () => {
         if (res.data.success) setData(res.data.data);
       });
   }, []);
-  return data.length ? (
-    store.userData.email == router.query.id ? (
-      <UserArticle data={data} />
-    ) : (
-      <Article data={data} />
-    )
-  ) : (
-    <Empty description="暂时没有发布文章哦" />
+
+  return (
+    <If if={data.length} else={<Empty description="暂时没有发布文章哦" />}>
+      <If if={store.userData.email == router.query.id} else={<Article data={data} />}>
+        <UserArticle data={data} />
+      </If>
+    </If>
   );
 };
 
@@ -213,78 +214,22 @@ const User: FunctionComponent = () => {
   );
 };
 
-const Skeleton: FunctionComponent = () => {
-  return (
-    <>
-      <style jsx>{`
-        .skeleton-header {
-          height: 320px;
-          background-color: white;
-        }
-        .skeleton-body {
-          height: 600px;
-          background-color: white;
-          margin-top: 10px;
-        }
-        .skeleton-bar {
-          background-color: rgb(241, 241, 241);
-          width: calc(100% - 20px);
-          height: calc(100% - 20px);
-          margin: 0px auto;
-          position: relative;
-          top: 10px;
-          animation: twinkle 3s infinite;
-        }
-        @keyframes twinkle {
-          0% {
-            background-color: rgb(241, 241, 241);
-          }
-          50% {
-            background-color: rgb(214, 214, 214);
-          }
-          100% {
-            background-color: rgb(241, 241, 241);
-          }
-        }
-      `}</style>
-      <div className="skeleton-header">
-        <div className="skeleton-bar"></div>
-      </div>
-      <div className="skeleton-body">
-        <div className="skeleton-bar"></div>
-      </div>
-    </>
-  );
-};
-
-const Error: FunctionComponent = () => {
-  let router = useRouter();
-  return (
-    <div style={{ backgroundColor: "white" }}>
-      <Result
-        status="error"
-        title="没有找到对应的用户"
-        subTitle="可能是您修改了地址栏的地址或者其他原因导致。"
-        extra={[
-          <Button key="usererrorbtn" type="primary" onClick={() => router.replace("/")}>
-            回到首页
-          </Button>,
-        ]}
-      />
-    </div>
-  );
-};
-
 const NextPageName: NextPage<propsType> = props => {
   const [isSuccess, setIsSuccess] = useState<undefined | boolean>();
   const [userData, setUserData] = useState<userResponse>({});
-
   useEffect(() => {
     axios.get<response<userResponse>>(`/user/data/${props.id}`).then(res => {
       setIsSuccess(res.data.success);
       setUserData(res.data.data);
     });
   }, []);
+
+  //设置页面更新强制刷新组件
+  const [key, setKey] = useState(1);
+  let router = useRouter();
+  useEffect(() => {
+    setKey(i => ++i);
+  }, [router]);
 
   return (
     <Layout>
@@ -294,7 +239,7 @@ const NextPageName: NextPage<propsType> = props => {
         description="博客个人中心，查看发布的内容"
       />
       <userDataContext.Provider value={userData}>
-        <If if={isSuccess == undefined} else={isSuccess ? <User /> : <Error />}>
+        <If if={isSuccess == undefined} else={isSuccess ? <User key={key} /> : <Error />}>
           <Skeleton />
         </If>
       </userDataContext.Provider>
