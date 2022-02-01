@@ -74,7 +74,9 @@ interface articlePageTypes {
   introduce: string;
   view_count: number;
   comment_count: number;
-  image:false|string;
+  image: false | string;
+  author: string;
+  type:string[]
 }
 
 

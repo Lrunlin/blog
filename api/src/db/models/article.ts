@@ -42,10 +42,8 @@ export default sequelize.define<ArticleInstance>(
         $("img").each((index, data) => {
           $(data).removeAttr("alt").removeAttr("style").removeAttr("contenteditable");
 
-          if (!$(data).attr("src")?.includes(assetsPath)) {
-            let _src: string = $(data).attr("src")?.replace(`${assetsPath}image/`, "") + "";
-            $(data).attr("src", _src);
-          }
+          let _src: string = $(data).attr("src")?.replace(`${assetsPath}image/`, "") + "";
+          $(data).attr("src", _src);
         });
         this.setDataValue("article", xss($("body").html() as string));
       },
@@ -53,6 +51,7 @@ export default sequelize.define<ArticleInstance>(
         let article: string = this.getDataValue("article");
         let $ = cheerio.load(article + "");
         $("img").each((index, data) => {
+          //没有http说明是网络图片
           if (!$(data).attr("src")?.includes("http")) {
             let _src: string = `${assetsPath}image/${$(data).attr("src")}`;
             $(data)

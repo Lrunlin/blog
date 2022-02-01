@@ -21,7 +21,6 @@ router.get("/article/page/:page", async (req: Request, res: Response, next: Next
     where.author = "admin";
   }
 
-
   Article.hasMany(Comment);
   Comment.belongsTo(Article, { foreignKey: "articleId", targetKey: "id" });
   const { count, rows } = await Article.findAndCountAll({
@@ -35,6 +34,8 @@ router.get("/article/page/:page", async (req: Request, res: Response, next: Next
       "article",
       "introduce",
       "view_count",
+      "author",
+      "type",
       "image",
       [
         Sequelize.literal(`(
@@ -66,6 +67,8 @@ router.get("/article/page/:page", async (req: Request, res: Response, next: Next
         view_count: item.view_count,
         image: item.image,
         comment_count: (item as any).dataValues.comment_count,
+        type: item.type,
+        author: item.author,
       };
     }),
   });
