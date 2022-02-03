@@ -10,7 +10,7 @@ import type { article } from "@/types";
 import UserFace from "@/components/common/UserFace";
 import Comment from "@/components/common/Comment";
 import CodeStyle from "@/style/CodeStyle";
-import If from "@/utils/If";
+import ClassName from "classnames";
 
 interface propsTypes {
   data: article | null;
@@ -95,7 +95,11 @@ const Article: FunctionComponent<articleProps> = props => {
   }, []);
   return (
     <>
-      <Head title={`${data.title}-前端路上`} description={data.introduce.substring(0, 100)} keyword={data.type} />
+      <Head
+        title={`${data.title}-前端路上`}
+        description={data.introduce.substring(0, 100)}
+        keyword={data.type}
+      />
       <CodeStyle />
       <style jsx>{Style}</style>
       <style jsx global>{`
@@ -106,7 +110,7 @@ const Article: FunctionComponent<articleProps> = props => {
           border-radius: 50%;
         }
       `}</style>
-      <div className="article-header article-container_item">
+      <div className={ClassName(["article-header", "article-container_item"])}>
         <h1 className="article-title">{data.title}</h1>
         <div className="article-data_author">
           <div
@@ -121,7 +125,7 @@ const Article: FunctionComponent<articleProps> = props => {
         </div>
       </div>
       <article
-        className="article-data article-container_item article-details"
+        className={ClassName(["article-data", "article-container_item", "article-details"])}
         dangerouslySetInnerHTML={{ __html: data.article }}
       ></article>
     </>
@@ -158,14 +162,14 @@ const NextPageName: NextPage<propsTypes> = props => {
 
   return (
     <Layout styleJsx={propsStyle}>
-      <>
-        <If if={props.data} else={<NoFound />}>
-          <>
-            <Article data={data as article} />
-            <Comment articleId={(data as article).id + ""} />
-          </>
-        </If>
-      </>
+      {data ? (
+        <>
+          <Article data={data as article} />
+          <Comment articleId={(data as article).id + ""} />
+        </>
+      ) : (
+        <NoFound />
+      )}
     </Layout>
   );
 };
