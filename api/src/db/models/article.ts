@@ -1,9 +1,10 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config";
-import assetsPath from "@/store/assetsPath";
+import { assets, cdn } from "@/store/assetsPath";
 import cheerio from "cheerio";
 import type { ArticleInstance } from "../types";
 import xss from "xss";
+
 
 export default sequelize.define<ArticleInstance>(
   "article",
@@ -40,12 +41,17 @@ export default sequelize.define<ArticleInstance>(
       set(value: string) {
         let $ = cheerio.load(value + "");
         $("img").each((index, data) => {
-          $(data).removeAttr("alt").removeAttr("style").removeAttr("contenteditable");
+          $(data)
+            .removeAttr("alt")
+            .removeAttr("style")
+            .removeAttr("contenteditable")
+            .removeAttr("data-src");
 
-          let _src: string = $(data).attr("src")?.replace(`${assetsPath}image/`, "") + "";
+          let _src: string =
+            $(data).attr("src")?.replace(`${assets}image/`, "")?.replace(`${cdn}image/`, "") + "";
           $(data).attr("src", _src);
         });
-        this.setDataValue("article", xss($("body").html() as string));
+        this.setDataValue("article", $("body").html() as string);
       },
       get() {
         let article: string = this.getDataValue("article");
@@ -53,7 +59,7 @@ export default sequelize.define<ArticleInstance>(
         $("img").each((index, data) => {
           //没有http说明是网络图片
           if (!$(data).attr("src")?.includes("http")) {
-            let _src: string = `${assetsPath}image/${$(data).attr("src")}`;
+            let _src: string = `${cdn}image/${$(data).attr("src")}`;
             $(data)
               .attr("data-src", _src)
               .removeAttr("src")
@@ -83,7 +89,7 @@ export default sequelize.define<ArticleInstance>(
         const article: string = this.getDataValue("article");
         let $ = cheerio.load(`<div>${article}</div>`);
         let _image: string | undefined = $("img").eq(0).attr("src");
-        let _src = (_image + "").includes("http") ? _image : `${assetsPath}image/${_image}`;
+        let _src = (_image + "").includes("http") ? _image : `${cdn}image/${_image}`;
         return _image ? _src : false;
       },
     },

@@ -10,7 +10,7 @@ import type { article } from "@/types";
 import UserFace from "@/components/common/UserFace";
 import Comment from "@/components/common/Comment";
 import CodeStyle from "@/style/CodeStyle";
-import ClassName from "classnames";
+import If from "@/utils/If";
 
 interface propsTypes {
   data: article | null;
@@ -110,7 +110,7 @@ const Article: FunctionComponent<articleProps> = props => {
           border-radius: 50%;
         }
       `}</style>
-      <div className={ClassName(["article-header", "article-container_item"])}>
+      <div className="article-header article-container_item">
         <h1 className="article-title">{data.title}</h1>
         <div className="article-data_author">
           <div
@@ -125,7 +125,7 @@ const Article: FunctionComponent<articleProps> = props => {
         </div>
       </div>
       <article
-        className={ClassName(["article-data", "article-container_item", "article-details"])}
+        className="article-data article-container_item article-details"
         dangerouslySetInnerHTML={{ __html: data.article }}
       ></article>
     </>

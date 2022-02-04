@@ -4,6 +4,9 @@ interface accessRecordTypes {
   [key: string]: number;
 }
 
+/** 
+ * 统计七天之内的访问量
+*/
 let accessRecord: accessRecordTypes = {};
 /** 添加一条记录*/
 function statistics() {

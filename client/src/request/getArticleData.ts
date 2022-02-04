@@ -2,7 +2,7 @@ import axios from "axios";
 import type { article, response } from "@/types";
 
 /**
- * todo 根据id或者router查询文章信息
+ * 根据id或者router查询文章信息 并返回对应评论
  * @params value {string} 需要查询的值
  * @params router{null|string} 标明router后根据router查询默认id
  */
