@@ -4,7 +4,6 @@ interface githubAttributes {
   id: string;
   name: string;
   description: string;
-  image: string;
   languages: string;
   url: string;
   time: Date;

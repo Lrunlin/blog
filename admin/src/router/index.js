@@ -20,7 +20,7 @@ const routes = [{
         }
     }, {
         path: '/github',
-        component: () => import('@/page/GitHub.vue'),
+        component: () => import('@/page/GitHub/index.vue'),
         meta: {
             title: '仓库信息'
         }

@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "cross-env ENV=dev nodemon --watch ./src -e ts --exec ts-node ./src/index.ts",
     "build": "webpack",
-    "start": "cross-env ENV=pro nodemon --watch ./src -e ts --exec ts-node ./src/index.ts"
+    "start": "cross-env ENV=pro nodemon --watch ./src -e ts --exec ts-node ./src/index.ts",
+    "pro": "cross-env ENV=dev nodemon --watch ./dist/src -e ts --exec ts-node ./src/index.js"
+
   },
   "_moduleAliases": {
     "@": "./src"

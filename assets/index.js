@@ -8,7 +8,9 @@ app.use(cors())
 app.use(express.urlencoded({
     extended: false
 }));
-app.use(express.json());
+app.use(express.json({
+    limit: "10mb"
+}));
 
 let publicKey = fs.readFileSync('./assets/public.pem').toString(); //公钥
 
@@ -40,6 +42,7 @@ app.use('/', require('./router/upload-github')); // 上传GitHub图片
 app.use('/', require('./router/update-assets')); // 更新资源图片
 app.use('/', require('./router/upload-face')); // 用户上传头像
 app.use('/', require('./router/read-user-face')); // 获取用户头像
+app.use('/', require('./router/delete-github')); // 删除GitHub图片
 
 
 

@@ -4,8 +4,8 @@ import { GithubOutlined } from "@ant-design/icons";
 import { getGithubProjectData } from "@/request";
 import type { githubProjectTypes } from "@/types";
 import Image from "next/image";
-import { Skeleton } from "antd";
-import If from '@/utils/If';
+import Skeleton from "./Skeleton";
+import If from "@/utils/If";
 
 const Style = css`
   @mixin border {
@@ -63,6 +63,7 @@ const Style = css`
     }
   }
 `;
+
 /** 右侧aside*/
 const Action = () => {
   const [githubData, setGithubData] = useState<githubProjectTypes[]>([]);

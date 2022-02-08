@@ -1,16 +1,16 @@
-import { useEffect, FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import type { NextPage, GetServerSideProps } from "next";
 import { Result, Button } from "antd";
 import { useRouter } from "next/router";
 import css from "styled-jsx/css";
 import Layout from "@/layout/Main";
 import Head from "@/utils/Head";
+import useLazyLoad from "@/hooks/useLazyLoad";
 import { getArticleData } from "@/request";
 import type { article } from "@/types";
 import UserFace from "@/components/common/UserFace";
 import Comment from "@/components/common/Comment";
 import CodeStyle from "@/style/CodeStyle";
-import If from "@/utils/If";
 
 interface propsTypes {
   data: article | null;
@@ -69,30 +69,7 @@ const Style = css`
 const Article: FunctionComponent<articleProps> = props => {
   let data = props.data;
   let router = useRouter();
-  useEffect(() => {
-    function imageLazyLoad() {
-      function getTop(e: HTMLElement) {
-        var T = e.offsetTop;
-        while (((e as any) = e.offsetParent)) {
-          T += e.offsetTop;
-        }
-        return T;
-      }
-      let imgs = document.getElementsByTagName("img");
-      var H = document.documentElement.clientHeight;
-      var S = document.documentElement.scrollTop || document.body.scrollTop;
-      for (var i = 0; i < imgs.length; i++) {
-        if (H + S > getTop(imgs[i]) && !imgs[i].src) {
-          imgs[i].src = imgs[i].getAttribute("data-src") + "";
-        }
-      }
-    }
-    imageLazyLoad();
-    window.addEventListener("scroll", imageLazyLoad);
-    return () => {
-      window.removeEventListener("scroll", imageLazyLoad);
-    };
-  }, []);
+  useLazyLoad("article img");
   return (
     <>
       <Head
