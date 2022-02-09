@@ -18,7 +18,7 @@ import "@/utils/axios";
  */
 let MemoScript = memo(() => {
   let scriptSrc =
-    process.env.NODE_ENV == "development"
+    process.env.NEXT_PUBLIC_ENV == "development"
       ? "http://localhost:3000/"
       : "https://blog-api.blogweb.cn/";
   return <Script src={`${scriptSrc}statistics?v${+new Date()}`} strategy="lazyOnload" />;

@@ -11,7 +11,7 @@ interface decodeTypes {
 }
 
 // 根据token获取登陆者的信息
-router.get("/user/data", sign, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/user/data",sign, async (req: Request, res: Response, next: NextFunction) => {
   let token = req.headers.authorization;
   jwt.verify(token + "", PUBLICKEY, async function (err, decode) {
     if (err) {
@@ -21,10 +21,10 @@ router.get("/user/data", sign, async (req: Request, res: Response, next: NextFun
       });
       return false;
     }
-
+    
     let userData = decode as decodeTypes;
     let userRows = await User.findByPk(userData.userId, {
-      attributes: ["email", "GitHub"],
+      attributes: ["email","GitHub"],
     });
 
     res.json({

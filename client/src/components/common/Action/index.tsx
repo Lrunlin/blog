@@ -6,6 +6,7 @@ import type { githubProjectTypes } from "@/types";
 import Image from "next/image";
 import Skeleton from "./Skeleton";
 import If from "@/utils/If";
+import NoSSR from '@/utils/NoSSR';
 
 const Style = css`
   @mixin border {
@@ -78,7 +79,7 @@ const Action = () => {
       <aside>
         <div className="aside-body aside-body_github">
           <h3 className="aside-title">
-            <GithubOutlined />
+            <NoSSR children={<GithubOutlined />}/>
             <span>我的GitHub</span>
           </h3>
           <If if={githubData.length} else={<Skeleton />}>

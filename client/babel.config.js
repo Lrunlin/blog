@@ -47,7 +47,7 @@ let config = {
     ],
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NEXT_PUBLIC_ENV === 'production') {
     config.plugins.push('transform-remove-console')
 };
 

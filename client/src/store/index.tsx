@@ -5,7 +5,7 @@ interface storeTypes {
   userData: userData;
   setUserData: Dispatch<userData>;
   assetsPath: string;
-  CDN:string;
+  CDN: string;
 }
 
 let storeObj = {};
@@ -26,9 +26,13 @@ const Store: FunctionComponent = props => {
     userData,
     setUserData,
     assetsPath:
-      process.env.NODE_ENV == "development" ? "http://localhost:3456" : "https://assets.blogweb.cn",
+      process.env.NEXT_PUBLIC_ENV == "development"
+        ? "http://localhost:3456"
+        : "https://assets.blogweb.cn",
     CDN:
-      process.env.NODE_ENV == "development" ? "http://localhost:3456" : "https://cdn.blogweb.cn",
+      process.env.NEXT_PUBLIC_ENV == "development"
+        ? "http://localhost:3456"
+        : "https://cdn.blogweb.cn",
   };
 
   return <Context.Provider value={store}>{props.children}</Context.Provider>;

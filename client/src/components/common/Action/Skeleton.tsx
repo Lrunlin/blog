@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 
 /** Action 组件GitHub项目名部分的骨架屏*/
-const Skeleton: FunctionComponent = props => {
+const Skeleton: FunctionComponent = () => {
   return (
     <>
       <style jsx>{`

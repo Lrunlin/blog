@@ -9,6 +9,7 @@ import Logn from "./Logn";
 import { Context } from "@/store";
 import type { response, userData } from "@/types";
 import If from "@/utils/If";
+import NoSSR from "@/utils/NoSSR";
 import SearchInput from "./SearchInput";
 import Nav from "./Nav";
 import UserSelect from "./UserSelect";
@@ -74,7 +75,6 @@ const Header: FunctionComponent = () => {
     }
   }, []);
 
-
   return (
     <div className="header-container">
       <style jsx={true}>{Style}</style>
@@ -89,12 +89,12 @@ const Header: FunctionComponent = () => {
         <div className="header-user">
           <div className="compile">
             <Tooltip placement="bottomRight" title={userData?.sign ? "发布文章" : "请登录"}>
-              <FormOutlined
-                onClick={() => {
-                  userData?.sign ? router.push("/write") : message.warn("请登录后发布文章");
-                }}
-                style={{ fontSize: "20px", color: "#def3fd" }}
-              />
+                <FormOutlined
+                  onClick={() => {
+                    userData?.sign ? router.push("/write") : message.warn("请登录后发布文章");
+                  }}
+                  style={{ fontSize: "20px", color: "#def3fd" }}
+                />
             </Tooltip>
           </div>
           <If

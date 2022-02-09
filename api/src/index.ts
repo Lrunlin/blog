@@ -3,6 +3,7 @@ require("module-alias/register"); //设置绝对路径
 time:2021-10-21
 author:liurl0621@gmail.com
 */
+
 import express from "express";
 const router = express.Router();
 import fs from "fs";
@@ -17,8 +18,7 @@ app.use(
     extended: false,
   })
 );
-app.use(express.json({ limit: "10mb" }));
-
+app.use(express.json());
 import cookieParser from "cookie-parser";
 app.use(cookieParser());
 

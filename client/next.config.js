@@ -1,11 +1,12 @@
 /** @type {import('next').NextConfig} */
 const webpack = require('webpack');
 const path = require('path');
-
+const {
+  env
+} = require('process')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
-
 module.exports = withBundleAnalyzer({
   eslint: {
     ignoreDuringBuilds: true,
@@ -16,7 +17,7 @@ module.exports = withBundleAnalyzer({
     };
     return config;
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://cdn.blogweb.cn' : '',
+  assetPrefix: env.NEXT_PUBLIC_ENV == 'production' ? 'https://cdn.blogweb.cn' : '',
   async headers() {
     return [{
       source: '/:all*(svg|jpg|png|css|js|webp)',

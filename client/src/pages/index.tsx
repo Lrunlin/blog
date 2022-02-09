@@ -33,7 +33,6 @@ const Index: NextPage<propsTypes> = props => {
   const page = useRef(1);
   const type = useRef("");
 
-  
   /**根据要求获取对应的文章 type为查询某个类型的第一页文章，page为换页*/
   const refreshData = async (method: "page" | "type", value?: string | number) => {
     if (method == "type") {
@@ -73,7 +72,7 @@ const Index: NextPage<propsTypes> = props => {
         </InfiniteScroll>
       </section>
       <Action />
-    </Layout> 
+    </Layout>
   );
 };
 
@@ -89,7 +88,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       type: type,
       article: res.data,
       total: res.total,
-      isOrigina: context.req.headers?.referer?.includes("blogweb"),
+      isOrigina: context?.req?.headers?.referer?.includes("blogweb"),
     },
   };
 };

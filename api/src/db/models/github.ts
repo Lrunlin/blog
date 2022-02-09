@@ -21,6 +21,15 @@ export default sequelize.define<GitHubInstance>(
       allowNull: false,
       comment: "项目介绍",
     },
+    image: {
+      type: DataTypes.STRING(200),
+      allowNull: false,
+      comment: "预览图片",
+      get() {
+        let url = this.getDataValue("image");
+        return `${assetsPath}github/${url}`;
+      },
+    },
     languages: {
       type: DataTypes.STRING(200),
       allowNull: false,
