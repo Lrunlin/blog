@@ -82,13 +82,16 @@ export const getServerSideProps: GetServerSideProps = async context => {
     1,
     typeof context.query.type == "string" ? context.query.type : ""
   );
-
+  let isOrigina =
+    process.env.NEXT_PUBLIC_ENV == "development"
+      ? true
+      : context.req.headers.referer?.includes("blogweb");
   return {
     props: {
       type: type,
       article: res.data,
       total: res.total,
-      isOrigina: context?.req?.headers?.referer?.includes("blogweb"),
+      isOrigina: isOrigina,
     },
   };
 };

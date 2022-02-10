@@ -6,6 +6,10 @@
     "outDir": "./dist",
     "rootDir": "./",
     "moduleResolution": "node",
+    //变量和函数参数未使用警告
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+
     "removeComments": true, //取消注释
     "strict": true,
     "baseUrl": "./",
@@ -16,5 +20,7 @@
     "esModuleInterop": true,
     "noImplicitAny": true, // 不允许隐式的 any 类型
     "typeRoots": ["./types"]
-  }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.d.ts"]
 }

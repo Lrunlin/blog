@@ -3,8 +3,8 @@ import sequelize from "../config";
 import { assets, cdn } from "@/store/assetsPath";
 import cheerio from "cheerio";
 import type { ArticleInstance } from "../types";
-import xss from "xss";
-
+import xss from "@/utils/xss";
+import assembleHTML from "@/utils/assembleHTML";
 
 export default sequelize.define<ArticleInstance>(
   "article",
@@ -39,34 +39,12 @@ export default sequelize.define<ArticleInstance>(
       type: DataTypes.TEXT,
       allowNull: false,
       set(value: string) {
-        let $ = cheerio.load(value + "");
-        $("img").each((index, data) => {
-          $(data)
-            .removeAttr("alt")
-            .removeAttr("style")
-            .removeAttr("contenteditable")
-            .removeAttr("data-src");
-
-          let _src: string =
-            $(data).attr("src")?.replace(`${assets}image/`, "")?.replace(`${cdn}image/`, "") + "";
-          $(data).attr("src", _src);
-        });
-        this.setDataValue("article", $("body").html() as string);
+        this.setDataValue("article", xss(value));
       },
       get() {
         let article: string = this.getDataValue("article");
-        let $ = cheerio.load(article + "");
-        $("img").each((index, data) => {
-          //没有http说明是网络图片
-          if (!$(data).attr("src")?.includes("http")) {
-            let _src: string = `${cdn}image/${$(data).attr("src")}`;
-            $(data)
-              .attr("data-src", _src)
-              .removeAttr("src")
-              .attr("alt", this.getDataValue("type") as string);
-          }
-        });
-        return $("body").html() as string;
+        let type: string = this.getDataValue("type");
+        return assembleHTML(article,type);
       },
     },
     time: {

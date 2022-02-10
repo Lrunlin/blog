@@ -10,7 +10,6 @@ import fs from "fs";
 import path from "path";
 const app = express();
 
-app.use("/css", express.static("./public/css")); //保存下载文章的数据
 app.use("/robots.txt", express.static("public/robots.txt"));
 
 app.use(

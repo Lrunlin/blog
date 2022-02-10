@@ -7,7 +7,8 @@ todo 快捷拼接路径
 @return {string} key 获取结果
 */
 function getKey(type: "private" | "public"): string {
-  return fs.readFileSync(path.join(__dirname, `./${type}-key.pem`)).toString();
+  let _path = path.join(__dirname, `../../../public/key/${type}-key.pem`);
+  return fs.readFileSync(_path).toString();
 }
 
 const PRIVATEKEY: string = getKey("private");
