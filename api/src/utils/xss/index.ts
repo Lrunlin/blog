@@ -1,7 +1,13 @@
 import xss from "xss";
 import { assets, cdn } from "@/store/assetsPath";
 import whiteList from "./whiteList";
-function StrongXSS(html: string) {
+/** 
+ * xss处理article字段
+ * @?处理图片路径和白名单外的标签和属性
+ * @params html {string} 需要处理的HTML字符串
+ * @return str {string} 处理好的HTML字符串
+*/
+function StrongXSS(html: string):string {
   return xss(html, {
     stripIgnoreTag: true,
     whiteList,
