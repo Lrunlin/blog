@@ -22,7 +22,7 @@ onMounted(() => {
   editor = new WangEditor("#editor");
   //文件上传
   editor.config.uploadImgMaxSize = 3 * 1024 * 1024;
-  editor.config.uploadImgAccept = ["jpg", "jpeg", "png"];
+  editor.config.uploadImgAccept = ["jpg", "jpeg", "png","webp"];
   editor.config.showLinkImg = false;
 
   editor.config.customUploadImg = function (resultFiles, insertImgFn) {

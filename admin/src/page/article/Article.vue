@@ -13,7 +13,7 @@
       <el-button>{{ total }}</el-button>
     </el-col>
   </el-row>
-  <el-table :data="tableData" stripe style="width: 100%">
+  <el-table :data="tableData" stripe style="width: 100%" row-ke="id">
     <el-table-column label="#" width="40">
       <template v-slot="scope">{{ scope.$index + 1 }}</template>
     </el-table-column>
@@ -122,7 +122,7 @@ function remove(scope) {
 
 function download(id) {
   axios.get(`/article/${id}`).then(res => {
-    downloadData(res.data.data)
+    downloadData(res.data.data);
   });
 }
 </script>

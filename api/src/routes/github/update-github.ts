@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.put("/github/:id",adminAuth, async (req: Request, res: Response, next: NextFunction) => {
   let id = req.params.id;
-
   GitHub.update(req.body, { where: { id: id } })
     .then(row => {
       let isSuccess = !!row[0];

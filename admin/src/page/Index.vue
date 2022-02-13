@@ -73,12 +73,12 @@
         <el-tooltip
           v-for="(item, index) in data.loadavg"
           effect="dark"
-          :content="`${(index + 1) * 5}分钟负载情况`"
+          :content="setTips(index)"
           placement="top"
-          :key="index"
+          :key="Math.random()"
           :style="{ marginLeft: index != 0 ? '5px' : '0px' }"
         >
-          <el-progress type="circle" :percentage="+(item*100).toFixed(0)" :width="50" />
+          <el-progress type="circle" :percentage="+(item * 100).toFixed(0)" :width="50" />
         </el-tooltip>
       </div>
     </div>
@@ -89,7 +89,8 @@
       </div>
       <div class="os-content_item_data">
         {{ formatSize(data.memory_total - data.memory_free) }}
-        /{{ formatSize(data.memory_total) }}
+        /
+        {{ formatSize(data.memory_total) }}
         <el-progress
           v-if="data.memory_total"
           :percentage="
@@ -118,7 +119,11 @@ let data = ref({});
 axios.get("/admin/init").then(res => {
   data.value = res.data.data;
 });
-
+const setTips = index => {
+  const list = [1, 5, 15];
+  return `${list[index]}分钟负载情况`;
+};
+/** 格式化大小*/
 const formatSize = fileSize => {
   let result = "";
   if (fileSize >= 1048576) {

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import assetsPath from '@/store/assetsPath';
+import assetsPath from "@/store/assetsPath";
 import sequelize from "../config";
 import type { GitHubInstance } from "../types";
 
@@ -28,6 +28,9 @@ export default sequelize.define<GitHubInstance>(
       get() {
         let url = this.getDataValue("image");
         return `${assetsPath}github/${url}`;
+      },
+      set(value) {
+        this.setDataValue("image", (value + "").replace(`${assetsPath}github/`, ""));
       },
     },
     languages: {

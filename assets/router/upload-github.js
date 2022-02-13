@@ -8,6 +8,7 @@ const md5 = require('md5');
 const axios = require('axios');
 const adminAuth = require('../utils/auth');
 let dir = path.join(__dirname, '../public/github');
+const whiteList = require('../store/imageWriteList');
 
 
 const storage = multer.diskStorage({
@@ -15,7 +16,6 @@ const storage = multer.diskStorage({
         cb(null, dir)
     },
     filename: function (req, file, cb) {
-        let whiteList = ['image/jpeg', 'image/png'];
         if (whiteList.includes(file.mimetype)) {
             cb(null, `${+new Date()}-${file.originalname}`);
         } else {

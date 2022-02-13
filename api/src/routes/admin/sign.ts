@@ -6,8 +6,6 @@ import { Admin } from "@/db";
 import { PRIVATEKEY } from "@/store/key";
 import jwt from "jsonwebtoken";
 import md5 from "md5";
-import xss from '@/utils/xss';
-console.log(xss);
 
 
 

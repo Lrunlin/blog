@@ -6,6 +6,7 @@ const multer = require('multer') //上传图片
 const sharp = require("sharp")
 const md5 = require('md5');
 const auth = require('../utils/auth')
+const whiteList = require('../store/imageWriteList');
 
 let dir = path.join(__dirname, '../public');
 
@@ -15,7 +16,6 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         //?因为不确定新文件的格式所以还是不使用params的参数
-        let whiteList = ['image/jpeg', 'image/png'];
         if (whiteList.includes(file.mimetype)) {
             cb(null, `${+new Date()}-${file.originalname}`);
         } else {
