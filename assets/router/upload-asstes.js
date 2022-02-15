@@ -33,7 +33,6 @@ const upload = multer({
 
 router.post('/assets', upload.single('image'), async (req, res) => {
     const path = req.file.path; //图片原本的名字
-
     const name = `${md5(req.file.filename+(+new Date()))}.webp`
     let data = process.env.ENV == 'dev' ?
         `http://localhost:3456/image/${name}` : `https://assets.blogweb.cn/image/${name}`;
@@ -41,18 +40,19 @@ router.post('/assets', upload.single('image'), async (req, res) => {
     sharp(path)
         .webp({
             quality: 50
-        }).toFile(`${dir}/${name}`, (err, info) => {
-            if (err) {
-                res.json({
-                    errno: '错误，反正不是0',
-                    data: data
-                });
-            } else {
-                res.json({
-                    errno: 0,
-                    data: data
-                });
-            }
+        })
+        .toFile(`${dir}/${name}`)
+        .then(info => {
+            res.json({
+                errno: 0,
+                data: data
+            });
+        }).catch(err => {
+            res.json({
+                errno: '错误，反正不是0',
+                data: data
+            });
+        }).finally(() => {
             fs.unlinkSync(`${dir}/${req.file.filename}`)
         })
 

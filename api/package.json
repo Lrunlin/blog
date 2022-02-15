@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env ENV=dev nodemon --watch ./src -e ts --exec ts-node ./src/index.ts",
-    "build": "webpack",
+    "build": "node build",
     "start": "cross-env ENV=pro nodemon --watch ./src -e ts --exec ts-node ./src/index.ts"
   },
   "_moduleAliases": {
