@@ -14,7 +14,7 @@ const HeadComponent: FunctionComponent<props> = prop => {
       <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
       <meta name="description" content={prop.description} />
       <meta name="keywords" content={"前端路上,博客" + prop.keyword.join(",")} />
-      <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       {prop.children}
     </Head>
   );

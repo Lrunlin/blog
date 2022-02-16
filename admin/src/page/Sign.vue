@@ -58,9 +58,9 @@
       <div class="copyright">
         Copyright &copy; {{ new Date().getFullYear() }}&nbsp;<a
           target="_blank"
-          href="https://github.com/zxysilent"
+          href="https://github.com/Lrunlin/blog"
           >github.com/Lrunlin/blog</a
-        >&nbsp;&nbsp;<a target="_blank" href="https://blog.zxysilent.com">blogweb.cn</a>
+        >&nbsp;&nbsp;<a target="_blank" href="https://blogweb.com">blogweb.cn</a>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@ function setRandomCode() {
   for (let i = 0; i < 4; i++) {
     res += str[random(0, 62)];
   }
-  return res;
+  return res.substring(0, 4);
 }
 let code = ref(setRandomCode());
 let rules = {
@@ -240,5 +240,9 @@ function submitForm() {
   .el-input {
     width: 60%;
   }
+}
+.lizi {
+  width: 500px;
+  height: 400px;
 }
 </style>
