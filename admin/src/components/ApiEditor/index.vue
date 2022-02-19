@@ -7,6 +7,7 @@
 
 <script setup>
 import { ref, watchEffect, onMounted, onBeforeUnmount } from "vue";
+import jquery from "jquery";
 import option from "./option.js";
 let isPreview = ref(false);
 let emit = defineEmits();
@@ -22,7 +23,16 @@ onMounted(() => {
     "editor",
     e => {
       e.config.onchange = function (newHtml) {
-        emit("update:setHTML", newHtml);
+        let _dom = jquery(`<div>${newHtml}</div>`);
+        _dom.find("code").each((index, el) => {
+          let className = jquery(el).attr("class");
+          if (className) {
+            if (!className.includes("language")) {
+              jquery(el).removeAttr("class").attr("class", `language-${className}`);
+            }
+          }
+        });
+        emit("update:setHTML", jquery(_dom).html());
       };
     },
     () => {

@@ -21,8 +21,7 @@ export default sequelize.define<AdminInstance>(
       allowNull: false,
       comment: "管理员密码",
       set(value: string) {
-        const admin = this.getDataValue("admin");
-        this.setDataValue("password", md5(admin + value));
+        this.setDataValue("password", md5(value));
       },
     },
   },

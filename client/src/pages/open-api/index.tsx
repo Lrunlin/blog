@@ -61,7 +61,7 @@ const NextPageName: NextPage<propsTypes> = props => {
         keyword={["公开API接口", "文章接口", ...props.list.map(item => item.name)]}
       />
       <style jsx>{style}</style>
-      <CodeStyle type="open-api" />
+      <CodeStyle key={data.id} />
       <aside>
         <h2>API</h2>
         {props.list.map(item => (

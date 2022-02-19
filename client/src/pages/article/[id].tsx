@@ -77,7 +77,6 @@ const Article: FunctionComponent<articleProps> = props => {
         description={data.introduce.substring(0, 100)}
         keyword={data.type}
       />
-      <CodeStyle />
       <style jsx>{Style}</style>
       <style jsx global>{`
         .article-details img {
@@ -104,6 +103,7 @@ const Article: FunctionComponent<articleProps> = props => {
           <time>发布于{(data.time + "").substring(0, 10)}</time>
         </div>
       </div>
+      <CodeStyle />
       <article
         className="article-data article-container_item article-details"
         dangerouslySetInnerHTML={{ __html: data.article }}

@@ -12,7 +12,7 @@ import md5 from "md5";
 router.get("/admin/token", async (req: Request, res: Response) => {
   const { admin, password } = req.query;
   let data = await Admin.findOne({
-    where: { admin: admin, password: md5(admin as string + password as string) },
+    where: { admin: admin, password: md5(password as string) },
   });
   
   let isSuccess = !!data;

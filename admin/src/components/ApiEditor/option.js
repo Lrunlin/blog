@@ -30,7 +30,7 @@ function option(id, setOPtion,LineFeed) {
     ];
 
     editor.config.languageType = [
-        "JSON",
+        "json",
     ];
 
     editor.config.showMenuTooltips = false;//关闭触碰提示
