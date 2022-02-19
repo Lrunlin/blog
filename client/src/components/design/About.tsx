@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, MouseEvent, FunctionComponent } from "react";
-import BarHeader from "@/components/home/BarHeader";
+import BarHeader from "@/components/design/BarHeader";
 import WaveImage from '../../../public/image/wave.png';
 
 interface aboutItemPropsTypes {

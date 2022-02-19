@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import BarHeader from "@/components/home/BarHeader";
+import BarHeader from "@/components/design/BarHeader";
 import Image from "next/image";
 
 const Contact: FunctionComponent = () => {

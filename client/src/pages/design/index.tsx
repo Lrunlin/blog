@@ -3,14 +3,13 @@ import type { FunctionComponent } from "react";
 import Head from "@/utils/Head";
 import Image from "next/image";
 
-import Index from "@/components/home/Index";
-import Nav from "@/components/home/Nav";
-import About from "@/components/home/About";
-import Example from "@/components/home/Example";
-import Contact from "@/components/home/Contact";
-import Helper from "@/components/home/Helper";
+import Index from "@/components/design/Index";
+import Nav from "@/components/design/Nav";
+import About from "@/components/design/About";
+import Example from "@/components/design/Example";
+import Contact from "@/components/design/Contact";
+import Helper from "@/components/design/Helper";
 
-import CodeSVG from "../../../public/image/code.svg";
 
 const Footer: FunctionComponent = () => {
   return (

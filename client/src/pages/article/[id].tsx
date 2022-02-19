@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
 import type { NextPage, GetServerSideProps } from "next";
-import { Result, Button } from "antd";
 import { useRouter } from "next/router";
 import css from "styled-jsx/css";
 import Layout from "@/layout/Main";
@@ -11,6 +10,7 @@ import type { article } from "@/types";
 import UserFace from "@/components/common/UserFace";
 import Comment from "@/components/common/Comment";
 import CodeStyle from "@/style/CodeStyle";
+import NotFound from "@/components/article/NotFound";
 
 interface propsTypes {
   data: article | null;
@@ -86,6 +86,9 @@ const Article: FunctionComponent<articleProps> = props => {
         .article-user-face {
           border-radius: 50%;
         }
+        article p {
+          margin-bottom: 8px;
+        }
       `}</style>
       <div className="article-header article-container_item">
         <h1 className="article-title">{data.title}</h1>
@@ -109,31 +112,6 @@ const Article: FunctionComponent<articleProps> = props => {
   );
 };
 
-const NoFound: FunctionComponent = () => {
-  let router = useRouter();
-  return (
-    <>
-      <Head
-        title="404|未找到指定文章"
-        keyword={["404", "未找到该文章"]}
-        description="未找到该文章"
-      />
-      <div>
-        <Result
-          status="404"
-          title="未找到对应文章"
-          subTitle="没有找到对应文章"
-          extra={
-            <Button type="primary" onClick={() => router.replace("/")}>
-              回到首页
-            </Button>
-          }
-        />
-      </div>
-    </>
-  );
-};
-
 const NextPageName: NextPage<propsTypes> = props => {
   let data = props.data;
 
@@ -145,7 +123,7 @@ const NextPageName: NextPage<propsTypes> = props => {
           <Comment articleId={(data as article).id + ""} />
         </>
       ) : (
-        <NoFound />
+        <NotFound />
       )}
     </Layout>
   );

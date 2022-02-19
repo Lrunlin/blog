@@ -1,9 +1,6 @@
 import css from "styled-jsx/css";
-import NoSSR from "@/utils/NoSSR";
 import type { FunctionComponent } from "react";
-import Link from "next/link";
 import cl from "classnames";
-import Skeleton from "./Skeleton";
 interface props {
   introduce: string;
   hasImage: boolean;
@@ -36,11 +33,9 @@ const ArticleIntroduce: FunctionComponent<props> = props => {
   return (
     <>
       <style jsx>{Style}</style>
-      <NoSSR onLoad={<Skeleton hasImage={props.hasImage} />}>
-          <div className={cl(["introduce", props.hasImage && "introduce-hasimage"])}>
-            {props.introduce}
-          </div>
-      </NoSSR>
+      <div className={cl(["introduce", props.hasImage && "introduce-hasimage"])}>
+        {props.introduce}
+      </div>
     </>
   );
 };

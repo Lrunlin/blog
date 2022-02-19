@@ -1,5 +1,5 @@
 import { useState, useEffect, FunctionComponent, memo } from "react";
-import BarHeader from "@/components/home/BarHeader";
+import BarHeader from "@/components/design/BarHeader";
 import { Button, Image } from "antd";
 import { getGithubProjectData } from "@/request";
 import { githubProjectTypes } from "@/types";
