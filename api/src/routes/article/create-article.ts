@@ -16,7 +16,6 @@ router.post("/article", sign, async (req: Request, res: Response, next: NextFunc
     createArticleData.router = md5(createArticleData.author + createArticleData.title);
   }
 
-  //检测router只能是字母或数字
   if (!/^[a-zA-Z0-9-]{3,36}$/.test(createArticleData.router)) {
     res.json({
       success: false,
