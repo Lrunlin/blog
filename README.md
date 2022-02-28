@@ -2,6 +2,8 @@
 
 主要使用 Vue3，NextJs，React，Node-Express，Scss,MySQl
 
+**[博客地址](https://blogweb.cn)**
+
 ## 源码：
 
 1.  个人博客管理系统（admin）
@@ -21,11 +23,6 @@
 6.  发布文章、设置用户基本信息
 7.  可以对管理员进行留言
 8.  浏览并使用管理员发布的开发 API 接口
-
-### 说明
-
-1.  首页和搜索页面的文章介绍文字，防止影响 SEO 使用 NoSSR 实现客户端渲染
-2.  SiteMap.xml 使用 Next.js 路由形式实现，相关数据服务器缓存 1 小时更新
 
 ## 管理系统
 
@@ -47,7 +44,12 @@
 2.  使用 JWT 算法 RSA256 进行签名解密进行接口请求权限判断
 3.  统计访问量是在所有文件中注入一段 JS 代码，JS 代码每次被访问当日访问量+1
 4.  发送无权限请求返回错误代码 401
+5.  接口文档工具使用 Apifox，需要的从博客联系我
 
-# 接口地址
+## 更新计划
 
-https://www.apifox.cn/apidoc/shared-aedb9c41-781a-42cb-8ad9-269486f708b8
+1.  用户端更换 CSS 管理方案为 tailwind CSS 或者 styled-components
+2.  服务端 Node.js 框架更换为 Koa2 或者 Nest.js
+3.  将 assets 与 api 合并方便资源处理(但是会牺牲部署的便利性)
+4.  将富文本编辑器换为 Markdown 编辑器
+5.  将首页左侧的图标和类型全部存入数据库并且上传 CDN
