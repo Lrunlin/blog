@@ -12,7 +12,7 @@ import Article from "@/components/common/Article";
 
 import type { articleType, articlePageTypes } from "@/types";
 import { getPageArticleData, getType } from "@/request";
-import Script from "@/components/common/Script";
+import Statistics from "@/components/common/Statistics";
 
 /**扩展文章类型，本类型携带文章对应的评论数量*/
 interface propsTypes {
@@ -73,7 +73,7 @@ const Index: NextPage<propsTypes> = props => {
         </InfiniteScroll>
       </section>
       <Action />
-      <Script id="index" />
+      <Statistics id="index" />
     </Layout>
   );
 };

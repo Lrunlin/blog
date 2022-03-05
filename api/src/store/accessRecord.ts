@@ -11,18 +11,20 @@ function statistics(type: string | undefined, referrer: string) {
   let time = moment().format("YYYY-MM-DD");
 
   // 设置时间轴并且只保留最近七天
-  !accessRecord[time] &&
-    (accessRecord[time] = {
+  if (!accessRecord[time]) {
+    accessRecord[time] = {
       visits: 0,
       type: {},
       referrer: { Google: 0, 360: 0, Baidu: 0, Bing: 0, Other: 0, 直接进入: 0 },
-    });
-  if (Object.keys(accessRecord).length > 7) {
-    delete accessRecord[Object.keys(accessRecord)[0] as string];
+    };
+    if (Object.keys(accessRecord).length > 7) {
+      delete accessRecord[Object.keys(accessRecord)[0] as string];
+    }
   }
 
-  // 开始类型和访问量的自增
+  //访问量的自增
   accessRecord[time].visits++;
+  //如果有类型就设置类型自增
   if (type) {
     type.split(",").forEach(item => {
       accessRecord[time].type[item]
@@ -30,9 +32,9 @@ function statistics(type: string | undefined, referrer: string) {
         : (accessRecord[time].type[item] = 1);
     });
   }
-  //设置访问来源
+  //设置访问来源（没有访问来源就设置直接进入）
   if (!referrer) {
-    accessRecord[time].referrer['直接进入']++;
+    accessRecord[time].referrer["直接进入"]++;
     return false;
   }
   let referrerList = [

@@ -11,7 +11,7 @@ import UserFace from "@/components/common/UserFace";
 import Comment from "@/components/common/Comment";
 import CodeStyle from "@/style/CodeStyle";
 import NotFound from "@/components/article/NotFound";
-import Script from "@/components/common/Script";
+import Statistics from "@/components/common/Statistics";
 
 interface propsTypes {
   data: article | null;
@@ -109,7 +109,7 @@ const Article: FunctionComponent<articleProps> = props => {
         className="article-data article-container_item article-details"
         dangerouslySetInnerHTML={{ __html: data.article }}
       ></article>
-      <Script type={data.type + ""} id={data.id} />
+      <Statistics type={data.type + ""} id={data.id} />
     </>
   );
 };
