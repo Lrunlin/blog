@@ -8,11 +8,11 @@
 <script setup>
 import { computed, onMounted, watchEffect } from "vue";
 import * as echarts from "echarts/core";
-import { GridComponent } from "echarts/components";
+import { GridComponent ,TooltipComponent } from "echarts/components";
 import { LineChart } from "echarts/charts";
 import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
-echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
+echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition,TooltipComponent ]);
 let props = defineProps({
   data: {
     type: Object,
@@ -51,8 +51,8 @@ let option = computed(() => {
   };
 });
 onMounted(() => {
+  let myChart = echarts.init(document.getElementById("EchartsVisits"));
   watchEffect(() => {
-    let myChart = echarts.init(document.getElementById("EchartsVisits"));
     myChart.setOption(option.value);
   });
 });

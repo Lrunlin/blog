@@ -6,7 +6,7 @@
         "properties": {
             "id": "710000",
             "cp": [121.509062, 24.044332],
-            "name": "台湾",
+            "name": "台湾省",
             "childNum": 6
         },
         "geometry": {
@@ -54,7 +54,7 @@
         "properties": {
             "id": "130000",
             "cp": [114.502461, 38.045474],
-            "name": "河北",
+            "name": "河北省",
             "childNum": 3
         },
         "geometry": {
@@ -82,7 +82,7 @@
         "properties": {
             "id": "140000",
             "cp": [111.849248, 36.857014],
-            "name": "山西",
+            "name": "山西省",
             "childNum": 1
         },
         "geometry": {
@@ -98,7 +98,7 @@
         "properties": {
             "id": "150000",
             "cp": [111.670801, 41.818311],
-            "name": "内蒙古",
+            "name": "内蒙古自治区",
             "childNum": 2
         },
         "geometry": {
@@ -118,7 +118,7 @@
         "properties": {
             "id": "210000",
             "cp": [123.429096, 41.796767],
-            "name": "辽宁",
+            "name": "辽宁省",
             "childNum": 16
         },
         "geometry": {
@@ -198,7 +198,7 @@
         "properties": {
             "id": "220000",
             "cp": [125.3245, 43.886841],
-            "name": "吉林",
+            "name": "吉林省",
             "childNum": 1
         },
         "geometry": {
@@ -214,7 +214,7 @@
         "properties": {
             "id": "230000",
             "cp": [128.642464, 46.756967],
-            "name": "黑龙江",
+            "name": "黑龙江省",
             "childNum": 2
         },
         "geometry": {
@@ -234,7 +234,7 @@
         "properties": {
             "id": "320000",
             "cp": [119.767413, 33.041544],
-            "name": "江苏",
+            "name": "江苏省",
             "childNum": 1
         },
         "geometry": {
@@ -250,7 +250,7 @@
         "properties": {
             "id": "330000",
             "cp": [120.153576, 29.287459],
-            "name": "浙江",
+            "name": "浙江省",
             "childNum": 45
         },
         "geometry": {
@@ -446,7 +446,7 @@
         "properties": {
             "id": "340000",
             "cp": [117.283042, 31.26119],
-            "name": "安徽",
+            "name": "安徽省",
             "childNum": 3
         },
         "geometry": {
@@ -474,7 +474,7 @@
         "properties": {
             "id": "350000",
             "cp": [118.306239, 26.075302],
-            "name": "福建",
+            "name": "福建省",
             "childNum": 18
         },
         "geometry": {
@@ -562,7 +562,7 @@
         "properties": {
             "id": "360000",
             "cp": [115.592151, 27.676493],
-            "name": "江西",
+            "name": "江西省",
             "childNum": 1
         },
         "geometry": {
@@ -578,7 +578,7 @@
         "properties": {
             "id": "370000",
             "cp": [118.000923, 36.275807],
-            "name": "山东",
+            "name": "山东省",
             "childNum": 13
         },
         "geometry": {
@@ -646,7 +646,7 @@
         "properties": {
             "id": "410000",
             "cp": [113.665412, 33.757975],
-            "name": "河南",
+            "name": "河南省",
             "childNum": 1
         },
         "geometry": {
@@ -662,7 +662,7 @@
         "properties": {
             "id": "420000",
             "cp": [113.298572, 30.684355],
-            "name": "湖北",
+            "name": "湖北省",
             "childNum": 3
         },
         "geometry": {
@@ -690,7 +690,7 @@
         "properties": {
             "id": "430000",
             "cp": [111.782279, 28.09409],
-            "name": "湖南",
+            "name": "湖南省",
             "childNum": 3
         },
         "geometry": {
@@ -718,7 +718,7 @@
         "properties": {
             "id": "440000",
             "cp": [113.280637, 23.125178],
-            "name": "广东",
+            "name": "广东省",
             "childNum": 24
         },
         "geometry": {
@@ -830,7 +830,7 @@
         "properties": {
             "id": "450000",
             "cp": [108.320004, 22.82402],
-            "name": "广西",
+            "name": "广西壮族自治区",
             "childNum": 2
         },
         "geometry": {
@@ -854,7 +854,7 @@
         "properties": {
             "id": "460000",
             "cp": [109.83119, 19.031971],
-            "name": "海南",
+            "name": "海南省",
             "childNum": 1
         },
         "geometry": {
@@ -870,7 +870,7 @@
         "properties": {
             "id": "510000",
             "cp": [104.065735, 30.659462],
-            "name": "四川",
+            "name": "四川省",
             "childNum": 2
         },
         "geometry": {
@@ -894,7 +894,7 @@
         "properties": {
             "id": "520000",
             "cp": [106.713478, 26.578343],
-            "name": "贵州",
+            "name": "贵州省",
             "childNum": 3
         },
         "geometry": {
@@ -922,7 +922,7 @@
         "properties": {
             "id": "530000",
             "cp": [101.512251, 24.740609],
-            "name": "云南",
+            "name": "云南省",
             "childNum": 1
         },
         "geometry": {
@@ -938,7 +938,7 @@
         "properties": {
             "id": "540000",
             "cp": [89.132212, 30.860361],
-            "name": "西藏",
+            "name": "西藏自治区",
             "childNum": 1
         },
         "geometry": {
@@ -954,7 +954,7 @@
         "properties": {
             "id": "610000",
             "cp": [108.948024, 34.263161],
-            "name": "陕西",
+            "name": "陕西省",
             "childNum": 1
         },
         "geometry": {
@@ -970,7 +970,7 @@
         "properties": {
             "id": "620000",
             "cp": [103.823557, 36.058039],
-            "name": "甘肃",
+            "name": "甘肃省",
             "childNum": 2
         },
         "geometry": {
@@ -994,7 +994,7 @@
         "properties": {
             "id": "630000",
             "cp": [96.778916, 35.623178],
-            "name": "青海",
+            "name": "青海省",
             "childNum": 2
         },
         "geometry": {
@@ -1018,7 +1018,7 @@
         "properties": {
             "id": "640000",
             "cp": [106.278179, 37.26637],
-            "name": "宁夏",
+            "name": "宁夏回族自治区",
             "childNum": 2
         },
         "geometry": {
@@ -1042,7 +1042,7 @@
         "properties": {
             "id": "650000",
             "cp": [85.617733, 40.792818],
-            "name": "新疆",
+            "name": "新疆维吾尔自治区",
             "childNum": 1
         },
         "geometry": {
@@ -1058,7 +1058,7 @@
         "properties": {
             "id": "110000",
             "cp": [116.405285, 39.904989],
-            "name": "北京",
+            "name": "北京市",
             "childNum": 1
         },
         "geometry": {
@@ -1074,7 +1074,7 @@
         "properties": {
             "id": "120000",
             "cp": [117.190182, 39.125596],
-            "name": "天津",
+            "name": "天津市",
             "childNum": 1
         },
         "geometry": {
@@ -1090,7 +1090,7 @@
         "properties": {
             "id": "310000",
             "cp": [121.472644, 31.231706],
-            "name": "上海",
+            "name": "上海市",
             "childNum": 6
         },
         "geometry": {
@@ -1130,7 +1130,7 @@
         "properties": {
             "id": "500000",
             "cp": [107.304962, 29.533155],
-            "name": "重庆",
+            "name": "重庆市",
             "childNum": 2
         },
         "geometry": {
@@ -1154,7 +1154,7 @@
         "properties": {
             "id": "810000",
             "cp": [114.173355, 22.320048],
-            "name": "香港",
+            "name": "香港特别行政区",
             "childNum": 5
         },
         "geometry": {
@@ -1190,7 +1190,7 @@
         "properties": {
             "id": "820000",
             "cp": [113.54909, 22.198951],
-            "name": "澳门",
+            "name": "澳门特别行政区",
             "childNum": 1
         },
         "geometry": {

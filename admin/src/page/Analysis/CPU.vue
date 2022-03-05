@@ -29,7 +29,6 @@ let outLineBorderColor = computed(() => {
   let index = Math.ceil(props.data * 10) > 9 ? 9 : Math.ceil(props.data * 10);
   return colorList[index];
 });
-console.log(outLineBorderColor.value);
 let option = computed(() => {
   return {
     series: [
@@ -52,8 +51,8 @@ let option = computed(() => {
   };
 });
 onMounted(() => {
+  let myChart = echarts.init(document.getElementById("EchartsCPU"));
   watchEffect(() => {
-    let myChart = echarts.init(document.getElementById("EchartsCPU"));
     myChart.setOption(option.value);
   });
 });

@@ -10,7 +10,7 @@ let address = "";
 axios
   .get(`https://api.map.baidu.com/location/ip?ak=LC742jDXOpX0YK7zCujnaYYBUiifRHBT&coor=bd09ll`)
   .then(res => {
-    address = res.data.content.address_detail.province;
+    address = res.data.content.address_detail.province as string;
   })
   .catch(err => {
     address = "北京市";

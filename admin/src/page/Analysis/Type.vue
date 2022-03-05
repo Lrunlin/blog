@@ -115,8 +115,8 @@ let option = computed(() => {
 });
 
 onMounted(() => {
+  let myChart = echarts.init(document.getElementById("EchartArticleType"));
   watchEffect(() => {
-    let myChart = echarts.init(document.getElementById("EchartArticleType"));
     myChart.setOption(option.value);
   });
 });

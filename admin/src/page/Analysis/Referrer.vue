@@ -102,8 +102,8 @@ let option = computed(() => {
 });
 
 onMounted(() => {
+  let myChart = echarts.init(document.getElementById("EchartsReferrer"));
   watchEffect(() => {
-    let myChart = echarts.init(document.getElementById("EchartsReferrer"));
     myChart.setOption(option.value);
   });
 });

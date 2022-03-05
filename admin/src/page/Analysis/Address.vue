@@ -10,31 +10,40 @@
  * 父组件传来省份，本组件根据JSON数据获取省会
  * 并且在地图上建立连线，（传来省的省会--所有省会）
  */
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import china from "@/assets/analysis/china.json";
-import data from "@/assets/analysis/city-data.json";
+// import data from "@/assets/analysis/city-data.json";
 
 import * as echarts from "echarts/core";
-import { MapChart, EffectScatterChart, LinesChart } from "echarts/charts";
+import { MapChart, EffectScatterChart, LinesChart, ScatterChart } from "echarts/charts";
 import { VisualMapComponent, TitleComponent } from "echarts/components";
-echarts.use([MapChart, VisualMapComponent, EffectScatterChart, LinesChart, TitleComponent]);
+echarts.use([
+  MapChart,
+  VisualMapComponent,
+  EffectScatterChart,
+  LinesChart,
+  TitleComponent,
+  ScatterChart,
+]);
 echarts.registerMap("china", china);
 
-let props = defineProps({ address: { type: String, required: true, default: "北京市" } });
-let city = computed(() => data[props.address].city); //根据传来的省找到省会
+let props = defineProps({ address: { type: String, required: true, default: "北京" } });
 
 //数据格式化
 let geoCoordMap = {}; //城市坐标信息
-Object.values(data).forEach(item => {
-  geoCoordMap[item.city] = item.cp;
+china.features.forEach(item => {
+  let _item = item.properties;
+  geoCoordMap[_item.name] = _item.cp;
 });
 
-//城市之间的连线情况
+/** 城市之间的连线情况*/
 let LineData = computed(() => {
-  let _data = Object.values(data).map(item => [{ name: city.value }, { name: item.city }]);
+  //对象转数组然后map返回所需格式
+  let _data = Object.keys(geoCoordMap).map(item => [{ name: props.address }, { name: item }]);
   return _data;
 });
-// 将LineData转为Echarts使用的格式
+
+/** 将LineData转为Echarts使用的格式*/
 let convertData = function (data) {
   let res = [];
   for (let i = 0; i < data.length; i++) {
@@ -55,7 +64,7 @@ let convertData = function (data) {
 let series = computed(() => {
   return [
     {
-      name: city.value,
+      name: props.address,
       type: "lines",
       zlevel: 1,
       effect: {
@@ -72,7 +81,7 @@ let series = computed(() => {
       data: convertData(LineData.value),
     },
     {
-      name: city.value,
+      name: props.address,
       type: "lines",
       zlevel: 2,
       symbol: ["none", "arrow"],
@@ -91,7 +100,7 @@ let series = computed(() => {
       data: convertData(LineData.value),
     },
     {
-      name: city.value,
+      name: props.address,
       type: "effectScatter",
       coordinateSystem: "geo",
       zlevel: 2,
@@ -101,9 +110,9 @@ let series = computed(() => {
       label: {
         show: true,
         position: "right",
-        //只有主机所在省的省会显示名字
+        //只有主机所在省的省,会显示名字
         formatter: function (params) {
-          return params.name == city.value ? params.name : "";
+          return params.name == props.address ? params.name : "";
         },
       },
       symbolSize: function (val) {
@@ -116,6 +125,22 @@ let series = computed(() => {
         };
       }),
     },
+    {
+      type: "scatter",
+      coordinateSystem: "geo",
+      symbol: "pin",
+      symbolSize: 30,
+      label: {
+        show: false,
+      },
+      itemStyle: {
+        color: "red",
+        shadowBlur: 50,
+        shadowColor: "#8FD1C3",
+      },
+      zlevel: 3,
+      data: [geoCoordMap[props.address]],
+    },
   ];
 });
 
@@ -123,7 +148,6 @@ let option = computed(() => {
   return {
     title: {
       text: "服务器位置",
-      subtext: "所在省的省会",
       left: "center",
       textStyle: {
         color: "#fff",
@@ -136,7 +160,7 @@ let option = computed(() => {
           show: false,
         },
       },
-      zoom: 1, //当前视角的缩放比例
+      zoom: 1.2, //当前视角的缩放比例
       roam: true, //是否开启平游或缩放
       scaleLimit: {
         //滚轮缩放的极限控制
@@ -158,7 +182,7 @@ let option = computed(() => {
             },
             {
               offset: 1,
-              color: "rgba(	47,79,79, .1)",
+              color: "rgba(47,79,79, .1)",
             },
           ],
           globalCoord: false,
@@ -177,9 +201,9 @@ let option = computed(() => {
   };
 });
 onMounted(() => {
-  watch(option, newValue => {
-    let myChartChina = echarts.init(document.getElementById("EchartsAddress"));
-    myChartChina.setOption(newValue);
+  let myChartChina = echarts.init(document.getElementById("EchartsAddress"));
+  watchEffect(() => {
+    myChartChina.setOption(option.value);
   });
 });
 </script>
