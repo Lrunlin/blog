@@ -12,7 +12,7 @@ let dir = path.join(__dirname, '../public');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, `${dir}/temporary`)
+        cb(null, `${dir}/image`)
     },
     filename: function (req, file, cb) {
         //?因为不确定新文件的格式所以还是不使用params的参数
@@ -51,7 +51,7 @@ router.put('/assets/:name', auth, upload.single('image'), async (req, res) => {
                     data: req.params.name
                 });
             }
-            fs.unlinkSync(`${dir}/temporary/${req.file.filename}`)
+            fs.unlinkSync(`${dir}/image/${req.file.filename}`)
         })
 })
 module.exports = router;
