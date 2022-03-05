@@ -1,5 +1,5 @@
 import { Comment, Article } from "@/db";
-import { sign } from "@/utils/auth";
+import { sign } from "@/common/guards/auth";
 import md5 from "md5";
 import express, { NextFunction, Response, Request } from "express";
 import { setBlackList } from "@/store/blackList";

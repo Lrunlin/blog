@@ -1,7 +1,7 @@
 import express, { NextFunction, Response, Request } from "express";
 const app = express();
 const router = express.Router();
-import { adminAuth } from "@/utils/auth";
+import { adminAuth } from "@/common/guards/auth";
 import md5 from "md5";
 import { Article } from "@/db";
 router.put("/article/:id", adminAuth, async (req: Request, res: Response, next: NextFunction) => {

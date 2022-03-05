@@ -1,5 +1,5 @@
 import express, { NextFunction, Response, Request } from "express";
-import { adminAuth } from "@/utils/auth";
+import { adminAuth } from "@/common/guards/auth";
 import { Admin } from "@/db";
 const router = express.Router();
 

@@ -92,7 +92,14 @@ cmd.run(`tsc`,
             console.error(err);
             return false;
         }
-        fs.writeFileSync('./dist/package.json', fs.readFileSync('./package.json'));
+
+        let package = JSON.parse(fs.readFileSync('./package.json').toString())
+        package.scripts.dev = "cross-env ENV=dev nodemon --watch ./src ./src/index.js"
+        package.scripts.start = "cross-env ENV=pro nodemon --watch ./src ./src/index.js"
+
+        fs.writeFileSync('./dist/package.json', JSON.stringify(package));
+
+        fs.writeFileSync('./dist/yarn.lock', fs.readFileSync('./yarn.lock'));
         copyDir('./public', './dist/public')
     }
 );

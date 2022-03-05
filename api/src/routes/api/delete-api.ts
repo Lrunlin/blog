@@ -1,6 +1,6 @@
 import express, { NextFunction, Response, Request } from "express";
 import { Api } from "@/db";
-import { adminAuth } from "@/utils/auth";
+import { adminAuth } from "@/common/guards/auth";
 const app = express();
 const router = express.Router();
 

@@ -1,9 +1,9 @@
 import express, { NextFunction, Response, Request } from "express";
 const router = express.Router();
 import { Article } from "@/db";
-import { sign } from "@/utils/auth";
+import { sign } from "@/common/guards/auth";
 import md5 from "md5";
-import sendEmailCreateArticle from "@/modules/sendEmailCreateArticle";
+import sendEmailCreateArticle from "@/common/modules/sendEmailCreateArticle";
 router.post("/article", sign, async (req: Request, res: Response, next: NextFunction) => {
   let createArticleData = req.body;
   createArticleData.author = req.userId + "";

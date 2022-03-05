@@ -1,9 +1,9 @@
 import express, { NextFunction, Response, Request } from "express";
-const app = express();
 const router = express.Router();
 import { Type } from "@/db";
+import deleteImage from "@/common/modules/image/deleteImage";
 
-import auth from "@/utils/auth/auth";
+import auth from "@/common/guards/auth/auth";
 
 router.delete("/type/:type", auth, async (req: Request, res: Response, next: NextFunction) => {
   let rows: number = await Type.destroy({
@@ -17,5 +17,8 @@ router.delete("/type/:type", auth, async (req: Request, res: Response, next: Nex
     success: isSuccess,
     message: isSuccess ? "删除成功" : "删除失败",
   });
+  if (isSuccess) {
+    deleteImage("type", req.params.type + "");
+  }
 });
 export default router;

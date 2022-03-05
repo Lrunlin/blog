@@ -12,7 +12,12 @@ let consoleText =
 
 /** 统计网站访问量*/
 router.get("/statistics", async (req: Request, res: Response, next: NextFunction) => {
+  // 设置成缓存一天
+  if (process.env.ENV != "dev") {
+    res.setHeader("Cache-Control", "max-age=86400");
+  }
   res.send(consoleText);
-  statistics();
+  let type = req.query.type ? req.query.type + "" : undefined;
+  statistics(type, req.query.referrer + "");
 });
 export default router;

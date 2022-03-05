@@ -100,12 +100,16 @@
       </div>
     </div>
   </div>
-  <AccessRecordEcharts :data="data.access_record" />
+  <div style="text-align: center; margin-top: 100px">
+    <el-button type="primary" :icon="Histogram" round @click="router.push('/analysis')"
+      >数据分析</el-button
+    >
+  </div>
 </template>
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
-
+import { useRouter } from "vue-router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
@@ -113,8 +117,9 @@ dayjs.locale("zh-cn");
 dayjs.extend(relativeTime);
 
 import Icon from "@/components/Icon.vue";
-import AccessRecordEcharts from "@/components/AccessRecord.vue";
-
+import { Histogram } from "@element-plus/icons";
+let router = useRouter();
+import Analysis from "./Analysis/index.vue";
 let data = ref({});
 axios.get("/admin/init").then(res => {
   data.value = res.data.data;

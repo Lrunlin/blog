@@ -27,8 +27,5 @@ interface articleType {
   time: string;
 }
 
-interface controller {
-  path: string;
-}
-
-export type { readArticle, articleType };
+type imageDir = "type";
+export type { readArticle, articleType, imageDir };

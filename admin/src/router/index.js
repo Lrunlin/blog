@@ -9,6 +9,15 @@ import {
 const routes = [{
     path: '/sign',
     component: () => import('@/page/Sign.vue'),
+    meta: {
+        title: '登录'
+    }
+}, {
+    path: '/analysis',
+    component: () => import('@/page/Analysis/index.vue'),
+    meta: {
+        title: '数据分析'
+    }
 }, {
     path: '/',
     component: () => import('@/layout/Home.vue'),

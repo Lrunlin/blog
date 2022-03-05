@@ -3,7 +3,7 @@ import { Api } from "@/db";
 import { ApiInstance } from "@/db/types";
 import md5 from "md5";
 
-import { adminAuth } from "@/utils/auth";
+import { adminAuth } from "@/common/guards/auth";
 const app = express();
 const router = express.Router();
 

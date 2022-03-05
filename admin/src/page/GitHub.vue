@@ -123,7 +123,6 @@ function update() {
   delete _data.id;
 
   axios.put(`/github/${activeGitHubData.value.id}`, _data).then(res => {
-    console.log(res.data);
     if (res.data.success) {
       ElMessage.success(res.data.message);
       hideDialog.value = false;

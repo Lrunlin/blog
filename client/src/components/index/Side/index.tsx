@@ -4,24 +4,13 @@ import css from "styled-jsx/css";
 import type { articleType } from "@/types";
 import { useRouter } from "next/router";
 import { Menu } from "antd";
-import NoSSR from "@/utils/NoSSR";
-import {
-  ContainerOutlined,
-  BookOutlined,
-  CodeOutlined,
-  ConsoleSqlOutlined,
-  BorderlessTableOutlined,
-} from "@ant-design/icons";
+import axios from "axios";
+
+let url = axios.defaults.baseURL;
 
 interface propsTypes {
   type: articleType[];
   refreshData: (method: "page" | "type", value: string) => void;
-}
-interface asideListTypes {
-  type: string;
-  icon: JSX.Element;
-  /**设置key,在没有对应类型时使用，设置为空查询默认信息 用于推荐按钮*/
-  key?: string;
 }
 
 const Style = css`
@@ -33,49 +22,17 @@ const Style = css`
     position: sticky;
     top: 70px;
     z-index: 1;
+    user-select: none;
   }
   .aside-title {
     padding-left: 24px;
     padding-top: 10px;
     border-bottom: 1px solid #f2f2f2;
   }
+  img {
+    width: 16px;
+  }
 `;
-
-let asideList: asideListTypes[] = [
-  {
-    type: "推荐",
-    icon: <BookOutlined />,
-    key: "",
-  },
-  {
-    type: "资讯",
-    icon: <ContainerOutlined />,
-  },
-  {
-    type: "前端",
-    icon: <CodeOutlined />,
-  },
-  {
-    type: "后端",
-    icon: <ConsoleSqlOutlined />,
-  },
-];
-
-const IconSkeleton: FunctionComponent = () => {
-  return (
-    <>
-      <style jsx>{`
-        div {
-          height: 15px;
-          width: 15px;
-          background-color: rgb(177, 177, 177);
-          border-radius: 50%;
-        }
-      `}</style>
-      <div></div>
-    </>
-  );
-};
 
 /** 左侧aside*/
 const Aside: FunctionComponent<propsTypes> = props => {
@@ -109,26 +66,17 @@ const Aside: FunctionComponent<propsTypes> = props => {
           selectedKeys={articleMenu}
           onClick={selectMeun}
         >
-          {asideList.map(item => (
+          <Menu.Item key="" icon={<img src="/image/推荐.png" />}>
+            推荐
+          </Menu.Item>
+          {props.type.map(item => (
             <Menu.Item
-              key={item.key != undefined ? item.key : item.type}
-              icon={<NoSSR children={item.icon} onLoad={<IconSkeleton />} />}
+              key={item.type}
+              icon={<img src={`${url}/image/type/${item.type}.webp`} alt={item.type} />}
             >
               {item.type}
             </Menu.Item>
           ))}
-          {props.type.map(
-            (item, index) =>
-              item.isShow && (
-                <Menu.Item
-                  key={item.type}
-                  style={{ marginTop: !index ? "5px" : "" }}
-                  icon={<NoSSR children={<BorderlessTableOutlined />} onLoad={<IconSkeleton />} />}
-                >
-                  {item.type}
-                </Menu.Item>
-              )
-          )}
         </Menu>
       </aside>
     </>

@@ -226,6 +226,11 @@ dayjs@^1.10.7:
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
   integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
 
+echarts-liquidfill@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmmirror.com/echarts-liquidfill/-/echarts-liquidfill-3.1.0.tgz#4ec70f3697382d0404c95fff9f3e8dd85c8377da"
+  integrity sha512-5Dlqs/jTsdTUAsd+K5LPLLTgrbbNORUSBQyk8PSy1Mg2zgHDWm83FmvA4s0ooNepCJojFYRITTQ4GU1UUSKYLw==
+
 echarts@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.2.2.tgz#ec3c8b2a151cbba71ba3c2c7cf9b2f2047ce4370"

@@ -1,8 +1,7 @@
 import express, { NextFunction, Response, Request } from "express";
 import os from "os";
 import { Article, User, Type, Api } from "@/db";
-import { adminAuth } from "@/utils/auth";
-import { accessRecord } from "@/store/accessRecord";
+import { adminAuth } from "@/common/guards/auth";
 const router = express.Router();
 /** 管理员页面首页显示的信息*/
 router.get("/admin/init", adminAuth, async (req: Request, res: Response, next: NextFunction) => {
@@ -19,7 +18,6 @@ router.get("/admin/init", adminAuth, async (req: Request, res: Response, next: N
     type_count: await Type.count(),
     user_count: await User.count(),
     api_count: await Api.count(),
-    access_record: accessRecord,
   };
   res.json({
     success: true,

@@ -1,6 +1,6 @@
 import express, { NextFunction, Response, Request } from "express";
 import { Article, Comment } from "@/db";
-import { sign } from "@/utils/auth";
+import { sign } from "@/common/guards/auth";
 
 const router = express.Router();
 interface whereTypes {

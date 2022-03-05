@@ -1,6 +1,6 @@
 import express, { NextFunction, Response, Request } from "express";
 import { User } from "@/db";
-import { sign } from "@/utils/auth";
+import { sign } from "@/common/guards/auth";
 import jwt from "jsonwebtoken";
 import { PUBLICKEY } from "@/store/key";
 const app = express();

@@ -27,7 +27,6 @@ interface articleType {
   type: string;
   time: Date;
   isShow: boolean;
-  tag: string;
 }
 
 

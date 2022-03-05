@@ -1,5 +1,5 @@
 import express, { NextFunction, Response, Request } from "express";
-import { sign } from "@/utils/auth";
+import { sign } from "@/common/guards/auth";
 import axios from "axios";
 import assetsPath from "@/store/assetsPath";
 import { setBlackList } from "@/store/blackList";

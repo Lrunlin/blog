@@ -11,6 +11,7 @@ import path from "path";
 const app = express();
 
 app.use("/robots.txt", express.static("public/robots.txt"));
+app.use("/image", express.static("public/image"));
 
 app.use(
   express.urlencoded({

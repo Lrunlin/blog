@@ -4,7 +4,7 @@ const router = express.Router();
 import md5 from "md5";
 import { GitHub } from "@/db";
 import { GitHubInstance } from "@/db/types";
-import { adminAuth } from "@/utils/auth";
+import { adminAuth } from "@/common/guards/auth";
 
 router.post("/github", adminAuth, async (req: Request, res: Response, next: NextFunction) => {
   let _data = req.body;

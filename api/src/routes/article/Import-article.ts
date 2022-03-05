@@ -1,5 +1,5 @@
 import express, { NextFunction, Response, Request } from "express";
-import { adminAuth } from "@/utils/auth";
+import { adminAuth } from "@/common/guards/auth";
 import { Article } from "@/db";
 
 const app = express();

@@ -8,6 +8,7 @@ export default sequelize.define<ArticleTypeInstance>(
       type: DataTypes.STRING(60),
       allowNull: false,
       primaryKey: true,
+      unique: "type",
     },
     time: {
       type: DataTypes.DATE,
