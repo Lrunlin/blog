@@ -1,17 +1,22 @@
 import express, { NextFunction, Response, Request } from "express";
 import { adminAuth } from "@/common/guards/auth";
 import { GitHub } from "@/db";
-const app = express();
+import deleteImage from "@/common/modules/image/deleteImage";
+
 const router = express.Router();
 
-router.delete("/github/:id",adminAuth, async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/github/:id", adminAuth, async (req: Request, res: Response, next: NextFunction) => {
   let id = req.params.id;
   GitHub.destroy({ where: { id: id } })
     .then(row => {
+      let isSuccess = !!row;
       res.json({
-        success: !!row,
-        message: !!row ? "删除成功" : "删除失败",
+        success: isSuccess,
+        message: isSuccess ? "删除成功" : "删除失败",
       });
+      if (isSuccess) {
+        deleteImage("github", req.params.id + "");
+      }
     })
     .catch(err => {
       res.json({

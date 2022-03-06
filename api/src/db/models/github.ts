@@ -21,30 +21,6 @@ export default sequelize.define<GitHubInstance>(
       allowNull: false,
       comment: "项目介绍",
     },
-    image: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-      comment: "预览图片",
-      get() {
-        let url = this.getDataValue("image");
-        return `${assetsPath}github/${url}`;
-      },
-      set(value) {
-        this.setDataValue("image", (value + "").replace(`${assetsPath}github/`, ""));
-      },
-    },
-    languages: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-      comment: "使用什么语言编写的项目",
-      set(value: string[]) {
-        this.setDataValue("languages", value.join(","));
-      },
-      get() {
-        let type = this.getDataValue("languages");
-        return type.split(",");
-      },
-    },
     url: {
       type: DataTypes.STRING(200),
       allowNull: false,

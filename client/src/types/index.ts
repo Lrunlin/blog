@@ -44,9 +44,7 @@ interface comment {
 interface githubProjectTypes {
   id: string;
   name: string;
-  image: string;
   url: string;
-  languages: string[];
   description: string;
 }
 

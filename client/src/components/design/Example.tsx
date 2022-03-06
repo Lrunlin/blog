@@ -3,7 +3,7 @@ import BarHeader from "@/components/design/BarHeader";
 import { Button, Image } from "antd";
 import { getGithubProjectData } from "@/request";
 import { githubProjectTypes } from "@/types";
-
+import axios from 'axios'
 interface maskTypes {
   data: githubProjectTypes;
   setIsPreview: (value: boolean) => void;
@@ -47,7 +47,7 @@ const Item: FunctionComponent<githubProjectTypes> = (props): JSX.Element => {
             onVisibleChange: vis => setIsPreview(vis),
             mask: <Mask data={props} setIsPreview={value => setIsPreview(value)} />,
           }}
-          src={props.image}
+          src={`${axios.defaults.baseURL}/image/github/${props.id}.webp`}
           alt="样例展示图"
         />
         <h3 style={{ color: "black", textAlign: "center" }}>{props.name}</h3>

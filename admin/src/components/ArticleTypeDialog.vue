@@ -104,7 +104,9 @@ function update() {
   _form.append("type", data.value.type);
   _form.append("time", data.value.time);
   _form.append("isShow", data.value.isShow);
-  _form.append("image", document.getElementById("fileImage").files[0]);
+  if (document.getElementById("fileImage").files[0]) {
+    _form.append("image", document.getElementById("fileImage").files[0]);
+  }
   axios.put(`/type/${type.value}`, _form).then(res => {
     if (res.data.success) {
       ElMessage.success(res.data.message);

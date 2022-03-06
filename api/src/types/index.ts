@@ -27,5 +27,5 @@ interface articleType {
   time: string;
 }
 
-type imageDir = "type";
+type imageDir = "type"|"github";
 export type { readArticle, articleType, imageDir };

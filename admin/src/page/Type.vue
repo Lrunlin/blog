@@ -17,7 +17,7 @@
 
     <el-table-column label="是否显示" width="180">
       <template v-slot="scope">
-        <img :src="`${url}/image/type/${scope.row.type}.webp`" />
+        <img :src="`${url}/image/type/${scope.row.type}.webp`" class="type-icon" />
       </template>
     </el-table-column>
 
@@ -86,5 +86,9 @@ function remove(type, index) {
   display: flex;
   justify-content: flex-end;
   padding: 10px 30px;
+}
+.type-icon{
+  width: 100px;
+  height: 100px;
 }
 </style>
