@@ -5,10 +5,10 @@ import deleteImage from "@/common/modules/image/deleteImage";
 
 import auth from "@/common/guards/auth/auth";
 
-router.delete("/type/:type", auth, async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/type/:id", auth, async (req: Request, res: Response, next: NextFunction) => {
   let rows: number = await Type.destroy({
     where: {
-      type: req.params.type + "",
+      id: req.params.id + "",
     },
   });
 
@@ -18,7 +18,7 @@ router.delete("/type/:type", auth, async (req: Request, res: Response, next: Nex
     message: isSuccess ? "删除成功" : "删除失败",
   });
   if (isSuccess) {
-    deleteImage("type", req.params.type + "");
+    deleteImage("type", req.params.id + "");
   }
 });
 export default router;

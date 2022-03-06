@@ -2,20 +2,11 @@ import express, { NextFunction, Response, Request } from "express";
 const app = express();
 const router = express.Router();
 import { Article } from "@/db";
-let rows: any = null;
-Article.findAll({
-  attributes: ["router", "time"],
-}).then(res => {
-  rows = res;
-});
-setTimeout(() => {
-  Article.findAll({
-    attributes: ["router", "time"],
-  }).then(res => {
-    rows = res;
-  });
-}, 3_600_000);
+setTimeout(() => {}, 3_600_000);
 router.get("/sitemap", async (req: Request, res: Response, next: NextFunction) => {
+  let rows =await Article.findAll({
+    attributes: ["router", "time"],
+  });
   res.json({
     success: true,
     message: "查询sitemap列表",

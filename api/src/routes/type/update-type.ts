@@ -9,14 +9,21 @@ import renameImage from "@/common/modules/image/renameImage";
 const router = express.Router();
 
 router.put(
-  "/type/:type",
+  "/type/:id",
   adminAuth,
   upload,
   async (req: Request, res: Response, next: NextFunction) => {
-    let type = req.params.type;
-    let rows = await Type.update(req.body, {
+    let id = req.params.id;
+    let { type, time, isShow, oldValue } = req.body;
+
+    let _data = {
+      type,
+      time,
+      isShow,
+    };
+    let rows = await Type.update(_data, {
       where: {
-        type: type,
+        id: id,
       },
     });
 
@@ -27,25 +34,9 @@ router.put(
     });
 
     if (isSuccess) {
-      let typeSql = `update article set type=REPLACE (type,'${type}','${req.body.type}') WHERE type like '%${type}%'`;
+      let typeSql = `update article set type=REPLACE (type,'${oldValue}','${req.body.type}') WHERE type like '%${oldValue}%'`;
       sequelize.query(typeSql);
-
-      let fileRes = await useUploadImage(req, { dir: "type", name: req.body.type });
-      let isTypeUptate = !!(req.params.type != req.body.type);
-      //判断有无文件上传
-      // 然后判断类型名字是否被修改
-      if (fileRes) {
-        if (isTypeUptate) {
-          deleteImage("type", type);
-        }
-        //类型变了有文件上传就把旧文件删掉
-        // 类型没变有文件上传会自动覆盖
-      } else {
-        if (isTypeUptate) {
-          //类型变了，没有文件上传就对旧文件进行重命名
-          renameImage("type", type, req.body.type);
-        }
-      }
+      useUploadImage(req, { dir: "type", name: id });
     } else {
       useUploadImage(req, false);
     }

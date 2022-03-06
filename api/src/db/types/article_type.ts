@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 
 interface articleTypeAttributes {
+  id: string;
   type: string;
   time?: Date;
   isShow: boolean;

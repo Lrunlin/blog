@@ -3,7 +3,6 @@
     v-model="isShowDialog"
     :destroy-on-close="true"
     @closed="closeDialog"
-    @open="type = data.type"
     :lockScroll="false"
     title="文本信息"
     width="30%"
@@ -59,22 +58,22 @@ let props = defineProps({
     required: true,
   },
 });
-let type = ref("");
 let isShowDialog = ref(props.mode);
 let data = ref("");
 let imageUrl = ref(false);
 
 watchEffect(() => {
   isShowDialog.value = !!props.mode;
+  console.log(props.mode);
   if (props.mode == "create") {
     data.value = {
       time: new Date(),
       type: "",
       isShow: true,
     };
-  } else {
-    data.value = Object.assign({}, props.data);
-    imageUrl.value = `${url}/image/type/${props.data.type}.webp`;
+  } else if (props.mode == "update") {
+    data.value = Object.assign({oldValue:props.data.type}, props.data);
+    imageUrl.value = `${url}/image/type/${props.data.id}.webp`;
   }
 });
 let emit = defineEmits();
@@ -102,12 +101,13 @@ function create() {
 function update() {
   let _form = new FormData();
   _form.append("type", data.value.type);
-  _form.append("time", data.value.time);
+  _form.append("time", new Date(+new Date(data.value.time)+1000));
   _form.append("isShow", data.value.isShow);
+  _form.append("oldValue", data.value.oldValue);
   if (document.getElementById("fileImage").files[0]) {
     _form.append("image", document.getElementById("fileImage").files[0]);
   }
-  axios.put(`/type/${type.value}`, _form).then(res => {
+  axios.put(`/type/${data.value.id}`, _form).then(res => {
     if (res.data.success) {
       ElMessage.success(res.data.message);
       router.go(0);

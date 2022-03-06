@@ -4,10 +4,14 @@ import type { ArticleTypeInstance } from "../types";
 export default sequelize.define<ArticleTypeInstance>(
   "article_type",
   {
+    id: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      primaryKey: true,
+    },
     type: {
       type: DataTypes.STRING(60),
       allowNull: false,
-      primaryKey: true,
       unique: "type",
     },
     time: {

@@ -22,10 +22,11 @@ interface readArticle {
 }
 
 interface articleType {
+  id: string;
   type: string;
   isShow: boolean;
   time: string;
 }
 
-type imageDir = "type"|"github";
+type imageDir = "type" | "github";
 export type { readArticle, articleType, imageDir };

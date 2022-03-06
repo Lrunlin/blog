@@ -17,7 +17,7 @@
 
     <el-table-column label="是否显示" width="180">
       <template v-slot="scope">
-        <img :src="`${url}/image/type/${scope.row.type}.webp`" class="type-icon" />
+        <img :src="`${url}/image/type/${scope.row.id}.webp`" class="type-icon" />
       </template>
     </el-table-column>
 
@@ -43,7 +43,7 @@
           "
           >修改</el-button
         >
-        <el-button type="danger" size="small" @click="remove(scope.row.type, scope.$index)"
+        <el-button type="danger" size="small" @click="remove(scope.row.id, scope.$index)"
           >删除</el-button
         >
       </template>
@@ -56,11 +56,9 @@ import { ref } from "vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import { Close, Check } from "@element-plus/icons";
-import { useRouter } from "vue-router";
 import ArticleTypeDialog from "@/components/ArticleTypeDialog.vue";
 let url = axios.defaults.baseURL;
 
-let router = useRouter();
 let tableData = ref([]);
 let activeTypeData = ref({});
 let mode = ref(false);
@@ -69,8 +67,8 @@ axios.get("/type").then(res => {
   tableData.value = res.data.data;
 });
 
-function remove(type, index) {
-  axios.delete(`/type/${type}`).then(res => {
+function remove(id, index) {
+  axios.delete(`/type/${id}`).then(res => {
     if (res.data.success) {
       ElMessage.success("删除成功");
       tableData.value.splice(index, 1);
@@ -87,7 +85,7 @@ function remove(type, index) {
   justify-content: flex-end;
   padding: 10px 30px;
 }
-.type-icon{
+.type-icon {
   width: 100px;
   height: 100px;
 }

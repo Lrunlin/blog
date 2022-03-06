@@ -72,7 +72,7 @@ const Aside: FunctionComponent<propsTypes> = props => {
           {props.type.map(item => (
             <Menu.Item
               key={item.type}
-              icon={<img src={`${url}/image/type/${item.type}.webp`} alt={item.type} />}
+              icon={<img src={`${url}/image/type/${item.id}.webp`} alt={item.type} />}
             >
               {item.type}
             </Menu.Item>

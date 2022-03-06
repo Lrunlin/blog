@@ -6,7 +6,7 @@ interface article {
   view_count: number;
   comment_count: number;
   time: Date;
-  id: string ;
+  id: string;
   author: string;
   introduce: string;
   image: string | false; //（博客分页展示的图片）不一定有
@@ -14,7 +14,7 @@ interface article {
 interface userData {
   sign: boolean;
   email: string;
-  GitHub:string;
+  GitHub: string;
 }
 //处理结果，文字描述结果，返回数据（可选，手动设置类型）
 interface response<T = void> {
@@ -24,22 +24,20 @@ interface response<T = void> {
 }
 
 interface articleType {
+  id: string;
   type: string;
   time: Date;
   isShow: boolean;
 }
 
-
 interface comment {
   id: string;
   commentator: string;
-  articleId: string|null;
+  articleId: string | null;
   content: string;
   time?: Date;
   superior?: string;
 }
-
-
 
 interface githubProjectTypes {
   id: string;
@@ -55,7 +53,6 @@ interface user {
   password: string;
   GitHub?: string;
 }
-
 
 interface api {
   id: string;
@@ -73,13 +70,8 @@ interface articlePageTypes {
   comment_count: number;
   image: false | string;
   author: string;
-  type:string[]
+  type: string[];
 }
-
-
-
-
-
 
 export type {
   userData,
