@@ -43,10 +43,10 @@ let option = computed(() => {
       type: "value",
     },
     grid: {
-      x: vw(1.3),
+      x: vw(2.1),
       y: vw(2.3),
-      x2: vw(),
-      y2: vw(),
+      x2: 0,
+      y2: vw(1.5),
     },
     series: [
       {
