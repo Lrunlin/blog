@@ -8,11 +8,11 @@
 <script setup>
 import { computed, onMounted, watchEffect } from "vue";
 import * as echarts from "echarts/core";
-import { GridComponent ,TooltipComponent } from "echarts/components";
+import { GridComponent, TooltipComponent } from "echarts/components";
 import { LineChart } from "echarts/charts";
 import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
-echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition,TooltipComponent ]);
+echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition, TooltipComponent]);
 let props = defineProps({
   data: {
     type: Object,
@@ -31,6 +31,7 @@ let option = computed(() => {
         fontSize: vw(),
       },
     },
+
     tooltip: {
       trigger: "axis",
     },
@@ -40,6 +41,12 @@ let option = computed(() => {
     },
     yAxis: {
       type: "value",
+    },
+    grid: {
+      x: vw(1.3),
+      y: vw(2.3),
+      x2: vw(),
+      y2: vw(),
     },
     series: [
       {

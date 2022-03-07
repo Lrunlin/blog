@@ -27,6 +27,7 @@ echarts.use([
 ]);
 echarts.registerMap("china", china);
 
+const vw = (val = 1) => ((document.documentElement.clientWidth / 100) * val).toFixed(1);
 let props = defineProps({ address: { type: String, required: true, default: "北京" } });
 
 //数据格式化
@@ -151,6 +152,7 @@ let option = computed(() => {
       left: "center",
       textStyle: {
         color: "#fff",
+        fontSize: vw()
       },
     },
     geo: {

@@ -9,6 +9,7 @@
 </template>
 <script setup>
 import { onMounted, computed, watchEffect } from "vue";
+
 import * as echarts from "echarts/core";
 import "echarts-liquidfill";
 const colorList = [

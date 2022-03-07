@@ -32,7 +32,6 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
 import NumberComponent from "@/components/Number.vue";
 import { Tickets, PriceTag, UserFilled } from "@element-plus/icons";
 let props = defineProps({
