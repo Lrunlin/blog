@@ -25,7 +25,7 @@ const colorList = [
   "#5c0011",
 ];
 
-let props = defineProps({ data: { type: Number, required: true, default: 2 } });
+let props = defineProps({ data: { type: Number, required: true, default: 0 } });
 let outLineBorderColor = computed(() => {
   let index = Math.ceil(props.data * 10) > 9 ? 9 : Math.ceil(props.data * 10);
   return colorList[index];

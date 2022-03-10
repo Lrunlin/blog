@@ -33,9 +33,9 @@
       <el-menu-item index="/create-article">
         <span>发布文章</span>
       </el-menu-item>
-      <el-menu-item index="/tube">
+      <!-- <el-menu-item index="/tube">
         <span>导出/导入</span>
-      </el-menu-item>
+      </el-menu-item> -->
     </el-sub-menu>
     <el-menu-item index="/github">
       <el-icon>
