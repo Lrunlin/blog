@@ -34,7 +34,7 @@ app.all('*', (req, res, next) => {
 
 
 app.use('/', require('./router/upload-asstes')); // 资源上传
-app.use('/', require('./router/delete-assets')); // 删除文章时候删除文件
+app.use('/', require('./router/delete-assets')); //删除文件
 app.use('/', require('./router/read-assets')); // 查询资源
 app.use('/', require('./router/update-assets')); // 更新资源图片
 app.use('/', require('./router/upload-face')); // 用户上传头像

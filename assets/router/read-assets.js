@@ -5,6 +5,7 @@ const fs = require('fs');
 const moment = require('moment');
 const path = require('path');
 let dir = path.join(__dirname, '../public/image');
+let face = path.join(__dirname, '../public/face');
 
 router.get('/assets', async (req, res) => {
 
@@ -21,15 +22,29 @@ router.get('/assets', async (req, res) => {
         return result;
     }
     //获取正式文件夹内所有图片
-    let dirData = fs.readdirSync(dir).filter(item => item != '.gitkeep');
-    let data = dirData.map(item => {
-        //获取图片信息
-        let fileData = fs.statSync(`${dir}/${item}`);
-        // 返回格式
+    let dirData = fs.readdirSync(dir).filter(item => item != '.gitkeep').map(item => {
         return {
             name: item,
+            dir: dir,
+            type: 'image'
+        }
+    });
+    let faceData = fs.readdirSync(face).filter(item => item != '.gitkeep').map(item => {
+        return {
+            name: item,
+            dir: face,
+            type: 'face'
+        }
+    });
+    let data = [...dirData, ...faceData].map(item => {
+        //获取图片信息
+        let fileData = fs.statSync(`${dir}/${item.name}`);
+        // 返回格式
+        return {
+            name: item.name,
             size: formatSize(fileData.size),
-            time: moment(fileData.birthtime).format('yyyy-MM-DD hh:mm')
+            time: moment(fileData.birthtime).format('yyyy-MM-DD hh:mm'),
+            type:item.type
         }
     });
 

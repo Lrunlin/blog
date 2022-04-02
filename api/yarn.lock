@@ -1274,13 +1274,6 @@ latest-version@^5.1.0:
   dependencies:
     package-json "^6.3.0"
 
-loadavg-windows@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmmirror.com/loadavg-windows/-/loadavg-windows-1.1.1.tgz#e384aa8107b4ebf851bec267dd4a0789c4c54bc4"
-  integrity sha512-ncSyH121LuN6OENPSohTAS2W85J3NYVIfjsVcK4spViQbHlQUXhGKd8VYhrqWyjtwwSTw4g3rrDraNoSJWRLgw==
-  dependencies:
-    weak-daemon "1.0.3"
-
 lodash.includes@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
@@ -2288,11 +2281,6 @@ vary@^1, vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
-
-weak-daemon@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmmirror.com/weak-daemon/-/weak-daemon-1.0.3.tgz#d922b7c0dfb8f6bf027c463ea875584d2b085f19"
-  integrity sha512-9OLYp5qQSxpnTIyuA1zJ7at3DV2DSBcbdXduC/3QFPeYjF30Lh1nfBrG+VLf4QUvZPz2lXFPu08oIRzWQfucVQ==
 
 which@^2.0.1:
   version "2.0.2"

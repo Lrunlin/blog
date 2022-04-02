@@ -17,4 +17,4 @@ export default class SiteMap extends Component {
     res.write(data);
     res.end();
   }
-}
+};

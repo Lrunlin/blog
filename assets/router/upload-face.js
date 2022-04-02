@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer') //上传图片
 const sharp = require("sharp")
-const md5 = require('md5');
 const whiteList = require('../store/imageWriteList');
 
 let dir = path.join(__dirname, '../public/face');

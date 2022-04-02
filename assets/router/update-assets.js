@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer') //上传图片
 const sharp = require("sharp")
-const md5 = require('md5');
 const auth = require('../utils/auth')
 const whiteList = require('../store/imageWriteList');
 
