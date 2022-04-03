@@ -61,6 +61,12 @@
       </el-icon>
       <span>图片资源</span>
     </el-menu-item>
+    <el-menu-item index="/links">
+      <el-icon>
+        <Link />
+      </el-icon>
+      <span>友链</span>
+    </el-menu-item>
     <el-sub-menu index="2">
       <template #title>
         <el-icon>
@@ -90,6 +96,7 @@ import {
   Reading,
   Share,
   Setting,
+  Link,
 } from "@element-plus/icons";
 
 let route = useRoute();

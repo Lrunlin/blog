@@ -99,6 +99,20 @@ const routes = [{
         meta: {
             title: '修改密码'
         }
+    }, {
+        path: '/links',
+        component: () => import('@/page/Links.vue'),
+        meta: {
+            title: '友链管理'
+        }
+    }, {
+        // Vue3中的路由版本不使用*
+        // https: //blog.csdn.net/weixin_44795287/article/details/115708796
+        path: '/:catchAll(.*)',
+        component: () => import('@/page/NotFound.vue'),
+        meta: {
+            title: '404 | 未找到页面'
+        }
     }]
 }]
 const router = createRouter({

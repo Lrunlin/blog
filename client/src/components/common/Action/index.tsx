@@ -5,9 +5,9 @@ import { getGithubProjectData } from "@/request";
 import type { githubProjectTypes } from "@/types";
 import Image from "next/image";
 import Skeleton from "./Skeleton";
+import Links from './Links';
 import If from "@/utils/If";
-import NoSSR from '@/utils/NoSSR';
-
+import NoSSR from "@/utils/NoSSR";
 const Style = css`
   @mixin border {
     border-bottom: 1px solid #f2f2f2;
@@ -79,7 +79,7 @@ const Action = () => {
       <aside>
         <div className="aside-body aside-body_github">
           <h3 className="aside-title">
-            <NoSSR children={<GithubOutlined />}/>
+            <NoSSR children={<GithubOutlined />} />
             <span>我的GitHub</span>
           </h3>
           <If if={githubData.length} else={<Skeleton />}>
@@ -122,6 +122,7 @@ const Action = () => {
             <h3>友情链接</h3>
             <p> 交换友情链接请在【随便说说】模块中留言</p>
           </div>
+          <Links/>
         </div>
       </aside>
     </>

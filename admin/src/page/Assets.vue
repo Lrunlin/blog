@@ -84,8 +84,8 @@ let data = ref([]);
 
 let tableData = ref([]);
 axios.get(`${assets}/assets`).then(res => {
-    data.value = res.data.data;
-    tableData.value = res.data.data.slice(0, 10).map(item => { item.id = ''; return item });
+  data.value = res.data.data;
+  tableData.value = res.data.data.slice(0, 10).map(item => Object.assign(item, { id: "" }));
 });
 
 function remove(dir, name, index) {
@@ -101,28 +101,27 @@ function remove(dir, name, index) {
 
 //todo 上传成功后根据返回的参数更新图片版本号来刷新
 function reload(res) {
-    tableData.value.find(item => item.name == res.data).id = `?v${Math.random()}${+new Date()}`
+  tableData.value.find(item => item.name == res.data).id = `?v${Math.random()}${+new Date()}`;
 }
-
-
 
 function switchPage(page) {
-    tableData.value = data.value.slice(page - 1, page * 10).map(item => { item.id = ''; return item });
+  tableData.value = data.value
+    .slice((page - 1) * 10, page * 10)
+    .map(item => Object.assign(item, { id: "" }));
 }
-
 </script>
 <script>
 export default {
-    methods: {
-        upload(refId) {
-            this.$refs[refId].submit();
-        },
+  methods: {
+    upload(refId) {
+      this.$refs[refId].submit();
     },
-}
+  },
+};
 </script>
 <style scoped>
 .el-pagination {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 </style>

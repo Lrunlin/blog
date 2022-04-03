@@ -5,6 +5,7 @@ import type { ArticleTypeInstance } from "./article_type";
 import type { CommentInstance } from "./comment";
 import type { ApiInstance } from "./api";
 import type { GitHubInstance } from "./github";
+import type { LinksInstance } from "./links";
 
 export type {
   UserInstance,
@@ -14,4 +15,5 @@ export type {
   ArticleTypeInstance,
   CommentInstance,
   GitHubInstance,
+  LinksInstance,
 };

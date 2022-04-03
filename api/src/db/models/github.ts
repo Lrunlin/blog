@@ -1,5 +1,4 @@
 import { DataTypes } from "sequelize";
-import assetsPath from "@/store/assetsPath";
 import sequelize from "../config";
 import type { GitHubInstance } from "../types";
 

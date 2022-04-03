@@ -5,5 +5,6 @@ import Comment from "./models/comment";
 import User from "./models/user";
 import Api from "./models/api";
 import GitHub from "./models/github";
+import Links from "./models/links";
 
-export { Admin, Article, Type, Comment, User, Api, GitHub };
+export { Admin, Article, Type, Comment, User, Api, GitHub, Links };

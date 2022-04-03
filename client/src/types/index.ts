@@ -73,6 +73,22 @@ interface articlePageTypes {
   type: string[];
 }
 
+interface linksType {
+  id: string;
+  /** 网站名称*/
+  name: string;
+  /** 网站介绍*/
+  description: string;
+  /** 网站地址*/
+  url: string;
+  /** 创建时间*/
+  time: Date;
+  /** 是否引流*/
+  drainage: Boolean;
+  /** logo地址*/
+  logo: string;
+}
+
 export type {
   userData,
   article,
@@ -83,4 +99,5 @@ export type {
   user,
   api,
   articlePageTypes,
+  linksType,
 };
