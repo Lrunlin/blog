@@ -13,7 +13,7 @@ function xss(html: string): string {
   $("img").each((index, item) => {
     let _src = $(item).attr("src") || $(item).attr("data-src"); //获取data-src,防止意外
     $(item)
-      .attr("src", (_src as string).replace(`${assets}image/`, "").replace(`${cdn}/image/`, ""))
+      .attr("src", (_src as string).replace(`${assets}image/`, "").replace(`${cdn}image/`, ""))
       .removeAttr("data-src")
       .removeAttr("alt")
       .removeAttr("title");
