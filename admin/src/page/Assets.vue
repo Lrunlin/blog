@@ -20,6 +20,13 @@
         </el-icon>
       </template>
     </el-table-column>
+
+    <el-table-column label="创建时间" width="280">
+      <template v-slot="scope">
+        <el-date-picker v-model="scope.row.time" readonly type="datetime" />
+      </template>
+    </el-table-column>
+
     <el-table-column prop="size" sortable label="图片大小" width="120" />
     <el-table-column label="删除" width="120">
       <template v-slot="scope">

@@ -43,11 +43,13 @@ router.get('/assets', async (req, res) => {
         return {
             name: item.name,
             size: formatSize(fileData.size),
-            time: moment(fileData.birthtime).format('yyyy-MM-DD hh:mm'),
-            type:item.type
+            // 使用文件最近一次修改的时间戳
+            time: moment(fileData.mtime).format('yyyy-MM-DD hh:mm:ss'),
+            type: item.type
         }
+    }).sort((a, b) => {
+        return +new Date(b.time) - (+new Date(a.time))
     });
-
     res.json({
         success: true,
         message: '查询静态文件',
