@@ -6,7 +6,7 @@ import md5 from "md5";
 import { Article } from "@/db";
 router.put("/article/:id", adminAuth, async (req: Request, res: Response, next: NextFunction) => {
   let id: string = req.params.id;
-  let { type, router, time, article, title } = req.body;
+  let { type, router, time, article, title, view_count } = req.body;
   if (!req.body.router) {
     req.body.router = md5(req.userId + req.body.title);
   }
@@ -19,7 +19,7 @@ router.put("/article/:id", adminAuth, async (req: Request, res: Response, next: 
   }
 
   Article.update(
-    { type, router, time, article, title },
+    { type, router, time, article, title, view_count },
     {
       where: {
         id: id,

@@ -12,6 +12,9 @@
         <el-form-item label="发布时间">
           <el-date-picker v-model="data.time" type="datetime" placeholder="选择文章发布时间" />
         </el-form-item>
+        <el-form-item label="浏览量">
+          <el-input-number v-model="data.view_count" :min="1" :step="2" />
+        </el-form-item>
         <el-form-item label="文章类型">
           <Type v-model:type="data.type" />
         </el-form-item>
@@ -59,6 +62,7 @@ function switchImageSrc(html) {
   });
   return dom.html();
 }
+
 axios.get(`/article/${route.params.id}`).then(res => {
   if (res.data.success) {
     data.router = res.data.data.router;
@@ -66,6 +70,7 @@ axios.get(`/article/${route.params.id}`).then(res => {
     data.type = res.data.data.type;
     data.article = switchImageSrc(res.data.data.article);
     data.time = res.data.data.time;
+    data.view_count = res.data.data.view_count;
     isSuccess.value = true;
   } else {
     isSuccess.value = false;
@@ -88,7 +93,7 @@ function update() {
       title: data.title,
       type: data.type,
       article: data.article,
-      oldHtml: data.oldHtml,
+      view_count: data.view_count,
     })
     .then(res => {
       if (res.data.success) {

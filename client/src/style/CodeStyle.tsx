@@ -1,7 +1,10 @@
 import css from "styled-jsx/css";
-import { useEffect,memo } from "react";
+import { useEffect, memo } from "react";
 import type { FunctionComponent } from "react";
 import useScript from "@/hooks/useScript";
+import getConfig from "next/config";
+//时间戳项目重启时缓存
+const { v }: { v: number } = getConfig().publicRuntimeConfig;
 
 const CodeStyle = css.global`
   pre,
@@ -42,19 +45,19 @@ const TableStyle = css.global`
   }
 `;
 
-/** 
+/**
  * 处理代码高亮和表格样式
  * @params key {any} 响应式的值触发更新
-*/
+ */
 const Style: FunctionComponent = () => {
   useEffect(() => {
     let link = document.createElement("link");
-    link.href = "/css/prism.css";
+    link.href = `/css/prism.css?${v}`;
     link.rel = "stylesheet";
     document.head.append(link);
   }, []);
-  useScript("/js/prism.js");
-  
+  useScript(`/js/prism.js?${v}`);
+
   return (
     <>
       <style jsx>{CodeStyle}</style>
