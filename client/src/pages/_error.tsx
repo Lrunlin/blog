@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "@/utils/Head";
 import { Result, Button } from "antd";
 import { useRouter } from "next/router";
+import Header from "@/components/common/Header";
 
 const Error: NextPage = (props: any): JSX.Element => {
   let statusCode: number = props.statusCode;
@@ -14,6 +15,7 @@ const Error: NextPage = (props: any): JSX.Element => {
         description={statusCode + ""}
         keyword={[statusCode + ""]}
       />
+      <Header />
       <Result
         status={statusCode as any} //antd支持的类型比较特殊直接any
         title={statusCode}

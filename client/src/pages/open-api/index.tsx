@@ -1,4 +1,4 @@
-import { useState, Fragment, FunctionComponent } from "react";
+import { useState } from "react";
 import type { NextPage, GetServerSideProps } from "next";
 import Layout from "@/layout/Base";
 import css from "styled-jsx/css";
@@ -55,7 +55,7 @@ const NextPageName: NextPage<propsTypes> = props => {
     <Layout styleJsx={propsStyle}>
       <Head
         title="前端|Api接口"
-        description={`分享API公共接口，并且提供了API请求文档，接口地址请求样例${props.list
+        description={`分享API公共接口,并且提供了API请求文档,接口地址请求样例${props.list
           .map(item => item.name)
           .join(",")}`}
         keyword={["公开API接口", "文章接口", ...props.list.map(item => item.name)]}

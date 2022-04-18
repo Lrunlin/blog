@@ -22,7 +22,7 @@ onMounted(() => {
   editor = new WangEditor("#editor");
   //文件上传
   editor.config.uploadImgMaxSize = 3 * 1024 * 1024;
-  editor.config.uploadImgAccept = ["jpg", "jpeg", "png","webp"];
+  editor.config.uploadImgAccept = ["jpg", "jpeg", "png", "webp"];
   editor.config.showLinkImg = false;
 
   editor.config.customUploadImg = function (resultFiles, insertImgFn) {
@@ -55,7 +55,24 @@ onMounted(() => {
     "code",
     "splitLine",
   ];
-  editor.config.languageType = ["jsx", "tsx", "json", "javascript", "html", "xml", "css"];
+  editor.config.languageType = [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "TypeScript",
+    "TSX",
+    "JSX",
+    "JSON",
+    "XML",
+    "Bash",
+    "Stylus",
+    "SASS",
+    "SQL",
+    "JAVA",
+    "Python",
+    "C",
+    "CPP",
+  ];
   editor.config.height = 500;
 
   editor.config.onchange = function (newHtml) {
@@ -64,13 +81,12 @@ onMounted(() => {
       let className = jquery(el).attr("class");
       if (className) {
         if (!className.includes("language")) {
-          jquery(el).removeAttr("class").attr("class", `language-${className}`);
+          jquery(el).removeAttr("class").attr("class", `language-${className.toLocaleLowerCase()}`);
         }
       }
     });
     emit("update:html", jquery(_dom).html());
   };
-
   const { $, BtnMenu } = WangEditor;
   class AlertMenu extends BtnMenu {
     constructor(editor) {
