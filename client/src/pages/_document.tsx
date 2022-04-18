@@ -9,6 +9,18 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0R6YEF4YG"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+    window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G0R6YEF4YG');
+`,
+          }}
+        ></script>
       </Html>
     );
   }

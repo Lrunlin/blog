@@ -32,9 +32,9 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        chunkFileNames: 'static/[name]-lrl-[hash].js',
-        entryFileNames: 'static/[name]-lrl-[hash].js',
-        assetFileNames: 'static/[name]-lrl-[hash].[ext]',
+        chunkFileNames: 'static/[name].blog.[hash].js',
+        entryFileNames: 'static/[name].blog.[hash].js',
+        assetFileNames: 'static/[name].blog.[hash].[ext]',
       }
     }
   },
