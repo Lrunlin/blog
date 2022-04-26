@@ -2,12 +2,12 @@
 
 ## 技术栈
 
-用户端:Next.js(SSR)+TS  
-管理系统:Vue3  
-服务端:TS+Express+Sequelize(ORM)  
+用户端:Next.js(SSR)+TypeScript+Ant Design  
+管理系统:Vue3+Element-Plus  
+服务端:TypeScript+Express+Sequelize(ORM)  
 数据库:MySQL
 
-**[博客地址](https://blogweb.cn)**
+**[博客预览地址:https://blogweb.cn](https://blogweb.cn)**
 
 ## 功能
 
@@ -50,6 +50,11 @@
 2.  服务端 Node.js 框架更换为 Koa2 或者 Nest.js
 3.  将 assets 与 api 合并方便资源处理(但是会牺牲部署的便利性)
 4.  将富文本编辑器换为 Markdown 编辑器
+
+## 推荐运行环境
+
+1. 服务器:[腾讯云](https://curl.qcloud.com/VEizLhRn "腾讯云,轻量应用服务器")
+2. CDN/OSS:[七牛云](https://s.qiniu.com/NZ3Iz2 "七牛云,CDN,OSS")
 
 ## 预览图片
 
