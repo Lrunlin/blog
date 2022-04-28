@@ -1,4 +1,4 @@
-# 个人博客系统（长期更新）
+# 个人博客系统（源码长期更新）
 
 ## 技术栈
 
@@ -8,6 +8,8 @@
 数据库:MySQL
 
 **[博客预览地址:https://blogweb.cn](https://blogweb.cn)**
+
+***Node.js版本推荐使用14:对应node-sass版本（未来会迁移到18）***
 
 ## 功能
 
@@ -51,9 +53,10 @@
 3.  将 assets 与 api 合并方便资源处理(但是会牺牲部署的便利性)
 4.  将富文本编辑器换为 Markdown 编辑器
 
-## 推荐运行环境
+## 服务器推荐
 
-1. 服务器:[腾讯云](https://curl.qcloud.com/VEizLhRn "腾讯云,轻量应用服务器")
+1. 服务器:[腾讯云](https://curl.qcloud.com/VEizLhRn "腾讯云,轻量应用服务器")（推荐）
+2. 服务器:[阿里云](https://www.aliyun.com/daily-act/ecs/activity_selection?userCode=46qdmkc0 "阿里云,轻量应用服务器")
 2. CDN/OSS:[七牛云](https://s.qiniu.com/NZ3Iz2 "七牛云,CDN,OSS")
 
 ## 预览图片
