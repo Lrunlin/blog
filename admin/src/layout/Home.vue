@@ -9,14 +9,15 @@
       </div>
     </div>
   </el-row>
+  <WaterMark v-if="isWaterMark" />
 </template>
 <script setup>
 import Nav from "@/components/Nav.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import axios from "axios";
-
+import WaterMark from "@/components/WaterMark.vue";
 let router = useRouter();
 let store = useStore();
 let state = ref(false);
@@ -30,4 +31,5 @@ axios
   .finally(() => {
     isLoad.value = false;
   });
+let isWaterMark = computed(() =>  window.location.hostname != "admin.blogweb.cn");
 </script>
