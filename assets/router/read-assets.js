@@ -36,7 +36,6 @@ router.get('/assets', async (req, res) => {
             type: 'face'
         }
     });
-    console.log(faceData);
     let data = [...dirData, ...faceData].map(item => {
         //获取图片信息
         // (`${dir}/${item.name}`)
