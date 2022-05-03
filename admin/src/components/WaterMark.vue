@@ -1,6 +1,6 @@
 <template></template>
 <script setup>
-import { ref, onUnmounted } from "vue";
+import {  onUnmounted } from "vue";
 // 挂载到body所以不需要onMounted
 // https://segmentfault.com/a/1190000022055867
 
@@ -13,8 +13,8 @@ if (document.getElementById(id) !== null) {
 
 let can = document.createElement("canvas");
 // 设置canvas画布大小
-can.width = 150;
-can.height = 80;
+can.width = 250;
+can.height = 180;
 
 let cans = can.getContext("2d");
 cans.rotate((-20 * Math.PI) / 180); // 水印旋转角度
@@ -29,11 +29,12 @@ cans.fillText("blog", can.width / 2, can.height + 22);
 let div = document.createElement("div");
 div.id = id;
 div.style.pointerEvents = "none";
-div.style.top = "40px";
+div.style.top = "0px";
 div.style.left = "0px";
+// 水印透明度
 div.style.opacity = "0.20";
 div.style.position = "fixed";
-div.style.zIndex = "100000";
+div.style.zIndex = "100000 !important";
 div.style.width = document.documentElement.clientWidth + "px";
 div.style.height = document.documentElement.clientHeight + "px";
 div.style.background = "url(" + can.toDataURL("image/png") + ") left top repeat";

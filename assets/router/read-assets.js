@@ -38,7 +38,6 @@ router.get('/assets', async (req, res) => {
     });
     let data = [...dirData, ...faceData].map(item => {
         //获取图片信息
-        // (`${dir}/${item.name}`)
         let fileData = fs.statSync(path.normalize(`${item.dir}/${item.name}`));
         // 返回格式
         return {
