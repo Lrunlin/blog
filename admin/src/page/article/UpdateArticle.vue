@@ -51,7 +51,7 @@ import jquery from "jquery";
 let route = useRoute();
 let router = useRouter();
 let isSuccess = ref(null);
-let data = reactive({ title: "", type: ["1"], article: "" });
+let data = reactive({ title: "", type: ["1"], article: "",time:'' });
 
 function switchImageSrc(html) {
   let dom = jquery(`<div>${html}</div>`);
@@ -94,6 +94,7 @@ function update() {
       type: data.type,
       article: data.article,
       view_count: data.view_count,
+      time: data.time,
     })
     .then(res => {
       if (res.data.success) {
