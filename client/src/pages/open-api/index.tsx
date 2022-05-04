@@ -5,7 +5,7 @@ import css from "styled-jsx/css";
 import Head from "@/utils/Head";
 import axios from "axios";
 import CodeStyle from "@/style/CodeStyle";
-import NoSSR from '@/utils/NoSSR'
+import NoSSR from "@/utils/NoSSR";
 import type { response, api } from "@/types";
 import { Skeleton } from "antd";
 interface propsTypes {
@@ -61,6 +61,26 @@ const NextPageName: NextPage<propsTypes> = props => {
         keyword={["公开API接口", "文章接口", ...props.list.map(item => item.name)]}
       />
       <style jsx>{style}</style>
+      <style jsx global>{`
+        .open-api-content {
+          p {
+            margin: 0px;
+          }
+          blockquote {
+            border-left: 4px solid #20a0ff;
+            color: #555;
+            background-color: rgb(245, 245, 245);
+            font-size: 1em;
+            padding: 10px 20px;
+            border-radius: 5px;
+            ol {
+              list-style-type: none;
+              padding-left: 0px;
+              margin-left: 0px;
+            }
+          }
+        }
+      `}</style>
       <CodeStyle key={data.id} />
       <aside>
         <h2>API</h2>
@@ -70,11 +90,11 @@ const NextPageName: NextPage<propsTypes> = props => {
           </div>
         ))}
       </aside>
-      <article>
-      <NoSSR onLoad={<Skeleton />}>
-        <time>{data.time}</time>
-        <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
-      </NoSSR>
+      <article className="open-api-content">
+        <NoSSR onLoad={<Skeleton />}>
+          <time>{data.time}</time>
+          <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
+        </NoSSR>
       </article>
     </Layout>
   );
