@@ -65,7 +65,7 @@
 
 ![文章页面](https://disk.blogweb.cn/open-source/blog/1.jpg "文章页面")
 ![用户端首页](https://disk.blogweb.cn/open-source/blog/2.jpg "用户端首页")
-![数据可视化](https://disk.blogweb.cn/open-source/blog/3.jpg "数据可视化")
+![数据可视化](https://disk.blogweb.cn/open-source/blog/3.jpg?v12 "数据可视化")
 ![文章编辑](https://disk.blogweb.cn/open-source/blog/4.jpg "文章编辑")
 ![管理系统首页](https://disk.blogweb.cn/open-source/blog/5.jpg "管理系统首页")
 
