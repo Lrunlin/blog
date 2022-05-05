@@ -7,9 +7,11 @@
 服务端:TypeScript+Express+Sequelize(ORM)  
 数据库:MySQL
 
-**[博客预览地址:https://blogweb.cn](https://blogweb.cn)**
+1. **[博客预览地址:https://blogweb.cn](https://blogweb.cn "作者个人博客")**
+2. **[GitHub 仓库地址:https://github.com/Lrunlin/blog](https://github.com/Lrunlin/blog "GitHub仓库作为主仓库")**
+3. **[Gitee 仓库地址:https://gitee.com/awebcoder/blog](https://gitee.com/awebcoder/blog "Gitee仓库只做同步镜像不进行回复")**
 
-***Node.js版本推荐使用14:对应node-sass版本（未来会迁移到18）***
+**_Node.js 版本推荐使用 14:对应 node-sass 版本（未来会迁移到 18）_**
 
 ## 功能
 
@@ -57,7 +59,7 @@
 
 1. 服务器:[腾讯云](https://curl.qcloud.com/VEizLhRn "腾讯云,轻量应用服务器")（推荐）
 2. 服务器:[阿里云](https://www.aliyun.com/daily-act/ecs/activity_selection?userCode=46qdmkc0 "阿里云,轻量应用服务器")
-2. CDN/OSS:[七牛云](https://s.qiniu.com/NZ3Iz2 "七牛云,CDN,OSS")
+3. CDN/OSS:[七牛云](https://s.qiniu.com/NZ3Iz2 "七牛云,CDN,OSS")
 
 ## 预览图片
 
