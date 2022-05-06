@@ -1,11 +1,21 @@
 # 个人博客系统（源码长期更新）
 
+<div align=center>
+ <img src="https://disk.blogweb.cn/open-source/blog/logo.svg#pic_cente" alt="Logo" title="logo" />
+</div>
+
 ## 技术栈
 
 用户端:Next.js(SSR)+TypeScript+Ant Design  
 管理系统:Vue3+Element-Plus  
 服务端:TypeScript+Express+Sequelize(ORM)  
 数据库:MySQL
+
+## ALL in Vue
+
+系统相对完善对博客网站所需的 SEO 有处理可以在生产环境中进行使用,也可以当做毕业设计,系统提供一份用户端为 Vue3 的 CSR 历史版本,可联系 QQ:1974109227
+
+## 相关链接
 
 1. **[博客预览地址:https://blogweb.cn](https://blogweb.cn "作者个人博客")**
 2. **[GitHub 仓库地址:https://github.com/Lrunlin/blog](https://github.com/Lrunlin/blog "GitHub仓库作为主仓库")**
@@ -40,20 +50,14 @@
 10. 增删改查友链
 11. 大屏数据可视化
 
-### 备注
-
-1.  日志使用文件形式或者变量进行存储
-2.  使用 JWT 算法 RSA256 进行签名解密进行接口请求权限判断
-3.  统计访问量是在所有文件中注入一段 JS 代码,JS 代码每次被访问当日访问量+1,并且请求被缓存一天
-4.  发送无权限请求返回错误代码 401
-5.  接口文档工具使用 Apifox,需要的从博客中的联系方式联系我
-
 ## 更新计划
 
 1.  用户端支持移动端，更换 CSS 管理方案为 tailwind CSS 或者 styled-components
 2.  服务端 Node.js 框架更换为 Koa2 或者 Nest.js
 3.  将 assets 与 api 合并方便资源处理(但是会牺牲部署的便利性)
 4.  将富文本编辑器换为 Markdown 编辑器
+5.  管理系统使用 React18 重构
+6.  将 JWT 的秘钥验证换为 SHA，秘钥根据主机环境变量自动生成（保证生产环境秘钥安全性，防止秘钥泄漏）
 
 ## 服务器推荐
 
@@ -63,11 +67,14 @@
 
 ## 预览图片
 
-![文章页面](https://disk.blogweb.cn/open-source/blog/1.jpg "文章页面")
-![用户端首页](https://disk.blogweb.cn/open-source/blog/2.jpg "用户端首页")
-![数据可视化](https://disk.blogweb.cn/open-source/blog/3.jpg "数据可视化")
-![文章编辑](https://disk.blogweb.cn/open-source/blog/4.jpg "文章编辑")
-![管理系统首页](https://disk.blogweb.cn/open-source/blog/5.jpg "管理系统首页")
+<div align=center>
+<img src="https://disk.blogweb.cn/open-source/blog/1.jpg"  width=90% alt="文章页面" title="文章页面" />
+<img src="https://disk.blogweb.cn/open-source/blog/2.jpg"  width=90% alt="用户端首页" title="用户端首页" />
+<img src="https://disk.blogweb.cn/open-source/blog/3.jpg"  width=90% alt="数据可视化" title="数据可视化" />
+<img src="https://disk.blogweb.cn/open-source/blog/4.jpg"  width=90% alt="文章编辑" title="文章编辑" />
+<img src="https://disk.blogweb.cn/open-source/blog/5.jpg"  width=90% alt="管理系统首页" title="管理系统首页" />
+</div>
 
-说明:  
-系统相对完善对博客网站所需的 SEO 有处理可以在生产环境中进行使用,也可以当做毕业设计,系统提供一份用户端为 Vue3 的 CSR 版本,可联系 QQ:1974109227
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Lrunlin/blog&type=Date)](https://star-history.com/#Lrunlin/blog&Date)
