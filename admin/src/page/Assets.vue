@@ -1,8 +1,15 @@
 <template>
   <el-table :data="tableData" style="width: 100%">
+    <el-table-column label="#" width="60">
+      <template v-slot="scope">
+        <b>{{ scope.$index + 1 }}</b>
+      </template>
+    </el-table-column>
+
     <el-table-column label="图片" width="220">
       <template v-slot="scope">
         <el-image
+          :hide-on-click-modal="true"
           style="width: 100px"
           :src="`${assets}/${scope.row.type}/${scope.row.name}${scope.row.id}`"
           :previewSrcList="[`${assets}/${scope.row.type}/${scope.row.name}`]"
@@ -44,6 +51,7 @@
     <el-table-column label="替换">
       <template v-slot="scope">
         <el-upload
+          v-if="scope.row.type == 'image'"
           :ref="scope.row.name"
           name="image"
           :limit="1"
@@ -52,6 +60,7 @@
           method="put"
           :headers="{ authorization: store.state.token }"
           :on-success="reload"
+          accept="image/jpeg,image/png,image/webp"
         >
           <template #trigger>
             <el-button size="small" type="primary" :disabled="scope.row.type == 'face'"
@@ -91,14 +100,14 @@ let data = ref([]);
 
 let tableData = ref([]);
 axios.get(`${assets}/assets`).then(res => {
-  data.value = res.data.data;
-  tableData.value = res.data.data.slice(0, 10).map(item => Object.assign(item, { id: "" }));
+  data.value = res.data.data.map(item => Object.assign(item, { id: "" }));
+  tableData.value = res.data.data.slice(0, 10);
 });
 
 function remove(dir, name, index) {
   axios.delete(`${assets}/assets/${dir}/${name}`, { params: { images: [name] } }).then(res => {
     if (res.data.success) {
-      tableData.value.splice(index, 1);
+      tableData.value.splice(index, 1).slice(0, 10);
       ElMessage.success("删除成功");
     } else {
       ElMessage.error("删除成功");
@@ -108,13 +117,11 @@ function remove(dir, name, index) {
 
 //todo 上传成功后根据返回的参数更新图片版本号来刷新
 function reload(res) {
-  tableData.value.find(item => item.name == res.data).id = `?v${Math.random()}${+new Date()}`;
+  tableData.value.find(item => item.name == res.data).id = `?v${+new Date()}`;
 }
 
 function switchPage(page) {
-  tableData.value = data.value
-    .slice((page - 1) * 10, page * 10)
-    .map(item => Object.assign(item, { id: "" }));
+  tableData.value = data.value.slice((page - 1) * 10, page * 10);
 }
 </script>
 <script>
@@ -129,6 +136,6 @@ export default {
 <style scoped>
 .el-pagination {
   text-align: center;
-  margin-top: 20px;
+  margin: 20px 0px;
 }
 </style>
