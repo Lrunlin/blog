@@ -3,7 +3,6 @@ import Link from "next/link";
 import css from "styled-jsx/css";
 import setClassName from "classnames";
 import { useRouter } from "next/router";
-
 interface navListTypes {
   href: string;
   text: string;
@@ -34,7 +33,7 @@ const Style = css`
       color: #333;
     }
   }
-  
+
   .logo {
     width: 32px;
     height: 32px;
@@ -52,7 +51,11 @@ const Nav: FunctionComponent = () => {
     <>
       <nav>
         <style jsx>{Style}</style>
-        <img src="/favicon.svg" className="logo" alt="logo" />
+        <Link href="/">
+          <a>
+            <img src="/favicon.svg" className="logo" alt="logo" />
+          </a>
+        </Link>
         {navList.map(item => (
           <Link href={item.href} key={item.text}>
             <a className={setClassName({ active: router.pathname == item.href })}>{item.text}</a>

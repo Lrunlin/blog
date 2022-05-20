@@ -24,7 +24,8 @@ router.get("/article", async (req: Request, res: Response, next: NextFunction) =
     data: rows,
   });
 
-  if (Array.isArray(rows) && rows.length == 1) {
+  //只有根据router查询才自增
+  if (Array.isArray(rows) && rows.length == 1 && req.query.router) {
     Article.increment("view_count", {
       where: req.query,
     });

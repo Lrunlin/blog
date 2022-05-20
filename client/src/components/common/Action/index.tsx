@@ -5,7 +5,7 @@ import { getGithubProjectData } from "@/request";
 import type { githubProjectTypes } from "@/types";
 import Image from "next/image";
 import Skeleton from "./Skeleton";
-import Links from './Links';
+import Links from "./Links";
 import If from "@/utils/If";
 import NoSSR from "@/utils/NoSSR";
 const Style = css`
@@ -88,7 +88,7 @@ const Action = () => {
                 href={item.url}
                 key={item.id}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow"
                 className="aside-item"
               >
                 {item.name}
@@ -96,7 +96,7 @@ const Action = () => {
             ))}
           </If>
 
-          <a href="https://github.com/Lrunlin" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/Lrunlin" target="_blank" rel="nofollow">
             <Image
               src="/image/github.png"
               width={230}
@@ -122,7 +122,7 @@ const Action = () => {
             <h3>友情链接</h3>
             <p> 交换友情链接请在【随便说说】模块中留言</p>
           </div>
-          <Links/>
+          <Links />
         </div>
       </aside>
     </>

@@ -16,13 +16,14 @@ router.get("/article/:id", async (req: Request, res: Response, next: NextFunctio
     message: rows ? `查询成功` : "未查询到该文章",
     data: rows,
   });
-
-  if (rows) {
-    Article.increment("view_count", {
-      where: {
-        id: id,
-      },
-    });
-  }
+  
+  //根据ID查询不算访问
+  // if (rows) {
+  //   Article.increment("view_count", {
+  //     where: {
+  //       id: id,
+  //     },
+  //   });
+  // }
 });
 export default router;

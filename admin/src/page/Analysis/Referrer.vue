@@ -88,7 +88,8 @@ let option = computed(() => {
           show: false,
         },
         data: data.value,
-        color: ["#00aa48", "#ea4335", "#4e6ef2", "#00809d", "#722ed1", "#c41d7f"],
+        //对应的颜色列表
+        color: ["#00aa48", "#ea4335", "#4e6ef2", "#00809d", "#722ed1", "#c41d7f","#24292f"],
         // data: [
         //   { value: 1048, name: "Search Engine" },
         //   { value: 735, name: "Direct" },
