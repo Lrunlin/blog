@@ -1,5 +1,6 @@
 import { Image } from "antd";
 import { useEffect, useState } from "react";
+import styled from "styled-jsx";
 /**
  * 文章页面的图片预览组件
  */
@@ -20,19 +21,28 @@ function Preview() {
   }, []);
 
   return (
-    <Image
-      style={{ display: "none" }}
-      src={src}
-      preview={{
-        visible: !!src,
-        src: src,
-        onVisibleChange: visible => {
-          if (!visible) {
-            setSrc("");
+    <>
+      <style jsx global>
+        {`
+          .ant-image-preview-img {
+            max-width: 80%;
           }
-        },
-      }}
-    />
+        `}
+      </style>
+      <Image
+        style={{ display: "none" }}
+        src={src}
+        preview={{
+          visible: !!src,
+          src: src,
+          onVisibleChange: visible => {
+            if (!visible) {
+              setSrc("");
+            }
+          },
+        }}
+      />
+    </>
   );
 }
 export default Preview;

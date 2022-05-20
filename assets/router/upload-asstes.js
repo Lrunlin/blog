@@ -39,7 +39,7 @@ router.post('/assets', upload.single('image'), async (req, res) => {
 
     sharp(path)
         .webp({
-            quality: 50
+            quality: 80
         })
         .toFile(`${dir}/${name}`)
         .then(info => {
