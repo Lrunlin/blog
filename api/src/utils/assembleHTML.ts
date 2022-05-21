@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import { cdn } from "@/store/assetsPath";
+import { joinUrl } from "@/store/assetsPath";
 
 /**
  * article的article字段中的get
@@ -12,12 +12,14 @@ function html(str: string, type: string): string {
   $("img").each((index, data) => {
     //没有http说明是网络图片
     if (!$(data).attr("src")?.includes("http")) {
-      let _src: string = `${cdn}image/${$(data).attr("src")}`;
+      let _src: string = joinUrl("article", $(data).attr("src") + "", true);
+      console.log(_src);
+      
       $(data).attr("data-src", _src).removeAttr("src").attr("alt", type);
     }
   });
   $("pre").addClass("line-numbers");
-  $("a").attr("rel", "noopener noreferrer");
+  $("a").attr("rel", "noopener noreferrer nofollow");
   return $("body").html() as string;
 }
 export default html;

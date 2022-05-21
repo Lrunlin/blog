@@ -7,6 +7,7 @@ interface optionType {
   dir: imageDir;
   name?: string;
 }
+
 /**
  * 将upload上传的图片以webp格式保存到指定位置（配合upload）
  * @params req {Request}
@@ -15,6 +16,7 @@ interface optionType {
  */
 async function uploadImage(req: Request, option: optionType | false) {
   let id = v4().replace(/-/g, "");
+  
   if (req.file) {
     let filename = req.file.filename;
     if (!option) {
@@ -24,11 +26,11 @@ async function uploadImage(req: Request, option: optionType | false) {
 
     return await sharp(`public/image/${filename}`)
       .webp({
-        quality: 50,
+        quality: 80,
       })
       .toFile(`public/image/${option.dir}/${option.name || id}.webp`)
       .then(info => {
-        return option.name || id;
+        return `${option.name || id}.webp`;
       })
       .catch(err => {
         return false;

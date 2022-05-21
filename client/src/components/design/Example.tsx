@@ -3,7 +3,6 @@ import BarHeader from "@/components/design/BarHeader";
 import { Button, Image } from "antd";
 import { getGithubProjectData } from "@/request";
 import { githubProjectTypes } from "@/types";
-import axios from 'axios'
 interface maskTypes {
   data: githubProjectTypes;
   setIsPreview: (value: boolean) => void;
@@ -38,6 +37,11 @@ const Item: FunctionComponent<githubProjectTypes> = (props): JSX.Element => {
           position: relative;
         }
       `}</style>
+      <style jsx global>{`
+         .ant-image-preview-img {
+          max-width: 80%;
+        }
+      `}</style>
       <div className="example-item_img_container">
         <Image
           height={340}
@@ -47,7 +51,7 @@ const Item: FunctionComponent<githubProjectTypes> = (props): JSX.Element => {
             onVisibleChange: vis => setIsPreview(vis),
             mask: <Mask data={props} setIsPreview={value => setIsPreview(value)} />,
           }}
-          src={`${axios.defaults.baseURL}/image/github/${props.id}.webp`}
+          src={props.preview_href}
           alt="样例展示图"
         />
         <h3 style={{ color: "black", textAlign: "center" }}>{props.name}</h3>
@@ -95,7 +99,7 @@ const Example: FunctionComponent = () => {
         <BarHeader id="example" titleEn="MY WORKS" title="精选·案例" />
         <p className="example-messgae">
           以下来源于个人
-          <a href="https://github.com/Lrunlin" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/Lrunlin" target="_blank" rel="noopener noreferrer nofollow">
             GitHub
           </a>
         </p>

@@ -64,7 +64,6 @@ let imageUrl = ref(false);
 
 watchEffect(() => {
   isShowDialog.value = !!props.mode;
-  console.log(props.mode);
   if (props.mode == "create") {
     data.value = {
       time: new Date(),

@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { Menu } from "antd";
 import axios from "axios";
 
-let url = axios.defaults.baseURL;
 
 interface propsTypes {
   type: articleType[];
@@ -72,7 +71,7 @@ const Aside: FunctionComponent<propsTypes> = props => {
           {props.type.map(item => (
             <Menu.Item
               key={item.type}
-              icon={<img src={`${url}/image/type/${item.id}.webp`} alt={item.type} />}
+              icon={<img src={item.icon_href} alt={item.type} />}
             >
               {item.type}
             </Menu.Item>

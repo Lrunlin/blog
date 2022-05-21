@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config";
-import { assets, cdn } from "@/store/assetsPath";
+import { joinUrl } from "@/store/assetsPath";
+
 import cheerio from "cheerio";
 import type { ArticleInstance } from "../types";
 import xss from "@/utils/xss";
@@ -44,7 +45,7 @@ export default sequelize.define<ArticleInstance>(
       get() {
         let article: string = this.getDataValue("article");
         let type: string = this.getDataValue("type");
-        return assembleHTML(article,type);
+        return assembleHTML(article, type);
       },
     },
     time: {
@@ -67,7 +68,7 @@ export default sequelize.define<ArticleInstance>(
         const article: string = this.getDataValue("article");
         let $ = cheerio.load(`<div>${article}</div>`);
         let _image: string | undefined = $("img").eq(0).attr("src");
-        let _src = (_image + "").includes("http") ? _image : `${cdn}image/${_image}`;
+        let _src = (_image + "").includes("http") ? _image : joinUrl("article", _image + "", true);
         return _image ? _src : false;
       },
     },

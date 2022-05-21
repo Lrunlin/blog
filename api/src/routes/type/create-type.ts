@@ -20,6 +20,7 @@ router.post("/type", auth, upload, async (req: Request, res: Response, next: Nex
       success: true,
       message: "添加成功",
     });
+    
     useUploadImage(req, { dir: "type", name: id});
   } catch (error) {
     res.json({

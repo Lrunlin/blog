@@ -13,8 +13,8 @@
       <template v-slot="scope">
         <el-image
           style="width: 50px; height: 50px"
-          :src="setImageSrc(scope.row.id)"
-          :preview-src-list="[setImageSrc(scope.row.id)]"
+          :src="scope.row.preview_href"
+          :preview-src-list="[scope.row.preview_href]"
         />
       </template>
     </el-table-column>
@@ -42,9 +42,6 @@ import { ElMessage } from "element-plus";
 import { Edit, Delete } from "@element-plus/icons";
 import axios from "axios";
 import GitHubDialog from "@/components/GitHubDialog.vue";
-function setImageSrc(name) {
-  return `${axios.defaults.baseURL}/image/github/${name}.webp`;
-}
 let data = ref([]);
 let dataKey = ref(0); //通过dateKey控制请求刷新
 watchEffect(() => {

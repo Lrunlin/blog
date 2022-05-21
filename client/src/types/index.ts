@@ -28,6 +28,7 @@ interface articleType {
   type: string;
   time: Date;
   isShow: boolean;
+  icon_href: string;
 }
 
 interface comment {
@@ -44,6 +45,8 @@ interface githubProjectTypes {
   name: string;
   url: string;
   description: string;
+  time: string | Date;
+  preview_href: string;
 }
 
 /** 文章作者类型*/

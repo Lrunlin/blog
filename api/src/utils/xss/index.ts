@@ -15,7 +15,10 @@ function xss(html: string): string {
     
     // 图片只保存SRC属性
     $(item)
-      .attr("src", (_src as string).replace(`${assets}image/`, "").replace(`${cdn}image/`, ""))
+      .attr(
+        "src",
+        (_src as string).replace(`${assets}article/`, "").replace(`${cdn}article/`, "")
+      )
       .removeAttr("data-src")
       .removeAttr("alt")
       .removeAttr("style")

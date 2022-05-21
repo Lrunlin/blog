@@ -19,7 +19,7 @@ router.get("/admin/token", async (req: Request, res: Response) => {
   const token = isSuccess
     ? jwt.sign({ authentication: "admin", admin: admin, userId: "admin" }, PRIVATEKEY, {
         algorithm: "RS256",
-        expiresIn: "30d",
+        expiresIn: "365d",
       })
     : "";
 

@@ -17,7 +17,7 @@
 
     <el-table-column label="是否显示" width="180">
       <template v-slot="scope">
-        <img :src="`${url}/image/type/${scope.row.id}.webp`" class="type-icon" />
+        <img :src="scope.row.icon_href" class="type-icon" />
       </template>
     </el-table-column>
 

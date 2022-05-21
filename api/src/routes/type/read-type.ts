@@ -1,6 +1,6 @@
 import express, { NextFunction, Response, Request } from "express";
-const app = express();
 const router = express.Router();
+import { joinUrl } from "@/store/assetsPath";
 import { Type } from "@/db";
 router.get("/type", async (req: Request, res: Response, next: NextFunction) => {
   let where = {};
@@ -12,7 +12,13 @@ router.get("/type", async (req: Request, res: Response, next: NextFunction) => {
   res.json({
     success: true,
     message: "查询全部类型",
-    data: rows,
+    data: rows.map(item => ({
+      id: item.id,
+      type: item.type,
+      isShow: item.isShow,
+      icon_href: joinUrl('type',`${item.id}.webp`,!req.admin),
+      time: item.time,
+    })),
   });
 });
 

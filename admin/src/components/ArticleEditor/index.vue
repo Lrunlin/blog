@@ -28,7 +28,7 @@ onMounted(() => {
   editor.config.customUploadImg = function (resultFiles, insertImgFn) {
     let formData = new FormData();
     formData.append("image", resultFiles[0]);
-    axios.post(`${store.state.assets}/assets`, formData).then(res => {
+    axios.post(`/assets`, formData).then(res => {
       insertImgFn(res.data.data);
     });
   };
