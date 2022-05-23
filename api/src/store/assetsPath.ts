@@ -17,5 +17,15 @@ const cdn =
 const joinUrl = (dir: imageDir, name: string, useCDN?: any) =>
   `${useCDN ? cdn : assets}${dir}/${name}`;
 
-export { assets, cdn, joinUrl };
+/** 
+ * 获取public下的image文件夹路径
+ * @parmas dir {string} 文件夹名称
+ * @parmas name {string|undefind} 文件名称
+ * @return src {string} 拼接的路径
+*/
+function getPublicImage(dir:string,name?:string):string {
+  return `public/image/${dir}${name?`/${name}`:''}`
+}
+
+export { assets, cdn, joinUrl, getPublicImage };
 export default assets;

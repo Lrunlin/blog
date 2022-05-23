@@ -4,8 +4,6 @@ import { Type } from "@/db";
 import { adminAuth } from "@/common/guards/auth";
 import upload from "@/common/middleware/upload";
 import useUploadImage from "@/common/modules/image/uploadImage";
-import deleteImage from "@/common/modules/image/deleteImage";
-import renameImage from "@/common/modules/image/renameImage";
 const router = express.Router();
 
 router.put(

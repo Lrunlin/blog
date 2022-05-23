@@ -9,17 +9,18 @@
     <el-table-column label="图片" width="220">
       <template v-slot="scope">
         <el-image
+          class="table-viewer__img"
           :hide-on-click-modal="true"
           style="width: 100px"
-          :src="`${assets}/${scope.row.type}/${scope.row.name}${scope.row.id}`"
-          :previewSrcList="[`${assets}/${scope.row.type}/${scope.row.name}`]"
+          :src="`${scope.row.image_href}?${scope.row.time}`"
+          :previewSrcList="[`${scope.row.image_href}?${scope.row.time}`]"
           lazy
         ></el-image>
       </template>
     </el-table-column>
     <el-table-column label="类型" width="80">
       <template v-slot="scope">
-        <el-icon v-if="scope.row.type == 'image'">
+        <el-icon v-if="scope.row.type == 'article'">
           <Notebook />
         </el-icon>
         <el-icon v-else>
@@ -51,11 +52,11 @@
     <el-table-column label="替换">
       <template v-slot="scope">
         <el-upload
-          v-if="scope.row.type == 'image'"
+          v-if="scope.row.type == 'article'"
           :ref="scope.row.name"
           name="image"
           :limit="1"
-          :action="`${assets}/assets/${scope.row.name}`"
+          :action="`${axios.defaults.baseURL}/assets/${scope.row.name}`"
           :auto-upload="false"
           method="put"
           :headers="{ authorization: store.state.token }"
@@ -63,15 +64,12 @@
           accept="image/jpeg,image/png,image/webp"
         >
           <template #trigger>
-            <el-button size="small" type="primary" :disabled="scope.row.type == 'face'"
-              >选择</el-button
-            >
+            <el-button size="small" type="primary">选择</el-button>
           </template>
           <el-button
             style="margin-left: 10px"
             @click="upload(scope.row.name)"
             size="small"
-            :disabled="scope.row.type == 'face'"
             type="success"
             >确定上传</el-button
           >
@@ -95,17 +93,16 @@ import { Delete, UserFilled, Notebook } from "@element-plus/icons";
 
 let store = useStore();
 
-const assets = store.state.assets;
 let data = ref([]);
 
 let tableData = ref([]);
-axios.get(`${assets}/assets`).then(res => {
-  data.value = res.data.data.map(item => Object.assign(item, { id: "" }));
+axios.get(`/assets`).then(res => {
+  data.value = res.data.data;
   tableData.value = res.data.data.slice(0, 10);
 });
 
 function remove(dir, name, index) {
-  axios.delete(`${assets}/assets/${dir}/${name}`, { params: { images: [name] } }).then(res => {
+  axios.delete(`/assets/${dir}/${name}`).then(res => {
     if (res.data.success) {
       tableData.value.splice(index, 1).slice(0, 10);
       ElMessage.success("删除成功");
@@ -117,7 +114,7 @@ function remove(dir, name, index) {
 
 //todo 上传成功后根据返回的参数更新图片版本号来刷新
 function reload(res) {
-  tableData.value.find(item => item.name == res.data).id = `?v${+new Date()}`;
+  tableData.value.find(item => item.name == res.data).time = new Date();
 }
 
 function switchPage(page) {
@@ -137,5 +134,10 @@ export default {
 .el-pagination {
   text-align: center;
   margin: 20px 0px;
+}
+</style>
+<style lang="scss">
+.table-viewer__img .el-image-viewer__img {
+  max-width: 80% !important;
 }
 </style>

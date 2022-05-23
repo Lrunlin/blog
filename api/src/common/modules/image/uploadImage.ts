@@ -11,12 +11,12 @@ interface optionType {
 /**
  * 将upload上传的图片以webp格式保存到指定位置（配合upload）
  * @params req {Request}
- * @params option {dir:string,name:string}|false 传入的文件夹和文件名(传入false删除图片)
+ * @params option {dir:string,name:string|false 传入的文件夹和文件名(传入false删除图片)
  * @return {Promise<string|boolean>} 返回结果
  */
 async function uploadImage(req: Request, option: optionType | false) {
   let id = v4().replace(/-/g, "");
-  
+
   if (req.file) {
     let filename = req.file.filename;
     if (!option) {

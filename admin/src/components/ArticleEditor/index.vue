@@ -1,5 +1,5 @@
 <template>
-  <div id="editor"></div>
+  <div id="articleEditor"></div>
 </template>
 
 <script setup>
@@ -19,7 +19,7 @@ let props = defineProps({
 const emit = defineEmits();
 
 onMounted(() => {
-  editor = new WangEditor("#editor");
+  editor = new WangEditor("#articleEditor");
   //文件上传
   editor.config.uploadImgMaxSize = 3 * 1024 * 1024;
   editor.config.uploadImgAccept = ["jpg", "jpeg", "png", "webp"];

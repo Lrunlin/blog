@@ -1,5 +1,4 @@
-import { useState, useEffect, FunctionComponent, memo, useContext } from "react";
-import { Context } from "@/store";
+import { useState, useEffect, FunctionComponent } from "react";
 import axios from "axios";
 import Image from "next/image";
 
@@ -10,15 +9,14 @@ interface propsTypes {
   height: number;
 }
 const Face: FunctionComponent<propsTypes> = props => {
-  let store = useContext(Context);
   const [userFaceData, setUserFaceData] = useState(
     props.userId == "admin" ? "/image/admin-face-default.png" : "/image/user-face-default.png"
   );
 
   useEffect(() => {
     const getImage = async () => {
-      axios.get(`${store.assetsPath}/user/face`).then(res => {
-        if (res.data.success) setUserFaceData(`${store.CDN}/face/${res.data.data}`);
+      axios.get(`/user/face`).then(res => {
+        if (res.data.success) setUserFaceData(`${res.data.data}`);
       });
     };
     props.userId && props.userId != "admin" && getImage();

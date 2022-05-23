@@ -1,8 +1,5 @@
 require("module-alias/register"); //设置绝对路径
-/*
-time:2021-10-21
-author:liurl0621@gmail.com
-*/
+
 
 import express from "express";
 const router = express.Router();
@@ -32,6 +29,13 @@ app.use(
   })
 );
 
+
+import morgan from "morgan";
+if (process.env.ENV == "dev") {
+  app.use(morgan("dev"));
+} 
+
+
 async function fileDisplay(filePath: string) {
   let files: string[] = fs.readdirSync(filePath);
   files.forEach((filename: string) => {
@@ -52,22 +56,6 @@ async function fileDisplay(filePath: string) {
 const filePath: string = path.join(__dirname, "./routes");
 fileDisplay(filePath);
 
-import morgan from "morgan";
-if (process.env.ENV == "dev") {
-  app.use(morgan("dev"));
-}
 
-const formatSize = (fileSize: number) => {
-  let result = "";
-  if (fileSize >= 1048576) {
-    result =
-      fileSize % 1048576 === 0 ? fileSize / 1048576 + "MB" : Math.trunc(fileSize / 1048576) + "MB";
-  } else if (fileSize >= 1024) {
-    result = fileSize % 1024 === 0 ? fileSize / 1024 + "KB" : Math.trunc(fileSize / 1024) + "KB";
-  } else {
-    result = fileSize + "B";
-  }
-  return result;
-};
 
 app.listen(3000, () => console.log(`run`));

@@ -10,6 +10,7 @@ import UserFace from "@/components/common/UserFace";
 import Layout from "@/layout/Base";
 import { Context } from "@/store";
 import { response } from "@/types";
+
 interface formValueTypes {
   GitHub: string;
   email: string;
@@ -62,6 +63,7 @@ const Main: FunctionComponent = () => {
     const isLt3M = file.size / 1024 / 1024 < 3;
     if (!isLt3M) {
       message.error("图片不得大于3MB");
+      return false;
     }
     return true;
   };
@@ -72,7 +74,7 @@ const Main: FunctionComponent = () => {
     if (info.file.status === "done") {
       setIsLoad(false);
       if (info.file.response.success) {
-        setImageUrl(`${store.assetsPath}/face/${info.file.response.data}?v${+new Date()}`); //刷新缓存
+        setImageUrl(`${info.file.response.data}?v${+new Date()}`); //刷新缓存
       } else {
         message.error("上传失败");
       }
@@ -118,8 +120,8 @@ const Main: FunctionComponent = () => {
               onChange={loadAssets}
               maxCount={1}
               onRemove={() => setImageUrl("")}
-              action={`${store.assetsPath}/user/face`}
-              headers={{ authorization: localStorage.token, "user-face": "true" }}
+              action={`${axios.defaults.baseURL}/user/face`}
+              headers={{ authorization: localStorage.token }}
             >
               {imageUrl ? (
                 <img src={imageUrl} alt="用户头像" style={{ width: "100%" }} />
@@ -128,7 +130,7 @@ const Main: FunctionComponent = () => {
                   {isLoad ? (
                     <LoadingOutlined />
                   ) : (
-                    <UserFace width={120} height={120} userId={store.userData.email} />
+                      <UserFace width={120} height={120} userId={store.userData.email} />
                   )}
                 </div>
               )}

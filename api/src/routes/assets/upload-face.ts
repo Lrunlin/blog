@@ -2,22 +2,25 @@ import express from "express";
 import { joinUrl } from "@/store/assetsPath";
 import uploadImage from "@/common/modules/image/uploadImage";
 import upload from "@/common/middleware/upload";
-import auth from "@/common/guards/auth/auth";
-
+import sign from "@/common/guards/auth/sign";
 const router = express.Router();
 
-router.post("/assets", auth, upload, async (req, res) => {
-  uploadImage(req, { dir: "article" })
+router.post("/user/face", sign, upload, async (req, res) => {
+    
+  uploadImage(req, { dir: "face", name: req.userId })
     .then(result => {
       res.json({
-        errno: 0,
-        data: joinUrl("article", result as string),
+        success: true,
+        message: "上传成功",
+        data: joinUrl("face", result as string),
       });
     })
     .catch(err => {
+      console.log(err);
+
       res.json({
-        errno: "上传错误,反正不是0",
-        data: "",
+        success: false,
+        message: "上传失败",
       });
     });
 });
