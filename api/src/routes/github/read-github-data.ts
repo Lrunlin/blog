@@ -1,9 +1,10 @@
 import express, { NextFunction, Response, Request } from "express";
 import { GitHub } from "@/db";
 import { joinUrl } from "@/store/assetsPath";
-const app = express();
+import referrer from "@/common/middleware/referrer";
+
 const router = express.Router();
-router.get("/github", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/github",referrer, async (req: Request, res: Response, next: NextFunction) => {
   let rows = await GitHub.findAll();
   res.json({
     success: false,
@@ -13,7 +14,7 @@ router.get("/github", async (req: Request, res: Response, next: NextFunction) =>
       name: item.name,
       description: item.description,
       url: item.url,
-      preview_href: joinUrl("github", `${item.id}.webp`, !req.admin),
+      preview_href: joinUrl("github", `${item.id}.webp`, !req.isAdmin),
       time: item.time,
     })),
   });

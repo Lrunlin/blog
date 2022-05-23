@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 
 /*
 todo 快捷拼接路径
@@ -7,7 +6,8 @@ todo 快捷拼接路径
 @return {string} key 获取结果
 */
 function getKey(type: "private" | "public"): string {
-  let _path = path.join(__dirname, `../../../public/key/${type}-key.pem`);
+  let _path = `public/key/${type}.${process.env.ENV}.pem`;
+  
   return fs.readFileSync(_path).toString();
 }
 

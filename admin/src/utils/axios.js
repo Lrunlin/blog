@@ -1,6 +1,6 @@
 import axios from "axios";
 axios.defaults.baseURL =
-  process.env.NODE_ENV == "development" ? "http://localhost:3000" : "blogweb.cn/api";
+  process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://blogweb.cn/api";
 axios.interceptors.request.use(
   function (config) {
     config.headers.authorization = localStorage.token;

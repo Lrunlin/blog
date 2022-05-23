@@ -7,6 +7,9 @@ api/public/image/**/*.png
 api/public/image/**/*.jpg
 api/public/image/**/*.webp
 
+*.pro.pem
+
+
 dist
 .next
 .vscode

@@ -1,14 +1,16 @@
 require("module-alias/register"); //设置绝对路径
 
-
 import express from "express";
 const router = express.Router();
 import fs from "fs";
 import path from "path";
 const app = express();
 
-app.use("/robots.txt", express.static("public/robots.txt"));
-app.use("/image", express.static("public/image"));
+// 前缀
+const prefix = process.env.ENV == "dev" ? "" : "/api";
+
+app.use(`${prefix}/robots.txt`, express.static("public/robots.txt"));
+app.use(`${prefix}/image`, express.static("public/image"));
 
 app.use(
   express.urlencoded({
@@ -29,12 +31,10 @@ app.use(
   })
 );
 
-
 import morgan from "morgan";
 if (process.env.ENV == "dev") {
   app.use(morgan("dev"));
-} 
-
+}
 
 async function fileDisplay(filePath: string) {
   let files: string[] = fs.readdirSync(filePath);
@@ -45,7 +45,7 @@ async function fileDisplay(filePath: string) {
     let isDir: boolean = stats.isDirectory();
     if (isFile) {
       import(filedir).then(route => {
-        app.use("/", route.default);
+        app.use(`${prefix}/`, route.default);
       });
     }
     if (isDir) {
@@ -55,7 +55,5 @@ async function fileDisplay(filePath: string) {
 }
 const filePath: string = path.join(__dirname, "./routes");
 fileDisplay(filePath);
-
-
 
 app.listen(3000, () => console.log(`run`));
