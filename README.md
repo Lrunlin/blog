@@ -1,7 +1,7 @@
 # 个人博客系统（源码长期更新）
 
 <div align=center>
- <img src="https://disk.blogweb.cn/open-source/blog/logo.svg#pic_cente" alt="Logo" title="logo" />
+ <img src="https://blogweb.cn/favicon.svg" alt="Logo" title="logo" />
 </div>
 
 ## 技术栈
@@ -13,7 +13,7 @@
 
 ## ALL in Vue
 
-系统相对完善对博客网站所需的 SEO 有处理可以在生产环境中进行使用,也可以当做毕业设计,系统提供一份用户端为 Vue3 的 CSR 历史版本,可联系 QQ:1974109227
+系统相对完善对博客网站所需的 SEO 有处理可以在生产环境中进行使用,也可以当做毕业设计,系统提供一份用户端为 Vue3 的 CSR 版本(前端 Vue3,服务端 Node.js 使用 JavaScript),可联系 QQ:1974109227
 
 ## 相关链接
 
@@ -21,7 +21,9 @@
 2. **[GitHub 仓库地址:https://github.com/Lrunlin/blog](https://github.com/Lrunlin/blog "GitHub仓库作为主仓库")**
 3. **[Gitee 仓库地址:https://gitee.com/awebcoder/blog](https://gitee.com/awebcoder/blog "Gitee仓库只做同步镜像不进行回复")**
 
-**_Node.js 版本推荐使用 14:对应 node-sass 版本（未来会迁移到 18）_**
+<p id="to">注:</p>
+
+**_Node.js 版本推荐使用 14.17.1,同时推荐使用 yarn 作为包管理器(未来会对 Node 版本进行升级)_**
 
 ## 功能
 
@@ -50,16 +52,27 @@
 10. 增删改查友链
 11. 大屏数据可视化
 
+## 开发环境启动
+
+_关于项目启动环境见[文档顶部说明](#to)_
+
+0. 导入 SQL 文件
+1. npm install yarn -g _(如果有 yarn 请忽略)_
+2. 点击 install.bat 自动安装依赖 _(完成后关闭 cmd 窗口)_
+3. 点击 dev.bat 启动项目
+
+## 生产环境部署
+
+本站使用宝塔 Linux 进行网站部署,对于不同开发者来说生产环境服务器不同。如果你在项目部署时遇到了问题可以通过顶部的联系方式联系我。
+
 ## 更新计划
 
 1.  用户端支持移动端，更换 CSS 管理方案为 tailwind CSS 或者 styled-components
 2.  服务端 Node.js 框架更换为 Koa2 或者 Nest.js
-3.  将 assets 与 api 文件夹合并方便资源处理(但是会牺牲部署的便利性)
-4.  将富文本编辑器换为 Markdown 编辑器
-5.  管理系统使用 React18 重构
-6.  在线友链申请功能
-7.  管理员管理系统配置功能
-8.  根据环境变量切换 RSA 秘钥
+3.  将富文本编辑器换为 Markdown 编辑器
+4.  管理系统使用 React18 重构
+5.  在线友链申请功能
+6.  管理员管理系统配置功能
 
 ## 服务器推荐
 
@@ -70,11 +83,12 @@
 ## 预览图片
 
 <div align=center>
-<img src="https://disk.blogweb.cn/open-source/blog/1.jpg"  width=90% alt="文章页面" title="文章页面" />
-<img src="https://disk.blogweb.cn/open-source/blog/2.jpg"  width=90% alt="用户端首页" title="用户端首页" />
-<img src="https://disk.blogweb.cn/open-source/blog/3.jpg"  width=90% alt="数据可视化" title="数据可视化" />
-<img src="https://disk.blogweb.cn/open-source/blog/4.jpg"  width=90% alt="文章编辑" title="文章编辑" />
-<img src="https://disk.blogweb.cn/open-source/blog/5.jpg"  width=90% alt="管理系统首页" title="管理系统首页" />
+<img src="./docs/image/1.jpg"  width=90% alt="文章页面" title="文章页面" />
+<img src="./docs/image/2.jpg"  width=90% alt="用户端首页" title="用户端首页" />
+<img src="./docs/image/3.jpg"  width=90% alt="数据可视化" title="数据可视化" />
+<img src="./docs/image/4.jpg"  width=90% alt="文章编辑" title="文章编辑" />
+<img src="./docs/image/5.jpg"  width=90% alt="管理系统首页" title="管理系统首页" />
+<img src="./docs/image/6.jpg"  width=90% alt="文章管理页面" title="文章管理页面" />
 </div>
 
 ## Star History

@@ -4,6 +4,7 @@ import axios from "axios";
 import { MessageOutlined } from "@ant-design/icons";
 import { Input, Button, message } from "antd";
 import { response } from "@/types";
+import type {Input as InputType} from 'antd';
 
 interface propsTypes {
   articleId: string | null;
@@ -33,7 +34,7 @@ const Reply: FunctionComponent<propsTypes> = props => {
   };
 
   /** 回复框的DOM*/
-  const inputDom = useRef<Input | null>(null);
+  const inputDom = useRef<InputType | null>(null);
   useEffect(() => {
     inputDom.current?.focus();
   }, []);
