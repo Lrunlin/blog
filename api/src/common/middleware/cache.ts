@@ -4,8 +4,6 @@ import mcache from "memory-cache";
  * 缓存中间件
 */
 const cache = (req: Request, res: any, next: NextFunction) => {
-  console.log(mcache.size());
-  
   let key = req.originalUrl || req.url;//以接口路径作为key
   let cachedBody = mcache.get(key);
   //   检测key是否有对应的数据.如果有就直接返回
