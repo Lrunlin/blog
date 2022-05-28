@@ -2,7 +2,9 @@ import express, { NextFunction, Response, Request } from "express";
 const app = express();
 const router = express.Router();
 import { Links } from "@/db";
-router.get("/links", async (req: Request, res: Response, next: NextFunction) => {
+import cache from "@/common/middleware/cache";
+
+router.get("/links",cache, async (req: Request, res: Response, next: NextFunction) => {
   let rows = await Links.findAll({ order: [["time", "desc"]] });
   res.json({
     success: true,

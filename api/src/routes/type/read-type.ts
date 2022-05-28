@@ -3,8 +3,9 @@ const router = express.Router();
 import { joinUrl } from "@/store/assetsPath";
 import { Type } from "@/db";
 import referrer from '@/common/middleware/referrer';
+import cache from "@/common/middleware/cache";
 
-router.get("/type",referrer, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/type",referrer,cache, async (req: Request, res: Response, next: NextFunction) => {
   let where = {};
   if (req.query.isShow) {
     where = { isShow: true };

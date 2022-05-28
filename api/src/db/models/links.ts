@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config";
 import type { LinksInstance } from "../types";
+import cache from "@/db/hooks/cache";
 
 export default sequelize.define<LinksInstance>(
   "links",
@@ -39,5 +40,6 @@ export default sequelize.define<LinksInstance>(
   {
     tableName: "links",
     timestamps: false,
+    hooks:cache
   }
 );

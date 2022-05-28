@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config";
 import type { GitHubInstance } from "../types";
+import cache from "@/db/hooks/cache";
 
 export default sequelize.define<GitHubInstance>(
   "github",
@@ -35,5 +36,6 @@ export default sequelize.define<GitHubInstance>(
   {
     tableName: "github",
     timestamps: false,
+    hooks:cache
   }
 );

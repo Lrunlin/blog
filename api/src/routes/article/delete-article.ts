@@ -16,19 +16,18 @@ router.delete("/article/:id", sign, async (req: Request, res: Response, next: Ne
   if (req.authentication != "admin") {
     where.author = req.userId;
   }
-  let articleData = await Article.findByPk(id, {
-    attributes: ["article"],
-  });
+
   let rows: number = await Article.destroy({
     where: where,
   });
+
   let isSuccess = !!rows;
   res.json({
     success: isSuccess,
     message: isSuccess ? `成功删除文章:${id}` : "删除失败",
   });
 
-  //删除对应评论和所用到的图片
+  //删除对应评论
   if (isSuccess) {
     Comment.destroy({
       where: {
