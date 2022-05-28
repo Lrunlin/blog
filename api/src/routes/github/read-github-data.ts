@@ -2,9 +2,10 @@ import express, { NextFunction, Response, Request } from "express";
 import { GitHub } from "@/db";
 import { joinUrl } from "@/store/assetsPath";
 import referrer from "@/common/middleware/referrer";
+import cache from "@/common/middleware/cache";
 
 const router = express.Router();
-router.get("/github",referrer, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/github", referrer, cache, async (req: Request, res: Response, next: NextFunction) => {
   let rows = await GitHub.findAll();
   res.json({
     success: false,

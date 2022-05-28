@@ -6,6 +6,7 @@ import cheerio from "cheerio";
 import type { ArticleInstance } from "../types";
 import xss from "@/utils/xss";
 import assembleHTML from "@/utils/assembleHTML";
+import cache from "@/db/hooks/cache";
 
 export default sequelize.define<ArticleInstance>(
   "article",
@@ -98,5 +99,6 @@ export default sequelize.define<ArticleInstance>(
         fields: [{ name: "router" }],
       },
     ],
+    hooks:cache
   }
 );

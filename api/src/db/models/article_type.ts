@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config";
 import type { ArticleTypeInstance } from "../types";
+import cache from "@/db/hooks/cache";
 export default sequelize.define<ArticleTypeInstance>(
   "article_type",
   {
@@ -36,5 +37,6 @@ export default sequelize.define<ArticleTypeInstance>(
         fields: [{ name: "type" }],
       },
     ],
+    hooks: cache
   }
 );

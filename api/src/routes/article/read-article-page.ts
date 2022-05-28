@@ -2,12 +2,12 @@ import express, { NextFunction, Response, Request } from "express";
 const app = express();
 const router = express.Router();
 import { Article, Comment } from "@/db";
-
+import cache from "@/common/middleware/cache";
 import Sequelize, { Op } from "sequelize";
 interface whereType {
   [key: string]: any;
 }
-router.get("/article/page/:page", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/article/page/:page",cache, async (req: Request, res: Response, next: NextFunction) => {
   const page: number = +req.params.page;
   let where: whereType = req.query.type
     ? {

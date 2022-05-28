@@ -1,12 +1,13 @@
 import express, { NextFunction, Response, Request } from "express";
-import { Article, Comment, User } from "@/db";
+import { Article} from "@/db";
+import cache from '@/common/middleware/cache';
 const router = express.Router();
 
 interface whereType {
   [key: string]: string;
 }
 
-router.get("/article", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/article", cache,async (req: Request, res: Response, next: NextFunction) => {
   const rows = await Article.findAll({
     where: req.query,
   });
