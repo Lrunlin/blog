@@ -5,15 +5,12 @@ import mcache from "memory-cache";
 const cache = {
   afterCreate() {
     mcache.clear();
-    console.log(mcache.size());
   },
   afterBulkUpdate() {
     mcache.clear();
-    console.log('put:',mcache.size());
   },
   afterBulkDestroy() {
     mcache.clear();
-    console.log(mcache.size());
   },
 };
 export default cache;

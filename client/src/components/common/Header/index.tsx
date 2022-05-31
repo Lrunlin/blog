@@ -9,7 +9,6 @@ import Logn from "./Logn";
 import { Context } from "@/store";
 import type { response, userData } from "@/types";
 import If from "@/utils/If";
-import NoSSR from "@/utils/NoSSR";
 import SearchInput from "./SearchInput";
 import Nav from "./Nav";
 import UserSelect from "./UserSelect";

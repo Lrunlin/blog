@@ -8,6 +8,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 module.exports = withBundleAnalyzer({
+  legacyBrowsers: false,//不兼容过时浏览器
+  browsersListForSwc:true,
   eslint: {
     ignoreDuringBuilds: true,
   },

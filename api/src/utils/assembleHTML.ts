@@ -13,8 +13,6 @@ function html(str: string, type: string): string {
     //没有http说明是网络图片
     if (!$(data).attr("src")?.includes("http")) {
       let _src: string = joinUrl("article", $(data).attr("src") + "", true);
-      console.log(_src);
-      
       $(data).attr("data-src", _src).removeAttr("src").attr("alt", type);
     }
   });

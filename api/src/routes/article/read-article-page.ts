@@ -21,8 +21,9 @@ router.get("/article/page/:page",cache, async (req: Request, res: Response, next
     where.author = "admin";
   }
 
-  Article.hasMany(Comment);
-  Comment.belongsTo(Article, { foreignKey: "articleId", targetKey: "id" });
+  // Article.hasMany(Comment);
+  // Comment.belongsTo(Article, { foreignKey: "articleId", targetKey: "id" });
+  
   const { count, rows } = await Article.findAndCountAll({
     offset: (page - 1) * 10,
     limit: 10,
