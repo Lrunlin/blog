@@ -9,7 +9,7 @@
       </div>
     </div>
   </el-row>
-  <WaterMark v-if="isWaterMark" />
+  <WaterMark v-if="isWaterMark" :text="['blogweb.cn',store.state.admin]" />
 </template>
 <script setup>
 import Nav from "@/components/Nav.vue";
@@ -26,10 +26,13 @@ let isLoad = ref(true);
 axios
   .get("/admin/state")
   .then(res => {
-    state.value = res.data.success;
+    if (res.data.success) {
+      state.value = res.data.success;
+      store.commit("sign", res.data.data);
+    }
   })
   .finally(() => {
     isLoad.value = false;
   });
-let isWaterMark = computed(() =>  window.location.hostname != "admin.blogweb.cn");
+let isWaterMark = computed(() => window.location.hostname != "admin.blogweb.cn");
 </script>

@@ -10,6 +10,7 @@ router.get("/admin/state", adminAuth, async (req: Request, res: Response, next: 
     res.json({
       success: !!decode,
       message: `管理员${decode?.admin}登录成功`,
+      data:decode?.admin
     });
   });
 });

@@ -22,7 +22,7 @@
     </el-descriptions-item>
     <el-descriptions-item label="URL" class-name="write-box">
       <el-input v-model="item.url" maxlength="100" placeholder="网址" />
-      <el-link :href="item.url" target="_blank">前往</el-link>
+      <el-link :href="item.url" target="_blank" class="ml-10">前往</el-link>
     </el-descriptions-item>
     <el-descriptions-item label="详情">
       <el-input
@@ -37,11 +37,11 @@
     <el-descriptions-item label="Logo" class-name="write-box">
       <el-input v-model="item.logo" maxlength="100" placeholder="Logo地址" />
       <el-image
-        class="links-logo"
         :src="item.logo"
+        class="links-logo ml-10"
+        alt="友链Logo"
         :preview-src-list="[item.logo]"
-        style="width: 30px; height: 30px"
-        fit="contain"
+        :hide-on-click-modal="true"
       />
     </el-descriptions-item>
 
@@ -164,9 +164,9 @@ function update(item) {
     .el-input {
       width: calc(100% - 80px);
     }
-    *:last-child {
-      margin-left: 10px;
-    }
+  }
+  .ml-10{
+    margin-left: 10px;
   }
 }
 </style>

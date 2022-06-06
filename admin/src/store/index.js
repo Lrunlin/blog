@@ -10,9 +10,13 @@ const store = createStore({
         /** token方便在模板中使用*/
         token: localStorage.token,
         /** 管理员登录状态*/
-        isSign: false
+        admin: false
     },
-    mutations: {},
+    mutations: {
+        sign(state, adminID) {
+            state.admin = adminID
+        }
+    },
     actions: {
 
     },
