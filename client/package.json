@@ -5,8 +5,8 @@
     "dev": "cross-env NEXT_PUBLIC_ENV=development next dev -p 5678",
     "build": "cross-env NEXT_PUBLIC_ENV=production next build",
     "start": "cross-env NEXT_PUBLIC_ENV=production next start -p 5678",
-    "test_build": "cross-env NEXT_PUBLIC_ENV=development next build",
-    "test": "cross-env NEXT_PUBLIC_ENV=development next start -p 5678",
+    "build:test": "cross-env NEXT_PUBLIC_ENV=development next build",
+    "start:test": "cross-env NEXT_PUBLIC_ENV=development next start -p 5678",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"

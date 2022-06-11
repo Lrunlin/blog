@@ -32,16 +32,16 @@ const ArticleItem: FunctionComponent<articlePageTypes> = memo(props => {
     <>
       <style jsx>{Style}</style>
       <article className={cl([props.image && "article-has_image"])}>
-        <ArticleLink router={props.router}>
+        <ArticleLink id={props.id}>
           <h2>{props.title}</h2>
         </ArticleLink>
         <div className="article-body">
           <If if={props.image}>
-            <ArticleLink router={props.router}>
+            <ArticleLink id={props.id}>
               <ArticleImage image={props.image} title={props.title} />
             </ArticleLink>
           </If>
-          <ArticleLink router={props.router}>
+          <ArticleLink id={props.id}>
             <ArticleIntroduce introduce={props.introduce} hasImage={!!props.image} />
           </ArticleLink>
         </div>

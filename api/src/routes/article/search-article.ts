@@ -13,7 +13,6 @@ router.get("/article/search/:text", async (req: Request, res: Response, next: Ne
     attributes: [
       "id",
       "title",
-      "router",
       "author",
       "type",
       "article",

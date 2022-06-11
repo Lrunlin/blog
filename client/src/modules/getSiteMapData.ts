@@ -3,7 +3,7 @@ import axios from "axios";
 import type { response } from "@/types";
 
 interface siteListType {
-  router: string;
+  id: string;
   weight: number;
   time?: string;
 }
@@ -19,17 +19,17 @@ const footer = `\n</urlset>`;
 async function getSiteMapData() {
   let list: siteListType[] = [
     {
-      router: "",
+      id: "",
       weight: 1,
     },
-    { router: "design", weight: 0.8 },
-    { router: "open-api", weight: 0.6 },
+    { id: "design", weight: 0.8 },
+    { id: "open-api", weight: 0.6 },
     {
-      router: "comment",
+      id: "comment",
       weight: 0.5,
     },
   ];
-  let rows = await axios.get<response<{ router: string; time: string; weight: number }[]>>(
+  let rows = await axios.get<response<{ id: string; time: string; weight: number }[]>>(
     "/sitemap"
   );
 
@@ -37,7 +37,7 @@ async function getSiteMapData() {
     ...list,
     ...rows.data.data.map(item => {
       item.weight = 0.9;
-      item.router = `article/${item.router}`;
+      item.id = `article/${item.id}`;
       return item;
     }),
   ];
@@ -45,7 +45,7 @@ async function getSiteMapData() {
   let body = list.map(item => {
     return `
     <url>
-     <loc>https://blogweb.cn/${item.router}</loc>
+     <loc>https://blogweb.cn/${item.id}</loc>
      <priority>${item.weight}</priority>
      <lastmod>${moment(item.time || new Date()).format("YYYY-MM-DD")}</lastmod>
      <changefreq>weekly</changefreq>

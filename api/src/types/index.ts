@@ -12,7 +12,7 @@ interface readArticle {
   /** 文章创建时间 */
   time: Date;
   /** 文章ID */
-  id: string | number;
+  id: number;
   /** 文章发布人 */
   author: string;
   /** 文章介绍 */

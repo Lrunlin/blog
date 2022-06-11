@@ -120,7 +120,7 @@ const Header: FunctionComponent = memo(() => {
 /** 如果是自己的个人中心文章显示表格*/
 const UserArticle: FunctionComponent<userArticleTypes> = props => {
   const [data, setData] = useState<article[]>(props.data);
-  function removeArticle(id: string) {
+  function removeArticle(id: number) {
     axios.delete<response>(`/article/${id}`).then(res => {
       if (res.data.success) {
         message.success("删除成功");
@@ -151,7 +151,7 @@ const UserArticle: FunctionComponent<userArticleTypes> = props => {
     {
       title: "删除",
       dataIndex: "id",
-      render: (value: string) => {
+      render: (value:number) => {
         return (
           <Button type="primary" danger onClick={() => removeArticle(value)}>
             删除

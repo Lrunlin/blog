@@ -3,9 +3,6 @@
   <el-tabs type="card" v-model="activeTab" v-if="isSuccess === true">
     <el-tab-pane label="文章设置">
       <el-form label-width="120px">
-        <el-form-item label="文章路由">
-          <el-input v-model="data.router" placeholder="非必填"></el-input>
-        </el-form-item>
         <el-form-item label="文章标题">
           <el-input v-model="data.title" maxlength="50"></el-input>
         </el-form-item>
@@ -65,7 +62,6 @@ function switchImageSrc(html) {
 
 axios.get(`/article/${route.params.id}`).then(res => {
   if (res.data.success) {
-    data.router = res.data.data.router;
     data.title = res.data.data.title;
     data.type = res.data.data.type;
     data.article = switchImageSrc(res.data.data.article);
@@ -89,7 +85,6 @@ function update() {
   }
   axios
     .put(`/article/${route.params.id}`, {
-      router: data.router,
       title: data.title,
       type: data.type,
       article: data.article,

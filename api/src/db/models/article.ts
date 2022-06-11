@@ -12,15 +12,9 @@ export default sequelize.define<ArticleInstance>(
   "article",
   {
     id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
-    },
-    router: {
-      type: DataTypes.STRING(60),
-      allowNull: false,
-      unique: "router",
     },
     author: {
       type: DataTypes.STRING(60),
@@ -78,7 +72,7 @@ export default sequelize.define<ArticleInstance>(
       get() {
         let article: string = this.getDataValue("article");
         let $ = cheerio.load(article);
-        return $.text().substring(0, 280).trim();
+        return $.text().substring(0, 280).replace(/ /g,'').replace(/\n/g,'');
       },
     },
   },

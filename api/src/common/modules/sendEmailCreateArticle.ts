@@ -34,7 +34,7 @@ async function sendEmail(id:string|number) {
     <h3>${_article.title}</h3>
     <div>文章类型:${_article.type}</div>
     <b>
-     <a href="https://blogweb.cn/article/${_article.router}">点击链接查看吧</a>
+     <a href="https://blogweb.cn/article/${_article.id}">点击链接查看吧</a>
     </b>
     `,
   };

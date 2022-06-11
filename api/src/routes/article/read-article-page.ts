@@ -1,7 +1,7 @@
 import express, { NextFunction, Response, Request } from "express";
 const app = express();
 const router = express.Router();
-import { Article, Comment } from "@/db";
+import { Article } from "@/db";
 import cache from "@/common/middleware/cache";
 import Sequelize, { Op } from "sequelize";
 interface whereType {
@@ -29,7 +29,6 @@ router.get("/article/page/:page",cache, async (req: Request, res: Response, next
     limit: 10,
     attributes: [
       "id",
-      "router",
       "time",
       "title",
       "article",
@@ -61,7 +60,6 @@ router.get("/article/page/:page",cache, async (req: Request, res: Response, next
       //?防止传输数据过大
       return {
         id: item.id,
-        router: item.router,
         time: item.time,
         title: item.title,
         introduce: item.introduce,

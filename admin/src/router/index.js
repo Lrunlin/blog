@@ -87,13 +87,7 @@ const routes = [{
         meta: {
             title: '文章更新'
         }
-    }, {
-        path: '/tube',
-        component: () => import('@/page/article/Tube.vue'),
-        meta: {
-            title: '文章导出导入'
-        }
-    }, {
+    },  {
         path: '/password',
         component: () => import('@/page/UpdatePassword.vue'),
         meta: {

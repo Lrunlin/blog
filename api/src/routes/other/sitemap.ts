@@ -5,7 +5,7 @@ import { Article } from "@/db";
 setTimeout(() => {}, 3_600_000);
 router.get("/sitemap", async (req: Request, res: Response, next: NextFunction) => {
   let rows =await Article.findAll({
-    attributes: ["router", "time"],
+    attributes: ["id", "time"],
   });
   res.json({
     success: true,

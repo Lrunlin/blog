@@ -1,12 +1,11 @@
 interface article {
-  router: string;
+  id: number;
   title: string;
   type: string[];
   article: string;
   view_count: number;
   comment_count: number;
   time: Date;
-  id: string;
   author: string;
   introduce: string;
   image: string | false; //（博客分页展示的图片）不一定有
@@ -65,7 +64,7 @@ interface api {
 }
 
 interface articlePageTypes {
-  router: string;
+  id:number,
   time: Date;
   title: string;
   introduce: string;

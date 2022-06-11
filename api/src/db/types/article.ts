@@ -1,7 +1,5 @@
 import { Model, Optional } from "sequelize";
 interface articleAttributes {
-  /** 文章路由 */
-  router: string;
   /** 文章标题 */
   title: string;
   /** 文章类型 */
@@ -13,7 +11,7 @@ interface articleAttributes {
   /** 文章创建时间 */
   time: Date;
   /** 文章ID */
-  id: string | number;
+  id: number;
   /** 文章发布人 */
   author: string;
   /** 文章介绍 */

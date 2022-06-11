@@ -6,6 +6,7 @@ import type { article } from "@/types";
 import Comment from "@/components/common/Comment";
 import NotFound from "@/components/article/NotFound";
 import Article from "@/components/article/Article";
+import Head from "next/head";
 
 interface propsTypes {
   data: article | null;
@@ -23,23 +24,39 @@ const NextPageName: NextPage<propsTypes> = props => {
   let data = props.data;
 
   return (
-    <Layout styleJsx={propsStyle}>
-      {data ? (
-        <>
-          <Article data={data as article} />
-          <Comment articleId={(data as article).id + ""} />
-        </>
-      ) : (
-        <NotFound />
-      )}
-    </Layout>
+    <>
+      <Layout styleJsx={propsStyle}>
+        {data ? (
+          <>
+            <Head>
+              <link rel="canonical" href={`https://blogweb.cn/article/${data.id}`} />
+            </Head>
+            <Article data={data as article} />
+            <Comment articleId={(data as article).id + ""} />
+          </>
+        ) : (
+          <NotFound />
+        )}
+      </Layout>
+    </>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  let rows = await getArticleData(context?.params?.id as string, true);
+  let id = context?.params?.id as string;
+  let rows = await getArticleData(id);
+
   if (!rows) {
     context.res.statusCode = 404;
+  }
+
+  if (((rows as article).id+'') != id) {
+    return {
+      redirect: {
+        destination: `/article/${(rows as article).id}`,
+        permanent: true,
+      },
+    };
   }
 
   return {

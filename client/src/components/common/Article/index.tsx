@@ -11,7 +11,7 @@ const Article: FunctionComponent<propsTypes> = props => {
   return (
     <>
       {props.data.map(item => {
-        return <ArticleItem key={item.router} {...item} />;
+        return <ArticleItem key={item.id} {...item} />;
       })}
     </>
   );

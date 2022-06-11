@@ -2,9 +2,6 @@
   <el-tabs type="card" v-model="activeTab" :before-leave="beforeLeave">
     <el-tab-pane label="文章设置" :disabled="activeTab == '2'">
       <el-form label-width="120px">
-        <el-form-item label="文章路由">
-          <el-input v-model="data.router" placeholder="数字、字母或中划线3-36位(非必填)"></el-input>
-        </el-form-item>
         <el-form-item label="文章标题">
           <el-input v-model="data.title" maxlength="50"></el-input>
         </el-form-item>
@@ -23,9 +20,6 @@
     <el-tab-pane label="发布" :disabled="!hasReleaseRecord">
       <el-result icon="success" title="文章发布成功" :sub-title="`文章标题:${data.title}`">
         <template #extra>
-          <el-button type="primary" size="medium" @click="link" v-if="data.router"
-            >去看看</el-button
-          >
           <el-button type="primary" size="medium" @click="router.push('/article')"
             >返回列表</el-button
           >
@@ -56,7 +50,6 @@ function release() {
   }
   axios
     .post("/article", {
-      router: data.router,
       title: data.title,
       type: data.type,
       article: data.article,
@@ -82,10 +75,6 @@ function beforeLeave(activeName, oldActiveName) {
       ElMessage.error("请设置文章类型");
       return false;
     }
-    if (data.router && !/^[a-zA-Z0-9-]{3,36}$/.test(data.router)) {
-      ElMessage.error("文章路由只能由数字、字母或中划线组成");
-      return false;
-    }
   }
   if (oldActiveName == "1") {
     if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(data.article)) {
@@ -95,18 +84,6 @@ function beforeLeave(activeName, oldActiveName) {
   }
 }
 
-function link() {
-  let path =
-    process.env.NODE_ENV === "production"
-      ? "https://blogweb.cn/article"
-      : "http://localhost:5678/article";
-  let a = document.createElement("a");
-  a.href = `${path}/${data.router}`;
-  a.target = "_blank";
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => document.body.removeChild(a), 1000);
-}
 </script>
 <style scoped lang="scss">
 .el-input {
