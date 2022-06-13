@@ -8,8 +8,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 module.exports = withBundleAnalyzer({
-  legacyBrowsers: false,//不兼容过时浏览器
-  browsersListForSwc:true,
+  legacyBrowsers: false, //不兼容过时浏览器
+  browsersListForSwc: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -32,9 +32,4 @@ module.exports = withBundleAnalyzer({
       }],
     }, ]
   },
-  // 公共变量
-  publicRuntimeConfig: {
-    // 静态文件缓存时间戳，在项目重启时候才会变
-    v: +new Date(),
-  }
 })

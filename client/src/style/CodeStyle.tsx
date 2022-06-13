@@ -4,7 +4,6 @@ import type { FunctionComponent } from "react";
 import useScript from "@/hooks/useScript";
 import getConfig from "next/config";
 //时间戳项目重启时缓存
-const { v }: { v: number } = getConfig().publicRuntimeConfig;
 
 const CodeStyle = css.global`
   pre,
@@ -52,11 +51,15 @@ const TableStyle = css.global`
 const Style: FunctionComponent = () => {
   useEffect(() => {
     let link = document.createElement("link");
-    link.href = `/css/prism.css?${v}`;
+    link.href = `/css/prism.css`;
+    link.id = `prismHightLightStyle`;
     link.rel = "stylesheet";
     document.head.append(link);
+    return ()=>{
+       (document.getElementById(link.id) as HTMLElement).remove();
+    }
   }, []);
-  useScript(`/js/prism.js?${v}`);
+  useScript(`/js/prism.js`);
 
   return (
     <>

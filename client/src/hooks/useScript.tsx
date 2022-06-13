@@ -13,6 +13,9 @@ const useScript = (src: string, watch?: any[]) => {
     script.id = id;
     script.src = src;
     document.head.append(script);
+    return () => {
+      (document.getElementById(id) as HTMLElement).remove();
+    };
   }, watch || []);
 };
 export default useScript;

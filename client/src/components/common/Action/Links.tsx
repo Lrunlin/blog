@@ -47,7 +47,7 @@ export default function Links() {
                 title={item.description}
                 href={item.url}
               >
-                <Avatar src={item.logo} size={20} />
+                <Avatar src={item.logo} size={20} alt="友链" />
                 <span>{item.name}</span>
               </a>
             );

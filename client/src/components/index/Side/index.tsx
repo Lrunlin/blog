@@ -4,7 +4,6 @@ import css from "styled-jsx/css";
 import type { articleType } from "@/types";
 import { useRouter } from "next/router";
 import { Menu } from "antd";
-import axios from "axios";
 
 
 interface propsTypes {
@@ -65,7 +64,7 @@ const Aside: FunctionComponent<propsTypes> = props => {
           selectedKeys={articleMenu}
           onClick={selectMeun}
         >
-          <Menu.Item key="" icon={<img src="/image/推荐.png" />}>
+          <Menu.Item key="" icon={<img src="/image/推荐.png" alt="文章推荐" />}>
             推荐
           </Menu.Item>
           {props.type.map(item => (
