@@ -29,6 +29,12 @@ const CodeStyle = css.global`
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
   }
+  .toolbar-item{
+    margin-right:5px;
+    span{
+      border-radius: 4px !important;
+    }
+  }
 `;
 const TableStyle = css.global`
   table,

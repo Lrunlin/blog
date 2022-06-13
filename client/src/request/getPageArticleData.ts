@@ -5,7 +5,6 @@ interface responseTypes extends response<articlePageTypes[]> {
   total: number;
 }
 
-
 interface result {
   total: number;
   data: articlePageTypes[];
@@ -13,10 +12,9 @@ interface result {
 
 /** 分页查询文章信息*/
 const getPageArticleData = async (page: number = 1, type?: string): Promise<result> => {
-  let articleType = !!(type && /^[\s\S]*.*[^\s][\s\S]*$/.test(type + ""));
   let article = await axios.get<responseTypes>(
     `/article/page/${page}`,
-    articleType ? { params: { type: type } } : {}
+    type ? { params: { type: type } } : {}
   );
   return {
     total: article.data.total,

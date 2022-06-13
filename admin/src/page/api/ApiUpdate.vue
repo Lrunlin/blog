@@ -31,7 +31,6 @@ axios.get(`/api/${route.params.id}`).then(res => {
 
 function update() {
     axios.put(`/api/${route.params.id}`, { ...data }).then(res => {
-        console.log(res.data)
         if (res.data.success) {
             ElMessage.success(res.data.message)
         } else {

@@ -76,18 +76,14 @@ const Index: NextPage<propsTypes> = props => {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   let typeData = getType();
-  let articlePageData = getPageArticleData(
-    1,
-    typeof context.query.type == "string" ? context.query.type : ""
-  );
-  let response =await Promise.all([typeData, articlePageData]);
-   return {
-     props: {
-       type: response[0],
-       article: response[1].data,
-       total: response[1].total,
-     },
-   };
+  let articlePageData = getPageArticleData(1, (context.query.type as string) || "");
+  let response = await Promise.all([typeData, articlePageData]);
+  return {
+    props: {
+      type: response[0],
+      article: response[1].data,
+      total: response[1].total,
+    },
+  };
 };
-
 export default Index;
