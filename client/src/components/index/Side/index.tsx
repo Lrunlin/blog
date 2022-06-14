@@ -5,7 +5,6 @@ import type { articleType } from "@/types";
 import { useRouter } from "next/router";
 import { Menu } from "antd";
 
-
 interface propsTypes {
   type: articleType[];
   refreshData: (method: "page" | "type", value: string) => void;
@@ -46,9 +45,9 @@ const Aside: FunctionComponent<propsTypes> = props => {
     let type: string = e.key;
     props.refreshData("type", type);
     if (/^[\s\S]*.*[^\s][\s\S]*$/.test(type)) {
-      router.push({ query: { type: type } });
+      router.push("", { query: { type: type } }, { shallow: true });
     } else {
-      router.push({ query: {} });
+      router.push("", { query: {} }, { shallow: true });
     }
     setArticleMenu([type]);
   };
@@ -68,10 +67,7 @@ const Aside: FunctionComponent<propsTypes> = props => {
             推荐
           </Menu.Item>
           {props.type.map(item => (
-            <Menu.Item
-              key={item.type}
-              icon={<img src={item.icon_href} alt={item.type} />}
-            >
+            <Menu.Item key={item.type} icon={<img src={item.icon_href} alt={item.type} />}>
               {item.type}
             </Menu.Item>
           ))}
