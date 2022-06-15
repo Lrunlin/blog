@@ -81,6 +81,7 @@ onMounted(() => {
       let className = jquery(el).attr("class");
       if (className) {
         if (!className.includes("language")) {
+          jquery(el).parent("pre").attr("class", `language-${className.toLocaleLowerCase()}`);
           jquery(el).removeAttr("class").attr("class", `language-${className.toLocaleLowerCase()}`);
         }
       }

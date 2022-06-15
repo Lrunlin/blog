@@ -81,7 +81,7 @@ const NextPageName: NextPage<propsTypes> = props => {
           }
         }
       `}</style>
-      <CodeStyle key={data.id} />
+      <CodeStyle key={data.id} language={["json"]} />
       <aside>
         <h2>API</h2>
         {props.list.map(item => (

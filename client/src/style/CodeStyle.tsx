@@ -2,8 +2,7 @@ import css from "styled-jsx/css";
 import { useEffect, memo } from "react";
 import type { FunctionComponent } from "react";
 import useScript from "@/hooks/useScript";
-import getConfig from "next/config";
-//时间戳项目重启时缓存
+import axios from 'axios';
 
 const CodeStyle = css.global`
   pre,
@@ -29,9 +28,9 @@ const CodeStyle = css.global`
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
   }
-  .toolbar-item{
-    margin-right:5px;
-    span{
+  .toolbar-item {
+    margin-right: 5px;
+    span {
       border-radius: 4px !important;
     }
   }
@@ -49,23 +48,25 @@ const TableStyle = css.global`
     background: rgb(245, 245, 245);
   }
 `;
-
+interface propsTypes {
+  language: string[];
+}
 /**
  * 处理代码高亮和表格样式
- * @params key {any} 响应式的值触发更新
+ * @params language {string|undefind} 语言包
  */
-const Style: FunctionComponent = () => {
+const Style: FunctionComponent<propsTypes> = props => {
   useEffect(() => {
     let link = document.createElement("link");
-    link.href = `/css/prism.css`;
+    link.href = `${axios.defaults.baseURL}/high-light/css`;
     link.id = `prismHightLightStyle`;
     link.rel = "stylesheet";
     document.head.append(link);
-    return ()=>{
-       (document.getElementById(link.id) as HTMLElement).remove();
-    }
+    return () => {
+      (document.getElementById(link.id) as HTMLElement).remove();
+    };
   }, []);
-  useScript(`/js/prism.js`);
+  useScript(`${axios.defaults.baseURL}/high-light/js?languages=${props.language.join(",")}`);
 
   return (
     <>

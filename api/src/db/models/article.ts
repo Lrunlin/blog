@@ -72,7 +72,26 @@ export default sequelize.define<ArticleInstance>(
       get() {
         let article: string = this.getDataValue("article");
         let $ = cheerio.load(article);
-        return $.text().substring(0, 280).replace(/ /g,'').replace(/\n/g,'');
+        return $.text().substring(0, 280).replace(/ /g, "").replace(/\n/g, "");
+      },
+    },
+    languages: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        let $ = cheerio.load(this.getDataValue("article"));
+        let languages: string[] = [];
+        $("pre").each((index, el) => {
+          let allClassNames = `${$(el).attr("class")} ${$(el)
+            .children("code")
+            .eq(0)
+            .attr("class")}`.split(" ");
+          let hasClassNames = allClassNames.find(item => item.includes("language-"));
+          let language = hasClassNames ? hasClassNames.replace("language-", "") : false;
+          if (language) {
+            if (!languages.includes(language)) languages.push(language);
+          }
+        });
+        return languages.length?languages:null;
       },
     },
   },
@@ -93,6 +112,6 @@ export default sequelize.define<ArticleInstance>(
         fields: [{ name: "router" }],
       },
     ],
-    hooks:cache
+    hooks: cache,
   }
 );

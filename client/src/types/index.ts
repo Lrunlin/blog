@@ -9,6 +9,8 @@ interface article {
   author: string;
   introduce: string;
   image: string | false; //（博客分页展示的图片）不一定有
+  /** 代码高亮中使用到的语言*/
+  languages:string[]|null;
 }
 interface userData {
   sign: boolean;

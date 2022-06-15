@@ -18,6 +18,8 @@ interface articleAttributes {
   introduce: string;
   /** 文章展示图 */
   image: string | false;
+  /**文章中使用代码高亮的语言**/
+  languages: string[] | null;
 }
 
 interface ArticleCreationAttributes extends Optional<articleAttributes, "id"> {}

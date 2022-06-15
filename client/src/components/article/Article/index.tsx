@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, memo } from "react";
 import { useRouter } from "next/router";
 import css from "styled-jsx/css";
 import Head from "@/utils/Head";
@@ -7,7 +7,7 @@ import type { article } from "@/types";
 import UserFace from "@/components/common/UserFace";
 import CodeStyle from "@/style/CodeStyle";
 import Statistics from "@/components/common/Statistics";
-import Preview from './Preview';
+import Preview from "./Preview";
 
 interface articleProps {
   data: article;
@@ -50,10 +50,11 @@ const Style = css`
     align-items: center;
   }
 `;
-const Article: FunctionComponent<articleProps> = props => {
+const Article: FunctionComponent<articleProps> = memo(props => {
   let data = props.data;
   let router = useRouter();
   useLazyLoad("article img");
+
   return (
     <>
       <Head
@@ -89,7 +90,7 @@ const Article: FunctionComponent<articleProps> = props => {
           <time>发布于{(data.time + "").substring(0, 10)}</time>
         </div>
       </div>
-      <CodeStyle />
+      {data.languages && <CodeStyle language={data.languages} />}
       <article
         className="article-data article-container_item article-details"
         dangerouslySetInnerHTML={{ __html: data.article }}
@@ -98,5 +99,5 @@ const Article: FunctionComponent<articleProps> = props => {
       <Statistics type={data.type + ""} id={data.id} />
     </>
   );
-};
+});
 export default Article;

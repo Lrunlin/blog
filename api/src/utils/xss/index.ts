@@ -25,6 +25,8 @@ function xss(html: string): string {
       .removeAttr("contenteditable")
       .removeAttr("title");
   });
+  $("code").removeClass("line-numbers");
+  $("pre").removeClass("line-numbers");
 
   return $("body").html() as string;
 }

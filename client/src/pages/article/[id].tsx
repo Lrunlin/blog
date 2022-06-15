@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     context.res.statusCode = 404;
   }
 
-  if (((rows as article).id+'') != id) {
+  if ((rows as article).id + "" != id) {
     return {
       redirect: {
         destination: `/article/${(rows as article).id}`,
