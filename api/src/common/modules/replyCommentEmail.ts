@@ -26,6 +26,11 @@ async function sendEmail(new_comment_id: string) {
   }
 
   let oldCommentData = await Comment.findByPk(newCommentData?.superior);
+  
+  //如果自己回复自己就return
+  if (new_comment_id == oldCommentData?.id) {
+    return;
+  }
 
   let url = oldCommentData?.articleId ? `article/${oldCommentData.articleId}` : "comment";
 
@@ -38,7 +43,7 @@ async function sendEmail(new_comment_id: string) {
       <div>回复时间:${moment(newCommentData?.time).format("YYYY-MM-DD hh:mm:ss")}</div>
       <div>回复内容:${newCommentData?.content}</div>
       <b>
-        <a href="https://blogweb.cn/${url}">点击链接查看吧</a>
+        <a href="https://blogweb.cn/${url}?target=${new_comment_id}">点击链接查看吧</a>
       </b>
       `,
   };

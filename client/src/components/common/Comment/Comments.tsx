@@ -5,6 +5,7 @@ import axios from "axios";
 import type { response, comment as commentType } from "@/types";
 import css from "styled-jsx/css";
 import If from "@/utils/If";
+import { useRouter } from "next/router";
 interface propsTypes {
   articleId: string | null;
 }
@@ -15,10 +16,15 @@ const Style = css`
     padding: 10px 20px;
     margin-top: 10px;
   }
+  .comment-target {
+    background-color: #ffff93;
+  }
 `;
 
 /** 将评论数据处理并渲染 */
 const Comments: FunctionComponent<propsTypes> = props => {
+  let router = useRouter();
+
   const [data, setData] = useState<formatCommentsType[]>([]);
   /** 重新获取评论数据*/
   function resetData() {
@@ -61,10 +67,16 @@ const Comments: FunctionComponent<propsTypes> = props => {
           {data.map(item => {
             return (
               item.childrenComment && (
-                <UpgradeComment data={data} item={item} key={item.id + Math.random()}>
+                <UpgradeComment data={data} item={item} key={item.id}>
                   {item.childrenComment.map(el => {
                     //?处理一下评论者名字显示格式
-                    return <UpgradeComment data={data} item={el} key={item.id + Math.random()} />;
+                    return el.id == router.query.target ? (
+                      <div className="comment-target" id={el.id}>
+                        <UpgradeComment data={data} item={el} key={el.id} />
+                      </div>
+                    ) : (
+                      <UpgradeComment data={data} item={el} key={el.id} />
+                    );
                   })}
                 </UpgradeComment>
               )
