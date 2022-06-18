@@ -3,13 +3,11 @@ import { sign } from "@/common/guards/auth";
 import md5 from "md5";
 import express, { NextFunction, Response, Request } from "express";
 import { setBlackList } from "@/store/blackList";
+import replyCommentEmail from "@/common/modules/replyCommentEmail";
 
 const app = express();
 const router = express.Router();
 
-interface paramsType {
-  [key: string]: any;
-}
 
 //参数错误时执行
 const _error = (req: Request, res: Response): void => {
@@ -73,6 +71,7 @@ router.post("/comment", sign, async (req: Request, res: Response, next: NextFunc
       success: true,
       message: "评论成功",
     });
+    replyCommentEmail(params.id);
   } catch (error: any) {
     res.json({
       success: false,
