@@ -4,16 +4,19 @@ import cache from "@/common/middleware/cache";
 
 const app = express();
 const router = express.Router();
-
+/** 
+ * 定义使用的主题和插件
+* !如果使用了工具栏中的按钮，一定在先定义toolbar
+*/
 const config = {
   themes: "tomorrow",
   plugins: [
+    "toolbar",
     "line-highlight",
     "line-numbers",
-    "show-language",
     "inline-color",
-    "toolbar",
     "copy-to-clipboard",
+    "show-language",
   ],
 };
 /** prism代码高亮的相关配置*/
@@ -29,7 +32,7 @@ const plugins = config.plugins.map(item => {
       ? fs.readFileSync(`public/prism/plugins/${item}/prism-${item}.min.css`).toString()
       : "",
     js: fs.existsSync(`public/prism/plugins/${item}/prism-${item}.min.js`)
-      ? fs.readFileSync(`public/prism/plugins/${item}/prism-${item}.min.js`).toString()
+      ? `/**插件:${item}**/${fs.readFileSync(`public/prism/plugins/${item}/prism-${item}.min.js`).toString()}\n`
       : "",
   };
 });
