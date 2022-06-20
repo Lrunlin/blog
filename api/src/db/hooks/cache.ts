@@ -1,4 +1,4 @@
-import mcache from "memory-cache";
+import { mcache } from "@/common/middleware/cache";
 /**
  * sequelize中的Hooks函数，用于在数据表变化时清除缓存
  */

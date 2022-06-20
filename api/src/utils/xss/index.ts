@@ -12,20 +12,15 @@ function xss(html: string): string {
   const $ = cheerio.load(blackList(html));
   $("img").each((index, item) => {
     let _src = $(item).attr("src") || $(item).attr("data-src"); //获取data-src,防止意外
-    
+
     // 图片只保存SRC属性
-    $(item)
-      .attr(
-        "src",
-        (_src as string).replace(`${assets}article/`, "").replace(`${cdn}article/`, "")
-      )
-      .removeAttr("data-src")
-      .removeAttr("alt")
-      .removeAttr("style")
-      .removeAttr("contenteditable")
-      .removeAttr("title");
+    $(item).attr(
+      "src",
+      (_src as string).replace(`${assets}article/`, "").replace(`${cdn}article/`, "")
+    );
   });
-  $("code").removeClass("line-numbers");
+
+  $("code").removeAttr("class");
   $("pre").removeClass("line-numbers");
 
   return $("body").html() as string;
