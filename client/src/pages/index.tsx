@@ -53,7 +53,7 @@ const Index: NextPage<propsTypes> = props => {
     <Layout styleJsx={Style}>
       <Head
         title="前端路上-技术博客 | 网站Web前端"
-        description="前端开发|Vue开发|毕业设计制作|NodeJs|WEB前端|前端路上-个人博客。原创前端技术博客，致力于分享前端学习路上的第一手资料。专注WEB前端开发、移动端开发、前端工程化、前端职业发展，做最有价值的前端技术学习网站,网站开放部分API接口,所有文章均为原创,并且分享可做项目类型和日常开源分享。"
+        description="前端开发|Vue开发|毕业设计制作|NodeJs|WEB前端|网络日志|前端路上-个人博客。原创前端技术博客，致力于分享前端学习路上的第一手资料。专注WEB前端开发、移动端开发、前端工程化、前端职业发展，做最有价值的前端技术学习网站,网站开放部分API接口,所有文章均为原创,并且分享可做项目类型和日常开源分享。"
         keyword={["专注WEB开发", "前端开发", "前端自动化", "移动端开发", "个人博客"]}
       />
       <Aside type={props.type} refreshData={refreshData} />
