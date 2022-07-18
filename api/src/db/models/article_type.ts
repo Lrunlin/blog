@@ -18,7 +18,7 @@ export default sequelize.define<ArticleTypeInstance>(
     time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: new Date(),
+      defaultValue: () => new Date(),
     },
     isShow: {
       type: DataTypes.BOOLEAN,
@@ -37,6 +37,6 @@ export default sequelize.define<ArticleTypeInstance>(
         fields: [{ name: "type" }],
       },
     ],
-    hooks: cache
+    hooks: cache,
   }
 );

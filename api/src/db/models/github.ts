@@ -29,7 +29,7 @@ export default sequelize.define<GitHubInstance>(
     time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: new Date(),
+      defaultValue:()=> new Date(),
       comment: "更新时间",
     },
   },

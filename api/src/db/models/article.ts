@@ -46,7 +46,7 @@ export default sequelize.define<ArticleInstance>(
     time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: new Date(),
+      defaultValue:()=> new Date(),
     },
     title: {
       type: DataTypes.STRING(200),

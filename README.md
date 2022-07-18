@@ -4,6 +4,9 @@
  <img src="https://blogweb.cn/favicon.svg" alt="Logo" title="logo" />
 </div>
 
+## 初始密码
+管理系统初始账号密码:admin  
+
 ## 技术栈
 
 用户端:Next.js(SSR)+TypeScript+Ant Design  
@@ -19,7 +22,7 @@
 
 1. **[博客预览地址:https://blogweb.cn](https://blogweb.cn "作者个人博客")**
 2. **[GitHub 仓库地址:https://github.com/Lrunlin/blog](https://github.com/Lrunlin/blog "GitHub仓库作为主仓库")**
-3. **[Gitee 仓库地址:https://gitee.com/awebcoder/blog](https://gitee.com/awebcoder/blog "Gitee仓库只做同步镜像不进行回复")**
+3. **[Gitee 仓库地址:https://gitee.com/awebcoder/blog](https://gitee.com/awebcoder/blog "Gitee仓库只做同步镜像不进行维护")**
 
 <p id="to">注:</p>
 

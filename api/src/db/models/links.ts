@@ -34,12 +34,12 @@ export default sequelize.define<LinksInstance>(
     time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: new Date(),
+      defaultValue: () => new Date(),
     },
   },
   {
     tableName: "links",
     timestamps: false,
-    hooks:cache
+    hooks: cache,
   }
 );

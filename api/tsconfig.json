@@ -9,7 +9,6 @@
     //变量和函数参数未使用警告
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
-
     "removeComments": true, //取消注释
     "strict": true,
     "baseUrl": "./",

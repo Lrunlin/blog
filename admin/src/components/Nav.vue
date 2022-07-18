@@ -109,6 +109,7 @@ onMounted(() => {
 onUnmounted(() => {
   document.body.classList.remove("nav-active");
   document.body.classList.remove("transition");
+  document.body.classList.remove("nav-active_collapse");
 });
 
 watchEffect(() => {

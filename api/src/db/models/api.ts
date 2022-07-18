@@ -24,7 +24,7 @@ export default sequelize.define<ApiInstance>(
     time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: new Date(),
+      defaultValue:()=> new Date(),
     },
   },
   {

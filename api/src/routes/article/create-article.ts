@@ -27,7 +27,7 @@ router.post("/article", sign, async (req: Request, res: Response, next: NextFunc
           },
         }
       );
-      sendEmailCreateArticle(row.id);
+      // sendEmailCreateArticle(row.id);
     }, 1_800_000);
   } catch (error) {
     res.json({

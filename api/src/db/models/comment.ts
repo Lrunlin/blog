@@ -33,7 +33,7 @@ export default sequelize.define<CommentInstance>(
     time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: new Date(),
+      defaultValue: () => new Date(),
     },
   },
   {
