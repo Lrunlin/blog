@@ -11,7 +11,7 @@ module.exports = withBundleAnalyzer({
   legacyBrowsers: false, //不兼容过时浏览器
   browsersListForSwc: true,
   eslint: {
-    ignoreDuringBuilds: true,
+    // ignoreDuringBuilds: true,
   },
   webpack: (config) => {
     config.resolve.alias = {
