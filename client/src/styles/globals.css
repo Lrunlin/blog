@@ -1,0 +1,3 @@
+/* @tailwind base;不使用初始化CSS */
+/* @tailwind components;组件也不用 */
+@tailwind utilities;
