@@ -1,12 +1,15 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import expand from "@/utils/article/expand";
-import cache from '@/common/middleware/cache';
+import getTagData from "@/utils/article/modules/get-type-data";
+import cache from "@/common/middleware/cache";
 
+import HTMLToMarkDown from "@/utils/article/modules/html-to-markdown";
+import getCodeBlockLanguage from "@/utils/article/modules/get-code-block-language";
+import imgPrefix from "@/utils/article/modules/img-add-prefix";
 
 let router = new Router();
 
-router.get("/article/:id",cache, async ctx => {
+router.get("/article/:id", cache, async ctx => {
   let id = +ctx.params.id;
 
   await DB.Article.findByPk(id, {
@@ -23,8 +26,21 @@ router.get("/article/:id",cache, async ctx => {
   })
     .then(row => {
       if (row) {
-        ctx.body = { success: true, message: "查询成功", data: expand(row.toJSON()) };
+        let data: any = row.toJSON();
+
+        if (!ctx.query.update) {
+          data = getCodeBlockLanguage(imgPrefix(getTagData(data) as any) as any);
+        } else {
+          data = imgPrefix(data, true);
+        }
+
+        if (ctx.query.update == "md") {
+          data = HTMLToMarkDown(data);
+        }
+
+        ctx.body = { success: true, message: "查询成功", data: data };
       } else {
+        ctx.status = 404;
         ctx.body = { success: false, message: "没有找到对应的文章", data: [] };
       }
     })

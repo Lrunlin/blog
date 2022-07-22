@@ -3,12 +3,14 @@ import axios from "axios";
 import { message } from "antd";
 import { Editor } from "@bytemd/react";
 import { marked } from "marked";
-import htmlToMarkDown from "html-to-md";
+
 import zhHans from "bytemd/lib/locales/zh_Hans.json";
 import gfm from "@bytemd/plugin-gfm";
 import LanguageListPlugin from "./LanguageListPlugin";
 import "bytemd/dist/index.css";
 import "./index.css";
+
+
 
 interface propsType {
   value?: string;
@@ -17,11 +19,11 @@ interface propsType {
 const MarkDonwEdit: FC<propsType> = memo(props => {
   const [value, setValue] = useState("");
 
-  //如果传来初始值就设置初始化值
+  //如果传来初始值就设置初始化值,并在只在第一次props.value变化时设置
   let setContentCount = useRef(0);
   useEffect(() => {
     if (props.value && !setContentCount.current) {
-      setValue(htmlToMarkDown(props.value));
+      setValue((props.value));
       setContentCount.current++;
     }
   }, [props.value]);
@@ -44,7 +46,7 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
         let formData = new FormData();
         formData.append("image", files[0]);
         return await axios
-          .post("/static/static", formData)
+          .post("/static/article", formData)
           .then(res => {
             return [
               {

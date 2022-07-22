@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import MarkDownEditor from "@/components/MarkDownEditor";
 import { Button, Form, Input, message, TreeSelect, Skeleton, Result, InputNumber } from "antd";
 import axios from "axios";
@@ -13,20 +13,18 @@ const Update = () => {
   let params = useParams();
   let id = params.id;
   let { mutate } = useSWRConfig();
+
   /** 加载，获取文章内容*/
   let {
     data: response,
     error,
     isValidating,
   } = useSwr(
-    `/article/${id}`,
-    () =>
-      axios.get(`/article/${id}`).then(res => {
-        //TreeData需要修改tag，只需要string[id] 即可
-        res.data.data.tag = res.data.data.tag.map((item: any) => item.id);
-        return res;
-      }),
-    { revalidateOnMount: true }
+    [`/article/${id}`],
+    () => axios.get(`/article/${id}?update=md`),
+    {
+      revalidateOnMount: true,
+    },
   );
 
   /** 更新文章，提交*/

@@ -1,9 +1,9 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import expand from "@/utils/article/expand";
 import auth from "@/common/middleware/auth";
 import { Op } from "sequelize";
 import qs from "qs";
+import getTagData from '@/utils/article/modules/get-type-data'
 
 let router = new Router();
 router.get("/article/page/:page", auth(1), async ctx => {
@@ -54,7 +54,7 @@ router.get("/article/page/:page", auth(1), async ctx => {
           page: page,
           page_size: pageSize,
           total_count: count,
-          list: rows.map(item => expand(item.toJSON())),
+          list: rows.map(item => getTagData(item.toJSON())),
         },
       };
     })

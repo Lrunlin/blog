@@ -1,7 +1,7 @@
 import { useState, Fragment, useEffect } from "react";
 import axios from "axios";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Table, Popover, Tag, Avatar, Badge, Modal, Button, Tooltip } from "antd";
+import { Table, Popover, Tag, Avatar, Badge, Modal, Button, Tooltip, message } from "antd";
 import { Link } from "react-router-dom";
 import KingIcon from "@/assets/king.svg";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
@@ -10,17 +10,17 @@ import { articleListDataContext } from "./index";
 export const tableOptionContext = atom({
   key: "table-option",
   default: {
+    key: 0, //用于刷新表格
     page: !isNaN(+sessionStorage.page) ? +sessionStorage.page : 1,
     page_size: !isNaN(+sessionStorage.page_size) ? +sessionStorage.page_size : 10,
   },
 });
 
-
 const TableCom = () => {
   /** 文章列表数据 */
   let articleList = useRecoilValue(articleListDataContext);
   /** table的选择*/
-  let [tableOption,setTableOption] = useRecoilState(tableOptionContext);
+  let [tableOption, setTableOption] = useRecoilState(tableOptionContext);
 
   const { confirm } = Modal;
   const destroyAll = () => {
@@ -92,29 +92,29 @@ const TableCom = () => {
       },
       width: 100,
     },
-    {
-      title: "状态",
-      dataIndex: "state",
-      render: (state: any) => {
-        return <>{state ? <Tag color="green">正常</Tag> : <Tag color="red">删除</Tag>}</>;
-      },
-      width: 100,
-    },
+
     {
       title: "标签",
       dataIndex: "tag",
       render: (tags: any, record: any, index: any) => {
         return (
           <>
-            {tags.map((item: any) => (
-              <Tag
-                key={`article-list-${item.id}`}
-                icon={item.icon_url && <img className="w-5 h-5 mr-1" src={item.icon_url} alt="ICON" />}
-                color="#55acee"
-              >
-                {item.name}
-              </Tag>
-            ))}
+            {tags.map((item: any) => {
+              return (
+                <Tag
+                  key={`article-list-${item.id}`}
+                  className="mt-1"
+                  icon={
+                    item?.icon_url && (
+                      <img className="w-5 h-5 mr-1" src={item.icon_url} alt="ICON" />
+                    )
+                  }
+                  color="#55acee"
+                >
+                  {item?.name}
+                </Tag>
+              );
+            })}
           </>
         );
       },
@@ -154,7 +154,14 @@ const TableCom = () => {
                     </div>
                   ),
                   onOk() {
-                    axios.delete(`/articlen/${id}`).then(res => {});
+                    axios.delete(`/article/${id}`).then(res => {
+                      if (res.data.success) {
+                        message.success(res.data.message);
+                        setTableOption(option => ({ ...option, key: option.key++ }));
+                      } else {
+                        message.error(res.data.message);
+                      }
+                    });
                   },
                   onCancel() {
                     destroyAll();
@@ -184,7 +191,7 @@ const TableCom = () => {
           onChange: (page, pageSize) => {
             sessionStorage.page = page;
             sessionStorage.page_size = pageSize;
-            setTableOption({ page: page, page_size: pageSize });
+            setTableOption({ page: page, page_size: pageSize, key: 0 });
           },
           showSizeChanger: true,
           showQuickJumper: true,

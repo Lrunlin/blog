@@ -2,7 +2,6 @@ import type { Context, Next } from "koa";
 import LRU from "lru-cache";
 import Redis from "ioredis";
 import DB from "@/db";
-import { EagerLoadingError } from "sequelize/types";
 
 const redisClient = new Redis({
   host: process.env.DB_REDIS_HOST || "127.0.0.1",
@@ -23,26 +22,29 @@ const cacheOption = new LRU({
  */
 async function cache(ctx: Context, next: Next) {
   await next();
-  let ip = ctx.ip;
   (async () => {
+    let ip = ctx.ip;
     // 有IP并且不是管理员才判断
     if (ip && !ctx.headers.isadmin && (ctx.body as any).success) {
       let articleID = ctx.path.replace("/article/", "");
-      let key = ('h'+articleID + ip).replace('::ffff:', "");
+      let key = ("h" + articleID + ip).replace("::ffff:", "");
 
-      redisClient.exists(key).then(hasKey => {
-        if (!hasKey) {
-          DB.Article.increment("view_count", {
-            where: {
-              id: articleID,
-            },
-          }).then(res=>{
-            redisClient.set(key, "", "EX", 259_200);
-          });
-        }
-      }).catch(err=>{
-        console.log('redis写入key错误:',err);
-      });
+      redisClient
+        .exists(key)
+        .then(hasKey => {
+          if (!hasKey) {
+            DB.Article.increment("view_count", {
+              where: {
+                id: articleID,
+              },
+            }).then(res => {
+              redisClient.set(key, "", "EX", 259_200);
+            });
+          }
+        })
+        .catch(err => {
+          console.log("redis写入key错误:", err);
+        });
     }
   })();
 }

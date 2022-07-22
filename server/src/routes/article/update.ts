@@ -5,7 +5,7 @@ let router = new Router();
 
 import Joi from "Joi";
 import validator from "@/common/middleware/validator";
-import { cache } from "@/modules/cache/type";
+import { cache } from "@/utils/article/modules/get-type-data";
 import { TagAttributes } from "@/db/models/tag";
 
 const schema = Joi.object({

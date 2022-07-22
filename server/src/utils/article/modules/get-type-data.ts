@@ -1,5 +1,7 @@
 import DB from "@/db";
 import LRU from "lru-cache";
+import type { ArticleAttributes } from "@/db/models/article";
+import type { TagAttributes } from "@/db/models/tag";
 
 /**
  * 存储type和tag的数据
@@ -24,7 +26,7 @@ function getData() {
       );
 
       cache.set(
-        "type/tree",
+        "tree",
         type
           .sort((a, b) => a.indexes - b.indexes)
           .map(item => {
@@ -46,5 +48,22 @@ function getData() {
 setTimeout(() => {
   getData();
 }, 0);
+
+/**
+ * todo 为文章表加工tag字段，通过tag_id查询对应的tag信息
+ * @params article {Article} 文章数据
+ * @return article {Article} 处理好的文章数据
+ */
+function getTypeData(article: ArticleAttributes) {
+  let tag = cache.get("tag") as TagAttributes[];
+  
+  return {
+    ...article,
+    tag: (article.tag as unknown as number[]).map(item => {
+      return tag.find(_item=>_item.id==item)
+    }),
+  };
+}
+export default getTypeData;
 
 export { getData, cache };

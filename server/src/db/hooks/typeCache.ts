@@ -1,4 +1,4 @@
-import { getData } from "@/modules/cache/type";
+import { getData } from "@/utils/article/modules/get-type-data";
 /**
  * sequelize中的Hooks函数，用于在数据表变化时清除缓存
  */

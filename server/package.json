@@ -33,9 +33,12 @@
     "nodemon": "^2.0.14",
     "qiniu": "^7.7.0",
     "qs": "^6.11.0",
+    "sanitize-html": "^2.7.0",
     "sequelize": "^6.21.1",
     "sharp": "^0.30.7",
     "shelljs": "^0.8.5",
+    "turndown": "^7.1.1",
+    "turndown-plugin-gfm": "^1.0.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -51,7 +54,9 @@
     "@types/multer": "^1.4.7",
     "@types/node": "^18.0.0",
     "@types/nodemailer": "^6.4.4",
+    "@types/sanitize-html": "^2.6.2",
     "@types/sharp": "^0.29.5",
+    "@types/turndown": "^5.0.1",
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.3",
     "ts-loader": "^9.2.6",

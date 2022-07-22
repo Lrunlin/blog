@@ -9,8 +9,10 @@
 用户端:Next.js+TypeScript+Ant Design+Tailwind CSS 
 管理系统:React18+TypeScript+Vite+Ant Design+Tailwind CSS  
 服务端:TypeScript+Koa2+Sequelize(ORM)
-数据库:MySQL+Redis  
+数据库:MySQL(InnoDB)+Redis  
 
+前端状态管理采用Recoil
+API接口文档使用Apifox
 Token黑名单使用Redis缓存，其他数据使用LRU-cache缓存。  
 
 ## 其他版本

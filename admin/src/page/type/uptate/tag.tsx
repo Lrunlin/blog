@@ -51,7 +51,6 @@ const UpdateTag = () => {
   };
 
   const onFinish = (values: any) => {
-    console.log(values);
 
     axios.put(`/tag/${params.id}`, values).then(res => {
       if (res.data.success) {

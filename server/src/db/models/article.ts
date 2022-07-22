@@ -1,6 +1,6 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
-import cheerio from "cheerio";
+import dehydrate from "@/utils/article/set/dehydrate";
 
 export interface ArticleAttributes {
   id: number;
@@ -60,23 +60,11 @@ export class Article
           type: DataTypes.TEXT,
           allowNull: true,
           comment: "文章介绍",
-          get(this) {
-            let description = this.getDataValue("description");
-            if (description) {
-              return description;
-            }
-            let $ = cheerio.load(this.getDataValue("content") as string);
-            $("pre,code,a,table").remove();
-            return $("body")
-              .text()
-              .substring(0, 200)
-              .replace(/ /g, "")
-              .replace(/\s/g, "")
-              .replace(/\n/g, "");
-          },
           set(this, val) {
             if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
               this.setDataValue("description", val);
+            } else {
+              this.setDataValue("description", null as any);
             }
           },
         },
@@ -89,7 +77,7 @@ export class Article
           },
           get() {
             let type = this.getDataValue("tag");
-            return type.split(",");
+            return /^[\s\S]*.*[^\s][\s\S]*$/.test(type) ? type.split(",").map(item => +item) : [];
           },
         },
         author: {
@@ -101,6 +89,9 @@ export class Article
           type: DataTypes.TEXT,
           allowNull: false,
           comment: "文章内容",
+          set(this, val) {
+            this.setDataValue("content", dehydrate(val as string));
+          },
         },
         cover_file_name: {
           type: DataTypes.STRING(60),
@@ -109,6 +100,8 @@ export class Article
           set(this, val) {
             if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
               this.setDataValue("cover_file_name", val);
+            } else {
+              this.setDataValue("cover_file_name", null as any);
             }
           },
         },
@@ -121,26 +114,7 @@ export class Article
             if (!cover_file_name) {
               return null;
             }
-            return `${process.env.CDN}/${cover_file_name}`;
-          },
-        },
-        languages: {
-          type: DataTypes.VIRTUAL,
-          get() {
-            let $ = cheerio.load(this.getDataValue("content"));
-            let languages: string[] = [];
-            $("pre").each((index, el) => {
-              let allClassNames = `${$(el).attr("class")} ${$(el)
-                .children("code")
-                .eq(0)
-                .attr("class")}`.split(" ");
-              let hasClassNames = allClassNames.find(item => item.includes("language-"));
-              let language = hasClassNames ? hasClassNames.replace("language-", "") : false;
-              if (language) {
-                if (!languages.includes(language)) languages.push(language);
-              }
-            });
-            return languages.length ? languages : null;
+            return `${process.env.CDN}/cover/${cover_file_name}`;
           },
         },
         reprint: {
@@ -150,6 +124,8 @@ export class Article
           set(this, val) {
             if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
               this.setDataValue("reprint", val);
+            } else {
+              this.setDataValue("reprint", null as any);
             }
           },
         },

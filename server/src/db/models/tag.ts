@@ -51,7 +51,7 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           comment: "ICON地址",
           get(this) {
             let icon_url = this.getDataValue("icon_url");
-            return icon_url ? `${process.env.cdn}/${icon_url}` : null;
+            return icon_url ? `${process.env.cdn}/type/${icon_url}` : null;
           },
         },
         time: {
