@@ -40,4 +40,24 @@ new Promise((resolve, reject) => {
     shell.exec('cross-env ENV=development nodemon --watch ./dist ./dist/src/index.js', {
         async: true
     });
+});
+
+// 每次开发时自动备份一个.development 不携带值
+const dotenv = require('dotenv');
+const envDir = fs.readdirSync('env');
+// 如果是.开头直接删
+envDir.forEach(item => {
+    if (item.startsWith('.')) {
+        clearDir(`env/${item}`);
+    }
+});
+// 设置打包env的模板
+envDir.filter(item => !item.startsWith('.')).forEach(dir => {
+    fs.mkdirSync(`env/.${dir}`);
+    fs.readdirSync(`env/${dir}`).forEach(file => {
+        let fileData = fs.readFileSync(`env/${dir}/${file}`);
+        let envStringData = Object.keys(dotenv.parse(fileData.toString()))
+        envStringData.push(" ");
+        fs.writeFileSync(`env/.${dir}/${file}`, envStringData.join(`=\n`))
+    })
 })

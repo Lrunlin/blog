@@ -4,7 +4,7 @@ interface props {
   title: string;
   description: string;
   keyword: string[];
-  children: JSX.Element;
+  children?: JSX.Element;
 }
 
 /**Head组件封装 title keywords  description children*/
