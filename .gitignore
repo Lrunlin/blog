@@ -4,6 +4,5 @@ dist
 .vscode
 .DS_Store
 *.local
-# 将环境变量文件删除，只保留模板
-**/env/development
-**/env/production
+**/**/development/**
+**/**/production/**
