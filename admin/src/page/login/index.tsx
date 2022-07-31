@@ -56,6 +56,7 @@ const LognIn = () => {
             rules={[
               { required: true, message: "请填写密码" },
               { min: 8, max: 16, message: "密码为8-16位的数字、字母、特殊字符" },
+              { pattern: /^[a-zA-Z0-9_]{8,16}$/, message: "密码格式为数字、字母或下划线" },
             ]}
           >
             <Input.Password />

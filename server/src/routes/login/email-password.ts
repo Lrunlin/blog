@@ -1,11 +1,15 @@
 import Router from "@koa/router";
-import type { Context, Next } from "koa";
 import DB from "@/db";
 import Joi from "Joi";
 import validator from "@/common/middleware/validator";
 const schema = Joi.object({
   email: Joi.string().min(5).max(30).required().email().error(new Error("邮箱格式不正确")),
-  password: Joi.string().min(8).max(16).required().error(new Error("密码格式错误")),
+  password: Joi.string()
+    .min(8)
+    .max(16)
+    .required()
+    .pattern(/^[a-zA-Z0-9_]{8,16}$/)
+    .error(new Error("密码格式错误")),
 });
 import jwt from "jsonwebtoken";
 let router = new Router();
