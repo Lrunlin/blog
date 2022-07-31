@@ -14,8 +14,8 @@ export interface UserAttributes {
   site?: string;
   unit?: string;
   location?: string;
-  avatar_url?: string;
-  time: Date;
+  avatar_file_name?: string;
+  create_time: Date;
 }
 
 export type UserPk = "id";
@@ -29,7 +29,7 @@ export type UserOptionalAttributes =
   | "site"
   | "unit"
   | "location"
-  | "avatar_url";
+  | "avatar_file_name";
 export type UserCreationAttributes = Optional<UserAttributes, UserOptionalAttributes>;
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
@@ -45,8 +45,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   site?: string;
   unit?: string;
   location?: string;
-  avatar_url?: string;
-  time!: Date;
+  avatar_file_name?: string;
+  create_time!: Date;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof User {
     return sequelize.define(
@@ -116,14 +116,22 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           allowNull: true,
           comment: "所在地区",
         },
-        avatar_url: {
+        avatar_file_name: {
           type: DataTypes.STRING(60),
           allowNull: true,
           comment: "头像图片名称",
         },
-        time: {
+        avatar_url: {
+          type: DataTypes.VIRTUAL,
+          get(this) {
+            let avatar_url = this.getDataValue("avatar_file_name");
+            return avatar_url ? `${process.env.CDN}/${avatar_url}` : avatar_url;
+          },
+        },
+        create_time: {
           type: DataTypes.DATE,
           allowNull: false,
+          defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
           comment: "创建时间",
         },
       },

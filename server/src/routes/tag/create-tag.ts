@@ -1,12 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import id from "@/utils/useId";
+import id from "@/common/hooks/useId";
 
 let router = new Router();
 
 router.post("/tag", async ctx => {
-  let { name, belong, icon_url } = ctx.request.body;
-
+  let { name, belong, icon_file_name } = ctx.request.body;
   let indexes = await DB.Tag.findAndCountAll({
     where: {
       belong: belong,
@@ -17,7 +16,7 @@ router.post("/tag", async ctx => {
     id: id(),
     name: name,
     belong: belong,
-    icon_url: icon_url,
+    icon_file_name: icon_file_name,
     indexes: indexes.count + 1,
     time: new Date(),
   })

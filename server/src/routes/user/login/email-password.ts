@@ -13,7 +13,7 @@ const schema = Joi.object({
 });
 import jwt from "jsonwebtoken";
 let router = new Router();
-router.post("/login", validator(schema), async ctx => {
+router.post("/login/email", validator(schema), async ctx => {
   
   let { email, password } = ctx.request.body;
 

@@ -1,5 +1,7 @@
-import type { NextPage } from "next";
+import type { NextPage,GetServerSideProps } from "next";
 import Base from "@/layout/Base";
+
+
 
 const Home: NextPage = () => {
   return (
@@ -9,4 +11,11 @@ const Home: NextPage = () => {
   );
 };
 
+
+
+export const getServerSideProps:GetServerSideProps=async()=>{
+  return {
+    props:{}
+  }
+};
 export default Home;

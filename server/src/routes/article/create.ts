@@ -1,9 +1,9 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import useId from "@/utils/useId";
+import useId from "@/common/hooks/useId";
 import Joi from "Joi";
 import validator from "@/common/middleware/validator";
-import { cache } from "@/utils/article/modules/get-type-data";
+import { cache } from "@/common/utils/article/modules/get-type-data";
 import { TagAttributes } from "@/db/models/tag";
 import auth from "@/common/middleware/auth";
 
@@ -17,8 +17,8 @@ const schema = Joi.object({
     .error(new Error("文章介绍为1-200的字符串或者null")),
   cover_file_name: Joi.string()
     .allow("")
-    .min(35)
-    .max(100)
+    .min(15)
+    .max(50)
     .required()
     .allow(null)
     .lowercase()
@@ -27,12 +27,13 @@ const schema = Joi.object({
     .error(new Error("封面地址为图片名称，禁止包含http、/等字眼")),
   reprint: Joi.string()
     .allow("")
-    .max(100)
+    .min(10)
+    .max(150)
     .required()
     .allow(null)
     .lowercase()
     .pattern(/^https:\/\/.*/)
-    .error(new Error("转载地址为1-100的字符串，要求为https网址")),
+    .error(new Error("转载地址为10-100的字符串，要求为https网址")),
   tag: Joi.array()
     .items(Joi.number().required())
     .min(1)

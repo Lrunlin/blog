@@ -24,7 +24,7 @@ async function fileDisplay(filePath: string) {
   _fileDisplay(filePath);
   return fileList;
 }
-let src = path.join(__dirname, "../routes");
+let src = path.join(__dirname, "../../routes");
 async function getAllRouter() {
   let fileList = await fileDisplay(src);
   return fileList;

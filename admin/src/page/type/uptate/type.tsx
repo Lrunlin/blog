@@ -8,7 +8,7 @@ import { response } from "@type/response";
 import {  TypeAttributes } from "@type/type";
 
 interface ResponseType extends TypeAttributes {
-  file_name: string;
+  icon_url: string;
 }
 
 const UpdateType = () => {
@@ -52,9 +52,9 @@ const UpdateType = () => {
 
   /** 设置初始化的值*/
   let uploadInitVlaue = useMemo(() => {
-    return data?.icon_url
+    return data?.icon_file_name
       ? {
-          file_name: data.file_name,
+          file_name: data.icon_file_name,
           icon_url: data.icon_url,
         }
       : undefined;
@@ -71,7 +71,7 @@ const UpdateType = () => {
           scrollToFirstError={true}
           onFinish={onFinish}
         >
-          <Form.Item label="名称" name="icon_url">
+          <Form.Item label="名称" name="icon_file_name">
             <Upload target="type" InitValue={uploadInitVlaue} />
           </Form.Item>
           <Form.Item label="名称" name="name" rules={[{ required: true, message: "请填写名称" }]}>

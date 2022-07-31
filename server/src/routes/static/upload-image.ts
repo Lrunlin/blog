@@ -5,7 +5,7 @@ import multer from "@koa/multer";
 import sharp from "sharp";
 import qiniu from "qiniu";
 import { v4 } from "uuid";
-import sync from "@/utils/useSync";
+import sync from "@/common/hooks/useSync";
 import auth from "@/common/middleware/auth";
 
 let config = new qiniu.conf.Config({

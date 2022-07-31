@@ -24,10 +24,8 @@ interface PropsType {
 const AddTypeModal: FC<PropsType> = props => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   let [name, setName] = useState("");
-  let [belong, setBelong] = useState<TagFormValueProps["belong"]>();
-  let [fileName, setFileName] = useState<string | null>(null);
-  const onFinish = () => {
-    props.onFinish({ name: name, belong: belong as number, icon_url: fileName });
+  const onFinish = (values:any) => {
+    props.onFinish(values);
   };
 
   useImperativeHandle(props.event, () => ({
@@ -59,8 +57,8 @@ const AddTypeModal: FC<PropsType> = props => {
           onFinish={onFinish}
           autoComplete="off"
         >
-          <Form.Item label="上传ICON" name="icon_url">
-            <UpLoad target="type" onChange={val => setFileName(val)} />
+          <Form.Item label="上传ICON" name="icon_file_name">
+            <UpLoad target="type" />
           </Form.Item>
           <Form.Item
             label="名称"
@@ -76,8 +74,6 @@ const AddTypeModal: FC<PropsType> = props => {
           <Form.Item label="归属" name="belong" rules={[{ required: true, message: "请选择归属" }]}>
             <Select
               style={{ width: 180 }}
-              value={belong}
-              onChange={val => setBelong(val)}
               loading={!data}
             >
               {data &&

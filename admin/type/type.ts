@@ -3,14 +3,14 @@ interface TypeAttributes {
   name: string;
   belong?: number;
   description: string;
-  icon_url?: string;
+  icon_file_name?: string;
   time: Date;
 }
 interface TagAttributes {
   id: number;
   name: string;
   belong?: number;
-  icon_url?: string;
+  icon_file_name?: string;
   time: Date;
 }
 interface TypeAttributesList extends TypeAttributes {

@@ -22,11 +22,8 @@ interface PropsType {
  */
 const AddTypeModal: FC<PropsType> = props => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  let [name, setName] = useState("");
-  let [fileName, setFileName] = useState<string | null>(null);
-  let [description, setDescription] = useState<string>("");
-  const onFinish = () => {
-    props.onFinish({ name: name, icon_url: fileName, description: description });
+  const onFinish = (values:any) => {
+    props.onFinish(values);
   };
 
   useImperativeHandle(props.event, () => ({
@@ -55,15 +52,15 @@ const AddTypeModal: FC<PropsType> = props => {
           onFinish={onFinish}
           autoComplete="off"
         >
-          <Form.Item label="上传ICON" name="icon_url">
-            <UpLoad target="type" onChange={val => setFileName(val)} />
+          <Form.Item label="上传ICON" name="icon_file_name">
+            <UpLoad target="type"  />
           </Form.Item>
           <Form.Item
             label="名称"
             name="name"
             rules={[{ required: true, message: "请填写类型名称" }]}
           >
-            <Input value={name} onChange={e => setName(e.target.value)} placeholder="请填写类型名称" />
+            <Input placeholder="请填写类型名称" />
           </Form.Item>
           <Form.Item
             label="介绍"
@@ -74,8 +71,6 @@ const AddTypeModal: FC<PropsType> = props => {
               rows={6}
               placeholder="类型介绍,用于HTML的meta标签description"
               maxLength={150}
-              value={description}
-              onChange={e => setDescription(e.target.value)}
             />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 5, span: 16 }}>

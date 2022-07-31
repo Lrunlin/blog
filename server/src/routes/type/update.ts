@@ -3,13 +3,13 @@ import DB from "@/db";
 let router = new Router();
 
 router.put("/type/:id", async ctx => {
-  let { name, indexes, icon_url, description } = ctx.request.body;
+  let { name, indexes, icon_file_name, description } = ctx.request.body;
   let { id } = ctx.params;
   await DB.Type.update(
     {
       name,
       indexes,
-      icon_url,
+      icon_file_name,
       description,
     },
     { where: { id: id } }

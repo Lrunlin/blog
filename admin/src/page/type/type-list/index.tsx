@@ -5,19 +5,18 @@ import useSwr, { useSWRConfig } from "swr";
 import getType from "@/request/getType";
 import AddTypeModal, { event as typeEvent, TypeFormValueProps } from "./AddTypeModal";
 import AddTagModal, { event as tagEvent, TagFormValueProps } from "./AddTagModal";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const TypeList = () => {
   let navigate = useNavigate();
   const { mutate } = useSWRConfig();
-  let { data } = useSwr("/type", () => getType());
+  let { data } = useSwr("/type/tree", () => getType());
   let typeEvent = useRef({} as typeEvent);
   const createType = (values: TypeFormValueProps) => {
     axios.post("/type", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         typeEvent.current.onClose();
-        mutate("/type");
+        mutate("/type/tree");
       } else {
         message.error(res.data.message);
       }
@@ -27,7 +26,7 @@ const TypeList = () => {
     axios.post("/tag", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
-        mutate("/type");
+        mutate("/type/tree");
         tagEvent.current.onClose();
       } else {
         message.error(res.data.message);

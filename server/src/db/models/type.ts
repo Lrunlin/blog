@@ -6,21 +6,21 @@ export interface TypeAttributes {
   id: number;
   name: string;
   indexes: number;
-  icon_url?: string;
+  icon_file_name?: string;
   time: Date;
   description: string;
 }
 
 export type TypePk = "id";
 export type TypeId = Type[TypePk];
-export type TypeOptionalAttributes = "icon_url";
+export type TypeOptionalAttributes = "icon_file_name";
 export type TypeCreationAttributes = Optional<TypeAttributes, TypeOptionalAttributes>;
 
 export class Type extends Model<TypeAttributes, TypeCreationAttributes> implements TypeAttributes {
   id!: number;
   name!: string;
   indexes!: number;
-  icon_url?: string;
+  icon_file_name?: string;
   time!: Date;
   description!: string;
 
@@ -45,15 +45,19 @@ export class Type extends Model<TypeAttributes, TypeCreationAttributes> implemen
           allowNull: false,
           comment: "排序、索引",
         },
-        icon_url: {
+        icon_file_name: {
           type: DataTypes.STRING(60),
           allowNull: true,
-          comment: "ICON地址",
+          comment: "ICON文件名称",
+        },
+        icon_url: {
+          type: DataTypes.VIRTUAL,
           get(this) {
-            let icon_url = this.getDataValue("icon_url");
-            return icon_url ? `${process.env.cdn}/type/${icon_url}` : null;
+            let icon_file_name = this.getDataValue("icon_file_name");
+            return icon_file_name ? `${process.env.cdn}/type/${icon_file_name}` : null;
           },
         },
+
         time: {
           type: DataTypes.DATE,
           allowNull: false,

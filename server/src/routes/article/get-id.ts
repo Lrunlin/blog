@@ -1,11 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import getTagData from "@/utils/article/modules/get-type-data";
+import getTagData from "@/common/utils/article/modules/get-type-data";
 import cache from "@/common/middleware/cache";
 
-import HTMLToMarkDown from "@/utils/article/modules/html-to-markdown";
-import getCodeBlockLanguage from "@/utils/article/modules/get-code-block-language";
-import imgPrefix from "@/utils/article/modules/img-add-prefix";
+import HTMLToMarkDown from "@/common/utils/article/modules/html-to-markdown";
+import getCodeBlockLanguage from "@/common/utils/article/modules/get-code-block-language";
+import imgPrefix from "@/common/utils/article/modules/img-add-prefix";
 
 let router = new Router();
 

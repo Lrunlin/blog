@@ -26,7 +26,7 @@ app.use(cors());
 
 
 
-import getAllRouter from "@/modules/getAllRouter";
+import getAllRouter from "@/common/modules/getAllRouter";
 (async () => {
   let Routers = await getAllRouter();
   Routers.forEach((item, index) => {

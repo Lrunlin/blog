@@ -32,4 +32,6 @@ module.exports = withBundleAnalyzer({
       }],
     }, ]
   },
+  env: {
+  },
 })

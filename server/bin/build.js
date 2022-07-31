@@ -19,6 +19,9 @@ let env = '';
 fs.readdirSync('env/production').forEach(item => {
     env += `${fs.readFileSync(`env/production/${item}`).toString()}\n`
 })
+if (fs.existsSync('env/.env')) {
+    env += `${fs.readFileSync(`env/.env`).toString()}\n`
+};
 fs.writeFileSync('dist/.env', env) //复制环境变量文件
 
 

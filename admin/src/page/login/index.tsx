@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 const LognIn = () => {
   let navigate = useNavigate();
   function onFinish(values: any) {
-    axios.post("/login", values).then(res => {
+    axios.post("/login/email", values).then(res => {
       if (res.data.success) {
         window.localStorage.token = res.data.token;
         message.success(res.data.message);

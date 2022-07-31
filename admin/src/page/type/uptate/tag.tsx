@@ -18,13 +18,12 @@ import { response } from "@type/response";
 import { TypeAttributesList, TagAttributes } from "@type/type";
 
 interface ResponseType extends TagAttributes {
-  file_name: string;
+  icon_url: string;
 }
 
 const UpdateTag = () => {
   let navigate = useNavigate();
   let params = useParams<{ id: string }>();
-  console.log("form render");
 
   let { data, error } = useSwr(`/tag/${params.id}`, () => {
     return axios.get<response<ResponseType>>(`/tag/${params.id}`).then(res => {
@@ -51,7 +50,6 @@ const UpdateTag = () => {
   };
 
   const onFinish = (values: any) => {
-
     axios.put(`/tag/${params.id}`, values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
@@ -63,23 +61,17 @@ const UpdateTag = () => {
 
   /** 设置初始化的值*/
   let uploadInitVlaue = useMemo(() => {
-    return data?.icon_url
+    return data?.icon_file_name
       ? {
-          file_name: data.file_name,
+          file_name: data.icon_file_name,
           icon_url: data.icon_url,
         }
       : undefined;
   }, [data]);
   let { data: typeList } = useSwr(`/type/notTree`, () => {
-    return axios
-      .get<response<TypeAttributesList[]>>(`/type`, {
-        params: {
-          notTree: true,
-        },
-      })
-      .then(res => {
-        return res.data.data;
-      });
+    return axios.get<response<TypeAttributesList[]>>(`/type`, {}).then(res => {
+      return res.data.data;
+    });
   });
   const { Option } = Select;
 
@@ -95,7 +87,7 @@ const UpdateTag = () => {
           scrollToFirstError={true}
           onFinish={onFinish}
         >
-          <Form.Item label="名称" name="icon_url">
+          <Form.Item label="名称" name="icon_file_name">
             <Upload target="type" InitValue={uploadInitVlaue} />
           </Form.Item>
           <Form.Item label="名称" name="name" rules={[{ required: true, message: "请填写名称" }]}>

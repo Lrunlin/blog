@@ -2,10 +2,9 @@ import DB from "@/db";
 import LRU from "lru-cache";
 import type { ArticleAttributes } from "@/db/models/article";
 import type { TagAttributes } from "@/db/models/tag";
-
 /**
  * 存储type和tag的数据
- * type/tree 树形结构
+ * tree 树形结构
  * type 全部的type
  * tag 全部的tag
  */
@@ -24,6 +23,8 @@ function getData() {
         "tag",
         tag.map(item => item.toJSON())
       );
+
+
 
       cache.set(
         "tree",
@@ -56,11 +57,11 @@ setTimeout(() => {
  */
 function getTypeData(article: ArticleAttributes) {
   let tag = cache.get("tag") as TagAttributes[];
-  
+
   return {
     ...article,
     tag: (article.tag as unknown as number[]).map(item => {
-      return tag.find(_item=>_item.id==item)
+      return tag.find(_item => _item.id == item);
     }),
   };
 }

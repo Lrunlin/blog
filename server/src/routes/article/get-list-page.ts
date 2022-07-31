@@ -3,7 +3,7 @@ import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import { Op } from "sequelize";
 import qs from "qs";
-import getTagData from '@/utils/article/modules/get-type-data'
+import getTagData from '@/common/utils/article/modules/get-type-data'
 
 let router = new Router();
 router.get("/article/page/:page", auth(1), async ctx => {

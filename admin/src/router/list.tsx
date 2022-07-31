@@ -3,7 +3,7 @@ import type { FC, LazyExoticComponent } from "react";
 
 const RouterList: RouterListType[] = [
   {
-    path: "/logn-in",
+    path: "/login",
     element: lazy(() => import("@/page/login")),
   },
   {

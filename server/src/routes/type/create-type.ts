@@ -1,11 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import id from "@/utils/useId";
+import id from "@/common/hooks/useId";
 
 let router = new Router();
 
 router.post("/type", async ctx => {
-  let { name, description, icon_url } = ctx.request.body;
+  let { name, description, icon_file_name } = ctx.request.body;
 
   let indexes = await DB.Type.findAndCountAll();
 
@@ -13,7 +13,7 @@ router.post("/type", async ctx => {
     id: id(),
     name: name,
     description: description,
-    icon_url: icon_url,
+    icon_file_name: icon_file_name,
     indexes: indexes.count + 1,
     time: new Date(),
   })

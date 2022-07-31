@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import "antd/dist/antd.css";
 //部分动画样式在这个css里面
 // import "antd/lib/style/index.css";
+import "@/plugin/axios";
 
 import moment from "moment";
 import "moment/locale/zh-cn";

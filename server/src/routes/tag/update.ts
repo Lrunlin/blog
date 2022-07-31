@@ -3,13 +3,13 @@ import DB from "@/db";
 let router = new Router();
 
 router.put("/tag/:id", async ctx => {
-  let { name, indexes, icon_url, belong } = ctx.request.body;
+  let { name, indexes, icon_file_name, belong } = ctx.request.body;
   let { id } = ctx.params;
   await DB.Tag.update(
     {
       name,
       indexes,
-      icon_url,
+      icon_file_name,
       belong,
     },
     { where: { id: id } }

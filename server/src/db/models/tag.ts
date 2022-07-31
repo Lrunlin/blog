@@ -6,21 +6,21 @@ export interface TagAttributes {
   id: number;
   name: string;
   belong: number;
-  icon_url?: string;
+  icon_file_name?: string;
   time: Date;
   indexes: number;
 }
 
 export type TagPk = "id";
 export type TagId = Tag[TagPk];
-export type TagOptionalAttributes = "icon_url";
+export type TagOptionalAttributes = "icon_file_name";
 export type TagCreationAttributes = Optional<TagAttributes, TagOptionalAttributes>;
 
 export class Tag extends Model<TagAttributes, TagCreationAttributes> implements TagAttributes {
   id!: number;
   name!: string;
   belong!: number;
-  icon_url?: string;
+  icon_file_name?: string;
   time!: Date;
   indexes!: number;
 
@@ -45,15 +45,19 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           allowNull: false,
           comment: "所属Type的ID",
         },
-        icon_url: {
+        icon_file_name: {
           type: DataTypes.STRING(255),
           allowNull: true,
-          comment: "ICON地址",
+          comment: "ICON文件名称",
+        },
+        icon_url: {
+          type: DataTypes.VIRTUAL,
           get(this) {
-            let icon_url = this.getDataValue("icon_url");
-            return icon_url ? `${process.env.cdn}/type/${icon_url}` : null;
+            let icon_file_name = this.getDataValue("icon_file_name");
+            return icon_file_name ? `${process.env.cdn}/type/${icon_file_name}` : null;
           },
         },
+
         time: {
           type: DataTypes.DATE,
           allowNull: false,

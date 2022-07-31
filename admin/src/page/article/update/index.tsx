@@ -40,7 +40,7 @@ const Update = () => {
   }
 
   //获取typeTree
-  let { data: treeData } = useSwr("/type", () =>
+  let { data: treeData } = useSwr("/type/tree", () =>
     getType().then(res => {
       return res.map(item => ({
         ...item,
