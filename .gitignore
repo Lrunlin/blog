@@ -4,5 +4,7 @@ dist
 .vscode
 .DS_Store
 *.local
-**/**/development/**
-**/**/production/**
+
+
+**/env/**/development/**
+**/env/**/production/**
