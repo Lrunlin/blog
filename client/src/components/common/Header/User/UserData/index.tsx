@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Dropdown, Avatar, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { state } from "@/store/user-data";
+import useUserData from "@/store/user-data";
 import type { UserAttributes } from "@/store/user-data";
 import { useRouter } from "next/router";
 
@@ -26,7 +26,7 @@ const UserData = () => {
       ]}
     />
   );
-  let userData = state() as UserAttributes;
+  let [userData] = useUserData();
   return (
     <>
       <div>
@@ -42,7 +42,7 @@ const UserData = () => {
         >
           创作者
         </Dropdown.Button>
-        <Avatar src={userData.avatar_url}>{userData.name}</Avatar>
+        <Avatar src={userData?.avatar_url}>{userData?.name.slice(0,1).toLocaleUpperCase()}</Avatar>
       </div>
     </>
   );

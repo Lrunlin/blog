@@ -10,7 +10,7 @@ moment.locale("zh-cn");
 
 import { RecoilRoot } from "recoil";
 
-import "@/styles/globals.css";
+import "@/styles/globals.scss";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>

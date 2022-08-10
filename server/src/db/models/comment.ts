@@ -1,5 +1,5 @@
-import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
+import * as Sequelize from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 
 export interface CommentAttributes {
   id: number;
@@ -7,76 +7,91 @@ export interface CommentAttributes {
   user_id: number;
   content: string;
   reply?: number;
-  client_ip?: string;
-  time: Date;
+  client_ip: string;
+  comment_pics?: string;
+  create_time: Date;
 }
 
 export type CommentPk = "id";
 export type CommentId = Comment[CommentPk];
-export type CommentOptionalAttributes = "reply" | "client_ip";
+export type CommentOptionalAttributes = "reply" | "comment_pics";
 export type CommentCreationAttributes = Optional<CommentAttributes, CommentOptionalAttributes>;
 
-export class Comment extends Model<CommentAttributes, CommentCreationAttributes> implements CommentAttributes {
+export class Comment
+  extends Model<CommentAttributes, CommentCreationAttributes>
+  implements CommentAttributes
+{
   id!: number;
   article_id!: number;
   user_id!: number;
   content!: string;
   reply?: number;
-  client_ip?: string;
-  time!: Date;
-
+  client_ip!: string;
+  comment_pics?: string;
+  create_time!: Date;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Comment {
-    return sequelize.define('Comment', {
-    id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true,
-      comment: "ID"
-    },
-    article_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      comment: "文章ID"
-    },
-    user_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      comment: "用户ID"
-    },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      comment: "内容"
-    },
-    reply: {
-      type: DataTypes.BIGINT,
-      allowNull: true,
-      comment: "是否是对某个评论的回复，不是则为null是则为对应的评论id"
-    },
-    client_ip: {
-      type: DataTypes.STRING(50),
-      allowNull: true,
-      comment: "用户IP"
-    },
-    time: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      comment: "评论时间"
-    }
-  }, {
-    tableName: 'comment',
-    timestamps: false,
-    indexes: [
+    return sequelize.define(
+      "Comment",
       {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
+        id: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          primaryKey: true,
+          comment: "ID",
+        },
+        article_id: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          comment: "文章ID",
+        },
+        user_id: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          comment: "用户ID",
+        },
+        content: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+          comment: "内容",
+        },
+        reply: {
+          type: DataTypes.BIGINT,
+          allowNull: true,
+          comment: "是否是对某个评论的回复，不是则为null是则为对应的评论id",
+        },
+        client_ip: {
+          type: DataTypes.STRING(50),
+          allowNull: false,
+          comment: "用户IP",
+        },
+        comment_pics: {
+          type: DataTypes.STRING(200),
+          allowNull: true,
+          comment: "评论中使用到的图片",
+          get(this) {
+            let comment_pics = this.getDataValue("comment_pics");
+            return comment_pics ? `${process.env.CDN}/comment/${comment_pics}` : comment_pics;
+          },
+        },
+        create_time: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          comment: "评论时间",
+        },
       },
-    ]
-  }) as typeof Comment;
+      {
+        tableName: "comment",
+        timestamps: false,
+        indexes: [
+          {
+            name: "PRIMARY",
+            unique: true,
+            using: "BTREE",
+            fields: [{ name: "id" }],
+          },
+        ],
+      }
+    ) as typeof Comment;
   }
 }

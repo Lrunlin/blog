@@ -3,18 +3,14 @@ import { Button, Form, Input, Divider, message } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 import { useSetRecoilState } from "recoil";
 import axios from "axios";
-import { modalStateContext, signModalContext } from "../index";
+import { modalStateContext } from "../index";
 
-// 用于在Modal中切换的组件
-import LogOn from "../LogOn";
-import ForgetPassword from "../ForgetPassword";
-
-import { action as useUserAuthAction } from "@/store/user-auth";
-import { action as useUserDataAction } from "@/store/user-data";
+import useUserData from "@/store/user-data";
 
 /** 弹窗中的登录组件*/
 const LogIn = () => {
-  let closeModal = useSetRecoilState(modalStateContext);
+  let setModalState = useSetRecoilState(modalStateContext);
+  const [, refreshDataAction] = useUserData();
 
   const [isLoad, setIsLoad] = useState(false);
   function logIn(values: any) {
@@ -24,10 +20,9 @@ const LogIn = () => {
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);
-          closeModal(false);
+          setModalState(false);
           localStorage.token = res.data.token;
-          useUserAuthAction();
-          useUserDataAction();
+          refreshDataAction();
         } else {
           message.error(res.data.message);
         }
@@ -35,7 +30,6 @@ const LogIn = () => {
       .finally(() => setIsLoad(false));
   }
 
-  let switchComponent = useSetRecoilState(signModalContext);
   return (
     <>
       <Form onFinish={logIn} autoComplete="off">
@@ -70,25 +64,12 @@ const LogIn = () => {
         </Form.Item>
       </Form>
       <div className="flex justify-between">
-        <span
-          className="text-sky-600 cursor-pointer"
-          onClick={() =>
-            switchComponent({
-              title: "邮箱注册",
-              component: <LogOn />,
-            })
-          }
-        >
+        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogOn")}>
           邮箱注册
         </span>
         <span
           className="text-sky-600 cursor-pointer"
-          onClick={() =>
-            switchComponent({
-              title: "忘记密码",
-              component: <ForgetPassword />,
-            })
-          }
+          onClick={() => setModalState("ForgetPassword")}
         >
           忘记密码
         </span>

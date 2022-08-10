@@ -67,6 +67,7 @@ router.get("/logon/email", validator(schema), async ctx => {
     name: name,
     password: password,
     auth: 0,
+    avatar_file_name: "default.webp",
     create_time: new Date(),
   })
     .then(res => {

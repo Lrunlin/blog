@@ -14,7 +14,6 @@ interface ResponseType extends TypeAttributes {
 const UpdateType = () => {
   let navigate = useNavigate();
   let params = useParams<{ id: string }>();
-  console.log("form render");
 
   let { data, error } = useSwr(`/type/${params.id}`, () => {
     return axios.get<response<ResponseType>>(`/type/${params.id}`).then(res => {

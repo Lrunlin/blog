@@ -1,0 +1,29 @@
+.adorn {
+}
+@mixin line {
+  transform: translateY(2px);
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background: #e5e6eb;
+  margin: 0px 4px;
+  content: " ";
+}
+.adorn::after {
+  @include line;
+}
+.adorn::before {
+  @include line;
+}
+.tag:not(:last-child):after {
+  display: inline-block;
+  content: " ";
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  margin: 0px 2px;
+  transform: translateY(-4px);
+  background: #4e5969;
+}
+
+

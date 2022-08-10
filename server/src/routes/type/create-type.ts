@@ -15,7 +15,6 @@ router.post("/type", async ctx => {
     description: description,
     icon_file_name: icon_file_name,
     indexes: indexes.count + 1,
-    time: new Date(),
   })
     .then(res => {
       ctx.body = { success: true, message: `成功添加类型:${name}` };

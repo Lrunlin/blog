@@ -7,13 +7,13 @@ export interface TypeAttributes {
   name: string;
   indexes: number;
   icon_file_name?: string;
-  time: Date;
+  create_time: Date;
   description: string;
 }
 
 export type TypePk = "id";
 export type TypeId = Type[TypePk];
-export type TypeOptionalAttributes = "icon_file_name";
+export type TypeOptionalAttributes = "icon_file_name" | "create_time";
 export type TypeCreationAttributes = Optional<TypeAttributes, TypeOptionalAttributes>;
 
 export class Type extends Model<TypeAttributes, TypeCreationAttributes> implements TypeAttributes {
@@ -21,7 +21,7 @@ export class Type extends Model<TypeAttributes, TypeCreationAttributes> implemen
   name!: string;
   indexes!: number;
   icon_file_name?: string;
-  time!: Date;
+  create_time!: Date;
   description!: string;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Type {
@@ -57,10 +57,10 @@ export class Type extends Model<TypeAttributes, TypeCreationAttributes> implemen
             return icon_file_name ? `${process.env.cdn}/type/${icon_file_name}` : null;
           },
         },
-
-        time: {
+        create_time: {
           type: DataTypes.DATE,
           allowNull: false,
+          defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
           comment: "创建时间",
         },
         description: {

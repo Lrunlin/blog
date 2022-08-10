@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import axios from "axios";
-import { modalStateContext, signModalContext } from "../index";
+import { modalStateContext } from "../index";
 import { useSetRecoilState } from "recoil";
-import LogIn from "../LogIn";
-import LogOn from "../LogOn";
-
 
 const ForgetPassword = () => {
   const [isLoad, setIsLoad] = useState(false);
 
-  let closeModal = useSetRecoilState(modalStateContext);
-  let switchComponent = useSetRecoilState(signModalContext);
+  let setModalState = useSetRecoilState(modalStateContext);
   function forgetPassword(values: any) {
     setIsLoad(true);
     axios
@@ -19,13 +15,13 @@ const ForgetPassword = () => {
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);
-          closeModal(false);
+          setModalState(false);
         } else {
           message.error(res.data.message);
         }
       })
       .finally(() => setIsLoad(false));
-  };
+  }
   return (
     <>
       <Form onFinish={forgetPassword} autoComplete="off">
@@ -46,26 +42,10 @@ const ForgetPassword = () => {
         </Form.Item>
       </Form>
       <div className="flex justify-between">
-        <span
-          className="text-sky-600 cursor-pointer"
-          onClick={() =>
-            switchComponent({
-              title: "邮箱注册",
-              component: <LogIn />,
-            })
-          }
-        >
+        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogIn")}>
           登录
         </span>
-        <span
-          className="text-sky-600 cursor-pointer"
-          onClick={() =>
-            switchComponent({
-              title: "忘记密码",
-              component: <LogOn />,
-            })
-          }
-        >
+        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogOn")}>
           注册
         </span>
       </div>

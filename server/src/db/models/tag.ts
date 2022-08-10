@@ -7,13 +7,13 @@ export interface TagAttributes {
   name: string;
   belong: number;
   icon_file_name?: string;
-  time: Date;
+  create_time: Date;
   indexes: number;
 }
 
 export type TagPk = "id";
 export type TagId = Tag[TagPk];
-export type TagOptionalAttributes = "icon_file_name";
+export type TagOptionalAttributes = "icon_file_name" | "create_time";
 export type TagCreationAttributes = Optional<TagAttributes, TagOptionalAttributes>;
 
 export class Tag extends Model<TagAttributes, TagCreationAttributes> implements TagAttributes {
@@ -21,7 +21,7 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
   name!: string;
   belong!: number;
   icon_file_name?: string;
-  time!: Date;
+  create_time!: Date;
   indexes!: number;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Tag {
@@ -57,10 +57,10 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
             return icon_file_name ? `${process.env.cdn}/type/${icon_file_name}` : null;
           },
         },
-
-        time: {
+        create_time: {
           type: DataTypes.DATE,
           allowNull: false,
+          defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
           comment: "创建时间",
         },
         indexes: {

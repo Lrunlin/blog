@@ -9,12 +9,12 @@ export interface UserAttributes {
   github?: string;
   qq?: string;
   password: string;
-  state?: number;
+  state: number;
   description?: string;
   site?: string;
   unit?: string;
   location?: string;
-  avatar_file_name?: string;
+  avatar_file_name: string;
   create_time: Date;
 }
 
@@ -29,7 +29,7 @@ export type UserOptionalAttributes =
   | "site"
   | "unit"
   | "location"
-  | "avatar_file_name";
+  | "create_time";
 export type UserCreationAttributes = Optional<UserAttributes, UserOptionalAttributes>;
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
@@ -40,12 +40,12 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   github?: string;
   qq?: string;
   password!: string;
-  state?: number;
+  state!: number;
   description?: string;
   site?: string;
   unit?: string;
   location?: string;
-  avatar_file_name?: string;
+  avatar_file_name!: string;
   create_time!: Date;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof User {
@@ -93,7 +93,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
         },
         state: {
           type: DataTypes.INTEGER,
-          allowNull: true,
+          allowNull: false,
+          defaultValue: 1,
           comment: "状态，（权限）",
         },
         description: {
@@ -118,14 +119,14 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
         },
         avatar_file_name: {
           type: DataTypes.STRING(60),
-          allowNull: true,
+          allowNull: false,
           comment: "头像图片名称",
         },
         avatar_url: {
           type: DataTypes.VIRTUAL,
           get(this) {
             let avatar_url = this.getDataValue("avatar_file_name");
-            return avatar_url ? `${process.env.CDN}/${avatar_url}` : avatar_url;
+            return avatar_url ? `${process.env.CDN}/avatar/${avatar_url}` : avatar_url;
           },
         },
         create_time: {

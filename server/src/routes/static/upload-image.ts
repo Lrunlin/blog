@@ -25,15 +25,14 @@ let secretKey = process.env.QINIU_SK;
 let bucket = process.env.OSS_NAME;
 
 function verify() {
-  let folderList = ["article", "avatar", "cover",'type'];
+  let folderList = ["article", "avatar", "cover", "type", "comment"];
   return async (ctx: Context, next: Next) => {
-    
     if (folderList.includes(ctx.params.folder)) {
       await next();
     } else {
       ctx.body = {
         success: false,
-        message: "已经记录日志了，在瞎玩封号处理",
+        message: "已经记录日志了，再瞎玩封号处理",
       };
       console.log(`id: ${ctx.id} 尝试瞎上传图片`);
     }
@@ -78,7 +77,7 @@ router.post("/static/:folder", auth([0, 1]), verify(), upload.single("image"), a
                 success: true,
                 message: "上传成功",
                 data: {
-                  file_name: respBody.key.replace(`${ctx.params.folder}/`,''),
+                  file_name: respBody.key.replace(`${ctx.params.folder}/`, ""),
                   file_href: `${process.env.CDN}/${respBody.key}`,
                 },
               };

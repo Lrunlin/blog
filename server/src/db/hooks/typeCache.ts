@@ -1,4 +1,4 @@
-import { getData } from "@/common/utils/article/modules/get-type-data";
+import { getData } from "@/common/modules/cache/type";
 import type { DestroyOptions } from "sequelize";
 import type { TypeAttributes,TagAttributes } from "../models/init-models";
 /**

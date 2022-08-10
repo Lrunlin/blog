@@ -3,8 +3,8 @@ import DB from "@/db";
 import useId from "@/common/hooks/useId";
 import Joi from "Joi";
 import validator from "@/common/middleware/validator";
-import { cache } from "@/common/utils/article/modules/get-type-data";
-import { TagAttributes } from "@/db/models/tag";
+import { cache } from "@/common/modules/cache/type";
+import { TagAttributes } from "@/db/models/init-models";
 import auth from "@/common/middleware/auth";
 
 const schema = Joi.object({

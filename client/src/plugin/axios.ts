@@ -1,6 +1,8 @@
 import axios from "axios";
 axios.defaults.baseURL =
-  process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://api.blogweb.cn/";
+  process.env.NEXT_PUBLIC_ENV == "development"
+    ? "http://localhost:3000"
+    : "https://api.blogweb.cn/";
 
 const ErrorCodeMessage = {
   200: "服务器成功返回请求的数据。",
@@ -22,8 +24,11 @@ const ErrorCodeMessage = {
 
 axios.interceptors.request.use(
   (config: any) => {
-    config.headers.authorization = localStorage.token;
-    config.headers.isadmin = true;
+    // 客户端才修改请求头
+    if (typeof window != "undefined") {
+      config.headers.authorization = localStorage.token;
+      config.headers.isadmin = true;
+    }
     config.headers["Cache-Control"] = "no-cache";
     return config;
   },
@@ -37,15 +42,17 @@ axios.interceptors.response.use(
   config => {
     /**访问成功**/
     return config;
-  },
-  error => {
-    let errorCode: number = error.response.status;
-    /** 响应码对应的错误*/
-    let responseMessage: string | undefined = (ErrorCodeMessage as any)[errorCode + ""];
-    /** 服务器返回的message属性*/
-    let serverErrorMessage = error?.response?.data?.message;
-
-    message.error(serverErrorMessage || `${errorCode}:${responseMessage}` || "请求错误");
-    return Promise.reject(error);
   }
+  // error => {
+  //   console.log(error);
+
+  //   let errorCode: number = error?.response?.status;
+  //   /** 响应码对应的错误*/
+  //   let responseMessage: string | undefined = (ErrorCodeMessage as any)[errorCode + ""];
+  //   /** 服务器返回的message属性*/
+  //   let serverErrorMessage = error?.response?.data?.message;
+
+  //   message.error(serverErrorMessage || `${errorCode}:${responseMessage}` || "请求错误");
+  //   return Promise.reject(error);
+  // }
 );

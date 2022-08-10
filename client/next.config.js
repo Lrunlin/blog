@@ -16,6 +16,7 @@ module.exports = withBundleAnalyzer({
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
+      '@type':path.resolve(__dirname, './types')
     };
     return config;
   },
@@ -28,7 +29,7 @@ module.exports = withBundleAnalyzer({
       locale: false,
       headers: [{
         key: 'Cache-Control',
-        value: 'public, max-age=9999999999, must-revalidate',
+        value: env.NEXT_PUBLIC_ENV == 'production'?'public, max-age=9999999999, must-revalidate':'public, max-age=0, must-revalidate',
       }],
     }, ]
   },

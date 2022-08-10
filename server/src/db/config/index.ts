@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(
-  "blog_new",
+  "blog",
   process.env.DB_MYSQL_USER + "",
   process.env.DB_MYSQL_PASSWORD || "",
   {

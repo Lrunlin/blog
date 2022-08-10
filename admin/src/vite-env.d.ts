@@ -2,3 +2,4 @@
 declare module "bytemd/lib/locales/*" {
   export const a: any;
 }
+

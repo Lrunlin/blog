@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import { atom, useRecoilState } from "recoil";
 
 export interface UserAttributes {
   id: number;
@@ -24,23 +24,25 @@ export const userDataContext = atom<UserAttributes | null>({
   default: null,
 });
 
-/** 用户是否登录，以及用户权限信息*/
-export function state() {
-  return useRecoilValue(userDataContext);
-}
-
-/** 根据Token刷新当前用户信息*/
-export function action() {
-  let setUserAuthState = useSetRecoilState(userDataContext);
-  useEffect(() => {
+/** 
+ * @params [userData, refreshUserData] {[object,function]} 用户信息，刷新用户信息
+*/
+function useUserData() {
+  let [userData, setUserData] = useRecoilState(userDataContext);
+  function refreshUserData() {
     axios.get("/user/info").then(res => {
       if (res.data.success) {
-        setUserAuthState(res.data.data);
+        setUserData(res.data.data);
       } else {
-        setUserAuthState(null);
+        setUserData(null);
       }
     });
+  }
+
+  useEffect(() => {
+    refreshUserData();
   }, []);
-  return;
+  return [userData, refreshUserData] as [UserAttributes | null, () => void];
 }
 
+export default useUserData;

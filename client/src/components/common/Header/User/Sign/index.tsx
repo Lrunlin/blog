@@ -1,44 +1,47 @@
-import { useState } from "react";
-import { atom, useRecoilValue, useRecoilState } from "recoil";
+import { atom, useRecoilState } from "recoil";
 import { Modal } from "antd";
-import LogIn from "./LogIn";
-import LogOn from "./LogOn";
-import ForgetPassword from "./ForgetPassword";
+import dynamic from "next/dynamic";
+const LogIn = dynamic(import("./LogIn"), { ssr: false });
+const LogOn = dynamic(import("./LogOn"), { ssr: false });
+const ForgetPassword = dynamic(import("./ForgetPassword"), { ssr: false });
 
-/** 用于对Modal组件的显示与隐藏*/
-export const modalStateContext = atom({
-  key: "model-state-context",
-  default: false,
-});
-
-/** 弹窗组件显示的状态管理管理*/
-export const signModalContext = atom({
-  key: "login-modal",
-  default: {
+let componentsList = {
+  LogIn: {
     title: "登录",
     component: <LogIn />,
-    // component: <LogOn />,
-    // component: <ForgetPassword />,
   },
+  LogOn: {
+    title: "注册",
+    component: <LogOn />,
+  },
+  ForgetPassword: {
+    title: "忘记密码",
+    component: <ForgetPassword />,
+  },
+};
+
+/** 弹窗组件显示的状态管理管理*/
+export const modalStateContext = atom<false | keyof typeof componentsList>({
+  key: "modal-state",
+  default: false,
 });
 
 /** Modal弹窗，处理用户的注册和登录*/
 const Sign = () => {
-  const [isModalVisible, setIsModalVisible] = useRecoilState(modalStateContext);
-  
-  
-  const ComponentsValue = useRecoilValue(signModalContext);
+  const [ComponentsValue, setComponentsValue] = useRecoilState(modalStateContext);
+
+
   function Components() {
-    return ComponentsValue.component;
+    return ComponentsValue ? componentsList[ComponentsValue].component : <></>;
   }
   return (
     <>
       <Modal
-        title={<b>{ComponentsValue.title}</b>}
-        visible={isModalVisible}
+        title={<b>{ComponentsValue ? componentsList[ComponentsValue].title : ""}</b>}
+        visible={!!ComponentsValue}
         width={315}
         footer={null}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={() => setComponentsValue(false)}
       >
         <Components />
       </Modal>

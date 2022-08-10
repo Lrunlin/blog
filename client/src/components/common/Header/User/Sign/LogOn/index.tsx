@@ -2,13 +2,11 @@ import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
-import { modalStateContext,signModalContext } from "../index";
-import LogIn from "../LogIn";
+import { modalStateContext } from "../index";
 
 const Logon = () => {
   const [isLoad, setIsLoad] = useState(false);
-  const closeModal = useSetRecoilState(modalStateContext);
-  const switchComponent = useSetRecoilState(signModalContext);
+  const setModalState = useSetRecoilState(modalStateContext);
 
   function logOn(values: any) {
     setIsLoad(true);
@@ -18,7 +16,7 @@ const Logon = () => {
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);
-          closeModal(false);
+          setModalState(false);
         } else {
           message.error(res.data.message);
         }
@@ -84,16 +82,8 @@ const Logon = () => {
         </Form.Item>
       </Form>
       <div className="flex justify-between">
-        <span
-          className="text-sky-600 cursor-pointer"
-          onClick={() =>
-            switchComponent({
-              title: "登录",
-              component: <LogIn />,
-            })
-          }
-        >
-          邮箱注册
+        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogIn")}>
+          登录
         </span>
       </div>
     </>

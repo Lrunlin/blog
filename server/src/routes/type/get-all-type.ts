@@ -1,5 +1,5 @@
 import Router from "@koa/router";
-import { cache } from "@/common/utils/article/modules/get-type-data";
+import { cache } from "@/common/modules/cache/type";
 
 let router = new Router();
 

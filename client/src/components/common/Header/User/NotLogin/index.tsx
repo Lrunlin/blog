@@ -2,10 +2,10 @@ import { Button } from "antd";
 import { useSetRecoilState } from "recoil";
 import { modalStateContext } from "../Sign";
 const NotLogin = () => {
-    let openModal = useSetRecoilState(modalStateContext);
+    let setModalState = useSetRecoilState(modalStateContext);
   return (
     <>
-      <Button type="primary" ghost onClick={() => openModal(true)}>
+      <Button type="primary" ghost onClick={() => setModalState("LogIn")}>
         登录
       </Button>
     </>

@@ -18,7 +18,6 @@ router.post("/tag", async ctx => {
     belong: belong,
     icon_file_name: icon_file_name,
     indexes: indexes.count + 1,
-    time: new Date(),
   })
     .then(res => {
       ctx.body = { success: true, message: `成功添加类型:${name}` };

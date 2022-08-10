@@ -1,0 +1,37 @@
+
+a:hover {
+  color: inherit;
+}
+.container {
+  @apply mx-auto;
+  & > * {
+    @apply mx-auto max-w-[1160px];
+  }
+}
+.container-xs {
+  @apply mx-auto;
+  & > * {
+    @apply mx-auto max-w-[960px];
+  }
+}
+
+.border-b-solid {
+  @apply border-b;
+  border-bottom-style: solid;
+}
+
+.border-l-solid {
+  @apply border-l;
+  border-left-style: solid;
+}
+.border-r-solid {
+  @apply border-r;
+  border-right-style: solid;
+}
+.border-t-solid {
+  @apply border-t;
+  border-top-style: solid;
+}
+/* @tailwind base;不使用初始化CSS */
+/* @tailwind components;组件也不用 */
+@tailwind utilities;
