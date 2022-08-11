@@ -5,6 +5,7 @@ export interface responseType {
   id: string;
   name: string;
   children: responseType[];
+  isLogin?: boolean;
 }
 
 /**

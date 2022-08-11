@@ -11,7 +11,7 @@ export interface ArticleAttributes {
   content: string;
   cover_file_name?: string;
   reprint?: string;
-  view_count?: number;
+  view_count: number;
   update_time?: Date;
   create_time: Date;
 }
@@ -37,7 +37,7 @@ export class Article
   content!: string;
   cover_file_name?: string;
   reprint?: string;
-  view_count?: number;
+  view_count!: number;
   update_time?: Date;
   create_time!: Date;
 

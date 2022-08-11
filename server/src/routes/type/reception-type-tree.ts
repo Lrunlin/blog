@@ -14,6 +14,7 @@ const defaultType = [
   {
     name: "关注",
     id: `${prefix}/follow`,
+    isLogin:true
   },
 ];
 // 在type缓存更新时重写缓存数据

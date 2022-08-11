@@ -16,6 +16,8 @@ interface propsType {
   advertisement: advertisementType;
 }
 const Home: NextPage<propsType> = props => {
+  /** 文章总数*/
+  let [total, setTotal] = useState(props.article_list.total);
   /** 文章数据信息*/
   let [list, setList] = useState<articleListResponseType["list"]>(props.article_list.list);
 
@@ -30,6 +32,7 @@ const Home: NextPage<propsType> = props => {
       } else {
         setList(_list => [...list, ...data.list]);
       }
+      setTotal(data.total);
     });
   }
   return (
@@ -55,7 +58,7 @@ const Home: NextPage<propsType> = props => {
       />
       <ArticleList
         list={list}
-        total={props.article_list.total}
+        total={total}
         loadMoreData={() => {
           page.current++;
           loadMoreData();

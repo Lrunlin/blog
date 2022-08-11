@@ -66,6 +66,7 @@ router.post("/article", auth([0, 1]), validator(schema), async ctx => {
     content: content,
     author: ctx.id as number,
     tag: tag,
+    view_count:0,
     create_time: new Date(),
   })
     .then(res => {

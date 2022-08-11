@@ -8,8 +8,6 @@ interface paramsType {
   type: "recommend" | "newest" | "hottest";
 }
 
-// export
-
 
 
 export interface responseType {

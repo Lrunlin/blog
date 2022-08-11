@@ -25,7 +25,6 @@ import cors from "@koa/cors";
 app.use(cors());
 
 
-
 import getAllRouter from "@/common/modules/getAllRouter";
 (async () => {
   let Routers = await getAllRouter();

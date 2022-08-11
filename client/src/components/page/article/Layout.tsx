@@ -12,12 +12,12 @@ interface propsType {
 const Layout: FC<propsType> = props => {
   return (
     <Base className="pb-16">
-      <div className="mr-4">
+      <div className="mr-4  w-full">
         <article className="p-8 pb-5 bg-white">{props.children}</article>
         <div className="p-8 pb-10 mt-4 bg-white">
           <Comments />
         </div>
-        <Recommend/>
+        <Recommend />
       </div>
       <Aside />
     </Base>
