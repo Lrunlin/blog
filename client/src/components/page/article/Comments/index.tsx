@@ -10,7 +10,7 @@ const Comments = () => {
   return (
     <>
       <div className="text-xl font-black mb-4">评论</div>
-      <div className="border-b-solid border-slate-200">
+      <div>
         {userData ? (
           <Editor id="comment" />
         ) : (

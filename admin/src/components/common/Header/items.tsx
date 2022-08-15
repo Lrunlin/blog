@@ -1,4 +1,4 @@
-import { HomeOutlined, BookOutlined, TagOutlined } from "@ant-design/icons";
+import { HomeOutlined, BookOutlined, TagOutlined, AppstoreAddOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 interface MenuItem {
@@ -35,6 +35,20 @@ const items = [
       {
         href: "/type/list",
         label: "类型列表",
+      },
+    ],
+  },
+  {
+    label: "广告投放",
+    icon: <AppstoreAddOutlined />,
+    children: [
+      {
+        href: "/advertisement",
+        label: "新增",
+      },
+      {
+        href: "/advertisement/list",
+        label: "广告列表",
       },
     ],
   },

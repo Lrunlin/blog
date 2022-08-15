@@ -34,5 +34,6 @@ module.exports = withBundleAnalyzer({
     }, ]
   },
   env: {
+    SITE_NAME:'网络日志'
   },
 })

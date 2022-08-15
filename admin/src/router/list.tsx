@@ -38,6 +38,18 @@ const RouterList: RouterListType[] = [
         path: "/tag/:id",
         element: lazy(() => import("@/page/type/uptate/tag")),
       },
+      {
+        path: "/advertisement",
+        element: lazy(() => import("@/page/advertisement/create")),
+      },
+      {
+        path: "/advertisement/list",
+        element: lazy(() => import("@/page/advertisement/list")),
+      },
+      {
+        path: "/advertisement/:id",
+        element: lazy(() => import("@/page/advertisement/update")),
+      },
     ],
   },
 ];

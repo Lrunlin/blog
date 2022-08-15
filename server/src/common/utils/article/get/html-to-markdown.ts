@@ -32,8 +32,8 @@ turndownService.addRule("autoLanguage", {
 });
 
 /** 将HTML字符串转为Markdown*/
-function turndown(article: ArticleAttributes) {
+function HTMLToMarkDown(article: ArticleAttributes) {
   return { ...article, content: turndownService.turndown(article.content) };
 }
-
-export default turndown;
+export const htmlToMD = (html: string) => turndownService.turndown(html);
+export default HTMLToMarkDown;

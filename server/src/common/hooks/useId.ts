@@ -7,11 +7,11 @@ var lastTimeTick: undefined | Number;
 /** 最后一次生成的随机数*/
 var lastRandomNumberTick: undefined | Number;
 
-function id() {
+function useID() {
   /** 时间戳*/
   let timestamp = +new Date() - BaseTime;
   lastRandomNumberTick = timestamp == lastTimeTick ? ++(lastRandomNumberTick as number) : 0;
   lastTimeTick = timestamp;
   return +`${timestamp}${WorkerID}${lastRandomNumberTick}`;
 }
-export default id;
+export default useID;

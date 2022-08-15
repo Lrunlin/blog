@@ -1,21 +1,8 @@
 import type { Context, Next } from "koa";
-import LRU from "lru-cache";
-import Redis from "ioredis";
 import DB from "@/db";
+import Redis from "@/common/utils/redis";
 
-const redisClient = new Redis({
-  host: process.env.DB_REDIS_HOST || "127.0.0.1",
-  port: process.env.DB_REDIS_PORT ? +process.env.DB_REDIS_PORT : 6379,
-  password: process.env.DB_REDIS_PASSWORD,
-  db: 1,
-  // username: process.env.DB_REDIS_USER,
-  retryStrategy: function (times) {
-    return Math.min(times * 50, 5000);
-  },
-});
-const cacheOption = new LRU({
-  max: 5000,
-});
+const redisClient = Redis(2);
 
 /**
  * 缓存文章内容，并且写入阅读历史
@@ -50,4 +37,3 @@ async function cache(ctx: Context, next: Next) {
 }
 
 export default cache;
-// process.env.ENV == "development"?(ctx: Context, next: Next):cache;

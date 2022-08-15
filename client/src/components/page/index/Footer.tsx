@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Dropdown } from "antd";
 import classNames from "classnames";
 import style from "./index.module.scss";
+import {env} from 'process'
 
 let list = [
   [
@@ -26,7 +27,7 @@ let list = [
       辽ICP备2020014377号
     </a>,
   ],
-  [<a>&copy;2022-网络日志</a>],
+  [<a>&copy;2022-{env.SITE_NAME}</a>],
 ];
 
 const Footer = () => {

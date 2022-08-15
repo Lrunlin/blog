@@ -13,7 +13,7 @@ const Error: NextPage = (props: any): JSX.Element => {
       <Head
         title={`${statusCode} | 页面加载错误`}
         description={statusCode + ""}
-        keyword={[statusCode + ""]}
+        keywords={[statusCode + ""]}
       />
       <Header />
       <Result

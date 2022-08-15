@@ -1,10 +1,10 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
+import { htmlToMD } from "@/common/utils/article/get/html-to-markdown";
 
 export interface DraftsAttributes {
   id: number;
   user_id: number;
-  tag?: string;
   title?: string;
   content: string;
   time: Date;
@@ -12,13 +12,12 @@ export interface DraftsAttributes {
 
 export type DraftsPk = "id";
 export type DraftsId = Drafts[DraftsPk];
-export type DraftsOptionalAttributes = "tag" | "title";
+export type DraftsOptionalAttributes = "title";
 export type DraftsCreationAttributes = Optional<DraftsAttributes, DraftsOptionalAttributes>;
 
 export class Drafts extends Model<DraftsAttributes, DraftsCreationAttributes> implements DraftsAttributes {
   id!: number;
   user_id!: number;
-  tag?: string;
   title?: string;
   content!: string;
   time!: Date;
@@ -37,11 +36,6 @@ export class Drafts extends Model<DraftsAttributes, DraftsCreationAttributes> im
       allowNull: false,
       comment: "用户ID"
     },
-    tag: {
-      type: DataTypes.STRING(150),
-      allowNull: true,
-      comment: "文章标签"
-    },
     title: {
       type: DataTypes.STRING(200),
       allowNull: true,
@@ -50,7 +44,11 @@ export class Drafts extends Model<DraftsAttributes, DraftsCreationAttributes> im
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
-      comment: "草稿箱内容"
+      comment: "草稿箱内容",
+      get(){
+        let content=this.getDataValue('content');
+        return htmlToMD(content);
+      }
     },
     time: {
       type: DataTypes.DATE,
