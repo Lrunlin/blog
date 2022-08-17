@@ -1,5 +1,3 @@
-import { useState, Fragment } from "react";
-import { FC } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import { useRouter } from "next/router";

@@ -7,6 +7,7 @@ import ArticleList from "@/components/common/ArticleList";
 import type { response } from "@type/response";
 import type { articleListItemType } from "@type/article-list-item";
 
+/** 文章页面底部的推荐文章*/
 const Recommend = () => {
   let router = useRouter();
   let articleID = router.query.id;

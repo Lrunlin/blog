@@ -1,6 +1,6 @@
 import React, { useState, memo, useEffect } from "react";
 import { Upload, Modal } from "antd";
-import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 import axios from "axios";
 import { target } from "@type/folder";
 import ImgCrop from "antd-img-crop";
@@ -15,6 +15,7 @@ interface PropsType {
     icon_url: string;
     file_name: string;
   };
+  notCrop?: boolean;
 }
 /**
  * 文件上传组件
@@ -69,7 +70,7 @@ const App: React.FC<PropsType> = memo(props => {
       >
         <img alt="预览" className="w-full" src={previewImageSrc} />
       </Modal>
-      <ImgCrop aspect={props.aspect || 1} rotate quality={1}>
+      {props.notCrop ? (
         <Upload
           action={`${axios.defaults.baseURL}/static/${props.target}`}
           listType="picture-card"
@@ -86,7 +87,26 @@ const App: React.FC<PropsType> = memo(props => {
         >
           {fileList.length < 1 && "+ Upload"}
         </Upload>
-      </ImgCrop>
+      ) : (
+        <ImgCrop aspect={props.aspect || 1} rotate quality={1} modalTitle="图片剪裁">
+          <Upload
+            action={`${axios.defaults.baseURL}/static/${props.target}`}
+            listType="picture-card"
+            fileList={fileList}
+            onChange={onChange}
+            onPreview={(file: UploadFile) => setPreviewImageSrc(file.url as string)}
+            onRemove={() => setFileList([])}
+            name="image"
+            accept="image/*"
+            headers={{
+              authorization: localStorage.token,
+            }}
+            maxCount={1}
+          >
+            {fileList.length < 1 && "+ Upload"}
+          </Upload>
+        </ImgCrop>
+      )}
     </>
   );
 });

@@ -25,7 +25,7 @@ let secretKey = process.env.QINIU_SK;
 let bucket = process.env.OSS_NAME;
 
 function verify() {
-  let folderList = ["article", "avatar", "cover", "type", "comment"];
+  let folderList = ["article", "avatar", "cover", "type", "comment", "advertisement"];
   return async (ctx: Context, next: Next) => {
     if (folderList.includes(ctx.params.folder)) {
       await next();

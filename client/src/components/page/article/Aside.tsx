@@ -1,8 +1,9 @@
 import useSWR from "swr";
 import classNames from "classnames";
 import getAdvertisementList from "@/request/advertisement";
+/** 文章页面的右侧推广内容*/
 const Aside = () => {
-  let { data } = useSWR("/advertisement-article", () => getAdvertisementList());
+  let { data } = useSWR("/advertisement-article", () => getAdvertisementList("article"));
   return (
     <>
       <aside>
@@ -15,7 +16,7 @@ const Aside = () => {
               key={item.id}
               className={classNames(["w-60 block relative group cursor-pointer", index && "mt-2"])}
             >
-              <img src={item.cover} alt="推广" className="w-full" />
+              <img src={item.poster_url} alt="推广" className="w-full" />
             </a>
           ))}
       </aside>

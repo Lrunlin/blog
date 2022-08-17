@@ -19,13 +19,9 @@ const Update = () => {
     data: response,
     error,
     isValidating,
-  } = useSwr(
-    [`/article/${id}`],
-    () => axios.get(`/article/${id}?update=md`),
-    {
-      revalidateOnMount: true,
-    },
-  );
+  } = useSwr([`/article/${id}`], () => axios.get(`/article/${id}?update=md`), {
+    revalidateOnMount: true,
+  });
 
   /** 更新文章，提交*/
   function onFinish(values: any) {

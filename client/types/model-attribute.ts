@@ -55,21 +55,21 @@ export interface FollowAttributes {
   time: Date;
 }
 
+type commentUserData = Pick<
+  UserAttributes,
+  "id" | "name" | "auth" | "avatar_file_name" | "avatar_url"
+>;
 export interface CommentAttributes {
   id: number;
   article_id: number;
   user_id: number;
-  user_data: Pick<UserAttributes, "id" | "name" | "auth" | "avatar_file_name" | "avatar_url">;
+  user_data: commentUserData;
   content: string;
-  reply: null;
+  reply: null | {
+    content: string;
+    user_data: Pick<UserAttributes, "id" | "name" | "auth" | "avatar_file_name" | "avatar_url">;
+  };
   comment_pics: string;
   create_time: Date;
-  children: [
-    Omit<CommentAttributes, "children"> & {
-      reply: {
-        content: string;
-        user_data: Pick<UserAttributes, "id" | "name" | "auth" | "avatar_file_name" | "avatar_url">;
-      };
-    }
-  ];
+  children?: CommentAttributes[];
 }
