@@ -47,8 +47,7 @@ const ArticleItem: FC<propsType> = props => {
             href={`/article/${data.id}`}
             target="_blank"
           >
-            {/* {data.title} */}
-            {data.id}
+            {data.title}
           </a>
           <a
             href={`/article/${data.id}`}

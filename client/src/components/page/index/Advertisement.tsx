@@ -26,7 +26,7 @@ const Advertisement: FC<propsType> = props => {
             "w-full",
           ])}
         >
-          <img src={item.cover} alt="推广" className="w-full" />
+          <img src={item.poster_url} alt="推广" className="w-full" />
           <span
             className="text-xl hidden group-hover:block text-slate-400 absolute right-3 top-1 z-10"
             onClick={e => {

@@ -82,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   let reponse = await Promise.all([
     getTypeTreeIndex(),
     getArticleList("/article/list/recommend", 1, "recommend"),
-    getAdvertisementList(),
+    getAdvertisementList("index"),
   ]);
 
   return {

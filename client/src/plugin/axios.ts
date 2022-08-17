@@ -27,7 +27,6 @@ axios.interceptors.request.use(
     // 客户端才修改请求头
     if (typeof window != "undefined") {
       config.headers.authorization = localStorage.token;
-      config.headers.isadmin = true;
     }
     config.headers["Cache-Control"] = "no-cache";
     return config;

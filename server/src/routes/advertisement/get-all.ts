@@ -1,15 +1,23 @@
 import Router from "@koa/router";
-import { v4 } from "uuid";
+import DB from "@/db";
 
 let router = new Router();
+
 router.get("/advertisement", async ctx => {
-  ctx.body = {
-    data: new Array(3).fill(null).map(() => ({
-      id: v4(),
-      url:'blogweb.cn',
-      cover:
-        "https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d76f050f2f6d48f8890e4036ac4fdfb2~tplv-k3u1fbpfcp-no-mark:480:400:0:0.awebp?",
-    })),
-  };
+  let option = ctx.header.isadmin
+    ? {
+        order: [["indexes", "asc"]],
+      }
+    : {
+        where: {
+          position: ["all", ctx.query.position],
+        },
+        order: [["indexes", "asc"]],
+        attributes: ["id", "poster_file_name", "poster_url", "url"],
+      };
+
+  await DB.Advertisement.findAll(option as any).then(rows => {
+    ctx.body = { success: true, message: "查询推广内容", data: rows };
+  });
 });
 export default router;
