@@ -21,7 +21,7 @@ const UserData = () => {
         },
         {
           label: "创作者中心",
-          key: "/creator/home",
+          key: "/creator",
         },
       ]}
     />

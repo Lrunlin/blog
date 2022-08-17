@@ -6,7 +6,7 @@ import moment from "moment";
 let positionMapping = {
   all: "全部",
   article: "文章页面",
-  index: "首页",
+  creator: "创作者中心",
 };
 function Position(position: keyof typeof positionMapping) {
   return positionMapping[position];

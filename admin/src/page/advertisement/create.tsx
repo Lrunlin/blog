@@ -59,9 +59,9 @@ const APP = () => {
         </Item>
         <Item label="显示位置" name="position" required>
           <Select style={{ width: 120 }}>
-            <Option value="all">全部</Option>
             <Option value="index">首页</Option>
             <Option value="article">文章页面</Option>
+            <Option value="creator">创作者中心</Option>
           </Select>
         </Item>
         <Item wrapperCol={{ offset: 2, span: 10 }}>
