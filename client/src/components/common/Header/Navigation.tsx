@@ -1,10 +1,9 @@
 import ActiveLink from "@/components/next/ActiveLink";
-import {env} from 'process'
 
 const Navigation = () => {
   return (
     <nav>
-      <h1 className="hidden">{env.SITE_NAME}</h1>
+      <h1 className="hidden">{process.env.SITE_NAME}</h1>
       <ActiveLink href="/">
         <img src="/favicon.svg" className="h-6" alt="logo" />
       </ActiveLink>

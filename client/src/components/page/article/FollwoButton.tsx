@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Button } from "antd";
-import { useRecoilValue,useSetRecoilState } from "recoil";
-import { modalStateContext } from "@/components/common/Header/User/Sign";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { modalStateContext } from "@/components/common/Header/Sign";
 import useSWR from "swr";
 import axios from "axios";
 import { userDataContext } from "@/store/user-data";
@@ -71,7 +71,7 @@ const FollowButton: FC<propsType> = props => {
           ghost
           type="primary"
           className="rounded text-[#1e80ff] bg-[rgb(30,128,255)]"
-          onClick={() => setModalState('LogIn')}
+          onClick={() => setModalState("LogIn")}
         >
           +关注
         </Button>

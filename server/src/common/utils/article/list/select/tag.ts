@@ -13,9 +13,11 @@ async function setData() {
   data = {};
   let tagList = await DB.Tag.findAll({ attributes: ["id"] });
   tagList.forEach(({ id }) => {
-    DB.Article.findAll({ ...option, where: { tag: { [Op.substring]: id } } }).then(rows => {
-      data[id] = rows.map(item => getTagData(item.toJSON())) as any;
-    });
+    DB.Article.findAll({ ...option, where: { tag: { [Op.substring]: id, },state: 1 } }).then(
+      rows => {
+        data[id] = rows.map(item => getTagData(item.toJSON())) as any;
+      }
+    );
   });
 }
 

@@ -7,7 +7,7 @@ async function getData(id: number) {
       where: { user_id: id },
       attributes: ["id"],
     })
-  ).map(item => DB.Article.findAll({ where: { author: item.id }, ...option }));
+  ).map(item => DB.Article.findAll({ where: { author: item.id, state: 1 }, ...option }));
   return await Promise.all(articleList)
     .then(rows => rows.flat().map(item => getTagData(item.toJSON(), ["name"])))
     .catch(() => []);

@@ -7,8 +7,6 @@ import { Collection as _Collection } from "./collection";
 import type { CollectionAttributes, CollectionCreationAttributes } from "./collection";
 import { Comment as _Comment } from "./comment";
 import type { CommentAttributes, CommentCreationAttributes } from "./comment";
-import { Drafts as _Drafts } from "./drafts";
-import type { DraftsAttributes, DraftsCreationAttributes } from "./drafts";
 import { Follow as _Follow } from "./follow";
 import type { FollowAttributes, FollowCreationAttributes } from "./follow";
 import { Notice as _Notice } from "./notice";
@@ -27,7 +25,6 @@ export {
   _Article as Article,
   _Collection as Collection,
   _Comment as Comment,
-  _Drafts as Drafts,
   _Follow as Follow,
   _Notice as Notice,
   _Tag as Tag,
@@ -45,8 +42,6 @@ export type {
   CollectionCreationAttributes,
   CommentAttributes,
   CommentCreationAttributes,
-  DraftsAttributes,
-  DraftsCreationAttributes,
   FollowAttributes,
   FollowCreationAttributes,
   NoticeAttributes,
@@ -66,7 +61,6 @@ export function initModels(sequelize: Sequelize) {
   const Article = _Article.initModel(sequelize);
   const Collection = _Collection.initModel(sequelize);
   const Comment = _Comment.initModel(sequelize);
-  const Drafts = _Drafts.initModel(sequelize);
   const Follow = _Follow.initModel(sequelize);
   const Notice = _Notice.initModel(sequelize);
   const Tag = _Tag.initModel(sequelize);
@@ -79,7 +73,6 @@ export function initModels(sequelize: Sequelize) {
     Article: Article,
     Collection: Collection,
     Comment: Comment,
-    Drafts: Drafts,
     Follow: Follow,
     Notice: Notice,
     Tag: Tag,

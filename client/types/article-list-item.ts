@@ -8,6 +8,7 @@ type articleListItemType = Pick<
   | "description"
   | "view_count"
   | "cover_url"
+  | "state"
   | "update_time"
   | "create_time"
   | "comment_count"

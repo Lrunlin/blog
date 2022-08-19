@@ -4,13 +4,9 @@ import axios from "axios";
 import ArticleEditor from "@/components/common/ArticleEditor";
 import { useRouter } from "next/router";
 import { message } from "antd";
-import { useResetRecoilState } from "recoil";
-import { writeArticleContext } from "@/components/common/ArticleEditor";
-import { env } from "process";
 
 const Write: NextPage = () => {
   let router = useRouter();
-  let resetArticleData = useResetRecoilState(writeArticleContext);
 
   return (
     <div className="bg-white ">
@@ -18,17 +14,16 @@ const Write: NextPage = () => {
         showDraftsButton={true}
         meta={
           <Head
-            title={`写文章-${env.SITE_NAME}`}
+            title={`写文章-${process.env.SITE_NAME}`}
             description="文章发布"
             keywords={["文章发布", "MarkDown"]}
           />
         }
         submit={values => {
-          axios.post("/article", values).then(res => {
+          axios.post("/article", {...values,state:1}).then(res => {
             if (res.data.success) {
               message.success(res.data.message);
-              router.replace("/creator");
-              resetArticleData();
+              router.replace("/creator/content/article");
             } else {
               message.error(res.data.message);
             }

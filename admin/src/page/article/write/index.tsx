@@ -14,7 +14,7 @@ const Write = () => {
   function onFinish(values: any) {
     setLoad(true);
     axios
-      .post("/article", values)
+      .post("/article", { ...values, state: 1 })
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);

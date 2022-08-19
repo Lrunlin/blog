@@ -9,6 +9,7 @@ const sequelize = new Sequelize(
     dialect: "mysql",
     port: process.env.DB_MYSQL_PORT ? +(process.env.DB_MYSQL_PORT as string) : 3306,
     timezone: "+08:00",
+    // logging: process.env.ENV == "development",
     logging: false, //不打印日志
     pool: {
       max: 5,

@@ -24,10 +24,11 @@ export interface ArticleAttributes {
   cover_file_name?: string;
   cover_url?: string;
   reprint?: string;
+  state:number;
   language: string[] | null;
   view_count?: number;
-  update_time?: Date;
-  create_time: Date;
+  update_time?: string;
+  create_time: string;
   comment_count: number;
   collection_count: number;
 }
@@ -46,7 +47,7 @@ export interface UserAttributes {
   location?: string;
   avatar_file_name?: string;
   avatar_url?: string;
-  create_time: Date;
+  create_time: string;
 }
 export interface FollowAttributes {
   id: number;

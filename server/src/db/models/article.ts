@@ -11,6 +11,7 @@ export interface ArticleAttributes {
   content: string;
   cover_file_name?: string;
   reprint?: string;
+  state: number;
   view_count: number;
   update_time?: Date;
   create_time: Date;
@@ -22,6 +23,7 @@ export type ArticleOptionalAttributes =
   | "description"
   | "cover_file_name"
   | "reprint"
+  | "view_count"
   | "update_time";
 export type ArticleCreationAttributes = Optional<ArticleAttributes, ArticleOptionalAttributes>;
 
@@ -37,9 +39,11 @@ export class Article
   content!: string;
   cover_file_name?: string;
   reprint?: string;
+  state!: number;
   view_count!: number;
   update_time?: Date;
   create_time!: Date;
+
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Article {
     return sequelize.define(
@@ -128,6 +132,11 @@ export class Article
               this.setDataValue("reprint", null as any);
             }
           },
+        },
+        state: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          comment: "文章状态",
         },
         view_count: {
           type: DataTypes.INTEGER,

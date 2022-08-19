@@ -15,10 +15,10 @@ async function setData() {
 
   typeList.forEach(async ({ id: typeID }) => {
     // 该type下有哪些tag
-    let tagIDHub = await (
+    let tagIDHub = await(
       await DB.Tag.findAll({ where: { belong: typeID }, attributes: ["id"] })
     ).map(({ id: tagID }) =>
-      DB.Article.findAll({ ...option, where: { tag: { [Op.substring]: tagID } } })
+      DB.Article.findAll({ ...option, where: { tag: { [Op.substring]: tagID }, state: 1 } })
     );
     Promise.all(tagIDHub).then(articleList => {
       data[typeID] = articleList

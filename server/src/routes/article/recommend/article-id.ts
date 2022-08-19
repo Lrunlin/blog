@@ -6,10 +6,10 @@ import type { TagAttributes, ArticleAttributes } from "@/db/models/init-models";
 
 let router = new Router();
 
-
 // 根据文章ID返回推荐文章
 router.get("/article/recommend/:id", async ctx => {
-  let articleID = ctx.params.id;
+  let articleID = +ctx.params.id;
+
   let articleType = await DB.Article.findByPk(articleID, {
     attributes: ["tag"],
   });
@@ -25,6 +25,7 @@ router.get("/article/recommend/:id", async ctx => {
         tag: {
           [Op.substring]: tag,
         },
+        state: 1,
       },
       include: [
         {

@@ -7,10 +7,13 @@ let data: ArticleAttributes[] = [];
 function setData() {
   DB.Article.findAll({
     ...option,
+    where: {
+      state: 1,
+    },
   }).then(rows => {
     data = rows.map(item => getTagData(item.toJSON(), ["name"])) as unknown as ArticleAttributes[];
   });
-};
+}
 
 setTimeout(() => {
   setData();

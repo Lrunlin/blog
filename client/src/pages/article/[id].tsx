@@ -6,7 +6,6 @@ import Layout from "@/components/page/article/Layout";
 import Head from "@/components/next/Head";
 import FollwoButton from "@/components/page/article/FollwoButton";
 import type { ArticleAttributes } from "@type/model-attribute";
-import { env } from "process";
 
 interface propsType {
   data: ArticleAttributes;
@@ -17,7 +16,12 @@ const Article: NextPage<propsType> = props => {
     <>
       <Head
         title={data.title}
-        keywords={[env.SITE_NAME, "技术文章", "博客社区", ...data.tag.map(item => item.name)]}
+        keywords={[
+          process.env.SITE_NAME,
+          "技术文章",
+          "博客社区",
+          ...data.tag.map(item => item.name),
+        ]}
         description={data.description}
       />
       <Layout>

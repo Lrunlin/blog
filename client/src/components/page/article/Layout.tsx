@@ -12,7 +12,7 @@ interface propsType {
 const Layout: FC<propsType> = props => {
   return (
     <Base className="pb-16">
-      <div className="mr-4  w-full">
+      <div className="mr-4 w-full">
         <article className="p-8 pb-5 bg-white break-all">{props.children}</article>
         <div className="p-8 pb-10 mt-4 bg-white">
           <Comments />

@@ -18,11 +18,13 @@ const MarkDonwEdit: FC = memo(() => {
   let [articleData, setArticleData] = useRecoilState(writeArticleContext);
   const [value, setValue] = useState("");
   let allowChangeValue = useRef(true);
-  
   useEffect(() => {
     if (allowChangeValue.current) {
       allowChangeValue.current = false;
       setValue(articleData.content);
+    }
+    if (articleData.content.length == 0) {
+      setValue("");
     }
   }, [articleData.content]);
 
@@ -35,6 +37,7 @@ const MarkDonwEdit: FC = memo(() => {
           headerIds: false,
         });
         setArticleData(_data => ({ ..._data, content: html }));
+        setValue(md);
       }}
       plugins={[gfm(), LanguageListPlugin() as any, highlight()]}
       uploadImages={async files => {

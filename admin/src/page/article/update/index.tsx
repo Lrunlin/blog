@@ -25,7 +25,7 @@ const Update = () => {
 
   /** 更新文章，提交*/
   function onFinish(values: any) {
-    axios.put(`/article/${id}`, values).then(res => {
+    axios.put(`/article/${id}`, {...values,state:1}).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         mutate(`/article/${id}`);

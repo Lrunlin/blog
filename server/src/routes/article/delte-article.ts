@@ -6,7 +6,8 @@ import sequelize from "@/db/config";
 let router = new Router();
 
 router.delete("/article/:id", auth([0, 1]), async ctx => {
-  let id = ctx.params.id;
+  let id = +ctx.params.id;
+
   try {
     let where: { id: number | string; author?: number } = {
       id: id,
@@ -17,19 +18,19 @@ router.delete("/article/:id", auth([0, 1]), async ctx => {
     const result = await sequelize.transaction(async t => {
       let deleteArticleCount = await DB.Article.destroy({
         where: where,
-        transaction:t,
+        transaction: t,
       });
       await DB.Collection.destroy({
         where: {
           article_id: id,
         },
-        transaction:t
+        transaction: t,
       });
       await DB.Comment.destroy({
         where: {
           article_id: id,
         },
-        transaction:t,
+        transaction: t,
       });
 
       return !!deleteArticleCount;

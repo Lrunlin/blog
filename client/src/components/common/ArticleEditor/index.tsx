@@ -60,6 +60,7 @@ const Editor: FC<propsType> = props => {
           bordered={false}
           className="mr-10 h-full"
           onChange={e => setArticleData(_data => ({ ..._data, title: e.target.value }))}
+          maxLength={50}
         />
         <div className="flex mr-5">
           {props.showDraftsButton && <DraftsButton />}

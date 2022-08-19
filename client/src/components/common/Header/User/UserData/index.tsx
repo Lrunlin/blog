@@ -1,9 +1,8 @@
-import { useState, useRef } from "react";
-import { Dropdown, Avatar, Menu } from "antd";
+import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import useUserData from "@/store/user-data";
-import type { UserAttributes } from "@/store/user-data";
 import { useRouter } from "next/router";
+import Avatar from "../../../Avatar";
+import News from "../../News";
 
 const UserData = () => {
   let router = useRouter();
@@ -26,23 +25,23 @@ const UserData = () => {
       ]}
     />
   );
-  let [userData] = useUserData();
   return (
     <>
-      <div>
+      <div className="flex items-center">
         <Dropdown.Button
           getPopupContainer={() =>
             document.getElementsByClassName("header-dropdown-button-positon")[0] as HTMLElement
           }
           icon={<DownOutlined />}
-          className="mr-8 header-dropdown-button-positon"
+          className="header-dropdown-button-positon"
           type="primary"
           overlay={menu}
           overlayStyle={{ width: "110%" }}
         >
           创作者
         </Dropdown.Button>
-        <Avatar src={userData?.avatar_url}>{userData?.name.slice(0,1).toLocaleUpperCase()}</Avatar>
+        <News className="mx-8" />
+        <Avatar />
       </div>
     </>
   );

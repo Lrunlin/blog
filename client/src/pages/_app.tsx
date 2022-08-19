@@ -11,10 +11,16 @@ moment.locale("zh-cn");
 import { RecoilRoot } from "recoil";
 
 import "@/styles/globals.scss";
+
+import dynamic from "next/dynamic";
+const Sign = dynamic(import("@/components/common/Header/Sign"), { ssr: false });
+
 function MyApp({ Component, pageProps }: AppProps) {
+  
   return (
     <>
       <RecoilRoot>
+        <Sign/>
         <Component {...pageProps} />
       </RecoilRoot>
     </>

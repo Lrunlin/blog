@@ -1,2 +1,8 @@
 User-agent: *
+Allow:*
+Disallow:/article/editor
+Disallow:/creator
+Disallow:/user
+Disallow:/write
+Disallow:/notification
 Sitemap:https://blogweb.cn/sitemap.xml
