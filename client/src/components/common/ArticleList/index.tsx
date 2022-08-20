@@ -4,12 +4,14 @@ import { Skeleton, Divider, Empty } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ArticleItem from "./ArticleItem";
 import classNames from "classnames";
+import type { propsType as itemPropsType } from "./ArticleItem";
 
 interface propsType {
   className?: string;
   list: articleListItemType[];
   total: number;
   loadMoreData: () => void;
+  keyword?: itemPropsType["keyword"];
 }
 
 /**
@@ -33,7 +35,7 @@ const ArticleList: FC<propsType> = props => {
         >
           <ul className="p-0 w-full">
             {list.map(item => (
-              <ArticleItem key={`article-list-${item.id}`} data={item} />
+              <ArticleItem key={`article-list-${item.id}`} data={item} keyword={props.keyword} />
             ))}
           </ul>
         </InfiniteScroll>

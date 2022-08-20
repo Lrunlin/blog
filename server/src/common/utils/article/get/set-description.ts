@@ -1,5 +1,5 @@
 import type { ArticleAttributes } from "@/db/models/article";
-import cheerio from "cheerio";
+import { load } from "cheerio";
 
 /**
  * todo对文章表的description字段进行加工，在没有description时设置为前200的text
@@ -13,7 +13,8 @@ function setDescription(article: ArticleAttributes,length:number=200): ArticleAt
   if (description) {
     return article;
   }
-  let $ = cheerio.load(article.content);
+  
+  let $ = load(article.content);
   $("pre,code,a,table").remove();
   let _description = $("body")
     .text()

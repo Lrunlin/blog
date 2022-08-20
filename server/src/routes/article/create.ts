@@ -5,7 +5,7 @@ import auth from "@/common/middleware/auth";
 import { verifyStateMiddleware, verifyParamsMiddleware } from "@/common/verify/create-article";
 
 let router = new Router();
-router.post("/article", auth([0, 1]), verifyStateMiddleware,verifyParamsMiddleware, async ctx => {
+router.post("/article", auth([0, 1]), verifyStateMiddleware, verifyParamsMiddleware, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, state } = ctx.request.body;
 
   let id = useID();

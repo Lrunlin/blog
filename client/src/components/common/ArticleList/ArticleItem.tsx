@@ -4,9 +4,13 @@ import moment from "moment";
 import style from "./index.module.scss";
 import classNames from "classnames";
 import Image from "next/image";
+import Highlighter from "react-highlight-words";
+import { Image as AntdImage } from "antd";
+import Cover from "./Cover";
 
-interface propsType {
+export interface propsType {
   data: articleListItemType;
+  keyword?: string;
 }
 
 /**
@@ -14,7 +18,7 @@ interface propsType {
  * 传递单个文章数据即可
  */
 const ArticleItem: FC<propsType> = props => {
-  let { data } = props;
+  let { data, keyword } = props;
 
   return (
     <li className="px-5 pt-3 list-none">
@@ -41,30 +45,35 @@ const ArticleItem: FC<propsType> = props => {
         </span>
       </div>
       <div className="flex pb-2">
-        <div className="w-[calc(100%-130px)]">
+        <div className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12"])}>
           <a
             className="font-bold text-lg text-[#1d2129] block"
             href={`/article/${data.id}`}
             target="_blank"
           >
-            {data.title}
+            {keyword ? (
+              <Highlighter
+                highlightClassName="p-0 bg-white text-red-500"
+                searchWords={[keyword]}
+                autoEscape={true}
+                textToHighlight={data.title}
+              />
+            ) : (
+              data.title
+            )}
           </a>
           <a
             href={`/article/${data.id}`}
             className={classNames([
               "text-sm text-[#86909c] block mt-1",
-              data.cover_url ? "line-clamp-2" : "line-clamp-1",
+              data.cover_url ? "line-clamp-2 mr-2" : "line-clamp-1",
             ])}
             target="_blank"
           >
             {data.description}
           </a>
         </div>
-        {data.cover_url && (
-          <div className="w-[120px] h-20 bg-gray-900 overflow-hidden">
-            <img className="w-[120px]" src={data.cover_url} alt={data.title} />
-          </div>
-        )}
+        {data.cover_url && <Cover cover_url={data.cover_url} />}
       </div>
       <div className={classNames(["pb-2", "border-slate-200", "border-b-solid"])}>
         <ul

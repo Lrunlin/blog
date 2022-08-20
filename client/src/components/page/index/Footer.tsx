@@ -52,7 +52,7 @@ const Footer = () => {
               <div className="bg-white w-40 h-52 pt-2 rounded text-center">
                 <div>QQ:1974109227</div>
                 <div>
-                  <Image src="/qq-qrcode.jpg?!@3" width={140} height={140} />
+                  <Image src="/image/qq-qrcode.jpg" width={140} height={140} />
                 </div>
               </div>
             }
@@ -73,7 +73,7 @@ const Footer = () => {
               <div className="bg-white w-40 h-52 pt-2 rounded text-center">
                 <div>添加站长微信</div>
                 <div>
-                  <Image src="/wechat-qrcode.jpg?!@3" width={140} height={140} />
+                  <Image src="/image/wechat-qrcode.jpg" width={140} height={140} />
                 </div>
               </div>
             }

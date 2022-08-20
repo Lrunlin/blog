@@ -13,6 +13,7 @@ const option = {
     "update_time",
     "create_time",
     "tag",
+    "content",
     [
       Sequelize.literal(`(SELECT COUNT(*) FROM comment WHERE comment.article_id = article.id)`),
       "comment_count",

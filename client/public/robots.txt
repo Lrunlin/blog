@@ -2,6 +2,7 @@ User-agent: *
 Allow:*
 Disallow:/article/editor
 Disallow:/creator
+Disallow:/search
 Disallow:/user
 Disallow:/write
 Disallow:/notification

@@ -1,5 +1,4 @@
 import Router from "@koa/router";
-import DB from "@/db";
 import Joi from "joi";
 import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/validator";
