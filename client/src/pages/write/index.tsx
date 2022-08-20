@@ -20,14 +20,19 @@ const Write: NextPage = () => {
           />
         }
         submit={values => {
-          axios.post("/article", {...values,state:1}).then(res => {
-            if (res.data.success) {
-              message.success(res.data.message);
-              router.replace("/creator/content/article");
-            } else {
-              message.error(res.data.message);
-            }
-          });
+          axios
+            .post("/article", { ...values, state: 1 })
+            .then(res => {
+              if (res.data.success) {
+                message.success(res.data.message);
+                router.replace("/creator/content/article");
+              } else {
+                message.error(res.data.message);
+              }
+            })
+            .catch(err => {
+              message.error(err.response?.data?.message);
+            });
         }}
       />
     </div>

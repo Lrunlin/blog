@@ -4,14 +4,16 @@ import { useRouter } from "next/router";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { writeArticleContext } from "./index";
 import axios from "axios";
+import { useSWRConfig } from "swr";
 
 const DraftsButton = () => {
   let { title, description, cover_file_name, reprint, content, tag } =
     useRecoilValue(writeArticleContext);
-  let resetArticleData = useResetRecoilState(writeArticleContext);
 
   let router = useRouter();
+  let { mutate } = useSWRConfig();
 
+  /** 判断按钮是否禁止点击*/
   let isDisabled = useMemo(() => {
     return !/^[\s\S]*.*[^\s][\s\S]*$/.test(title) || title.length > 50 || content.length < 20;
   }, [title, content]);
@@ -34,8 +36,8 @@ const DraftsButton = () => {
       })
       .then(res => {
         if (res.data.success) {
-          resetArticleData();
           message.success(res.data.message);
+          router.push("/creator/content/article");
         } else {
           message.error(res.data.message);
         }
@@ -60,8 +62,8 @@ const DraftsButton = () => {
       })
       .then(res => {
         if (res.data.success) {
-          resetArticleData();
           message.success(res.data.message);
+          mutate(`article-update-${router.query.id}`);
         } else {
           message.error(res.data.message);
         }

@@ -5,14 +5,16 @@ import type { Context, Next } from "koa";
 import validator from "@/common/middleware/validator";
 
 let verifyState = Joi.object({
-  state: Joi.number().custom((value: number, helper) => {
-    let stateList = [0, 1];
-    if (stateList.includes(value)) {
-      return true;
-    } else {
-      return helper.message(new Error("State错误") as any);
-    }
-  }),
+  state: Joi.number()
+    .custom((value: number, helper) => {
+      let stateList = [0, 1];
+      if (stateList.includes(value)) {
+        return true;
+      } else {
+        throw new Error("");
+      }
+    })
+    .error(new Error("State错误")),
 });
 
 const article = Joi.object({
@@ -66,8 +68,6 @@ const article = Joi.object({
   content: Joi.string().min(20).required().error(new Error("文章内容为最短20的HTML字符串")),
 });
 
-
-
 const drafts = Joi.object({
   title: Joi.string().min(1).max(50).required().error(new Error("标题为1-50的字符串")),
   description: Joi.string()
@@ -117,11 +117,6 @@ const drafts = Joi.object({
     }),
   content: Joi.string().min(20).required().error(new Error("文章内容为最短20的HTML字符串")),
 });
-
-
-
-
-
 
 /** 创建文章验证参数的中间件*/
 export const verifyStateMiddleware = validator(verifyState, false, true);

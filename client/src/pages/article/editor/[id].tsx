@@ -6,7 +6,7 @@ import ArticleEditor from "@/components/common/ArticleEditor";
 import { Result, Button, message, Skeleton } from "antd";
 import useSWR from "swr";
 import axios from "axios";
-import {  useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { writeArticleContext } from "@/components/common/ArticleEditor";
 
 interface propsType {
@@ -14,10 +14,11 @@ interface propsType {
 }
 const Write: NextPage<propsType> = props => {
   let router = useRouter();
+
   let [articleData, setArticleData] = useRecoilState(writeArticleContext);
   const [isValidating, setIsValidating] = useState(true);
 
-  let { data, error ,mutate} = useSWR(`article-update`, () =>
+  let { data, error, mutate } = useSWR(`article-update-${props}`, () =>
     axios.get(`/article/${props.id}?update=md`).then(res => res.data.data)
   );
 
@@ -52,18 +53,23 @@ const Write: NextPage<propsType> = props => {
             />
           }
           submit={values => {
-            axios.put("/article", { ...values, state: 1 }).then(res => {
-              if (res.data.success) {
-                message.success(res.data.message);
-                mutate();
-              } else {
-                message.error(res.data.message);
-              }
-            });
+            axios
+              .put(`/article/${props.id}`, { ...values, state: 1 })
+              .then(res => {
+                if (res.data.success) {
+                  message.success(res.data.message);
+                  mutate();
+                } else {
+                  message.error(res.data.message);
+                }
+              })
+              .catch(err => {
+                message.error(err.response?.data?.message);
+              });
           }}
         />
       )}
-      {isValidating && <Skeleton paragraph={{rows:4}} />}
+      {isValidating && <Skeleton paragraph={{ rows: 4 }} />}
       {error && (
         <Result
           status="error"

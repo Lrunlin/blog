@@ -5,14 +5,16 @@ import type { Context, Next } from "koa";
 import validator from "@/common/middleware/validator";
 
 let verifyState = Joi.object({
-  state: Joi.number().custom((value: number, helper) => {
-    let stateList = [0, 1];
-    if (stateList.includes(value)) {
-      return true;
-    } else {
-      return helper.message(new Error("State错误") as any);
-    }
-  }),
+  state: Joi.number()
+    .custom((value: number, helper) => {
+      let stateList = [0, 1];
+      if (stateList.includes(value)) {
+        return true;
+      } else {
+        throw new Error("");
+      }
+    })
+    .error(new Error("State错误")),
 });
 
 /** 验证文章*/
@@ -123,5 +125,5 @@ let drafts = Joi.object({
 /** 创建文章验证参数的中间件*/
 export const verifyStateMiddleware = validator(verifyState, false, true);
 export const verifyParamsMiddleware = async (ctx: Context, next: Next) => {
-   return await validator(ctx.request.body.state == 1 ? article : drafts)(ctx, next);
+  return await validator(ctx.request.body.state == 1 ? article : drafts)(ctx, next);
 };
