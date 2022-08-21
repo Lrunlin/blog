@@ -9,7 +9,7 @@ declare module "bytemd/lib/locales/*" {
 namespace NodeJS {
   interface ProcessEnv {
     /** 环境*/
-    NEXT_PUBLIC_ENV: "development" | "production";
+    NODE_ENV: "development" | "production";
     /** 网站名称*/
     NEXT_PUBLIC_SITE_NAME: string;
     /** API接口地址*/
