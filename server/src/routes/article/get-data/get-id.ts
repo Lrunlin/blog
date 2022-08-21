@@ -6,6 +6,7 @@ import HTMLToMarkDown from "@/common/utils/article/get/html-to-markdown";
 import getCodeBlockLanguage from "@/common/utils/article/get/get-code-block-language";
 import imgPrefix from "@/common/utils/article/get/img-add-prefix";
 import getTagData from "@/common/utils/article/get/get-tag-data";
+import Sequelize from "@/db/config";
 
 let router = new Router();
 
@@ -21,6 +22,29 @@ router.get("/article/:id", cache, async ctx => {
       },
     ],
     attributes: {
+      include: [
+        "id",
+        "title",
+        "description",
+        "cover_file_name",
+        "cover_url",
+        "state",
+        "create_time",
+        "tag",
+        "content",
+        "view_count",
+        "update_time",
+        [
+          Sequelize.literal(`(SELECT COUNT(*) FROM comment WHERE comment.article_id = article.id)`),
+          "comment_count",
+        ],
+        [
+          Sequelize.literal(
+            `(SELECT COUNT(*) FROM collection WHERE collection.article_id = article.id)`
+          ),
+          "collection_count",
+        ],
+      ],
       exclude: ["author"],
     },
   })

@@ -9,7 +9,7 @@ const Comments = () => {
   let setModalState = useSetRecoilState(modalStateContext);
   return (
     <>
-      <div className="text-xl font-black mb-4">评论</div>
+      <div className="text-xl font-black mb-4" id="comment">评论</div>
       <div>
         {userData ? (
           <Editor id="comment" />

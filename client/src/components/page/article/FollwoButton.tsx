@@ -11,8 +11,9 @@ import type { FollowAttributes } from "@type/model-attribute";
 interface propsType {
   bloggerID: FollowAttributes["blogger_id"];
 }
-
 const SwitchButton: FC<propsType> = props => {
+  let userData = useRecoilValue(userDataContext);
+
   let { data, error, mutate } = useSWR("follow-user-state", () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
@@ -35,7 +36,7 @@ const SwitchButton: FC<propsType> = props => {
               ghost
               type="primary"
               className="rounded text-[#1e80ff] bg-[rgb(30,128,255)]"
-              onClick={follow}
+              onClick={() => (userData?.id != props.bloggerID ? follow() : () => {})}
             >
               +关注
             </Button>

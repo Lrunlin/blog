@@ -7,6 +7,11 @@ let router = new Router();
 router.post("/follow/:bogger_id", auth([0, 1]), async ctx => {
   let boggerID = +ctx.params.bogger_id;
 
+  if (boggerID==ctx.id) {
+    ctx.body = { success: false, message: "不能关注自己！！！" };
+    return;
+  }
+
   let blogger = await DB.User.findOne({ where: { id: boggerID }, attributes: ["state"] });
   if (!blogger) {
     ctx.body = { success: false, message: "没有找到对应的博主" };

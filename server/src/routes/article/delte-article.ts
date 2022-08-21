@@ -42,6 +42,7 @@ router.delete("/article/:id", auth([0, 1]), async ctx => {
   } catch (error) {
     //回滚
     ctx.body = { success: false, message: `删除失败` };
+    console.log(error);
   }
 });
 export default router;

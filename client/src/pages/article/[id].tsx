@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import type { GetServerSideProps, NextPage } from "next";
+import { atom, useSetRecoilState, useResetRecoilState } from "recoil";
 import { Avatar } from "antd";
 import axios from "axios";
 import moment from "moment";
@@ -10,8 +12,21 @@ import type { ArticleAttributes } from "@type/model-attribute";
 interface propsType {
   data: ArticleAttributes;
 }
+export const currentArticleDataContext = atom<ArticleAttributes>({
+  key: "current-article-data",
+  default: {} as ArticleAttributes,
+});
 const Article: NextPage<propsType> = props => {
   let { data } = props;
+  let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
+  let resetCurrentArticleData = useResetRecoilState(currentArticleDataContext);
+  useEffect(() => {
+    setCurrentArticleData(data);
+    return () => {
+      resetCurrentArticleData();
+    };
+  }, [data]);
+
   return (
     <>
       <Head
