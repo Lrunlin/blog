@@ -3,16 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NEXT_PUBLIC_ENV=development next dev -p 5678",
-    "dev:cache": "cross-env NEXT_PUBLIC_ENV=development nodemon server.js",
-    "build": "cross-env NEXT_PUBLIC_ENV=production next build",
-    "build:test": "cross-env NEXT_PUBLIC_ENV=development next build",
-    "start": "cross-env NEXT_PUBLIC_ENV=production nodemon server.js",
-    "start:no-cache": "cross-env NEXT_PUBLIC_ENV=production next start -p 5678",
-    "start:test": "cross-env NEXT_PUBLIC_ENV=development next start -p 5678",
-    "analyze": "cross-env ANALYZE=true next build",
-    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
-    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
+    "dev": "next dev -p 5678",
+    "dev:cache": "nodemon server.js",
+    "build": "next build",
+    "start": "nodemon server.js",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@bytemd/plugin-gfm": "^1.17.2",

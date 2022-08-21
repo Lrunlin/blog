@@ -21,7 +21,7 @@ module.exports = withBundleAnalyzer({
     return config;
   },
   // CDN地址
-  assetPrefix: env.NEXT_PUBLIC_ENV == 'production' ? 'https://cdn.blogweb.cn' : '',
+  assetPrefix: env.NODE_ENV == 'production' ? env.CDN : undefined,
   // 设置缓存
   async headers() {
     return [{
@@ -29,11 +29,8 @@ module.exports = withBundleAnalyzer({
       locale: false,
       headers: [{
         key: 'Cache-Control',
-        value: env.NEXT_PUBLIC_ENV == 'production'?'public, max-age=9999999999, must-revalidate':'public, max-age=0, must-revalidate',
+        value: env.NODE_ENV == 'production'?'public, max-age=9999999999, must-revalidate':'public, max-age=0, must-revalidate',
       }],
     }, ]
-  },
-  env: {
-    SITE_NAME:'网络日志'
   },
 })

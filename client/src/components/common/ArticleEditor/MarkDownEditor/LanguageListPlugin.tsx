@@ -1,14 +1,14 @@
-import { useState, Fragment } from "react";
-import { Modal, message, Select } from "antd";
+import { Modal, Select } from "antd";
 import axios from "axios";
-let data: any[] = [];
-axios.get("/language-list").then(res => {
-  data = res.data.data;
-});
+import useSwr from "swr";
+
 const { confirm } = Modal;
 const { Option } = Select;
-
 const LanguageListPlugin = () => {
+  let { data } = useSwr("language-list", () =>
+    axios.get("/language-list").then(res => res.data.data)
+  );
+
   return {
     actions: [
       {
@@ -29,7 +29,7 @@ const LanguageListPlugin = () => {
                     Modal.destroyAll();
                   }}
                 >
-                  {data.map(item => (
+                  {data.map((item: any) => (
                     <Option value={item.language} key={item.language + item.title}>
                       <em>
                         {item.title}-{item.language}

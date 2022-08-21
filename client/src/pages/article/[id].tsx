@@ -17,7 +17,7 @@ const Article: NextPage<propsType> = props => {
       <Head
         title={data.title}
         keywords={[
-          process.env.SITE_NAME,
+          process.env.NEXT_PUBLIC_SITE_NAME,
           "技术文章",
           "博客社区",
           ...data.tag.map(item => item.name),

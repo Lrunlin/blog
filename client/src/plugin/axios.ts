@@ -1,8 +1,7 @@
 import axios from "axios";
-axios.defaults.baseURL =
-  process.env.NEXT_PUBLIC_ENV == "development"
-    ? "http://localhost:3000"
-    : "https://api.blogweb.cn/";
+
+
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_HOST;
 
 const ErrorCodeMessage = {
   200: "服务器成功返回请求的数据。",

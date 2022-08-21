@@ -11,6 +11,16 @@ namespace NodeJS {
     /** 环境*/
     NEXT_PUBLIC_ENV: "development" | "production";
     /** 网站名称*/
-    SITE_NAME: string;
+    NEXT_PUBLIC_SITE_NAME: string;
+    /** API接口地址*/
+    NEXT_PUBLIC_API_HOST: string;
+    /** CDN*/
+    NEXT_PUBLIC_CDN: string;
+    /** Redis用户名*/
+    NEXT_PUBLIC_DB_REDIS_USER: string;
+    /** Redis端口号*/
+    NEXT_PUBLIC_DB_REDIS_PORT: number;
+    /** Redis密码*/
+    NEXT_PUBLIC_DB_REDIS_PASSWORD: string | number;
   }
 }

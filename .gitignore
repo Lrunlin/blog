@@ -8,3 +8,5 @@ dist
 
 **/env/**/development/**
 **/env/**/production/**
+
+client/.env.production

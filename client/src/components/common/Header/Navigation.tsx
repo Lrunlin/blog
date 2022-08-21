@@ -3,7 +3,7 @@ import ActiveLink from "@/components/next/ActiveLink";
 const Navigation = () => {
   return (
     <nav>
-      <h1 className="hidden">{process.env.SITE_NAME}</h1>
+      <h1 className="hidden">{process.env.NEXT_PUBLIC_SITE_NAME}</h1>
       <ActiveLink href="/">
         <img src="/favicon.svg" className="h-6" alt="logo" />
       </ActiveLink>

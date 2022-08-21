@@ -26,7 +26,7 @@ let list = [
       辽ICP备2020014377号
     </a>,
   ],
-  [<a>&copy;2022-{process.env.SITE_NAME}</a>],
+  [<a>&copy;2022-{process.env.NEXT_PUBLIC_SITE_NAME}</a>],
 ];
 
 const Footer = () => {

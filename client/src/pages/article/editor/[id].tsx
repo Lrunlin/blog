@@ -47,7 +47,7 @@ const Write: NextPage<propsType> = props => {
           showDraftsButton={data.state == 0}
           meta={
             <Head
-              title={`写文章-${process.env.SITE_NAME}`}
+              title={`写文章-${process.env.NEXT_PUBLIC_SITE_NAME}`}
               description="文章发布"
               keywords={["文章发布", "MarkDown"]}
             />

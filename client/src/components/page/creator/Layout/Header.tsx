@@ -14,7 +14,7 @@ const Header = () => {
             <div className="flex items-center">
               <Image src="/favicon.svg" height={28} width={28} />
               <span className="ml-5 text-xl font-medium text-blue-400">
-                {process.env.SITE_NAME}
+                {process.env.NEXT_PUBLIC_SITE_NAME}
               </span>
             </div>
           </Link>
