@@ -1,15 +1,23 @@
-/** @type {import('next').NextConfig} */
 const webpack = require("webpack");
 const path = require("path");
 const { env } = require("process");
-const envObject=require('./env/index')
+const envObject = require("./env/index");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-module.exports = withBundleAnalyzer({
-  legacyBrowsers: false, //不兼容过时浏览器
-  browsersListForSwc: true,
+
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  pageExtensions: ["tsx"],
+  experimental: {
+    plugins: true,
+    scrollRestoration: true,
+    legacyBrowsers: false,
+    browsersListForSwc: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -21,7 +29,7 @@ module.exports = withBundleAnalyzer({
     return config;
   },
   // CDN地址
-  assetPrefix: env.CND,
+  assetPrefix: env.CDN,
   // 设置缓存
   async headers() {
     return [
@@ -41,4 +49,5 @@ module.exports = withBundleAnalyzer({
     ];
   },
   env: envObject,
-});
+};
+module.exports = withBundleAnalyzer(nextConfig);

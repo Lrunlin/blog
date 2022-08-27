@@ -2,7 +2,7 @@ module.exports = {
   plugins: {
     tailwindcss: {},
     // autoprefixer: {},//自动前缀
-      ...(process.env.NEXT_PUBLIC_ENV === 'production' ? {
+      ...(process.env.NODE_ENV === 'production' ? {
         cssnano: {}
       } : {})
   },

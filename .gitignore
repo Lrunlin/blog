@@ -9,4 +9,4 @@ dist
 **/env/**/development/**
 **/env/**/production/**
 
-client/.env.production
+client/env/.env.production
