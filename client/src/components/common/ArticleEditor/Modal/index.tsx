@@ -53,6 +53,7 @@ const Modal: FC<modalPropsType> = props => {
             ]}
             children={<div></div>}
           />
+
           <Item
             label="标签"
             required
@@ -65,7 +66,11 @@ const Modal: FC<modalPropsType> = props => {
           >
             <Type />
           </Item>
-          <Item label="封面" name="cover_file_name">
+          <Item
+            label="封面"
+            name="cover_file_name"
+            rules={[{ min: 15, max: 50, message: "封面文件错误" }]}
+          >
             <Cover />
           </Item>
           <Item

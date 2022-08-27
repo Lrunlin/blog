@@ -27,7 +27,7 @@ app.use(cors());
 import getAllRouter from "@/common/modules/getAllRouter";
 (async () => {
   let Routers = await getAllRouter();
-  let routeCount=0;
+  let routeCount = 0;
   Routers.forEach((item, index) => {
     import(item).then(_route => {
       if (_route.default.routes()) {

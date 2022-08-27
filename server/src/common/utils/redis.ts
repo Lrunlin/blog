@@ -5,7 +5,7 @@ const Redis = (db: number) => {
     host: process.env.DB_REDIS_HOST || "127.0.0.1",
     port: process.env.DB_REDIS_PORT ? +process.env.DB_REDIS_PORT : 6379,
     password: process.env.DB_REDIS_PASSWORD,
-    db: 2,
+    db:db,
     // username: process.env.DB_REDIS_USER,
     retryStrategy: function (times) {
       return Math.min(times * 50, 5000);

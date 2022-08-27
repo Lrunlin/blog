@@ -25,7 +25,7 @@ let secretKey = process.env.QINIU_SK;
 let bucket = process.env.OSS_NAME;
 
 function verify() {
-  let folderList = ["article", "avatar", "cover", "type", "comment", "advertisement"];
+  const folderList = ["article", "avatar", "cover", "type", "comment", "advertisement"];
   return async (ctx: Context, next: Next) => {
     if (folderList.includes(ctx.params.folder)) {
       await next();
@@ -48,23 +48,22 @@ router.post("/static/:folder", auth([0, 1]), verify(), upload.single("image"), a
   let uploadToken = putPolicy.uploadToken(mac);
 
   let buffer = ctx.file.buffer;
-  let fileName = `${ctx.params.folder}/${v4().replace(/-/g, "")}.webp`;
 
-  var formUploader = new qiniu.form_up.FormUploader(config);
-  var putExtra = new qiniu.form_up.PutExtra();
+  const mimetype = ctx.file.mimetype == "image/gif" ? "gif" : "webp";
+  let fileName = `${ctx.params.folder}/${v4().replace(/-/g, "")}.${mimetype}`;
+
+  let formUploader = new qiniu.form_up.FormUploader(config);
+  let putExtra = new qiniu.form_up.PutExtra();
 
   await sync(resolve => {
-    sharp(buffer)
-      .webp({
-        quality: 90,
-        lossless: true,
-      })
+    sharp(buffer, { animated: true })
+      [mimetype]()
       .toBuffer()
       .then(data => {
         formUploader.put(
           uploadToken,
           fileName,
-          data, //压缩后的buffer
+          data, //处理后的buffer
           putExtra,
           function (respErr, respBody, respInfo) {
             if (respErr) {

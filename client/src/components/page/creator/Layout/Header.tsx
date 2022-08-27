@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <div className="w-full h-16">
       <header className="w-full h-16 fixed z-10 bg-white border-slate-100 border-b-solid">
-        <div className="max-w-[1440px] h-full mx-auto flex justify-between items-center px-6">
+        <div className="max-w-[1440px] h-full mx-auto flex justify-between items-center px-6 cursor-pointer">
           <Link href="/" className="flex items-center">
             <div className="flex items-center">
               <Image src="/favicon.svg" height={28} width={28} />

@@ -60,10 +60,7 @@ router.get("/article/list/page/:page", validator(schema), async ctx => {
     where: where,
     offset: (page - 1) * 20,
     limit: 20,
-    order: [
-      ["update_time", "desc"],
-      ["create_time", "desc"],
-    ],
+    order: [["create_time", "desc"]],
     attributes:
       ctx.request.body.state != 0 ? attributes.concat(articleAttribute as any) : attributes,
     include: [

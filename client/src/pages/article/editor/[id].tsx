@@ -74,11 +74,11 @@ const Write: NextPage<propsType> = props => {
         <Result
           status="error"
           title="文章查找错误"
-          extra={[
+          extra={
             <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
               回到内容管理
-            </Button>,
-          ]}
+            </Button>
+          }
         />
       )}
     </div>

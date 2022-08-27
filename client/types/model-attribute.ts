@@ -24,7 +24,7 @@ export interface ArticleAttributes {
   cover_file_name?: string;
   cover_url?: string;
   reprint?: string;
-  state:number;
+  state: number;
   language: string[] | null;
   view_count?: number;
   update_time?: string;
@@ -47,6 +47,12 @@ export interface UserAttributes {
   location?: string;
   avatar_file_name?: string;
   avatar_url?: string;
+  article_count: number;
+  collection_count: number;
+  /** 被多少人关注*/
+  follower_count: number;
+  /** 关注了多少人*/
+  followee_count: number;
   create_time: string;
 }
 export interface FollowAttributes {

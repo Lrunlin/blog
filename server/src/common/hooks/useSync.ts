@@ -1,8 +1,3 @@
-interface ResponsrType {
-  code: number;
-  msg: string;
-  data: any;
-}
 /**
  * 使用await Promise来解决Koa的坑
  * @parmas callback {function} 执行带有回调函数的函数

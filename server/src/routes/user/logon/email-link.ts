@@ -16,7 +16,7 @@ const schema = Joi.object({
   name: Joi.string().min(1).max(12).required().error(new Error("昵称为1-12的字符串")),
   password: Joi.string()
     .min(1)
-    .max(50)
+    .max(16)
     .required()
     .pattern(/^[a-zA-Z0-9_]{8,16}$/)
     .error(new Error("密码由8-16位的数字、字母或者下划线组成")),

@@ -39,7 +39,7 @@ const Logon = () => {
         <Form.Item
           name="name"
           rules={[
-            { required: true, message: "请确认密码" },
+            { required: true, message: "请填写用户昵称" },
             { min: 1, max: 12, message: "昵称长度在1-12之间" },
           ]}
         >
@@ -49,7 +49,7 @@ const Logon = () => {
         <Form.Item
           name="password"
           rules={[
-            { required: true, message: "请输入正确密码" },
+            { required: true, message: "请输入初始密码" },
             { min: 8, max: 16, message: "密码长度在8-16之间" },
             {
               pattern: new RegExp(/^[a-zA-Z0-9_]{8,16}$/),
