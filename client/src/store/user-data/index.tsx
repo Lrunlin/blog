@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { atom, useRecoilState } from "recoil";
 import { UserAttributes } from "@type/model-attribute";
-export type { UserAttributes };
+
+export type UserStateAttributes = Pick<UserAttributes,'id'|'name'|'auth'|"avatar_file_name"|"avatar_url">;
 
 export const userDataContext = atom<UserAttributes | null>({
   key: "user-data",
@@ -27,7 +28,7 @@ function useUserData() {
   useEffect(() => {
     refreshUserData();
   }, []);
-  return [userData, refreshUserData] as [UserAttributes | null, () => void];
+  return [userData, refreshUserData] as [UserStateAttributes | null, () => void];
 }
 
 export default useUserData;

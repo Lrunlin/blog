@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 const Notification: NextPage = () => {
   return (
     <>
-      <div></div>
+      <div>信息展示页面</div>
     </>
   );
 };

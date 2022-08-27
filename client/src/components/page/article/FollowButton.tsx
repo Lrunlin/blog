@@ -14,7 +14,7 @@ interface propsType {
 const SwitchButton: FC<propsType> = props => {
   let userData = useRecoilValue(userDataContext);
 
-  let { data, error, mutate } = useSWR("follow-user-state", () =>
+  let { data, error, mutate } = useSWR(`follow-user-state-${props.bloggerID}`, () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
   function follow() {

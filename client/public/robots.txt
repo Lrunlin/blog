@@ -1,9 +1,19 @@
 User-agent: *
 Allow:*
+# 文章修改
 Disallow:/article/editor
+# 开发者中心
 Disallow:/creator
+# 文章搜索
 Disallow:/search
+# 用户信息
 Disallow:/user
+# 文章发布
 Disallow:/write
+# 消息提示
 Disallow:/notification
+# oauth登录重定向
+Disallow:/oauth
+# 部分链接的结果展示
+Disallow:/result
 Sitemap:https://blogweb.cn/sitemap.xml

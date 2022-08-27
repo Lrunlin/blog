@@ -15,12 +15,14 @@ namespace NodeJS {
     /** API接口地址*/
     NEXT_PUBLIC_API_HOST: string;
     /** CDN*/
-    NEXT_PUBLIC_CDN: string;
+    CDN: string;
     /** Redis用户名*/
-    NEXT_PUBLIC_DB_REDIS_USER: string;
+    REDIS_USER: string;
     /** Redis端口号*/
-    NEXT_PUBLIC_DB_REDIS_PORT: number;
+    REDIS_PORT: number;
     /** Redis密码*/
-    NEXT_PUBLIC_DB_REDIS_PASSWORD: string | number;
+    REDIS_PASSWORD: string | number;
+    /** GitHub的ClientID用来登录*/
+    NEXT_PUBLIC_GITHUB_CLIENT_ID: string;
   }
 }

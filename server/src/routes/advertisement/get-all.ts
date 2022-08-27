@@ -10,7 +10,7 @@ router.get("/advertisement", async ctx => {
       }
     : {
         where: {
-          position: ["all", ctx.query.position],
+          position: ctx.query.position,
         },
         order: [["indexes", "asc"]],
         attributes: ["id", "poster_file_name", "poster_url", "url"],

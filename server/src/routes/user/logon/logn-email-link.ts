@@ -13,14 +13,16 @@ const schema = Joi.object({
 });
 
 router.get("/logon/email", validator(schema), async ctx => {
-  function response(success: boolean, message: string | string[], token?: string) {
+  function response(success: boolean, title: string, message?: string | string[], token?: string) {
     let query = qs.stringify({
-      success: success,
-      message: message,
-      token: token,
+      success,
+      title,
+      message,
+      href:'/',
+      token,
     });
     ctx.status = 302;
-    ctx.redirect(`${process.env.CLIENT_HOST}/logon?${query}`);
+    ctx.redirect(`${process.env.CLIENT_HOST}/result?${query}`);
   }
 
   let key = ctx.query.key;
@@ -33,8 +35,7 @@ router.get("/logon/email", validator(schema), async ctx => {
 
   // 携带了key但是缓存中没有找到
   if (!cache.has(key)) {
-    response(false, [
-      "您的链接错误",
+    response(false, "您的链接错误", [
       "链接有效期15分钟请返回注册窗口重新发送链接",
       "链接在注册成功后会直接销毁",
     ]);
@@ -50,10 +51,10 @@ router.get("/logon/email", validator(schema), async ctx => {
   let { email, name, password } = cache.get(key) as userDataType;
 
   //   判断是否已经注册了
-  let { count, rows } = await DB.User.findAndCountAll({ where: { email: email } });
+  let { count } = await DB.User.findAndCountAll({ where: { email: email } });
   if (count) {
-    response(false, [
-      `您的邮箱:${rows[0].email}已注册`,
+    response(false, "激活失败", [
+      `您的邮箱:${email}已注册`,
       "请打开登录窗口进行登录",
       "如果您忘记了密码请打开相应窗口发送激活链接",
     ]);
@@ -79,11 +80,11 @@ router.get("/logon/email", validator(schema), async ctx => {
         process.env.KEY as string,
         { expiresIn: "365d" }
       );
-      response(true, [`注册成功`, "点击按钮刷新登录状态"], token);
+      response(true, "注册成功", "", token);
       removeUserData(email);
     })
     .catch(err => {
-      response(false, [`注册失败`, "服务器注册错误"]);
+      response(false, `注册失败`, "服务器注册错误");
       console.log(err);
     });
 });

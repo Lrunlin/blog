@@ -1,4 +1,4 @@
-import Head from "next/head";
+import HeadComponent from "next/head";
 import type { FunctionComponent } from "react";
 interface props {
   title?: string;
@@ -8,10 +8,10 @@ interface props {
 }
 
 /**Head组件封装 title keywords  description children*/
-const HeadComponent: FunctionComponent<props> = props => {
+const Head: FunctionComponent<props> = props => {
   let { title, description, keywords } = props;
   return (
-    <Head>
+    <HeadComponent>
       {title && <title>{title}</title>}
       <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
       {description && <meta name="description" content={description} />}
@@ -20,8 +20,8 @@ const HeadComponent: FunctionComponent<props> = props => {
       )}
       <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       {props.children}
-    </Head>
+    </HeadComponent>
   );
 };
 
-export default HeadComponent;
+export default Head;

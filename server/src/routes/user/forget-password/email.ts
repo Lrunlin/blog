@@ -12,17 +12,17 @@ let router = new Router();
 
 router.post("/forget-password/email/:email", validator(schema, true), async ctx => {
   let email = ctx.params.email;
-  let { count, rows } = await DB.User.findAndCountAll({
+  let row = await DB.User.findOne({
     where: { email: email },
     attributes: ["email", "password"],
   });
-  if (!count) {
+  if (!row?.email) {
     ctx.body = { success: false, message: "账号不存在" };
     return;
   }
 
   let content = `
-<div>邮箱:${email}，密码:${rows[0].password}</div>
+<div>邮箱:${email}，密码:${row.password}</div>
 `;
 
   await sendEmail({

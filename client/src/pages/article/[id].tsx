@@ -6,7 +6,7 @@ import axios from "axios";
 import moment from "moment";
 import Layout from "@/components/page/article/Layout";
 import Head from "@/components/next/Head";
-import FollwoButton from "@/components/page/article/FollwoButton";
+import FollwoButton from "@/components/page/article/FollowButton";
 import type { ArticleAttributes } from "@type/model-attribute";
 
 interface propsType {

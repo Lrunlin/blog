@@ -5,7 +5,6 @@ import style from "./index.module.scss";
 import classNames from "classnames";
 import Image from "next/image";
 import Highlighter from "react-highlight-words";
-import { Image as AntdImage } from "antd";
 import Cover from "./Cover";
 
 export interface propsType {
@@ -38,6 +37,7 @@ const ArticleItem: FC<propsType> = props => {
               key={`tag${data.id}${item.name}`}
               href={`/tag/${item.name}`}
               target="_blank"
+              
             >
               {item.name}
             </a>

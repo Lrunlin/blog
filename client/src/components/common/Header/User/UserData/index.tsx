@@ -37,6 +37,7 @@ const UserData = () => {
           type="primary"
           overlay={menu}
           overlayStyle={{ width: "110%" }}
+          onClick={() => router.push("/creator")}
         >
           创作者
         </Dropdown.Button>

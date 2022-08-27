@@ -5,7 +5,7 @@ export interface CollectionAttributes {
   id: number;
   article_id: number;
   user_id: number;
-  time: Date;
+  create_time: Date;
 }
 
 export type CollectionPk = "id";
@@ -16,7 +16,7 @@ export class Collection extends Model<CollectionAttributes, CollectionCreationAt
   id!: number;
   article_id!: number;
   user_id!: number;
-  time!: Date;
+  create_time!: Date;
 
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Collection {
@@ -37,7 +37,7 @@ export class Collection extends Model<CollectionAttributes, CollectionCreationAt
       allowNull: false,
       comment: "用户ID"
     },
-    time: {
+    create_time: {
       type: DataTypes.DATE,
       allowNull: false,
       comment: "收藏时间"

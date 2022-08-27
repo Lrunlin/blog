@@ -11,7 +11,17 @@ router.get("/user/info", async ctx => {
 
   try {
     let { id } = jwt.verify(token + "", process.env.KEY as string) as payLoadType;
-    await DB.User.findByPk(id, { attributes: { exclude: ["password"] } })
+    await DB.User.findByPk(id, {
+      attributes: {
+        include: [
+          "id",
+          "name",
+          "auth",
+          "avatar_file_name",
+          "avatar_url",
+        ],
+      },
+    })
       .then(row => {
         if (!row) {
           ctx.body = { success: false, messgae: "没有查询到用户信息" };

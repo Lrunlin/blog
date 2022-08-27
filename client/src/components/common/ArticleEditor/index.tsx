@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Button, Input, Avatar, Dropdown, Result } from "antd";
 import MarkDonwEdit from "./MarkDownEditor";
-import { userDataContext, UserAttributes } from "@/store/user-data";
+import { userDataContext, UserStateAttributes } from "@/store/user-data";
 import { atom, useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
 import Modal from "./Modal";
 import DraftsButton from "./DraftsButton";
@@ -41,14 +41,14 @@ interface propsType {
 }
 export type modalPropsType = Pick<propsType, "submit">;
 const Editor: FC<propsType> = props => {
-  let userData = useRecoilValue(userDataContext) as UserAttributes;
+  let userData = useRecoilValue(userDataContext) as UserStateAttributes;
   let [articleData, setArticleData] = useRecoilState(writeArticleContext);
   let resetArticleData = useResetRecoilState(writeArticleContext);
   useEffect(() => {
     return () => {
       resetArticleData();
     };
-  }, []);
+  }, [resetArticleData]);
 
   return userData ? (
     <div className="w-full">

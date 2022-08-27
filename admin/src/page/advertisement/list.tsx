@@ -4,7 +4,7 @@ import { Skeleton, Result, Table, Image, Button } from "antd";
 import { useNavigate } from "react-router";
 import moment from "moment";
 let positionMapping = {
-  all: "全部",
+  index: "首页",
   article: "文章页面",
   creator: "创作者中心",
 };

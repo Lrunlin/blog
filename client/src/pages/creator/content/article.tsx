@@ -7,7 +7,7 @@ const { TabPane } = Tabs;
 // 创作者中心-内容管理-文章管理
 const ContentArticle = () => {
   return (
-    <Layout>
+    <Layout className="p-4 bg-white">
       <Tabs defaultActiveKey="1">
         <TabPane tab="文章" key="1" forceRender={true}>
           <ArticleList state={1} />

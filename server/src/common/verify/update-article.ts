@@ -5,16 +5,7 @@ import type { Context, Next } from "koa";
 import validator from "@/common/middleware/validator";
 
 let verifyState = Joi.object({
-  state: Joi.number()
-    .custom((value: number, helper) => {
-      let stateList = [0, 1];
-      if (stateList.includes(value)) {
-        return true;
-      } else {
-        throw new Error("");
-      }
-    })
-    .error(new Error("State错误")),
+  state: Joi.number().valid(0, 1).error(new Error("State错误")),
 });
 
 const article = Joi.object({
@@ -44,13 +35,7 @@ const article = Joi.object({
     .lowercase()
     .pattern(/^https:\/\/.*/)
     .error(new Error("转载地址为1-100的字符串，要求为https网址")),
-  state: Joi.number().custom((value: number, helper) => {
-    if (value == 1) {
-      return true;
-    } else {
-      return helper.message(new Error("state错误") as any);
-    }
-  }),
+  state: Joi.number().valid(1).error(new Error("state错误")),
   tag: Joi.array()
     .items(Joi.number().required())
     .min(1)
@@ -95,13 +80,7 @@ const drafts = Joi.object({
     .lowercase()
     .pattern(/^https:\/\/.*/)
     .error(new Error("转载地址为1-100的字符串，要求为https网址")),
-  state: Joi.number().custom((value: number, helper) => {
-    if (value == 0) {
-      return true;
-    } else {
-      return helper.message(new Error("state错误") as any);
-    }
-  }),
+  state: Joi.number().valid(0).error(new Error("state错误")),
   tag: Joi.array()
     .items(Joi.number())
     .max(6)

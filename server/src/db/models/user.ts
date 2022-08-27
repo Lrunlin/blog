@@ -101,21 +101,49 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           type: DataTypes.TEXT,
           allowNull: true,
           comment: "自我介绍",
+          set(this, val) {
+            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+              this.setDataValue("description", val);
+            } else {
+              this.setDataValue("description", null as any);
+            }
+          },
         },
         site: {
           type: DataTypes.STRING(200),
           allowNull: true,
           comment: "个人网站",
+          set(this, val) {
+            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+              this.setDataValue("site", val);
+            } else {
+              this.setDataValue("site", null as any);
+            }
+          },
         },
         unit: {
           type: DataTypes.STRING(100),
           allowNull: true,
           comment: "所属单位",
+          set(this, val) {
+            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+              this.setDataValue("unit", val);
+            } else {
+              this.setDataValue("unit", null as any);
+            }
+          },
         },
         location: {
-          type: DataTypes.STRING(30),
+          type: DataTypes.STRING(100),
           allowNull: true,
           comment: "所在地区",
+          set(this, val) {
+            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+              this.setDataValue("location", val);
+            } else {
+              this.setDataValue("location", null as any);
+            }
+          },
         },
         avatar_file_name: {
           type: DataTypes.STRING(60),

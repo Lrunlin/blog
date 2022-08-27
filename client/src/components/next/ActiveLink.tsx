@@ -21,7 +21,6 @@ const ActiveLink: FC<porpsType> = props => {
     return router.pathname == props.href ? props.activeClassName || "active-link" : "";
   }, [router]);
 
-  
   return (
     <>
       <Link {...props}>
