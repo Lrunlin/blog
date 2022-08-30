@@ -18,7 +18,7 @@ const Recommend = () => {
   );
   return (
     <>
-      {data && <ArticleList className="mt-4" list={data} total={25} loadMoreData={() => {}} />}
+      {data && <ArticleList className="mt-4" list={data} total={data.length} loadMoreData={() => {}} />}
       {isValidating && (
         <>
           <Skeleton active />

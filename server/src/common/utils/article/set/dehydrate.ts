@@ -10,6 +10,8 @@ function dehydrate(content: string) {
   const clean = sanitizeHtml(content, {
     enforceHtmlBoundary: true,
     allowedTags: [
+      "div",
+      "span",
       "a",
       "b",
       "blockquote",
@@ -60,19 +62,18 @@ function dehydrate(content: string) {
         let prefix = `${process.env.CDN}/article/`;
         return {
           tagName: "img",
-          attribs: src.startsWith(prefix)
-            ? {
-                src: src.replace(prefix, ""),
-              }
-            : ({} as any),
+          attribs: {
+            src: src.replace(prefix, ""),
+          },
         };
       },
     },
-    // 对img中src属性不对劲的进行过滤，返回true表示删除
     exclusiveFilter: function (frame) {
+      // 对img中src为空和外站图片进行删除
       if (frame.tag === "img") {
-        return !frame.attribs.src;
+        return !frame.attribs.src && frame.attribs.src.startsWith("http");
       }
+      // input标签只支持复选框
       if (frame.tag === "input") {
         return frame.attribs.type !== "checkbox";
       }

@@ -7,6 +7,7 @@ import moment from "moment";
 import Layout from "@/components/page/article/Layout";
 import Head from "@/components/next/Head";
 import FollwoButton from "@/components/page/article/FollowButton";
+import View from "@/components/page/article/View";
 import type { ArticleAttributes } from "@type/model-attribute";
 
 interface propsType {
@@ -26,6 +27,8 @@ const Article: NextPage<propsType> = props => {
       resetCurrentArticleData();
     };
   }, [data]);
+
+
 
   return (
     <>
@@ -54,7 +57,7 @@ const Article: NextPage<propsType> = props => {
           </div>
           <FollwoButton bloggerID={data.author_data.id} />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
+        <View language={data.language} content={data.content} />
         {data.reprint && (
           <blockquote className="mt-20 pl-4 border-l-solid border-l-4 rounded-sm border-l-blue-600">
             转载自:{data.reprint}

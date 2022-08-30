@@ -10,7 +10,7 @@ function hydrate(article: ArticleAttributes, update?: true) {
     if (update) {
       $(el).attr("src", `${process.env.CDN}/article/${$(el).attr("src")}`);
     } else {
-      $(el).attr("data-src", `${process.env.CDN}/article/${$(el).attr("src")}`);
+      $(el).attr("data-src", `${process.env.CDN}/article/${$(el).attr("src")}`).removeAttr('src');
     }
   });
   return { ...article, content: $("body").html() };

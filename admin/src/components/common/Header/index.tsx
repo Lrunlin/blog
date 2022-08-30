@@ -9,6 +9,13 @@ const Header: FC = memo(() => {
   let menuKeys = useMemo(() => {
     let _key = { selectKeys: [""], openKeys: [""] };
     items.forEach(item => {
+      if (item.href == location.pathname) {
+        _key = {
+          selectKeys: [item.key],
+          openKeys: [item.key],
+        };
+        return;
+      }
       item.children?.forEach(_item => {
         if (_item.href == location.pathname) {
           _key = {

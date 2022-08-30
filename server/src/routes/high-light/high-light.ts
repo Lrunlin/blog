@@ -1,4 +1,3 @@
-import fs from "fs";
 import Router from "@koa/router";
 let router = new Router();
 import StreamZip from "node-stream-zip";
@@ -60,14 +59,13 @@ decompressionPrism.then(() => {
       plugins.js += `/**插件:${item}-js**/${prism[`plugins/${item}/prism-${item}.min.js`]}`;
     }
   });
-  Object.keys(prism).forEach(item=>{
+  Object.keys(prism).forEach(item => {
     if (item.startsWith("language/prism-")) {
       let _key = item.replace(`language/prism-`, "").replace(`.min.js`, "");
-      language[_key]=prism[item];
+      language[_key] = prism[item];
     }
   });
 });
-
 
 /**
  * 根据传来的单个类型递归返回全部依赖类型，并且排序
@@ -98,7 +96,7 @@ function getAllType(type: string) {
 router.get("/high-light/:type", async ctx => {
   if (ctx.params.type == "css") {
     ctx.response.set("Content-Type", "text/css;charset=UTF-8");
-    ctx.body = `${themes}\n${plugins}`;
+    ctx.body = `${themes}\n${plugins.css}`;
     return;
   }
 
@@ -124,7 +122,7 @@ router.get("/high-light/:type", async ctx => {
 
   ctx.response.set("Content-Type", "text/javascript;charset=UTF-8");
   ctx.body = `/**博客:blogweb.cn**/
-  ${cors}\n${_language}\n${plugins}
+  ${cors}\n${_language}\n${plugins.js}
   `;
 });
 export default router;
