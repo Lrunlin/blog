@@ -1,6 +1,5 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import cache from "@/common/middleware/cache";
 
 import HTMLToMarkDown from "@/common/utils/article/get/html-to-markdown";
 import getCodeBlockLanguage from "@/common/utils/article/get/get-code-block-language";
@@ -10,7 +9,7 @@ import Sequelize from "@/db/config";
 
 let router = new Router();
 
-router.get("/article/:id", cache, async ctx => {
+router.get("/article/:id",  async ctx => {
   let id = +ctx.params.id;
 
   await DB.Article.findByPk(id, {

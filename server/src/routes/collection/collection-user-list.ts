@@ -7,7 +7,7 @@ import Sequelize from "@/db/config";
 let router = new Router();
 
 // 查询指定用户收藏的文章
-router.get("/article/collection/:user_id", async ctx => {
+router.get("/collection/:user_id", async ctx => {
   let page = +(ctx.query.page as string) || 1;
 
   let { count: collectionCount, rows: collectionList } = await DB.Collection.findAndCountAll({

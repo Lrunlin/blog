@@ -8,14 +8,16 @@ const { TabPane } = Tabs;
 const ContentArticle = () => {
   return (
     <Layout className="p-4 bg-white">
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="文章" key="1" forceRender={true}>
-          <ArticleList state={1} />
-        </TabPane>
-        <TabPane tab="草稿箱" key="2" forceRender={true}>
-          <ArticleList state={0} />
-        </TabPane>
-      </Tabs>
+      <div className="shadow-sm">
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="文章" key="1" forceRender={true}>
+            <ArticleList state={1} />
+          </TabPane>
+          <TabPane tab="草稿箱" key="2" forceRender={true}>
+            <ArticleList state={0} />
+          </TabPane>
+        </Tabs>
+      </div>
     </Layout>
   );
 };

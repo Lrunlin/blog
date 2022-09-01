@@ -3,7 +3,7 @@ import DB from "@/db";
 let router = new Router();
 import auth from "@/common/middleware/auth";
 
-router.get("/advertisement/:id", auth(1), async ctx => {
+router.get("/advertisement/:id", auth(), async ctx => {
   let id = ctx.params.id;
   await DB.Advertisement.findByPk(id).then(row => {
     if (row) {

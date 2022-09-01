@@ -40,7 +40,7 @@ const Aside = () => {
   }
 
   return (
-    <aside className="w-60 h-5/6 p-4 fixed bg-white">
+    <aside className="w-60 h-5/6 p-4 fixed shadow-sm bg-white">
       <div className="flex items-center">
         <Avatar size={48} />
         <div className="w-20 ml-2 text-lg truncate">{userData?.name}</div>

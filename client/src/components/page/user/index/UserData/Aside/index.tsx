@@ -13,7 +13,7 @@ const Aside: FC<{ data: UserAttributes }> = props => {
   );
   return (
     <aside className="w-60 fixed">
-      <div className="bg-white w-60 p-4">
+      <div className="bg-white w-60 p-4 shadow-sm">
         <div className="text-xl font-medium pb-2 text-gray-900 border-b-solid border-gray-200">
           个人成就
         </div>
@@ -21,7 +21,10 @@ const Aside: FC<{ data: UserAttributes }> = props => {
         {error && <div className="py-6 text-center">请求错误</div>}
         {data && (
           <div className="mt-3">
-            <div className="h-8 flex items-center">
+            <div
+              className="h-8 flex items-center cursor-pointer"
+              onClick={() => router.push({ query: { ...router.query, key: "article" } })}
+            >
               <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-50">
                 <Image src="/icon/view_blue.png" height={14} width={14} alt="view icon" />
               </div>
@@ -38,22 +41,34 @@ const Aside: FC<{ data: UserAttributes }> = props => {
           </div>
         )}
       </div>
-      <div className="w-60 p-4 mt-4 flex justify-around bg-white">
-        <div className="text-center">
+      <div className="w-60 p-4 mt-3 flex justify-around bg-white shadow-sm">
+        <div
+          className="text-center cursor-pointer"
+          onClick={() => router.push({ query: { ...router.query, key: "following" } })}
+        >
           <div className="text-base">关注了</div>
           <b>{props.data.followee_count}</b>
         </div>
-        <div className="text-center">
+        <div
+          className="text-center cursor-pointer"
+          onClick={() => router.push({ query: { ...router.query, key: "follower" } })}
+        >
           <div className="text-base">关注者</div>
           <b>{props.data.follower_count}</b>
         </div>
       </div>
       <div className="mt-4">
-        <div className="h-8 flex items-center border-t-solid border-gray-200">
+        <div
+          className="h-8 cursor-pointer flex items-center border-t-solid border-gray-200"
+          onClick={() => router.push({ query: { ...router.query, key: "collection" } })}
+        >
           收藏文章 {props.data.collection_count} 篇
         </div>
         {data && (
-          <div className="h-8 flex items-center border-t-solid border-gray-200">
+          <div
+            className="h-8 cursor-pointer flex items-center border-t-solid border-gray-200"
+            onClick={() => router.push({ query: { ...router.query, key: "article" } })}
+          >
             发布文章 {data.article_count} 篇
           </div>
         )}

@@ -1,10 +1,12 @@
 import { Button, Result } from "antd";
 import { useRouter } from "next/router";
+import Head from "@/components/next/Head";
 
 const NotFind = () => {
   let router = useRouter();
   return (
     <div>
+      <Head title="没有找到指定用户" />
       <Result
         title="没有找到对应的用户"
         extra={

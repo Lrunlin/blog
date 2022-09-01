@@ -22,7 +22,7 @@ router.post("/follow/:bogger_id", auth([0, 1]), async ctx => {
     id: useId(),
     blogger_id: boggerID,
     user_id: ctx.id as number,
-    time: new Date(),
+    create_time: new Date(),
   })
     .then(res => {
       ctx.body = { success: true, message: "关注成功" };

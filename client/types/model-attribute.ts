@@ -59,7 +59,7 @@ export interface FollowAttributes {
   id: number;
   blogger_id: number;
   user_id: number;
-  time: Date;
+  create_time: Date;
 }
 
 type commentUserData = Pick<

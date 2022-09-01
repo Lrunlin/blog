@@ -9,6 +9,7 @@ import Head from "@/components/next/Head";
 import FollwoButton from "@/components/page/article/FollowButton";
 import View from "@/components/page/article/View";
 import type { ArticleAttributes } from "@type/model-attribute";
+import { useRouter } from "next/router";
 
 interface propsType {
   data: ArticleAttributes;
@@ -18,6 +19,7 @@ export const currentArticleDataContext = atom<ArticleAttributes>({
   default: {} as ArticleAttributes,
 });
 const Article: NextPage<propsType> = props => {
+  let router = useRouter();
   let { data } = props;
   let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
   let resetCurrentArticleData = useResetRecoilState(currentArticleDataContext);
@@ -27,8 +29,6 @@ const Article: NextPage<propsType> = props => {
       resetCurrentArticleData();
     };
   }, [data]);
-
-
 
   return (
     <>
@@ -46,7 +46,13 @@ const Article: NextPage<propsType> = props => {
         <h1 className="text-4xl font-black">{data.title}</h1>
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center">
-            <Avatar src={data.author_data.avatar_url} alt={`作者${data.author_data.name}头像`} />
+            <span onClick={() => router.push(`/user/${data.author_data.id}`)}>
+              <Avatar
+                src={data.author_data.avatar_url}
+                alt={`作者${data.author_data.name}头像`}
+                className="cursor-pointer"
+              />
+            </span>
             <div className="ml-2">
               <div>{data.author_data.name}</div>
               <div>

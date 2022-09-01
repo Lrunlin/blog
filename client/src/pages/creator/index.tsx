@@ -26,7 +26,7 @@ const APP: NextPage = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="shadow-sm">
         {/* 顶部轮播图部分 */}
         <div className="w-full h-60 bg-white p-4">
           {isValidating && <div className="w-full h-full bg-gray-200"></div>}
@@ -60,7 +60,7 @@ const APP: NextPage = () => {
           )}
         </div>
         {/* 数据展示 */}
-        <div className="w-full mt-2 p-4 bg-white flex justify-around">
+        <div className="w-full mt-2 p-4 bg-white flex justify-around shadow-sm">
           <div className="text-center">
             <div className="text-base">发布文章</div>
             <div>{userData?.article_count}</div>

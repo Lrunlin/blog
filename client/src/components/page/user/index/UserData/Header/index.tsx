@@ -8,7 +8,7 @@ import FollowButton from "./FollowButton";
 const Header: FC<{ data: UserAttributes }> = ({ data }) => {
   return (
     <>
-      <div className="p-7 bg-white flex">
+      <div className="p-7 bg-white flex shadow-sm">
         <div className="w-24">
           <Avatar size={90} src={data.avatar_url} alt={`用户${data.name}头像`} />
         </div>

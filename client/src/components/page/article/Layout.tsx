@@ -15,8 +15,8 @@ const Layout: FC<propsType> = props => {
     <Base className="pb-16">
       <ToolBar />
       <div className="mr-4 w-full">
-        <article className="p-8 pb-5 bg-white break-all">{props.children}</article>
-        <div className="p-8 pb-10 mt-4 bg-white">
+        <article className="p-8 pb-5 bg-white break-all shadow-sm">{props.children}</article>
+        <div className="p-8 pb-10 mt-4 bg-white shadow-sm">
           <Comments />
         </div>
         <Recommend />

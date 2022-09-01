@@ -32,14 +32,14 @@ const Layout: FC<propsType> = ({ children }) => {
   return (
     <Base className="container">
       <div className="w-full m-0">
-        <div className="w-full py-3 bg-white">
+        <div className="w-full py-3 bg-white shadow-sm">
           <span className="ml-4 cursor-pointer">
             <LeftOutlined />
             返回个人主页
           </span>
         </div>
         <div className="mt-2 flex h-[630px]">
-          <aside className="w-56 bg-white mr-6 ">
+          <aside className="w-56 bg-white mr-6 shadow-sm">
             <div className="w-56 p-2">
               {list.map(item => {
                 return (
@@ -56,7 +56,7 @@ const Layout: FC<propsType> = ({ children }) => {
               })}
             </div>
           </aside>
-          <main className="w-full p-2 bg-white">
+          <main className="w-full p-2 bg-white shadow-sm">
             <>
               {userData ? (
                 <>{children}</>
