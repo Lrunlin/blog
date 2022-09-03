@@ -4,7 +4,7 @@ import useId from "@/common/hooks/useId";
 import auth from "@/common/middleware/auth";
 let router = new Router();
 
-router.post("/follow/:bogger_id", auth([0, 1]), async ctx => {
+router.post("/follow/:bogger_id", auth(0), async ctx => {
   let boggerID = +ctx.params.bogger_id;
 
   if (boggerID==ctx.id) {

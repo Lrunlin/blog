@@ -9,3 +9,4 @@ export default Models;
 
 DB.Article.belongsTo(DB.User, { as: "author_data", foreignKey: "author", targetKey: "id" });
 DB.Comment.belongsTo(DB.User, { as: "user_data", foreignKey: "user_id", targetKey: "id" });
+DB.Links.belongsTo(DB.User, { as: "user_data", foreignKey: "user_id", targetKey: "id" });

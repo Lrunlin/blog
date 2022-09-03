@@ -5,6 +5,7 @@ const RouterList: RouterListType[] = [
   {
     path: "/login",
     element: lazy(() => import("@/page/login")),
+    title: "登录",
   },
   {
     path: "",
@@ -13,42 +14,57 @@ const RouterList: RouterListType[] = [
       {
         path: "/",
         element: lazy(() => import("@/page/index")),
+        title: "首页",
       },
       {
         path: "/article/write",
         element: lazy(() => import("@/page/article/write")),
+        title: "文章编写",
       },
       {
         path: "/article/list",
         element: lazy(() => import("@/page/article/list")),
+        title: "文章列表",
       },
       {
         path: "/article/:id",
         element: lazy(() => import("@/page/article/update")),
+        title: "文章详情",
       },
       {
         path: "/type/list",
         element: lazy(() => import("@/page/type/type-list")),
+        title: "类型列表",
       },
       {
         path: "/type/:id",
         element: lazy(() => import("@/page/type/uptate/type")),
+        title: "类型详情",
       },
       {
         path: "/tag/:id",
         element: lazy(() => import("@/page/type/uptate/tag")),
+        title: "标签详情",
       },
       {
         path: "/advertisement",
         element: lazy(() => import("@/page/advertisement/create")),
+        title: "发布推广",
       },
       {
         path: "/advertisement/list",
         element: lazy(() => import("@/page/advertisement/list")),
+        title: "推广列表",
       },
       {
         path: "/advertisement/:id",
         element: lazy(() => import("@/page/advertisement/update")),
+        title: "修改推广",
+      },
+      {
+        path: "/links",
+        element: lazy(() => import("@/page/links/list")),
+        title: "友链列表",
       },
     ],
   },
@@ -58,5 +74,6 @@ interface RouterListType {
   path: string;
   element: LazyExoticComponent<FC<{}>>;
   children?: RouterListType[];
+  title?:string;
 }
 export type { RouterListType };

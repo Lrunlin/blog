@@ -80,3 +80,14 @@ export interface CommentAttributes {
   create_time: Date;
   children?: CommentAttributes[];
 }
+
+export interface LinksAttributes {
+  id: number;
+  name: string;
+  url: string;
+  user_id: number;
+  is_allow: number;
+  logo_file_name: string;
+  logo_url: string;
+  create_time: Date;
+}

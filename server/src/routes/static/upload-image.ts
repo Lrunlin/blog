@@ -25,14 +25,14 @@ let secretKey = process.env.QINIU_SK;
 let bucket = process.env.OSS_NAME;
 
 function verify() {
-  const folderList = ["article", "avatar", "cover", "type", "comment", "advertisement"];
+  const folderList = ["article", "avatar", "cover", "type", "comment", "advertisement", "links"];
   return async (ctx: Context, next: Next) => {
     if (folderList.includes(ctx.params.folder)) {
       await next();
     } else {
       ctx.body = {
         success: false,
-        message: "已经记录日志了，再瞎玩封号处理",
+        message: "已经记录日志了",
       };
       console.log(`id: ${ctx.id} 尝试瞎上传图片`);
     }

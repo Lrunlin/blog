@@ -9,6 +9,8 @@ import { Comment as _Comment } from "./comment";
 import type { CommentAttributes, CommentCreationAttributes } from "./comment";
 import { Follow as _Follow } from "./follow";
 import type { FollowAttributes, FollowCreationAttributes } from "./follow";
+import { Links as _Links } from "./links";
+import type { LinksAttributes, LinksCreationAttributes } from "./links";
 import { Notice as _Notice } from "./notice";
 import type { NoticeAttributes, NoticeCreationAttributes } from "./notice";
 import { Tag as _Tag } from "./tag";
@@ -26,6 +28,7 @@ export {
   _Collection as Collection,
   _Comment as Comment,
   _Follow as Follow,
+  _Links as Links,
   _Notice as Notice,
   _Tag as Tag,
   _TipsSet as TipsSet,
@@ -44,6 +47,8 @@ export type {
   CommentCreationAttributes,
   FollowAttributes,
   FollowCreationAttributes,
+  LinksAttributes,
+  LinksCreationAttributes,
   NoticeAttributes,
   NoticeCreationAttributes,
   TagAttributes,
@@ -62,11 +67,13 @@ export function initModels(sequelize: Sequelize) {
   const Collection = _Collection.initModel(sequelize);
   const Comment = _Comment.initModel(sequelize);
   const Follow = _Follow.initModel(sequelize);
+  const Links = _Links.initModel(sequelize);
   const Notice = _Notice.initModel(sequelize);
   const Tag = _Tag.initModel(sequelize);
   const TipsSet = _TipsSet.initModel(sequelize);
   const Type = _Type.initModel(sequelize);
   const User = _User.initModel(sequelize);
+
 
   return {
     Advertisement: Advertisement,
@@ -74,6 +81,7 @@ export function initModels(sequelize: Sequelize) {
     Collection: Collection,
     Comment: Comment,
     Follow: Follow,
+    Links: Links,
     Notice: Notice,
     Tag: Tag,
     TipsSet: TipsSet,

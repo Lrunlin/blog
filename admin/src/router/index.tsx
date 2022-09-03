@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import RouterRoot from "./Switch";
 
-const AnimatedSwitch: FC = props => {
+const AnimatedSwitch: FC = () => {
   return <RouterRoot />;
 };
 export default AnimatedSwitch;

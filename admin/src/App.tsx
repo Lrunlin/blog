@@ -1,7 +1,6 @@
-import { useState } from "react";
 import Router from "@/router";
 import { BrowserRouter, HashRouter } from "react-router-dom";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 import { RecoilRoot } from "recoil";
 
 function App() {

@@ -5,7 +5,7 @@ export interface UserAttributes {
   id: number;
   name: string;
   auth: number;
-  email?: string;
+  email: string;
   github?: string;
   qq?: string;
   password: string;
@@ -21,7 +21,6 @@ export interface UserAttributes {
 export type UserPk = "id";
 export type UserId = User[UserPk];
 export type UserOptionalAttributes =
-  | "email"
   | "github"
   | "qq"
   | "state"
@@ -36,7 +35,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   id!: number;
   name!: string;
   auth!: number;
-  email?: string;
+  email!: string;
   github?: string;
   qq?: string;
   password!: string;
@@ -70,7 +69,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
         },
         email: {
           type: DataTypes.STRING(60),
-          allowNull: true,
+          allowNull: false,
           comment: "用户邮箱",
           unique: "email",
         },
@@ -154,7 +153,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           type: DataTypes.VIRTUAL,
           get(this) {
             let avatar_url = this.getDataValue("avatar_file_name");
-            return avatar_url ? `${process.env.CDN}/avatar/${avatar_url}` : avatar_url;
+            return `${process.env.CDN}/avatar/${avatar_url}`;
           },
         },
         create_time: {

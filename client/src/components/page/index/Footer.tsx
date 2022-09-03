@@ -31,7 +31,7 @@ let list: listItemType[][] = [
       label: (
         <>
           <Image src="/icon/police.png" width={20} height={20} className="police icon" />
-          辽ICP备2020014377号
+          <span className="ml-1">辽ICP备2020014377号</span>
         </>
       ),
       className: "flex items-center",
@@ -56,7 +56,9 @@ const Footer = () => {
               className={classNames([style["child-a-gray"], _index && "ml-2", "mt-1"])}
               key={_item.key}
             >
-              <NoFollowLink href={_item.href} className={_item.className}>{_item.label}</NoFollowLink>
+              <NoFollowLink href={_item.href} className={_item.className}>
+                {_item.label}
+              </NoFollowLink>
             </li>
           ))}
         </ul>
@@ -79,7 +81,7 @@ const Footer = () => {
             </NoFollowLink>
           </Dropdown>
         </div>
-        <div className="mt-3 ml-2">
+        <div className="mt-3 ml-2 cursor-pointer">
           <Dropdown
             placement="bottom"
             overlay={
