@@ -22,7 +22,7 @@ router.put(
     }
 
     /** 如果state本来就是1那么就不接受修改否则可以修改*/
-    let oldState = await DB.Article.findByPk(id)
+    let oldState = await DB.Article.findByPk(id, { attributes: ["state"] })
       .then(res => {
         if (res) {
           return res.state;

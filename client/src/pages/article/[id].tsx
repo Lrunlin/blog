@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import { atom, useSetRecoilState, useResetRecoilState } from "recoil";
-import { Avatar } from "antd";
+import { Avatar, Button, Result } from "antd";
 import axios from "axios";
 import moment from "moment";
 import Layout from "@/components/page/article/Layout";
@@ -10,9 +10,10 @@ import FollwoButton from "@/components/page/article/FollowButton";
 import View from "@/components/page/article/View";
 import type { ArticleAttributes } from "@type/model-attribute";
 import { useRouter } from "next/router";
+import Header from "@/components/common/Header";
 
 interface propsType {
-  data: ArticleAttributes;
+  data: ArticleAttributes | null;
 }
 export const currentArticleDataContext = atom<ArticleAttributes>({
   key: "current-article-data",
@@ -20,6 +21,24 @@ export const currentArticleDataContext = atom<ArticleAttributes>({
 });
 const Article: NextPage<propsType> = props => {
   let router = useRouter();
+  if (!props.data) {
+    return (
+      <>
+        <Head title="没找到该篇文章" keywords={["404"]} description="Not Found" />
+        <Header />
+        <Result
+          status="404"
+          title="404"
+          subTitle="没找到该篇文章"
+          extra={
+            <Button type="primary" onClick={() => router.replace("/")}>
+              返回主页
+            </Button>
+          }
+        />
+      </>
+    );
+  }
   let { data } = props;
   let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
   let resetCurrentArticleData = useResetRecoilState(currentArticleDataContext);
@@ -76,7 +95,12 @@ const Article: NextPage<propsType> = props => {
 export default Article;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  let response = await axios(`/article/${(ctx as any).params.id}`).then(res => res.data.data);
+  let response = await axios(`/article/${(ctx as any).params.id}`)
+    .then(res => res.data.data)
+    .catch(() => null);
+  if (!response) {
+    ctx.res.statusCode = 404;
+  }
   return {
     props: {
       data: response,

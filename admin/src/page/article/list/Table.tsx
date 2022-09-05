@@ -64,11 +64,10 @@ const TableCom = () => {
                 )
               }
             >
-              <Avatar src={author_data.icon_url} style={{ verticalAlign: "middle" }} size="large">
+              <Avatar src={author_data.avatar_url} style={{ verticalAlign: "middle" }} size="large">
                 {(author_data.name as string).substring(0, 1).toLocaleUpperCase()}
               </Avatar>
             </Badge>
-            <div>{author_data.name}</div>
           </Link>
         );
       },
@@ -157,7 +156,7 @@ const TableCom = () => {
                     axios.delete(`/article/${id}`).then(res => {
                       if (res.data.success) {
                         message.success(res.data.message);
-                        setTableOption(option => ({ ...option, key: option.key++ }));
+                        setTableOption(option => ({ ...option, key:+new Date() }));
                       } else {
                         message.error(res.data.message);
                       }

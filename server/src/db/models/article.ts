@@ -1,6 +1,7 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
 import dehydrate from "@/common/utils/article/set/dehydrate";
+import hooks from "../hooks/article";
 
 export interface ArticleAttributes {
   id: number;
@@ -43,7 +44,6 @@ export class Article
   view_count!: number;
   update_time?: Date;
   create_time!: Date;
-
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Article {
     return sequelize.define(
@@ -166,6 +166,7 @@ export class Article
             fields: [{ name: "id" }],
           },
         ],
+        hooks:hooks,
       }
     ) as typeof Article;
   }

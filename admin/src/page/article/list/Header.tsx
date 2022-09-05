@@ -48,14 +48,6 @@ const Header = () => {
           <Input placeholder="发布者ID" className="w-40" />
         </Form.Item>
 
-        <Form.Item name="auth" label="权限">
-          <Radio.Group>
-            <Radio value={1}>仅管理员</Radio>
-            <Radio value={0}>仅用户</Radio>
-            <Radio value={undefined}>不限</Radio>
-          </Radio.Group>
-        </Form.Item>
-
         <Form.List name="sort">
           {fields =>
             fields.map((field, index) => (

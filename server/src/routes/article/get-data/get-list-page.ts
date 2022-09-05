@@ -12,11 +12,8 @@ router.get("/article/page/:page", auth(1), async ctx => {
   let pageSize = query.page_size ? +query.page_size : 10;
   let where: { [key: string]: any } = {};
 
-  if (query.auth) {
-    where.auth = query.auth;
-  }
   if (query.id) {
-    where.id = query.id;
+    where.id = +query.id;
   }
   if (query.deadline) {
     where.create_time = {
@@ -65,4 +62,3 @@ router.get("/article/page/:page", auth(1), async ctx => {
     });
 });
 export default router;
-

@@ -1,6 +1,6 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
-import typeCache from "@/db/hooks/typeCache";
+import hooks from "@/db/hooks/type";
 
 export interface TagAttributes {
   id: number;
@@ -86,7 +86,7 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
             fields: [{ name: "name" }],
           },
         ],
-        hooks: typeCache,
+        hooks: hooks,
       }
     ) as typeof Tag;
   }
