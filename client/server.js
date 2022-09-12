@@ -54,7 +54,7 @@ async function renderAndCache(req, res) {
     if (
       ip &&
       !(await RedisViewHisTory.exists(`${ip}----${key}`)) &&
-      !(await RedisViewHisTory.exists(`unrecorded-${ip}----${key}`))
+      !(await RedisViewHisTory.exists(`unrecorded--${ip}----${key}`))
     ) {
       RedisViewHisTory.set(`unrecorded--${ip}----${key}`, "", "EX", 432_000);
     }

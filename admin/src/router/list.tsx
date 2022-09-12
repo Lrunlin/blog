@@ -66,6 +66,11 @@ const RouterList: RouterListType[] = [
         element: lazy(() => import("@/page/links/list")),
         title: "友链列表",
       },
+      {
+        path: "/comment",
+        element: lazy(() => import("@/page/comment/index")),
+        title: "友链列表",
+      },
     ],
   },
 ];

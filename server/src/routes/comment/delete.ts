@@ -20,7 +20,16 @@ async function collectCommentID(id: number) {
 }
 
 let router = new Router();
-router.delete("/comment/:id", authMiddleware([0, 1]), async ctx => {
+router.delete("/comment/:id", authMiddleware(0), async ctx => {
+  // 如果不是管理员那就验证身份
+  if (ctx.id != 1) {
+    let userID = await DB.Comment.findByPk(+ctx.params.id, { attributes: ["user_id"] });
+    if (userID?.user_id != ctx.id) {
+      ctx.body = { success: false, message: "只能删除自己的评论哦" };
+      return;
+    }
+  }
+
   let id = await collectCommentID(+ctx.params.id);
 
   try {

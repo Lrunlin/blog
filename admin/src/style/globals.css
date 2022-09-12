@@ -2,3 +2,6 @@
 /* @tailwind components;组件也不用 */
 @tailwind utilities;
 
+.piece {
+  @apply shadow-sm bg-white p-4;
+}

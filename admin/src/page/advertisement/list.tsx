@@ -72,14 +72,16 @@ const APP = () => {
   return (
     <>
       {data && (
-        <Table
-          dataSource={data}
-          rowKey="id"
-          columns={columns}
-          pagination={{
-            position: ["bottomCenter"],
-          }}
-        />
+        <div className="piece">
+          <Table
+            dataSource={data}
+            rowKey="id"
+            columns={columns}
+            pagination={{
+              position: ["bottomCenter"],
+            }}
+          />
+        </div>
       )}
       {error && <Result status="error" title="请求错误"></Result>}
       {isValidating && (

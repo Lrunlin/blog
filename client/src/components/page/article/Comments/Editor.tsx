@@ -55,7 +55,7 @@ const Editor: FC<propsType> = props => {
 
   let [picture, setPicture] = useState<responseType | null>(null);
   function load() {
-    let dom = document.getElementById("commentInput") as HTMLInputElement;
+    let dom = document.getElementById(`commentInput-${props.id}`) as HTMLInputElement;
     let file = (dom.files as FileList)[0];
     loadStatic("comment", file).then(res => {
       if (res.success) {
@@ -70,7 +70,7 @@ const Editor: FC<propsType> = props => {
       .post("/comment", {
         article_id: router.query.id,
         content: value,
-        comment_pics: picture,
+        comment_pics: picture?.file_name||null,
         reply: props.reply || null,
       })
       .then(res => {
@@ -165,7 +165,7 @@ const Editor: FC<propsType> = props => {
                 </div>
               </span>
               <label
-                htmlFor="commentInput"
+                htmlFor={`commentInput-${props.id}`}
                 onClick={() => {
                   ref.current.focus();
                 }}
@@ -178,7 +178,7 @@ const Editor: FC<propsType> = props => {
               <input
                 className="hidden"
                 type="file"
-                id="commentInput"
+                id={`commentInput-${props.id}`}
                 accept="image/*"
                 onChange={load}
               />

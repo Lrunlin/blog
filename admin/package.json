@@ -12,6 +12,7 @@
     "@bytemd/plugin-gfm": "^1.17.1",
     "@bytemd/react": "^1.17.1",
     "@pansy/watermark": "^2.2.1",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "antd": "^4.21.3",
     "antd-img-crop": "^4.2.3",
     "array-move": "^4.0.0",

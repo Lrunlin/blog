@@ -25,7 +25,6 @@ const CommentItem: FC<propsType> = props => {
   const [showEditor, setShowEditor] = useState(false);
   function removeComment() {
     axios.delete(`/comment/${data.id}`).then(res => {
-      console.log(res.data);
       if (res.data.success) {
         message.success(res.data.message);
         mutate(`/comment/list/${articleID}`);

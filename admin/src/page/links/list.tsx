@@ -110,7 +110,9 @@ const LinksList = () => {
   ];
   return (
     <>
-      <Table rowKey="id" dataSource={data} columns={columns} />
+      <div className="piece">
+        <Table rowKey="id" dataSource={data} columns={columns} />
+      </div>
       <Modal
         title="确定删除友链"
         visible={!!deleteLinksID}

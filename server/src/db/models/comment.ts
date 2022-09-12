@@ -9,6 +9,7 @@ export interface CommentAttributes {
   reply?: number;
   client_ip: string;
   comment_pics?: string;
+  is_review: number;
   create_time: Date;
 }
 
@@ -28,6 +29,7 @@ export class Comment
   reply?: number;
   client_ip!: string;
   comment_pics?: string;
+  is_review!: number;
   create_time!: Date;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Comment {
@@ -73,6 +75,11 @@ export class Comment
             let comment_pics = this.getDataValue("comment_pics");
             return comment_pics ? `${process.env.CDN}/comment/${comment_pics}` : comment_pics;
           },
+        },
+        is_review: {
+          type: DataTypes.TINYINT,
+          allowNull: false,
+          comment: "是否已经审查了",
         },
         create_time: {
           type: DataTypes.DATE,

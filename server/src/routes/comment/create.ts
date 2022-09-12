@@ -42,7 +42,7 @@ const schema = Joi.object({
 });
 
 let router = new Router();
-router.post("/comment", authMiddleware([0, 1]), validator(schema), async ctx => {
+router.post("/comment", authMiddleware(0), validator(schema), async ctx => {
   let { article_id, reply, content, comment_pics } = ctx.request.body;
   let { count } = await DB.Comment.findAndCountAll({
     where: {
@@ -65,6 +65,7 @@ router.post("/comment", authMiddleware([0, 1]), validator(schema), async ctx => 
     comment_pics,
     create_time: new Date(),
     user_id: ctx.id as number,
+    is_review: 0,
     client_ip: ctx.ip,
   })
     .then(res => {
