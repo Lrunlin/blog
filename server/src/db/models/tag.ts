@@ -54,7 +54,7 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           type: DataTypes.VIRTUAL,
           get(this) {
             let icon_file_name = this.getDataValue("icon_file_name");
-            return icon_file_name ? `${process.env.cdn}/type/${icon_file_name}` : null;
+            return icon_file_name ? `${process.env.CDN}/type/${icon_file_name}` : null;
           },
         },
         create_time: {

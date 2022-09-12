@@ -7,6 +7,7 @@ const Aside = () => {
   return (
     <>
       <aside>
+        <div className="w-60">{/* 占位用的防止左侧内容偏移 */}</div>
         {data &&
           data.map((item, index) => (
             <a

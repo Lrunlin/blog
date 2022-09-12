@@ -1,4 +1,4 @@
-import Joi from "Joi";
+import Joi from "joi";
 import { cache } from "@/common/modules/cache/type";
 import { TagAttributes } from "@/db/models/init-models";
 import type { Context, Next } from "koa";

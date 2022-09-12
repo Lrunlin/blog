@@ -14,7 +14,7 @@ router.get("/links", getUserId, validator(schema), async ctx => {
   await DB.Links.findAll({
     where: ctx.auth != 1 ? { state: 1 } : { state: ctx.query.state || [0, 1, 2] },
     attributes: { exclude: ctx.auth != 1 ? ["create_time", "is_allow", "user_id"] : ["user_id"] },
-    order:[['create_time','desc']],
+    order: [["create_time", "desc"]],
     include: [
       {
         model: DB.User,

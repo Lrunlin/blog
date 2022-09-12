@@ -6,7 +6,7 @@
     "dev": "next dev -p 5678",
     "dev:cache": "cross-env NODE_ENV=development nodemon server.js",
     "build": "next build",
-    "test": "cross-env NODE_ENV=development next build && cross-env NODE_ENV=development next start -p 5678",
+    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development nodemon server.js",
     "lint": "next lint",
     "start": "cross-env NODE_ENV=production nodemon server.js",
     "analyze": "cross-env ANALYZE=true next build"

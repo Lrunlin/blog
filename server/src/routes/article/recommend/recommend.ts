@@ -40,7 +40,7 @@ router.get("/recommend", validator(schema), async ctx => {
 // 关注
 router.get("/follow", validator(schema), auth([0, 1]), async ctx => {
   let page = +(ctx.query.page as string);
-  let _data =await followArticleList(ctx.id as number) as any;
+  let _data = (await followArticleList(ctx.id as number)) as any;
   let data = sort(ctx.query.type as any, _data);
 
   ctx.body = {

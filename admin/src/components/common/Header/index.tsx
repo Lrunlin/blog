@@ -5,7 +5,7 @@ import items from "./items";
 import { useLocation } from "react-router-dom";
 const Header: FC = memo(() => {
   let location = useLocation();
-  
+
   let menuKeys = useMemo(() => {
     let _key = { selectKeys: [""], openKeys: [""] };
     items.forEach(item => {
@@ -29,9 +29,9 @@ const Header: FC = memo(() => {
   }, [location]);
 
   useEffect(() => {
-    document.body.classList.add("pl-48");
+    document.body.classList.add("pl-48", "bg-gray-100");
     return () => {
-      document.body.classList.remove("pl-48");
+      document.body.classList.remove("pl-48", "bg-gray-100");
     };
   });
   return (

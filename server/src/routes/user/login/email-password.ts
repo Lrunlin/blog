@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import Joi from "Joi";
+import Joi from "joi";
 import validator from "@/common/middleware/validator";
 const schema = Joi.object({
   email: Joi.string().min(5).max(30).required().email().error(new Error("邮箱格式不正确")),
@@ -14,7 +14,6 @@ const schema = Joi.object({
 import jwt from "jsonwebtoken";
 let router = new Router();
 router.post("/login/email", validator(schema), async ctx => {
-  
   let { email, password } = ctx.request.body;
 
   await DB.User.findOne({

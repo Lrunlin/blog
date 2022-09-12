@@ -35,7 +35,7 @@ router.get("/article/page/:page", auth(1), async ctx => {
       {
         model: DB.User,
         as: "author_data",
-        attributes: ["id", "name", "auth", "avatar_url"],
+        attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
       },
     ],
     attributes: {

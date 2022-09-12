@@ -43,13 +43,13 @@ new Promise((resolve, reject) => {
         }
     });
 }).then(() => {
-    shell.exec('cross-env ENV=development nodemon --watch ./dist ./dist/src/index.js', {
+    // shell.exec('cross-env ENV=development nodemon --watch ./dist ./dist/src/index.js', {
+    shell.exec('nodemon ./dist/src/index.js', {
         async: true
     });
 });
 
 // 每次开发时自动备份一个.development 不携带值
-const dotenv = require('dotenv');
 const envDir = fs.readdirSync('env').filter(item => item != '.env');
 
 // 先将所有.开头的文件夹删除

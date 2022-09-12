@@ -6,7 +6,7 @@ import DB from "@/db";
 import useId from "@/common/hooks/useId";
 let router = new Router();
 
-import Joi from "Joi";
+import Joi from "joi";
 import validator from "@/common/middleware/validator";
 const schema = Joi.object({
   key: Joi.string().length(40).required().error(new Error("干点正事")),
@@ -18,7 +18,7 @@ router.get("/logon/email", validator(schema), async ctx => {
       success,
       title,
       message,
-      href:'/',
+      href: "/",
       token,
     });
     ctx.status = 302;

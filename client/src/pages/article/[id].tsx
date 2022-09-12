@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import { atom, useSetRecoilState, useResetRecoilState } from "recoil";
-import { Avatar, Button, Result } from "antd";
+import { Button, Result } from "antd";
 import axios from "axios";
-import moment from "moment";
 import Layout from "@/components/page/article/Layout";
 import Head from "@/components/next/Head";
-import FollwoButton from "@/components/page/article/FollowButton";
 import View from "@/components/page/article/View";
 import type { ArticleAttributes } from "@type/model-attribute";
 import { useRouter } from "next/router";
 import Header from "@/components/common/Header";
+import dynamic from "next/dynamic";
+const ArticleUserData = dynamic(import("@/components/page/article/UserData"), { ssr: false });
 
 interface propsType {
   data: ArticleAttributes | null;
@@ -52,7 +52,7 @@ const Article: NextPage<propsType> = props => {
   return (
     <>
       <Head
-        title={data.title}
+        title={`${data.title}-${process.env.NEXT_PUBLIC_SITE_NAME}`}
         keywords={[
           process.env.NEXT_PUBLIC_SITE_NAME,
           "技术文章",
@@ -64,23 +64,7 @@ const Article: NextPage<propsType> = props => {
       <Layout>
         <h1 className="text-4xl font-black">{data.title}</h1>
         <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <span onClick={() => router.push(`/user/${data.author_data.id}`)}>
-              <Avatar
-                src={data.author_data.avatar_url}
-                alt={`作者${data.author_data.name}头像`}
-                className="cursor-pointer"
-              />
-            </span>
-            <div className="ml-2">
-              <div>{data.author_data.name}</div>
-              <div>
-                <time>{moment(data.create_time).format("YYYY年MM月DD日 hh:mm")}</time>
-                <span> · 阅读数 {data.view_count}</span>
-              </div>
-            </div>
-          </div>
-          <FollwoButton bloggerID={data.author_data.id} />
+          <ArticleUserData />
         </div>
         <View language={data.language} content={data.content} />
         {data.reprint && (

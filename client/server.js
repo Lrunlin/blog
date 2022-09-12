@@ -1,6 +1,7 @@
 const express = require("express");
 const next = require("next");
 const redis = require("ioredis");
+const env = require("./env");
 
 const port = 5678; //端口
 const app = next({
@@ -9,16 +10,25 @@ const app = next({
 
 const Redis = db => {
   return new redis({
-    host: process.env.DB_REDIS_HOST || "127.0.0.1",
-    port: process.env.DB_REDIS_PORT ? +process.env.DB_REDIS_PORT : 6379,
-    password: process.env.DB_REDIS_PASSWORD,
+    host: env.REDIS_HOST || "127.0.0.1",
+    port: env.REDIS_PORT ? +env.REDIS_PORT : 6379,
+    password: env.REDIS_PASSWORD,
     db: db,
-    // username: process.env.DB_REDIS_USER,
+    username: env.REDIS_USER,
     retryStrategy: function (times) {
       return Math.min(times * 50, 5000);
     },
   });
 };
+
+function getClientIp(req) {
+  return (
+    req.headers["x-forwarded-for"] ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress
+  );
+}
 
 let RedisHTML = Redis(1);
 let RedisViewHisTory = Redis(2);
@@ -31,6 +41,7 @@ const handle = app.getRequestHandler();
 
 //渲染和处理缓存
 async function renderAndCache(req, res) {
+  let ip = getClientIp(req);
   let pagePath = req.path;
   let queryParams = req.query;
   const key = req.url.replace("/article/", "");
@@ -41,11 +52,11 @@ async function renderAndCache(req, res) {
     // 记录阅读记录
     // 有IP并且没有保存的
     if (
-      req.ip &&
-      !(await RedisViewHisTory.exists(`${req.ip}----${key}`)) &&
-      !(await RedisViewHisTory.exists(`unrecorded-${req.ip}----${key}`))
+      ip &&
+      !(await RedisViewHisTory.exists(`${ip}----${key}`)) &&
+      !(await RedisViewHisTory.exists(`unrecorded-${ip}----${key}`))
     ) {
-      RedisViewHisTory.set(`unrecorded--${req.ip}----${key}`, "", "EX", 432_000);
+      RedisViewHisTory.set(`unrecorded--${ip}----${key}`, "", "EX", 432_000);
     }
     return;
   }
@@ -53,23 +64,20 @@ async function renderAndCache(req, res) {
   app
     .renderToHTML(req, res, pagePath, queryParams)
     .then(async html => {
-      if (res.statusCode === 200) {
-        RedisHTML.set(key, html + "", "EX", 999999999);
-      } else {
-        RedisHTML.del(key);
-      }
       // 响应直出内容
       res.send(html);
-
-      //设置历史记录
-      if (
-        req.ip &&
-        !(await RedisViewHisTory.exists(`${req.ip}----${key}`)) &&
-        !(await RedisViewHisTory.exists(`unrecorded-${req.ip}----${key}`))
-      ) {
-        RedisViewHisTory.set(`unrecorded--${req.ip}----${key}`, "", "EX", 432_000);
+      
+      if (res.statusCode === 200) {
+        RedisHTML.set(key, html + "");
+        //设置历史记录
+        if (
+          ip &&
+          !(await RedisViewHisTory.exists(`${ip}----${key}`)) &&
+          !(await RedisViewHisTory.exists(`unrecorded-${ip}----${key}`))
+        ) {
+          RedisViewHisTory.set(`unrecorded--${ip}----${key}`, "", "EX", 432_000);
+        }
       }
-      return;
     })
     .catch(err => {
       app.renderError(err, req, res, pagePath, queryParams);

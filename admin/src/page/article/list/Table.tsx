@@ -1,11 +1,10 @@
-import { useState, Fragment, useEffect } from "react";
 import axios from "axios";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Table, Popover, Tag, Avatar, Badge, Modal, Button, Tooltip, message } from "antd";
+import { Table, Popover,  Avatar, Badge, Modal, Button, Tooltip, message } from "antd";
 import { Link } from "react-router-dom";
-import KingIcon from "@/assets/king.svg";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
 import { articleListDataContext } from "./index";
+import classNames from "classnames";
 
 export const tableOptionContext = atom({
   key: "table-option",
@@ -56,7 +55,7 @@ const TableCom = () => {
                 author_data.auth == 1 && (
                   <div>
                     <img
-                      src={KingIcon}
+                      src="/src/assets/king.svg"
                       className="w-4 h-4"
                       style={{ transform: "rotate(45deg)" }}
                     />
@@ -97,24 +96,21 @@ const TableCom = () => {
       dataIndex: "tag",
       render: (tags: any, record: any, index: any) => {
         return (
-          <>
-            {tags.map((item: any) => {
+          <div className="flex">
+            {tags.map((item: any,index:number) => {
               return (
-                <Tag
-                  key={`article-list-${item.id}`}
-                  className="mt-1"
-                  icon={
-                    item?.icon_url && (
-                      <img className="w-5 h-5 mr-1" src={item.icon_url} alt="ICON" />
-                    )
-                  }
-                  color="#55acee"
+                <div
+                  className={classNames(["flex items-center bg-[#55acee] px-1.5 py-0.5 rounded-sm", index&&"ml-1"])}
+                  key={item.id}
                 >
-                  {item?.name}
-                </Tag>
+                  {item?.icon_url && (
+                    <img className="w-4 h-4 mr-1" src={item.icon_url} alt={item.name} />
+                  )}
+                  <span className="text-sm">{item.name}</span>
+                </div>
               );
             })}
-          </>
+          </div>
         );
       },
       width: "20%",
@@ -156,7 +152,7 @@ const TableCom = () => {
                     axios.delete(`/article/${id}`).then(res => {
                       if (res.data.success) {
                         message.success(res.data.message);
-                        setTableOption(option => ({ ...option, key:+new Date() }));
+                        setTableOption(option => ({ ...option, key: +new Date() }));
                       } else {
                         message.error(res.data.message);
                       }

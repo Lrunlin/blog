@@ -16,7 +16,7 @@ let upload = multer({
   storage: multer.memoryStorage(),
   limits: {
     files: 1,
-    fileSize: 1024 * 1024 * 3, //3mb
+    fileSize: 1024 * 1024 * 30, //3mb
   },
 });
 
@@ -68,8 +68,9 @@ router.post("/static/:folder", auth([0, 1]), verify(), upload.single("image"), a
           function (respErr, respBody, respInfo) {
             if (respErr) {
               ctx.body = { success: true, message: "上传错误" };
+              console.log(respErr);
               resolve();
-              throw respErr;
+              return;
             }
             if (respInfo.statusCode == 200) {
               ctx.body = {

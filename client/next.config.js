@@ -1,6 +1,5 @@
 const webpack = require("webpack");
 const path = require("path");
-const { env } = require("process");
 const envObject = require("./env/index");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -29,7 +28,7 @@ const nextConfig = {
     return config;
   },
   // CDN地址
-  assetPrefix: env.CDN,
+  assetPrefix: envObject.CDN || "",
   // 设置缓存
   async headers() {
     return [
@@ -40,7 +39,7 @@ const nextConfig = {
           {
             key: "Cache-Control",
             value:
-              env.NODE_ENV == "production"
+              process.env.NODE_ENV == "production"
                 ? "public, max-age=9999999999, must-revalidate"
                 : "public, max-age=0, must-revalidate",
           },

@@ -3,7 +3,7 @@ import type { articleListItemType } from "@type/article-list-item";
 import moment from "moment";
 import style from "./index.module.scss";
 import classNames from "classnames";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import Highlighter from "react-highlight-words";
 import Cover from "./Cover";
 
@@ -37,7 +37,6 @@ const ArticleItem: FC<propsType> = props => {
               key={`tag${data.id}${item.name}`}
               href={`/tag/${item.name}`}
               target="_blank"
-              
             >
               {item.name}
             </a>
@@ -87,15 +86,15 @@ const ArticleItem: FC<propsType> = props => {
           ])}
         >
           <li className={classNames(["flex", "items-center"])}>
-            <Image src="/icon/view.png" width={16} height={16} />
+            <Image src="/icon/view.png" width={16} height={16} alt="view icon" />
             <span className="ml-1">{data.view_count}</span>
           </li>
           <li className={classNames(["flex", "items-center", "mx-3"])}>
-            <Image src="/icon/comment.png" width={16} height={16} />
+            <Image src="/icon/comment.png" width={16} height={16} alt="comment icon" />
             <span className="ml-1">{data.comment_count}</span>
           </li>
           <li className={classNames(["flex", "items-center"])}>
-            <Image src="/icon/collection.png" width={16} height={16} />
+            <Image src="/icon/collection.png" width={16} height={16} alt="collection icon" />
             <span className="ml-1">{data.collection_count}</span>
           </li>
         </ul>
