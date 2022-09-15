@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { UserAttributes } from "@type/model-attribute";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import { Avatar } from "antd";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import FollowButton from "./FollowButton";

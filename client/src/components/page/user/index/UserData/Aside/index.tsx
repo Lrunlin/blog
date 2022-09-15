@@ -3,7 +3,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import type { UserAttributes } from "@type/model-attribute";
 
 const Aside: FC<{ data: UserAttributes }> = props => {

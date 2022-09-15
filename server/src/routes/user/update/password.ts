@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
 

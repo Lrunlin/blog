@@ -16,7 +16,7 @@ const AuthorRanking = () => {
           {data &&
             data.map(item => (
               <div key={item.id} className="mt-2 py-2 flex">
-                <Avatar size={40} src={item.avatar_url}>
+                <Avatar size={40} src={item.avatar_url} alt="头像">
                   {(item.name as string).substring(0, 1).toLocaleUpperCase()}
                 </Avatar>
                 <div className="ml-2">

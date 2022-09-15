@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import DB from "@/db";
 import useID from "@/common/hooks/useId";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 import auth from "@/common/middleware/auth";
 
 const schema = Joi.object({

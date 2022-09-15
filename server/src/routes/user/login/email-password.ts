@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 const schema = Joi.object({
   email: Joi.string().min(5).max(30).required().email().error(new Error("邮箱格式不正确")),
   password: Joi.string()

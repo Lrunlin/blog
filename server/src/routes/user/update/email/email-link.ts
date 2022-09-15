@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 import auth from "@/common/middleware/auth";
 import sendEmail from "@/common/utils/email";
 import { getRemainingTTL, createKey, setUserEmail } from "@/common/modules/cache/update-email";

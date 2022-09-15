@@ -1,5 +1,5 @@
 import { useState, Fragment, useEffect } from "react";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import News from "@/components/common/Header/News";
 import Avatar from "@/components/common/Avatar";
 import Link from "next/link";

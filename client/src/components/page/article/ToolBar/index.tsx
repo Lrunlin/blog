@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { currentArticleDataContext } from "@/pages/article/[id]";
 import { useRecoilValue } from "recoil";
 import useUserData from "@/store/user-data";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import axios from "axios";

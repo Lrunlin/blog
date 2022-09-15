@@ -4,7 +4,7 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { commentEmojiActiveContext } from "./store";
 import { Avatar, Button, Input, message } from "antd";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import { useRouter } from "next/router";
 import loadStatic, { responseType } from "@/request/load-static";
 import data from "@emoji-mart/data";

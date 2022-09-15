@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import DB from "@/db";
 import getUserId from "@/common/middleware/getUserId";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 
 const schema = Joi.object({
   state: Joi.number().valid(0, 1, 2).error(new Error("state参数错误")),

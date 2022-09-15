@@ -3,7 +3,7 @@ import type { WhereOptions } from "sequelize";
 import { Op } from "sequelize";
 import { ArticleAttributes } from "@/db/models/init-models";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 import DB from "@/db";
 import getTagData from "@/common/utils/article/get/get-tag-data";
 import setDescription from "@/common/utils/article/get/set-description";

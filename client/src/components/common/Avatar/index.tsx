@@ -5,11 +5,12 @@ import useUserData from "@/store/user-data";
 import useSWR from "swr";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function Menu() {
   let router = useRouter();
   let [userData] = useUserData();
-  let { data,  isValidating } = useSWR(`achievement-user-${userData?.id}`, () =>
+  let { data, isValidating } = useSWR(`achievement-user-${userData?.id}`, () =>
     axios.get(`/achievement/${userData?.id}`).then(res => res.data.data)
   );
 
@@ -20,9 +21,11 @@ function Menu() {
     <div className="w-60 p-4 mb-6 bg-white rounded-xl shadow-md border border-solid border-gray-200">
       {/* 顶部 */}
       <div className="flex">
-        <div>
-          <Avatar size={48} src={userData?.avatar_url} alt="头像" />
-        </div>
+        <Link href={`/user/${userData?.id}`}>
+          <a>
+            <Avatar size={48} src={userData?.avatar_url} alt="头像" />
+          </a>
+        </Link>
         <div className="text-lg ml-4 truncate">{userData?.name}</div>
       </div>
       {/* 中间 */}
@@ -58,7 +61,7 @@ function Menu() {
           className="cursor-pointer"
           onClick={() => {
             localStorage.removeItem("token");
-            router.reload()
+            router.reload();
           }}
         >
           退出登录

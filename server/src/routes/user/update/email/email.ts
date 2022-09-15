@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 import { getUserEmail } from "@/common/modules/cache/update-email";
 import qs from "qs";
 import DB from "@/db";

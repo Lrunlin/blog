@@ -1,10 +1,15 @@
-import { Button, Divider, Skeleton, Empty, List } from "antd";
+import { Divider, Skeleton } from "antd";
 import useSWR from "swr";
 import axios from "axios";
 import useUserState from "@/store/user-state";
 import { Link, useNavigate } from "react-router-dom";
-
-
+import github from "@/assets/icon/github.svg";
+import dataIcon from "@/assets/icon/数据看板.svg";
+import homepage from "@/assets/icon/homepage.svg";
+import star from "@/assets/icon/star.svg";
+import fork from "@/assets/icon/fork.svg";
+import issues from "@/assets/icon/issues.svg";
+import watch from "@/assets/icon/watch.svg";
 
 /** 返回展示用户基本信息的打招呼用于*/
 function userMessage() {
@@ -49,7 +54,7 @@ const Index = () => {
           {data && (
             <div className="flex justify-between cursor-pointer">
               <div className="text-center" onClick={() => navigate("/statistics")}>
-                <img src="/src/assets/icon/数据看板.svg" alt="star" className="w-12 h-12" />
+                <img src={dataIcon} alt="data-icon" className="w-12 h-12" />
                 <div className="mt-1"> 数据分析</div>
               </div>
               <a
@@ -58,7 +63,7 @@ const Index = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src="/src/assets/icon/github.svg" alt="star" className="w-12 h-12" />
+                <img src={github} alt="github" className="w-12 h-12" />
                 <div className="mt-1">项目地址</div>
               </a>
               <a
@@ -67,23 +72,23 @@ const Index = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src="/src/assets/icon/homepage.svg" alt="star" className="w-12 h-12" />
+                <img src={homepage} alt="homepage" className="w-12 h-12" />
                 <div className="mt-1">网站首页</div>
               </a>
               <div className="text-center">
-                <img src="/src/assets/icon/star.svg" alt="star" className="w-12 h-12" />
+                <img src={star} alt="star" className="w-12 h-12" />
                 <div className="mt-1"> {data.repository_data.star_count}</div>
               </div>
               <div className="text-center">
-                <img src="/src/assets/icon/fork.svg" alt="star" className="w-12 h-12" />
+                <img src={fork} alt="fork" className="w-12 h-12" />
                 <div className="mt-1"> {data.repository_data.fork_count}</div>
               </div>
               <div className="text-center">
-                <img src="/src/assets/icon/issues.svg" alt="star" className="w-12 h-12" />
+                <img src={issues} alt="issues" className="w-12 h-12" />
                 <div className="mt-1"> {data.repository_data.issues_count}</div>
               </div>
               <div className="text-center">
-                <img src="/src/assets/icon/watch.svg" alt="star" className="w-12 h-12" />
+                <img src={watch} alt="watch" className="w-12 h-12" />
                 <div className="mt-1"> {data.repository_data.watch_count}</div>
               </div>
             </div>

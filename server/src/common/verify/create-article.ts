@@ -2,7 +2,7 @@ import Joi from "joi";
 import { cache } from "@/common/modules/cache/type";
 import { TagAttributes } from "@/db/models/init-models";
 import type { Context, Next } from "koa";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 
 let verifyState = Joi.object({
   state: Joi.number().valid(0, 1).error(new Error("State错误")),

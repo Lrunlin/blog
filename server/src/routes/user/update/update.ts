@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 
 const option = Joi.object({
   name: Joi.string().min(1).max(12).required().error(new Error("用户昵称格式错误")),

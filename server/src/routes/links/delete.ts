@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 import email from "@/common/utils/email";
 import sequelize from "@/db/config";
 

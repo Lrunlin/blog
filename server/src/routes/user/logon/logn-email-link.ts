@@ -7,7 +7,7 @@ import useId from "@/common/hooks/useId";
 let router = new Router();
 
 import Joi from "joi";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 const schema = Joi.object({
   key: Joi.string().length(40).required().error(new Error("干点正事")),
 });

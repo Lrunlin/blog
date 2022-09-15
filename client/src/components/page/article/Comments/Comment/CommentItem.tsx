@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import { Comment, Avatar, Image as AntdImage, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";

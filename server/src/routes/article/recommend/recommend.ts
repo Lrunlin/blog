@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import Joi from "joi";
 import auth from "@/common/middleware/auth";
-import validator from "@/common/middleware/validator";
+import validator from "@/common/middleware/verify/validator";
 
 import recommendArticleList from "@/common/utils/article/list/select/recommend";
 import typeArticleList from "@/common/utils/article/list/select/type";

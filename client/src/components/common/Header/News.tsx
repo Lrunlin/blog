@@ -1,5 +1,5 @@
 import type {  FC } from "react";
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import Link from "next/link";
 import classNames from "classnames";
 

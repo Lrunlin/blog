@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image from "@/components/next/Image";
 import { Dropdown } from "antd";
 import classNames from "classnames";
 import style from "./index.module.scss";
 import NoFollowLink from "@/components/next/NoFollowLink";
 
 interface listItemType {
-  key:string;
+  key: string;
   href?: string;
   label: JSX.Element | string;
   className?: string;
@@ -56,9 +56,13 @@ const Footer = () => {
               className={classNames([style["child-a-gray"], _index && "ml-2", "mt-1"])}
               key={_item.key}
             >
-              <NoFollowLink href={_item.href} className={_item.className}>
-                {_item.label}
-              </NoFollowLink>
+              {_item.href ? (
+                <NoFollowLink href={_item.href} className={_item.className}>
+                  {_item.label}
+                </NoFollowLink>
+              ) : (
+                <span className={_item.className}>{_item.label}</span>
+              )}
             </li>
           ))}
         </ul>
