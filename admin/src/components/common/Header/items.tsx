@@ -5,7 +5,6 @@ import {
   AppstoreAddOutlined,
   UsergroupAddOutlined,
   CommentOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -72,13 +71,8 @@ const items = [
   },
   {
     label: "评论列表",
-    href: "/comment",
+    href: "comment",
     icon: <CommentOutlined />,
-  },
-  {
-    label: "用户列表",
-    href: "/user",
-    icon: <UserOutlined />,
   },
 ];
 

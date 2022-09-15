@@ -6,8 +6,21 @@ let router = new Router();
 router.get("/user/data/:id", async ctx => {
   await DB.User.findByPk(ctx.params.id, {
     attributes: {
-      exclude: ["password"],
       include: [
+        "id",
+        "name",
+        "auth",
+        "email",
+        "github",
+        "qq",
+        "state",
+        "description",
+        "site",
+        "unit",
+        "location",
+        "avatar_file_name",
+        "avatar_url",
+        "create_time",
         [
           Sequelize.literal(
             `(SELECT COUNT(*) FROM article WHERE article.author = user.id and article.state=1)`

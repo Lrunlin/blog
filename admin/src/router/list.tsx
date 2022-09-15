@@ -69,12 +69,7 @@ const RouterList: RouterListType[] = [
       {
         path: "/comment",
         element: lazy(() => import("@/page/comment/index")),
-        title: "评论列表",
-      },
-      {
-        path: "/user",
-        element: lazy(() => import("@/page/user-list")),
-        title: "用户列表",
+        title: "友链列表",
       },
     ],
   },
@@ -84,6 +79,6 @@ interface RouterListType {
   path: string;
   element: LazyExoticComponent<FC<{}>>;
   children?: RouterListType[];
-  title?: string;
+  title?:string;
 }
 export type { RouterListType };
