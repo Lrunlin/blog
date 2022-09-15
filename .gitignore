@@ -10,3 +10,4 @@ dist
 **/env/**/production/**
 
 client/env/.env.production
+admin/**/.env.production
