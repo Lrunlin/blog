@@ -1,11 +1,11 @@
-import Image from "next/image";
 import { Dropdown } from "antd";
 import classNames from "classnames";
 import style from "./index.module.scss";
 import NoFollowLink from "@/components/next/NoFollowLink";
+import Image from "@/components/next/Image";
 
 interface listItemType {
-  key:string;
+  key: string;
   href?: string;
   label: JSX.Element | string;
   className?: string;
@@ -48,7 +48,7 @@ let list: listItemType[][] = [
 
 const Footer = () => {
   return (
-    <footer className="w-60">
+    <footer className="w-60 mt-4">
       {list.map((item, index) => (
         <ul className="p-0 m-0 text-sm list-none flex items-center" key={`footer-link-${index}`}>
           {item.map((_item, _index) => (
@@ -56,9 +56,15 @@ const Footer = () => {
               className={classNames([style["child-a-gray"], _index && "ml-2", "mt-1"])}
               key={_item.key}
             >
-              <NoFollowLink href={_item.href} className={_item.className}>
-                {_item.label}
-              </NoFollowLink>
+              {_item.href ? (
+                <NoFollowLink href={_item.href} className={_item.className}>
+                  {_item.label}
+                </NoFollowLink>
+              ) : (
+                <span className={classNames([_item.className, "cursor-pointer"])}>
+                  {_item.label}
+                </span>
+              )}
             </li>
           ))}
         </ul>
