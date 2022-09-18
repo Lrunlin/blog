@@ -2,12 +2,13 @@ import Router from "@koa/router";
 import DB from "@/db";
 import useId from "@/common/hooks/useId";
 import auth from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
 let router = new Router();
 
-router.post("/follow/:bogger_id", auth(0), async ctx => {
+router.post("/follow/:bogger_id", interger([], ["bogger_id"]), auth(0), async ctx => {
   let boggerID = +ctx.params.bogger_id;
 
-  if (boggerID==ctx.id) {
+  if (boggerID == ctx.id) {
     ctx.body = { success: false, message: "不能关注自己！！！" };
     return;
   }

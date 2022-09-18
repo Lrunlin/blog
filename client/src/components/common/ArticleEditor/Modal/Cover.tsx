@@ -61,6 +61,7 @@ const Cover = () => {
             authorization: localStorage.token,
           }}
           maxCount={1}
+          className="cursor-pointer"
         >
           <div className="w-[160px] h-[120px] border border-dashed border-slate-400 hover:border-blue-500 rounded flex items-center justify-center overflow-hidden">
             {fileList.length < 1 ? (

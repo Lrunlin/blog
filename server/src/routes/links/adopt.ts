@@ -3,10 +3,11 @@ import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import sequelize from "@/db/config";
 import sendEmail from "@/common/utils/email";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
 
-router.put("/links/:id", auth(0), async ctx => {
+router.put("/links/:id", interger([], ["id"]), auth(0), async ctx => {
   let id = ctx.params.id;
   let t = await sequelize.transaction();
   let updateResult = await DB.Links.update({ state: 1 }, { where: { id: id }, transaction: t })

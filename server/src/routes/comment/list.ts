@@ -1,8 +1,9 @@
 import Router from "@koa/router";
 import DB from "@/db";
+import interger from "@/common/verify/integer";
 let router = new Router();
 
-router.get("/comment/list/page/:page", async ctx => {
+router.get("/comment/list/page/:page", interger([], ["page"]), async ctx => {
   let page = +ctx.params.page;
 
   await DB.Comment.findAndCountAll({

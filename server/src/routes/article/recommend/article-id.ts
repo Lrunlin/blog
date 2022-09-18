@@ -4,6 +4,7 @@ import { Op } from "sequelize";
 import getTagData from "@/common/utils/article/get/get-tag-data";
 import type { TagAttributes, ArticleAttributes } from "@/db/models/init-models";
 import Sequelize from "@/db/config";
+import interger from "@/common/verify/integer";
 
 let articleAttribute = [
   "view_count",
@@ -32,7 +33,7 @@ let attributes = [
 let router = new Router();
 
 // 根据文章ID返回推荐文章
-router.get("/article/recommend/:id", async ctx => {
+router.get("/article/recommend/:id",interger([],['id']), async ctx => {
   let articleID = +ctx.params.id;
 
   let articleType = await DB.Article.findByPk(articleID, {

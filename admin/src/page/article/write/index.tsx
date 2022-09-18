@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import MarkDownEditor from "@/components/MarkDownEditor";
 import { Button, Form, Input, message, TreeSelect } from "antd";
 import axios from "axios";
@@ -9,6 +9,8 @@ import { useNavigate } from "react-router";
 // 不要吹灭你的灵感和你的想象力; 不要成为你的模型的奴隶。 ——文森特・梵高
 
 const Write = () => {
+  let { useForm } = Form;
+  let [form]=useForm()
   let navigate = useNavigate();
   const [load, setLoad] = useState(false);
   function onFinish(values: any) {
@@ -37,6 +39,7 @@ const Write = () => {
   return (
     <>
       <Form
+        form={form}
         initialValues={{
           description: null,
           cover_url: null,
@@ -91,7 +94,11 @@ const Write = () => {
           name="content"
           rules={[{ required: true, message: "内容不得为空" }]}
         >
-          <MarkDownEditor />
+          <div>
+            <MarkDownEditor onChange={(html)=>{
+              form.setFieldsValue({content:html})
+            }} />
+          </div>
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 2, span: 16 }}>

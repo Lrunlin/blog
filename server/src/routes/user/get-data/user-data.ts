@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import Sequelize from "@/db/config";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
-router.get("/user/data/:id", async ctx => {
+router.get("/user/data/:id",interger([],['id']), async ctx => {
   await DB.User.findByPk(ctx.params.id, {
     attributes: {
       exclude: ["password"],

@@ -15,13 +15,16 @@ import "@/styles/globals.scss";
 import dynamic from "next/dynamic";
 const Sign = dynamic(import("@/components/common/Header/Sign"), { ssr: false });
 
+import { SWRConfig } from "swr";
+
 function MyApp({ Component, pageProps }: AppProps) {
-  
   return (
     <>
       <RecoilRoot>
-        <Sign/>
-        <Component {...pageProps} />
+        <SWRConfig value={{ revalidateOnFocus: false }}>
+          <Sign />
+          <Component {...pageProps} />
+        </SWRConfig>
       </RecoilRoot>
     </>
   );

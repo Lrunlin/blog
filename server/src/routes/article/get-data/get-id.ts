@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-
+import interger from "@/common/verify/integer";
 import HTMLToMarkDown from "@/common/utils/article/get/html-to-markdown";
 import getCodeBlockLanguage from "@/common/utils/article/get/get-code-block-language";
 import imgPrefix from "@/common/utils/article/get/img-add-prefix";
@@ -9,7 +9,7 @@ import Sequelize from "@/db/config";
 
 let router = new Router();
 
-router.get("/article/:id",  async ctx => {
+router.get("/article/:id", interger([], ["id"]), async ctx => {
   let id = +ctx.params.id;
 
   await DB.Article.findByPk(id, {
@@ -22,17 +22,6 @@ router.get("/article/:id",  async ctx => {
     ],
     attributes: {
       include: [
-        "id",
-        "title",
-        "description",
-        "cover_file_name",
-        "cover_url",
-        "state",
-        "create_time",
-        "tag",
-        "content",
-        "view_count",
-        "update_time",
         [
           Sequelize.literal(`(SELECT COUNT(*) FROM comment WHERE comment.article_id = article.id)`),
           "comment_count",

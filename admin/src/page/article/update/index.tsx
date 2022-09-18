@@ -1,5 +1,5 @@
-import { useMemo, useEffect } from "react";
-import MarkDownEditor from "@/components/MarkDownEditor";
+import { useMemo, useEffect, useRef } from "react";
+import MarkDownEditor, { event } from "@/components/MarkDownEditor";
 import { Button, Form, Input, message, TreeSelect, Skeleton, Result, InputNumber } from "antd";
 import axios from "axios";
 import Upload from "@/components/UpLoad";
@@ -9,10 +9,13 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 
 const Update = () => {
+  let { useForm } = Form;
+  let [form] = useForm();
   let navigate = useNavigate();
   let params = useParams();
   let id = params.id;
   let { mutate } = useSWRConfig();
+  let event = useRef({} as event); //MD编辑器设置值
 
   /** 加载，获取文章内容*/
   let {
@@ -23,9 +26,15 @@ const Update = () => {
     revalidateOnMount: true,
   });
 
+  useEffect(() => {
+    if (response) {
+      event.current.setValue(response?.data?.data?.content);
+    }
+  }, [response]);
+
   /** 更新文章，提交*/
   function onFinish(values: any) {
-    axios.put(`/article/${id}`, {...values,state:1}).then(res => {
+    axios.put(`/article/${id}`, { ...values, state: 1 }).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         mutate(`/article/${id}`);
@@ -71,6 +80,7 @@ const Update = () => {
       )}
       {response && (
         <Form
+          form={form}
           initialValues={response.data.data}
           labelCol={{ span: 2 }}
           wrapperCol={{ span: 16 }}
@@ -129,12 +139,15 @@ const Update = () => {
             <Input placeholder="转载地址(原创文章则留空)" />
           </Form.Item>
 
-          <Form.Item
-            label="内容"
-            name="content"
-            rules={[{ required: true, message: "内容不得为空" }]}
-          >
-            <MarkDownEditor />
+          <Form.Item label="内容" rules={[{ required: true, message: "内容不得为空" }]}>
+            <div>
+              <MarkDownEditor
+                onChange={html => {
+                  form.setFieldsValue({ content: html });
+                }}
+                event={event}
+              />
+            </div>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 2, span: 16 }}>

@@ -20,8 +20,7 @@ http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
   let body = list.map(item => {
     return `
     <url>
-     <loc>${process.env.CLIENT_HOST}/${item.id ? `/article/${item.id}` : item.id}
-    </loc>
+     <loc>${process.env.CLIENT_HOST}/${item.id ? `article/${item.id}` : item.id}</loc>
      <priority>${item.priority || 0.8}</priority>
      <lastmod>${moment(item.lastmod || new Date()).format("YYYY-MM-DD")}</lastmod>
      <changefreq>weekly</changefreq>

@@ -2,8 +2,9 @@ import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import useID from "@/common/hooks/useId";
+import interger from "@/common/verify/integer";
 let router = new Router();
-router.post("/collection/:article_id", auth([0, 1]), async ctx => {
+router.post("/collection/:article_id", interger([], ["article_id"]), auth(0), async ctx => {
   let id = useID();
   let article_id = +ctx.params.article_id;
 

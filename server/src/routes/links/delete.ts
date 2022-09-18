@@ -5,6 +5,7 @@ import Joi from "joi";
 import validator from "@/common/middleware/verify/validator";
 import email from "@/common/utils/email";
 import sequelize from "@/db/config";
+import interger from "@/common/verify/integer";
 
 const schema = Joi.object({
   message: Joi.string().min(0).required().error(new Error("回复内容错误")),
@@ -12,7 +13,7 @@ const schema = Joi.object({
 
 let router = new Router();
 
-router.delete("/links/:id", validator(schema), auth(), async ctx => {
+router.delete("/links/:id", interger([], ["id"]), validator(schema), auth(), async ctx => {
   let message = ctx.query.message as string;
   let id = +(ctx.params.id as string);
   const t = await sequelize.transaction();

@@ -1,11 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
 
 /** 判断用户是否关注了某个博主*/
-router.get("/follow/state/:id", auth([0,1]), async ctx => {
+router.get("/follow/state/:id", interger([], ["id"]), auth(0), async ctx => {
   await DB.Follow.findAndCountAll({
     where: {
       blogger_id: ctx.params.id,

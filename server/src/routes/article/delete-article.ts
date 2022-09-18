@@ -2,10 +2,11 @@ import Router from "@koa/router";
 import auth from "@/common/middleware/auth";
 import DB from "@/db";
 import sequelize from "@/db/config";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
 
-router.delete("/article/:id", auth([0, 1]), async ctx => {
+router.delete("/article/:id",interger([],['id']), auth(0), async ctx => {
   let id = +ctx.params.id;
 
   try {

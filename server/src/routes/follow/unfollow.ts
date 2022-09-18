@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
 let router = new Router();
 
-router.delete("/follow/:bogger_id", auth([0, 1]), async ctx => {
+router.delete("/follow/:bogger_id", interger([], ["bogger_id"]), auth([0, 1]), async ctx => {
   let boggerID = +ctx.params.bogger_id;
 
   await DB.Follow.destroy({

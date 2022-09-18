@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import Joi from "joi";
 import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/verify/validator";
-
+import interger from "@/common/verify/integer";
 import recommendArticleList from "@/common/utils/article/list/select/recommend";
 import typeArticleList from "@/common/utils/article/list/select/type";
 import tagArticleList from "@/common/utils/article/list/select/tag";
@@ -54,7 +54,7 @@ router.get("/follow", validator(schema), auth([0, 1]), async ctx => {
 });
 
 // 根据类型查询
-router.get("/type/:id", validator(schema), async ctx => {
+router.get("/type/:id", interger([], ["id"]), validator(schema), async ctx => {
   let typeID = +(ctx.params.id as string);
 
   let page = +(ctx.query.page as string);
@@ -69,7 +69,7 @@ router.get("/type/:id", validator(schema), async ctx => {
   };
 });
 
-router.get("/tag/:id", validator(schema), async ctx => {
+router.get("/tag/:id", validator(schema), interger([], ["id"]), async ctx => {
   let tagID = +(ctx.params.id as string);
   let page = +(ctx.query.page as string);
   let data = sort(ctx.query.type as any, tagArticleList(tagID));

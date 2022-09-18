@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
-router.get("/collection/state/:article_id",auth([0,1]), async ctx => {
+router.get("/collection/state/:article_id", auth(0), interger([], ["article_id"]), async ctx => {
   await DB.Collection.findOne({
     where: {
       user_id: ctx.id,

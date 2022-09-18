@@ -2,9 +2,10 @@ import Router from "@koa/router";
 import DB from "@/db";
 import Sequelize from "@/db/config";
 import authMiddleware from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
-router.get("/user/list/:page", authMiddleware(), async ctx => {
+router.get("/user/list/:page", interger([], ["page"]), authMiddleware(), async ctx => {
   let page = +ctx.params.page;
   await DB.User.findAndCountAll({
     offset: (page - 1) * 10,

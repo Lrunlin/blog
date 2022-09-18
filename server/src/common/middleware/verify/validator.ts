@@ -1,4 +1,4 @@
-import type { ObjectSchema } from "Joi";
+import type { ObjectSchema } from "joi";
 import type { Context, Next } from "koa";
 
 /** 对query和body的参数进行验证*/

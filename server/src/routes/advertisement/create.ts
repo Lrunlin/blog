@@ -2,8 +2,11 @@ import Router from "@koa/router";
 import DB from "@/db";
 import useID from "@/common/hooks/useId";
 import auth from "@/common/middleware/auth";
+import verify from "@/common/verify/api-verify/advertisement/create-update";
+
 let router = new Router();
-router.post("/advertisement", auth(1), async ctx => {
+
+router.post("/advertisement", verify, auth(), async ctx => {
   let { poster_file_name, url, indexes, position } = ctx.request.body;
   let id = useID();
 

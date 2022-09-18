@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
+    "koa-compose": "^4.1.0",
     "koa-static": "^5.0.0",
     "koa-websocket": "^7.0.0",
     "lru-cache": "^7.10.1",

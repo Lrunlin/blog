@@ -1,6 +1,7 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import type { Comment } from "@/db/models/init-models";
+import interger from "@/common/verify/integer";
 let router = new Router();
 
 function createCommentTree(data: Comment[]) {
@@ -39,7 +40,7 @@ function createCommentTree(data: Comment[]) {
   return list;
 }
 
-router.get("/comment/list/:article_id", async ctx => {
+router.get("/comment/list/:article_id", interger([], ["article_id"]), async ctx => {
   let articleID = ctx.params.article_id;
   let commentList = await DB.Comment.findAll({
     where: { article_id: articleID },

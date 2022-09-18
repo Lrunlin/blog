@@ -34,7 +34,7 @@ const Type = () => {
             >
               <div
                 className={classNames([
-                  "w-full py-2 rounded text-gray-500 text-center hover:bg-gray-200",
+                  "w-full py-2 rounded text-gray-500 text-center hover:bg-gray-200 cursor-pointer",
                   index > 3 && "mt-2",
                   type == item.id ? "bg-gray-200" : "bg-gray-100",
                 ])}
@@ -49,10 +49,11 @@ const Type = () => {
         {data &&
           data
             ?.find(item => item.id == type)
-            ?.children.map(item => (
+            ?.children.map((item, index) => (
               <div
                 className={classNames([
-                  "w-1/5 h-full py-1 ml-1 rounded text-gray-500 text-center hover:bg-gray-200",
+                  "w-1/5 h-full py-1 ml-1 rounded text-gray-500 text-center hover:bg-gray-200 cursor-pointer",
+                  index > 3 && "mt-2",
                   articleData.tag.includes(item.id) ? "bg-gray-200" : "bg-gray-100",
                 ])}
                 key={`article-write-tag-${item.id}`}

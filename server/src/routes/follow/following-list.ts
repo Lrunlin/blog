@@ -1,11 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
+import integer from "@/common/verify/integer";
 import getUserId from "@/common/middleware/getUserId";
 
 let router = new Router();
 
 // 用户的关注列表
-router.get("/followimg/:user_id", getUserId, async ctx => {
+router.get("/followimg/:user_id", integer(["page"], ["user_id"]), getUserId, async ctx => {
   let userID = ctx.params.user_id;
   let page = +(ctx.query.page as unknown as string);
 

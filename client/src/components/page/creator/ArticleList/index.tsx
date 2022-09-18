@@ -114,7 +114,7 @@ const ContentArticleList: FC<propsType> = ({ state }) => {
                         placement="bottom"
                         arrow
                       >
-                        <span className="px-1 hover:bg-gray-300 rounded-sm duration-200">
+                        <span className="px-1 hover:bg-gray-300 rounded-sm duration-200 cursor-pointer">
                           <DashOutlined />
                         </span>
                       </Dropdown>

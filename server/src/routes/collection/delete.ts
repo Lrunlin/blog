@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
-router.delete("/collection/:article_id", auth([0, 1]), async ctx => {
+router.delete("/collection/:article_id", interger([], ["article_id"]), auth(0), async ctx => {
   let article_id = +ctx.params.article_id;
 
   await DB.Collection.destroy({

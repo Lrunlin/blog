@@ -1,9 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
+import verify from "@/common/verify/api-verify/advertisement/create-update";
+
 let router = new Router();
 
-router.put("/advertisement/:id", auth(1), async ctx => {
+router.put("/advertisement/:id",verify, interger([], ["id"]), auth(), async ctx => {
   let { poster_file_name, url, indexes, position } = ctx.request.body;
 
   await DB.Advertisement.update(

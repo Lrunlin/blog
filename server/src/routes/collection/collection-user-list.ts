@@ -3,11 +3,11 @@ import DB from "@/db";
 import getTagData from "@/common/utils/article/get/get-tag-data";
 import setDescription from "@/common/utils/article/get/set-description";
 import Sequelize from "@/db/config";
-
+import integer from "@/common/verify/integer";
 let router = new Router();
 
 // 查询指定用户收藏的文章
-router.get("/collection/:user_id", async ctx => {
+router.get("/collection/:user_id", integer([], ["user_id"]), async ctx => {
   let page = +(ctx.query.page as string) || 1;
 
   let { count: collectionCount, rows: collectionList } = await DB.Collection.findAndCountAll({

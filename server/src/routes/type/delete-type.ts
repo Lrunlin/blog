@@ -1,8 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
+import interger from "@/common/verify/integer";
+import authMiddleware from "@/common/middleware/auth";
 
 let router = new Router();
-router.delete("/type/:id", async ctx => {
+router.delete("/type/:id", interger([], ["id"]),authMiddleware(), async ctx => {
   let { id } = ctx.params;
 
   let { count } = await DB.Tag.findAndCountAll({

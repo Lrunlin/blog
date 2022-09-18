@@ -11,7 +11,6 @@ let positionMapping = {
 function Position(position: keyof typeof positionMapping) {
   return positionMapping[position];
 }
-
 const APP = () => {
   let { data, error, isValidating } = useSWR("/advertisement/list", () =>
     axios.get("/advertisement").then(res => res.data.data)

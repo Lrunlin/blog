@@ -2,10 +2,12 @@ import Router from "@koa/router";
 import DB from "@/db";
 import sequelize from "@/db/config";
 import { Op } from "sequelize";
+import interger from "@/common/verify/integer";
+import authMiddleware from "@/common/middleware/auth";
 
 let router = new Router();
 
-router.delete("/tag/:id", async ctx => {
+router.delete("/tag/:id", interger([], ["id"]),authMiddleware(), async ctx => {
   let { id } = ctx.params;
   const t = await sequelize.transaction();
   let deleteTagCount = await DB.Tag.destroy({

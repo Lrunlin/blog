@@ -11,7 +11,7 @@ const option = Joi.object({
   email: Joi.string().email(),
 });
 // 发送修改邮箱的链接
-router.put("/user/email", auth([0, 1]), validator(option), async ctx => {
+router.put("/user/email", auth(0), validator(option), async ctx => {
   let { email } = ctx.request.body;
   //   检测要求缓存中没有保存链接或者链接时间小于5分钟
   if (getRemainingTTL(ctx.id as number) > 300_000) {

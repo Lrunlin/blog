@@ -1,12 +1,13 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import interger from "@/common/verify/integer";
 import { Op } from "sequelize";
 import qs from "qs";
 import getTagData from "@/common/utils/article/get/get-tag-data";
 
 let router = new Router();
-router.get("/article/page/:page", auth(1), async ctx => {
+router.get("/article/page/:page", interger([], ["page"]), auth(), async ctx => {
   let page = +ctx.params.page;
   let query = qs.parse(ctx.querystring);
   let pageSize = query.page_size ? +query.page_size : 10;

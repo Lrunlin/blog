@@ -2,10 +2,10 @@ import Router from "@koa/router";
 import DB from "@/db";
 import useID from "@/common/hooks/useId";
 import auth from "@/common/middleware/auth";
-import { verifyStateMiddleware, verifyParamsMiddleware } from "@/common/verify/create-article";
+import verify from "@/common/verify/api-verify/article/create-article";
 
 let router = new Router();
-router.post("/article", auth([0]), verifyStateMiddleware, verifyParamsMiddleware, async ctx => {
+router.post("/article", auth(0), verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, state } = ctx.request.body;
 
   let id = useID();

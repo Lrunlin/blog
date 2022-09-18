@@ -1,8 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
+import interger from "@/common/verify/integer";
+import authMiddleware from "@/common/middleware/auth";
 let router = new Router();
 
-router.put("/tag/:id", async ctx => {
+router.put("/tag/:id", interger([], ["id"]),authMiddleware(), async ctx => {
   let { name, indexes, icon_file_name, belong } = ctx.request.body;
   let { id } = ctx.params;
   await DB.Tag.update(

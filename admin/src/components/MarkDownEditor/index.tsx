@@ -1,4 +1,5 @@
-import { FC, memo, useState, useEffect, useRef } from "react";
+import { memo, useState, useImperativeHandle } from "react";
+import type { FC, MutableRefObject } from "react";
 import axios from "axios";
 import { message } from "antd";
 import { Editor } from "@bytemd/react";
@@ -10,23 +11,26 @@ import LanguageListPlugin from "./LanguageListPlugin";
 import "bytemd/dist/index.css";
 import "./index.css";
 
-
-
+export type event = { setValue: (md: string) => void };
 interface propsType {
   value?: string;
   onChange?: (val: string) => void;
+  event?: MutableRefObject<event>;
 }
+
+/**
+ * MarkDown插件
+ * 在Form表单中使用时，需要使用Div包裹并使用setValue和onChange进行手动值设置
+ */
 const MarkDonwEdit: FC<propsType> = memo(props => {
   const [value, setValue] = useState("");
 
-  //如果传来初始值就设置初始化值,并在只在第一次props.value变化时设置
-  let setContentCount = useRef(0);
-  useEffect(() => {
-    if (props.value && !setContentCount.current) {
-      setValue((props.value));
-      setContentCount.current++;
-    }
-  }, [props.value]);
+  useImperativeHandle(props.event, () => ({
+    setValue: (md: string) => {
+      setValue(md);
+    },
+  }));
+
   return (
     <Editor
       locale={zhHans as any}
@@ -51,7 +55,7 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
             return [
               {
                 url: res.data.data.file_href,
-                alt:''
+                alt: "",
               },
             ];
           })

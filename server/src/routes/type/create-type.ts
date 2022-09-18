@@ -1,10 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import id from "@/common/hooks/useId";
+import authMiddleware from "@/common/middleware/auth";
 
 let router = new Router();
 
-router.post("/type", async ctx => {
+router.post("/type",authMiddleware(), async ctx => {
   let { name, description, icon_file_name } = ctx.request.body;
 
   let indexes = await DB.Type.findAndCountAll();

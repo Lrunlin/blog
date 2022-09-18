@@ -29,12 +29,14 @@ const Search: NextPage<propsType> = ({ keyword }) => {
 
   return (
     <Layout className="container-xs">
-      <ArticleList
-        keyword={keyword}
-        list={data}
-        total={total}
-        loadMoreData={() => setPage(_page => ++_page)}
-      />
+      <div className="w-full">
+        <ArticleList
+          keyword={keyword}
+          list={data}
+          total={total}
+          loadMoreData={() => setPage(_page => ++_page)}
+        />
+      </div>
     </Layout>
   );
 };

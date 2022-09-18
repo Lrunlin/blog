@@ -2,18 +2,12 @@ import Router from "@koa/router";
 import type { WhereOptions } from "sequelize";
 import { Op } from "sequelize";
 import { ArticleAttributes } from "@/db/models/init-models";
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validator";
 import DB from "@/db";
 import getTagData from "@/common/utils/article/get/get-tag-data";
 import setDescription from "@/common/utils/article/get/set-description";
 import Sequelize from "@/db/config";
+import verify from "@/common/verify/api-verify/article/list";
 
-const schema = Joi.object({
-  author: Joi.number().min(1).error(new Error("ID格式错误")),
-  state: Joi.number().min(0).max(1).error(new Error("文章状态错误")),
-  keyword: Joi.string().min(1).max(30).error(new Error("文章状态错误")),
-});
 let articleAttribute = [
   "view_count",
   "update_time",
@@ -40,7 +34,7 @@ let attributes = [
 
 let router = new Router();
 /** 根据前端传递的Query参数进行文章分页查询*/
-router.get("/article/list/page/:page", validator(schema), async ctx => {
+router.get("/article/list/page/:page", verify,  async ctx => {
   let page = +ctx.params.page;
   let where: WhereOptions<ArticleAttributes> = {};
   let { state, author, keyword } = ctx.query;

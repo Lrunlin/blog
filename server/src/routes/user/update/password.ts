@@ -15,7 +15,7 @@ const schema = Joi.object({
 
 let router = new Router();
 // 修改密码
-router.put("/user/password", validator(schema), auth([0, 1]), async ctx => {
+router.put("/user/password", validator(schema), auth(0), async ctx => {
   let { password } = ctx.request.body;
   let userData = await DB.User.findByPk(ctx.id, { attributes: ["password"] });
   if (userData?.password == password) {
