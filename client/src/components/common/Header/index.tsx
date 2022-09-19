@@ -13,7 +13,7 @@ const Header = () => {
       if (scrollY > 600 && !isShrink) {
         setIsShrink(true);
       }
-      if (scrollY < 600 && isShrink) {
+      if (scrollY < 620 && isShrink) {
         setIsShrink(false);
       }
     };

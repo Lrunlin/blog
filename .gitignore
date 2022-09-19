@@ -6,8 +6,8 @@ dist
 *.local
 
 
-**/env/**/development/**
-**/env/**/production/**
+server/**/.env.development
+server/**/.env.production
 
 client/env/.env.production
 admin/**/.env.production

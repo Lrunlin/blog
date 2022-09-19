@@ -38,7 +38,7 @@ const Sign = () => {
     <>
       <Modal
         title={<b>{ComponentsValue ? componentsList[ComponentsValue].title : ""}</b>}
-        visible={!!ComponentsValue}
+        open={!!ComponentsValue}
         width={315}
         footer={null}
         onCancel={() => setComponentsValue(false)}

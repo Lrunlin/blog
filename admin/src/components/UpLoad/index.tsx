@@ -63,7 +63,7 @@ const App: React.FC<PropsType> = memo(props => {
   return (
     <>
       <Modal
-        visible={!!previewImageSrc}
+        open={!!previewImageSrc}
         title="图片预览"
         footer={null}
         onCancel={() => setPreviewImageSrc("")}

@@ -115,7 +115,7 @@ const LinksList = () => {
       </div>
       <Modal
         title="确定删除友链"
-        visible={!!deleteLinksID}
+        open={!!deleteLinksID}
         onOk={remove}
         onCancel={() => setDeleteLinksID(null)}
         cancelText="取消"

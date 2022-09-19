@@ -43,7 +43,6 @@ import getAllRouter from "@/common/modules/getAllRouter";
   });
 })();
 
-
 // 执行定时任务
-import start from '@/common/worker'
-start()
+import start from "@/common/worker";
+start();

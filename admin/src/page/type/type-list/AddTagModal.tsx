@@ -44,7 +44,7 @@ const AddTypeModal: FC<PropsType> = props => {
     <>
       <Modal
         title="标签添加"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
         destroyOnClose={true}

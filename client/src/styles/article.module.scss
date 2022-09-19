@@ -1,0 +1,25 @@
+.article {
+  img {
+    max-width: 100%;
+    min-width: 30%;
+  }
+  //代码块
+  pre[class*="language-"] {
+    border-radius: 3px;
+  }
+  ul {
+    padding-left: 10px;
+    list-style-type: none;
+  }
+  ol {
+    padding-left: 10px;
+  }
+  p {
+    margin: 18px 0px;
+    code{
+        background-color: #cae5ff;
+        padding: 1px 3px;
+        border-radius: 3px;
+    }
+  }
+}

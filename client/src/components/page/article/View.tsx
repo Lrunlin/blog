@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import type { FC } from "react";
 import axios from "axios";
 import Script from "next/script";
+import style from "@/styles/article.module.scss";
 
 interface prposType {
   content: string;
@@ -36,15 +37,23 @@ const View: FC<prposType> = props => {
   }, []);
   return (
     <>
-      <link
-        rel="stylesheet"
-        href={`${axios.defaults.baseURL}/high-light/css?languages=${props.language?.join(",")}`}
-      />
-      <Script
-        strategy="afterInteractive"
-        src={`${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`}
-      />
-      <div id="view" dangerouslySetInnerHTML={{ __html: props.content }}></div>
+      {props.language && (
+        <>
+          <link
+            rel="stylesheet"
+            href={`${axios.defaults.baseURL}/high-light/css?languages=${props.language?.join(",")}`}
+          />
+          <Script
+            strategy="afterInteractive"
+            src={`${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`}
+          />
+        </>
+      )}
+      <div
+        id="view"
+        className={style.article}
+        dangerouslySetInnerHTML={{ __html: props.content }}
+      ></div>
     </>
   );
 };

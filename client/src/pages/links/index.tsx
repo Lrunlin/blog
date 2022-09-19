@@ -49,7 +49,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
       <Header />
       <Modal
         title="友链申请"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={() => form.submit()}
         onCancel={() => setIsModalVisible(false)}
         okText="发出申请"
@@ -58,7 +58,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
         <Collapse className="select-none">
           <Collapse.Panel header="点击查看本站信息" key="1">
             {siteData.map(item => (
-              <div className="mt-2 flex select-text">
+              <div className="mt-2 flex select-text" key={item.value+item.label}>
                 <div className="w-20 text-right">{item.label}:</div>
                 <div className="ml-2">{item.value}</div>
               </div>

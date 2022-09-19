@@ -47,7 +47,7 @@ const UpdateEmailModal: FC<propsType> = props => {
     <>
       <Modal
         title="修改邮箱"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={() => form.submit()}
         onCancel={() => setIsModalVisible(false)}
         cancelText="取消修改"

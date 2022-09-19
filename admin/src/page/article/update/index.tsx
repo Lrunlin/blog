@@ -139,7 +139,11 @@ const Update = () => {
             <Input placeholder="转载地址(原创文章则留空)" />
           </Form.Item>
 
-          <Form.Item label="内容" rules={[{ required: true, message: "内容不得为空" }]}>
+          <Form.Item
+            label="内容"
+            name="content"
+            rules={[{ required: true, message: "内容不得为空" }]}
+          >
             <div>
               <MarkDownEditor
                 onChange={html => {
