@@ -13,7 +13,7 @@ let verifyState = Joi.object({
 });
 
 const article = Joi.object({
-  title: Joi.string().min(1).max(50).required().error(new Error("标题为1-50的字符串")),
+  title: Joi.string().min(3).max(200).required().error(new Error("标题为1-50的字符串")),
   description: Joi.string()
     .allow("")
     .max(200)
@@ -42,7 +42,7 @@ const article = Joi.object({
 });
 
 const drafts = Joi.object({
-  title: Joi.string().min(1).max(50).required().error(new Error("标题为1-50的字符串")),
+  title: Joi.string().min(3).max(200).required().error(new Error("标题为1-50的字符串")),
   description: Joi.string()
     .allow("")
     .max(200)

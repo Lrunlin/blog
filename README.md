@@ -6,14 +6,14 @@
 
 ## 技术栈
 
-用户端:Next.js+TypeScript+Ant Design+Tailwind CSS 
+用户端:Next.js+TypeScript+Ant Design+Tailwind CSS  
 管理系统:React18+TypeScript+Vite+Ant Design+Tailwind CSS  
 服务端:TypeScript+Koa2+Sequelize(ORM)  
 数据库:MySQL(InnoDB)+Redis  
 
 前端状态管理采用Recoil
 API接口文档使用Apifox
-Token黑名单使用Redis缓存，其他数据使用LRU-cache缓存。  
+Token黑名单、Next.js页面渲染结果使用Redis缓存，其他数据使用LRU-cache缓存。  
 
 ## 其他版本
 
@@ -29,9 +29,6 @@ Token黑名单使用Redis缓存，其他数据使用LRU-cache缓存。
 2. **[GitHub 仓库地址:https://github.com/Lrunlin/blog](https://github.com/Lrunlin/blog "GitHub仓库作为主仓库")**
 3. **[Gitee 仓库地址:https://gitee.com/awebcoder/blog](https://gitee.com/awebcoder/blog "Gitee仓库只做同步镜像不进行回复")**
 
-<p id="to">注:</p>
-
-**_Node.js 版本推荐使用 16,同时推荐使用 yarn 作为包管理器(未来会对 Node 版本进行升级)_**
 
 ## 功能
 
@@ -64,15 +61,19 @@ Token黑名单使用Redis缓存，其他数据使用LRU-cache缓存。
 
 1. 积分功能
 2. 小组功能
-3. 用户端去 ant design
-4. 文章主题模式
-
-前期使用组件库快速搭建用户端页面，后期进行美化以及去Antd  
+3. 前期使用组件库快速搭建用户端页面，后期进行美化以及去Antd 
+4. 文章页面主题模式
 
 ## 开发环境启动
 
-_关于项目启动环境见[文档顶部说明](#to)_
+**_Node.js 版本推荐使用 16,同时推荐使用 yarn 作为包管理器(未来会对 Node 版本进行升级)_**
 
+### 环境变量
+1. admin文件夹在根目录创建.env.production文件并按照.env.development填写完整
+2. client文件夹在env文件夹中.env.production文件并按照.env.development填写完整
+3. server文件夹在env文件夹中向两个env开头的文件重命名经env替换为.env后填写完整
+
+### 启动
 0. 导入 SQL 文件
 1. npm install yarn -g _(如果有 yarn 请忽略)_
 2. 点击 install.bat 自动安装依赖 _(完成后关闭 cmd 窗口)_

@@ -7,6 +7,15 @@
   pre[class*="language-"] {
     border-radius: 3px;
   }
+  pre {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+  }
+  blockquote {
+    border-left:5px solid #cae5ff !important;
+    padding-left: 5px;
+    border-radius: 3px !important;
+  }
   ul {
     padding-left: 10px;
     list-style-type: none;
@@ -16,10 +25,10 @@
   }
   p {
     margin: 18px 0px;
-    code{
-        background-color: #cae5ff;
-        padding: 1px 3px;
-        border-radius: 3px;
+    code {
+      background-color: #cae5ff;
+      padding: 1px 3px;
+      border-radius: 3px;
     }
   }
 }

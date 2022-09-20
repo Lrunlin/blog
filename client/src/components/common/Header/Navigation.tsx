@@ -10,6 +10,9 @@ const Navigation = () => {
       <ActiveLink href="/" className="ml-4 text-zinc-800">
         首页
       </ActiveLink>
+      <ActiveLink href="/links" className="ml-4 text-zinc-800">
+        友情链接
+      </ActiveLink>
     </nav>
   );
 };

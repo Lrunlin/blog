@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 
 const Write = () => {
   let { useForm } = Form;
-  let [form]=useForm()
+  let [form] = useForm();
   let navigate = useNavigate();
   const [load, setLoad] = useState(false);
   function onFinish(values: any) {
@@ -51,8 +51,15 @@ const Write = () => {
         autoComplete="off"
         validateTrigger="onSubmit"
       >
-        <Form.Item label="标题" name="title" rules={[{ required: true, message: "请填写标题" }]}>
-          <Input placeholder="填写网站标题" maxLength={50} />
+        <Form.Item
+          label="标题"
+          name="title"
+          rules={[
+            { required: true, message: "请填写标题" },
+            { type: "string", min: 3, max: 200, message: "标题长度在3-200之间" },
+          ]}
+        >
+          <Input placeholder="填写网站标题" maxLength={200} />
         </Form.Item>
         <Form.Item
           label="标签"
@@ -95,9 +102,11 @@ const Write = () => {
           rules={[{ required: true, message: "内容不得为空" }]}
         >
           <div>
-            <MarkDownEditor onChange={(html)=>{
-              form.setFieldsValue({content:html})
-            }} />
+            <MarkDownEditor
+              onChange={html => {
+                form.setFieldsValue({ content: html });
+              }}
+            />
           </div>
         </Form.Item>
 
