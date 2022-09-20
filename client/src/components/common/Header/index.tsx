@@ -10,10 +10,11 @@ const Header = () => {
   useEffect(() => {
     const scrollSwitch = () => {
       let scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+      // 大于600缩回，小于540伸出
       if (scrollY > 600 && !isShrink) {
         setIsShrink(true);
       }
-      if (scrollY < 620 && isShrink) {
+      if (scrollY < 540 && isShrink) {
         setIsShrink(false);
       }
     };

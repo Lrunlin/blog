@@ -6,6 +6,8 @@ declare module "bytemd/lib/locales/*" {
 interface ImportMetaEnv {
   /** API接口地址*/
   readonly VITE_API_HOST: string;
+  /** 网站名称*/
+  readonly VITE_SITE_NAME: string;
 }
 
 interface ImportMeta {
