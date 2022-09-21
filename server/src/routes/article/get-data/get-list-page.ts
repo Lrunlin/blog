@@ -22,7 +22,7 @@ router.get("/article/page/:page", interger([], ["page"]), auth(), async ctx => {
     };
   }
   if (query.article_id) {
-    where.id = query.article_id;
+    where.id = (query.article_id as string).replace(/ /g, "");
   }
   if (query.author_id) {
     where.author = query.author_id;

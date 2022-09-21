@@ -17,10 +17,7 @@ const Base: FC<propsType> = props => {
     <>
       <Header />
       {props.brow}
-      <div
-        id="blogweb.cn"
-        className={classNames(["bg-[#f4f5f5]", "pt-2", props.containerClassName])}
-      >
+      <div className={classNames(["bg-[#f4f5f5]", "pt-2", props.containerClassName])}>
         <main
           className={classNames([
             "max-w-[1160px]",

@@ -1,11 +1,10 @@
 import Joi from "joi";
-import { cache } from "@/common/modules/cache/type";
-import { TagAttributes } from "@/db/models/init-models";
 import type { Context, Next } from "koa";
 import { urlAllowNull } from "../../modules/url";
 import { fileNameAllowNull } from "../../modules/file-name";
 import validator from "@/common/middleware/verify/validator";
 import compose from "koa-compose";
+import tag from '@/common/verify/modules/tag'
 
 let verifyState = Joi.object({
   state: Joi.number().valid(0, 1).error(new Error("State错误")),
@@ -23,20 +22,7 @@ let article = Joi.object({
   cover_file_name: fileNameAllowNull,
   reprint: urlAllowNull,
   state: Joi.number().valid(1).error(new Error("state错误")),
-  tag: Joi.array()
-    .items(Joi.number().required())
-    .min(1)
-    .max(6)
-    .required()
-    .error(new Error("网站标签为1-5个"))
-    .custom((value: number[], helper) => {
-      let tags = cache.get("tag") as Array<TagAttributes>;
-      if (value.every(item => tags.some(_item => _item.id == item))) {
-        return true;
-      } else {
-        return helper.message(new Error("tag_id不在数据表内") as any);
-      }
-    }),
+  tag: tag,
   content: Joi.string().min(20).required().error(new Error("文章内容为最短20的HTML字符串")),
 });
 
@@ -69,19 +55,7 @@ let drafts = Joi.object({
     .pattern(/^https:\/\/.*/)
     .error(new Error("转载地址为10-100的字符串，要求为https网址")),
   state: Joi.number().valid(0).error(new Error("state错误")),
-  tag: Joi.array()
-    .items(Joi.number())
-    .max(6)
-    .required()
-    .error(new Error("网站标签填写错误"))
-    .custom((value: number[], helper) => {
-      let tags = cache.get("tag") as Array<TagAttributes>;
-      if (value.every(item => tags.some(_item => _item.id == item))) {
-        return true;
-      } else {
-        return helper.message(new Error("tag_id不在数据表内") as any);
-      }
-    }),
+  tag: tag,
   content: Joi.string().min(20).error(new Error("文章内容为最短20的HTML字符串")),
 });
 

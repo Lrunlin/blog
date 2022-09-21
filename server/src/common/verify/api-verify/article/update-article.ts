@@ -1,12 +1,11 @@
 import compose from "koa-compose";
 import Joi from "joi";
-import { cache } from "@/common/modules/cache/type";
-import { TagAttributes } from "@/db/models/init-models";
 import type { Context, Next } from "koa";
 import validator from "@/common/middleware/verify/validator";
 import { urlAllowNull } from "../../modules/url";
 import { fileNameAllowNull } from "../../modules/file-name";
 import interger from "@/common/verify/integer";
+import tag from "@/common/verify/modules/tag";
 
 let verifyState = Joi.object({
   state: Joi.number().valid(0, 1).error(new Error("State错误")),
@@ -24,20 +23,7 @@ const article = Joi.object({
   view_count: Joi.number().min(0).error(new Error("文章阅读量大于0的数字")),
   reprint: urlAllowNull,
   state: Joi.number().valid(1).error(new Error("state错误")),
-  tag: Joi.array()
-    .items(Joi.number().required())
-    .min(1)
-    .max(6)
-    .required()
-    .error(new Error("网站标签为1-5个"))
-    .custom((value: number[], helper) => {
-      let tags = cache.get("tag") as Array<TagAttributes>;
-      if (value.every(item => tags.some(_item => _item.id == item))) {
-        return true;
-      } else {
-        return helper.message(new Error("tag_id不在数据表内") as any);
-      }
-    }),
+  tag: tag,
   content: Joi.string().min(20).required().error(new Error("文章内容为最短20的HTML字符串")),
 });
 
@@ -53,19 +39,7 @@ const drafts = Joi.object({
   view_count: Joi.number().min(0).error(new Error("文章阅读量大于0的数字")),
   reprint: urlAllowNull,
   state: Joi.number().valid(0).error(new Error("state错误")),
-  tag: Joi.array()
-    .items(Joi.number())
-    .max(6)
-    .required()
-    .error(new Error("网站标签为1-5个"))
-    .custom((value: number[], helper) => {
-      let tags = cache.get("tag") as Array<TagAttributes>;
-      if (value.every(item => tags.some(_item => _item.id == item))) {
-        return true;
-      } else {
-        return helper.message(new Error("tag_id不在数据表内") as any);
-      }
-    }),
+  tag: tag,
   content: Joi.string().min(20).required().error(new Error("文章内容为最短20的HTML字符串")),
 });
 
@@ -79,8 +53,4 @@ async function validatorMiddleware3(ctx: Context, next: Next) {
   return validator(ctx.request.body.state == 1 ? article : drafts)(ctx, next);
 }
 
-export default compose([
-  validatorMiddleware1,
-  validatorMiddleware2,
-  validatorMiddleware3,
-]);
+export default compose([validatorMiddleware1, validatorMiddleware2, validatorMiddleware3]);

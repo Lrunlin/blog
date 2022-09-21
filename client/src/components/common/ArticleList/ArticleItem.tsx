@@ -31,10 +31,10 @@ const ArticleItem: FC<propsType> = props => {
           </span>
         </span>
         <span>
-          {data.tag.slice(0, 2).map(item => (
+          {data.tag.slice(0, 2).map((item, index) => (
             <a
               className={classNames(["text-[#86909c]", style.tag])}
-              key={`tag${data.id}${item.name}`}
+              key={`tag${data.id}${item.name}${index}`}
               href={`/tag/${item.name}`}
               target="_blank"
             >

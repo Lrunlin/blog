@@ -71,7 +71,7 @@ Token黑名单、Next.js页面渲染结果使用Redis缓存，其他数据使用
 ### 环境变量
 1. admin文件夹在根目录创建.env.production文件并按照.env.development填写完整
 2. client文件夹在env文件夹中.env.production文件并按照.env.development填写完整
-3. server文件夹在env文件夹中向两个env开头的文件重命名经env替换为.env后填写完整
+3. server文件夹在env文件夹中向两个env开头的文件重命名,将env替换为.env后填写完整
 
 ### 启动
 0. 导入 SQL 文件

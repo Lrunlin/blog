@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
 import { articleListDataContext } from "./index";
 import classNames from "classnames";
+import king from "@/assets/icon/king.svg";
+
 
 export const tableOptionContext = atom({
   key: "table-option",
@@ -54,11 +56,7 @@ const TableCom = () => {
               count={
                 author_data.auth == 1 && (
                   <div>
-                    <img
-                      src="/src/assets/king.svg"
-                      className="w-4 h-4"
-                      style={{ transform: "rotate(45deg)" }}
-                    />
+                    <img src={king} className="w-4 h-4" style={{ transform: "rotate(45deg)" }} />
                   </div>
                 )
               }
