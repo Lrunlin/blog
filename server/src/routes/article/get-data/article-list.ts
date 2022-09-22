@@ -34,12 +34,27 @@ let attributes = [
 
 let router = new Router();
 /** 根据前端传递的Query参数进行文章分页查询*/
-router.get("/article/list/page/:page", verify,  async ctx => {
+router.get("/article/list/page/:page", verify, async ctx => {
   let page = +ctx.params.page;
   let where: WhereOptions<ArticleAttributes> = {};
-  let { state, author, keyword } = ctx.query;
+  let { state, author, keyword, tag } = ctx.query;
   state && (where.state = state);
   author && (where.author = author);
+
+  if (tag) {
+    await DB.Tag.findOne({
+      where: {
+        name: tag,
+      },
+      attributes: ["id"],
+    })
+      .then(row => {
+        if (row) {
+          where = Object.assign(where, { tag: { [Op.substring]: row.id as number } });
+        }
+      })
+      .catch(() => {});
+  }
   if (keyword) {
     where = Object.assign(where, {
       [Op.or]: [

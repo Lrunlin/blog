@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/router";
 import type { FC } from "react";
 import { responseType as typeTreeRsponseType } from "@/request/type-tree-index";
 import style from "../index.module.scss";
@@ -13,6 +14,7 @@ interface propsType {
 }
 /** 首页顶部展示类型选择的头部组件，穿盾type-tree数组即可*/
 const TypeHeader: FC<propsType> = props => {
+  let router = useRouter();
   let { data } = props;
   let userData = useRecoilValue(userDataContext);
   const [activeTypeKey, setActiveTypeKey] = useState(data[0].id);
@@ -35,6 +37,10 @@ const TypeHeader: FC<propsType> = props => {
     }
     setActiveTagKey(id);
   }
+  useEffect(() => {
+    console.log(data);
+  }, [data, router]);
+
   return (
     <>
       <div

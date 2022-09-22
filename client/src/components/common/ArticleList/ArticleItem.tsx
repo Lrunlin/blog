@@ -35,7 +35,7 @@ const ArticleItem: FC<propsType> = props => {
             <a
               className={classNames(["text-[#86909c]", style.tag])}
               key={`tag${data.id}${item.name}${index}`}
-              href={`/tag/${item.name}`}
+              href={`/search?tag=${item.name}`}
               target="_blank"
             >
               {item.name}

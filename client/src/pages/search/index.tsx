@@ -7,8 +7,9 @@ import type { articleListItemType } from "@type/article-list-item";
 
 interface propsType {
   keyword?: string;
+  tag?: string;
 }
-const Search: NextPage<propsType> = ({ keyword }) => {
+const Search: NextPage<propsType> = ({ keyword, tag }) => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<articleListItemType[]>([]);
   const [total, setTotal] = useState(0);
@@ -18,7 +19,8 @@ const Search: NextPage<propsType> = ({ keyword }) => {
       .get(`/article/list/page/${page}`, {
         params: {
           state: 1,
-          keyword: keyword,
+          keyword: keyword || undefined,
+          tag: tag || undefined,
         },
       })
       .then(res => {
@@ -44,7 +46,8 @@ export default Search;
 export const getServerSideProps: GetServerSideProps = async ctx => {
   return {
     props: {
-      keyword: ctx.query.keyword,
+      keyword: ctx.query.keyword || '',
+      tag: ctx.query.tag || '',
     },
   };
 };
