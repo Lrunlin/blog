@@ -39,6 +39,7 @@ const TypeHeader: FC<propsType> = props => {
     <>
       <div
         className={classNames([
+          "sm:hidden",
           style["type-header"],
           "container-xs bg-white",
           "border-slate-100 border-b-solid",

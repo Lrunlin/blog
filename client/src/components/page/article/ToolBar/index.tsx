@@ -9,6 +9,7 @@ import axios from "axios";
 import { message, Badge } from "antd";
 
 let itemClassName = classNames([
+  "sm:hidden",
   "w-14",
   "h-14",
   "text-[#707070]",

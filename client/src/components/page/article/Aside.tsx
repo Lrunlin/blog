@@ -6,7 +6,7 @@ const Aside = () => {
   let { data } = useSWR("/advertisement-article", () => getAdvertisementList("article"));
   return (
     <>
-      <aside>
+      <aside className="sm:hidden">
         <div className="w-60">{/* 占位用的防止左侧内容偏移 */}</div>
         {data &&
           data.map((item, index) => (

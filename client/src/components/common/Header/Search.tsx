@@ -20,6 +20,7 @@ const SearchBox = () => {
   return (
     <>
       <Search
+        className="sm:hidden"
         placeholder="搜索"
         allowClear
         onSearch={val => onSearch(val)}

@@ -6,8 +6,9 @@ let Redis = redis(1);
 
 export default init<Article, ArticleAttributes>(async (model, type) => {
   if (type == "update" || type == "delete") {
-    if (await Redis.exists(model.id + "")) {
-      Redis.del(model.id + "");
+    let cacheID = `/article/${model.id}`;
+    if (await Redis.exists(cacheID)) {
+      Redis.del(cacheID);
     }
   }
 });

@@ -6,7 +6,7 @@ import NotLogin from "@/components/common/Header/User/NotLogin";
 const User = () => {
   let [userData] = useUserData();
   return (
-    <>
+    <div className="sm:hidden">
       {userData ? (
         <>
           <UserData />
@@ -16,7 +16,7 @@ const User = () => {
           <NotLogin />
         </>
       )}
-    </>
+    </div>
   );
 };
 export default User;
