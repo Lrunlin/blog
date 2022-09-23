@@ -1,25 +1,28 @@
-# 个人博客系统（源码长期更新）
+# 多人博客社区系统
 
 <div align=center>
- <img src="https://blogweb.cn/favicon.svg" alt="Logo" title="logo" />
+ <img src="https://blogweb.cn/favicon.svg" alt="Logo" title="Logo" />
 </div>
 
-## 技术栈
+## 相关技术
 
-用户端:Next.js+TypeScript+Ant Design+Tailwind CSS  
-管理系统:React18+TypeScript+Vite+Ant Design+Tailwind CSS  
-服务端:TypeScript+Koa2+Sequelize(ORM)  
+用户端:Next.js  
+管理系统:React18+Vite  
+服务端:Koa2+Sequelize(ORM)  
 数据库:MySQL(InnoDB)+Redis  
 
-前端状态管理采用Recoil
-API接口文档使用Apifox
-Token黑名单、Next.js页面渲染结果使用Redis缓存，其他数据使用LRU-cache缓存。  
+编程语言 TypeScript  
+组件库使用 Ant Design  
+CSS解决方案 Tailwind CSS  
+React状态管理 Recoil  
+API接口文档 Apifox
+缓存 Token黑名单、Next.js页面渲染结果使用Redis缓存，其他数据使用LRU-cache缓存。  
 
 ## 其他版本
 
 系统相对完善对博客网站所需的 SEO 有处理可以在生产环境中进行使用,也可以当做毕业设计。
-系统提供一 份用户端为 Vue3 的 CSR 版本(前端 Vue3,服务端 Node.js 使用 JavaScript，不免费)  
-以及一份[前台为Next.js的后台为Vue3的版本](https://github.com/Lrunlin/web_blog "个人博客")（作者主页可见，开源） 
+系统提供一 份用户端为 Vue3 的 CSR 版本(前端 Vue3,服务端 Node.js 使用 JavaScript，非免费版本)  
+以及一份[Next.js+Vue3+Express版本](https://github.com/Lrunlin/web_blog "个人博客")（作者主页可见，开源） 
 
 可联系 QQ:1974109227  
 
@@ -57,6 +60,9 @@ Token黑名单、Next.js页面渲染结果使用Redis缓存，其他数据使用
 9. ~~登录并且可以修改管理员密码~~
 10. 爬虫系统，自动文章（思否）抓取
 11. 推广内容的数据处理
+12. 评论管理
+13. 首页消息通知
+
 ## 更新计划
 
 1. 积分功能

@@ -67,7 +67,7 @@ const Home: NextPage<propsType> = props => {
         <ArticleList
           list={list}
           total={total}
-          className="shadow-sm"
+          className="shadow-sm w-full"
           loadMoreData={() => {
             page.current++;
             loadMoreData();

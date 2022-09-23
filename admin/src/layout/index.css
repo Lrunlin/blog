@@ -1,20 +1,3 @@
-.animate {
-    animation: ani .2s forwards;
-}
-
-@keyframes ani {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: .5;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
 a{
     color:inherit !important;
 }

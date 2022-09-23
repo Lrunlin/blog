@@ -17,7 +17,7 @@ const Comment = () => {
       title: "用户信息",
       dataIndex: "user_data",
       render: (user_data: any) => (
-        <Link to={`/article/${user_data.id}`}>
+        <Link to={`/user/${user_data.id}`}>
           <Avatar src={user_data.avatar_url} />
         </Link>
       ),

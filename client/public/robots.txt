@@ -16,4 +16,6 @@ Disallow:/notification
 Disallow:/oauth
 # 部分链接的结果展示
 Disallow:/result
+# 友链页面
+Disallow:/links
 Sitemap:https://blogweb.cn/sitemap

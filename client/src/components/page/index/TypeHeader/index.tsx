@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import type { FC } from "react";
 import { responseType as typeTreeRsponseType } from "@/request/type-tree-index";
@@ -14,7 +14,6 @@ interface propsType {
 }
 /** 首页顶部展示类型选择的头部组件，穿盾type-tree数组即可*/
 const TypeHeader: FC<propsType> = props => {
-  let router = useRouter();
   let { data } = props;
   let userData = useRecoilValue(userDataContext);
   const [activeTypeKey, setActiveTypeKey] = useState(data[0].id);
@@ -26,9 +25,9 @@ const TypeHeader: FC<propsType> = props => {
   );
 
   function switchType(id: string) {
+    props.loadMoreData(id);
     setActiveTypeKey(id);
     setActiveTagKey(id);
-    props.loadMoreData(id);
   }
   function switchTag(id: string) {
     // 如果ID变了就触发文章数据更新(先判断在更新)
@@ -37,9 +36,6 @@ const TypeHeader: FC<propsType> = props => {
     }
     setActiveTagKey(id);
   }
-  useEffect(() => {
-    console.log(data);
-  }, [data, router]);
 
   return (
     <>

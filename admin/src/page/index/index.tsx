@@ -1,4 +1,4 @@
-import { Divider, Skeleton } from "antd";
+import { Divider, Empty, Skeleton } from "antd";
 import useSWR from "swr";
 import axios from "axios";
 import useUserState from "@/store/user-state";
@@ -102,17 +102,27 @@ const Index = () => {
           <Divider />
           {error && <>加载错误</>}
           {isValidating && <Skeleton active />}
-          {data &&
-            data.links.map((item: any) => {
-              return (
-                <div className="flex justify-between" key={item.id}>
+          {data && (
+            <div>
+              {!!data.links_count && (
+                <div className="flex justify-between">
                   <div>
-                    友链申请:{item.name}({item.url})
+                    有 <b>{data.links_count}</b> 友情链接申请带处理
                   </div>
                   <Link to="/links">去看看</Link>
                 </div>
-              );
-            })}
+              )}
+              {!!data.comment_count && (
+                <div className="flex justify-between">
+                  <div>
+                    有 <b>{data.comment_count}</b> 条新评论发布
+                  </div>
+                  <Link to="/comment">去看看</Link>
+                </div>
+              )}
+              {!data.links_count && !data.links_count && <Empty description="没有新的消息" />}
+            </div>
+          )}
         </div>
       </div>
     </>

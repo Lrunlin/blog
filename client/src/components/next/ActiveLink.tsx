@@ -3,13 +3,15 @@ import { FC } from "react";
 import Link from "next/link";
 import type { LinkProps } from "next/link";
 import { useRouter } from "next/router";
-import classNames from 'classnames';
+import classNames from "classnames";
 
 interface porpsType extends LinkProps {
-  /** 如果路劲一致设置classNames*/
+  /** 如果路径一致设置classNames*/
   activeClassName?: string;
   children: React.ReactNode;
-  className?:string;
+  className?: string;
+  /** 是否对a标签设置不跟踪属性*/
+  noFollow?: boolean;
 }
 
 /**
@@ -24,7 +26,13 @@ const ActiveLink: FC<porpsType> = props => {
   return (
     <>
       <Link {...props}>
-        <a className={classNames([className,props.className])}>{props.children}</a>
+        <a
+          className={classNames([className, props.className])}
+          target={props.noFollow ? "_blank" : undefined}
+          rel={props.noFollow ? "noreferrer nofollow" : undefined}
+        >
+          {props.children}
+        </a>
       </Link>
     </>
   );

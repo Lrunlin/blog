@@ -16,7 +16,7 @@ interface propsType extends basePropsType {
 const Layout: FC<propsType> = props => {
   return (
     <Base className="max-w-[960px]" {...props}>
-      <div className="mr-4 max-w-[calc(100%-256px)] sm:max-w-full">{props.children}</div>
+      <div className="mr-4 w-[calc(100%-256px)] sm:w-full sm:mr-0">{props.children}</div>
       <aside className="w-60 sm:hidden">
         <Advertisement data={props.advertisement} />
         <AuthorRanking />

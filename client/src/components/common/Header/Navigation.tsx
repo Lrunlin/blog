@@ -1,5 +1,5 @@
 import ActiveLink from "@/components/next/ActiveLink";
-
+import style from "@/components/page/index/index.module.scss";
 const Navigation = () => {
   return (
     <nav>
@@ -7,10 +7,15 @@ const Navigation = () => {
       <ActiveLink href="/">
         <img src="/favicon.svg" className="h-6" alt="logo" />
       </ActiveLink>
-      <ActiveLink href="/" className="ml-4 text-zinc-800">
+      <ActiveLink href="/" className="ml-4 text-zinc-800" activeClassName={style["type-active"]}>
         首页
       </ActiveLink>
-      <ActiveLink href="/links" className="ml-4 text-zinc-800">
+      <ActiveLink
+        href="/links"
+        className="ml-4 text-zinc-800"
+        noFollow={true}
+        activeClassName={style["type-active"]}
+      >
         友情链接
       </ActiveLink>
     </nav>
