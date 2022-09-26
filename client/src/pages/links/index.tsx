@@ -1,6 +1,6 @@
 import { useState, useTransition } from "react";
 import axios from "axios";
-import { Modal, Form, Input, message, Collapse } from "antd";
+import { Modal, Form, Input, message, Collapse, Badge } from "antd";
 import type { GetServerSideProps, NextPage } from "next";
 import Header from "@/components/common/Header";
 import Head from "@/components/next/Head";
@@ -9,6 +9,7 @@ import UpLoad from "@/components/page/links/UpLoad";
 import type { LinksAttributes } from "@type/model-attribute";
 import type { userDataType } from "@type/user-data";
 import type { response } from "@type/response";
+import Link from "next/link";
 type linksItem = Pick<LinksAttributes, "id" | "name" | "logo_file_name" | "logo_url" | "url"> & {
   user_data: userDataType;
 };
@@ -58,7 +59,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
         <Collapse className="select-none">
           <Collapse.Panel header="点击查看本站信息" key="1">
             {siteData.map(item => (
-              <div className="mt-2 flex select-text" key={item.value+item.label}>
+              <div className="mt-2 flex select-text" key={item.value + item.label}>
                 <div className="w-20 text-right">{item.label}:</div>
                 <div className="ml-2">{item.value}</div>
               </div>
@@ -131,19 +132,28 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
             </div>
           )}
           {props.data.map(item => (
-            <a
-              target="_blank"
-              href={item.url}
+            <Badge.Ribbon
+              text={
+                <Link href={`/user/${item.user_data.id}`}>
+                  <a className="text-white">{item.user_data.name}</a>
+                </Link>
+              }
+              className="cursor-pointer"
               key={item.id}
-              className="w-44 h-16 mr-4 mt-4 block group flex items-center justify-center cursor-pointer border border-solid border-gray-200"
             >
-              <span className="hidden group-hover:inline">{item.name}</span>
-              <img
-                src={item.logo_url}
-                alt="友情链接Logo"
-                className="h-7 max-w-[70%] group-hover:hidden"
-              />
-            </a>
+              <a
+                target="_blank"
+                href={item.url}
+                className="w-44 h-16 mr-4 mt-4 relative group flex items-center justify-center cursor-pointer border border-solid border-gray-200"
+              >
+                <span className="hidden group-hover:inline">{item.name}</span>
+                <img
+                  src={item.logo_url}
+                  alt="友情链接Logo"
+                  className="h-7 max-w-[70%] group-hover:hidden"
+                />
+              </a>
+            </Badge.Ribbon>
           ))}
         </div>
       </div>

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Table, Popover,  Avatar, Badge, Modal, Button, Tooltip, message } from "antd";
+import { Table, Popover, Avatar, Badge, Modal, Button, Tooltip, message, DatePicker } from "antd";
 import { Link } from "react-router-dom";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
 import { articleListDataContext } from "./index";
 import classNames from "classnames";
+import moment from "moment";
 import king from "@/assets/icon/king.svg";
-
 
 export const tableOptionContext = atom({
   key: "table-option",
@@ -35,16 +35,13 @@ const TableCom = () => {
       render: (text: any, item: any) => {
         return (
           <Popover content={text} trigger="hover">
-            <div
-              className="whitespace-nowrap text-ellipsis overflow-hidden"
-              style={{ width: "120px" }}
-            >
+            <div className="whitespace-nowrap text-ellipsis overflow-hidden w-60">
               <Link to={`/article/${item.id}`}>{text}</Link>
             </div>
           </Popover>
         );
       },
-      width: 300,
+      width: 280,
     },
     {
       title: "发表者",
@@ -68,7 +65,7 @@ const TableCom = () => {
           </Link>
         );
       },
-      width: 180,
+      width: 100,
     },
     {
       title: "阅读量",
@@ -95,10 +92,13 @@ const TableCom = () => {
       render: (tags: any, record: any, index: any) => {
         return (
           <div className="flex">
-            {tags.map((item: any,index:number) => {
+            {tags.map((item: any, index: number) => {
               return (
                 <div
-                  className={classNames(["flex items-center bg-[#55acee] px-1.5 py-0.5 rounded-sm", index&&"ml-1"])}
+                  className={classNames([
+                    "flex items-center bg-[#55acee] px-1.5 py-0.5 rounded-sm",
+                    index && "ml-1",
+                  ])}
                   key={item.id}
                 >
                   {item?.icon_url && (
@@ -120,10 +120,19 @@ const TableCom = () => {
       render: (text: any) => {
         return (
           <Popover content={text} trigger="hover" overlayClassName="w-3/12 max-w-[300px] break-all">
-            <div>{text}</div>
+            <div className="line-clamp-3">{text}</div>
           </Popover>
         );
       },
+      width: 200,
+    },
+    {
+      title: "发布时间",
+      dataIndex: "create_time",
+      render: (create_time: any) => {
+        return <DatePicker defaultValue={moment(create_time)} showTime />;
+      },
+      width: 200,
     },
     {
       title: "操作",

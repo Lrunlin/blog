@@ -12,7 +12,7 @@ const Navigation = () => {
       </ActiveLink>
       <ActiveLink
         href="/links"
-        className="ml-4 text-zinc-800"
+        className="ml-4 text-zinc-800 sm:hidden"
         noFollow={true}
         activeClassName={style["type-active"]}
       >

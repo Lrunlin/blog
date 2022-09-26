@@ -12,11 +12,13 @@ function setData() {
       state: 1,
     },
   }).then(rows => {
-    data = rows.map(item => {
-      let _item = getTagData(setDescription(item.toJSON()), ["name"]);
-      delete (_item as any).content;
-      return _item;
-    }) as unknown as ArticleAttributes[];
+    data = (
+      rows.map(item => {
+        let _item = getTagData(setDescription(item.toJSON()), ["name"]);
+        delete (_item as any).content;
+        return _item;
+      }) as unknown as ArticleAttributes[]
+    ).sort((a, b) => (a.reprint + "").length - (b.reprint + "").length);
   });
 }
 

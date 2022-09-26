@@ -48,5 +48,9 @@ const nextConfig = {
     ];
   },
   env: envObject,
+  //生产版本打包成独立文件夹
+  // experimental: {
+  //   outputStandalone: true,
+  // },
 };
 module.exports = withBundleAnalyzer(nextConfig);

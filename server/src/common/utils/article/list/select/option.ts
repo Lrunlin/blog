@@ -14,6 +14,7 @@ const option = {
     "create_time",
     "tag",
     "content",
+    "reprint",
     [
       Sequelize.literal(`(SELECT COUNT(*) FROM comment WHERE comment.article_id = article.id)`),
       "comment_count",
@@ -33,11 +34,12 @@ const option = {
     },
   ],
   offset: 0,
-  limit: 300,
+  limit: 800,
   order: [
-    ["update_time", "desc"],
-    ["create_time", "desc"],
+    ["reprint", "asc"],
     ["view_count", "desc"],
+    ["create_time", "desc"],
+    ["update_time", "desc"],
   ],
 } as any;
 export default option;

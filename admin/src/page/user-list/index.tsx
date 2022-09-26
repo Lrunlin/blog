@@ -97,8 +97,6 @@ const UserList = () => {
       title: "其他信息",
       width: 60,
       render: (item: any) => {
-        console.log(item);
-
         return (
           <Popover
             placement="topLeft"

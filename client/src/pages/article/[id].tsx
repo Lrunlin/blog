@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Header from "@/components/common/Header";
 import dynamic from "next/dynamic";
 const ArticleUserData = dynamic(import("@/components/page/article/UserData"), { ssr: false });
+const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
 
 interface propsType {
   data: ArticleAttributes | null;
@@ -67,11 +68,7 @@ const Article: NextPage<propsType> = props => {
           <ArticleUserData />
         </div>
         <View language={data.language} content={data.content} />
-        {data.reprint && (
-          <blockquote className="mt-20 pl-4 border-l-solid border-l-4 rounded-sm border-l-blue-600">
-            转载自:{data.reprint}
-          </blockquote>
-        )}
+        <Reprint reprint={data.reprint} />
       </Layout>
     </>
   );

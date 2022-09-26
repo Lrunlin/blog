@@ -39,7 +39,7 @@ function verify() {
   };
 }
 
-router.post("/static/:folder", auth([0, 1]), verify(), upload.single("image"), async ctx => {
+router.post("/static/:folder", auth(0), verify(), upload.single("image"), async ctx => {
   let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
   let options = {
     scope: bucket,

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : liurunlin1512
+ Source Server         : 云服务器数据库
  Source Server Type    : MySQL
- Source Server Version : 80027
- Source Host           : localhost:3306
+ Source Server Version : 80024
+ Source Host           : 82.157.170.35:3306
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80027
+ Target Server Version : 80024
  File Encoding         : 65001
 
- Date: 19/09/2022 10:46:01
+ Date: 23/09/2022 16:37:05
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ CREATE TABLE `article`  (
   `author` bigint NOT NULL COMMENT '发布者ID',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章内容',
   `cover_file_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '封面图片名称',
-  `reprint` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '转载地址，原创为null',
+  `reprint` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '转载地址，原创为null',
   `state` int NOT NULL COMMENT '文章状态',
   `view_count` int NOT NULL DEFAULT 0 COMMENT '阅读次数',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最近一次更新的时间',
