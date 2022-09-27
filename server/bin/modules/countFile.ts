@@ -1,12 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from "path";
 
 /** 
  * 获取文件夹内文件数量
  */
-function countFile(filePath) {
+function countFile(filePath:string) {
     let fileCount = 0;
-    function count(filePath) {
+    function count(filePath:string) {
         let files = fs.readdirSync(filePath);
         for (let index = 0; index < files.length; index++) {
             let filename = files[index];
@@ -25,4 +25,4 @@ function countFile(filePath) {
     count(filePath)
     return fileCount;
 }
-module.exports = countFile;
+export default countFile;

@@ -1,11 +1,10 @@
 // 变量别名
 import moduleAlias from "module-alias";
 moduleAlias.addAlias("@", __dirname);
+
 //环境变量
 import dotenv from "dotenv";
 import path from "path";
-
-const port = 3000;
 
 dotenv.config({
   path: path.join(__dirname, `../.env`), // 配置文件路径
@@ -27,6 +26,7 @@ app.use(cors());
 import getAllRouter from "@/common/modules/getAllRouter";
 (async () => {
   let Routers = await getAllRouter();
+
   let routeCount = 0;
   Routers.forEach((item, index) => {
     import(item).then(_route => {
@@ -36,6 +36,7 @@ import getAllRouter from "@/common/modules/getAllRouter";
       }
     });
     if (Routers.length == index + 1) {
+      const port = 3000;
       app.listen(port, function () {
         console.log(`项目运行于: ${port} 端口,共${index + 1}个路由文件,${routeCount}个路由`);
       });

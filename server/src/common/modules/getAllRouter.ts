@@ -27,6 +27,8 @@ async function fileDisplay(filePath: string) {
 let src = path.join(__dirname, "../../routes");
 async function getAllRouter() {
   let fileList = await fileDisplay(src);
-  return fileList;
+  return fileList.filter(item => {
+    return item.endsWith(".js");
+  });
 }
 export default getAllRouter;

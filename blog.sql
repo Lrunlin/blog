@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 云服务器数据库
+ Source Server         : liurunlin1512
  Source Server Type    : MySQL
- Source Server Version : 80024
- Source Host           : 82.157.170.35:3306
+ Source Server Version : 80027
+ Source Host           : localhost:3306
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80024
+ Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 23/09/2022 16:37:05
+ Date: 27/09/2022 00:11:48
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ CREATE TABLE `article`  (
   `author` bigint NOT NULL COMMENT '发布者ID',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章内容',
   `cover_file_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '封面图片名称',
-  `reprint` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '转载地址，原创为null',
+  `reprint` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '转载地址，原创为null',
   `state` int NOT NULL COMMENT '文章状态',
   `view_count` int NOT NULL DEFAULT 0 COMMENT '阅读次数',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最近一次更新的时间',
@@ -116,10 +116,12 @@ DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice`  (
   `id` bigint NOT NULL COMMENT 'ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
+  `relation_id` binary(1) NOT NULL COMMENT '对某个表的主键进行关联，例(article_id,follow_id)',
+  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '什么类型的通知',
+  `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '内容',
-  `title` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
-  `isRead` tinyint(1) NOT NULL COMMENT '已读',
-  `time` datetime NOT NULL COMMENT '发送时间',
+  `is_read` tinyint(1) NOT NULL COMMENT '是否已读',
+  `create_time` datetime NOT NULL COMMENT '发送时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '站内提示信息存储' ROW_FORMAT = COMPACT;
 

@@ -75,9 +75,9 @@ API接口文档 Apifox
 **_Node.js 版本推荐使用 16,同时推荐使用 yarn 作为包管理器(未来会对 Node 版本进行升级)_**
 
 ### 环境变量
-1. admin文件夹在根目录创建.env.production文件并按照.env.development填写完整
-2. client文件夹在env文件夹中.env.production文件并按照.env.development填写完整
-3. server文件夹在env文件夹中向两个env开头的文件重命名,将env替换为.env后填写完整
+1. admin文件夹在根目录创建.env.production文件并按照.env.development填写完整  
+2. client文件夹在env文件夹中.env.production文件并按照.env.development填写完整  
+3. server文件夹在env文件夹中将template重命名为环境变量名后补全内容  
 
 ### 启动
 0. 导入 SQL 文件

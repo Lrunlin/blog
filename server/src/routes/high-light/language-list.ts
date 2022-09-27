@@ -1,4 +1,3 @@
-import fs from "fs";
 import Router from "@koa/router";
 import auth from "@/common/middleware/auth";
 import StreamZip from "node-stream-zip";
@@ -24,7 +23,7 @@ zip.on("ready", () => {
   });
   zip.close();
 });
-router.get("/language-list", async ctx => {
+router.get("/language-list",auth(0), async ctx => {
   ctx.body = {
     success: true,
     message: "查询支持代码高亮的语言列表",
