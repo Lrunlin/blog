@@ -61,8 +61,13 @@ async function readingRecords(req) {
   if (!req.url.startsWith("/article/")) {
     return;
   }
-  let ip = getClientIp(req);
   const key = req.url.replace("/article/", "");
+  
+  // 如果key可以转为nan说民key不是数字
+  if (isNaN(+key)) {
+    return;
+  }
+  let ip = getClientIp(req);
   if (
     ip &&
     !(await RedisViewHisTory.exists(`${ip}----${key}`)) &&

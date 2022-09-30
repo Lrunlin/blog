@@ -33,6 +33,7 @@ const Profile: NextPage = () => {
       });
   };
 
+  // 切换地区、重新定位
   const location = Form.useWatch("location", form);
   function getLocation() {
     axios
@@ -58,6 +59,11 @@ const Profile: NextPage = () => {
               initialValues={data}
               onFinish={onFinish}
               autoComplete="off"
+              onFinishFailed={({ errorFields }) => {
+                if (errorFields.length) {
+                  message.warn(errorFields[0].errors[0]);
+                }
+              }}
             >
               <Form.Item
                 label="用户昵称"
@@ -104,7 +110,7 @@ const Profile: NextPage = () => {
               <Form.Item
                 name="avatar_file_name"
                 hidden
-                rules={[{ min: 1, max: 50, message: "封面文件错误" }]}
+                rules={[{ required: true, min: 1, max: 50, message: "请上传头像" }]}
                 children={<div></div>}
               />
 

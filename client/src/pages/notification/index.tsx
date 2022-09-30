@@ -1,11 +1,14 @@
-import { useState, Fragment } from "react";
-import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 
-const Notification: NextPage = () => {
-  return (
-    <>
-      <div>信息展示页面</div>
-    </>
-  );
+const Notification = () => {
+  return <></>;
+};
+export const getServerSideProps: GetServerSideProps = async context => {
+  return {
+    redirect: {
+      destination: "/notification/comment",
+      permanent: true,
+    },
+  };
 };
 export default Notification;

@@ -3,22 +3,8 @@ import authMiddleware from "@/common/middleware/auth";
 import sequelize from "@/db/config";
 import DB from "@/db";
 import interger from "@/common/verify/integer";
-
-/** 根据传递的评论ID查找出全部子评论的ID*/
-async function collectCommentID(id: number) {
-  let idHub: number[] = [id];
-  async function _collectCommentID(_id: number) {
-    await DB.Comment.findAll({ where: { reply: _id }, attributes: ["id"] }).then(async rows => {
-      for (let index = 0; index < rows.length; index++) {
-        const id = rows[index].id;
-        idHub.push(id);
-        await _collectCommentID(id);
-      }
-    });
-  }
-  await _collectCommentID(id);
-  return idHub;
-}
+import getCommentChildrenList from "@/common/utils/comment/get-comment-childrnen-list";
+import transaction from "@/common/transaction/comment/delete-comment";
 
 let router = new Router();
 router.delete("/comment/:id", interger([], ["id"]), authMiddleware(0), async ctx => {
@@ -30,22 +16,21 @@ router.delete("/comment/:id", interger([], ["id"]), authMiddleware(0), async ctx
       return;
     }
   }
-
-  let id = await collectCommentID(+ctx.params.id);
-
-  try {
-    await sequelize
-      .transaction(async t => {
-        return await DB.Comment.destroy({
-          where: { id: id },
-          transaction: t,
-        });
-      })
-      .then(count => {
-        ctx.body = { success: !!count, message: count ? "删除成功" : "删除失败" };
-      });
-  } catch (error) {
+  let t = await sequelize.transaction();
+  let id = await getCommentChildrenList(+ctx.params.id);
+  let _t = await transaction(id, t);
+  let result = await DB.Comment.destroy({
+    where: { id: id },
+    transaction: t,
+  })
+    .then(count => !!count)
+    .catch(() => false);
+  if (result && _t) {
+    ctx.body = { success: true, message: "删除成功" };
+    t.commit();
+  } else {
     ctx.body = { success: false, message: "删除失败" };
+    t.rollback();
   }
 });
 export default router;

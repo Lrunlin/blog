@@ -5,7 +5,6 @@ import ArticleList from "@/components/common/ArticleList";
 import FollowList from "./FollowList";
 import { useRouter } from "next/router";
 
-const { TabPane } = Tabs;
 const Main = () => {
   let router = useRouter();
   const [articleData, setArticleDetdata] = useState<any[]>([]);
@@ -35,7 +34,7 @@ const Main = () => {
         setCollectionTotal(res.data.data.total);
       });
   }, [collectionPage]);
-  
+
   let activeKey = useMemo(() => (router.query.key as string) || "article", [router.query]);
   return (
     <>
@@ -46,42 +45,63 @@ const Main = () => {
             query: { ...router.query, key },
           });
         }}
-      >
-        <TabPane tab="文章" key="article">
-          <ArticleList
-            list={articleData}
-            total={articleTotal}
-            loadMoreData={() => setArticlePage(_page => ++_page)}
-          />
-        </TabPane>
-        <TabPane tab="收藏" key="collection">
-          <ArticleList
-            list={collectionData}
-            total={collectionTotal}
-            loadMoreData={() => setCollectionPage(_page => ++_page)}
-          />
-        </TabPane>
-        <TabPane tab="关注" key="following">
-          <FollowList
-            loadMoreData={(page, setTotal, setData) => {
-              axios.get(`/following/${router.query.id}`, { params: { page: page } }).then(res => {
-                setTotal(res.data.data.total);
-                setData(_data => [..._data, ...res.data.data.list]);
-              });
-            }}
-          />
-        </TabPane>
-        <TabPane tab="关注者" key="follower">
-          <FollowList
-            loadMoreData={(page, setTotal, setData) => {
-              axios.get(`/follower/${router.query.id}`, { params: { page: page } }).then(res => {
-                setTotal(res.data.data.total);
-                setData(_data => [..._data, ...res.data.data.list]);
-              });
-            }}
-          />
-        </TabPane>
-      </Tabs>
+        items={[
+          {
+            label: "文章",
+            key: "article",
+            children: (
+              <ArticleList
+                list={articleData}
+                total={articleTotal}
+                loadMoreData={() => setArticlePage(_page => ++_page)}
+              />
+            ),
+          },
+          {
+            label: "收藏",
+            key: "collection",
+            children: (
+              <ArticleList
+                list={collectionData}
+                total={collectionTotal}
+                loadMoreData={() => setCollectionPage(_page => ++_page)}
+              />
+            ),
+          },
+          {
+            label: "关注",
+            key: "following",
+            children: (
+              <FollowList
+                loadMoreData={(page, setTotal, setData) => {
+                  axios
+                    .get(`/following/${router.query.id}`, { params: { page: page } })
+                    .then(res => {
+                      setTotal(res.data.data.total);
+                      setData(_data => [..._data, ...res.data.data.list]);
+                    });
+                }}
+              />
+            ),
+          },
+          {
+            label: "关注者",
+            key: "follower",
+            children: (
+              <FollowList
+                loadMoreData={(page, setTotal, setData) => {
+                  axios
+                    .get(`/follower/${router.query.id}`, { params: { page: page } })
+                    .then(res => {
+                      setTotal(res.data.data.total);
+                      setData(_data => [..._data, ...res.data.data.list]);
+                    });
+                }}
+              />
+            ),
+          },
+        ]}
+      ></Tabs>
     </>
   );
 };

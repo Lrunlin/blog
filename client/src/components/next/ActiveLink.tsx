@@ -20,14 +20,14 @@ interface porpsType extends LinkProps {
 const ActiveLink: FC<porpsType> = props => {
   let router = useRouter();
   let className = useMemo(() => {
-    return router.pathname == props.href ? props.activeClassName || "active-link" : "";
+    return router.asPath == props.href ? props.activeClassName || "active-link" : "";
   }, [router]);
 
   return (
     <>
       <Link {...props}>
         <a
-          className={classNames([className, props.className])}
+          className={classNames([props.className, className])}
           target={props.noFollow ? "_blank" : undefined}
           rel={props.noFollow ? "noreferrer nofollow" : undefined}
         >

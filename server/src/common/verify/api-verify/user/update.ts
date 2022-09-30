@@ -13,6 +13,6 @@ const option = Joi.object({
     .min(1)
     .max(200)
     .error(new Error("自我介绍格式错误")),
-  avatar_file_name: fileName,
+  avatar_file_name: fileName.error(new Error("头像格式错误")),
 });
 export default validator(option);

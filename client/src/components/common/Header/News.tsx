@@ -1,24 +1,42 @@
-import type {  FC } from "react";
+import { useEffect, useState } from "react";
+import type { FC } from "react";
 import Image from "@/components/next/Image";
 import Link from "next/link";
 import classNames from "classnames";
+import useUserData from "@/store/user-data";
+import axios from "axios";
+import { Badge } from "antd";
 
-interface propsType{
-    className?:string;
+interface propsType {
+  className?: string;
 }
 
 /** Header中的小铃铛用来跳转到通知页面*/
 const News: FC<propsType> = props => {
+  let userData = useUserData();
+  const [badgeCount, setBadgeCount] = useState(0);
+  useEffect(() => {
+    if (userData) {
+      axios.get("/notice/count").then(res => {
+        if (res.data.success) {
+          setBadgeCount(res.data.data);
+        }
+      });
+    }
+  }, [userData]);
+
   return (
     <>
       <Link href="/notification">
         <a rel="nofollow" className={classNames(["mt-2", props.className])}>
-          <Image
-            className="opacity-50 duration-300 hover:opacity-80 cursor-pointer"
-            src="/icon/small-bell.png"
-            height={24}
-            width={24}
-          />
+          <Badge count={badgeCount} size="small">
+            <Image
+              className="opacity-50 duration-300 hover:opacity-80 cursor-pointer"
+              src="/icon/small-bell.png"
+              height={24}
+              width={24}
+            />
+          </Badge>
         </a>
       </Link>
     </>

@@ -4,7 +4,6 @@ import type { Context, Next } from "koa";
 /** 对query和body的参数进行验证（支持异步）*/
 export default function validator(schema: ObjectSchema<any>, isParams?: true) {
   return async (ctx: Context, next: Next) => {
-    console.log(ctx.request.body);
     
     await schema
       .validateAsync(

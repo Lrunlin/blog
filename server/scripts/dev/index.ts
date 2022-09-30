@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 import deleteDir from "../modules/deleteDir";
 import copyDir from "../modules/copyDir";
 import chokidar from "chokidar";
@@ -19,12 +18,17 @@ shell.exec("nodemon ./dist/src/index.js", { async: true });
 import change from "./change";
 import remove from "./remove";
 import add from "./add";
+import addDir from "./addDir";
+import unlinkDir from "./unlinkDir";
+
 // 添加监听事件
 chokidar
   .watch("src")
   .on("add", path => add(path))
   .on("change", path => change(path))
-  .on("unlink", path => remove(path));
+  .on("unlink", path => remove(path))
+  .on("addDir", path => addDir(path))
+  .on("unlinkDir", path => unlinkDir(path));
 
 // 设置打包env的模板
 let fileData = fs.readFileSync(`env/.env.development`).toString();

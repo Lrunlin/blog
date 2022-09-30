@@ -19,6 +19,7 @@ export interface ArticleAttributes {
   title: string;
   description: string;
   tag: TagAttributes[];
+  author: number;
   author_data: UserAttributes;
   content: string;
   cover_file_name?: string;
@@ -89,5 +90,14 @@ export interface LinksAttributes {
   is_allow: number;
   logo_file_name: string;
   logo_url: string;
+  create_time: Date;
+}
+
+export interface NoticeAttributes {
+  id: number;
+  user_id: number;
+  relation_id: number;
+  type: string;
+  is_read: number;
   create_time: Date;
 }

@@ -36,7 +36,7 @@ const CommentItem: FC<propsType> = props => {
   return (
     <>
       <Comment
-      className="w-full"
+        className="w-full"
         actions={[
           <div className="flex items-center">
             <span
@@ -83,13 +83,13 @@ const CommentItem: FC<propsType> = props => {
         }
         datetime={<span>{moment(data.create_time).fromNow()}</span>}
         avatar={
-            <a target="_blank" href={`/user/${data.user_data.id}`} className="block w-10 h-10">
-              <Avatar
-                src={data.user_data.avatar_url}
-                size={32}
-                alt={`用户${data.user_data.name}头像`}
-              />
-            </a>
+          <a target="_blank" href={`/user/${data.user_data.id}`} className="block w-10 h-10">
+            <Avatar
+              src={data.user_data.avatar_url}
+              size={32}
+              alt={`用户${data.user_data.name}头像`}
+            />
+          </a>
         }
         content={
           <>

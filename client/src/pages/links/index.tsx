@@ -9,6 +9,8 @@ import UpLoad from "@/components/page/links/UpLoad";
 import type { LinksAttributes } from "@type/model-attribute";
 import type { userDataType } from "@type/user-data";
 import type { response } from "@type/response";
+import { modalStateContext } from "@/components/common/Header/Sign";
+import { useSetRecoilState } from "recoil";
 import Link from "next/link";
 type linksItem = Pick<LinksAttributes, "id" | "name" | "logo_file_name" | "logo_url" | "url"> & {
   user_data: userDataType;
@@ -25,6 +27,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
   let { useForm } = Form;
   let [form] = useForm();
   let [userData] = useUserData();
+  let setModalState = useSetRecoilState(modalStateContext);
 
   let [, startTransition] = useTransition();
 
@@ -123,14 +126,19 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
       <div>
         <h2 className="text-center mt-10">友情链接</h2>
         <div className="w-[992px] p-4 mt-12 mx-auto flex flex-wrap">
-          {userData && (
-            <div
-              className="w-44 h-16 mr-4 mt-4 bg-gray-100 flex items-center justify-center cursor-pointer border border-solid border-gray-200"
-              onClick={() => setIsModalVisible(true)}
-            >
-              + 申请友链
-            </div>
-          )}
+          <div
+            className="w-44 h-16 mr-4 mt-4 bg-gray-100 flex items-center justify-center cursor-pointer border border-solid border-gray-200"
+            onClick={() =>
+              userData
+                ? setIsModalVisible(true)
+                : () => {
+                    message.info("请登陆后再发出申请");
+                    setModalState("LogIn");
+                  }
+            }
+          >
+            + 申请友链
+          </div>
           {props.data.map(item => (
             <Badge.Ribbon
               text={

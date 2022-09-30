@@ -3,12 +3,14 @@ import auth from "@/common/middleware/auth";
 import DB from "@/db";
 let router = new Router();
 import verify from "@/common/verify/api-verify/article/update-article";
-
-router.put("/article/:id", auth(1), verify, async ctx => {
+import sequelize from "@/db/config";
+import transaction from "@/common/transaction/article/create-article";
+import integer from "@/common/verify/integer";
+router.put("/article/:id", auth(1), integer([], ["id"]), verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, view_count, state } =
     ctx.request.body;
-  let id = ctx.params.id;
-  let where: { id: string; author?: number } = {
+  let id = +ctx.params.id as number;
+  let where: { id: number; author?: number } = {
     id: id,
   };
 
@@ -35,7 +37,8 @@ router.put("/article/:id", auth(1), verify, async ctx => {
     return;
   }
 
-  await DB.Article.update(
+  let t = await sequelize.transaction();
+  let updateResult = await DB.Article.update(
     {
       title: title,
       description: description,
@@ -49,15 +52,21 @@ router.put("/article/:id", auth(1), verify, async ctx => {
     },
     {
       where: where,
+      transaction: t,
     }
   )
-    .then(result => {
-      let isSuccess = !!result[0];
-      ctx.body = { success: isSuccess, message: `成功修改${result[0]}条内容` };
-    })
-    .catch(err => {
-      ctx.body = { success: false, message: "修改错误" };
-      console.log(err);
-    });
+    .then(result => !!result[0])
+    .catch(() => false);
+
+  // 说明是从草稿箱发布文章
+  let _t = (state = 1 && oldState == 0) ? await transaction(id, ctx.id as number, t) : true;
+
+  if (updateResult && _t) {
+    ctx.body = { success: true, message: "修改成功" };
+    t.commit();
+  } else {
+    ctx.body = { success: false, message: "修改失败" };
+    t.rollback();
+  }
 });
 export default router;

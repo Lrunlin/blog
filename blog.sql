@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 27/09/2022 00:11:48
+ Date: 29/09/2022 18:57:46
 */
 
 SET NAMES utf8mb4;
@@ -116,14 +116,12 @@ DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice`  (
   `id` bigint NOT NULL COMMENT 'ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
-  `relation_id` binary(1) NOT NULL COMMENT '对某个表的主键进行关联，例(article_id,follow_id)',
-  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '什么类型的通知',
-  `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
-  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '内容',
+  `relation_id` bigint NOT NULL COMMENT '对某个表的主键进行关联，例(article_id,follow_id)',
+  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '什么类型的通知',
   `is_read` tinyint(1) NOT NULL COMMENT '是否已读',
   `create_time` datetime NOT NULL COMMENT '发送时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '站内提示信息存储' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for tag
@@ -139,18 +137,6 @@ CREATE TABLE `tag`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Table structure for tips_set
--- ----------------------------
-DROP TABLE IF EXISTS `tips_set`;
-CREATE TABLE `tips_set`  (
-  `user_id` bigint NOT NULL COMMENT '用户ID',
-  `follow` tinyint(1) NULL DEFAULT NULL COMMENT '关注的用户有新文章',
-  `comment` tinyint(1) NULL DEFAULT NULL COMMENT '收到回复',
-  `follow_me` tinyint(1) NULL DEFAULT NULL COMMENT '有人关注我',
-  PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户消息推送设置' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for type

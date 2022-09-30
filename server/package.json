@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node ./bin/dev",
-    "build": "ts-node ./bin/build",
+    "dev": "ts-node ./scripts/dev",
+    "build": "ts-node ./scripts/build",
     "start": "cross-env ENV=production nodemon ./src/index.js"
   },
   "dependencies": {

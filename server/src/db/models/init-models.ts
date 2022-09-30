@@ -15,8 +15,6 @@ import { Notice as _Notice } from "./notice";
 import type { NoticeAttributes, NoticeCreationAttributes } from "./notice";
 import { Tag as _Tag } from "./tag";
 import type { TagAttributes, TagCreationAttributes } from "./tag";
-import { TipsSet as _TipsSet } from "./tips_set";
-import type { TipsSetAttributes, TipsSetCreationAttributes } from "./tips_set";
 import { Type as _Type } from "./type";
 import type { TypeAttributes, TypeCreationAttributes } from "./type";
 import { User as _User } from "./user";
@@ -31,7 +29,6 @@ export {
   _Links as Links,
   _Notice as Notice,
   _Tag as Tag,
-  _TipsSet as TipsSet,
   _Type as Type,
   _User as User,
 };
@@ -53,8 +50,6 @@ export type {
   NoticeCreationAttributes,
   TagAttributes,
   TagCreationAttributes,
-  TipsSetAttributes,
-  TipsSetCreationAttributes,
   TypeAttributes,
   TypeCreationAttributes,
   UserAttributes,
@@ -70,7 +65,6 @@ export function initModels(sequelize: Sequelize) {
   const Links = _Links.initModel(sequelize);
   const Notice = _Notice.initModel(sequelize);
   const Tag = _Tag.initModel(sequelize);
-  const TipsSet = _TipsSet.initModel(sequelize);
   const Type = _Type.initModel(sequelize);
   const User = _User.initModel(sequelize);
 
@@ -84,7 +78,6 @@ export function initModels(sequelize: Sequelize) {
     Links: Links,
     Notice: Notice,
     Tag: Tag,
-    TipsSet: TipsSet,
     Type: Type,
     User: User,
   };

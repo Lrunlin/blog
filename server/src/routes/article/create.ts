@@ -1,33 +1,43 @@
 import Router from "@koa/router";
 import DB from "@/db";
+import sequelize from "@/db/config";
 import useID from "@/common/hooks/useId";
 import auth from "@/common/middleware/auth";
 import verify from "@/common/verify/api-verify/article/create-article";
+import transaction from "@/common/transaction/article/create-article";
 
 let router = new Router();
 router.post("/article", auth(0), verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, state } = ctx.request.body;
-
   let id = useID();
-  await DB.Article.create({
-    id: id,
-    title: title,
-    description: description,
-    cover_file_name: cover_file_name,
-    reprint: reprint,
-    content: content,
-    author: ctx.id as number,
-    tag: tag,
-    state: state,
-    view_count: 0,
-    create_time: new Date(),
-  })
-    .then(res => {
-      ctx.body = { success: true, message: `发布成功`, data: { article_id: id } };
-    })
-    .catch(err => {
-      ctx.body = { success: false, message: "发布失败" };
-      console.log(err);
-    });
+  let t = await sequelize.transaction();
+  // 只有正式发布才创建通知
+  let _t = state == 1 ? await transaction(id, ctx.id as number, t) : true;
+  let createArticle = await DB.Article.create(
+    {
+      id: id,
+      title: title,
+      description: description,
+      cover_file_name: cover_file_name,
+      reprint: reprint,
+      content: content,
+      author: ctx.id as number,
+      tag: tag,
+      state: state,
+      view_count: 0,
+      create_time: new Date(),
+    },
+    { transaction: t }
+  )
+    .then(() => true)
+    .catch(() => false);
+
+  if (createArticle && _t) {
+    ctx.body = { success: true, message: `发布成功`, data: { article_id: id } };
+    t.commit();
+  } else {
+    ctx.body = { success: false, message: "发布失败" };
+    t.rollback();
+  }
 });
 export default router;
