@@ -3,6 +3,7 @@ import Base from "@/layout/Base";
 import Aside from "./Aside";
 import dynamic from "next/dynamic";
 import ToolBar from "./ToolBar";
+
 let Comments = dynamic(import("./Comments"), { ssr: false });
 let Recommend = dynamic(import("./Recommend"), { ssr: false });
 

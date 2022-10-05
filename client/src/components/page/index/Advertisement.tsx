@@ -11,7 +11,7 @@ const Advertisement: FC<propsType> = props => {
   const [data, setData] = useState(props.data);
 
   return (
-    <>
+    <div className="mt-3">
       {data.map((item, index) => (
         <a
           href={item.url}
@@ -53,7 +53,7 @@ const Advertisement: FC<propsType> = props => {
           </div>
         </a>
       ))}
-    </>
+    </div>
   );
 };
 export default Advertisement;

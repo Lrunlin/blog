@@ -5,7 +5,7 @@ import type { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
 const Error: NextPage = (props: any): JSX.Element => {
-  let statusCode: number = props.statusCode;
+  let statusCode: number = props.statusCode||500;
   let router = useRouter();
 
   return (

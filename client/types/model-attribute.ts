@@ -31,6 +31,8 @@ export interface ArticleAttributes {
   update_time?: string;
   create_time: string;
   comment_count: number;
+  /** 是否展示目录*/
+  display_directory: boolean;
   collection_count: number;
 }
 export interface UserAttributes {

@@ -5,6 +5,7 @@ import HTMLToMarkDown from "@/common/utils/article/get/html-to-markdown";
 import getCodeBlockLanguage from "@/common/utils/article/get/get-code-block-language";
 import imgPrefix from "@/common/utils/article/get/img-add-prefix";
 import getTagData from "@/common/utils/article/get/get-tag-data";
+import getTitleId from "@/common/utils/article/get/set-title-id";
 import Sequelize from "@/db/config";
 
 let router = new Router();
@@ -41,7 +42,7 @@ router.get("/article/:id", interger([], ["id"]), async ctx => {
         let data: any = row.toJSON();
 
         if (!ctx.query.update) {
-          data = getCodeBlockLanguage(imgPrefix(getTagData(data) as any) as any);
+          data = getCodeBlockLanguage(imgPrefix(getTagData(getTitleId(data) as any) as any) as any);
         } else {
           data = imgPrefix(data, true);
         }

@@ -7,7 +7,7 @@ function compile(path: string) {
   const { outputText } = ts.transpileModule(content, {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
-      target: 2,
+      target: 4,//4是2017,2是2015
       moduleResolution: 2,
       esModuleInterop: true,
       strict: true,

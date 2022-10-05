@@ -19,14 +19,14 @@ const UserList = () => {
       title: "用户昵称",
       dataIndex: "name",
       render: (name: string, item: any) => (
-        <div className="w-40 flex justify-start">
+        <div className="w-16">
           <Link to={`/user/${item.id}`} className="block text-center">
             <Avatar src={item.avatar_url} alt="用户头像" />
-            <div>{name}</div>
+            <div className="w-full truncate">{name}</div>
           </Link>
         </div>
       ),
-      width: 160,
+      width: 100,
     },
     {
       title: "文章发表",
@@ -133,10 +133,10 @@ const UserList = () => {
   useEffect(() => {
     axios.get(`/user/list/${page}`).then(res => {
       if (res.data.success) {
+        setData(res.data.data.list);
         transition(() => {
-          setData(res.data.data.list);
+          setTotal(res.data.data.total);
         });
-        setTotal(res.data.data.total);
       } else {
         message.error(res.data.message);
       }

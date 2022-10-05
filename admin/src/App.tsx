@@ -10,7 +10,7 @@ function App() {
       <RecoilRoot>
         <HashRouter>
           {/* 使用SWR并且取消缓存 */}
-          <SWRConfig value={{ shouldRetryOnError: false }}>
+          <SWRConfig value={{ shouldRetryOnError: false, revalidateOnFocus: false }}>
             <Router />
           </SWRConfig>
         </HashRouter>
@@ -18,5 +18,4 @@ function App() {
     </>
   );
 }
-
 export default App;

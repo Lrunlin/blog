@@ -1,0 +1,42 @@
+.article-page-catalogue {
+  ol {
+    padding-left: 0px;
+    list-style: none;
+    width: 240px;
+    li {
+      position: relative;
+      width: 100%;
+      a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 8px 16px;
+        display: block;
+        &:hover {
+          background-color: rgba(214, 214, 214, 0.2);
+        }
+      }
+    }
+  }
+  a {
+    color: black;
+  }
+}
+.is-active-link {
+  color: #007fff !important;
+}
+.is-active-link::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  width: 4px;
+  height: 16px;
+  background: #1e80ff;
+  border-radius: 0 4px 4px 0;
+}
+.is-collapsible {
+  a {
+    padding-left: 32px !important;
+  }
+}
