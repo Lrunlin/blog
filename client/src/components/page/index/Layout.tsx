@@ -5,6 +5,7 @@ import AuthorRanking from "./AuthorRanking";
 import Footer from "./Footer";
 import Repository from "@/components/common/Repository";
 import { responseType as advertisementType } from "@/request/advertisement";
+import AdSense from "@/components/common/AdSense";
 
 interface propsType extends basePropsType {
   advertisement: advertisementType;
@@ -21,6 +22,7 @@ const Layout: FC<propsType> = props => {
       <aside className="w-60 sm:hidden">
         <Repository />
         <Advertisement data={props.advertisement} />
+        <AdSense />
         <AuthorRanking />
         <Footer />
       </aside>

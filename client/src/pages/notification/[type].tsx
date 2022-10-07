@@ -6,15 +6,20 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Skeleton, Empty } from "antd";
 import Notice from "@/components/page/notification/Notice";
 import { useRouter } from "next/router";
+import useUserData from "@/store/user-data";
 
 const Notification: NextPage = () => {
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  let [userData] = useUserData();
   let router = useRouter();
   useEffect(() => {
     let type = router.query.type;
     if (!["article", "comment"].includes(type + "")) {
+      return;
+    }
+    if (!userData) {
       return;
     }
     axios.get(`/notice/list/${type}`, { params: { page: page } }).then(res => {
@@ -23,7 +28,7 @@ const Notification: NextPage = () => {
         setTotal(res.data.total);
       }
     });
-  }, [page, router]);
+  }, [page, router, userData]);
 
   useEffect(() => {
     let noticeList = list.filter(item => item.is_read == 0).map(item => item.id);

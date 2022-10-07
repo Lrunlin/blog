@@ -3,7 +3,7 @@ import Joi from "joi";
 /** 上传图片验证配置(允许null)*/
 const fileNameAllowNull = Joi.string()
   .allow("")
-  .min(15)
+  .min(4)
   .max(50)
   .required()
   .allow(null)
@@ -14,7 +14,7 @@ const fileNameAllowNull = Joi.string()
 
 /** 上传图片验证配置*/
 const fileName = Joi.string()
-  .min(15)
+  .min(4)
   .max(50)
   .required()
   .lowercase()

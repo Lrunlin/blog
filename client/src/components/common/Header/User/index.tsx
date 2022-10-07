@@ -6,7 +6,7 @@ import NotLogin from "@/components/common/Header/User/NotLogin";
 const User = () => {
   let [userData] = useUserData();
   return (
-    <div className="sm:hidden">
+    <div className="sm:hidden flex justify-end w-80">
       {userData ? (
         <>
           <UserData />

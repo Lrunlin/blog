@@ -4,12 +4,16 @@ import jwt from "jsonwebtoken";
 import qs from "qs";
 import DB from "@/db";
 import useId from "@/common/hooks/useId";
+import upload from "@/common/utils/static/upload";
+import Identicon from "identicon.js";
+import sha1 from "sha1";
 let router = new Router();
 
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validator";
+
 const schema = Joi.object({
-  key: Joi.string().length(40).required().error(new Error("干点正事")),
+  key: Joi.string().length(40).required().error(new Error("Key的格式错误")),
 });
 
 router.get("/logon/email", validator(schema), async ctx => {
@@ -50,42 +54,48 @@ router.get("/logon/email", validator(schema), async ctx => {
 
   let { email, name, password } = cache.get(key) as userDataType;
 
-  //   判断是否已经注册了
-  let { count } = await DB.User.findAndCountAll({ where: { email: email } });
-  if (count) {
-    response(false, "激活失败", [
-      `您的邮箱:${email}已注册`,
-      "请打开登录窗口进行登录",
-      "如果您忘记了密码请打开相应窗口发送激活链接",
-    ]);
+  let id = useId();
+  var data = new Identicon(sha1(id + ""), {
+    size: 50,
+    format: "svg",
+    background: [240, 240, 240,255],
+  }).toString();
+
+  let uploadResult = await upload(Buffer.from(data, "base64"), ["avatar", `${id}.webp`])
+    .then(res => ({ success: true, fileName: (res as any).file_name as string }))
+    .catch(err => ({ success: false, errMes: err }));
+
+  if (!uploadResult.success) {
+    response(false, `注册失败`, [(uploadResult as any).errMes, "请稍后在试"]);
     return;
   }
 
-  let id = useId();
-  await DB.User.create({
+  let logonResulte = await DB.User.create({
     id: id,
     email: email,
     name: name,
     password: password,
     auth: 0,
-    avatar_file_name: "default.webp",
+    avatar_file_name: (uploadResult as any).fileName,
     create_time: new Date(),
   })
-    .then(res => {
-      let token = jwt.sign(
-        {
-          id: id,
-          auth: 0,
-        },
-        process.env.KEY as string,
-        { expiresIn: "365d" }
-      );
-      response(true, "注册成功", "", token);
-      removeUserData(email);
-    })
-    .catch(err => {
-      response(false, `注册失败`, "服务器注册错误");
-      console.log(err);
-    });
+    .then(() => true)
+    .catch(() => false);
+
+  if (!logonResulte) {
+    response(false, `注册失败`, "服务器注册错误");
+    return;
+  }
+
+  let token = jwt.sign(
+    {
+      id: id,
+      auth: 0,
+    },
+    process.env.KEY as string,
+    { expiresIn: "365d" }
+  );
+  response(true, "注册成功", "", token);
+  removeUserData(email);
 });
 export default router;

@@ -1,11 +1,14 @@
 import Head from "@/components/next/Head";
 import { Result, Button } from "antd";
+import type { ResultStatusType } from "antd/lib/result";
 import Header from "@/components/common/Header";
 import type { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
-const Error: NextPage = (props: any): JSX.Element => {
-  let statusCode: number = props.statusCode||500;
+interface propsType {
+  statusCode: ResultStatusType;
+}
+const Error: NextPage<propsType> = ({ statusCode }) => {
   let router = useRouter();
 
   return (
@@ -30,10 +33,9 @@ const Error: NextPage = (props: any): JSX.Element => {
   );
 };
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  
   return {
     props: {
-      statusCode: ctx.res.statusCode,
+      statusCode: ctx.res.statusCode || 500,
     },
   };
 };

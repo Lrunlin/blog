@@ -26,5 +26,9 @@ namespace NodeJS {
     REDIS_PASSWORD: string | number;
     /** GitHub的ClientID用来登录*/
     NEXT_PUBLIC_GITHUB_CLIENT_ID: string;
+    /** Google ADS中的client_id 填入数字部分即可*/
+    NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID: string;
+    /** ins标签的d-slot*/
+    NEXT_PUBLIC_GOOGLE_ADS_SLOT: string;
   }
 }

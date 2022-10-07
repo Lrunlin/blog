@@ -18,6 +18,7 @@
     "chokidar": "^3.5.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
+    "identicon.js": "^2.3.3",
     "ioredis": "^5.2.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
