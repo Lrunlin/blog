@@ -31,7 +31,6 @@ const Catalogue = () => {
       if (scrollY < 540 && isShrink) {
         setIsShrink(false);
       }
-      console.log(isShrink);
     };
     window.addEventListener("scroll", scrollSwitch);
     return () => {

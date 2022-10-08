@@ -1,8 +1,7 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import { Op } from "sequelize";
-import getTagData from "@/common/utils/article/get/get-tag-data";
-import type { TagAttributes, ArticleAttributes } from "@/db/models/init-models";
+import type { TagAttributes } from "@/db/models/init-models";
 import Sequelize from "@/db/config";
 import interger from "@/common/verify/integer";
 
@@ -33,57 +32,55 @@ let attributes = [
 let router = new Router();
 
 // 根据文章ID返回推荐文章
-router.get("/article/recommend/:id",interger([],['id']), async ctx => {
+router.get("/article/recommend/:id", interger([], ["id"]), async ctx => {
   let articleID = +ctx.params.id;
 
   let articleType = await DB.Article.findByPk(articleID, {
     attributes: ["tag"],
   });
+
   if (!articleType) {
     ctx.body = { success: false, message: "查询失败" };
     return;
   }
   let tags = articleType?.tag as unknown as TagAttributes["id"][];
 
-  // 查询指定类型的文章返回对应的ORM查询函数
-  const template = (tag: number) => {
-    return DB.Article.findAll({
-      where: {
-        tag: {
-          [Op.substring]: tag,
-        },
-        state: 1,
+  await DB.Article.findAll({
+    where: {
+      id: {
+        [Op.not]: articleID,
       },
-      attributes: [...attributes, ...articleAttribute] as any,
-      include: [
-        {
-          model: DB.User,
-          as: "author_data",
-          attributes: ["id", "name", "auth", "avatar_url"],
-        },
-      ],
+      [Op.or]: tags.map(item => ({ tag: { [Op.substring]: item } })),
+      state: 1,
+    },
+    offset: 0,
+    limit: 24,
+    attributes: [...attributes, ...articleAttribute] as any,
+    include: [
+      {
+        model: DB.User,
+        as: "author_data",
+        attributes: ["id", "name", "auth", "avatar_url"],
+      },
+    ],
+  })
+    .then(rows => {
+      ctx.body = {
+        success: true,
+        message: "根据文章ID搜索同类型文章",
+        data: rows.map(item => {
+          let _item = item.toJSON();
+          delete (_item as any).content;
+          delete (_item as any).state;
+          return _item;
+        }),
+      };
+    })
+    .catch(() => {
+      ctx.body = {
+        success: false,
+        message: "查询失败",
+      };
     });
-  };
-
-  // 传递文章类型查询该文章所有类型的对应的文章
-  await Promise.all(tags.map(item => template(item))).then(result => {
-    let data = result
-      .map(item => item.map(_item => _item.toJSON()))
-      .flat()
-      .reduce((total: ArticleAttributes[], item, index) => {
-        if (index > 24) {
-          return total;
-        }
-        return total.some((_article: ArticleAttributes) => _article.id == item.id)
-          ? total
-          : [...total, item];
-      }, []);
-
-    ctx.body = {
-      success: true,
-      message: "根据文章ID搜索同类型文章",
-      data: data.map(item => getTagData(item)),
-    };
-  });
 });
 export default router;

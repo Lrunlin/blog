@@ -3,11 +3,11 @@ import Joi from "joi";
 import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/verify/validator";
 import interger from "@/common/verify/integer";
-import recommendArticleList from "@/common/utils/article/list/select/recommend";
-import typeArticleList from "@/common/utils/article/list/select/type";
-import tagArticleList from "@/common/utils/article/list/select/tag";
-import followArticleList from "@/common/utils/article/list/select/follow";
-import sort from "@/common/utils/article/list/sort";
+import option from "@/common/utils/article/select/option";
+import { Op } from "sequelize";
+
+import getTypeChildrenTag from "@/common/utils/article/select/getTypeChildrenTag";
+import getBloggerList from "@/common/utils/article/select/getBloggerList";
 
 //todo 前期推荐方式比较简单，后期在升级
 let router = new Router();
@@ -24,62 +24,55 @@ const schema = Joi.object({
 
 // 综合
 router.get("/recommend", validator(schema), async ctx => {
-  let data = sort(ctx.query.type as any, recommendArticleList());
   let page = +(ctx.query.page as string);
-
+  let data = await option(page, ctx.query.page as any);
   ctx.body = {
     success: true,
     message: `综合${ctx.query.type},页数:${page}`,
-    data: {
-      total: data.length,
-      list: data.slice((page - 1) * 10, page * 10),
-    },
+    data: data,
   };
 });
 
 // 关注
-router.get("/follow", validator(schema), auth([0, 1]), async ctx => {
+router.get("/follow", validator(schema), auth(0), async ctx => {
   let page = +(ctx.query.page as string);
-  let _data = (await followArticleList(ctx.id as number)) as any;
-  let data = sort(ctx.query.type as any, _data);
-
+  let bloggerList = await getBloggerList(ctx.id as number);
+  let data = await option(page, ctx.query.type as any, { author: bloggerList });
   ctx.body = {
     success: true,
     message: "查询关注博主的文章",
-    data: {
-      total: data.length,
-      list: data.slice((page - 1) * 10, page * 10),
-    },
+    data: data,
   };
 });
 
 // 根据类型查询
 router.get("/type/:id", interger([], ["id"]), validator(schema), async ctx => {
   let typeID = +(ctx.params.id as string);
-
   let page = +(ctx.query.page as string);
-  let data = sort(ctx.query.type as any, typeArticleList(typeID));
+  let tagList = await getTypeChildrenTag(typeID);
+
+  let data = await option(page, ctx.query.type as any, {
+    [Op.or]: tagList.map(item => ({ tag: { [Op.substring]: item } })),
+  });
+
   ctx.body = {
     success: true,
     message: "根据类型查询文章",
-    data: {
-      total: data.length,
-      list: data.slice((page - 1) * 10, page * 10),
-    },
+    data: data,
   };
 });
 
 router.get("/tag/:id", validator(schema), interger([], ["id"]), async ctx => {
-  let tagID = +(ctx.params.id as string);
   let page = +(ctx.query.page as string);
-  let data = sort(ctx.query.type as any, tagArticleList(tagID));
+  let data = await option(page, ctx.query.type as any, {
+    tag: {
+      [Op.substring]: ctx.params.id as string,
+    },
+  });
   ctx.body = {
     success: true,
     message: "根据tag查询文章",
-    data: {
-      total: data.length,
-      list: data.slice((page - 1) * 10, page * 10),
-    },
+    data: data,
   };
 });
 export default router;
