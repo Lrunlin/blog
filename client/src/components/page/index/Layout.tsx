@@ -22,7 +22,7 @@ const Layout: FC<propsType> = props => {
       <aside className="w-60 sm:hidden">
         <Repository />
         <Advertisement data={props.advertisement} />
-        <AdSense />
+        {/* <AdSense /> */}
         <AuthorRanking />
         <Footer />
       </aside>

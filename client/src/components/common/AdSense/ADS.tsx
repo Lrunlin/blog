@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import Script from "next/script";
-
 const ADS = () => {
+  useEffect(() => {
+    ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+  }, []);
   return (
     <>
       <Script
@@ -8,9 +11,8 @@ const ADS = () => {
         src={`//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
         crossOrigin="anonymous"
       />
-      <Script>(adsbygoogle = window.adsbygoogle || []).push({});</Script>
       <ins
-        className="adsbygoogle"
+        className="adsbygoogle mt-3"
         style={{ display: "block" }}
         data-ad-client={`ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
         data-ad-slot={process.env.NEXT_PUBLIC_GOOGLE_ADS_SLOT}

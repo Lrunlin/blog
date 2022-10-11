@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import ADS from "./ADS";
 const AdSense = () => {
   const [isLoad, setIsLoad] = useState(true);
-  if (process.env.NODE_ENV == "development") {
-    return (
-      <div className="w-full h-96 my-3 bg-gray-200 flex items-center justify-center">
-        开发环境不显示广告
-      </div>
-    );
-  }
+  // if (process.env.NODE_ENV == "development") {
+  //   return (
+  //     <div className="w-full h-96 my-3 bg-gray-200 flex items-center justify-center">
+  //       开发环境不显示广告
+  //     </div>
+  //   );
+  // }
   useEffect(() => {
     let timer: NodeJS.Timeout;
     function ready() {
