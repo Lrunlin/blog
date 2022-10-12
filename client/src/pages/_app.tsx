@@ -8,7 +8,7 @@ import moment from "moment";
 import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, RecoilEnv } from "recoil";
 
 import "@/styles/globals.scss";
 
@@ -17,6 +17,10 @@ const Sign = dynamic(import("@/components/common/Header/Sign"), { ssr: false });
 
 import { SWRConfig } from "swr";
 
+// 服务端禁用key检查
+if (typeof window == "undefined") {
+  RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
+}
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
