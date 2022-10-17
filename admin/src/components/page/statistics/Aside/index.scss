@@ -1,0 +1,26 @@
+@import "@/page/statistics/index.scss";
+.aside-article-item {
+  width: 100%;
+  height: vw(445);
+}
+.article-ranking-item {
+  font-size: vw(18);
+  border-bottom: vw(2) solid $borderColor;
+  height: vw(40);
+  .article-ranking-item_title {
+    margin-left: vw(10);
+  }
+  .article-ranking-item_count {
+    font-weight: 700;
+    margin-right: vw(40);
+  }
+}
+.server-used-container {
+  width: 100%;
+  margin-top: vw(20);
+
+  .server-used {
+    width: 100%;
+    height: vw(245);
+  }
+}

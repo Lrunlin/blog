@@ -62,18 +62,18 @@ async function readingRecords(req) {
     return;
   }
   const key = req.url.replace("/article/", "");
-  
-  // 如果key可以转为nan说民key不是数字
+
+  // 如果key可以转为NaN说民key不是数字
   if (isNaN(+key)) {
     return;
   }
-  let ip = getClientIp(req);
+  let ip = getClientIp(req).split(',')[0];
   if (
     ip &&
-    !(await RedisViewHisTory.exists(`${ip}----${key}`)) &&
-    !(await RedisViewHisTory.exists(`unrecorded--${ip}----${key}`))
+    !(await RedisViewHisTory.exists(`${ip}--${key}--*`)) &&
+    !(await RedisViewHisTory.exists(`u--${ip}--${key}--*`))
   ) {
-    RedisViewHisTory.set(`unrecorded--${ip}----${key}`, "", "EX", 432_000);
+    RedisViewHisTory.set(`u--${ip}--${key}`, "", "EX", 604_800);
   }
 }
 
@@ -91,7 +91,6 @@ async function renderAndCache(req, res) {
   // 如果缓存中有直出的html数据，就直接将缓存内容响应给客户端
   if (await RedisHTML.exists(pagePath)) {
     res.send(await RedisHTML.get(pagePath));
-
     readingRecords(req);
     return;
   }

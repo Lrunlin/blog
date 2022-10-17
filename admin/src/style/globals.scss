@@ -1,0 +1,15 @@
+/* @tailwind base;不使用初始化CSS */
+/* @tailwind components;组件也不用 */
+@tailwind utilities;
+
+.piece {
+  @apply shadow-sm bg-white p-4;
+}
+
+.no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}

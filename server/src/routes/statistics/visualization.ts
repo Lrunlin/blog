@@ -1,31 +1,107 @@
+import os from "os";
 import Router from "@koa/router";
+import { getDiskInfoSync } from "node-disk-info";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
-import { Op, where } from "sequelize";
+import { Op } from "sequelize";
 import typeCache from "@/common/modules/cache/type";
+import Redis from "@/common/utils/redis";
+
+let redis = Redis(2);
+
+let visits: number[] = new Array(7).fill(0);
+let articleRanking: { id: number; title: string; view_count: number }[] | null = [];
+
+/** 通过Redis阅读记录获取七日内访问量*/
+async function setVisitsData() {
+  visits = new Array(7).fill(0);
+  let _articleRanking: { [key: string]: number } = {};
+  (await redis.keys("*")).forEach(async item => {
+    /** 统计每天访问量*/
+    redis.ttl(item).then(time => {
+      // 根据剩余天数计算应该处于数组第几位
+      let index = 7 - 1 - Math.floor((604_800 - time) / 86_400);
+      visits[index]++;
+    });
+    /** 统计七日内文章访问量*/
+    let articleID = item.split("--").slice(-1)[0];
+    _articleRanking[articleID] ? _articleRanking[articleID]++ : (_articleRanking[articleID] = 1);
+  });
+  let articleIDs = Object.entries(_articleRanking)
+    .sort((a, b) => b[1] - a[1])
+    .splice(0, 10)
+    .map(el => ({ articleID: el[0], viewCount: el[1] }));
+  articleRanking = await DB.Article.findAll({
+    attributes: ["id", "title"],
+    where: { id: articleIDs.map(item => item.articleID) },
+    raw: true,
+  })
+    .then(rows => rows.map((item, index) => ({ ...item, view_count: articleIDs[index].viewCount })))
+    .catch(() => null);
+}
+
+setVisitsData();
+setTimeout(() => {
+  setVisitsData();
+}, 21_600_000);
 
 let router = new Router();
 
+const getDistData = () => {
+  let isLinux = os.type().toLowerCase().includes("linux");
+
+  let total = 0;
+  let occupied = 0;
+  getDiskInfoSync().forEach(item => {
+    total += item.blocks;
+    occupied += item.used;
+  });
+  return {
+    occupied: isLinux ? occupied * 1000 : occupied,
+    total: isLinux ? total * 1000 : total,
+  };
+};
+
 router.get("/statistics/visualization", auth(), async ctx => {
-  /** 文章总数*/
-  let articleCount = DB.Article.findAndCountAll({ attributes: ["id"] }).then(({ count }) => count);
-  /** 原创文章总数*/
-  let articleReprintCount = DB.Article.findAndCountAll({
-    attributes: ["id"],
-    where: { reprint: { [Op.not]: null } as any },
-  }).then(({ count }) => count);
-  //查询管理员ID
-  let adminData = await DB.Article.findAll({
-    attributes: ["id"],
-    where: { state: 1 },
-  })
-    .then(rows => rows.map(item => item.toJSON().id))
-    .catch(() => []);
+  let adminID = (await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true })
+    .then(rows => rows.map(item => item.id))
+    .catch(() => [])) as number[];
+
   /** 管理员发布的原创文章数量*/
-  let adminNotReprintCount = DB.Article.findAndCountAll({
+  let adminNotReprintCount = await DB.Article.findAndCountAll({
     attributes: ["id"],
-    where: { reprint: { [Op.not]: null } as any, author: adminData },
-  }).then(({ count }) => count);
+    raw: true,
+    where: { reprint: { [Op.is]: null } as any, author: adminID },
+  })
+    .then(({ count }) => count)
+    .catch(() => 0);
+
+  /** 管理员发布的转载文章数量*/
+  let adminReprintCount = await DB.Article.findAndCountAll({
+    attributes: ["id"],
+    raw: true,
+    where: { reprint: { [Op.not]: null } as any, author: adminID },
+  })
+    .then(({ count }) => count)
+    .catch(() => 0);
+
+  /** 用户原创文章*/
+  let userNotReprintCount = await DB.Article.findAndCountAll({
+    attributes: ["id"],
+    raw: true,
+    where: { reprint: { [Op.is]: null } as any, author: { [Op.not]: adminID } },
+  })
+    .then(({ count }) => count)
+    .catch(() => 0);
+
+  /** 用户转载文章*/
+  let userReprintCount = await DB.Article.findAndCountAll({
+    attributes: ["id"],
+    raw: true,
+    where: { reprint: { [Op.not]: null } as any, author: { [Op.not]: adminID } },
+  })
+    .then(({ count }) => count)
+    .catch(() => 0);
 
   /** 类型总数*/
   let typeCount = (typeCache.get("type") as any[]).length;
@@ -33,46 +109,52 @@ router.get("/statistics/visualization", auth(), async ctx => {
   let tagCount = (typeCache.get<any[]>("tag") as any[]).length;
 
   /** 普通用户数量*/
-  let userCount = DB.User.findAndCountAll({
+  let userCount = await DB.User.findAndCountAll({
     attributes: ["id"],
-    where: { state: { [Op.not]: 1 } as any },
-  }).then(({ count }) => count);
+    raw: true,
+    where: { id: { [Op.not]: adminID } },
+  })
+    .then(({ count }) => count)
+    .catch(() => null);
 
-  let links = DB.Links.findAndCountAll({ attributes: ["state"] }).then(({ rows }) => {
-    ({
-      total: rows.reduce((total, item) => (item.toJSON().state == 1 ? ++total : total), 0),
-      apply: rows.reduce((total, item) => (item.toJSON().state == 0 ? ++total : total), 0),
-    });
-  });
+  let links = await DB.Links.findAndCountAll({
+    attributes: ["id"],
+    raw: true,
+    where: { state: 1 },
+  })
+    .then(({ count }) => count)
+    .catch(() => null);
 
-  await Promise.all([articleCount, articleReprintCount, adminNotReprintCount, userCount, links])
-    .then(data => {
-      ctx.body = {
-        success: true,
-        message: "查询首页内容统计信息",
-        data: {
-          article: {
-            total: data[0],
-            article_reprint_count: data[1],
-            admin_not_reprint_article_count: data[2],
-          },
-          type: {
-            type_count: typeCount,
-            tag_count: tagCount,
-          },
-          user: {
-            total: data[3],
-          },
-          links: data[4],
-        },
-      };
-    })
-    .catch(err => {
-      ctx.status = 500;
-      ctx.body = {
-        success: false,
-        message: "查询失败",
-      };
-    });
+  ctx.body = {
+    success: true,
+    message: "大屏页面统计信息",
+    data: {
+      article: {
+        admin_reprint_count: adminReprintCount,
+        admin_not_reprint_count: adminNotReprintCount,
+        user_reprint_count: userReprintCount,
+        user_not_reprint_count: userNotReprintCount,
+      },
+      type: {
+        type_count: typeCount,
+        tag_count: tagCount,
+      },
+      user: {
+        user_count: userCount,
+      },
+      links: {
+        links_count: links,
+      },
+      visits: visits,
+      article_ranking: articleRanking,
+      // 1、5、15 负载
+      loadavg: os.loadavg().map(load => +load.toFixed(0) * 100),
+      memory: {
+        occupied: os.totalmem() - os.freemem(),
+        total: os.totalmem(),
+      },
+      disk: getDistData(),
+    },
+  };
 });
 export default router;

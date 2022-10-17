@@ -3,6 +3,8 @@ import useSWR from "swr";
 import axios from "axios";
 import useUserState from "@/store/user-state";
 import { Link, useNavigate } from "react-router-dom";
+import Notice from "@/components/page/index/notice";
+
 import github from "@/assets/icon/github.svg";
 import dataIcon from "@/assets/icon/数据看板.svg";
 import homepage from "@/assets/icon/homepage.svg";
@@ -46,12 +48,12 @@ const Index = () => {
         <div className="w-full mr-4 p-5 bg-white shadow-sm">
           <div className="text-lg flex justify-between">
             <span>开源项目</span>
-            <span>{data && data.repository_data.refresh_time}</span>
+            <span>{data && data.repository_data?.refresh_time}</span>
           </div>
           <Divider />
           {error && <>加载错误</>}
           {isValidating && <Skeleton active />}
-          {data && (
+          {data?.repository_data && (
             <div className="flex justify-between cursor-pointer">
               <div className="text-center" onClick={() => navigate("/statistics")}>
                 <img src={dataIcon} alt="data-icon" className="w-12 h-12" />
@@ -102,27 +104,7 @@ const Index = () => {
           <Divider />
           {error && <>加载错误</>}
           {isValidating && <Skeleton active />}
-          {data && (
-            <div>
-              {!!data.links_count && (
-                <div className="flex justify-between">
-                  <div>
-                    有 <b>{data.links_count}</b> 友情链接申请带处理
-                  </div>
-                  <Link to="/links">去看看</Link>
-                </div>
-              )}
-              {!!data.comment_count && (
-                <div className="flex justify-between">
-                  <div>
-                    有 <b>{data.comment_count}</b> 条新评论发布
-                  </div>
-                  <Link to="/comment">去看看</Link>
-                </div>
-              )}
-              {!data.links_count && !data.links_count && <Empty description="没有新的消息" />}
-            </div>
-          )}
+          {data?.notice && <Notice data={data.notice} />}
         </div>
       </div>
     </>

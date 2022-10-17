@@ -30,9 +30,13 @@ import getAllRouter from "@/common/modules/getAllRouter";
   let routeCount = 0;
   Routers.forEach((item, index) => {
     import(item).then(_route => {
-      if (_route.default.routes()) {
-        routeCount += _route.default.routes().router.stack.length;
-        app.use(_route.default.routes());
+      try {
+        if (_route?.default?.routes()) {
+          routeCount += _route.default.routes().router.stack.length;
+          app.use(_route.default.routes());
+        }
+      } catch (error) {
+        console.log(item, _route.default);
       }
     });
     if (Routers.length == index + 1) {

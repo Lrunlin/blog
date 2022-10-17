@@ -10,7 +10,7 @@ const AuthorRanking = () => {
     <>
       <div className="bg-white mt-3 shadow-sm">
         <div className="py-3 px-2 border-b-solid border-slate-200">🎖️作者榜</div>
-        {isValidating && <div className="bg-gray-200 h-60"></div>}
+        {isValidating && <div className="bg-gray-200 h-80"></div>}
         {error && <div className="h-10  flex items-center justify-center">加载错误</div>}
         <div className="px-2">
           {data &&

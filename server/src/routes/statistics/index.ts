@@ -20,7 +20,9 @@ function getGtiHubData() {
         refresh_time: moment().format("MM-DD hh:mm:ss"),
       };
     })
-    .catch(() => {});
+    .catch(err => {
+      console.log(err);
+    });
 }
 getGtiHubData();
 setInterval(() => {
@@ -29,14 +31,20 @@ setInterval(() => {
 
 let router = new Router();
 router.get("/statistics/index", auth(), async ctx => {
-  let links = DB.Links.findAndCountAll({ where: { state: 0 } }).then(({ count }) => count);
+  let links = DB.Links.findAndCountAll({ where: { state: 0 }, raw: true })
+    .then(({ count }) => ({ type: "links", count: count }))
+    .catch(() => []);
 
-  let adminId = await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"] }).then(rows =>
-    rows.map(item => item.toJSON().id)
+  let adminId = await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true }).then(
+    rows => rows.map(item => item.id)
   );
+
   let comment = DB.Comment.findAndCountAll({
     where: { is_review: 0, user_id: { [Op.not]: adminId } },
-  }).then(({ count }) => count);
+    raw: true,
+  })
+    .then(({ count }) => ({ type: "comment", count: count }))
+    .catch(() => []);
 
   await Promise.all([links, comment])
     .then(data => {
@@ -44,8 +52,7 @@ router.get("/statistics/index", auth(), async ctx => {
         success: true,
         message: "查询首页内容",
         data: {
-          links_count: data[0],
-          comment_count: data[1],
+          notice: data.flat().filter(item => item.count),
           repository_data: repositoryData,
         },
       };

@@ -1,0 +1,59 @@
+@import "@/page/statistics/index.scss";
+
+// 容器，携带图片边框
+.statistics-container {
+  position: relative;
+  border: vw(2) solid $borderColor;
+  padding: 20px 12.5px;
+  display: inline-block;
+}
+
+// 处理图片边框问题
+.statistics-title-bg {
+  width: vw(92.5);
+  height: vw(11.5);
+  position: absolute;
+  left: vw(-(2));
+  top: vw(-(11));
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.statistics-border-bg {
+  width: vw(25);
+  position: absolute;
+}
+.statistics-border-bg_left {
+  left: vw(-2);
+  bottom: vw(-2);
+}
+.statistics-border-bg_right {
+  right: vw(-2);
+  top: vw(-2);
+}
+
+.statistics-title-right-bg {
+  position: absolute;
+  width: vw(20);
+  bottom: vw(-2);
+  right: vw(-2);
+}
+
+// header中的item容器
+.header-item {
+  width: vw(278);
+  height: vw(96);
+  .title {
+    font-size: vw(24);
+    font-weight: 700;
+    color: white;
+  }
+  .data {
+    color: $color;
+    font-weight: 700;
+    font-size: vw(24);
+  }
+  .footer {
+    font-size: vw(16);
+    color: white;
+  }
+}

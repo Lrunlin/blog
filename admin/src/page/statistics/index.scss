@@ -1,0 +1,28 @@
+$color: rgba(14, 253, 255, 1);
+$borderColor: rgba(14, 253, 255, 0.5);
+
+@function vw($px) {
+  @return calc($px/1920 * 100vw);
+}
+@function vh($px) {
+  @return calc($px/961 * 100vh);
+}
+.container-title {
+  color: $color;
+  font-size: vw(32);
+  padding-top: vh(15);
+  text-align: center;
+  font-weight: 900;
+}
+main.main {
+  width: vw(1843);
+  margin: 0px auto;
+  margin-top: vh(30);
+  display: flex;
+  .main-left {
+    width: vw(1350);
+  }
+  .main-right {
+    width: vw(450);
+  }
+}

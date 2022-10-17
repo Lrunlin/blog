@@ -78,12 +78,17 @@ const RouterList: RouterListType[] = [
       },
     ],
   },
+  {
+    path: "/statistics",
+    element: lazy(() => import("@/page/statistics")),
+    title: "统计",
+  },
 ];
 export default RouterList;
 interface RouterListType {
   path: string;
   element: LazyExoticComponent<FC<{}>>;
   children?: RouterListType[];
-  title?:string;
+  title?: string;
 }
 export type { RouterListType };
