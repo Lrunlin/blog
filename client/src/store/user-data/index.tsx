@@ -3,9 +3,12 @@ import axios from "axios";
 import { atom, useRecoilState } from "recoil";
 import { UserAttributes } from "@type/model-attribute";
 
-export type UserStateAttributes = Pick<UserAttributes,'id'|'name'|'auth'|"avatar_file_name"|"avatar_url">;
+export type UserStateAttributes = Pick<
+  UserAttributes,
+  "id" | "name" | "auth" | "avatar_file_name" | "avatar_url"
+>;
 
-export const userDataContext = atom<UserAttributes | null>({
+export const userDataContext = atom<UserStateAttributes | null>({
   key: "user-data",
   default: null,
 });
@@ -26,7 +29,7 @@ function useUserData() {
   }
 
   useEffect(() => {
-    refreshUserData();
+    if (!userData) refreshUserData();
   }, []);
   return [userData, refreshUserData] as [UserStateAttributes | null, () => void];
 }

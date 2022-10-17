@@ -4,6 +4,8 @@ import { GithubOutlined } from "@ant-design/icons";
 import { useSetRecoilState } from "recoil";
 import axios from "axios";
 import { modalStateContext } from "../index";
+import cookie from "js-cookie";
+
 
 import useUserData from "@/store/user-data";
 
@@ -21,7 +23,7 @@ const LogIn = () => {
         if (res.data.success) {
           message.success(res.data.message);
           setModalState(false);
-          localStorage.token = res.data.token;
+          cookie.set("token", res.data.token, { expires: 365 });
           refreshDataAction();
         } else {
           message.error(res.data.message);

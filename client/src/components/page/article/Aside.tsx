@@ -39,7 +39,7 @@ const Aside = () => {
         <Repository />
         {/* 目录 */}
         {articleData.display_directory && <Catalogue />}
-        {/* <AdSense /> */}
+        <AdSense />
       </aside>
     </>
   );

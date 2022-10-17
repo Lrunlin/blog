@@ -3,15 +3,14 @@ import Base from "@/layout/Base";
 import { Button, Result } from "antd";
 import { useRouter } from "next/router";
 import qs from "qs";
+import cookie from "js-cookie";
 
 /** 为一些页面显示处理结果*/
 const ResultFC = () => {
   let router = useRouter();
   let query = useMemo(() => qs.parse(qs.stringify(router.query)), [router.query]);
   useEffect(() => {
-    if (query.token) {
-      localStorage.token = query.token;
-    }
+    if (query.token) cookie.set("token", query.token + "", { expires: 365 });
   }, [query]);
   function SubTitle() {
     let message = query.message as string | string[];

@@ -22,30 +22,6 @@ const Redis = db => {
   });
 };
 
-// 获取除文章页面外需要渲染的路由
-const routes = ["article/*"].concat(
-  glob
-    .sync("src/pages/**/*.tsx")
-    .filter(item => {
-      let _file = fs.readFileSync(item).toString();
-      return (
-        !_file.includes(`export const getServerSideProps:`) &&
-        !_file.includes(`export let getServerSideProps:`)
-      );
-    })
-    .map(item => item.replace("src/pages/", "").replace(".tsx", ""))
-    .filter(item => !item.startsWith("_") && !item.includes("["))
-    .map(item => {
-      if (!item.endsWith("/index")) {
-        return item;
-      } else {
-        let _arr = item.split("/");
-        _arr.pop();
-        return _arr.join("/");
-      }
-    })
-);
-
 /** 获取用户端请求IP*/
 function getClientIp(req) {
   return (
@@ -67,7 +43,7 @@ async function readingRecords(req) {
   if (isNaN(+key)) {
     return;
   }
-  let ip = getClientIp(req).split(',')[0];
+  let ip = getClientIp(req).split(",")[0];
   if (
     ip &&
     !(await RedisViewHisTory.exists(`${ip}--${key}--*`)) &&
@@ -118,9 +94,7 @@ async function main() {
   const server = express();
 
   //对哪些页面进行缓存
-  for (const path of routes) {
-    server.get(`/${path}`, (req, res) => renderAndCache(req, res));
-  }
+  server.get(`/article/*`, (req, res) => renderAndCache(req, res));
   server.get("*", (req, res) => handle(req, res));
 
   server.listen(port, () => {
