@@ -30,5 +30,11 @@ namespace NodeJS {
     NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID: string;
     /** ins标签的d-slot*/
     NEXT_PUBLIC_GOOGLE_ADS_SLOT: string;
+    /** 站长QQ*/
+    QQ: string;
+    /** 站长邮箱*/
+    EMAIL: string;
+    /** ICP 备案号*/
+    ICP: string;
   }
 }

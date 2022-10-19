@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { modalStateContext } from "@/components/common/Header/Sign";
 import { Result, Button } from "antd";
@@ -7,6 +8,7 @@ import Header from "./Header";
 import Aside from "./Aside";
 import classNames from "classnames";
 import Head from "@/components/next/Head";
+import { useRouter } from "next/router";
 
 interface propsType {
   children: ReactNode;
@@ -16,6 +18,12 @@ const Layout: FC<propsType> = ({ children, className }) => {
   let [userData] = useUserData();
   let setModalState = useSetRecoilState(modalStateContext);
 
+  let router = useRouter();
+  useEffect(() => {
+    router.prefetch("/write");
+    router.prefetch("/article/editor/[id]");
+  }, []);
+  
   return (
     <>
       <Head title="创作者中心" />

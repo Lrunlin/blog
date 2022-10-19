@@ -50,7 +50,7 @@ const CommentItem: FC<propsType> = props => {
             </span>
             {data.user_data.id == userData?.id && (
               <span className="flex items-center ml-3 cursor-pointer" onClick={removeComment}>
-                <Image src="/icon/delete2.png" width={14} height={14} />
+                <Image src="/icon/delete-fill.png" width={14} height={14} />
                 <span className="ml-0.5">删除</span>
               </span>
             )}

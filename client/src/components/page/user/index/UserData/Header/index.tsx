@@ -29,7 +29,7 @@ const Header: FC<{ data: UserAttributes }> = ({ data }) => {
               )}
               {data.site && (
                 <NoFollowLink href={data.site} className="mr-2">
-                  <Image src="/icon/互联网.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/website.png" height={18} width={18} alt="ICON" />
                 </NoFollowLink>
               )}
             </div>
@@ -39,13 +39,13 @@ const Header: FC<{ data: UserAttributes }> = ({ data }) => {
             <div className="flex items-center">
               {data.location && (
                 <div className="flex items-center">
-                  <Image src="/icon/公文.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/briefcase.png" height={18} width={18} alt="ICON" />
                   <span className="ml-1.5">{data.location}</span>
                 </div>
               )}
               {data.unit && (
                 <div className="flex items-center ml-3">
-                  <Image src="/icon/单位.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/unit.png" height={18} width={18} alt="ICON" />
                   <span className="ml-1.5">{data.unit}</span>
                 </div>
               )}
@@ -56,7 +56,7 @@ const Header: FC<{ data: UserAttributes }> = ({ data }) => {
           {data.description && (
             <div className="w-full mt-2 flex items-start">
               <div className="mt-0.5">
-                <Image src="/icon/明信片_postcard5.png" height={14} width={18} alt="poster card" />
+                <Image src="/icon/postcard.png" height={14} width={18} alt="poster card" />
               </div>
               <div className="w-11/12 ml-1.5 break-all">{data.description}</div>
             </div>

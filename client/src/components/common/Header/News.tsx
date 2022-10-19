@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import type { FC } from "react";
 import Image from "@/components/next/Image";
 import Link from "next/link";
@@ -12,7 +12,7 @@ interface propsType {
 }
 
 /** Header中的小铃铛用来跳转到通知页面*/
-const News: FC<propsType> = props => {
+const News: FC<propsType> = memo(props => {
   let userData = useUserData();
   const [badgeCount, setBadgeCount] = useState(0);
   useEffect(() => {
@@ -41,5 +41,5 @@ const News: FC<propsType> = props => {
       </Link>
     </>
   );
-};
+});
 export default News;

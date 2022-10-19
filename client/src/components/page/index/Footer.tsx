@@ -17,7 +17,7 @@ let list: listItemType[][] = [
       label: "友情链接",
     },
     {
-      href: "/sitemap.xml",
+      href: "/sitemap/index.xml",
       label: "SiteMap",
     },
     {
@@ -31,7 +31,7 @@ let list: listItemType[][] = [
       label: (
         <>
           <Image src="/icon/police.png" width={20} height={20} className="police icon" />
-          <span className="ml-1">辽ICP备2020014377号</span>
+          <span className="ml-1">{process.env.ICP}</span>
         </>
       ),
       className: "flex items-center",
@@ -73,14 +73,16 @@ const Footer = () => {
             placement="bottom"
             overlay={
               <div className="bg-white w-40 h-52 pt-2 rounded text-center">
-                <div>QQ:1974109227</div>
+                <div>QQ:{process.env.QQ}</div>
                 <div>
                   <Image src="/image/qq-qrcode.jpg" width={140} height={140} alt="QQ名片二维码" />
                 </div>
               </div>
             }
           >
-            <NoFollowLink href="http://wpa.qq.com/msgrd?v=3&uin=1974109227&site=qq&menu=yes">
+            <NoFollowLink
+              href={`http://wpa.qq.com/msgrd?v=3&uin=${process.env.QQ}&site=qq&menu=yes`}
+            >
               <Image src="/icon/qq.png" width={24} height={24} alt="QQ图标" />
             </NoFollowLink>
           </Dropdown>
@@ -101,7 +103,7 @@ const Footer = () => {
           </Dropdown>
         </div>
         <div className="mt-3 ml-2">
-          <NoFollowLink href="mailto:353575900@qq.com">
+          <NoFollowLink href={`mailto:${process.env.EMAIL}`}>
             <Image src="/icon/email.png" width={24} height={24} alt="邮箱图标" />
           </NoFollowLink>
         </div>

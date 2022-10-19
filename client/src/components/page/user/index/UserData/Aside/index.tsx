@@ -26,13 +26,18 @@ const Aside: FC<{ data: UserAttributes }> = props => {
               onClick={() => router.push({ query: { ...router.query, key: "article" } })}
             >
               <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-50">
-                <Image src="/icon/view_blue.png" height={14} width={14} alt="view icon" />
+                <Image src="/icon/view-blue.png" height={14} width={14} alt="view icon" />
               </div>
               <span className="ml-2">文章被阅读 {data.article_view_count.toLocaleString()}</span>
             </div>
             <div className="h-8 flex items-center">
               <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-50">
-                <Image src="/icon/_收藏2.png" height={14} width={14} alt="collection icon" />
+                <Image
+                  src="/icon/collection-blue.png"
+                  height={14}
+                  width={14}
+                  alt="collection icon"
+                />
               </div>
               <span className="ml-2">
                 文章被收藏 {data.article_collection_count.toLocaleString()}

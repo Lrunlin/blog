@@ -1,7 +1,7 @@
 // 先关闭端口
 import { kill } from "cross-port-killer";
 kill(3000).catch(() => {
-  console.log("关闭失败");
+  console.log(`端口3000关闭失败`);
 });
 
 // 变量别名
