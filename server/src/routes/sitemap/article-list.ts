@@ -18,14 +18,24 @@ router.get("/sitemap/:index", integer([], ["index"]), async ctx => {
     ],
     raw: true,
   }).then(rows => {
+    let list = rows.map(item => ({
+      href: `${process.env.CLIENT_HOST}/article/${item.id}`,
+      priority: 0.9,
+      create_time: moment(item.update_time || item.create_time).format("YYYY-MM-DD"),
+    }));
+
+    if (index == 1) {
+      list.unshift({
+        href: process.env.CLIENT_HOST as string,
+        priority: 1,
+        create_time: moment().format("YYYY-MM-DD"),
+      });
+    }
+
     ctx.body = {
       success: true,
       message: "获取sitemap文章列表",
-      data: rows.map(item => ({
-        href: `${process.env.CLIENT_HOST}/article/${item.id}`,
-        priority: 0.9,
-        create_time: moment(item.update_time || item.create_time).format("YYYY-MM-DD"),
-      })),
+      data: list,
     };
   });
 });

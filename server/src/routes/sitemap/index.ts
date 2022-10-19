@@ -9,20 +9,12 @@ router.get("/sitemap", async ctx => {
     attributes: ["id"],
     raw: true,
   }).then(({ count }) => {
-    let list = new Array(Math.ceil(count / 1000)).fill(null).map((_, index) => ({
-      href: `${process.env.CLIENT_HOST}/sitemap/index${index + 1}.xml`,
-      priority: 1,
-      create_time: moment().format("YYYY-MM-DD"),
-    }));
-    list.unshift({
-      href: process.env.CLIENT_HOST as string,
-      priority: 1,
-      create_time: moment().format("YYYY-MM-DD"),
-    });
     ctx.body = {
       success: true,
-      message: "获取sitemap",
-      data: list,
+      message: "获取sitemap列表",
+      data: new Array(Math.ceil(count / 1000)).fill(null).map((_, index) => ({
+        href: `${process.env.CLIENT_HOST}/sitemap/index${index + 1}.xml`,
+      })),
     };
   });
 });

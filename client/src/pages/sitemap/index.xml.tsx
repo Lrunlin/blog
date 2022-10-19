@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import setSiteMap from "@/common/utils/sitemap";
+import setSiteMap from "@/common/utils/sitemap/sitemap-list";
 
 const SiteMap = () => null;
 export default SiteMap;
