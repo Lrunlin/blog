@@ -1,3 +1,9 @@
+// 先关闭端口
+import { kill } from "cross-port-killer";
+kill(3000).catch(() => {
+  console.log("关闭失败");
+});
+
 // 变量别名
 import moduleAlias from "module-alias";
 moduleAlias.addAlias("@", __dirname);

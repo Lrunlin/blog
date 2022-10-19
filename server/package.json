@@ -17,6 +17,7 @@
     "cheerio": "^1.0.0-rc.10",
     "chokidar": "^3.5.3",
     "cross-env": "^7.0.3",
+    "cross-port-killer": "^1.4.0",
     "dotenv": "^16.0.1",
     "identicon.js": "^2.3.3",
     "ioredis": "^5.2.0",

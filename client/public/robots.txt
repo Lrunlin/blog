@@ -18,4 +18,4 @@ Disallow:/oauth
 Disallow:/result
 # 友链页面
 Disallow:/links
-Sitemap:https://blogweb.cn/sitemap
+Sitemap:https://blogweb.cn/sitemap/index.xml

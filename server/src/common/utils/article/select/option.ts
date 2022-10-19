@@ -15,12 +15,12 @@ let sort = {
     ["view_count", "desc"],
   ],
   newest: [
-    ["create_time", "desc"],
     ["update_time", "desc"],
+    ["create_time", "desc"],
     ["reprint", "asc"],
-    ["view_count", "desc"],
-    ["comment_count", "desc"],
     ["collection_count", "desc"],
+    ["comment_count", "desc"],
+    ["view_count", "desc"],
   ],
   hottest: [
     ["view_count", "desc"],

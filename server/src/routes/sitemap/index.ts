@@ -3,44 +3,26 @@ import DB from "@/db";
 import moment from "moment";
 let router = new Router();
 
-interface sitemapItemType {
-  id: string | number;
-  priority?: number;
-  update_time?: Date;
-  create_time?: Date;
-}
-function setSiteMap(list: sitemapItemType[]) {
-  const header = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
->`;
-  const footer = `\n</urlset>`;
-  let body = list.map(item => {
-    return `
-    <url>
-     <loc>${process.env.CLIENT_HOST}/${item.id ? `article/${item.id}` : item.id}</loc>
-     <priority>${item.priority || 0.9}</priority>
-     <lastmod>${moment(item.update_time || item.update_time).format("YYYY-MM-DD")}</lastmod>
-     <changefreq>weekly</changefreq>
-    </url>`;
-  });
-  return header + body.join("") + footer;
-}
-let list = [{ id: "", priority: 1, create_time: new Date() }];
 router.get("/sitemap", async ctx => {
-  await DB.Article.findAll({
+  await DB.Article.findAndCountAll({
     where: { state: 1 },
-    attributes: ["id", "update_time", "create_time"],
-    order: [["reprint", "asc"]],
+    attributes: ["id"],
     raw: true,
-  }).then(rows => {
+  }).then(({ count }) => {
+    let list = new Array(Math.ceil(count / 1000)).fill(null).map((_, index) => ({
+      href: `${process.env.CLIENT_HOST}/sitemap/index${index + 1}.xml`,
+      priority: 1,
+      create_time: moment().format("YYYY-MM-DD"),
+    }));
+    list.unshift({
+      href: process.env.CLIENT_HOST as string,
+      priority: 1,
+      create_time: moment().format("YYYY-MM-DD"),
+    });
     ctx.body = {
       success: true,
-      message: "获取sitemap.xml",
-      data: setSiteMap([...list, ...rows]),
+      message: "获取sitemap",
+      data: list,
     };
   });
 });

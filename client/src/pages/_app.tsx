@@ -1,7 +1,8 @@
+import { NextPage, NextPageContext } from "next";
 import type { AppProps } from "next/app";
-import "antd/dist/antd.css";
+
 //部分动画样式在这个css里面
-// import "antd/lib/style/index.css";
+import "antd/lib/style/index.css";
 import "@/plugin/axios";
 
 import moment from "moment";
@@ -16,7 +17,8 @@ import dynamic from "next/dynamic";
 const Sign = dynamic(import("@/components/common/Header/Sign"), { ssr: false });
 
 import { SWRConfig } from "swr";
-import { NextPage, NextPageContext } from "next";
+
+import {parse as cookieParse} from "cookie";
 
 // 服务端禁用key检查
 if (typeof window == "undefined") {
@@ -52,12 +54,14 @@ APP.getInitialProps = async (params: any) => {
     return { userInfo: null } as Props;
   }
 
-  let cookies: { [key: string]: string } = JSON.parse(
-    '{"' + (ctx?.req?.headers?.cookie as string).replace(/=/g, '":"').replace(/;\s+/g, '","') + '"}'
-  );
+  let { token } = cookieParse(ctx?.req?.headers?.cookie + "");
+  if (!token) {
+    return { userInfo: null } as Props;
+  }
+
   let userInfo = await axios
     .get("/user/info", {
-      headers: { authorization: cookies.token },
+      headers: { authorization: token },
     })
     .then(res => {
       return { userInfo: res.data.data || null } as Props;

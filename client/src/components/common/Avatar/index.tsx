@@ -6,6 +6,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import cookie from "js-cookie";
 
 function Menu() {
   let router = useRouter();
@@ -60,7 +61,7 @@ function Menu() {
         <div
           className="cursor-pointer"
           onClick={() => {
-            localStorage.removeItem("token");
+            cookie.remove("token");
             router.reload();
           }}
         >

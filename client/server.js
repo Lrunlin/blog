@@ -1,5 +1,5 @@
 const express = require("express");
-const fs = require("fs");
+const { kill } = require("cross-port-killer");
 const next = require("next");
 const redis = require("ioredis");
 const env = require("./env");
@@ -96,7 +96,9 @@ async function main() {
   //对哪些页面进行缓存
   server.get(`/article/*`, (req, res) => renderAndCache(req, res));
   server.get("*", (req, res) => handle(req, res));
-
+  await kill(port).catch(() => {
+    console.log(`端口${port}关闭失败！`);
+  });
   server.listen(port, () => {
     console.log(`>开始运行于： http://localhost:${port}`);
   });

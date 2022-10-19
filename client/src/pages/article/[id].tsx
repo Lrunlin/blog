@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import dynamic from "next/dynamic";
 import type { GetServerSideProps, NextPage } from "next";
+import { useEffect } from "react";
 import { atom, useSetRecoilState, useResetRecoilState } from "recoil";
 import { Button, Result } from "antd";
 import axios from "axios";
@@ -9,7 +10,6 @@ import View from "@/components/page/article/View";
 import type { ArticleAttributes } from "@type/model-attribute";
 import { useRouter } from "next/router";
 import Header from "@/components/common/Header";
-import dynamic from "next/dynamic";
 const ArticleUserData = dynamic(import("@/components/page/article/UserData"), { ssr: false });
 const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
 
