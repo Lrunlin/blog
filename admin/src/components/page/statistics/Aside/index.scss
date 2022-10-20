@@ -6,7 +6,7 @@
 .article-ranking-item {
   height: vw(40);
   width: 100%;
-  color: white;
+  color: white !important;
   font-size: vw(18);
   border-bottom: vw(2) solid $borderColor;
    display: flex;
