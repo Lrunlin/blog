@@ -25,7 +25,7 @@ const Modal: FC<modalPropsType> = props => {
       <div>
         <Form
           labelCol={{ span: 3, offset: 2 }}
-          className="mt-2"
+          className="!ml-5 !mt-2"
           initialValues={articleData}
           form={form}
           onFinishFailed={({ errorFields }) => {

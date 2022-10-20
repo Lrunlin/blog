@@ -25,7 +25,7 @@ const schema = Joi.object({
 // 综合
 router.get("/recommend", validator(schema), async ctx => {
   let page = +(ctx.query.page as string);
-  let data = await option(page, ctx.query.page as any);
+  let data = await option(page, ctx.query.type as any);
   ctx.body = {
     success: true,
     message: `综合${ctx.query.type},页数:${page}`,

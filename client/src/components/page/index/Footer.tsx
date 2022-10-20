@@ -108,7 +108,7 @@ const Footer = () => {
           </NoFollowLink>
         </div>
         <div className="mt-3 ml-2">
-          <NoFollowLink href="https://github.com/Lrunlin">
+          <NoFollowLink href={`${process.env.GITHUB}`}>
             <Image src="/icon/github.png" width={24} height={24} alt="GitHub图标" />
           </NoFollowLink>
         </div>

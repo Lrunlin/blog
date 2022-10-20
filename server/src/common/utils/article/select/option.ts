@@ -9,8 +9,8 @@ let sort = {
   recommend: [
     ["reprint", "asc"],
     ["update_time", "desc"],
-    ["create_time", "desc"],
     ["comment_count", "desc"],
+    ["create_time", "desc"],
     ["collection_count", "desc"],
     ["view_count", "desc"],
   ],
@@ -20,12 +20,11 @@ let sort = {
     ["reprint", "asc"],
     ["collection_count", "desc"],
     ["comment_count", "desc"],
-    ["view_count", "desc"],
   ],
   hottest: [
-    ["view_count", "desc"],
     ["collection_count", "desc"],
     ["create_time", "desc"],
+    ["view_count", "desc"],
     ["comment_count", "desc"],
     ["update_time", "desc"],
     ["reprint", "asc"],

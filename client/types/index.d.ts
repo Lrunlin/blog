@@ -34,6 +34,8 @@ namespace NodeJS {
     QQ: string;
     /** 站长邮箱*/
     EMAIL: string;
+    /** GItHub主页地址*/
+    GITHUB: string;
     /** ICP 备案号*/
     ICP: string;
   }
