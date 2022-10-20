@@ -42,7 +42,7 @@ function option(data: { value: number; name: string }[]) {
     series: [
       {
         type: "pie",
-        radius: "80%",
+        radius: "70%",
         data: data,
         top: vw(-10),
         left: vw(140),

@@ -4,9 +4,13 @@
   height: vw(445);
 }
 .article-ranking-item {
+  height: vw(40);
+  width: 100%;
+  color: white;
   font-size: vw(18);
   border-bottom: vw(2) solid $borderColor;
-  height: vw(40);
+   display: flex;
+  justify-content: space-around;
   .article-ranking-item_title {
     margin-left: vw(10);
   }
