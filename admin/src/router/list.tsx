@@ -8,7 +8,12 @@ const RouterList: RouterListType[] = [
     title: "登录",
   },
   {
-    path: "",
+    path: "/statistics",
+    element: lazy(() => import("@/page/statistics")),
+    title: "统计",
+  },
+  {
+    path: "/",
     element: lazy(() => import("@/layout/Base")),
     children: [
       {
@@ -76,12 +81,12 @@ const RouterList: RouterListType[] = [
         element: lazy(() => import("@/page/user-list")),
         title: "用户列表",
       },
+      {
+        path: "*",
+        element: lazy(() => import("@/page/NoFound")),
+        title: "404",
+      },
     ],
-  },
-  {
-    path: "/statistics",
-    element: lazy(() => import("@/page/statistics")),
-    title: "统计",
   },
 ];
 export default RouterList;

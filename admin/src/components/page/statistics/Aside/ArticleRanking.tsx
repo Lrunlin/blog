@@ -11,10 +11,10 @@ const ArticleRanking: FC<{ data: propsType["article_ranking"] }> = ({ data }) =>
             <a
               key={`echarts-article-ranking-${item.id}`}
               href={`/article/${item.id}`}
-              className="flex justify-around text-white article-ranking-item w-full"
+              className="article-ranking-item"
               target="_blank"
             >
-              <div className="flex w-full">
+              <div className="flex w-4/5">
                 <div className="article-ranking-item_index">{index + 1}</div>
                 <div className="article-ranking-item_title truncate w-4/5">{item.title}</div>
               </div>
