@@ -1,5 +1,4 @@
-import moment from "moment";
-
+import dayjs from "dayjs";
 interface sitemapItemType {
   href: string | number;
   priority?: number;
@@ -20,7 +19,7 @@ http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
   <url>
   <loc>${item.href}</loc>
   <priority>${item.priority || 0.9}</priority>
-  <lastmod>${moment(item.update_time || item.create_time).format("YYYY-MM-DD")}</lastmod>
+  <lastmod>${dayjs(item.update_time || item.create_time).format("YYYY-MM-DD")}</lastmod>
   <changefreq>weekly</changefreq>
   </url>`;
   });

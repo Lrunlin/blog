@@ -5,9 +5,7 @@ import type { AppProps } from "next/app";
 import "antd/lib/style/index.css";
 import "@/plugin/axios";
 
-import moment from "moment";
-import "moment/locale/zh-cn";
-moment.locale("zh-cn");
+import "@/plugin/dayjs.ts";
 
 import { RecoilRoot, RecoilEnv } from "recoil";
 

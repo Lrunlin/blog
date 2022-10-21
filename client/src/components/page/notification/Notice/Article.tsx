@@ -2,7 +2,7 @@ import type{ FC } from "react";
 import type { ArticleAttributes, NoticeAttributes, UserAttributes } from "@type/model-attribute";
 import { Avatar } from "antd";
 import NoFollowLink from "@/components/next/NoFollowLink";
-import moment from "moment";
+import dayjs from "dayjs";
 
 interface dataType extends Omit<NoticeAttributes, "is_read"> {
   label: {
@@ -28,7 +28,7 @@ const ArticleNotice: FC<{ data: dataType }> = ({ data }) => {
           快去看看吧。
         </div>
         <div className="mt-2 text-gray-400">
-          {moment(data.create_time).fromNow().replace(" ", "")}
+          {dayjs(data.create_time).fromNow().replace(" ", "")}
         </div>
       </div>
     </div>

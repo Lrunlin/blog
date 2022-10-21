@@ -1,7 +1,5 @@
-const webpack = require("webpack");
 const path = require("path");
 const envObject = require("./env/index");
-
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });

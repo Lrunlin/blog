@@ -1,7 +1,7 @@
 import { Avatar } from "antd";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
-import moment from "moment";
+import dayjs from "dayjs";
 import { currentArticleDataContext } from "@/pages/article/[id]";
 import FollwoButton from "@/components/page/article/FollowButton";
 
@@ -21,7 +21,7 @@ const ArticleUserData = () => {
         <div className="ml-2">
           <div>{data.author_data.name}</div>
           <div>
-            <time>{moment(data.create_time).format("YYYY年MM月DD日 hh:mm")}</time>
+            <time>{dayjs(data.create_time).format("YYYY年MM月DD日 hh:mm")}</time>
             <span> · 阅读数 {data.view_count}</span>
           </div>
         </div>

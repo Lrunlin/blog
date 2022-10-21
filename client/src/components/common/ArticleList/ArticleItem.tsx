@@ -1,6 +1,6 @@
 import { FC } from "react";
 import type { articleListItemType } from "@type/article-list-item";
-import moment from "moment";
+import dayjs from "dayjs";
 import style from "./index.module.scss";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
@@ -25,7 +25,7 @@ const ArticleItem: FC<propsType> = props => {
         <span className="text-[#4e5969]">{data.author_data.name}</span>
         <span className={classNames(["text-[#86909c]"])}>
           <span className={classNames([style.adorn])}>
-            {moment(data.update_time || data.create_time)
+            {dayjs(data.update_time || data.create_time)
               .fromNow()
               .replace(" ", "")}
           </span>

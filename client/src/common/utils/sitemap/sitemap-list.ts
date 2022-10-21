@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 
 interface sitemapItemType {
   href: string | number;
@@ -11,7 +11,7 @@ function setSiteMap(list: sitemapItemType[]) {
     return `
     <sitemap >
      <loc>${item.href}</loc>
-     <lastmod>${moment().format("YYYY-MM-DD")}</lastmod>
+     <lastmod>${dayjs().format("YYYY-MM-DD")}</lastmod>
     </sitemap>`;
   });
   const footer = `\n</sitemapindex>`;

@@ -7,7 +7,7 @@ import type {
 } from "@type/model-attribute";
 import { Avatar } from "antd";
 import NoFollowLink from "@/components/next/NoFollowLink";
-import moment from "moment";
+import dayjs from "dayjs";
 
 interface dataType extends Omit<NoticeAttributes, "is_read"> {
   label: {
@@ -44,7 +44,7 @@ const ArticleCommentNotice: FC<{ data: dataType }> = ({ data }) => {
           </NoFollowLink>
         </div>
         <div className="mt-2 text-gray-400">
-          {moment(data.create_time).fromNow().replace(" ", "")}
+          {dayjs(data.create_time).fromNow().replace(" ", "")}
         </div>
       </div>
     </div>

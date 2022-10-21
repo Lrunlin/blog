@@ -12,7 +12,6 @@ fs.writeFileSync("dist/.env", fs.readFileSync(`env/.env.development`).toString()
 // 开始执行tsc
 shell.exec("tsc");
 
-// shell.exec('cross-env ENV=development nodemon --watch ./dist ./dist/src/index.js', {
 shell.exec("nodemon ./dist/src/index.js", { async: true });
 
 import change from "./change";

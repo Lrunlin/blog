@@ -7,7 +7,7 @@ import Image from "@/components/next/Image";
 import { Comment, Avatar, Image as AntdImage, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
-import moment from "moment";
+import dayjs from "dayjs";
 import { useSWRConfig } from "swr";
 import type { CommentAttributes } from "@type/model-attribute";
 import Editor from "../Editor";
@@ -81,7 +81,7 @@ const CommentItem: FC<propsType> = props => {
             </>
           )
         }
-        datetime={<span>{moment(data.create_time).fromNow()}</span>}
+        datetime={<span>{dayjs(data.create_time).fromNow()}</span>}
         avatar={
           <a target="_blank" href={`/user/${data.user_data.id}`} className="block w-10 h-10">
             <Avatar
