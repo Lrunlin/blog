@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import getTagData from "@/common/utils/article/get/get-tag-data";
-import setDescription from "@/common/utils/article/get/set-description";
+import getTagData from "@/common/modules/article/get/get-tag-data";
+import setDescription from "@/common/modules/article/get/set-description";
 import Sequelize from "@/db/config";
 import integer from "@/common/verify/integer";
 let router = new Router();

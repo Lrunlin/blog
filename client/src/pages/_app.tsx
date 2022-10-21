@@ -7,37 +7,28 @@ import "@/plugin/axios";
 
 import "@/plugin/dayjs.ts";
 
-import { RecoilRoot, RecoilEnv } from "recoil";
-
 import "@/styles/globals.scss";
 
-import dynamic from "next/dynamic";
-const Sign = dynamic(import("@/components/common/Header/Sign"), { ssr: false });
 
-import { SWRConfig } from "swr";
+import { parse as cookieParse } from "cookie";
 
-import {parse as cookieParse} from "cookie";
-
-// 服务端禁用key检查
-if (typeof window == "undefined") {
-  RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
-}
-
-import { userDataContext } from "@/store/user-data";
-import type { UserStateAttributes } from "@/store/user-data";
 import axios from "axios";
-interface Props extends AppProps {
-  userInfo: UserStateAttributes | null;
+
+import Recoil, { userInfo } from "@/plugin/recoil";
+export interface Props extends AppProps {
+  userInfo: userInfo;
 }
+
+import SWR from "@/plugin/swr";
+
 const APP: NextPage<Props> = ({ Component, pageProps, userInfo }) => {
   return (
     <>
-      <RecoilRoot initializeState={({ set }) => set(userDataContext, userInfo)}>
-        <SWRConfig value={{ revalidateOnFocus: false }}>
-          <Sign />
+      <Recoil userInfo={userInfo}>
+        <SWR>
           <Component {...pageProps} />
-        </SWRConfig>
-      </RecoilRoot>
+        </SWR>
+      </Recoil>
     </>
   );
 };

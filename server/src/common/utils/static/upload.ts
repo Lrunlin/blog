@@ -1,6 +1,6 @@
 import qiniu from "qiniu";
 import sharp from "sharp";
-import sync from "@/common/hooks/useSync";
+import sync from "@/common/utils/sync";
 
 let config = new qiniu.conf.Config({
   zone: qiniu.zone.Zone_z2,

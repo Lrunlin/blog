@@ -1,4 +1,5 @@
 import type { ReactNode, FC } from "react";
+import { useRouter } from "next/router";
 import { Button, Result } from "antd";
 import { useSetRecoilState } from "recoil";
 import { modalStateContext } from "@/components/common/Header/Sign";
@@ -26,13 +27,16 @@ interface propsType {
 
 const Layout: FC<propsType> = ({ children }) => {
   let [userData] = useUserData();
-
+  let router = useRouter();
   let setModalState = useSetRecoilState(modalStateContext);
 
   return (
     <Base className="container">
       <div className="w-full m-0">
-        <div className="w-full py-3 bg-white shadow-sm">
+        <div
+          className="w-full py-3 bg-white shadow-sm"
+          onClick={() => router.push(`/user/${userData?.id}`)}
+        >
           <span className="ml-4 cursor-pointer">
             <LeftOutlined />
             返回个人主页

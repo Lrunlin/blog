@@ -1,5 +1,5 @@
 import type { Context, Next } from "koa";
-import verify from "./verify";
+import verify from "@/common/utils/jwt/verify";
 
 type authCode = 1 | 0;
 

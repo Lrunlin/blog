@@ -3,7 +3,7 @@ import authMiddleware from "@/common/middleware/auth";
 import sequelize from "@/db/config";
 import DB from "@/db";
 import interger from "@/common/verify/integer";
-import getCommentChildrenList from "@/common/utils/comment/get-comment-childrnen-list";
+import getCommentChildrenList from "@/common/modules/comment/get-comment-childrnen-list";
 import transaction from "@/common/transaction/comment/delete-comment";
 
 let router = new Router();

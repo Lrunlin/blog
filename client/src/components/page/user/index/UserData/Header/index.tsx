@@ -18,7 +18,7 @@ const Header: FC<{ data: UserAttributes }> = ({ data }) => {
             <h1 className="font-semibold mb-0">{data.name}</h1>
             <div className="flex items-center">
               {data.github && (
-                <NoFollowLink href={data.github} className="mr-2">
+                <NoFollowLink href={`https://github.com/${data.github}`} className="mr-2">
                   <Image src="/icon/github-fill.png" height={18} width={18} alt="ICON" />
                 </NoFollowLink>
               )}

@@ -1,20 +1,15 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import useID from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 import verify from "@/common/verify/api-verify/links/create";
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validator";
 import auth from "@/common/middleware/auth";
-
-
 
 let router = new Router();
 
 router.post("/links", verify, auth(0), async ctx => {
   let { name, url, logo_file_name } = ctx.request.body;
-  let id = useID();
   await DB.Links.create({
-    id,
+    id: id(),
     user_id: ctx.id as number,
     name,
     url,

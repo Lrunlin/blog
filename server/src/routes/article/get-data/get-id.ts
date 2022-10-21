@@ -1,11 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import interger from "@/common/verify/integer";
-import HTMLToMarkDown from "@/common/utils/article/get/html-to-markdown";
-import getCodeBlockLanguage from "@/common/utils/article/get/get-code-block-language";
-import imgPrefix from "@/common/utils/article/get/img-add-prefix";
-import getTagData from "@/common/utils/article/get/get-tag-data";
-import getTitleId from "@/common/utils/article/get/set-title-id";
+import HTMLToMarkDown from "@/common/modules/article/get/html-to-markdown";
+import getCodeBlockLanguage from "@/common/modules/article/get/get-code-block-language";
+import imgPrefix from "@/common/modules/article/get/img-add-prefix";
+import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTitleId from "@/common/modules/article/get/set-title-id";
 import Sequelize from "@/db/config";
 
 let router = new Router();

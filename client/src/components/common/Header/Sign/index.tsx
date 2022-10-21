@@ -30,7 +30,6 @@ export const modalStateContext = atom<false | keyof typeof componentsList>({
 const Sign = () => {
   const [ComponentsValue, setComponentsValue] = useRecoilState(modalStateContext);
 
-
   function Components() {
     return ComponentsValue ? componentsList[ComponentsValue].component : <></>;
   }

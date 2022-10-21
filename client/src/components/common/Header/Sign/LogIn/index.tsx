@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form, Input, Divider, message } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 import { useSetRecoilState } from "recoil";
 import axios from "axios";
 import { modalStateContext } from "../index";
 import cookie from "js-cookie";
-
-
 import useUserData from "@/store/user-data";
 
 /** 弹窗中的登录组件*/
@@ -31,6 +29,27 @@ const LogIn = () => {
       })
       .finally(() => setIsLoad(false));
   }
+
+  let timer: NodeJS.Timer;
+  function github() {
+    let win = window.open(
+      `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`,
+      "_blank",
+      "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes"
+    ) as Window;
+    // 开启后监听是否关闭，如果关闭了就重新获取一下userData
+    timer = setInterval(() => {
+      if (win.closed) {
+        refreshDataAction();
+        setModalState(false);
+      }
+    }, 500);
+  }
+  useEffect(() => {
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <>
@@ -79,7 +98,7 @@ const LogIn = () => {
       <div>
         <Divider className="my-3" />
         <div className="flex justify-evenly">
-          <GithubOutlined className="text-xl cursor-pointer" />
+          <GithubOutlined className="text-xl cursor-pointer" onClick={github} />
         </div>
       </div>
     </>

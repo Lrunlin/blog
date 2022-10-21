@@ -4,7 +4,7 @@ import Joi from "joi";
 import verify from "@/common/middleware/verify/validator";
 import integer from "@/common/verify/integer";
 import authMiddleware from "@/common/middleware/auth";
-import switchList from "@/common/utils/notice/switch-list";
+import switchList from "@/common/modules/notice";
 import { Op } from "sequelize";
 
 const schema = Joi.object({

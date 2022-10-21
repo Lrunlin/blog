@@ -15,13 +15,13 @@ const Account = () => {
     userData ? axios.get(`/user/data/${userData?.id}`).then(res => res.data.data) : undefined
   );
 
-  // function updateGithub() {
-  //   window.open(
-  //     `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}`,
-  //     "_blank",
-  //     "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes"
-  //   );
-  // }
+  function updateGithub() {
+    window.open(
+      `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`,
+      "_blank",
+      "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes"
+    );
+  }
   let emailModalRef = useRef() as event;
   let passwordModalRef = useRef() as updatePasswordEvent;
 
@@ -56,7 +56,7 @@ const Account = () => {
               <div className="w-14">GitHub:</div>
               <div>{data.github || "未绑定"}</div>
             </div>
-            <div className="text-blue-400 cursor-pointer" title="长城防火墙屏蔽，暂不支持">
+            <div className="text-blue-400 cursor-pointer" onClick={updateGithub}>
               换绑
             </div>
           </div>

@@ -1,11 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import id from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 import authMiddleware from "@/common/middleware/auth";
 
 let router = new Router();
 
-router.post("/tag",authMiddleware(), async ctx => {
+router.post("/tag", authMiddleware(), async ctx => {
   let { name, belong, icon_file_name } = ctx.request.body;
   let indexes = await DB.Tag.findAndCountAll({
     where: {

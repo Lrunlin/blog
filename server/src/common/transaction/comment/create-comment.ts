@@ -1,6 +1,6 @@
 import { Transaction } from "sequelize/types";
 import DB from "@/db";
-import useID from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 
 /**
  * 删除评论进行的事务处理
@@ -31,7 +31,7 @@ async function transaction(
 
     let result = await DB.Notice.create(
       {
-        id: useID(),
+        id: id(),
         user_id: replyCommentData.user_id /**通知被评论的用户**/,
         relation_id: comment_id,
         type: "comment",
@@ -48,7 +48,7 @@ async function transaction(
     if (articleData.author == user_id) return true;
     let result = await DB.Notice.create(
       {
-        id: useID(),
+        id: id(),
         user_id: articleData.author /**通知文章作者**/,
         relation_id: comment_id,
         type: "article_comment",

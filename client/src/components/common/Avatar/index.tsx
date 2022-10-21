@@ -1,4 +1,5 @@
-import type { FC } from "react";
+import { memo } from "react";
+import type { FC, ReactNode } from "react";
 import { Avatar, Dropdown } from "antd";
 import type { AvatarProps } from "antd";
 import useUserData from "@/store/user-data";
@@ -8,23 +9,28 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import cookie from "js-cookie";
 
-function Menu() {
+interface itemPropsType {
+  isValidating: boolean;
+  data: ReactNode;
+}
+const Item: FC<itemPropsType> = ({ isValidating, data }) => {
+  return <>{isValidating ? <span className="px-1 py-0.5 bg-slate-300"></span> : data}</>;
+};
+
+const Menu: FC = () => {
   let router = useRouter();
   let [userData] = useUserData();
   let { data, isValidating } = useSWR(`achievement-user-${userData?.id}`, () =>
     axios.get(`/achievement/${userData?.id}`).then(res => res.data.data)
   );
 
-  function Skeleton() {
-    return <>{isValidating && <span className="px-1 py-0.5 bg-slate-300"></span>}</>;
-  }
   return (
     <div className="w-60 p-4 mb-6 bg-white rounded-xl shadow-md border border-solid border-gray-200">
       {/* 顶部 */}
       <div className="flex">
         <Link href={`/user/${userData?.id}`}>
           <a>
-            <Avatar size={48} src={userData?.avatar_url} alt="头像" />
+            <Avatar size={48} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
           </a>
         </Link>
         <div className="text-lg ml-4 truncate">{userData?.name}</div>
@@ -34,29 +40,26 @@ function Menu() {
         <div className="text-center">
           <div className="text-base">关注者</div>
           <div>
-            {data?.funs_count}
-            <Skeleton />
+            <Item isValidating={isValidating} data={data?.funs_count} />
           </div>
         </div>
         <div className="text-center">
           <div className="text-base">被收藏</div>
           <div>
-            {data?.article_collection_count}
-            <Skeleton />
+            <Item isValidating={isValidating} data={data?.article_collection_count} />
           </div>
         </div>
         <div className="text-center">
           <div className="text-base">文章</div>
           <div>
-            {data?.article_count}
-            <Skeleton />
+            <Item isValidating={isValidating} data={data?.article_count} />
           </div>
         </div>
       </div>
       {/* 底部 */}
       <div className="text-gray-400 mt-8 flex justify-between">
         <div className="cursor-pointer" onClick={() => router.push("/user/settings/profile")}>
-          我的主页
+          账号设置
         </div>
         <div
           className="cursor-pointer"
@@ -70,12 +73,11 @@ function Menu() {
       </div>
     </div>
   );
-}
+};
 
 /** 登录用户的头像（根据userData自动获取链接）*/
-const componentNeme: FC<AvatarProps> = props => {
+const Avatar_: FC<AvatarProps> = memo(props => {
   let [userData] = useUserData();
-
   return (
     <>
       <Dropdown overlay={<Menu />} placement="bottomRight" trigger={["click"]}>
@@ -83,5 +85,5 @@ const componentNeme: FC<AvatarProps> = props => {
       </Dropdown>
     </>
   );
-};
-export default componentNeme;
+});
+export default Avatar_;

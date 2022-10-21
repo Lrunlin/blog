@@ -1,11 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
-import useID from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 import interger from "@/common/verify/integer";
 let router = new Router();
 router.post("/collection/:article_id", interger([], ["article_id"]), auth(0), async ctx => {
-  let id = useID();
   let article_id = +ctx.params.article_id;
 
   let articleAuthor = await DB.Article.findByPk(article_id, { attributes: ["author"] });
@@ -28,12 +27,12 @@ router.post("/collection/:article_id", interger([], ["article_id"]), auth(0), as
   }
 
   await DB.Collection.create({
-    id: id,
+    id: id(),
     article_id: article_id,
     user_id: ctx.id as number,
     create_time: new Date(),
   })
-    .then(res => {
+    .then(() => {
       ctx.body = { success: true, message: "收藏成功" };
     })
     .catch(err => {

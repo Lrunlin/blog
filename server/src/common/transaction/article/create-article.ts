@@ -1,9 +1,9 @@
 import DB from "@/db";
-import useID from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 import { Transaction } from "sequelize/types";
 
 /** 创建文章发布的事务处理*/
-async function transaction(article_id: number, author_id:number, t: Transaction) {
+async function transaction(article_id: number, author_id: number, t: Transaction) {
   //   获取粉丝列表
   let funsList = await DB.Follow.findAll({
     where: {
@@ -13,10 +13,10 @@ async function transaction(article_id: number, author_id:number, t: Transaction)
     raw: true,
     transaction: t,
   });
-  
+
   //   批量添加
   let data = funsList.map((item: any) => ({
-    id: useID(),
+    id: id(),
     user_id: item.user_id,
     relation_id: article_id,
     type: "article",

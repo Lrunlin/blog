@@ -1,6 +1,6 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
-import dehydrate from "@/common/utils/article/set/dehydrate";
+import dehydrate from "@/common/modules/article/set/dehydrate";
 import hooks from "../hooks/article";
 
 export interface ArticleAttributes {

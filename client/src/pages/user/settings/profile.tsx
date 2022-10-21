@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Layout from "@/components/page/user/setting/Layout";
 import useUserData from "@/store/user-data";
-import { Button, Result, Form, Input, message } from "antd";
+import { Button, Result, Form, Input, message, Grid } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import useSwr from "swr";
 import axios from "axios";
@@ -48,6 +48,9 @@ const Profile: NextPage = () => {
 
   return (
     <Layout>
+      {/* 用来按需打包 */}
+      {false && Grid}
+
       <h2 className="pb-2 border-b-solid border-gray-200">个人资料</h2>
       {error && <Result status="404" title="没有找到指定的用户" />}
       {data && (

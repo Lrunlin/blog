@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import sequelize from "@/db/config";
-import useID from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 import auth from "@/common/middleware/auth";
 import verify from "@/common/verify/api-verify/article/create-article";
 import transaction from "@/common/transaction/article/create-article";
@@ -9,13 +9,13 @@ import transaction from "@/common/transaction/article/create-article";
 let router = new Router();
 router.post("/article", auth(0), verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, state } = ctx.request.body;
-  let id = useID();
+  let _id = id();
   let t = await sequelize.transaction();
   // 只有正式发布才创建通知
-  let _t = state == 1 ? await transaction(id, ctx.id as number, t) : true;
+  let _t = state == 1 ? await transaction(_id, ctx.id as number, t) : true;
   let createArticle = await DB.Article.create(
     {
-      id: id,
+      id: _id,
       title: title,
       description: description,
       cover_file_name: cover_file_name,

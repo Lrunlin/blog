@@ -30,7 +30,7 @@ function useUserData() {
 
   useEffect(() => {
     if (!userData) refreshUserData();
-  }, []);
+  }, [userData]);
   return [userData, refreshUserData] as [UserStateAttributes | null, () => void];
 }
 

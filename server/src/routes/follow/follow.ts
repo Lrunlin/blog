@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import useId from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 import auth from "@/common/middleware/auth";
 import interger from "@/common/verify/integer";
 let router = new Router();
@@ -20,7 +20,7 @@ router.post("/follow/:bogger_id", interger([], ["bogger_id"]), auth(0), async ct
   }
 
   await DB.Follow.create({
-    id: useId(),
+    id: id(),
     blogger_id: boggerID,
     user_id: ctx.id as number,
     create_time: new Date(),

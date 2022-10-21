@@ -3,7 +3,7 @@ import { cache, removeUserData } from "@/common/modules/cache/logon-email";
 import jwt from "jsonwebtoken";
 import qs from "qs";
 import DB from "@/db";
-import useId from "@/common/hooks/useId";
+import id from "@/common/utils/id";
 import upload from "@/common/utils/static/upload";
 import Identicon from "identicon.js";
 import sha1 from "sha1";
@@ -54,11 +54,10 @@ router.get("/logon/email", validator(schema), async ctx => {
 
   let { email, name, password } = cache.get(key) as userDataType;
 
-  let id = useId();
   var data = new Identicon(sha1(id + ""), {
     size: 50,
     format: "svg",
-    background: [240, 240, 240,255],
+    background: [240, 240, 240, 255],
   }).toString();
 
   let uploadResult = await upload(Buffer.from(data, "base64"), ["avatar", `${id}.webp`])
@@ -71,7 +70,7 @@ router.get("/logon/email", validator(schema), async ctx => {
   }
 
   let logonResulte = await DB.User.create({
-    id: id,
+    id: id(),
     email: email,
     name: name,
     password: password,

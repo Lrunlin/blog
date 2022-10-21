@@ -3,11 +3,11 @@ import Joi from "joi";
 import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/verify/validator";
 import interger from "@/common/verify/integer";
-import option from "@/common/utils/article/select/option";
+import option from "@/common/modules/article/select/option";
 import { Op } from "sequelize";
 
-import getTypeChildrenTag from "@/common/utils/article/select/getTypeChildrenTag";
-import getBloggerList from "@/common/utils/article/select/getBloggerList";
+import getTypeChildrenTag from "@/common/modules/article/select/getTypeChildrenTag";
+import getBloggerList from "@/common/modules/article/select/getBloggerList";
 
 //todo 前期推荐方式比较简单，后期在升级
 let router = new Router();

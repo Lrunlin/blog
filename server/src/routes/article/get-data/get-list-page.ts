@@ -4,7 +4,7 @@ import auth from "@/common/middleware/auth";
 import interger from "@/common/verify/integer";
 import { Op } from "sequelize";
 import qs from "qs";
-import getTagData from "@/common/utils/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/get-tag-data";
 
 let router = new Router();
 router.get("/article/page/:page", interger([], ["page"]), auth(), async ctx => {
