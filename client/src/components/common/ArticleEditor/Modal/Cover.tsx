@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Upload, Image } from "antd";
-import { ReloadOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
-import axios from "axios";
-import ImgCrop from "antd-img-crop";
-import type { UploadFile, UploadProps } from "antd/es/upload/interface";
-
 import { useRecoilState } from "recoil";
 import { writeArticleContext } from "../index";
+import { ReloadOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
+import ImgCrop from "antd-img-crop";
+import type { UploadFile, UploadProps } from "antd/es/upload/interface";
+import axios from "axios";
+import cookie from "js-cookie";
 
 const Cover = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -58,7 +58,7 @@ const Cover = () => {
           name="image"
           accept="image/*"
           headers={{
-            authorization: localStorage.token,
+            authorization:cookie.get('token')+'',
           }}
           maxCount={1}
           className="cursor-pointer"

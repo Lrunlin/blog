@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { FC } from "react";
 import axios from "axios";
+import cookie from "js-cookie";
 import { Upload } from "antd";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 
@@ -37,7 +38,7 @@ const UpLoad: FC<propsType> = props => {
         name="image"
         accept="image/*"
         headers={{
-          authorization: localStorage.token,
+          authorization: cookie.get("token") + "",
         }}
         maxCount={1}
       >

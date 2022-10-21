@@ -40,7 +40,6 @@ router.post("/comment", verify, authMiddleware(0), async ctx => {
       create_time: new Date(),
       user_id: ctx.id as number,
       is_review: 0,
-      client_ip: ctx.ip,
     },
     { transaction: t }
   ).catch(() => false as false);

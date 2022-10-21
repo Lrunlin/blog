@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import type { FC } from "react";
 import { Upload } from "antd";
-import axios from "axios";
 import ImgCrop from "antd-img-crop";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
+import axios from "axios";
+import cookie from "js-cookie";
 
 interface propsType {
   avatar_file_name: string;
@@ -54,7 +55,7 @@ const UploadAvatar: FC<propsType> = props => {
           name="image"
           accept="image/*"
           headers={{
-            authorization: localStorage.token,
+            authorization: cookie.get('token')+'',
           }}
           maxCount={1}
         >

@@ -52,7 +52,7 @@ router.get("/comment/list/:article_id", interger([], ["article_id"]), async ctx 
       },
     ],
     order: [["create_time", "desc"]],
-    attributes: { exclude: ["client_ip", "is_examine", "is_review"] },
+    attributes: { exclude: ["is_review"] },
   });
   ctx.body = {
     success: true,

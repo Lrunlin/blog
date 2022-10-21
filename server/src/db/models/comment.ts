@@ -7,7 +7,6 @@ export interface CommentAttributes {
   user_id: number;
   content: string;
   reply?: number;
-  client_ip: string;
   comment_pics?: string;
   is_review: number;
   create_time: Date;
@@ -27,7 +26,6 @@ export class Comment
   user_id!: number;
   content!: string;
   reply?: number;
-  client_ip!: string;
   comment_pics?: string;
   is_review!: number;
   create_time!: Date;
@@ -61,11 +59,6 @@ export class Comment
           type: DataTypes.BIGINT,
           allowNull: true,
           comment: "是否是对某个评论的回复，不是则为null是则为对应的评论id",
-        },
-        client_ip: {
-          type: DataTypes.STRING(50),
-          allowNull: false,
-          comment: "用户IP",
         },
         comment_pics: {
           type: DataTypes.STRING(200),
