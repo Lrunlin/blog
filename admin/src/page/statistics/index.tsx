@@ -1,4 +1,3 @@
-import { useState, Fragment } from "react";
 import bg from "@/assets/statistics/bg.jpg";
 import useSwr from "swr";
 import axios from "axios";
@@ -27,7 +26,7 @@ const Statistics = () => {
           <main className="main flex justify-around">
             <div className="main-left">
               <Header type={data.type} user={data.user} links={data.links} />
-              <Main visits={data.visits} article={data.article} loadavg={data.loadavg} />
+              <Main referer={data.referer} visits={data.visits} article={data.article} loadavg={data.loadavg} />
             </div>
             <div className="main-right">
               <Aside article_ranking={data.article_ranking} memory={data.memory} disk={data.disk} />

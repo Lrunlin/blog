@@ -10,23 +10,49 @@ import Redis from "@/common/utils/redis";
 let redis = Redis(2);
 
 let visits: number[] = new Array(7).fill(0);
+let referer: { [key: string]: number } = {
+  Google: 0,
+  360: 0,
+  Baidu: 0,
+  Bing: 0,
+  GitHub: 0,
+  直接进入: 0,
+  Other: 0,
+};
 let articleRanking: { id: number; title: string; view_count: number }[] | null = [];
-
-/** 通过Redis阅读记录获取七日内访问量*/
+/** 通过Redis阅读记录获取七日内访问量、作者排行榜、访问来源统计*/
 async function setVisitsData() {
   visits = new Array(7).fill(0);
   let _articleRanking: { [key: string]: number } = {};
+  referer = {
+    Google: 0,
+    360: 0,
+    Baidu: 0,
+    Bing: 0,
+    GitHub: 0,
+    直接进入: 0,
+    Other: 0,
+  };
   (await redis.keys("*")).forEach(async item => {
-    /** 统计每天访问量*/
+    // 统计每天访问量 根据剩余天数计算应该处于数组第几位
     redis.ttl(item).then(time => {
-      // 根据剩余天数计算应该处于数组第几位
       let index = 7 - 1 - Math.floor((604_800 - time) / 86_400);
       visits[index]++;
     });
     /** 统计七日内文章访问量*/
     let articleID = item.split("--").slice(-1)[0];
     _articleRanking[articleID] ? _articleRanking[articleID]++ : (_articleRanking[articleID] = 1);
+    /** 统计访问来源*/
+    redis.get(item).then(res => {
+      /** 防止遍历时候缓存恰巧被删除了*/
+      if (!res) {
+        return;
+      }
+      referer[res]!=undefined ? referer[res]++ : referer["直接进入"]++;
+    });
   });
+
+  /** 统计作者排行榜*/
   let articleIDs = Object.entries(_articleRanking)
     .sort((a, b) => b[1] - a[1])
     .splice(0, 10)
@@ -154,6 +180,7 @@ router.get("/statistics/visualization", auth(), async ctx => {
         total: os.totalmem(),
       },
       disk: getDistData(),
+      referer: referer,
     },
   };
 });

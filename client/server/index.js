@@ -1,63 +1,17 @@
 const express = require("express");
 const { kill } = require("cross-port-killer");
 const next = require("next");
-const redis = require("ioredis");
-const env = require("./env");
-const glob = require("glob");
+const Redis = require("./redis");
+const readingRecords = require("./readingRecords");
 const port = 5678; //端口
 const app = next({
   dev: process.env.NODE_ENV == "development",
+  dir: "./",
 });
 
-const Redis = db => {
-  return new redis({
-    host: env.REDIS_HOST || "127.0.0.1",
-    port: env.REDIS_PORT ? +env.REDIS_PORT : 6379,
-    password: env.REDIS_PASSWORD,
-    db: db,
-    username: env.REDIS_USER,
-    retryStrategy: function (times) {
-      return Math.min(times * 50, 5000);
-    },
-  });
-};
-
-/** 获取用户端请求IP*/
-function getClientIp(req) {
-  return (
-    req?.headers["x-forwarded-for"] ||
-    req?.connection.remoteAddress ||
-    req?.socket.remoteAddress ||
-    req?.connection.socket.remoteAddress
-  );
-}
-
-/** 保存阅读记录*/
-async function readingRecords(req) {
-  if (!req.url.startsWith("/article/")) {
-    return;
-  }
-  const key = req.url.replace("/article/", "");
-
-  // 如果key可以转为NaN说民key不是数字
-  if (isNaN(+key)) {
-    return;
-  }
-  let ip = getClientIp(req).split(",")[0];
-  if (
-    ip &&
-    !(await RedisViewHisTory.exists(`${ip}--${key}--*`)) &&
-    !(await RedisViewHisTory.exists(`u--${ip}--${key}--*`))
-  ) {
-    RedisViewHisTory.set(`u--${ip}--${key}`, "", "EX", 604_800);
-  }
-}
-
 let RedisHTML = Redis(1);
-let RedisViewHisTory = Redis(2);
 // 每次启动时候清空全部页面缓存
 RedisHTML.flushdb();
-
 // nextjs原生请求处理函数
 const handle = app.getRequestHandler();
 //渲染和处理缓存
@@ -87,12 +41,9 @@ async function renderAndCache(req, res) {
       app.renderError(err, req, res, pagePath, queryParams);
     });
 }
-
 async function main() {
   await app.prepare(); //准备(初始化)
-
   const server = express();
-
   //对哪些页面进行缓存
   server.get(`/article/*`, (req, res) => renderAndCache(req, res));
   server.get("*", (req, res) => handle(req, res));

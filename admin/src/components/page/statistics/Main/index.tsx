@@ -1,12 +1,10 @@
-import { useEffect } from "react";
-import vw from "@/utils/vw";
 import type { FC } from "react";
-import * as echarts from "echarts";
 import Container from "../common/Container";
 import "./index.scss";
 import Visits from "./Visits";
 import Article from "./Article";
 import Loadavg from "./Loadavg";
+import Referer from "./Referer";
 
 export interface propsType {
   visits: number[];
@@ -17,10 +15,11 @@ export interface propsType {
     user_not_reprint_count: number;
   };
   loadavg: [number, number, number];
+  referer: { [key: string]: number }[];
 }
 
 /** 大屏页面左下方显示块*/
-const Main: FC<propsType> = ({ visits, article, loadavg }) => {
+const Main: FC<propsType> = ({ visits, article, loadavg, referer }) => {
   return (
     <div>
       <div className="main-item">
@@ -33,7 +32,7 @@ const Main: FC<propsType> = ({ visits, article, loadavg }) => {
       </div>
       <div className="main-item">
         <Container>
-          <div className="main-l"></div>
+          <Referer data={referer} />
         </Container>
         <Container>
           <Loadavg data={loadavg} />

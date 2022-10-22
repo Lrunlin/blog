@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 5678",
-    "dev:server": "cross-env NODE_ENV=development nodemon server.js",
+    "dev:server": "cross-env NODE_ENV=development nodemon server",
     "build": "next build",
-    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development nodemon server.js",
+    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development nodemon server",
     "lint": "next lint",
-    "start": "cross-env NODE_ENV=production nodemon server.js",
+    "start": "cross-env NODE_ENV=production nodemon server",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
