@@ -10,7 +10,7 @@ let list = [
   { label: "Baidu", color: "#4e6ef2" },
   { label: "Bing", color: "#007daa" },
   { label: "GitHub", color: "#24292f" },
-  { label: "Other", color: "#ff0000" },
+  { label: "Other", color: "yellow" },
   { label: "直接进入", color: "purple" },
 ];
 
@@ -41,13 +41,13 @@ function option(data: propsType["referer"]) {
       top: vw(30),
       left: 0,
       textStyle: {
-        fontSize: vw(12),
+        fontSize: vw(13, 12),
         color: "white",
       },
     },
     label: {
       color: "white", // 改变标示文字的颜色
-      fontSize: vw(12),
+      fontSize: vw(13, 12),
     },
     series: [
       {

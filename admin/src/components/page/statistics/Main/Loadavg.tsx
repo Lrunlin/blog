@@ -18,7 +18,7 @@ const Loadavg: FC<{ data: propsType["loadavg"] }> = ({ data }) => {
             top: vw(0),
             left: "center",
             textStyle: {
-              fontSize: vw(14),
+              fontSize: vw(14, 14),
               color: "white",
             },
           },
@@ -31,7 +31,7 @@ const Loadavg: FC<{ data: propsType["loadavg"] }> = ({ data }) => {
               type: "gauge",
               axisLine: {
                 lineStyle: {
-                  width: vw(30),
+                  width: vw(30,undefined,30),
                   color: [
                     [0.3, "#67e0e3"],
                     [0.7, "#37a2da"],
@@ -67,7 +67,7 @@ const Loadavg: FC<{ data: propsType["loadavg"] }> = ({ data }) => {
                 valueAnimation: true,
                 formatter: "{value} %",
                 color: "inherit",
-                fontSize: vw(16),
+                fontSize: vw(16, 14),
               },
               data: [{ value: data[index] }],
             },

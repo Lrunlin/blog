@@ -3,7 +3,6 @@ import type { FC } from "react";
 import * as echarts from "echarts";
 import vw from "@/utils/vw";
 import type { propsType } from "./index";
-import Container from "../common/Container";
 
 const byteConvert = function (bytes: number) {
   let symbols = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
@@ -112,10 +111,6 @@ const MemoryDisk: FC<{ memory: propsType["memory"]; disk: propsType["disk"] }> =
       ],
     });
   }, [memory, disk]);
-  return (
-    <Container className="server-used-container">
-      <div id="main4" className="server-used"></div>
-    </Container>
-  );
+  return <div id="main4" className="server-data-container"></div>;
 };
 export default MemoryDisk;

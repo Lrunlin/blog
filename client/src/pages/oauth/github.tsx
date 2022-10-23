@@ -40,30 +40,22 @@ const Github = () => {
               status="error"
               title="请求错误"
               subTitle="这可能不是您的原因，也许是GitHub受到防火墙影响。"
-              extra={[
-                <Button
-                  type="primary"
-                  key="console"
-                  onClick={() => router.replace("/creator/content/article")}
-                >
+              extra={
+                <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
                   返回
-                </Button>,
-              ]}
+                </Button>
+              }
             />
           ) : (
             <Result
               status={data.success ? "success" : "error"}
               title={data.success ? "成功" : "失败"}
               subTitle={data.message}
-              extra={[
-                <Button
-                  type="primary"
-                  key="console2"
-                  onClick={() => router.replace("/creator/content/article")}
-                >
+              extra={
+                <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
                   返回
-                </Button>,
-              ]}
+                </Button>
+              }
             />
           )}
         </div>

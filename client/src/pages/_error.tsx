@@ -20,7 +20,7 @@ const Error: NextPage<propsType> = ({ statusCode }) => {
       />
       <Header />
       <Result
-        status={statusCode as any} //antd支持的类型比较特殊直接any
+        status={statusCode}
         title={statusCode}
         subTitle="页面加载错误"
         extra={

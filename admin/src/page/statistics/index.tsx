@@ -14,9 +14,10 @@ const Statistics = () => {
   return (
     <>
       <div
-        className="min-h-screen min-w-full bg-cover"
+        className="min-h-screen min-w-full"
         style={{
           backgroundImage: `url('${bg}')`,
+          backgroundSize: "100vw 100vh",
         }}
       >
         <div className="container-title">数据分析</div>
@@ -26,7 +27,12 @@ const Statistics = () => {
           <main className="main flex justify-around">
             <div className="main-left">
               <Header type={data.type} user={data.user} links={data.links} />
-              <Main referer={data.referer} visits={data.visits} article={data.article} loadavg={data.loadavg} />
+              <Main
+                referer={data.referer}
+                visits={data.visits}
+                article={data.article}
+                loadavg={data.loadavg}
+              />
             </div>
             <div className="main-right">
               <Aside article_ranking={data.article_ranking} memory={data.memory} disk={data.disk} />

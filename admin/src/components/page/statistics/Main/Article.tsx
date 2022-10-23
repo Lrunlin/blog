@@ -31,13 +31,13 @@ function option(data: { value: number; name: string }[]) {
       top: vw(30),
       left: 0,
       textStyle: {
-        fontSize: vw(12),
+        fontSize: vw(13, 12),
         color: "white",
       },
     },
     label: {
       color: "white", // 改变标示文字的颜色
-      fontSize: vw(12),
+      fontSize: vw(13, 12),
     },
     series: [
       {
