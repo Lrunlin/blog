@@ -36,7 +36,7 @@ router.get(
       .then(async ({ count, rows }) => {
         return { total: count, list: await switchList(rows) };
       })
-      .catch(a => {
+      .catch(() => {
         return null;
       });
     ctx.body = { success: !!data, message: data ? "查询成功" : "查询失败", data: data };

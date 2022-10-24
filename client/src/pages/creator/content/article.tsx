@@ -18,6 +18,7 @@ const ContentArticle = () => {
               <Search
                 placeholder="标题或摘要关键字"
                 onSearch={val => setKeyword(val)}
+                maxLength={30}
                 style={{ width: 200 }}
               />
             ),

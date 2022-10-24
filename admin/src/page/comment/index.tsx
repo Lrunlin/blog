@@ -1,11 +1,10 @@
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, startTransition } from "react";
 import axios from "axios";
 import { message, Table, Avatar, Image, Button, Popover, DatePicker } from "antd";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
 const Comment = () => {
-  let [, transition] = useTransition();
   const columns = [
     {
       title: "文章ID",
@@ -92,7 +91,7 @@ const Comment = () => {
   useEffect(() => {
     axios.get(`/comment/list/page/${page}`, { params: {} }).then(res => {
       if (res.data.success) {
-        transition(() => {
+        startTransition(() => {
           setData(res.data.data.list);
         });
         setTotal(res.data.data.total);

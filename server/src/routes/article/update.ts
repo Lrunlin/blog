@@ -6,7 +6,7 @@ import verify from "@/common/verify/api-verify/article/update-article";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/article/create-article";
 import integer from "@/common/verify/integer";
-router.put("/article/:id", auth(1), integer([], ["id"]), verify, async ctx => {
+router.put("/article/:id", auth(), integer([], ["id"]), verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, view_count, state } =
     ctx.request.body;
   let id = +ctx.params.id as number;
@@ -19,7 +19,7 @@ router.put("/article/:id", auth(1), integer([], ["id"]), verify, async ctx => {
   }
 
   /** 如果state本来就是1那么就不接受修改否则可以修改*/
-  let oldState = await DB.Article.findByPk(id, { attributes: ["state"] })
+  let oldState = await DB.Article.findByPk(id, { attributes: ["state"], raw: true })
     .then(res => {
       if (res) {
         return res.state;
@@ -28,7 +28,7 @@ router.put("/article/:id", auth(1), integer([], ["id"]), verify, async ctx => {
         return null;
       }
     })
-    .catch(err => {
+    .catch(() => {
       ctx.body = { success: false, message: "修改错误" };
       return null;
     });

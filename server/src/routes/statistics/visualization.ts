@@ -43,13 +43,15 @@ async function setVisitsData() {
     let articleID = item.split("--").slice(-1)[0];
     _articleRanking[articleID] ? _articleRanking[articleID]++ : (_articleRanking[articleID] = 1);
     /** 统计访问来源*/
-    redis.get(item).then(res => {
-      /** 防止遍历时候缓存恰巧被删除了*/
-      if (!res) {
-        return;
-      }
-      referer[res]!=undefined ? referer[res]++ : referer["直接进入"]++;
-    });
+    redis
+      .get(item)
+      .then(res => {
+        if (res == null) {
+          return;
+        }
+        referer[res] != undefined ? referer[res]++ : referer["直接进入"]++;
+      })
+      .catch(() => {});
   });
 
   /** 统计作者排行榜*/

@@ -1,4 +1,4 @@
-import { useState, useTransition } from "react";
+import { useState, startTransition } from "react";
 import { Result, Table, Avatar, Image, Button, Modal, Input, message as messageAlert } from "antd";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import useSWR from "swr";
@@ -6,7 +6,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const LinksList = () => {
-  let [, startTransition] = useTransition();
   let { data, error, mutate } = useSWR("links-list", () =>
     axios.get("/links").then(res => res.data.data)
   );

@@ -1,4 +1,4 @@
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, startTransition, useRef } from "react";
 import type { FC } from "react";
 import useUserData from "@/store/user-data";
 import { Skeleton, Divider, Empty, Result } from "antd";
@@ -16,7 +16,6 @@ interface propsType {
 }
 /** 内容管理文章管理组件（文章、草稿箱）*/
 const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
-  let [, transition] = useTransition();
   let [userData] = useUserData();
   let [page, setPage] = useState(1);
   let [data, setData] = useState<articleListItemType[]>([]);
@@ -24,34 +23,35 @@ const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
   let [, setError] = useState(false);
   let [isValidating, setIsValidating] = useState(true);
 
+  let _keyword = useRef<string | undefined>(keyword); //保留上一次关键词
   useEffect(() => {
-    setPage(1);
-    setData([]);
-    transition(() => {
-      setTotal(-1);
-    });
-  }, [keyword]);
-
-  useEffect(() => {
+    let _page = _keyword.current == keyword ? page : 1;
     axios
-      .get<response<{ total: number; list: articleListItemType[] }>>(`/article/list/page/${page}`, {
-        params: {
-          author: userData?.id,
-          state: state,
-          keyword: /^[\s\S]*.*[^\s][\s\S]*$/.test(keyword) ? keyword : undefined,
-        },
-      })
+      .get<response<{ total: number; list: articleListItemType[] }>>(
+        `/article/list/page/${_page}`,
+        {
+          params: {
+            author: userData?.id,
+            state: state,
+            keyword: keyword,
+          },
+        }
+      )
       .then(res => {
-        if (total < 0) setTotal(res.data.data.total);
-        setData(_data => [...data, ...res.data.data.list]);
+        let list = res.data.data.list;
+        setData(_data => (_page == 1 ? list : [...data, ...list]));
+        startTransition(() => {
+          setTotal(res.data.data.total);
+        });
       })
       .catch(() => {
         setError(true);
       })
       .finally(() => {
         setIsValidating(false);
+        _keyword.current = /^[\s\S]*.*[^\s][\s\S]*$/.test(keyword) ? keyword : undefined;
       });
-  }, [keyword, page]);
+  }, [page, keyword]);
 
   return (
     <>

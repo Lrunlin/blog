@@ -6,7 +6,7 @@ import compose from "koa-compose";
 const schema = Joi.object({
   author: Joi.number().min(1).error(new Error("ID格式错误")),
   state: Joi.number().valid(0, 1).error(new Error("文章状态错误")),
-  keyword: Joi.string().min(1).max(30).error(new Error("文章关键词错误")),
+  keyword: Joi.string().min(0).max(30).error(new Error("文章关键词错误")),
   tag: Joi.string().min(1).max(30).error(new Error("文章标签错误")),
 });
 

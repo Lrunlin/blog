@@ -6,8 +6,8 @@ import { useRecoilValue } from "recoil";
 import { currentArticleDataContext } from "@/pages/article/[id]";
 import Repository from "@/components/common/Repository";
 import AdSense from "@/components/common/AdSense";
-
 const Catalogue = dynamic(import("./Catalogue"), { ssr: false });
+
 /** 文章页面的右侧推广内容*/
 const Aside = () => {
   let { data } = useSWR("/advertisement-article", () => getAdvertisementList("article"));

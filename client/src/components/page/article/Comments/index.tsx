@@ -4,6 +4,7 @@ import { modalStateContext } from "@/components/common/Header/Sign";
 import Editor from "./Editor";
 import Comment from "./Comment";
 
+/** 文章页面评论组件*/
 const Comments = () => {
   let userData = useRecoilValue(userDataContext);
   let setModalState = useSetRecoilState(modalStateContext);

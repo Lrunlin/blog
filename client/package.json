@@ -17,7 +17,6 @@
     "@bytemd/react": "^1.17.2",
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
-    "@tailwindcss/line-clamp": "^0.4.0",
     "antd": "4.23.5",
     "antd-img-crop": "^4.2.4",
     "axios": "^0.27.2",
@@ -46,6 +45,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.1.6",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@types/cookie": "^0.5.1",
     "@types/js-cookie": "^3.0.2",
     "@types/marked": "^4.0.3",

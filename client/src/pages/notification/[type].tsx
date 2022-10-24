@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition, useRef, memo } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
 import Layout from "@/components/page/notification/Layout";
@@ -7,35 +7,43 @@ import { Skeleton, Empty } from "antd";
 import Notice from "@/components/page/notification/Notice";
 import { useRouter } from "next/router";
 import useUserData from "@/store/user-data";
-
-const Notification: NextPage = () => {
-  const [list, setList] = useState<any[]>([]);
-  const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
+const Notification: NextPage = memo(() => {
   let [userData] = useUserData();
   let router = useRouter();
-  useEffect(() => {
-    let type = router.query.type;
-    if (!["article", "comment"].includes(type + "")) {
-      return;
-    }
-    if (!userData) {
-      return;
-    }
-    axios.get(`/notice/list/${type}`, { params: { page: page } }).then(res => {
-      setList(res.data.data.list);
-      if (!total) {
-        setTotal(res.data.total);
-      }
-    });
-  }, [page, router, userData]);
 
+  const [list, setList] = useState<any[]>([]);
+  const [total, setTotal] = useState(0);
+  let type = useRef("");
+  let page = useRef(1);
+  useEffect(() => {
+    if (router.query.type && userData && ["article", "comment"].includes(router.query.type + "")) {
+      type.current = router.query.type as string;
+      page.current = 1;
+      getNoticeData();
+    }
+  }, [router, userData]);
+
+  function getNoticeData() {
+    axios
+      .get(`/notice/list/${type.current}`, { params: { page: page.current } })
+      .then(({ data }) => {
+        if (page.current == 1) {
+          setList(data.data.list);
+          startTransition(() => {
+            setTotal(data.data.total);
+          });
+        } else {
+          setList(_list => [..._list, ...data.data.list]);
+        }
+      });
+  }
+
+  // 标记已读
   useEffect(() => {
     let noticeList = list.filter(item => item.is_read == 0).map(item => item.id);
-    if (!noticeList.length) {
-      return;
+    if (noticeList.length) {
+      axios.put("/notice/read", { notice_list: noticeList });
     }
-    axios.put("/notice/read", { notice_list: noticeList });
   }, [list]);
 
   return (
@@ -43,7 +51,10 @@ const Notification: NextPage = () => {
       {list.length ? (
         <InfiniteScroll
           dataLength={list.length}
-          next={() => setPage(_page => ++_page)}
+          next={() => {
+            page.current++;
+            getNoticeData();
+          }}
           hasMore={list.length < total}
           loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
           className="w-[700px]"
@@ -57,5 +68,5 @@ const Notification: NextPage = () => {
       )}
     </Layout>
   );
-};
+});
 export default Notification;

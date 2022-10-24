@@ -1,4 +1,4 @@
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { message, Table, Avatar, DatePicker, Popover } from "antd";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -9,7 +9,6 @@ import qq from "@/assets/icon/QQ.svg";
 import copy from "copy-to-clipboard";
 
 const UserList = () => {
-  const [, transition] = useTransition();
 
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -134,7 +133,7 @@ const UserList = () => {
     axios.get(`/user/list/${page}`).then(res => {
       if (res.data.success) {
         setData(res.data.data.list);
-        transition(() => {
+        startTransition(() => {
           setTotal(res.data.data.total);
         });
       } else {

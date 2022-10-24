@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { atom, useSetRecoilState, useResetRecoilState } from "recoil";
 import { Button, Result } from "antd";
 import axios from "axios";
-import Layout from "@/components/page/article/Layout";
 import Head from "@/components/next/Head";
+import Layout from "@/components/page/article/Layout";
+import Header from "@/components/common/Header";
 import View from "@/components/page/article/View";
+import ArticleUserData from "@/components/page/article/UserData";
 import type { ArticleAttributes } from "@type/model-attribute";
 import { useRouter } from "next/router";
-import Header from "@/components/common/Header";
-const ArticleUserData = dynamic(import("@/components/page/article/UserData"), { ssr: false });
 const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
 
 interface propsType {
@@ -63,10 +63,8 @@ const Article: NextPage<propsType> = props => {
         description={data.description}
       />
       <Layout>
-        <h1 className="text-4xl font-black">{data.title}</h1>
-        <div className="mb-4 flex items-center justify-between">
-          <ArticleUserData />
-        </div>
+        <h1 className="text-4xl font-semibold">{data.title}</h1>
+        <ArticleUserData data={data} />
         <View language={data.language} content={data.content} />
         <Reprint reprint={data.reprint} />
       </Layout>

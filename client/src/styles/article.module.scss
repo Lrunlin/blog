@@ -12,7 +12,7 @@
     word-wrap: break-word !important;
   }
   blockquote {
-    border-left:5px solid #cae5ff !important;
+    border-left: 5px solid #cae5ff !important;
     padding-left: 5px;
     border-radius: 3px !important;
   }
@@ -30,5 +30,11 @@
       padding: 1px 3px;
       border-radius: 3px;
     }
+  }
+}
+//设置antd预览图大小
+.preview {
+  img {
+    max-width: 400px !important;
   }
 }

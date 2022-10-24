@@ -1,33 +1,63 @@
-import { useState, Fragment } from "react";
+import { useState, useEffect } from "react";
 import type { FC, ReactNode } from "react";
 import Base from "@/layout/Base";
 import Head from "@/components/next/Head";
 import ActiveLink from "@/components/next/ActiveLink";
+import classNames from "classnames";
+import useUserData from "@/store/user-data";
+import axios from "axios";
 
 interface propsType {
   children: ReactNode;
 }
 const Layout: FC<propsType> = props => {
+  let list = [
+    {
+      label: "评论通知",
+      href: "comment",
+    },
+    {
+      label: "关注通知",
+      href: "article",
+    },
+  ];
+
+  let userData = useUserData();
+  const [noticeList, setNoticeList] = useState<string[] | false>(false);
+  useEffect(() => {
+    if (userData && !noticeList) {
+      axios.get("/notice/count").then(({ data }) => {
+        if (data.success) {
+          setNoticeList(data.data.notice);
+        }
+      });
+    }
+  }, [userData, noticeList]);
+
   return (
     <>
       <Base
         brow={
           <div className="w-full bg-white h-11 shadow-sm">
             <div className="max-w-[960px] mx-auto flex h-full">
-              <ActiveLink
-                href="/notification/comment"
-                className="text-gray-600 flex items-center"
-                activeClassName="font-bold !text-blue-400 "
-              >
-                评论通知
-              </ActiveLink>
-              <ActiveLink
-                href="/notification/article"
-                className="text-gray-600 flex items-center ml-4"
-                activeClassName="font-bold !text-blue-400"
-              >
-                关注通知
-              </ActiveLink>
+              {list.map((item, index) => {
+                return (
+                  <ActiveLink
+                    key={`notification-${item.href}`}
+                    href={`/notification/${item.href}`}
+                    className={classNames([
+                      "text-gray-600 flex items-center relative px-2",
+                      index && "ml-4",
+                    ])}
+                    activeClassName="font-bold !text-blue-400 "
+                  >
+                    {noticeList && noticeList.includes(item.href) && (
+                      <div className="w-1.5 h-1.5 absolute bg-red-400 rounded-full top-3 right-0"></div>
+                    )}
+                    {item.label}
+                  </ActiveLink>
+                );
+              })}
             </div>
           </div>
         }

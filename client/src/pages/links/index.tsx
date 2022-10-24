@@ -1,4 +1,4 @@
-import { useState, useTransition } from "react";
+import { useState, startTransition } from "react";
 import axios from "axios";
 import { Modal, Form, Input, message, Collapse, Badge } from "antd";
 import type { GetServerSideProps, NextPage } from "next";
@@ -20,7 +20,7 @@ const siteData = [
   { label: "网站名称", value: process.env.NEXT_PUBLIC_SITE_NAME },
   { label: "网址", value: process.env.NEXT_PUBLIC_HOST },
   { label: "Logo", value: `${process.env.NEXT_PUBLIC_HOST}/favicon.svg` },
-  { label: "网站介绍", value: `${process.env.NEXT_PUBLIC_SITE_NAME}:一个多人博客社区` },
+  { label: "网站介绍", value: `${process.env.NEXT_PUBLIC_SITE_NAME}:一个多人技术博客社区` },
 ];
 
 const Links: NextPage<{ data: linksItem[] }> = props => {
@@ -29,18 +29,16 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
   let [userData] = useUserData();
   let setModalState = useSetRecoilState(modalStateContext);
 
-  let [, startTransition] = useTransition();
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function onFinish(values: any) {
     axios.post("/links", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
+        setIsModalVisible(false);
         startTransition(() => {
-          setIsModalVisible(false);
+          form.resetFields();
         });
-        form.resetFields();
       } else {
         message.error(res.data.message);
       }

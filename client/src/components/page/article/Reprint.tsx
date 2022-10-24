@@ -1,9 +1,10 @@
 import type { FC } from "react";
 
 interface propsType {
+  /** 转载地址*/
   reprint?: string | null;
 }
-
+/** 文章底部的转载链接组件*/
 const Reprint: FC<propsType> = ({ reprint }) => {
   return (
     <>

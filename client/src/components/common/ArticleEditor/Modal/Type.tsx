@@ -19,6 +19,7 @@ const Type = () => {
   });
   return (
     <>
+      {/* 类型 */}
       <div className="pb-2 flex flex-wrap">
         {data &&
           data.map((item, index) => (
@@ -30,7 +31,7 @@ const Type = () => {
               offset={[-5, 5]}
               size="small"
               key={`article-write-type-${item.id}`}
-              className="w-1/5 ml-1 block"
+              className="w-1/5 !ml-1 block"
             >
               <div
                 className={classNames([
@@ -45,6 +46,7 @@ const Type = () => {
             </Badge>
           ))}
       </div>
+      {/* 标签 */}
       <div className="pt-2 border-t-solid border-slate-200 flex flex-wrap">
         {data &&
           data
@@ -52,7 +54,7 @@ const Type = () => {
             ?.children.map((item, index) => (
               <div
                 className={classNames([
-                  "w-1/5 h-full py-1 ml-1 rounded text-gray-500 text-center hover:bg-gray-200 cursor-pointer",
+                  "w-1/5 h-full py-1 !ml-1 rounded text-gray-500 text-center hover:bg-gray-200 cursor-pointer",
                   index > 3 && "mt-2",
                   articleData.tag.includes(item.id) ? "bg-gray-200" : "bg-gray-100",
                 ])}

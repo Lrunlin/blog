@@ -19,7 +19,7 @@ const News: FC<propsType> = memo(props => {
     if (userData) {
       axios.get("/notice/count").then(res => {
         if (res.data.success) {
-          setBadgeCount(res.data.data);
+          setBadgeCount(res.data.data.count);
         }
       });
     }
