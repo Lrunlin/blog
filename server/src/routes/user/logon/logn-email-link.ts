@@ -53,14 +53,14 @@ router.get("/logon/email", validator(schema), async ctx => {
   }
 
   let { email, name, password } = cache.get(key) as userDataType;
-
-  var data = new Identicon(sha1(id + ""), {
+  let _id=id()
+  var data = new Identicon(sha1(_id + ""), {
     size: 50,
     format: "svg",
     background: [240, 240, 240, 255],
   }).toString();
 
-  let uploadResult = await upload(Buffer.from(data, "base64"), ["avatar", `${id}.webp`])
+  let uploadResult = await upload(Buffer.from(data, "base64"), ["avatar", `${id()}.webp`])
     .then(res => ({ success: true, fileName: (res as any).file_name as string }))
     .catch(err => ({ success: false, errMes: err }));
 
@@ -70,7 +70,7 @@ router.get("/logon/email", validator(schema), async ctx => {
   }
 
   let logonResulte = await DB.User.create({
-    id: id(),
+    id: _id,
     email: email,
     name: name,
     password: password,

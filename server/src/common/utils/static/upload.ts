@@ -19,7 +19,7 @@ let bucket = process.env.OSS_NAME;
 async function upload(
   buffer: Buffer,
   fileName: [string, string]
-): Promise<{ file_name: string; file_href:string}|string> {
+): Promise<{ file_name: string; file_href: string } | string> {
   let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
   let options = {
     scope: bucket,
@@ -45,6 +45,7 @@ async function upload(
               reject(respErr);
               return;
             }
+            console.log(respInfo);
             if (respInfo.statusCode == 200) {
               resolve({
                 file_name: respBody.key.replace(`${fileName[0]}/`, ""),
