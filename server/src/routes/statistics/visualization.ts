@@ -176,7 +176,7 @@ router.get("/statistics/visualization", auth(), async ctx => {
       visits: visits,
       article_ranking: articleRanking,
       // 1、5、15 负载
-      loadavg: os.loadavg().map(load => +load.toFixed(0) * 100),
+      loadavg: os.loadavg().map(load => (load * 100).toFixed(0)),
       memory: {
         occupied: os.totalmem() - os.freemem(),
         total: os.totalmem(),

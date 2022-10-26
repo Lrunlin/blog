@@ -86,8 +86,10 @@ router.get("/article/list/page/:page", verify, async ctx => {
         message: "根据条件查询查询文章列表",
         data: {
           total: count,
-          list: rows.map(item => {
-            let _item = getTagData(setDescription(item.toJSON()), ["name"]);
+          list: rows.map(row => {
+            let item = row.toJSON();
+            let _description = setDescription<typeof item>(item);
+            let _item = getTagData<typeof _description>(_description, ["name"]);
             delete (_item as any).content;
             return _item;
           }),
@@ -103,7 +105,6 @@ router.get("/article/list/page/:page", verify, async ctx => {
           list: [],
         },
       };
-      console.log(err);
     });
 });
 export default router;

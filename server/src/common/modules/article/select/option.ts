@@ -15,8 +15,8 @@ let sort = {
     ["view_count", "desc"],
   ],
   newest: [
-    ["update_time", "desc"],
     ["create_time", "desc"],
+    ["update_time", "desc"],
     ["reprint", "asc"],
     ["collection_count", "desc"],
     ["comment_count", "desc"],
@@ -81,8 +81,10 @@ async function getArticleListData(
     .then(({ count, rows }) => {
       return {
         total: count,
-        list: rows.map(item => {
-          let _item = getTagData(setDescription(item.toJSON()), ["name"]);
+        list: rows.map(row => {
+          let item=row.toJSON();
+          let _description = setDescription<typeof item>(item)
+          let _item = getTagData<typeof _description>(_description, ["name"]);
           delete (_item as any).state;
           delete (_item as any).content;
           delete (_item as any).reprint;

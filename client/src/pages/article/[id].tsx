@@ -2,15 +2,13 @@ import dynamic from "next/dynamic";
 import type { GetServerSideProps, NextPage } from "next";
 import { useEffect } from "react";
 import { atom, useSetRecoilState, useResetRecoilState } from "recoil";
-import { Button, Result } from "antd";
 import axios from "axios";
 import Head from "@/components/next/Head";
 import Layout from "@/components/page/article/Layout";
-import Header from "@/components/common/Header";
 import View from "@/components/page/article/View";
 import ArticleUserData from "@/components/page/article/UserData";
 import type { ArticleAttributes } from "@type/model-attribute";
-import { useRouter } from "next/router";
+import NoFound from "@/components/page/article/NoFound";
 const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
 
 interface propsType {
@@ -21,25 +19,7 @@ export const currentArticleDataContext = atom<ArticleAttributes>({
   default: {} as ArticleAttributes,
 });
 const Article: NextPage<propsType> = props => {
-  let router = useRouter();
-  if (!props.data) {
-    return (
-      <>
-        <Head title="没找到该篇文章" keywords={["404"]} description="Not Found" />
-        <Header />
-        <Result
-          status="404"
-          title="404"
-          subTitle="没找到该篇文章"
-          extra={
-            <Button type="primary" onClick={() => router.replace("/")}>
-              返回主页
-            </Button>
-          }
-        />
-      </>
-    );
-  }
+  if (!props.data) return <NoFound />;
   let { data } = props;
   let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
   let resetCurrentArticleData = useResetRecoilState(currentArticleDataContext);

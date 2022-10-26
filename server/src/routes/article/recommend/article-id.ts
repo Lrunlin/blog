@@ -4,6 +4,8 @@ import { Op } from "sequelize";
 import type { TagAttributes } from "@/db/models/init-models";
 import Sequelize from "@/db/config";
 import interger from "@/common/verify/integer";
+import getTagData from "@/common/modules/article/get/get-tag-data";
+import setDescription from "@/common/modules/article/get/set-description";
 
 let articleAttribute = [
   "view_count",
@@ -69,9 +71,11 @@ router.get("/article/recommend/:id", interger([], ["id"]), async ctx => {
         success: true,
         message: "根据文章ID搜索同类型文章",
         data: rows.map(item => {
-          let _item = item.toJSON();
-          delete (_item as any).content;
-          delete (_item as any).state;
+         let _item = getTagData(setDescription(item.toJSON()), ["name"]);
+         delete (_item as any).state;
+         delete (_item as any).content;
+         delete (_item as any).reprint;
+         delete (_item as any).cover_file_name;
           return _item;
         }),
       };

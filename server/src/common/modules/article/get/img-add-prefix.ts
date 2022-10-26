@@ -1,18 +1,24 @@
 import { load } from "cheerio";
 import type { ArticleAttributes } from "@/db/models/article";
 
-/**
- * 从数据查询数据时对数据库的内容进行加工
- */
-function hydrate(article: ArticleAttributes, update?: true) {
-  let $ = load(article.content);
+type paramsType = Pick<ArticleAttributes,"title"| "content">;
+/**对于文章中的图片标签进行处理*/
+function serImageTag<T>(params: paramsType, update?: true) {
+  let $ = load(params.content);
   $("img").each((i, el) => {
     if (update) {
-      $(el).attr("src", `${process.env.CDN}/article/${$(el).attr("src")}`);
+      $(el)
+        .attr("src", `${process.env.CDN}/article/${$(el).attr("src")}`)
+        .attr("alt", params.title)
+        .attr("title", params.title);
     } else {
-      $(el).attr("data-src", `${process.env.CDN}/article/${$(el).attr("src")}`).removeAttr('src');
+      $(el)
+        .attr("data-src", `${process.env.CDN}/article/${$(el).attr("src")}`)
+        .removeAttr("src")
+        .attr("alt", params.title)
+        .attr("title", params.title);
     }
   });
-  return { ...article, content: $("body").html() };
+  return { ...params, content: $("body").html() as string } as T & paramsType;
 }
-export default hydrate;
+export default serImageTag;

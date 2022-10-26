@@ -1,12 +1,16 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import interger from "@/common/verify/integer";
+
 import HTMLToMarkDown from "@/common/modules/article/get/html-to-markdown";
 import getCodeBlockLanguage from "@/common/modules/article/get/get-code-block-language";
 import imgPrefix from "@/common/modules/article/get/img-add-prefix";
 import getTagData from "@/common/modules/article/get/get-tag-data";
 import getTitleId from "@/common/modules/article/get/set-title-id";
+import setDescription from "@/common/modules/article/get/set-description";
 import Sequelize from "@/db/config";
+
+import type { ArticleAttributes } from "@/db/models/init-models";
 
 let router = new Router();
 
@@ -42,13 +46,17 @@ router.get("/article/:id", interger([], ["id"]), async ctx => {
         let data: any = row.toJSON();
 
         if (!ctx.query.update) {
-          data = getCodeBlockLanguage(imgPrefix(getTagData(getTitleId(data) as any) as any) as any);
-        } else {
-          data = imgPrefix(data, true);
-        }
+          let _getTitleId = getTitleId<ArticleAttributes>(data);
 
-        if (ctx.query.update == "md") {
-          data = HTMLToMarkDown(data);
+          let _setDescription = setDescription<typeof _getTitleId>(_getTitleId);
+
+          let _getCodeBlockLanguage = getCodeBlockLanguage<typeof _setDescription>(_setDescription);
+
+          let _getTagDatagetTagData = getTagData(_getCodeBlockLanguage as any);
+          data = imgPrefix<typeof _getTagDatagetTagData>(_getTagDatagetTagData as any);
+        } else {
+          data = imgPrefix<typeof data>(data, true);
+          if (ctx.query.update == "md") data = HTMLToMarkDown<typeof data>(data);
         }
 
         ctx.body = { success: true, message: "查询成功", data: data };

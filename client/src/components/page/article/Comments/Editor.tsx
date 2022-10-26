@@ -90,7 +90,7 @@ const Editor: FC<propsType> = props => {
   return (
     <div className="flex">
       {/* 顶部输入框 */}
-      {!props.hideAvatar && <Avatar size={40} src={userData?.avatar_url} />}
+      {!props.hideAvatar && <Avatar size={40} src={userData?.avatar_url} alt={`${userData?.name}头像`} />}
       <div className="w-full ml-4">
         <div
           className={classNames([

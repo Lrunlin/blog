@@ -62,10 +62,8 @@ const MemoryDisk: FC<{ memory: propsType["memory"]; disk: propsType["disk"] }> =
           label: {
             position: "center",
             formatter: `${byteConvert(memory.occupied)}\n————\n${byteConvert(memory.total)}`,
-            textStyle: {
-              fontSize: vw(20),
-              color: "white",
-            },
+            fontSize: vw(20),
+            color: "white",
           },
           emphasis: {
             label: {
@@ -89,10 +87,8 @@ const MemoryDisk: FC<{ memory: propsType["memory"]; disk: propsType["disk"] }> =
           label: {
             position: "center",
             formatter: `${byteConvert(disk.occupied)}\n————\n${byteConvert(disk.total)}`,
-            textStyle: {
-              fontSize: vw(20),
-              color: "white",
-            },
+            fontSize: vw(20),
+            color: "white",
           },
           emphasis: {
             label: {
