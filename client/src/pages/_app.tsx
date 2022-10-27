@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import NextApp from "next/app";
 import type { AppProps, AppContext } from "next/app";
 
 //部分动画样式在这个css里面
@@ -35,7 +34,8 @@ const APP: NextPage<Props> = ({ Component, pageProps, userInfo }) => {
 
 //! APP组件无法使用getServerSideProps
 //? 因为是APP组件的原因,ctx并不是顶级的对象参数只是一个属性
-NextApp.getInitialProps = async ({ ctx }): Promise<any> => {
+APP.getInitialProps = async (params): Promise<any> => {
+  let { ctx } = params as unknown as AppContext;
   // ? article页面不请求,防止被redis缓存
   if (ctx.pathname.startsWith("/article/") && ctx.pathname != "/article/editor") {
     return { userInfo: null };

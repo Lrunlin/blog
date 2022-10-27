@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
 import type { GetServerSideProps, NextPage } from "next";
-import { useEffect } from "react";
-import { atom, useSetRecoilState, useResetRecoilState } from "recoil";
+import { atom } from "recoil";
 import axios from "axios";
+import RecoilRoot from "@/components/page/article/RecoilRoot";
 import Head from "@/components/next/Head";
 import Layout from "@/components/page/article/Layout";
 import View from "@/components/page/article/View";
@@ -18,17 +18,8 @@ export const currentArticleDataContext = atom<ArticleAttributes>({
   key: "current-article-data",
   default: {} as ArticleAttributes,
 });
-const Article: NextPage<propsType> = props => {
-  if (!props.data) return <NoFound />;
-  let { data } = props;
-  let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
-  let resetCurrentArticleData = useResetRecoilState(currentArticleDataContext);
-  useEffect(() => {
-    setCurrentArticleData(data);
-    return () => {
-      resetCurrentArticleData();
-    };
-  }, [data]);
+const Article: NextPage<propsType> = ({data}) => {
+  if (!data) return <NoFound />;
 
   return (
     <>
@@ -42,12 +33,14 @@ const Article: NextPage<propsType> = props => {
         ]}
         description={data.description}
       />
-      <Layout>
-        <h1 className="text-4xl font-semibold">{data.title}</h1>
-        <ArticleUserData data={data} />
-        <View language={data.language} content={data.content} />
-        <Reprint reprint={data.reprint} />
-      </Layout>
+      <RecoilRoot currentArticleData={data}>
+        <Layout>
+          <h1 className="text-4xl font-semibold">{data.title}</h1>
+          <ArticleUserData data={data} />
+          <View language={data.language} content={data.content} />
+          <Reprint reprint={data.reprint} />
+        </Layout>
+      </RecoilRoot>
     </>
   );
 };
