@@ -99,7 +99,9 @@ API 接口文档 Apifox
 
 ## 网络爬虫
 
-目前有偿提供文章爬虫程序,使用请求工具+无头浏览器对掘金和思否的文章进行爬取，并自动存入数据库
+使用puppeteer爬取掘金文章:[https://github.com/Lrunlin/puppeteer-juejin](https://github.com/Lrunlin/puppeteer-juejin)
+
+思否文章爬虫因为反扒机制升级的缘故正在转为puppeteer
 
 ## Star History
 
