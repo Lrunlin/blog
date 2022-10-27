@@ -18,7 +18,7 @@ export const currentArticleDataContext = atom<ArticleAttributes>({
   key: "current-article-data",
   default: {} as ArticleAttributes,
 });
-const Article: NextPage<propsType> = ({data}) => {
+const Article: NextPage<propsType> = ({ data }) => {
   if (!data) return <NoFound />;
 
   return (

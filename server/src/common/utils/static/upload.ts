@@ -45,7 +45,6 @@ async function upload(
               reject(respErr);
               return;
             }
-            console.log(respInfo);
             if (respInfo.statusCode == 200) {
               resolve({
                 file_name: respBody.key.replace(`${fileName[0]}/`, ""),

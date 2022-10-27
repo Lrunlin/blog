@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import type { FC } from "react";
-import { Image } from "antd";
 import axios from "axios";
 import Script from "next/script";
 import style from "@/styles/article.module.scss";
+import dynamic from "next/dynamic";
+const ImagePreview = dynamic(() => import("@/components/page/article/ImagePreview"), {
+  ssr: false,
+});
 
 interface prposType {
   content: string;
@@ -11,7 +14,6 @@ interface prposType {
 }
 /** 文章页面主题内容显示*/
 const View: FC<prposType> = props => {
-  const [preview, setPreview] = useState("");
   useEffect(() => {
     let imgs = document
       .getElementById("view")
@@ -34,20 +36,8 @@ const View: FC<prposType> = props => {
     }
     imageLazyLoad();
     window.addEventListener("scroll", imageLazyLoad);
-    function setPreviewSrc(e: any) {
-      if (e?.target?.src) setPreview(e?.target?.src);
-    }
-    for (let index = 0; index < imgs.length; index++) {
-      const element = imgs[index];
-      element.addEventListener("click", setPreviewSrc);
-    }
-
     return () => {
       window.removeEventListener("scroll", imageLazyLoad);
-      for (let index = 0; index < imgs.length; index++) {
-        const element = imgs[index];
-        element.removeEventListener("click", setPreviewSrc);
-      }
     };
   }, []);
   return (
@@ -69,24 +59,7 @@ const View: FC<prposType> = props => {
         className={style.article}
         dangerouslySetInnerHTML={{ __html: props.content }}
       ></div>
-      {preview && (
-        <div className={style["preview"]} id="preview">
-          <Image
-            width={0}
-            style={{ display: "none" }}
-            src={preview}
-            alt="预览图"
-            preview={{
-              mask: false,
-              getContainer: "#preview",
-              onVisibleChange: visible => {
-                if (visible == false) setPreview("");
-              },
-              visible: !!preview,
-            }}
-          />
-        </div>
-      )}
+      <ImagePreview rootID="view" />
     </>
   );
 };

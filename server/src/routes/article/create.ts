@@ -33,7 +33,7 @@ router.post("/article", auth(0), verify, async ctx => {
     .catch(() => false);
 
   if (createArticle && _t) {
-    ctx.body = { success: true, message: `发布成功`, data: { article_id: id } };
+    ctx.body = { success: true, message: `发布成功`, data: { article_id: _id } };
     t.commit();
   } else {
     ctx.body = { success: false, message: "发布失败" };
