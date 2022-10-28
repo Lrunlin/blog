@@ -1,7 +1,18 @@
 import { useEffect, useState } from "react";
-import ADS from "./ADS";
+import dynamic from "next/dynamic";
+const ADS = dynamic(import("./ADS"), { ssr: false });
+
 const AdSense = () => {
   const [isLoad, setIsLoad] = useState(true);
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setIsLoad(false);
+    }, 100);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   if (process.env.NODE_ENV == "development") {
     return (
       <div className="w-full h-96 my-3 bg-gray-200 flex items-center justify-center">
@@ -13,21 +24,7 @@ const AdSense = () => {
   if (!process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID) {
     return <></>;
   }
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    function ready() {
-      if (document.readyState == "complete") {
-        timer = setTimeout(() => {
-          setIsLoad(false);
-        }, 100);
-      }
-    }
-    document.addEventListener("readystatechange", ready);
-    return () => {
-      clearInterval(timer);
-      document.removeEventListener("readystatechange", ready);
-    };
-  }, []);
+
   return (
     <>
       {isLoad ? (

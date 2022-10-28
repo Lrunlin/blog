@@ -126,9 +126,9 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
         <div className="w-[992px] p-4 mt-12 mx-auto flex flex-wrap">
           <div
             className="w-44 h-16 mr-4 mt-4 bg-gray-100 flex items-center justify-center cursor-pointer border border-solid border-gray-200"
-            onClick={() =>
+            onClick={
               userData
-                ? setIsModalVisible(true)
+                ? () => setIsModalVisible(true)
                 : () => {
                     message.info("请登陆后再发出申请");
                     setModalState("LogIn");
