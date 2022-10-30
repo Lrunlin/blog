@@ -69,7 +69,7 @@ async function setVisitsData() {
 }
 
 setVisitsData();
-setTimeout(() => {
+setInterval(() => {
   setVisitsData();
 }, 21_600_000);
 
