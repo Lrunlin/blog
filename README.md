@@ -69,6 +69,10 @@ API 接口文档 Apifox
 2. 小组功能
 3. 前期使用组件库快速搭建用户端页面，后期进行美化以及去 Antd
 4. 文章页面主题模式
+5. Ant Design5
+6. Next.js 13
+7. 点赞功能
+8. Redis接口环境以及对应的事务处理
 
 ## 开发环境启动
 
@@ -101,7 +105,7 @@ API 接口文档 Apifox
 
 使用puppeteer爬取掘金文章:[https://github.com/Lrunlin/puppeteer-juejin](https://github.com/Lrunlin/puppeteer-juejin)
 
-思否文章爬虫因为反扒机制升级的缘故正在转为puppeteer
+思否文章爬虫因为反扒机制升级的原因正在转为puppeteer
 
 ## Star History
 
