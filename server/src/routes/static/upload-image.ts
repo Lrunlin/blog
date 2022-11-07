@@ -32,8 +32,8 @@ function verify() {
 router.post("/static/:folder", auth(0), verify(), uploadOption.single("image"), async ctx => {
   let buffer = ctx.file.buffer;
 
-  const mimetype = ctx.file.mimetype == "image/gif" ? "gif" : "webp";
-  let fileName = `${v4().replace(/-/g, "")}.${mimetype}`;
+  ;
+  let fileName = `${v4().replace(/-/g, "")}.webp`;
 
   await upload(buffer, [ctx.params.folder, fileName])
     .then(data => {

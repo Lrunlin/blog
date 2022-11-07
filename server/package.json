@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "ts-node ./scripts/dev",
     "build": "ts-node ./scripts/build",
-    "start": "cross-env ENV=production nodemon ./src/index.js",
-    "pm2": "cross-env ENV=development pm2 start&& pm2 monit"
+    "start": "cross-env ENV=production nodemon ./src/index.js"
   },
   "dependencies": {
     "@koa/cors": "^3.3.0",
@@ -67,7 +66,6 @@
     "@types/turndown": "^5.0.1",
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.3",
-    "pm2": "^5.2.0",
     "shelljs": "^0.8.5",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.4.0",

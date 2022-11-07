@@ -18,7 +18,7 @@ const list = [
 ];
 
 interface propsType {
-  loadMoreData: (type:string) => void;
+  loadMoreData: (type: string) => void;
 }
 const TypeSelect: FC<propsType> = props => {
   const [active, setActive] = useState(list[0].value);
@@ -43,7 +43,6 @@ const TypeSelect: FC<propsType> = props => {
             key={item.label + item.value}
             className={classNames([
               "px-3",
-              "#909090",
               "cursor-pointer",
               active == item.value ? "text-[#007fff]" : "",
             ])}

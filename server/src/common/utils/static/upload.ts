@@ -28,11 +28,10 @@ async function upload(
   let uploadToken = putPolicy.uploadToken(mac);
   let formUploader = new qiniu.form_up.FormUploader(config);
   let putExtra = new qiniu.form_up.PutExtra();
-  let type = fileName[1].split(".").slice(-1)[0] as "webp" | "gif";
-
+  
   return (await sync((resolve, reject) => {
     sharp(buffer, { animated: true })
-      [type]()
+      .webp()
       .toBuffer()
       .then(data => {
         formUploader.put(
