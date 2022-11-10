@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "ES2021",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "removeComments": true, //取消注释
+    "strict": true,
+    "allowJs": true,
+    "baseUrl": "./",
+    "skipLibCheck": true, //跳过声明文件的类型检查。
+    "esModuleInterop": true, // 允许export=导出，由import from 导入
+    "noImplicitAny": true, // 不允许隐式的 any 类型
+    "typeRoots": ["types"]
+  },
+  "include": ["./index.ts"],
+  "exclude": ["node_modules", "**/*.d.ts"],
+  "lib": ["es2021"]
+}

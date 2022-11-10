@@ -8,53 +8,54 @@ import typeCache from "@/common/modules/cache/type";
 import Redis from "@/common/utils/redis";
 
 let redis = Redis(2);
+interface refererType {
+  referer_label: string;
+  referer_color: string;
+  time: string;
+}
+let visits: { time: string; count: number }[] = new Array(7).fill(0);
+let referer: (Omit<refererType, "time"> & { count: number })[] = [];
 
-let visits: number[] = new Array(7).fill(0);
-let referer: { [key: string]: number } = {
-  Google: 0,
-  360: 0,
-  Baidu: 0,
-  Bing: 0,
-  GitHub: 0,
-  直接进入: 0,
-  Other: 0,
-};
 let articleRanking: { id: number; title: string; view_count: number }[] | null = [];
 /** 通过Redis阅读记录获取七日内访问量、作者排行榜、访问来源统计*/
 async function setVisitsData() {
-  visits = new Array(7).fill(0);
+  visits.length = 0;
   let _articleRanking: { [key: string]: number } = {};
-  referer = {
-    Google: 0,
-    360: 0,
-    Baidu: 0,
-    Bing: 0,
-    GitHub: 0,
-    直接进入: 0,
-    Other: 0,
-  };
-  (await redis.keys("*")).forEach(async item => {
-    // 统计每天访问量 根据剩余天数计算应该处于数组第几位
-    redis.ttl(item).then(time => {
-      let index = 7 - 1 - Math.floor((604_800 - time) / 86_400);
-      visits[index]++;
-    });
-    /** 统计七日内文章访问量*/
-    let articleID = item.split("--").slice(-1)[0];
+  referer = [] as any[];
+  for (const key of await redis.keys("*")) {
+    /** 统计七日内文章排行榜*/
+    let articleID = key.split("#").slice(-1)[0];
     _articleRanking[articleID] ? _articleRanking[articleID]++ : (_articleRanking[articleID] = 1);
-    /** 统计访问来源*/
-    redis
-      .get(item)
+    /** 统计访问来源和七日内全站文章访问量*/
+    await redis
+      .get(key)
       .then(res => {
         if (res == null) {
           return;
         }
-        referer[res] != undefined ? referer[res]++ : referer["直接进入"]++;
+        // 统计访问来源
+        let data = JSON.parse(res) as refererType;
+        let refererItem = referer.find(item => item.referer_label == data.referer_label);
+        if (refererItem) {
+          refererItem.count++;
+        } else {
+          referer.push({
+            referer_label: data.referer_label,
+            referer_color: data.referer_color,
+            count: 1,
+          });
+        }
+        // 统计访问量
+        let visitsItem = visits.find(item => item.time == data.time);
+        visitsItem ? visitsItem.count++ : visits.push({ time: data.time, count: 1 });
       })
       .catch(() => {});
-  });
+  }
+  //只保留7日内站点访问量(处理可能会出现的8个日期的问题)
+  visits = visits.sort((a, b) => +new Date(a.time) - +new Date(b.time)).slice(-7).map(item=>({...item,time:item.time.substring(5)}));
 
-  /** 统计作者排行榜*/
+
+  /** 统计文章阅读排行榜*/
   let articleIDs = Object.entries(_articleRanking)
     .sort((a, b) => b[1] - a[1])
     .splice(0, 10)

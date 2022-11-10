@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 5678",
-    "dev:server": "cross-env NODE_ENV=development nodemon server",
+    "dev:server": "cross-env NODE_ENV=development nodemon --watch ./server -e ts --exec ts-node ./server/index.ts",
     "build": "next build",
-    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development nodemon server",
+    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development ts-node ./server/index.ts",
     "lint": "next lint",
-    "start": "cross-env NODE_ENV=production nodemon server",
+    "start": "cross-env NODE_ENV=production ts-node ./server/index.ts",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "@next/bundle-analyzer": "^12.1.6",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@types/cookie": "^0.5.1",
+    "@types/express": "^4.17.14",
     "@types/js-cookie": "^3.0.2",
     "@types/marked": "^4.0.3",
     "@types/node": "18.0.0",

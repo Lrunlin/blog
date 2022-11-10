@@ -12,10 +12,7 @@ router.get("/sitemap/:index", integer([], ["index"]), async ctx => {
     offset: (index - 1) * limit,
     limit: limit,
     attributes: ["id", "update_time", "create_time"],
-    order: [
-      ["reprint", "asc"],
-      ["create_time", "desc"],
-    ],
+    order: [["create_time", "desc"]],
     raw: true,
   }).then(rows => {
     let list = rows.map(item => ({

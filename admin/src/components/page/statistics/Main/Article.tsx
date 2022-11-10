@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect ,useRef} from "react";
 import type { FC } from "react";
 import * as echarts from "echarts";
 import vw from "@/utils/vw";
@@ -60,8 +60,9 @@ function option(data: { value: number; name: string }[]) {
 
 /** 文章饼状图统计*/
 const Article: FC<{ data: propsType["article"] }> = ({ data }) => {
+  let DOM = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    echarts.init(document.getElementById("main2") as HTMLDivElement).setOption(
+    echarts.init(DOM.current as HTMLDivElement).setOption(
       option([
         { value: data.admin_reprint_count, name: "管理员转载文章" },
         { value: data.admin_not_reprint_count, name: "管理员原创文章" },
@@ -73,7 +74,7 @@ const Article: FC<{ data: propsType["article"] }> = ({ data }) => {
 
   return (
     <>
-      <div id="main2" className="w-full h-full main-s"></div>
+      <div ref={DOM} className="w-full h-full main-s"></div>
     </>
   );
 };

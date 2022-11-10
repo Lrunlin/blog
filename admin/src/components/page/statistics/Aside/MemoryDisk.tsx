@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { FC } from "react";
 import * as echarts from "echarts";
 import vw from "@/utils/vw";
@@ -18,12 +18,11 @@ const byteConvert = function (bytes: number) {
   return bytes + " " + symbols[i];
 };
 
-const MemoryDisk: FC<{ memory: propsType["memory"]; disk: propsType["disk"] }> = ({
-  memory,
-  disk,
-}) => {
+const MemoryDisk: FC<{ memory: propsType["memory"]; disk: propsType["disk"] }> = props => {
+  let { memory, disk } = props;
+  let DOM = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    echarts.init(document.getElementById("main4") as HTMLDivElement).setOption({
+    echarts.init(DOM.current as HTMLDivElement).setOption({
       title: [
         {
           text: "内存使用情况",
@@ -107,6 +106,6 @@ const MemoryDisk: FC<{ memory: propsType["memory"]; disk: propsType["disk"] }> =
       ],
     });
   }, [memory, disk]);
-  return <div id="main4" className="server-data-container"></div>;
+  return <div ref={DOM} className="server-data-container"></div>;
 };
 export default MemoryDisk;

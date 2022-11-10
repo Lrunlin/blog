@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { FC } from "react";
 import * as echarts from "echarts";
 import vw from "@/utils/vw";
 import type { propsType } from "./index";
-import moment from "moment";
 
 /** 访问量统计*/
 const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
+  let DOM=useRef<HTMLDivElement>(null)
   useEffect(() => {
-    let myChart = echarts.init(document.getElementById("main1") as HTMLElement);
+    let myChart = echarts.init(DOM.current as HTMLElement);
     myChart.setOption({
       title: {
         text: "文章阅读量",
@@ -35,10 +35,7 @@ const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
       xAxis: {
         type: "category",
         boundaryGap: false,
-        data: new Array(7)
-          .fill(null)
-          .map((_, index) => moment(+new Date()-(86_400_000*index)).format('MM-DD'))
-          .reverse(),
+        data: visits.map(item => item.time),
       },
       yAxis: {
         type: "value",
@@ -46,7 +43,7 @@ const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
       series: [
         {
           type: "line",
-          data: visits,
+          data: visits.map(item => item.count),
           itemStyle: {
             color: "red",
           },
@@ -56,7 +53,7 @@ const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
   }, [visits]);
   return (
     <>
-      <div id="main1" className="w-full h-full main-l"></div>
+      <div ref={DOM} className="w-full h-full main-l"></div>
     </>
   );
 };

@@ -6,7 +6,7 @@ import "./index.css";
 import Footer from "@/components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import useUserState from "@/store/user-state";
-import WaterMark from "./Watermark";
+// import WaterMark from "./Watermark";
 
 const Base: FC = () => {
   let navigate = useNavigate();
@@ -16,17 +16,15 @@ const Base: FC = () => {
     <>
       <Header />
       <main className="min-h-screen w-full pl-4 pr-4 relative top-4">
-        <WaterMark text={userState?.name || ""}>
-          {userState ? (
-            <Outlet />
-          ) : (
-            <div>
-              <Button onClick={() => navigate("/login", { replace: true })} type="primary">
-                请登录
-              </Button>
-            </div>
-          )}
-        </WaterMark>
+        {userState ? (
+          <Outlet />
+        ) : (
+          <div>
+            <Button onClick={() => navigate("/login", { replace: true })} type="primary">
+              请登录
+            </Button>
+          </div>
+        )}
       </main>
       <Footer />
     </>

@@ -1,8 +1,8 @@
-import { Divider, Empty, Skeleton } from "antd";
+import { Divider,  Skeleton } from "antd";
 import useSWR from "swr";
 import axios from "axios";
 import useUserState from "@/store/user-state";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Notice from "@/components/page/index/notice";
 
 import github from "@/assets/icon/github.svg";

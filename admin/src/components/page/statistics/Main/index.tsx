@@ -7,7 +7,7 @@ import Loadavg from "./Loadavg";
 import Referer from "./Referer";
 
 export interface propsType {
-  visits: number[];
+  visits: { time:string;count:number}[];
   article: {
     admin_reprint_count: number;
     admin_not_reprint_count: number;
@@ -15,7 +15,7 @@ export interface propsType {
     user_not_reprint_count: number;
   };
   loadavg: [number, number, number];
-  referer: { [key: string]: number }[];
+  referer: { referer_label: string; referer_color: string; count: number }[];
 }
 
 /** 大屏页面左下方显示块*/

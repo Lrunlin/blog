@@ -78,9 +78,14 @@ const Loadavg: FC<{ data: propsType["loadavg"] }> = ({ data }) => {
 
   return (
     <div className="main-s relative">
-      <div className={classNames(["echarts-loadavg-0", "loadavg-item"])}></div>
-      <div className={classNames(["echarts-loadavg-1", "loadavg-item"])}></div>
-      <div className={classNames(["echarts-loadavg-2", "loadavg-item"])}></div>
+      {new Array(3).fill(null).map((_,index)=>{
+        return (
+          <div
+            key={`echarts-loadavg-${index}`}
+            className={classNames([`echarts-loadavg-${index}`, "loadavg-item"])}
+          ></div>
+        );
+      })}
     </div>
   );
 };

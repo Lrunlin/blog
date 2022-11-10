@@ -7,7 +7,7 @@ let Redis = redis(1);
 export default init<Article, ArticleAttributes>(async (model, type) => {
   //清除Redis缓存
   if (type == "update" || type == "delete") {
-    let cacheID = `/article/${model.id}`;
+    let cacheID = model.id + "";
     if (await Redis.exists(cacheID)) {
       Redis.del(cacheID);
     }
