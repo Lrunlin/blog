@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 5678",
-    "dev:server": "cross-env NODE_ENV=development nodemon --watch ./server -e ts --exec ts-node ./server/index.ts",
+    "dev:server": "cross-env NODE_ENV=development node ./server/dist/index.js",
     "build": "next build",
-    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development ts-node ./server/index.ts",
+    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development node ./server/dist/index.js",
     "lint": "next lint",
-    "start": "cross-env NODE_ENV=production ts-node ./server/index.ts",
+    "start": "cross-env NODE_ENV=production node ./server/dist/index.js",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {

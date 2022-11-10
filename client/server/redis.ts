@@ -1,5 +1,6 @@
 import redis from "ioredis";
-const env = require("../env");
+
+const env = require(`${process.cwd()}/env/index.js`);
 
 /**
  * 创建Redis链接
