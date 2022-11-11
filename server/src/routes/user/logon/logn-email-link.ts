@@ -88,7 +88,7 @@ router.get("/logon/email", validator(schema), async ctx => {
 
   let token = jwt.sign(
     {
-      id: id,
+      id: _id,
       auth: 0,
     },
     process.env.KEY as string,
