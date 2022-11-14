@@ -2,8 +2,14 @@ import qiniu from "qiniu";
 import sharp from "sharp";
 import sync from "@/common/utils/sync";
 
+const zone = {
+  huadong: qiniu.zone.Zone_z0,
+  huabei: qiniu.zone.Zone_z1,
+  huanan: qiniu.zone.Zone_z2,
+};
+
 let config = new qiniu.conf.Config({
-  zone: qiniu.zone.Zone_z2,
+  zone: zone[process.env.OSS_ZONE],
 });
 let accessKey = process.env.QINIU_AK;
 let secretKey = process.env.QINIU_SK;
@@ -28,7 +34,7 @@ async function upload(
   let uploadToken = putPolicy.uploadToken(mac);
   let formUploader = new qiniu.form_up.FormUploader(config);
   let putExtra = new qiniu.form_up.PutExtra();
-  
+
   return (await sync((resolve, reject) => {
     sharp(buffer, { animated: true })
       .webp()

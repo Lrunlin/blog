@@ -30,7 +30,7 @@ let list: listItemType[][] = [
       href: "https://beian.miit.gov.cn/#/Integrated/index",
       label: (
         <>
-          <Image src="/icon/police.png" width={20} height={20} className="police icon" />
+          <Image src="/icon/police.png" width={20} height={20} alt="police icon" />
           <span className="ml-1">{process.env.ICP}</span>
         </>
       ),

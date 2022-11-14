@@ -54,6 +54,20 @@ const View: FC<prposType> = props => {
           />
         </>
       )}
+      <style jsx global>
+        {`
+          .toolbar-item {
+            margin-right: 6px;
+          }
+          .toolbar-item > a,
+          .toolbar-item > button,
+          .toolbar-item > span {
+            border: 1px solid #bbb !important;
+            border-radius: 3px !important;
+            cursor: pointer;
+          }
+        `}
+      </style>
       <div
         id="view"
         className={style.article}

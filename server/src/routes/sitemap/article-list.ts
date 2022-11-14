@@ -11,14 +11,14 @@ router.get("/sitemap/:index", integer([], ["index"]), async ctx => {
     where: { state: 1 },
     offset: (index - 1) * limit,
     limit: limit,
-    attributes: ["id", "update_time", "create_time"],
-    order: [["create_time", "desc"]],
+    attributes: ["id", "create_time"],
+    order: [["create_time", "asc"]],
     raw: true,
   }).then(rows => {
     let list = rows.map(item => ({
       href: `${process.env.CLIENT_HOST}/article/${item.id}`,
       priority: 0.9,
-      create_time: moment(item.update_time || item.create_time).format("YYYY-MM-DD"),
+      create_time: moment(item.create_time).format("YYYY-MM-DD"),
     }));
 
     if (index == 1) {

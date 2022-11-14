@@ -2146,10 +2146,10 @@ pump@^3.0.0:
     end-of-stream "^1.1.0"
     once "^1.3.1"
 
-qiniu@^7.7.0:
-  version "7.7.0"
-  resolved "https://registry.npmmirror.com/qiniu/-/qiniu-7.7.0.tgz"
-  integrity sha512-p8wZHDXzqCVtlPIygqIzpO6P59e5KcNAOf85oi6O7K5M4xjnwoi6L3e0F8IXgd38nb2PzWOH3XUkSbNAYW0g7Q==
+qiniu@7.8.0:
+  version "7.8.0"
+  resolved "https://registry.npmmirror.com/qiniu/-/qiniu-7.8.0.tgz#e37f60573eca192ad1f820196d426f97253cd561"
+  integrity sha512-StJ2+E2gnr9BOfUcOLLBSWicc4ItpI3BK+O76ebHKdWrcdNnFfIfHK6dzJY5Fu0k3od2QyuWoNMTZ77SD6emMA==
   dependencies:
     agentkeepalive "^4.0.2"
     before "^0.0.1"

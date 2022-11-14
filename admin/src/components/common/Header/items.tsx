@@ -68,6 +68,10 @@ const items = [
         href: "/links",
         label: "友链列表",
       },
+      {
+        href: "/links/create",
+        label: "添加友链",
+      },
     ],
   },
   {

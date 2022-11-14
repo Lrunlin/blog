@@ -16,8 +16,8 @@ const LinksList = () => {
 
   const [deleteLinksID, setDeleteLinksID] = useState<null | number>(null);
   const [message, setMessage] = useState("");
-  function remove() {
-    axios.delete(`/links/${deleteLinksID}`, { params: { message: message } }).then(res => {
+  function remove(id:number) {
+    axios.delete(`/links/${id}`, { params: { message: message } }).then(res => {
       if (res.data.success) {
         messageAlert.success(res.data.message);
         mutate();
@@ -70,10 +70,12 @@ const LinksList = () => {
       title: "用户信息",
       dataIndex: "user_data",
       render: (user_data: any) => {
-        return (
+        return user_data ? (
           <Link to={`/user/${user_data.id}`}>
             <Avatar src={user_data.avatar_url} alt="用户头像" />
           </Link>
+        ) : (
+          "未注册"
         );
       },
       width: 100,
@@ -87,7 +89,7 @@ const LinksList = () => {
             <Button
               danger
               type="primary"
-              onClick={() => setDeleteLinksID(id)}
+              onClick={() => (item.user_data ? setDeleteLinksID(id) : remove(item.id))}
               icon={<DeleteOutlined />}
             >
               删除
@@ -115,7 +117,7 @@ const LinksList = () => {
       <Modal
         title="确定删除友链"
         open={!!deleteLinksID}
-        onOk={remove}
+        onOk={() => remove(deleteLinksID as number)}
         onCancel={() => setDeleteLinksID(null)}
         cancelText="取消"
         okText="确认删除"

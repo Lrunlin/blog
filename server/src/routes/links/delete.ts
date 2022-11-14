@@ -8,7 +8,7 @@ import sequelize from "@/db/config";
 import interger from "@/common/verify/integer";
 
 const schema = Joi.object({
-  message: Joi.string().min(0).required().error(new Error("回复内容错误")),
+  message: Joi.string().min(0).error(new Error("回复内容错误")),
 });
 
 let router = new Router();

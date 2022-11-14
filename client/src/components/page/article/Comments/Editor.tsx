@@ -90,7 +90,9 @@ const Editor: FC<propsType> = props => {
   return (
     <div className="flex">
       {/* 顶部输入框 */}
-      {!props.hideAvatar && <Avatar size={40} src={userData?.avatar_url} alt={`${userData?.name}头像`} />}
+      {!props.hideAvatar && (
+        <Avatar size={40} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
+      )}
       <div className="w-full ml-4">
         <div
           className={classNames([
@@ -148,7 +150,7 @@ const Editor: FC<propsType> = props => {
                   e.stopPropagation();
                 }}
               >
-                <Image src="/icon/emoji.png" width={18} height={18} />
+                <Image src="/icon/emoji.png" width={18} height={18} alt="emoji" />
                 <span className="ml-1 text-sm text-neutral-500">表情</span>
                 <div
                   className={classNames([
@@ -171,7 +173,7 @@ const Editor: FC<propsType> = props => {
                 }}
               >
                 <span className="flex items-center ml-4 cursor-pointer">
-                  <Image src="/icon/picture.png" width={18} height={18} />
+                  <Image src="/icon/picture.png" width={18} height={18} alt="picture" />
                   <span className="ml-1 text-sm text-neutral-500">图片</span>
                 </span>
               </label>

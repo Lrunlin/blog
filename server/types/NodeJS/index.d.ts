@@ -30,6 +30,8 @@ declare global {
       QINIU_SK: string;
       /** OSS 名称*/
       OSS_NAME: string;
+      /** OSS区 (只支持国内区)*/
+      OSS_ZONE: "huadong" | "huabei" | "huanan";
       /** 百度地图AK*/
       BAIDU_MAP_AK: string;
       /** GitHub Client ID*/

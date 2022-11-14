@@ -5,7 +5,7 @@ export interface LinksAttributes {
   id: number;
   name: string;
   url: string;
-  user_id: number;
+  user_id?: number;
   state: number;
   logo_file_name: string;
   create_time: Date;
@@ -13,7 +13,8 @@ export interface LinksAttributes {
 
 export type LinksPk = "id";
 export type LinksId = Links[LinksPk];
-export type LinksCreationAttributes = LinksAttributes;
+export type LinksOptionalAttributes = "user_id";
+export type LinksCreationAttributes = Optional<LinksAttributes, LinksOptionalAttributes>;
 
 export class Links
   extends Model<LinksAttributes, LinksCreationAttributes>
@@ -22,7 +23,7 @@ export class Links
   id!: number;
   name!: string;
   url!: string;
-  user_id!: number;
+  user_id?: number;
   state!: number;
   logo_file_name!: string;
   create_time!: Date;
@@ -50,7 +51,7 @@ export class Links
         },
         user_id: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          allowNull: true,
           comment: "对应用户的ID",
           unique: "user_id",
         },

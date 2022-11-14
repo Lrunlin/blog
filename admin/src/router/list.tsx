@@ -67,6 +67,11 @@ const RouterList: RouterListType[] = [
         title: "修改推广",
       },
       {
+        path: "/links/create",
+        element: lazy(() => import("@/page/links/create")),
+        title: "友链添加",
+      },
+      {
         path: "/links",
         element: lazy(() => import("@/page/links/list")),
         title: "友链列表",

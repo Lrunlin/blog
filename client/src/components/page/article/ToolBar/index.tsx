@@ -65,7 +65,7 @@ const ToolBar = () => {
     <div className="fixed top-32 left-[calc(50vw-680px)] select-none">
       <a className={classNames([itemClassName, "block"])} href="#comment">
         <Badge count={currentArticleData.comment_count}>
-          <Image src="/icon/comments.png" height={24} width={24} />
+          <Image src="/icon/comments.png" height={24} width={24} alt="comments" />
         </Badge>
       </a>
       <div
@@ -75,9 +75,9 @@ const ToolBar = () => {
         }
       >
         {collectionState ? (
-          <Image src="/icon/collection-fill.png" width={24} height={24} />
+          <Image src="/icon/collection-fill.png" width={24} height={24} alt="collection" />
         ) : (
-          <Image src="/icon/collection.png" width={24} height={24} />
+          <Image src="/icon/collection.png" width={24} height={24} alt="collection" />
         )}
       </div>
     </div>

@@ -28,13 +28,14 @@ const News: FC<propsType> = memo(props => {
   return (
     <>
       <Link href="/notification">
-        <a rel="nofollow" className={classNames(["mt-2", props.className])}>
+        <a rel="nofollow" className={classNames([props.className])}>
           <Badge count={badgeCount} size="small">
             <Image
               className="opacity-50 duration-300 hover:opacity-80 cursor-pointer"
               src="/icon/small-bell.png"
               height={24}
               width={24}
+              alt="bell"
             />
           </Badge>
         </a>

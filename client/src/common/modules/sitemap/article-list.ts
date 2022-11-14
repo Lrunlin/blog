@@ -1,8 +1,6 @@
-import dayjs from "dayjs";
 interface sitemapItemType {
   href: string | number;
   priority?: number;
-  update_time?: Date;
   create_time?: Date;
 }
 /** 处理文章的sitemap*/
@@ -19,7 +17,7 @@ http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
   <url>
   <loc>${item.href}</loc>
   <priority>${item.priority || 0.9}</priority>
-  <lastmod>${dayjs(item.update_time || item.create_time).format("YYYY-MM-DD")}</lastmod>
+  <lastmod>${item.create_time}</lastmod>
   <changefreq>weekly</changefreq>
   </url>`;
   });

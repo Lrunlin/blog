@@ -88,7 +88,7 @@ export interface LinksAttributes {
   id: number;
   name: string;
   url: string;
-  user_id: number;
+  user_id: number|null;
   is_allow: number;
   logo_file_name: string;
   logo_url: string;

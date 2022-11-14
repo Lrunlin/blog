@@ -12,8 +12,9 @@ import type { response } from "@type/response";
 import { modalStateContext } from "@/components/common/Header/Sign";
 import { useSetRecoilState } from "recoil";
 import Link from "next/link";
+import classNames from "classnames";
 type linksItem = Pick<LinksAttributes, "id" | "name" | "logo_file_name" | "logo_url" | "url"> & {
-  user_data: userDataType;
+  user_data?: userDataType;
 };
 
 const siteData = [
@@ -32,7 +33,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function onFinish(values: any) {
-    axios.post("/links", values).then(res => {
+    axios.post("/links/apply", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         setIsModalVisible(false);
@@ -115,7 +116,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
           <Form.Item
             label="LOGO"
             name="logo_file_name"
-            rules={[{ required: true, min: 10, message: "请上传网站Logo" }]}
+            rules={[{ required: true, min: 4, message: "请上传网站Logo" }]}
           >
             <UpLoad />
           </Form.Item>
@@ -140,11 +141,13 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
           {props.data.map(item => (
             <Badge.Ribbon
               text={
-                <Link href={`/user/${item.user_data.id}`}>
-                  <a className="text-white">{item.user_data.name}</a>
-                </Link>
+                item.user_data && (
+                  <Link href={`/user/${item.user_data.id}`}>
+                    <a className="text-white">{item.user_data.name}</a>
+                  </Link>
+                )
               }
-              className="cursor-pointer"
+              className={classNames(["cursor-pointer", !item.user_data && "hidden"])}
               key={item.id}
             >
               <a
@@ -174,7 +177,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     .then(res => {
       return { props: { data: res.data.data } };
     })
-    .catch(err => {
+    .catch(() => {
       ctx.res.statusCode = 500;
       return { props: { data: [] } };
     });

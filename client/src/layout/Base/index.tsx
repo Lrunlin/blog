@@ -1,7 +1,9 @@
-import { BackTop } from "antd";
+import type { FC, ReactNode } from "react";
+import dynamic from "next/dynamic";
+const BackTop = dynamic(import("./BackTop"), { ssr: false });
+
 import classNames from "classnames";
 import Header from "@/components/common/Header";
-import type { FC, ReactNode } from "react";
 
 export interface propsType {
   children: ReactNode;

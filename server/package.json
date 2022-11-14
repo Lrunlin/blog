@@ -36,7 +36,7 @@
     "node-stream-zip": "^1.15.0",
     "nodemailer": "6.6.3",
     "nodemon": "^2.0.20",
-    "qiniu": "^7.7.0",
+    "qiniu": "7.8.0",
     "qs": "^6.11.0",
     "sanitize-html": "^2.7.0",
     "sequelize": "^6.21.1",

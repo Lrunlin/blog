@@ -38,19 +38,19 @@ const CommentItem: FC<propsType> = props => {
       <Comment
         className="w-full"
         actions={[
-          <div className="flex items-center">
+          <div className="flex items-center" key={'comment-1'}>
             <span
               className="flex items-center cursor-pointer"
               onClick={e => {
                 setShowEditor(_state => !_state);
               }}
             >
-              <Image src="/icon/comment.png" width={14} height={14} />
+              <Image src="/icon/comment.png" width={14} height={14} alt="comment" />
               <span className="ml-0.5">{showEditor ? "取消回复" : "回复"}</span>
             </span>
             {data.user_data.id == userData?.id && (
               <span className="flex items-center ml-3 cursor-pointer" onClick={removeComment}>
-                <Image src="/icon/delete-fill.png" width={14} height={14} />
+                <Image src="/icon/delete-fill.png" width={14} height={14} alt="delete" />
                 <span className="ml-0.5">删除</span>
               </span>
             )}

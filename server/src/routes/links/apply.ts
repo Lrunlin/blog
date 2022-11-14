@@ -6,7 +6,8 @@ import auth from "@/common/middleware/auth";
 
 let router = new Router();
 
-router.post("/links", verify, auth(0), async ctx => {
+/** 在网站注册的用户可以发起申请*/
+router.post("/links/apply", verify, auth(0), async ctx => {
   let { name, url, logo_file_name } = ctx.request.body;
   await DB.Links.create({
     id: id(),
@@ -21,7 +22,7 @@ router.post("/links", verify, auth(0), async ctx => {
       ctx.body = { success: true, message: "申请成功，请等待邮箱回复结果" };
     })
     .catch(err => {
-      ctx.body = { success: false, message: "发送失败" };
+      ctx.body = { success: false, message: "申请失败" };
       console.log(err);
     });
 });

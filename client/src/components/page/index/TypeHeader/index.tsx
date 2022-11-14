@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { useRouter } from "next/router";
 import type { FC } from "react";
 import { responseType as typeTreeRsponseType } from "@/request/type-tree-index";
 import style from "../index.module.scss";
@@ -76,12 +75,12 @@ const TypeHeader: FC<propsType> = props => {
               <div
                 key={item.id}
                 className={classNames([
-                  "py-0.5 px-1.5 flex items-center cursor-pointer",
+                  "h-6 px-2.5 flex items-center cursor-pointer",
                   item.id == activeTagKey ? style["tag-active"] : "",
                   "bg-white",
                   "rounded-2xl",
                   "text-[#909090]",
-                  index ? "ml-2" : "",
+                  index && "ml-2",
                 ])}
                 onClick={() => switchTag(item.id)}
               >
