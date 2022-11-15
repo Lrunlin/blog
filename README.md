@@ -103,9 +103,12 @@ API 接口文档 Apifox
 
 ## 网络爬虫
 
-使用puppeteer爬取掘金文章:[https://github.com/Lrunlin/puppeteer-juejin](https://github.com/Lrunlin/puppeteer-juejin)
+使用puppeteer爬取掘金文章并直接存入数据库:[https://github.com/Lrunlin/puppeteer-juejin-blog](https://github.com/Lrunlin/puppeteer-juejin-blog)
 
-思否文章爬虫因为反扒机制升级的原因正在转为puppeteer
+使用puppeteer爬取掘金文章将数据和图片直接保存为本地文件:[https://github.com/Lrunlin/puppeteer-juejin](https://github.com/Lrunlin/puppeteer-juejin)
+
+参考文章:[Puppeteer爬取掘金文章](https://blogweb.cn/article/1197996635410),[Puppeteer连接已有Chrome浏览器](https://blogweb.cn/article/6064301311)
+
 
 ## Star History
 
