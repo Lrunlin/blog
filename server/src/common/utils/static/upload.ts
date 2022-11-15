@@ -37,7 +37,7 @@ async function upload(
 
   return (await sync((resolve, reject) => {
     sharp(buffer, { animated: true })
-      .webp()
+      .webp({ quality: 100})
       .toBuffer()
       .then(data => {
         formUploader.put(
