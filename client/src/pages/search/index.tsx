@@ -1,18 +1,17 @@
-import { useState, Fragment, useEffect } from "react";
-import type { GetServerSideProps, NextPage } from "next";
+import { useState, startTransition, useEffect } from "react";
+import type { NextPage } from "next";
 import Layout from "@/layout/Base";
 import axios from "axios";
 import ArticleList from "@/components/common/ArticleList";
 import type { articleListItemType } from "@type/article-list-item";
+import { useRouter } from "next/router";
 
-interface propsType {
-  keyword?: string;
-  tag?: string;
-}
-const Search: NextPage<propsType> = ({ keyword, tag }) => {
+const Search: NextPage = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<articleListItemType[]>([]);
   const [total, setTotal] = useState(0);
+  let router = useRouter();
+  let { keyword, tag } = router.query as { keyword?: string; tag?: string };
 
   useEffect(() => {
     axios
@@ -24,10 +23,14 @@ const Search: NextPage<propsType> = ({ keyword, tag }) => {
         },
       })
       .then(res => {
-        setData(_data => [...data, ...res.data.data.list]);
+        if (page == 1) {
+          setData(res.data.data.list);
+        } else {
+          setData(_data => [...data, ...res.data.data.list]);
+        }
         setTotal(res.data.data.total);
       });
-  }, [page]);
+  }, [page, router.query]);
 
   return (
     <Layout className="container-xs">
@@ -43,11 +46,3 @@ const Search: NextPage<propsType> = ({ keyword, tag }) => {
   );
 };
 export default Search;
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  return {
-    props: {
-      keyword: ctx.query.keyword || '',
-      tag: ctx.query.tag || '',
-    },
-  };
-};
