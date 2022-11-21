@@ -88,9 +88,9 @@ const items = [
 
 // 递归添加key
 function setKey(obj: MenuItem[]) {
-  obj.forEach((item, index, arr) => {
-    if (!arr[index].key) {
-      arr[index].key = `${item.href}menu-key${item.label}${index}`;
+  obj.forEach((item, index) => {
+    if (!item.key) {
+      item.key = `${item.href}menu-key${item.label}${index}`;
     }
     item.children && setKey(item.children);
     item.href && (item.label = <Link to={item.href}>{item.label}</Link>);

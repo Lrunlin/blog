@@ -10,7 +10,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const nextConfig = {
   pageExtensions: ["tsx"],
   experimental: {
-    plugins: true,
     scrollRestoration: true,
     legacyBrowsers: false,
     browsersListForSwc: true,
