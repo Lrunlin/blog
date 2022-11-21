@@ -1,18 +1,13 @@
 import qiniu from "qiniu";
 import sharp from "sharp";
 import sync from "@/common/utils/sync";
-
-const zone = {
-  huadong: qiniu.zone.Zone_z0,
-  huabei: qiniu.zone.Zone_z1,
-  huanan: qiniu.zone.Zone_z2,
-};
+import zone from "./utils/zone";
+import Mac from './utils/Mac';
 
 let config = new qiniu.conf.Config({
-  zone: zone[process.env.OSS_ZONE],
+  zone: zone,
 });
-let accessKey = process.env.QINIU_AK;
-let secretKey = process.env.QINIU_SK;
+
 let bucket = process.env.OSS_NAME;
 
 /**
@@ -26,18 +21,17 @@ async function upload(
   buffer: Buffer,
   fileName: [string, string]
 ): Promise<{ file_name: string; file_href: string } | string> {
-  let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
   let options = {
     scope: bucket,
   };
   let putPolicy = new qiniu.rs.PutPolicy(options);
-  let uploadToken = putPolicy.uploadToken(mac);
+  let uploadToken = putPolicy.uploadToken(Mac);
   let formUploader = new qiniu.form_up.FormUploader(config);
   let putExtra = new qiniu.form_up.PutExtra();
 
   return (await sync((resolve, reject) => {
     sharp(buffer, { animated: true })
-      .webp({ quality: 100})
+      .webp({ lossless: true, quality: 80 })
       .toBuffer()
       .then(data => {
         formUploader.put(

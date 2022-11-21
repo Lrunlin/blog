@@ -52,7 +52,7 @@ router.get("/article/:id", interger([], ["id"]), async ctx => {
 
           let _getCodeBlockLanguage = getCodeBlockLanguage<typeof _setDescription>(_setDescription);
 
-          let _getTagDatagetTagData = getTagData(_getCodeBlockLanguage as any);
+          let _getTagDatagetTagData = getTagData(_getCodeBlockLanguage as any, ["name"]);
           data = imgPrefix<typeof _getTagDatagetTagData>(_getTagDatagetTagData as any);
         } else {
           data = imgPrefix<typeof data>(data, true);

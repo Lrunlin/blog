@@ -11,15 +11,18 @@ const Aside: FC<{ data: UserAttributes }> = props => {
   let { data, error, isValidating } = useSWR(`achievement-user-${router.query.id}`, () =>
     axios.get(`/achievement/${router.query.id}`).then(res => res.data.data)
   );
+  
   return (
     <aside className="w-60 fixed">
       <div className="bg-white w-60 p-4 shadow-sm">
         <div className="text-xl font-medium pb-2 text-gray-900 border-b-solid border-gray-200">
           个人成就
         </div>
-        {isValidating && <Skeleton />}
-        {error && <div className="py-6 text-center">请求错误</div>}
-        {data && (
+        {isValidating ? (
+          <Skeleton />
+        ) : error ? (
+          <div className="py-6 text-center">请求错误</div>
+        ) : (
           <div className="mt-3">
             <div
               className="h-8 flex items-center cursor-pointer"

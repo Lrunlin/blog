@@ -58,7 +58,7 @@ const Cover = () => {
           name="image"
           accept="image/*"
           headers={{
-            authorization:cookie.get('token')+'',
+            authorization: cookie.get("token") + "",
           }}
           maxCount={1}
           className="cursor-pointer"

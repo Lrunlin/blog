@@ -21,7 +21,10 @@ function getGtiHubData() {
       };
     })
     .catch(err => {
-      console.log(err);
+      //开发环境经常因为代码更新快而限制请求频率
+      if (process.env.ENV == "production") {
+        console.log(err);
+      }
     });
 }
 getGtiHubData();

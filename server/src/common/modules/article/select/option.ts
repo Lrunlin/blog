@@ -7,10 +7,10 @@ import setDescription from "@/common/modules/article/get/set-description";
 
 let sort = {
   recommend: [
-    ["reprint", "asc"],
     ["update_time", "desc"],
     ["comment_count", "desc"],
     ["create_time", "desc"],
+    ["reprint", "asc"],
     ["collection_count", "desc"],
     ["view_count", "desc"],
   ],
