@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import type { NextPage, GetServerSideProps } from "next";
+import { message, Spin } from "antd";
 
 import Head from "@/components/next/Head";
 
@@ -22,20 +23,30 @@ const Home: NextPage<propsType> = props => {
   let [total, setTotal] = useState(props.article_list.total);
   /** 文章数据信息*/
   let [list, setList] = useState<articleListResponseType["list"]>(props.article_list.list);
+  /** 判断是否在加载中*/
+  const [isLoading, setIsLoading] = useState(false);
 
   let page = useRef(1);
   let requeseURL = useRef("/article/list/recommend");
   let type = useRef("recommend");
 
   function loadMoreData() {
-    getArticleList(requeseURL.current, page.current, type.current as any).then(data => {
-      if (page.current == 1) {
-        setList(data.list);
-      } else {
-        setList(_list => [...list, ...data.list]);
-      }
-      setTotal(data.total);
-    });
+    if (page.current == 1) setIsLoading(true);
+    getArticleList(requeseURL.current, page.current, type.current as any)
+      .then(data => {
+        if (page.current == 1) {
+          setList(data.list);
+        } else {
+          setList(_list => [...list, ...data.list]);
+        }
+        setTotal(data.total);
+      })
+      .catch(() => {
+        message.error("请求错误");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
   return (
     <>
@@ -64,15 +75,17 @@ const Home: NextPage<propsType> = props => {
             loadMoreData();
           }}
         />
-        <ArticleList
-          list={list}
-          total={total}
-          className="shadow-sm w-full"
-          loadMoreData={() => {
-            page.current++;
-            loadMoreData();
-          }}
-        />
+        <Spin tip="加载中..." spinning={isLoading}>
+          <ArticleList
+            list={list}
+            total={total}
+            className="shadow-sm w-full"
+            loadMoreData={() => {
+              page.current++;
+              loadMoreData();
+            }}
+          />
+        </Spin>
       </Layout>
     </>
   );

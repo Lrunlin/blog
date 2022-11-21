@@ -140,6 +140,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
           </div>
           {props.data.map(item => (
             <Badge.Ribbon
+              key={item.id}
               text={
                 item.user_data && (
                   <Link href={`/user/${item.user_data.id}`}>
@@ -148,7 +149,6 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
                 )
               }
               className={classNames(["cursor-pointer", !item.user_data && "hidden"])}
-              key={item.id}
             >
               <a
                 target="_blank"

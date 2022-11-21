@@ -44,7 +44,9 @@ const ArticleItem: FC<propsType> = props => {
         </span>
       </div>
       <div className="flex pb-2">
-        <div className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12"])}>
+        <div
+          className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12", "truncate"])}
+        >
           <a
             className="font-bold text-lg text-[#1d2129] block"
             href={`/article/${data.id}`}
