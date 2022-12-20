@@ -18,7 +18,7 @@ const Aside = () => {
       <aside className="sm:hidden">
         <div className="w-60">{/* 占位用的防止左侧内容偏移 */}</div>
         {/* 广告 */}
-        {data && (
+        {data && !!data.length && (
           <div className="mb-3">
             {data.map((item, index) => (
               <a

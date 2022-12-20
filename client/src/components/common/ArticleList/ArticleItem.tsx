@@ -45,10 +45,10 @@ const ArticleItem: FC<propsType> = props => {
       </div>
       <div className="flex pb-2">
         <div
-          className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12", "truncate"])}
+          className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12"])}
         >
           <a
-            className="font-bold text-lg text-[#1d2129] block"
+            className="font-bold text-lg text-[#1d2129] block truncate"
             href={`/article/${data.id}`}
             target="_blank"
           >

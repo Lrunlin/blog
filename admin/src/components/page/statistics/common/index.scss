@@ -6,6 +6,9 @@
   border: vw(2) solid $borderColor;
   padding: vw(20) vw(12.5);
   display: inline-block;
+  img {
+    user-select: none;
+  }
 }
 
 // 处理图片边框问题
@@ -29,6 +32,7 @@
 .statistics-border-bg_right {
   right: vw(-2);
   top: vw(-2);
+  user-select: none;
 }
 
 .statistics-title-right-bg {

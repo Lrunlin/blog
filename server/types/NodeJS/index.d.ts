@@ -22,8 +22,6 @@ declare global {
       DB_MYSQL_PASSWORD: string;
       /** CDN地址*/
       CDN: string;
-      /** OSS地址*/
-      OSS: string;
       /** 七牛云 AK*/
       QINIU_AK: string;
       /** 七牛云SK*/
