@@ -143,8 +143,8 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
               key={item.id}
               text={
                 item.user_data && (
-                  <Link href={`/user/${item.user_data.id}`}>
-                    <a className="text-white">{item.user_data.name}</a>
+                  <Link href={`/user/${item.user_data.id}`} className="text-white">
+                    {item.user_data.name}
                   </Link>
                 )
               }

@@ -29,9 +29,7 @@ const Menu: FC = () => {
       {/* 顶部 */}
       <div className="flex">
         <Link href={`/user/${userData?.id}`}>
-          <a>
-            <Avatar size={48} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
-          </a>
+          <Avatar size={48} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
         </Link>
         <div className="text-lg ml-4 truncate">{userData?.name}</div>
       </div>

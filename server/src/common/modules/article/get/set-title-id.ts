@@ -1,7 +1,7 @@
 import { ArticleAttributes } from "@/db/models/article";
 import { load } from "cheerio";
 
-type paramsType = Pick<ArticleAttributes,'content'>;
+type paramsType = Pick<ArticleAttributes, "content">;
 /** 设置h1-h6的id*/
 function setTitleId<T>(params: paramsType) {
   let $ = load(params.content);

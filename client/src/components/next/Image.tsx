@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import ImageNext from "next/future/image";
-import type { ImageProps } from "next/future/image";
+import ImageNext from "next/image";
+import type { ImageProps } from "next/image";
 
 const Image: FC<ImageProps> = props => {
   return (

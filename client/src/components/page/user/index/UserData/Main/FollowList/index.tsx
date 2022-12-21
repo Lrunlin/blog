@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { FC, Dispatch, SetStateAction } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {  Skeleton, Divider, Empty, Avatar } from "antd";
+import { Skeleton, Divider, Empty, Avatar } from "antd";
 import type { UserAttributes } from "@type/model-attribute";
 import FollowButton from "./FollowButton";
 import Link from "next/link";
@@ -49,8 +49,8 @@ const FollowList: FC<propsType> = props => {
                       <Avatar src={item.avatar_url} alt="用户头像" size={45} />
                     </Link>
                     <div className="ml-3">
-                      <Link href={`/user/${item.id}`}>
-                        <a className="text-black text-xl">{item.name}</a>
+                      <Link href={`/user/${item.id}`} className="text-black text-xl">
+                        {item.name}
                       </Link>
                       <div className="w-24 truncate text-gray-400">{item.description}</div>
                     </div>

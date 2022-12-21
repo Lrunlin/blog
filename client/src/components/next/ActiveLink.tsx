@@ -25,14 +25,13 @@ const ActiveLink: FC<porpsType> = props => {
 
   return (
     <>
-      <Link {...props}>
-        <a
-          className={classNames([props.className, className])}
-          target={props.noFollow ? "_blank" : undefined}
-          rel={props.noFollow ? "noreferrer nofollow" : undefined}
-        >
-          {props.children}
-        </a>
+      <Link
+        href={props.href}
+        className={classNames([props.className, className])}
+        target={props.noFollow ? "_blank" : undefined}
+        rel={props.noFollow ? "noreferrer nofollow" : undefined}
+      >
+        {props.children}
       </Link>
     </>
   );

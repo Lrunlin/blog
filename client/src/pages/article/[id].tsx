@@ -33,14 +33,14 @@ const Article: NextPage<propsType> = ({ data }) => {
         ]}
         description={data.description}
       />
-      <Layout>
-        <h1 className="text-4xl font-semibold">{data.title}</h1>
-        <RecoilRoot currentArticleData={data}>
+      <RecoilRoot currentArticleData={data} >
+        <Layout>
+          <h1 className="text-4xl font-semibold">{data.title}</h1>
           <ArticleUserData data={data} />
           <View language={data.language} content={data.content} />
           <Reprint reprint={data.reprint} />
-        </RecoilRoot>
-      </Layout>
+        </Layout>
+      </RecoilRoot>
     </>
   );
 };
