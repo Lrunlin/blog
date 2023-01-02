@@ -30,28 +30,26 @@ function createMenu(
       }
     });
   }
-  return (
-    <Menu
-      items={[
-        {
-          key: `creator-article-list-delete-${id}`,
-          label: (
-            <div className="px-1 py-0.5" onClick={remove}>
-              删除
-            </div>
-          ),
-        },
-        {
-          key: `creator-article-list-edit-${id}`,
-          label: (
-            <Link href={`/article/editor/${id}`}>
-              <div className="px-1 py-0.5">编辑</div>
-            </Link>
-          ),
-        },
-      ]}
-    />
-  );
+  return {
+    items: [
+      {
+        key: `creator-article-list-delete-${id}`,
+        label: (
+          <div className="px-1 py-0.5" onClick={remove}>
+            删除
+          </div>
+        ),
+      },
+      {
+        key: `creator-article-list-edit-${id}`,
+        label: (
+          <Link href={`/article/editor/${id}`}>
+            <div className="px-1 py-0.5">编辑</div>
+          </Link>
+        ),
+      },
+    ],
+  };
 }
 const ArticleListItem: FC<propsType> = memo(({ data, dispatch }) => {
   return (
@@ -60,7 +58,7 @@ const ArticleListItem: FC<propsType> = memo(({ data, dispatch }) => {
         <div className="flex justify-between">
           <span className="text-black text-base">{data.title}</span>
           <Dropdown
-            overlay={createMenu(data.id, dispatch.setData, dispatch.setTotal)}
+            menu={createMenu(data.id, dispatch.setData, dispatch.setTotal)}
             placement="bottom"
             arrow
           >

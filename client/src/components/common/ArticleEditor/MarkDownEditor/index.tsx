@@ -1,20 +1,20 @@
 import { memo, useState, useEffect, useRef } from "react";
-import type { FC } from "react";
 import axios from "axios";
-import { message } from "antd";
-import { Editor } from "@bytemd/react";
+
+import MdEditor from "react-markdown-editor-lite";
 import { marked } from "marked";
-
-import zhHans from "bytemd/lib/locales/zh_Hans.json";
-import gfm from "@bytemd/plugin-gfm";
-import highlight from "@bytemd/plugin-highlight";
-import LanguageListPlugin from "./LanguageListPlugin";
-import "bytemd/dist/index.css";
-
+import "react-markdown-editor-lite/lib/index.css";
+import { message } from "antd";
 import { useRecoilState } from "recoil";
 import { writeArticleContext } from "../index";
 
-const MarkDonwEdit: FC = memo(() => {
+import style from "./index.module.scss";
+
+import LanguageListPlugin from "./LanguageListPlugin";
+MdEditor.use(LanguageListPlugin);
+
+
+const MarkDonwEdit = memo(() => {
   let [articleData, setArticleData] = useRecoilState(writeArticleContext);
   const [value, setValue] = useState("");
   let allowChangeValue = useRef(true);
@@ -28,43 +28,36 @@ const MarkDonwEdit: FC = memo(() => {
     }
   }, [articleData.content]);
 
+
   return (
     <>
-      <style jsx global>{`
-        .bytemd-preview img {
-          min-width: 30%;
-          max-width: 70%;
-        }
-      `}</style>
-      <Editor
-        locale={zhHans as any}
+      <MdEditor
         value={value}
-        onChange={md => {
-          let html = marked(md, {
+        style={{ height: "800px" }}
+        renderHTML={text =>
+          marked(text, {
             headerIds: false,
-          });
-          setArticleData(_data => ({ ..._data, content: html }));
-          setValue(md);
-        }}
-        plugins={[gfm(), LanguageListPlugin() as any, highlight()]}
-        uploadImages={async files => {
+          })
+        }
+        htmlClass={style["view-class"]}
+        onImageUpload={async (file: File) => {
           let formData = new FormData();
-          formData.append("image", files[0]);
+          formData.append("image", file);
           return await axios
             .post("/static/article", formData)
             .then(res => {
-              return [
-                {
-                  url: res.data.data.file_href,
-                  alt: "",
-                },
-              ];
+              return res.data.data.file_href;
             })
             .catch(err => {
               message.error("上传失败");
               console.log(err);
-              return [];
             });
+        }}
+        imageAccept="image/*"
+        table={{ maxRow: 10, maxCol: 6 }}
+        onChange={({ html, text }) => {
+          setArticleData(_data => ({ ..._data, content: html }));
+          setValue(text);
         }}
       />
     </>

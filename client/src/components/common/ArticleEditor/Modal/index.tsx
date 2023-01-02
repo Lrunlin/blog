@@ -30,7 +30,7 @@ const Modal: FC<modalPropsType> = props => {
           form={form}
           onFinishFailed={({ errorFields }) => {
             if (errorFields.length) {
-              message.warn(errorFields[0].errors[0]);
+              message.warning(errorFields[0].errors[0]);
             }
           }}
           onFinish={props.submit}

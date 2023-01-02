@@ -1,12 +1,12 @@
 import Head from "@/components/next/Head";
 import { Result, Button } from "antd";
-import type { ResultStatusType } from "antd/lib/result";
+import type { ResultProps } from "antd";
 import Header from "@/components/common/Header";
 import type { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
 interface propsType {
-  statusCode: ResultStatusType;
+  statusCode: ResultProps['status'];
 }
 const Error: NextPage<propsType> = ({ statusCode }) => {
   let router = useRouter();

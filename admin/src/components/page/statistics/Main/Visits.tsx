@@ -6,7 +6,7 @@ import type { propsType } from "./index";
 
 /** 访问量统计*/
 const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
-  let DOM=useRef<HTMLDivElement>(null)
+  let DOM = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let myChart = echarts.init(DOM.current as HTMLElement);
     myChart.setOption({
@@ -31,7 +31,9 @@ const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
         fontSize: vw(14),
         color: "white",
       },
-      legend: {},
+      legend: {
+        show: false,
+      },
       xAxis: {
         type: "category",
         boundaryGap: false,
@@ -42,10 +44,19 @@ const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
       },
       series: [
         {
+          name: "阅读数",
           type: "line",
-          data: visits.map(item => item.count),
+          data: visits.map(item => item.view_count),
           itemStyle: {
             color: "red",
+          },
+        },
+        {
+          name: "IP数",
+          type: "line",
+          data: visits.map(item => item.ip_count),
+          itemStyle: {
+            color: "yellow",
           },
         },
       ],

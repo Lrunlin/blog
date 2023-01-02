@@ -7,7 +7,7 @@ import Loadavg from "./Loadavg";
 import Referer from "./Referer";
 
 export interface propsType {
-  visits: { time:string;count:number}[];
+  visits: { time: string; view_count: number; ip_count: number }[];
   article: {
     admin_reprint_count: number;
     admin_not_reprint_count: number;

@@ -1,54 +1,72 @@
+import { PluginComponent } from "react-markdown-editor-lite";
 import { Modal, Select } from "antd";
+import type { response } from "@type/response";
 import axios from "axios";
-import useSwr from "swr";
+import { MenuUnfoldOutlined } from "@ant-design/icons";
 
+interface CounterState {}
 const { confirm } = Modal;
 const { Option } = Select;
-const LanguageListPlugin = () => {
-  let { data } = useSwr("language-list", () =>
-    axios.get("/language-list").then(res => res.data.data)
-  );
+type listType = { title: string; language: string }[];
+class Counter extends PluginComponent<CounterState> {
+  // 这里定义插件名称，注意不能重复
+  static pluginName = "counter";
+  // 定义按钮被放置在哪个位置，默认为左侧，还可以放置在右侧（right）
+  static align = "left";
+  // 如果需要的话，可以在这里定义默认选项
 
-  return {
-    actions: [
-      {
-        title: "代码高亮语言搜索",
-        icon: `<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2258" width="32" height="32"><path d="M868.352 568.32q32.768 0 53.248 19.456t20.48 52.224l0 221.184q0 35.84-19.968 54.784t-52.736 18.944l-706.56 0q-33.792 0-56.832-22.528t-23.04-55.296l0-212.992q0-35.84 19.968-55.808t54.784-19.968l710.656 0zM868.352 90.112q32.768 0 53.248 18.944t20.48 52.736l0 220.16q0 35.84-19.968 54.784t-52.736 18.944l-706.56 0q-33.792 0-56.832-22.528t-23.04-55.296l0-211.968q0-35.84 19.968-55.808t54.784-19.968l710.656 0z" p-id="2259" fill="#707070"></path></svg>`, // 16x16 SVG icon
-        handler: {
-          type: "action",
-          click(ctx: any) {
-            confirm({
-              title: "支持代码高亮的语言列表",
-              content: (
-                <Select
-                  style={{ width: "200px" }}
-                  showSearch
-                  placeholder="输入想要查询的语言"
-                  onChange={val => {
-                    ctx.appendBlock(`\`\`\`\`${val}\n\n\`\`\`\``);
-                    Modal.destroyAll();
-                  }}
-                >
-                  {data.map((item: any) => (
-                    <Option value={item.language} key={item.language + item.title}>
-                      <em>
-                        {item.title}-{item.language}
-                      </em>
-                    </Option>
-                  ))}
-                </Select>
-              ),
-              onOk() {
-                Modal.destroyAll();
-              },
-              onCancel() {
-                Modal.destroyAll();
-              },
-            });
-          },
-        },
-      },
-    ],
+  state = {
+    data: [],
   };
-};
-export default LanguageListPlugin;
+
+  UNSAFE_componentWillMount() {
+    axios.get<response<listType>>("/language-list").then(res => {
+      this.setState({ data: res.data.data });
+    });
+  }
+
+  handleClick = () => {
+    confirm({
+      title: "支持代码高亮的语言列表",
+      maskClosable: true,
+      content: (
+        <Select
+          style={{ width: "200px" }}
+          showSearch
+          placeholder="输入想要查询的语言"
+          onChange={val => {
+            this.editor.insertText(`\`\`\`\`${val}\n\n\`\`\`\``);
+            Modal.destroyAll();
+          }}
+        >
+          {this.state.data.map((item: any) => (
+            <Option value={item.language} key={item.language + item.title}>
+              <em>
+                {item.title}-{item.language}
+              </em>
+            </Option>
+          ))}
+        </Select>
+      ),
+      onOk() {
+        Modal.destroyAll();
+      },
+      onCancel() {
+        Modal.destroyAll();
+      },
+    });
+  };
+
+  render() {
+    return (
+      <span
+        className="button button-type-counter"
+        title="代码块语言列表"
+        onClick={this.handleClick}
+      >
+        <MenuUnfoldOutlined />
+      </span>
+    );
+  }
+}
+export default Counter;

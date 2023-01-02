@@ -78,7 +78,7 @@ const Avatar_: FC<AvatarProps> = memo(props => {
   let [userData] = useUserData();
   return (
     <>
-      <Dropdown overlay={<Menu />} placement="bottomRight" trigger={["click"]}>
+      <Dropdown dropdownRender={() => <Menu />} placement="bottomRight" trigger={["click"]}>
         <Avatar src={userData?.avatar_url} className="cursor-pointer" alt="头像" {...props} />
       </Dropdown>
     </>

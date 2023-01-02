@@ -4,7 +4,8 @@ import { useRecoilValue } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { useRouter } from "next/router";
 import Image from "@/components/next/Image";
-import { Comment, Avatar, Image as AntdImage, message } from "antd";
+import { Avatar, Image as AntdImage, message } from "antd";
+import { Comment } from "@ant-design/compatible";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -38,7 +39,7 @@ const CommentItem: FC<propsType> = props => {
       <Comment
         className="w-full"
         actions={[
-          <div className="flex items-center" key={'comment-1'}>
+          <div className="flex items-center" key={"comment-1"}>
             <span
               className="flex items-center cursor-pointer"
               onClick={e => {

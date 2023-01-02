@@ -1,5 +1,4 @@
-import { useState, Fragment } from "react";
-import { Skeleton } from "antd";
+import { Skeleton, Result } from "antd";
 import { useRouter } from "next/router";
 import uswSwr from "swr";
 import axios from "axios";
@@ -17,22 +16,26 @@ const Recommend = () => {
       .then(res => res.data.data)
   );
   return (
-    <>
-      {data && (
+    // 1160-16(margin right)-240(aside width)
+    <div className="max-w-[904px]">
+      {data ? (
         <ArticleList
           className="mt-4 shadow-sm"
           list={data}
           total={data.length}
           loadMoreData={() => {}}
         />
-      )}
-      {isValidating && (
+      ) : isValidating ? (
         <>
           <Skeleton active />
           <Skeleton active />
         </>
+      ) : (
+        <div className="bg-white">
+          <Result status="error" title="文章获取失败" />
+        </div>
       )}
-    </>
+    </div>
   );
 };
 export default Recommend;

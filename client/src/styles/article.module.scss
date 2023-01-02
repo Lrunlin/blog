@@ -32,4 +32,15 @@
       border-radius: 3px;
     }
   }
+  table {
+    text-align: left;
+    thead {
+      background-color: #f5f7fa;
+      color: #677489;
+    }
+    th,td {
+      border: 1px solid #E1E6F0;
+      padding: 12px 16px;
+    }
+  }
 }

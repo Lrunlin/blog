@@ -71,14 +71,14 @@ const Footer = () => {
         <div className="mt-3">
           <Dropdown
             placement="bottom"
-            overlay={
+            dropdownRender={() => (
               <div className="bg-white w-40 h-52 pt-2 rounded text-center">
                 <div>QQ:{process.env.QQ}</div>
                 <div>
                   <Image src="/image/qq-qrcode.jpg" width={140} height={140} alt="QQ名片二维码" />
                 </div>
               </div>
-            }
+            )}
           >
             <NoFollowLink
               href={`http://wpa.qq.com/msgrd?v=3&uin=${process.env.QQ}&site=qq&menu=yes`}
@@ -90,14 +90,14 @@ const Footer = () => {
         <div className="mt-3 ml-2 cursor-pointer">
           <Dropdown
             placement="bottom"
-            overlay={
+            dropdownRender={() => (
               <div className="bg-white w-40 h-52 pt-2 rounded text-center">
                 <div>添加站长微信</div>
                 <div>
                   <Image src="/image/wechat-qrcode.jpg" width={140} height={140} alt="微信二维码" />
                 </div>
               </div>
-            }
+            )}
           >
             <Image src="/icon/wechat.png" width={24} height={24} alt="微信图标" />
           </Dropdown>

@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { Button, Input, Avatar, Dropdown, Result } from "antd";
-import MarkDonwEdit from "./MarkDownEditor";
+import dynamic from "next/dynamic";
+const MarkDownEditor = dynamic(() => import("./MarkDownEditor"), {
+  ssr: false,
+});
+
 import { userDataContext, UserStateAttributes } from "@/store/user-data";
 import { atom, useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
 import Modal from "./Modal";
@@ -64,7 +68,7 @@ const Editor: FC<propsType> = props => {
         />
         <div className="flex mr-5">
           {props.showDraftsButton && <DraftsButton />}
-          <Dropdown trigger={["click"]} overlay={<Modal {...props} />}>
+          <Dropdown trigger={["click"]} dropdownRender={() => <Modal {...props} />}>
             <Button type="primary" className="mx-4">
               发布
             </Button>
@@ -72,7 +76,7 @@ const Editor: FC<propsType> = props => {
           <Avatar src={userData.avatar_url} alt="头像" />
         </div>
       </header>
-      <MarkDonwEdit />
+      <MarkDownEditor />
     </div>
   ) : (
     <Base className="bg-white">

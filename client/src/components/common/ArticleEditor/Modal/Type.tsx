@@ -71,7 +71,7 @@ const Type = () => {
                     if (articleData.tag.length < 6) {
                       setArticleData(_data => ({ ..._data, tag: [..._data.tag, item.id] }));
                     } else {
-                      message.warn("最多选择6个标签");
+                      message.warning("最多选择6个标签");
                     }
                   }
                 }}

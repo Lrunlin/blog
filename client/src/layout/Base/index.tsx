@@ -1,7 +1,5 @@
 import type { FC, ReactNode } from "react";
-import dynamic from "next/dynamic";
-const BackTop = dynamic(import("./BackTop"), { ssr: false });
-
+import { FloatButton } from "antd";
 import classNames from "classnames";
 import Header from "@/components/common/Header";
 
@@ -34,7 +32,7 @@ const Base: FC<propsType> = props => {
           {props.children}
         </main>
       </div>
-      <BackTop />
+      <FloatButton.BackTop />
     </>
   );
 };

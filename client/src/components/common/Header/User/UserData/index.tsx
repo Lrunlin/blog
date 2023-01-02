@@ -9,22 +9,6 @@ const UserData = () => {
   function onSelect({ key }: { key: string }) {
     router.push(key);
   }
-  const menu = (
-    <Menu
-      onClick={onSelect}
-      className="w-full"
-      items={[
-        {
-          label: "发布文章",
-          key: "/write",
-        },
-        {
-          label: "创作者中心",
-          key: "/creator",
-        },
-      ]}
-    />
-  );
   return (
     <>
       <div className="flex items-center">
@@ -35,14 +19,28 @@ const UserData = () => {
           icon={<DownOutlined />}
           className="header-dropdown-button-positon"
           type="primary"
-          overlay={menu}
-          overlayStyle={{ width: "110%" }}
+          menu={{
+            onClick: onSelect,
+            className: "w-full",
+            items: [
+              {
+                label: "发布文章",
+                key: "/write",
+              },
+              {
+                label: "创作者中心",
+                key: "/creator",
+              },
+            ],
+          }}
           onClick={() => router.push("/creator")}
         >
           创作者
         </Dropdown.Button>
         <News className="mx-8" />
-        <Avatar />
+        <div>
+          <Avatar />
+        </div>
       </div>
     </>
   );

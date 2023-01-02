@@ -40,7 +40,7 @@ API 接口文档 Apifox
    1.邮箱  
    ~~2. QQ~~  
     3. GitHub(仅支持登录)
-2. 首页文章推荐  
+2. 首页文章推荐
 3. 文章的增删改查，以及草稿箱功能
 4. 文章评论
 5. 设置/修改用户基本信息、展示作者基本社交平台账号
@@ -65,18 +65,17 @@ API 接口文档 Apifox
 
 ## 更新计划
 
-1. 积分功能
-2. 小组功能
-3. 前期使用组件库快速搭建用户端页面，后期进行美化以及去 Antd
+1. 用户端 UI 进行美化以及去 Antd
+2. 积分功能
+3. 点赞功能
 4. 文章页面主题模式
-5. Ant Design5
-6. Next.js 13
-7. 点赞功能
-8. Redis接口环境以及对应的事务处理
+5. ~~Next.js 13~~ 升级为app文件夹并且使用server component
+6. Redis 接口环境以及对应的事务处理
+7. 小组功能
 
 ## 开发环境启动
 
-**_Node.js 版本推荐使用 16,同时推荐使用 yarn 作为包管理器(未来会对 Node 版本进行升级)_**
+**_Node.js 版本推荐使用 18,同时推荐使用 yarn 作为包管理器_**
 
 ### 环境变量
 
@@ -103,12 +102,13 @@ API 接口文档 Apifox
 
 ## 网络爬虫
 
-使用puppeteer爬取掘金文章并直接存入数据库:[https://github.com/Lrunlin/puppeteer-juejin-blog](https://github.com/Lrunlin/puppeteer-juejin-blog)
+[使用 puppeteer 爬取掘金文章并直接存入数据库](https://github.com/Lrunlin/puppeteer-juejin-blog)
 
-使用puppeteer爬取掘金文章将数据和图片直接保存为本地文件:[https://github.com/Lrunlin/puppeteer-juejin](https://github.com/Lrunlin/puppeteer-juejin)
+[使用 puppeteer 爬取掘金文章将数据和图片直接保存为本地文件](https://github.com/Lrunlin/puppeteer-juejin)
 
-参考文章:[Puppeteer爬取掘金文章](https://blogweb.cn/article/1197996635410),[Puppeteer连接已有Chrome浏览器](https://blogweb.cn/article/6064301311)
+[使用 puppeteer 爬取思否文章并直接存入数据库](https://github.com/Lrunlin/puppeteer-sf-blog)
 
+参考文章:[Puppeteer 爬取掘金文章](https://blogweb.cn/article/1197996635410),[Puppeteer 连接已有 Chrome 浏览器](https://blogweb.cn/article/6064301311)
 
 ## Star History
 
