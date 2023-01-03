@@ -1,4 +1,3 @@
-@import "./reset.scss";
 a:hover {
   color: inherit;
 }
@@ -37,6 +36,6 @@ a:hover {
 @tailwind utilities;
 
 // MarkDown编辑器的样式
-.bytemd {
-  height: 700px !important;
-}
+// .bytemd {
+//   height: 700px !important;
+// }

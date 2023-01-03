@@ -5,6 +5,8 @@ import "@/plugin/axios";
 
 import "@/plugin/dayjs.ts";
 
+import "antd/lib/style/index.css";
+
 import "@/styles/globals.scss";
 
 import { parse as cookieParse } from "cookie";
@@ -16,16 +18,13 @@ export interface Props extends AppProps {
   userInfo: userInfo;
 }
 import SWR from "@/plugin/swr";
-import Antd from "@/plugin/antd";
 
 const APP: NextPage<Props> = ({ Component, pageProps, userInfo }) => {
   return (
     <>
       <Recoil userInfo={userInfo}>
         <SWR>
-          <Antd>
-            <Component {...pageProps} />
-          </Antd>
+          <Component {...pageProps} />
         </SWR>
       </Recoil>
     </>

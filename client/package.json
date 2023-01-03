@@ -13,13 +13,12 @@
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
-    "@ant-design/compatible": "^5.1.1",
     "@bytemd/plugin-gfm": "^1.17.2",
     "@bytemd/plugin-highlight": "^1.17.2",
     "@bytemd/react": "^1.17.2",
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
-    "antd": "5.0.0",
+    "antd": "4.24.7",
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "cookie": "^0.5.0",
@@ -58,6 +57,7 @@
     "@types/react-dom": "18.0.5",
     "@types/react-highlight-words": "^0.16.4",
     "autoprefixer": "^10.4.7",
+    "babel-plugin-import": "^1.13.5",
     "cssnano": "^5.1.12",
     "dotenv": "^16.0.1",
     "eslint": "8.30.0",

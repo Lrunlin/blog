@@ -5,7 +5,7 @@ import { userDataContext } from "@/store/user-data";
 import { useRouter } from "next/router";
 import Image from "@/components/next/Image";
 import { Avatar, Image as AntdImage, message } from "antd";
-import { Comment } from "@ant-design/compatible";
+import { Comment } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
 import dayjs from "dayjs";

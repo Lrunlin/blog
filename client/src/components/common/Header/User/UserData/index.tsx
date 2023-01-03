@@ -1,4 +1,4 @@
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Avatar from "../../../Avatar";
@@ -12,13 +12,7 @@ const UserData = () => {
   return (
     <>
       <div className="flex items-center">
-        <Dropdown.Button
-          getPopupContainer={() =>
-            document.getElementsByClassName("header-dropdown-button-positon")[0] as HTMLElement
-          }
-          icon={<DownOutlined />}
-          className="header-dropdown-button-positon"
-          type="primary"
+        <Dropdown
           menu={{
             onClick: onSelect,
             className: "w-full",
@@ -33,14 +27,15 @@ const UserData = () => {
               },
             ],
           }}
-          onClick={() => router.push("/creator")}
+          placement="bottomLeft"
         >
-          创作者
-        </Dropdown.Button>
+          <div>
+            <Button type="primary">创作者</Button>
+            <Button type="primary" icon={<DownOutlined />} />
+          </div>
+        </Dropdown>
         <News className="mx-8" />
-        <div>
-          <Avatar />
-        </div>
+        <Avatar />
       </div>
     </>
   );
