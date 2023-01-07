@@ -37,6 +37,10 @@ router.get("/article/:id", interger([], ["id"]), async ctx => {
           ),
           "collection_count",
         ],
+        [
+          Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.article_id = article.id)`),
+          "likes_count",
+        ],
       ],
       exclude: ["author"],
     },

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : liurunlin1512
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80027
+ Source Server Version : 80027 (8.0.27)
  Source Host           : localhost:3306
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80027
+ Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 14/11/2022 14:43:37
+ Date: 05/01/2023 23:08:29
 */
 
 SET NAMES utf8mb4;
@@ -90,6 +90,18 @@ CREATE TABLE `follow`  (
   `create_time` datetime NOT NULL COMMENT '关注时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '关注表' ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Table structure for likes
+-- ----------------------------
+DROP TABLE IF EXISTS `likes`;
+CREATE TABLE `likes`  (
+  `id` bigint NOT NULL COMMENT '记录ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `article_id` bigint NOT NULL COMMENT '文章ID',
+  `create_time` datetime NOT NULL COMMENT '点赞时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Table structure for links

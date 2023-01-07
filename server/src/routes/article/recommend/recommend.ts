@@ -9,7 +9,6 @@ import { Op } from "sequelize";
 import getTypeChildrenTag from "@/common/modules/article/select/getTypeChildrenTag";
 import getBloggerList from "@/common/modules/article/select/getBloggerList";
 
-//todo 前期推荐方式比较简单，后期在升级
 let router = new Router();
 router.prefix("/article/list");
 const schema = Joi.object({

@@ -34,6 +34,7 @@ export interface ArticleAttributes {
   /** 是否展示目录*/
   display_directory: boolean;
   collection_count: number;
+  likes_count: number;
 }
 export interface UserAttributes {
   id: number;

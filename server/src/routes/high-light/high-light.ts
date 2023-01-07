@@ -94,6 +94,7 @@ function getAllType(type: string) {
 }
 
 router.get("/high-light/:type", async ctx => {
+  ctx.set("Cache-Control", "max-age=2592000"); //缓存一个月
   if (ctx.params.type == "css") {
     ctx.response.set("Content-Type", "text/css;charset=UTF-8");
     ctx.body = `${themes}\n${plugins.css}`;

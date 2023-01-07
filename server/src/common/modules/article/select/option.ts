@@ -11,18 +11,18 @@ let sort = {
     ["comment_count", "desc"],
     ["create_time", "desc"],
     ["reprint", "asc"],
-    ["collection_count", "desc"],
+    ["likes_count", "desc"],
     ["view_count", "desc"],
   ],
   newest: [
     ["create_time", "desc"],
     ["update_time", "desc"],
     ["reprint", "asc"],
-    ["collection_count", "desc"],
+    ["likes_count", "desc"],
     ["comment_count", "desc"],
   ],
   hottest: [
-    ["collection_count", "desc"],
+    ["likes_count", "desc"],
     ["create_time", "desc"],
     ["view_count", "desc"],
     ["comment_count", "desc"],
@@ -60,10 +60,8 @@ async function getArticleListData(
         "comment_count",
       ],
       [
-        Sequelize.literal(
-          `(SELECT COUNT(*) FROM collection WHERE collection.article_id = article.id)`
-        ),
-        "collection_count",
+        Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.article_id = article.id)`),
+        "likes_count",
       ],
     ],
     include: [
@@ -82,8 +80,8 @@ async function getArticleListData(
       return {
         total: count,
         list: rows.map(row => {
-          let item=row.toJSON();
-          let _description = setDescription<typeof item>(item)
+          let item = row.toJSON();
+          let _description = setDescription<typeof item>(item);
           let _item = getTagData<typeof _description>(_description, ["name"]);
           delete (_item as any).state;
           delete (_item as any).content;

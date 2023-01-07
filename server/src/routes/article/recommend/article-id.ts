@@ -15,8 +15,8 @@ let articleAttribute = [
     "comment_count",
   ],
   [
-    Sequelize.literal(`(SELECT COUNT(*) FROM collection WHERE collection.article_id = article.id)`),
-    "collection_count",
+    Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.article_id = article.id)`),
+    "likes_count",
   ],
 ];
 let attributes = [
@@ -71,11 +71,11 @@ router.get("/article/recommend/:id", interger([], ["id"]), async ctx => {
         success: true,
         message: "根据文章ID搜索同类型文章",
         data: rows.map(item => {
-         let _item = getTagData(setDescription(item.toJSON()), ["name"]);
-         delete (_item as any).state;
-         delete (_item as any).content;
-         delete (_item as any).reprint;
-         delete (_item as any).cover_file_name;
+          let _item = getTagData(setDescription(item.toJSON()), ["name"]);
+          delete (_item as any).state;
+          delete (_item as any).content;
+          delete (_item as any).reprint;
+          delete (_item as any).cover_file_name;
           return _item;
         }),
       };

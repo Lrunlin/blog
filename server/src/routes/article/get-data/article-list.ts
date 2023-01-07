@@ -16,8 +16,8 @@ let articleAttribute = [
     "comment_count",
   ],
   [
-    Sequelize.literal(`(SELECT COUNT(*) FROM collection WHERE collection.article_id = article.id)`),
-    "collection_count",
+    Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.article_id = article.id)`),
+    "likes_count",
   ],
 ];
 let attributes = [

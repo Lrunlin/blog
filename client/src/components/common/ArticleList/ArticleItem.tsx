@@ -96,8 +96,8 @@ const ArticleItem: FC<propsType> = props => {
             <span className="ml-1">{data.comment_count}</span>
           </li>
           <li className={classNames(["flex", "items-center"])}>
-            <Image src="/icon/collection.png" width={16} height={16} alt="collection icon" />
-            <span className="ml-1">{data.collection_count}</span>
+            <Image src="/icon/likes.png" width={16} height={16} alt="collection icon" />
+            <span className="ml-1">{data.likes_count}</span>
           </li>
         </ul>
       </div>

@@ -57,8 +57,23 @@ async function transaction(article_id: number, t: Transaction) {
     .then(() => true)
     .catch(() => false);
 
+  //删除点赞记录
+  let deleteLikes = await DB.Likes.destroy({
+    where: {
+      article_id: article_id,
+    },
+    transaction: t,
+  })
+    .then(() => true)
+    .catch(() => false);
+
   return (
-    deleteCollection && deleteComment && deleteArticleNotice && commentList && deleteCommentNotice
+    deleteCollection &&
+    deleteComment &&
+    deleteArticleNotice &&
+    commentList &&
+    deleteCommentNotice &&
+    deleteLikes
   );
 }
 
