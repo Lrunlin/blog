@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import type { FC } from "react";
+import { commentContext } from "./index";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { commentEmojiActiveContext } from "./store";
@@ -13,6 +14,7 @@ import i18n from "@emoji-mart/data/i18n/zh.json";
 import axios from "axios";
 import classNames from "classnames";
 import { useSWRConfig } from "swr";
+import type { propsType as commentPropsType } from "./index";
 
 interface propsType {
   id: number | string;
@@ -65,13 +67,15 @@ const Editor: FC<propsType> = props => {
       }
     });
   }
+  let { type } = useContext(commentContext);
   function comment() {
     axios
       .post("/comment", {
-        article_id: router.query.id,
+        belong_id: router.query.id,
         content: value,
-        comment_pics: picture?.file_name||null,
+        comment_pics: picture?.file_name || null,
         reply: props.reply || null,
+        type: type,
       })
       .then(res => {
         if (res.data.success) {

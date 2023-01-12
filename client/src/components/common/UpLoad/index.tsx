@@ -7,7 +7,7 @@ import upload from "./uoload";
 const Modal = dynamic(() => import("./Modal"), { ssr: false });
 import Picture from "./Image";
 
-type url = "article" | "avatar" | "cover" | "type" | "comment" | "advertisement" | "links";
+type url = "article" | "avatar" | "cover" | "type" | "comment" | "advertisement" | "link";
 
 export interface uploadPropsType {
   /** 上传地址*/

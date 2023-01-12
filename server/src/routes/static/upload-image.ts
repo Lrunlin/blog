@@ -15,7 +15,7 @@ let uploadOption = multer({
 });
 
 function verify() {
-  const folderList = ["article", "avatar", "cover", "type", "comment", "advertisement", "links"];
+  const folderList = ["article", "avatar", "cover", "type", "comment", "advertisement", "link"];
   return async (ctx: Context, next: Next) => {
     if (folderList.includes(ctx.params.folder)) {
       await next();

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { Empty, Button } from "antd";
 
 interface propsType {
-  data: { type: "links" | "comment"; count: number }[];
+  data: { type: "link" | "comment"; count: number }[];
 }
 
-function switchText(type: "links" | "comment") {
-  if (type == "links") {
+function switchText(type: "link" | "comment") {
+  if (type == "link") {
     return "友情链接申请待处理";
   } else if (type == "comment") {
     return "新评论发布";

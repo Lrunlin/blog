@@ -30,7 +30,7 @@ API 接口文档 Apifox
 
 1. **[博客预览地址:https://blogweb.cn](https://blogweb.cn "作者个人博客")**
 2. **[GitHub 仓库地址:https://github.com/Lrunlin/blog](https://github.com/Lrunlin/blog "GitHub仓库作为主仓库")**
-3. **[Gitee 仓库地址:https://gitee.com/awebcoder/blog](https://gitee.com/awebcoder/blog "Gitee仓库只做同步镜像不进行回复")**
+3. **[Gitee 仓库地址:https://gitee.com/awebcoder/blog](https://gitee.com/awebcoder/blog "Gitee仓库只做同步镜像不进行其他操作")**
 
 ## 功能
 
@@ -42,7 +42,7 @@ API 接口文档 Apifox
     3. GitHub(仅支持登录)
 2. 首页文章推荐
 3. 文章的增删改查，以及草稿箱功能
-4. 文章评论
+4. 文章评论、点赞
 5. 设置/修改用户基本信息、展示作者基本社交平台账号
 6. 关注作者、收藏文章 以及对应的列表查询
 7. 站内信提醒设置(文章、评论)
@@ -65,11 +65,11 @@ API 接口文档 Apifox
 
 ## 更新计划
 
-1. 用户端 UI 进行美化以及去 Antd
+1. 用户端 UI 进行美化以及去 Ant Design
 2. ~~积分功能~~
 3. 问答功能
 4. 文章页面主题模式
-5. ~~Next.js 13~~ 升级为app文件夹并且使用server component
+5. ~~Next.js 13~~ 升级为 app 文件夹并且使用 server component
 6. Redis 接口环境以及对应的事务处理
 7. 小组功能
 

@@ -50,7 +50,7 @@ const Statistics = () => {
           {data && (
             <main className="main flex justify-around">
               <div className="main-left">
-                <Header type={data.type} user={data.user} links={data.links} />
+                <Header type={data.type} user={data.user} link={data.link} />
                 <Main
                   referer={data.referer}
                   visits={data.visits}

@@ -6,7 +6,7 @@ const Link = () => {
   let { useForm } = Form;
   let [form] = useForm();
   function onFinish(values: any) {
-    axios.post("/links", values).then(res => {
+    axios.post("/link", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         startTransition(() => {
@@ -66,7 +66,7 @@ const Link = () => {
           name="logo_file_name"
           rules={[{ required: true, min: 4, message: "请上传网站Logo" }]}
         >
-          <Upload target="links" notCrop={true} />
+          <Upload target="link" notCrop={true} />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 4 }}>
           <Button type="primary" htmlType="submit">

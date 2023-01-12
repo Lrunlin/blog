@@ -4,7 +4,7 @@ import useAnimateNumber from "use-animate-number";
 interface propsType {
   type: { type_count: number; tag_count: number };
   user: { user_count: number };
-  links: { links_count: number };
+  link: { link_count: number };
 }
 
 const AnimateNumer: FC<{ number: number }> = ({ number }) => {
@@ -33,7 +33,7 @@ const Header: FC<propsType> = props => {
       />
       <Container
         title="友链个数"
-        data={<AnimateNumer number={props.links.links_count} />}
+        data={<AnimateNumer number={props.link.link_count} />}
         footer={<></>}
       />
     </div>

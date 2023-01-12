@@ -44,9 +44,7 @@ const ArticleItem: FC<propsType> = props => {
         </span>
       </div>
       <div className="flex pb-2">
-        <div
-          className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12"])}
-        >
+        <div className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12"])}>
           <a
             className="font-bold text-lg text-[#1d2129] block truncate"
             href={`/article/${data.id}`}
@@ -97,7 +95,7 @@ const ArticleItem: FC<propsType> = props => {
           </li>
           <li className={classNames(["flex", "items-center"])}>
             <Image src="/icon/likes.png" width={16} height={16} alt="collection icon" />
-            <span className="ml-1">{data.likes_count}</span>
+            <span className="ml-1">{data.like_count}</span>
           </li>
         </ul>
       </div>

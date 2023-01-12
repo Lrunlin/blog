@@ -30,7 +30,7 @@ const UpLoad: FC<propsType> = props => {
   return (
     <>
       <Upload
-        action={`${axios.defaults.baseURL}/static/links`}
+        action={`${axios.defaults.baseURL}/static/link`}
         listType="picture-card"
         fileList={fileList}
         onChange={onChange}

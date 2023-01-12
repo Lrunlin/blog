@@ -11,8 +11,8 @@ import { Follow as _Follow } from "./follow";
 import type { FollowAttributes, FollowCreationAttributes } from "./follow";
 import { Likes as _Likes } from "./likes";
 import type { LikesAttributes, LikesCreationAttributes } from "./likes";
-import { Links as _Links } from "./links";
-import type { LinksAttributes, LinksCreationAttributes } from "./links";
+import { Link as _Link } from "./link";
+import type { LinkAttributes, LinkCreationAttributes } from "./link";
 import { Notice as _Notice } from "./notice";
 import type { NoticeAttributes, NoticeCreationAttributes } from "./notice";
 import { Tag as _Tag } from "./tag";
@@ -29,7 +29,7 @@ export {
   _Comment as Comment,
   _Follow as Follow,
   _Likes as Likes,
-  _Links as Links,
+  _Link as Link,
   _Notice as Notice,
   _Tag as Tag,
   _Type as Type,
@@ -49,8 +49,8 @@ export type {
   FollowCreationAttributes,
   LikesAttributes,
   LikesCreationAttributes,
-  LinksAttributes,
-  LinksCreationAttributes,
+  LinkAttributes,
+  LinkCreationAttributes,
   NoticeAttributes,
   NoticeCreationAttributes,
   TagAttributes,
@@ -68,7 +68,7 @@ export function initModels(sequelize: Sequelize) {
   const Comment = _Comment.initModel(sequelize);
   const Follow = _Follow.initModel(sequelize);
   const Likes = _Likes.initModel(sequelize);
-  const Links = _Links.initModel(sequelize);
+  const Link = _Link.initModel(sequelize);
   const Notice = _Notice.initModel(sequelize);
   const Tag = _Tag.initModel(sequelize);
   const Type = _Type.initModel(sequelize);
@@ -81,7 +81,7 @@ export function initModels(sequelize: Sequelize) {
     Comment: Comment,
     Follow: Follow,
     Likes: Likes,
-    Links: Links,
+    Link: Link,
     Notice: Notice,
     Tag: Tag,
     Type: Type,

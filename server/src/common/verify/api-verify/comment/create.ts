@@ -1,9 +1,10 @@
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validatorAsync";
+import typeSchema from "@/common/verify/modules/type";
 import DB from "@/db";
 
 const schema = Joi.object({
-  article_id: Joi.number()
+  belong_id: Joi.number()
     .required()
     .external(async (value: number) => {
       return await DB.Article.findOne({
@@ -42,5 +43,6 @@ const schema = Joi.object({
     .pattern(/^((?!http).)*$/)
     .pattern(/^((?!,).)*$/)
     .pattern(/^((?!\/).)*$/),
+  type: typeSchema,
 });
 export default validator(schema);

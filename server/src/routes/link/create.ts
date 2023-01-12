@@ -6,10 +6,10 @@ import authMiddleware from "@/common/middleware/auth";
 let router = new Router();
 
 /** 管理员添加友链用于没在网站注册的用户*/
-router.post("/links", authMiddleware(), async ctx => {
+router.post("/link", authMiddleware(), async ctx => {
   let { name, url, logo_file_name } = ctx.request.body;
 
-  await DB.Links.create({
+  await DB.Link.create({
     id: id(),
     name,
     url,

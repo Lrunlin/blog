@@ -7,10 +7,10 @@ import interger from "@/common/verify/integer";
 
 let router = new Router();
 
-router.put("/links/:id", interger([], ["id"]), auth(0), async ctx => {
+router.put("/link/:id", interger([], ["id"]), auth(0), async ctx => {
   let id = ctx.params.id;
   let t = await sequelize.transaction();
-  let updateResult = await DB.Links.update({ state: 1 }, { where: { id: id }, transaction: t })
+  let updateResult = await DB.Link.update({ state: 1 }, { where: { id: id }, transaction: t })
     .then(([res]) => !!res)
     .catch(() => false);
 
@@ -20,7 +20,7 @@ router.put("/links/:id", interger([], ["id"]), auth(0), async ctx => {
     return;
   }
 
-  let linksData = await DB.Links.findByPk(id, {
+  let linkData = await DB.Link.findByPk(id, {
     attributes: [],
     include: [
       {
@@ -31,7 +31,7 @@ router.put("/links/:id", interger([], ["id"]), auth(0), async ctx => {
     ],
   });
 
-  let { email, name }: { email: string; name: string } = (linksData as any).user_data;
+  let { email, name }: { email: string; name: string } = (linkData as any).user_data;
 
   await sendEmail({
     target: email,

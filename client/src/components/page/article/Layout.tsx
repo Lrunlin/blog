@@ -18,7 +18,7 @@ const Layout: FC<propsType> = props => {
       <div className="mr-4 sm:mr-0 flex-1">
         <article className="p-8 pb-5 bg-white break-all shadow-sm">{props.children}</article>
         <div className="p-8 pb-10 mt-4 bg-white shadow-sm">
-          <Comments />
+          <Comments type="article" />
         </div>
         <Recommend />
       </div>

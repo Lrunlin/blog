@@ -11,18 +11,18 @@ let sort = {
     ["comment_count", "desc"],
     ["create_time", "desc"],
     ["reprint", "asc"],
-    ["likes_count", "desc"],
+    ["like_count", "desc"],
     ["view_count", "desc"],
   ],
   newest: [
     ["create_time", "desc"],
     ["update_time", "desc"],
     ["reprint", "asc"],
-    ["likes_count", "desc"],
+    ["like_count", "desc"],
     ["comment_count", "desc"],
   ],
   hottest: [
-    ["likes_count", "desc"],
+    ["like_count", "desc"],
     ["create_time", "desc"],
     ["view_count", "desc"],
     ["comment_count", "desc"],
@@ -56,12 +56,14 @@ async function getArticleListData(
       "content",
       "reprint",
       [
-        Sequelize.literal(`(SELECT COUNT(*) FROM comment WHERE comment.article_id = article.id)`),
+        Sequelize.literal(
+          `(SELECT COUNT(id) FROM comment WHERE comment.belong_id = article.id and type="article")`
+        ),
         "comment_count",
       ],
       [
-        Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.article_id = article.id)`),
-        "likes_count",
+        Sequelize.literal(`(SELECT COUNT(id) FROM likes WHERE likes.belong_id = article.id)`),
+        "like_count",
       ],
     ],
     include: [

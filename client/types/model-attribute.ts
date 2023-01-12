@@ -34,7 +34,7 @@ export interface ArticleAttributes {
   /** 是否展示目录*/
   display_directory: boolean;
   collection_count: number;
-  likes_count: number;
+  like_count: number;
 }
 export interface UserAttributes {
   id: number;
@@ -72,7 +72,7 @@ type commentUserData = Pick<
 >;
 export interface CommentAttributes {
   id: number;
-  article_id: number;
+  belong_id: number;
   user_id: number;
   user_data: commentUserData;
   content: string;
@@ -82,14 +82,15 @@ export interface CommentAttributes {
   };
   comment_pics: string;
   create_time: Date;
+  type: "article" | "questions";
   children?: CommentAttributes[];
 }
 
-export interface LinksAttributes {
+export interface LinkAttributes {
   id: number;
   name: string;
   url: string;
-  user_id: number|null;
+  user_id: number | null;
   is_allow: number;
   logo_file_name: string;
   logo_url: string;

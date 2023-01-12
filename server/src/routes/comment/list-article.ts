@@ -40,10 +40,10 @@ function createCommentTree(data: Comment[]) {
   return list;
 }
 
-router.get("/comment/list/:article_id", interger([], ["article_id"]), async ctx => {
-  let articleID = ctx.params.article_id;
+router.get("/comment/list/:belong_id", interger([], ["belong_id"]), async ctx => {
+  let articleID = ctx.params.belong_id;
   let commentList = await DB.Comment.findAll({
-    where: { article_id: articleID },
+    where: { belong_id: articleID, type: "article" },
     include: [
       {
         model: DB.User,

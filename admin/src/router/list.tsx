@@ -67,13 +67,13 @@ const RouterList: RouterListType[] = [
         title: "修改推广",
       },
       {
-        path: "/links/create",
-        element: lazy(() => import("@/page/links/create")),
+        path: "/link/create",
+        element: lazy(() => import("@/page/link/create")),
         title: "友链添加",
       },
       {
-        path: "/links",
-        element: lazy(() => import("@/page/links/list")),
+        path: "/link",
+        element: lazy(() => import("@/page/link/list")),
         title: "友链列表",
       },
       {
@@ -83,7 +83,12 @@ const RouterList: RouterListType[] = [
       },
       {
         path: "/user",
-        element: lazy(() => import("@/page/user-list")),
+        element: lazy(() => import("@/page/user/list")),
+        title: "用户列表",
+      },
+      {
+        path: "/user/:id",
+        element: lazy(() => import("@/page/user/data")),
         title: "用户列表",
       },
       {

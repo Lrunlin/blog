@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { Spin } from "antd";
 import type { NextPage } from "next";
-import Layout from "@/layout/Base";
+import { useRouter } from "next/router";
+import { Spin } from "antd";
 import axios from "axios";
+import Head from "@/components/next/Head";
+import Layout from "@/layout/Base";
 import ArticleList from "@/components/common/ArticleList";
 import type { articleListItemType } from "@type/article-list-item";
-import { useRouter } from "next/router";
 
 const Search: NextPage = () => {
   const [page, setPage] = useState(1);
@@ -44,6 +45,7 @@ const Search: NextPage = () => {
 
   return (
     <Layout className="container-xs">
+      <Head title="文章搜索" />
       <div className="w-full bg-white">
         <Spin tip="Loading..." spinning={isLoading}>
           <ArticleList

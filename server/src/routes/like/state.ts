@@ -4,11 +4,11 @@ import auth from "@/common/middleware/auth";
 import interger from "@/common/verify/integer";
 
 let router = new Router();
-router.get("/likes/state/:article_id", auth(0), interger([], ["article_id"]), async ctx => {
+router.get("/like/state/:belong_id", auth(0), interger([], ["belong_id"]), async ctx => {
   await DB.Likes.findOne({
     where: {
       user_id: ctx.id,
-      article_id: ctx.params.article_id,
+      belong_id: ctx.params.belong_id,
     },
   })
     .then(res => {

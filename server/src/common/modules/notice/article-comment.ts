@@ -5,7 +5,7 @@ import DB from "@/db";
 async function switchNoticeArticleComment(data: NoticeAttributes) {
   // 先查询评论
   let commentData = await DB.Comment.findByPk(data.relation_id, {
-    attributes: ["id","user_id", "article_id", "content"],
+    attributes: ["id", "user_id", "belong_id", "content"],
     raw: true,
   });
 
@@ -21,7 +21,7 @@ async function switchNoticeArticleComment(data: NoticeAttributes) {
       .catch(() => {
         throw "用户信息查询错误";
       }),
-    DB.Article.findByPk(commentData.article_id, {
+    DB.Article.findByPk(commentData.belong_id, {
       attributes: ["id", "title", "create_time"],
       raw: true,
     })

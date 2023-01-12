@@ -8,10 +8,10 @@ import sequelize from "@/db/config";
 
 let router = new Router();
 router.post("/comment", verify, authMiddleware(0), async ctx => {
-  let { article_id, reply, content, comment_pics } = ctx.request.body;
+  let { belong_id, reply, content, comment_pics, type } = ctx.request.body;
   let { count } = await DB.Comment.findAndCountAll({
     where: {
-      article_id,
+      belong_id: belong_id,
       reply,
       content,
       comment_pics: comment_pics,
@@ -28,12 +28,13 @@ router.post("/comment", verify, authMiddleware(0), async ctx => {
   let t = await sequelize.transaction();
 
   // 有上级评论就创建评论回复通知，没有上级评论就创建文章评论通知
-  let _t = await transaction(_id, reply, ctx.id as number, article_id as number, t);
+  let _t = await transaction(_id, reply, ctx.id as number, belong_id as number, t);
 
   let r = await DB.Comment.create(
     {
       id: _id,
-      article_id,
+      belong_id: belong_id,
+      type,
       reply,
       content,
       comment_pics,

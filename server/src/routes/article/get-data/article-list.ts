@@ -12,12 +12,14 @@ let articleAttribute = [
   "view_count",
   "update_time",
   [
-    Sequelize.literal(`(SELECT COUNT(*) FROM comment WHERE comment.article_id = article.id)`),
+    Sequelize.literal(
+      `(SELECT COUNT(*) FROM comment WHERE comment.belong_id = article.id and type="article")`
+    ),
     "comment_count",
   ],
   [
-    Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.article_id = article.id)`),
-    "likes_count",
+    Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.belong_id = article.id)`),
+    "like_count",
   ],
 ];
 let attributes = [

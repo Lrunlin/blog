@@ -14,12 +14,12 @@ router.get("/collection/:user_id", integer([], ["user_id"]), async ctx => {
     where: { user_id: ctx.params.user_id },
     offset: (page - 1) * 10,
     limit: 10,
-    attributes: ["article_id"],
+    attributes: ["belong_id"],
     order: [["create_time", "desc"]],
   });
 
   await DB.Article.findAll({
-    where: { id: collectionList.map(item => item.toJSON().article_id) },
+    where: { id: collectionList.map(item => item.toJSON().belong_id) },
     include: [
       {
         model: DB.User,
@@ -40,12 +40,14 @@ router.get("/collection/:user_id", integer([], ["user_id"]), async ctx => {
       "view_count",
       "update_time",
       [
-        Sequelize.literal(`(SELECT COUNT(*) FROM comment WHERE comment.article_id = article.id)`),
+        Sequelize.literal(
+          `(SELECT COUNT(*) FROM comment WHERE comment.belong_id = article.id and type="article")`
+        ),
         "comment_count",
       ],
       [
-        Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.article_id = article.id)`),
-        "likes_count",
+        Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.belong_id = article.id)`),
+        "like_count",
       ],
     ],
   })

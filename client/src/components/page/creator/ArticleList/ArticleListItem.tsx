@@ -76,7 +76,7 @@ const ArticleListItem: FC<propsType> = memo(({ data, dispatch }) => {
               <span className="mx-1.5 text-sm">&bull;</span>
               <span>{data.comment_count} 评论</span>
               <span className="mx-1.5 text-sm">&bull;</span>
-              <span>{data.likes_count} 点赞</span>
+              <span>{data.like_count} 点赞</span>
             </>
           )}
         </div>

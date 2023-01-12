@@ -19,19 +19,18 @@ const Likes = () => {
     if (!userData) {
       return;
     }
-    axios.get(`/likes/state/${id}`).then(res => {
+    axios.get(`/like/state/${id}`).then(res => {
       setLikeStateState(res.data.success);
     });
   }, [userData]);
 
   function like() {
-    axios.post(`/likes/${id}`).then(res => {
+    axios.post(`/like/${id}`, { type: "article" }).then(res => {
       if (res.data.success) {
-        message.success(res.data.message);
         setLikeStateState(true);
         setCurrentArticleData(_data => ({
           ..._data,
-          likes_count: _data.likes_count + 1,
+          like_count: _data.like_count + 1,
         }));
       } else {
         message.error(res.data.message);
@@ -39,13 +38,12 @@ const Likes = () => {
     });
   }
   function unLike() {
-    axios.delete(`/likes/${id}`).then(res => {
+    axios.delete(`/like/${id}`).then(res => {
       if (res.data.success) {
-        message.success(res.data.message);
         setLikeStateState(false);
         setCurrentArticleData(_data => ({
           ..._data,
-          likes_count: _data.likes_count - 1,
+          like_count: _data.like_count - 1,
         }));
       } else {
         message.error(res.data.message);
@@ -58,7 +56,7 @@ const Likes = () => {
         className={classNames([itemClassName, "hover:text-blue-500"])}
         onClick={likeState == undefined ? () => {} : likeState ? unLike : like}
       >
-        <Badge count={currentArticleData.likes_count} color="#adb1b8" offset={[10, -10]}>
+        <Badge count={currentArticleData.like_count} color="#adb1b8" offset={[10, -10]}>
           <Image
             src={likeState ? "/icon/likes-fill.png" : "/icon/likes.png"}
             width={24}

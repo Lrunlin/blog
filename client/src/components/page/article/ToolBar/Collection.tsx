@@ -22,9 +22,8 @@ const Collection = () => {
     axios.get(`/collection/state/${id}`).then(res => setCollectionState(res.data.success));
   }, [userData]);
   function collection() {
-    axios.post(`/collection/${id}`).then(res => {
+    axios.post(`/collection/${id}`, { type: "article" }).then(res => {
       if (res.data.success) {
-        message.success(res.data.message);
         setCollectionState(true);
         setCurrentArticleData(_data => ({
           ..._data,
@@ -38,7 +37,6 @@ const Collection = () => {
   function unCollection() {
     axios.delete(`/collection/${id}`).then(res => {
       if (res.data.success) {
-        message.success(res.data.message);
         setCollectionState(false);
         setCurrentArticleData(_data => ({
           ..._data,

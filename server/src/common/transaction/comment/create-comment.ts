@@ -13,7 +13,7 @@ async function transaction(
   comment_id: number,
   reply: number | null,
   user_id: number,
-  article_id: number,
+  belong_id: number,
   t: Transaction
 ) {
   // 是对于评论的回复
@@ -43,7 +43,7 @@ async function transaction(
     return !!result;
   } else {
     //用于通知文章作者文章被评论
-    let articleData = await DB.Article.findByPk(article_id, { attributes: ["author"], raw: true });
+    let articleData = await DB.Article.findByPk(belong_id, { attributes: ["author"], raw: true });
     if (!articleData) return false;
     if (articleData.author == user_id) return true;
     let result = await DB.Notice.create(

@@ -1,7 +1,7 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
 
-export interface LinksAttributes {
+export interface LinkAttributes {
   id: number;
   name: string;
   url: string;
@@ -11,15 +11,12 @@ export interface LinksAttributes {
   create_time: Date;
 }
 
-export type LinksPk = "id";
-export type LinksId = Links[LinksPk];
-export type LinksOptionalAttributes = "user_id";
-export type LinksCreationAttributes = Optional<LinksAttributes, LinksOptionalAttributes>;
+export type LinkPk = "id";
+export type LinkId = Link[LinkPk];
+export type LinkOptionalAttributes = "user_id";
+export type LinkCreationAttributes = Optional<LinkAttributes, LinkOptionalAttributes>;
 
-export class Links
-  extends Model<LinksAttributes, LinksCreationAttributes>
-  implements LinksAttributes
-{
+export class Link extends Model<LinkAttributes, LinkCreationAttributes> implements LinkAttributes {
   id!: number;
   name!: string;
   url!: string;
@@ -28,9 +25,9 @@ export class Links
   logo_file_name!: string;
   create_time!: Date;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof Links {
+  static initModel(sequelize: Sequelize.Sequelize): typeof Link {
     return sequelize.define(
-      "Links",
+      "Link",
       {
         id: {
           type: DataTypes.BIGINT,
@@ -69,7 +66,7 @@ export class Links
           type: DataTypes.VIRTUAL,
           get(this) {
             let logo_file_name = this.getDataValue("logo_file_name");
-            return `${process.env.CDN}/links/${logo_file_name}`;
+            return `${process.env.CDN}/link/${logo_file_name}`;
           },
         },
         create_time: {
@@ -79,7 +76,7 @@ export class Links
         },
       },
       {
-        tableName: "links",
+        tableName: "link",
         timestamps: false,
         indexes: [
           {
@@ -102,6 +99,6 @@ export class Links
           },
         ],
       }
-    ) as typeof Links;
+    ) as typeof Link;
   }
 }

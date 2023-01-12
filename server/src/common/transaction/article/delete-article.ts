@@ -6,11 +6,11 @@ import { Op } from "sequelize";
  * @params article_id {number} 被删除文章的ID
  * @return {boolean} 结果
  */
-async function transaction(article_id: number, t: Transaction) {
+async function transaction(belong_id: number, t: Transaction) {
   //删除收藏
   let deleteCollection = await DB.Collection.destroy({
     where: {
-      article_id: article_id,
+      belong_id: belong_id,
     },
     transaction: t,
   })
@@ -20,7 +20,7 @@ async function transaction(article_id: number, t: Transaction) {
   //删除评论
   let deleteComment = await DB.Comment.destroy({
     where: {
-      article_id: article_id,
+      belong_id: belong_id,
     },
     transaction: t,
   })
@@ -30,7 +30,7 @@ async function transaction(article_id: number, t: Transaction) {
   //删除文章创建的通知
   let deleteArticleNotice = await DB.Notice.destroy({
     where: {
-      relation_id: article_id,
+      relation_id: belong_id,
     },
     transaction: t,
   })
@@ -39,7 +39,7 @@ async function transaction(article_id: number, t: Transaction) {
 
   // 该文章下的评论列表
   let commentList = await DB.Comment.findAll({
-    where: { article_id: article_id },
+    where: { belong_id: belong_id },
     attributes: ["id"],
     raw: true,
   })
@@ -60,7 +60,7 @@ async function transaction(article_id: number, t: Transaction) {
   //删除点赞记录
   let deleteLikes = await DB.Likes.destroy({
     where: {
-      article_id: article_id,
+      belong_id: belong_id,
     },
     transaction: t,
   })

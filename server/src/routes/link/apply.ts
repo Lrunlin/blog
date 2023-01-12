@@ -1,15 +1,15 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import id from "@/common/utils/id";
-import verify from "@/common/verify/api-verify/links/create";
+import verify from "@/common/verify/api-verify/link/create";
 import auth from "@/common/middleware/auth";
 
 let router = new Router();
 
 /** 在网站注册的用户可以发起申请*/
-router.post("/links/apply", verify, auth(0), async ctx => {
+router.post("/link/apply", verify, auth(0), async ctx => {
   let { name, url, logo_file_name } = ctx.request.body;
-  await DB.Links.create({
+  await DB.Link.create({
     id: id(),
     user_id: ctx.id as number,
     name,

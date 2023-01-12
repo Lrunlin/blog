@@ -1,4 +1,6 @@
 .view-class {
+  word-wrap: break-word;
+  word-break: break-all;
   img {
     min-width: 30%;
     max-width: 70%;
@@ -24,5 +26,17 @@
       border: 1px solid #e1e6f0;
       padding: 12px 16px;
     }
+  }
+  blockquote {
+    border-left: 5px solid #cae5ff !important;
+    padding-left: 5px;
+    border-radius: 3px !important;
+  }
+  ul {
+    padding-left: 10px;
+    list-style-type: none;
+  }
+  ol {
+    padding-left: 10px;
   }
 }

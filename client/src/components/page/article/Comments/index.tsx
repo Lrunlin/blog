@@ -1,15 +1,21 @@
+import { createContext } from "react";
+import type { FC } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { modalStateContext } from "@/components/common/Header/Sign";
 import Editor from "./Editor";
 import Comment from "./Comment";
 
+export interface propsType {
+  type: "article" | "questions";
+}
+export const commentContext = createContext({ type: "" });
 /** 文章页面评论组件*/
-const Comments = () => {
+const Comments: FC<propsType> = ({ type }) => {
   let userData = useRecoilValue(userDataContext);
   let setModalState = useSetRecoilState(modalStateContext);
   return (
-    <>
+    <commentContext.Provider value={{ type: type }}>
       <div className="text-xl font-black mb-4" id="comment">
         评论
       </div>
@@ -28,7 +34,7 @@ const Comments = () => {
         )}
       </div>
       <Comment />
-    </>
+    </commentContext.Provider>
   );
 };
 export default Comments;

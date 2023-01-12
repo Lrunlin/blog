@@ -5,24 +5,24 @@ import useSWR from "swr";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const LinksList = () => {
-  let { data, error, mutate } = useSWR("links-list", () =>
-    axios.get("/links").then(res => res.data.data)
+const LinkList = () => {
+  let { data, error, mutate } = useSWR("link-list", () =>
+    axios.get("/link").then(res => res.data.data)
   );
 
   if (error) {
     return <Result status="error" title="请求错误" />;
   }
 
-  const [deleteLinksID, setDeleteLinksID] = useState<null | number>(null);
+  const [deleteLinkID, setDeleteLinkID] = useState<null | number>(null);
   const [message, setMessage] = useState("");
   function remove(id:number) {
-    axios.delete(`/links/${id}`, { params: { message: message } }).then(res => {
+    axios.delete(`/link/${id}`, { params: { message: message } }).then(res => {
       if (res.data.success) {
         messageAlert.success(res.data.message);
         mutate();
         startTransition(() => {
-          setDeleteLinksID(null);
+          setDeleteLinkID(null);
         });
         setMessage("");
       } else {
@@ -32,7 +32,7 @@ const LinksList = () => {
   }
 
   function adopt(id: number) {
-    axios.put(`/links/${id}`).then(res => {
+    axios.put(`/link/${id}`).then(res => {
       if (res.data.success) {
         messageAlert.success(res.data.message);
         mutate();
@@ -89,7 +89,7 @@ const LinksList = () => {
             <Button
               danger
               type="primary"
-              onClick={() => (item.user_data ? setDeleteLinksID(id) : remove(item.id))}
+              onClick={() => (item.user_data ? setDeleteLinkID(id) : remove(item.id))}
               icon={<DeleteOutlined />}
             >
               删除
@@ -116,9 +116,9 @@ const LinksList = () => {
       </div>
       <Modal
         title="确定删除友链"
-        open={!!deleteLinksID}
-        onOk={() => remove(deleteLinksID as number)}
-        onCancel={() => setDeleteLinksID(null)}
+        open={!!deleteLinkID}
+        onOk={() => remove(deleteLinkID as number)}
+        onCancel={() => setDeleteLinkID(null)}
         cancelText="取消"
         okText="确认删除"
       >
@@ -132,4 +132,4 @@ const LinksList = () => {
     </>
   );
 };
-export default LinksList;
+export default LinkList;

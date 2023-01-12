@@ -3,7 +3,8 @@ import { DataTypes, Model, Optional } from "sequelize";
 
 export interface CommentAttributes {
   id: number;
-  article_id: number;
+  type: string;
+  belong_id: number;
   user_id: number;
   content: string;
   reply?: number;
@@ -22,7 +23,8 @@ export class Comment
   implements CommentAttributes
 {
   id!: number;
-  article_id!: number;
+  type!: string;
+  belong_id!: number;
   user_id!: number;
   content!: string;
   reply?: number;
@@ -40,10 +42,15 @@ export class Comment
           primaryKey: true,
           comment: "ID",
         },
-        article_id: {
+        type: {
+          type: DataTypes.STRING(20),
+          allowNull: false,
+          comment: "article或者questions",
+        },
+        belong_id: {
           type: DataTypes.BIGINT,
           allowNull: false,
-          comment: "文章ID",
+          comment: "所属上级的ID",
         },
         user_id: {
           type: DataTypes.BIGINT,

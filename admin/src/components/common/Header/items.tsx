@@ -65,11 +65,11 @@ const items = [
     icon: <UsergroupAddOutlined />,
     children: [
       {
-        href: "/links",
+        href: "/link",
         label: "友链列表",
       },
       {
-        href: "/links/create",
+        href: "/link/create",
         label: "添加友链",
       },
     ],

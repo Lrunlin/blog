@@ -1,6 +1,6 @@
 import Collection from "./Collection";
 import Comment from "./Comment";
-import Likes from "./Likes";
+import Likes from "./Like";
 
 const ToolBar = () => {
   return (

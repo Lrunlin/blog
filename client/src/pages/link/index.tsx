@@ -5,15 +5,15 @@ import type { GetServerSideProps, NextPage } from "next";
 import Header from "@/components/common/Header";
 import Head from "@/components/next/Head";
 import useUserData from "@/store/user-data";
-import UpLoad from "@/components/page/links/UpLoad";
-import type { LinksAttributes } from "@type/model-attribute";
+import UpLoad from "@/components/page/link/UpLoad";
+import type { LinkAttributes } from "@type/model-attribute";
 import type { userDataType } from "@type/user-data";
 import type { response } from "@type/response";
 import { modalStateContext } from "@/components/common/Header/Sign";
 import { useSetRecoilState } from "recoil";
 import Link from "next/link";
 import classNames from "classnames";
-type linksItem = Pick<LinksAttributes, "id" | "name" | "logo_file_name" | "logo_url" | "url"> & {
+type linkItem = Pick<LinkAttributes, "id" | "name" | "logo_file_name" | "logo_url" | "url"> & {
   user_data?: userDataType;
 };
 
@@ -24,7 +24,7 @@ const siteData = [
   { label: "网站介绍", value: `${process.env.NEXT_PUBLIC_SITE_NAME}:一个多人技术博客社区` },
 ];
 
-const Links: NextPage<{ data: linksItem[] }> = props => {
+const Links: NextPage<{ data: linkItem[] }> = props => {
   let { useForm } = Form;
   let [form] = useForm();
   let [userData] = useUserData();
@@ -33,7 +33,7 @@ const Links: NextPage<{ data: linksItem[] }> = props => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function onFinish(values: any) {
-    axios.post("/links/apply", values).then(res => {
+    axios.post("/link/apply", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         setIsModalVisible(false);
@@ -173,7 +173,7 @@ export default Links;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   return await axios
-    .get<response<linksItem[]>>("/links")
+    .get<response<linkItem[]>>("/link")
     .then(res => {
       return { props: { data: res.data.data } };
     })

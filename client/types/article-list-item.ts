@@ -12,7 +12,7 @@ type articleListItemType = Pick<
   | "update_time"
   | "create_time"
   | "comment_count"
-  | "likes_count"
+  | "like_count"
 > & {
   tag: Pick<TagAttributes, "name">[];
   author_data: Pick<UserAttributes, "name">;

@@ -10,7 +10,7 @@ const interger =
     );
     if (validate.error) {
       ctx.status = 400;
-      ctx.body = { success: false, message: "请求参数错误(整数)" };
+      ctx.body = { success: false, message: `请求参数错误(整数)` };
     } else {
       await next();
     }

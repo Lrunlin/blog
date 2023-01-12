@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 05/01/2023 23:08:29
+ Date: 12/01/2023 16:53:49
 */
 
 SET NAMES utf8mb4;
@@ -57,7 +57,8 @@ CREATE TABLE `article`  (
 DROP TABLE IF EXISTS `collection`;
 CREATE TABLE `collection`  (
   `id` bigint NOT NULL COMMENT 'ID',
-  `article_id` bigint NOT NULL COMMENT '文章ID',
+  `belong_id` bigint NOT NULL COMMENT '文章ID',
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型article、question等',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '收藏时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -69,7 +70,8 @@ CREATE TABLE `collection`  (
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
   `id` bigint NOT NULL COMMENT 'ID',
-  `article_id` bigint NOT NULL COMMENT '文章ID',
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'article或者questions',
+  `belong_id` bigint NOT NULL COMMENT '所属上级的ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '内容',
   `reply` bigint NULL DEFAULT NULL COMMENT '是否是对某个评论的回复，不是则为null是则为对应的评论id',
@@ -97,17 +99,18 @@ CREATE TABLE `follow`  (
 DROP TABLE IF EXISTS `likes`;
 CREATE TABLE `likes`  (
   `id` bigint NOT NULL COMMENT '记录ID',
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型article、question等',
   `user_id` bigint NOT NULL COMMENT '用户ID',
-  `article_id` bigint NOT NULL COMMENT '文章ID',
+  `belong_id` bigint NOT NULL COMMENT '文章ID',
   `create_time` datetime NOT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for links
+-- Table structure for link
 -- ----------------------------
-DROP TABLE IF EXISTS `links`;
-CREATE TABLE `links`  (
+DROP TABLE IF EXISTS `link`;
+CREATE TABLE `link`  (
   `id` bigint NOT NULL COMMENT 'ID',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站名称',
   `url` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站链接',

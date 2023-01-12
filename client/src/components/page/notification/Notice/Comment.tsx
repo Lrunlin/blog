@@ -13,7 +13,7 @@ interface dataType extends Omit<NoticeAttributes, "is_read"> {
   label: {
     user_data: Pick<UserAttributes, "id" | "name" | "avatar_url" | "avatar_file_name">;
     article_data: Pick<ArticleAttributes, "id" | "title" | "author">;
-    comment_data: Pick<CommentAttributes, "id" | "content"|"reply"|"article_id">;
+    comment_data: Pick<CommentAttributes, "id" | "content" | "reply" | "belong_id" | "type">;
     raply_comment: Pick<CommentAttributes, "content">;
   };
 }
@@ -29,7 +29,7 @@ const ArticleCommentNotice: FC<{ data: dataType }> = ({ data }) => {
             {data.label.user_data.name}
           </NoFollowLink>
           回复了你的在文章
-          <NoFollowLink href={`/article/${data.label.article_data.id}`}>
+          <NoFollowLink href={`/${data.label.comment_data.type}/${data.label.article_data.id}`}>
             <div className="max-w-40 truncate">{data.label.article_data.title}</div>
           </NoFollowLink>
           下的评论
@@ -37,7 +37,7 @@ const ArticleCommentNotice: FC<{ data: dataType }> = ({ data }) => {
         <div>“{data.label.comment_data.content}”</div>
         <div className="w-[500px] mt-1 p-2 border border-solid rounded-sm  border-gray-200">
           <NoFollowLink
-            href={`/article/${data.label.article_data.id}`}
+            href={`/${data.label.comment_data.type}/${data.label.article_data.id}`}
             className="text-gray-700 line-clamp-13"
           >
             {data.label.raply_comment.content}
