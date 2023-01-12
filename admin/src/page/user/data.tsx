@@ -37,7 +37,7 @@ const UserData = () => {
             )}
             {data.site && (
               <Descriptions.Item label="个人网站">
-                <a href={data.data} target="_blank">
+                <a href={data.site} target="_blank">
                   {data.site}
                 </a>
               </Descriptions.Item>
