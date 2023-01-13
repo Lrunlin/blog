@@ -66,7 +66,6 @@ const Home: NextPage<propsType> = props => {
             }}
           />
         }
-        advertisement={(props as any).advertisement}
       >
         <TypeSelect
           loadMoreData={_type => {

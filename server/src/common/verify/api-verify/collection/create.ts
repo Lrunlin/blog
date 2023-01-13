@@ -7,4 +7,4 @@ import typeSchema from "@/common/verify/modules/type";
 const schema = Joi.object({
   type: typeSchema,
 });
-export default compose([interger([], ["belong_id"]), auth(0), validator(schema)]);
+export default compose([auth(0),interger([], ["belong_id"]), validator(schema)]);

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 const ADS = dynamic(() => import("./ADS"), { ssr: false });
 
+/** Google ADS*/
 const AdSense = () => {
   const [isLoad, setIsLoad] = useState(true); //加载中
 

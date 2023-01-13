@@ -1,6 +1,8 @@
+import compose from "koa-compose";
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validatorAsync";
 import typeSchema from "@/common/verify/modules/type";
+import authMiddleware from "@/common/middleware/auth";
 import DB from "@/db";
 
 const schema = Joi.object({
@@ -45,4 +47,4 @@ const schema = Joi.object({
     .pattern(/^((?!\/).)*$/),
   type: typeSchema,
 });
-export default validator(schema);
+export default compose([authMiddleware(0), validator(schema)]);

@@ -12,7 +12,6 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
     legacyBrowsers: false,
-    browsersListForSwc: true,
   },
   //生产版本打包成独立文件夹
   // output: "standalone",

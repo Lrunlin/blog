@@ -4,7 +4,6 @@ import { Divider } from "antd";
 import style from "./index.module.scss";
 import classNames from "classnames";
 
-/** 文章页面侧边目录*/
 const Catalogue = () => {
   useEffect(() => {
     tocbot.init({

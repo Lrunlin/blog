@@ -1,13 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import id from "@/common/utils/id";
-import authMiddleware from "@/common/middleware/auth";
 import verify from "@/common/verify/api-verify/comment/create";
 import transaction from "@/common/transaction/comment/create-comment";
 import sequelize from "@/db/config";
 
 let router = new Router();
-router.post("/comment", verify, authMiddleware(0), async ctx => {
+router.post("/comment", verify, async ctx => {
   let { belong_id, reply, content, comment_pics, type } = ctx.request.body;
   let { count } = await DB.Comment.findAndCountAll({
     where: {
