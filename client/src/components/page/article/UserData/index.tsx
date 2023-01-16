@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Avatar } from "antd";
 import dayjs from "dayjs";
 import FollwoButton from "@/components/page/article/UserData/FollowButton";

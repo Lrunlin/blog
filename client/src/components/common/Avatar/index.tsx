@@ -5,7 +5,7 @@ import type { AvatarProps } from "antd";
 import useUserData from "@/store/user-data";
 import useSWR from "swr";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import cookie from "js-cookie";
 
@@ -63,7 +63,7 @@ const Menu: FC = () => {
           className="cursor-pointer"
           onClick={() => {
             cookie.remove("token");
-            router.reload();
+            router.refresh();
           }}
         >
           退出登录

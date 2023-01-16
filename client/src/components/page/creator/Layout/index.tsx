@@ -8,7 +8,7 @@ import Header from "./Header";
 import Aside from "./Aside";
 import classNames from "classnames";
 import Head from "@/components/next/Head";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface propsType {
   children: ReactNode;

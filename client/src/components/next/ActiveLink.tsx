@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { FC } from "react";
 import Link from "next/link";
 import type { LinkProps } from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import classNames from "classnames";
 
 interface porpsType extends LinkProps {
@@ -18,10 +18,10 @@ interface porpsType extends LinkProps {
  * 高亮超链接，默认className:active-link
  */
 const ActiveLink: FC<porpsType> = props => {
-  let router = useRouter();
+  let pathname = usePathname();
   let className = useMemo(() => {
-    return router.asPath == props.href ? props.activeClassName || "active-link" : "";
-  }, [router]);
+    return pathname == props.href ? props.activeClassName || "active-link" : "";
+  }, [pathname]);
 
   return (
     <>

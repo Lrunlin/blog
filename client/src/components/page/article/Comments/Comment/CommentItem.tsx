@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { userDataContext } from "@/store/user-data";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import Image from "@/components/next/Image";
 import { Avatar, Image as AntdImage, message } from "antd";
 import { Comment } from "antd";
@@ -18,8 +18,8 @@ interface propsType {
 }
 
 const CommentItem: FC<propsType> = props => {
-  let router = useRouter();
-  let articleID = router.query.id;
+  let searchParams = useSearchParams();
+  let articleID = searchParams.get("id");
   let { mutate } = useSWRConfig();
   let { data } = props;
   let userData = useRecoilValue(userDataContext);

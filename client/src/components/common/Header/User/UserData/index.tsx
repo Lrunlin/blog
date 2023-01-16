@@ -1,6 +1,6 @@
 import { Dropdown, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Avatar from "../../../Avatar";
 import News from "../../News";
 

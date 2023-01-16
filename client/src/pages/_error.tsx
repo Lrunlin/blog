@@ -3,7 +3,7 @@ import { Result, Button } from "antd";
 import type { ResultProps } from "antd";
 import Header from "@/components/common/Header";
 import type { NextPage, GetServerSideProps } from "next";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface propsType {
   statusCode: ResultProps['status'];

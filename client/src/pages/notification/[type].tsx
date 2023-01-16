@@ -5,23 +5,27 @@ import Layout from "@/components/page/notification/Layout";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Skeleton, Empty } from "antd";
 import Notice from "@/components/page/notification/Notice";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import useUserData from "@/store/user-data";
 const Notification: NextPage = memo(() => {
   let [userData] = useUserData();
-  let router = useRouter();
+  let searchParams = useSearchParams();
 
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   let type = useRef("");
   let page = useRef(1);
   useEffect(() => {
-    if (router.query.type && userData && ["article", "comment"].includes(router.query.type + "")) {
-      type.current = router.query.type as string;
+    if (
+      searchParams.get("type") &&
+      userData &&
+      ["article", "comment"].includes(searchParams.get("type") + "")
+    ) {
+      type.current = searchParams.get("type") as string;
       page.current = 1;
       getNoticeData();
     }
-  }, [router, userData]);
+  }, [searchParams, userData]);
 
   function getNoticeData() {
     axios

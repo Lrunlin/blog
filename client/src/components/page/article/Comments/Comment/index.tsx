@@ -1,14 +1,14 @@
 import useSWR from "swr";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { SyncOutlined } from "@ant-design/icons";
 import CommentItem from "./CommentItem";
 import type { CommentAttributes } from "@type/model-attribute";
 import type { response } from "@type/response";
 
 const Comments = () => {
-  let router = useRouter();
-  let articleID = router.query.id;
+  let searchParams = useSearchParams();
+  let articleID = searchParams.get("id");
   let { data, isValidating, error, mutate } = useSWR(`/comment/list/${articleID}`, () =>
     axios
       .get<response<CommentAttributes[]>>(`/comment/list/${articleID}`)

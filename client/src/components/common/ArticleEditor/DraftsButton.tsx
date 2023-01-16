@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Button, message } from "antd";
-import { useRouter } from "next/router";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRecoilValue } from "recoil";
 import { writeArticleContext } from "./index";
 import axios from "axios";
 import { useSWRConfig } from "swr";
@@ -11,6 +11,8 @@ const DraftsButton = () => {
     useRecoilValue(writeArticleContext);
 
   let router = useRouter();
+  let searchParams = useSearchParams();
+  let pathname = usePathname();
   let { mutate } = useSWRConfig();
 
   /** 判断按钮是否禁止点击*/
@@ -51,7 +53,7 @@ const DraftsButton = () => {
     }
     setIsLoad(true);
     axios
-      .put(`/article/${router.query.id}`, {
+      .put(`/article/${searchParams.get("id")}`, {
         title: /^[\s\S]*.*[^\s][\s\S]*$/.test(title) ? title : "无标题",
         description,
         cover_file_name,
@@ -63,7 +65,7 @@ const DraftsButton = () => {
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);
-          mutate(`article-update-${router.query.id}`);
+          mutate(`article-update-${searchParams.get("id")}`);
         } else {
           message.error(res.data.message);
         }
@@ -76,7 +78,7 @@ const DraftsButton = () => {
       <Button
         ghost
         type="primary"
-        onClick={router.route == "/write" ? createDrafts : updateDrafts}
+        onClick={pathname == "/write" ? createDrafts : updateDrafts}
         disabled={isDisabled}
         loading={isLoad}
       >

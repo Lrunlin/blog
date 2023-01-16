@@ -8,7 +8,7 @@ import Layout from "@/components/page/article/Layout";
 import View from "@/components/page/article/View";
 import ArticleUserData from "@/components/page/article/UserData";
 import type { ArticleAttributes } from "@type/model-attribute";
-import NoFound from "@/components/page/article/NoFound";
+const NoFound = dynamic(() => import("@/components/page/article/NoFound"), { ssr: false });
 const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
 
 interface propsType {

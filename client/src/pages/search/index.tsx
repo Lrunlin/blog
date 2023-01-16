@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { Spin } from "antd";
 import axios from "axios";
 import Head from "@/components/next/Head";
@@ -13,8 +13,7 @@ const Search: NextPage = () => {
   const [data, setData] = useState<articleListItemType[]>([]);
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  let router = useRouter();
-  let { keyword, tag } = router.query as { keyword?: string; tag?: string };
+  let searchParams = useSearchParams();
 
   let first = useRef(true);
   useEffect(() => {
@@ -26,8 +25,8 @@ const Search: NextPage = () => {
       .get(`/article/list/page/${page}`, {
         params: {
           state: 1,
-          keyword: keyword || undefined,
-          tag: tag || undefined,
+          keyword: searchParams.get("keyword") || undefined,
+          tag: searchParams.get("tag") || undefined,
         },
       })
       .then(res => {
@@ -41,7 +40,7 @@ const Search: NextPage = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [page, router.query]);
+  }, [page, searchParams]);
 
   return (
     <Layout className="container-xs">
@@ -49,7 +48,7 @@ const Search: NextPage = () => {
       <div className="w-full bg-white">
         <Spin tip="Loading..." spinning={isLoading}>
           <ArticleList
-            keyword={keyword}
+            keyword={searchParams.get("keyword") as string}
             list={data}
             total={total}
             loadMoreData={() => setPage(_page => ++_page)}

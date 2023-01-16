@@ -7,13 +7,12 @@ import axios from "axios";
 import { userDataContext } from "@/store/user-data";
 import type { response } from "@type/response";
 import type { FollowAttributes } from "@type/model-attribute";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface propsType {
   bloggerID: FollowAttributes["blogger_id"];
 }
 const SwitchButton: FC<propsType> = props => {
-  let userData = useRecoilValue(userDataContext);
 
   let { data, error, mutate } = useSWR(`follow-user-state-${props.bloggerID}`, () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)

@@ -1,7 +1,7 @@
 import Head from "@/components/next/Head";
 import Header from "@/components/common/Header";
 import { Button, Result } from "antd";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 /** 文章页面404*/
 const NoFound = () => {

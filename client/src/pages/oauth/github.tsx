@@ -4,12 +4,14 @@ import axios from "axios";
 import { RedoOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 import useSwr from "swr";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
+import Head from "@/components/next/Head";
 
 const Github = () => {
   let router = useRouter();
-  let code = router.query.code;
+  let searchParams = useSearchParams();
+  let code = searchParams.get("code");
 
   let { data, error, isValidating } = useSwr(`oauth-github-${code}`, () =>
     code ? axios.post("/user/github", { code: code }).then(res => res.data) : ""
@@ -34,29 +36,38 @@ const Github = () => {
       <div className="bg-white shadow-sm w-full">
         <div>
           {isValidating ? (
-            <Result icon={<RedoOutlined spin />} title="请求中..." />
+            <>
+              <Head title="GitHub登录" />
+              <Result icon={<RedoOutlined spin />} title="请求中..." />
+            </>
           ) : error ? (
-            <Result
-              status="error"
-              title="请求错误"
-              subTitle="这可能不是您的原因，也许是GitHub受到防火墙影响。"
-              extra={
-                <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
-                  返回
-                </Button>
-              }
-            />
+            <>
+              <Head title="登录失败" />
+              <Result
+                status="error"
+                title="请求错误"
+                subTitle="这可能不是您的原因，也许是GitHub受到防火墙影响。"
+                extra={
+                  <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
+                    返回
+                  </Button>
+                }
+              />
+            </>
           ) : (
-            <Result
-              status={data.success ? "success" : "error"}
-              title={data.success ? "成功" : "失败"}
-              subTitle={data.message}
-              extra={
-                <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
-                  返回
-                </Button>
-              }
-            />
+            <>
+              <Head title={`登录${data.success ? "成功" : "失败"}`} />
+              <Result
+                status={data.success ? "success" : "error"}
+                title={data.success ? "成功" : "失败"}
+                subTitle={data.message}
+                extra={
+                  <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
+                    返回
+                  </Button>
+                }
+              />
+            </>
           )}
         </div>
       </div>

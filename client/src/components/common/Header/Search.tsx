@@ -1,27 +1,24 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter,usePathname,useSearchParams } from "next/navigation";
 import { Input } from "antd";
 
 const { Search } = Input;
 const SearchBox = () => {
   const [keyword, setKeyword] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   function onSearch(val: string) {
     if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(val)) {
       return;
     }
-    router.push({
-      pathname: "/search",
-      query: {
-        keyword: val,
-      },
-    });
+    router.push(`/search?keyword=${val}`);
   }
 
   useEffect(() => {
-    if (router.pathname == "/search" && router.query.keyword) {
-      setKeyword(router.query.keyword as string);
+    if (pathname == "/search" && searchParams.get("keyword")) {
+      setKeyword(searchParams.get("keyword") as string);
     }
   }, []);
 

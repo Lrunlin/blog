@@ -2,7 +2,7 @@ import { memo } from "react";
 import useUserData from "@/store/user-data";
 import Avatar from "@/components/common/Avatar";
 import { Button } from "antd";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Menu } from "antd";
 import type { MenuProps } from "antd";
 import { BookOutlined, HomeOutlined } from "@ant-design/icons";

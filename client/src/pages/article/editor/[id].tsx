@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "@/components/next/Head";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import ArticleEditor from "@/components/common/ArticleEditor";
 import { Result, Button, message, Skeleton } from "antd";
 import useSWR from "swr";

@@ -6,7 +6,7 @@ import { userDataContext } from "@/store/user-data";
 import { commentEmojiActiveContext } from "./store";
 import { Avatar, Button, Input, message } from "antd";
 import Image from "@/components/next/Image";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import loadStatic, { responseType } from "@/request/load-static";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
@@ -14,7 +14,6 @@ import i18n from "@emoji-mart/data/i18n/zh.json";
 import axios from "axios";
 import classNames from "classnames";
 import { useSWRConfig } from "swr";
-import type { propsType as commentPropsType } from "./index";
 
 interface propsType {
   id: number | string;
@@ -28,8 +27,8 @@ interface propsType {
 let { TextArea } = Input;
 
 const Editor: FC<propsType> = props => {
-  let router = useRouter();
-  let articleID = router.query.id;
+  let searchParams = useSearchParams();
+  let articleID = searchParams.get("id");
   let { mutate } = useSWRConfig();
   let userData = useRecoilValue(userDataContext);
   let [activeEmojiID, setActiveEmojiID] = useRecoilState(commentEmojiActiveContext);
@@ -71,7 +70,7 @@ const Editor: FC<propsType> = props => {
   function comment() {
     axios
       .post("/comment", {
-        belong_id: router.query.id,
+        belong_id: articleID,
         content: value,
         comment_pics: picture?.file_name || null,
         reply: props.reply || null,

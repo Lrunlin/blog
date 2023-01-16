@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
 import useUserData from "@/store/user-data";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { message, Badge } from "antd";
 import axios from "axios";
 import itemClassName from "./class";
@@ -11,8 +11,8 @@ import { useRecoilState } from "recoil";
 
 const Collection = () => {
   let [userData] = useUserData();
-  let rotuer = useRouter();
-  let id = rotuer.query.id;
+  let searchParams = useSearchParams();
+  let id = searchParams.get("id");
   let [currentArticleData, setCurrentArticleData] = useRecoilState(currentArticleDataContext);
   let [collectionState, setCollectionState] = useState<boolean | undefined>();
   useEffect(() => {

@@ -18,13 +18,18 @@ const schema = Joi.object({
 
 router.get("/logon/email", validator(schema), async ctx => {
   function response(success: boolean, title: string, message?: string | string[], token?: string) {
-    let query = qs.stringify({
-      success,
-      title,
-      message,
-      href: "/",
-      token,
-    });
+    let query = qs.stringify(
+      {
+        success,
+        title,
+        message,
+        href: "/",
+        token,
+      },
+      {
+        arrayFormat: "repeat",//query中的数组中不携带索引值
+      }
+    );
     ctx.status = 302;
     ctx.redirect(`${process.env.CLIENT_HOST}/result?${query}`);
   }
@@ -53,7 +58,7 @@ router.get("/logon/email", validator(schema), async ctx => {
   }
 
   let { email, name, password } = cache.get(key) as userDataType;
-  let _id=id()
+  let _id = id();
   var data = new Identicon(sha1(_id + ""), {
     size: 50,
     format: "svg",

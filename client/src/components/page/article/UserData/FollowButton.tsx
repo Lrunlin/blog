@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Button } from "antd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { modalStateContext } from "@/components/common/Header/Sign";
