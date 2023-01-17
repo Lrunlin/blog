@@ -1,11 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import Sequelize from "@/db/config";
-import Models from "@/db";
 import moment from "moment";
 let router = new Router();
 
-router.get("/author-ranking", async ctx => {
+router.get("/ranking/author", async ctx => {
   let time = moment(+new Date() - 604_800_000).format("YYYY-MM-DD hh:mm:ss");
   let data = await DB.User.findAll({
     attributes: [

@@ -10,4 +10,10 @@ Models.Article.belongsTo(Models.User, { as: "author_data", foreignKey: "author",
 Models.Comment.belongsTo(Models.User, { as: "user_data", foreignKey: "user_id", targetKey: "id" });
 Models.Link.belongsTo(Models.User, { as: "user_data", foreignKey: "user_id", targetKey: "id" });
 Models.Collection.belongsTo(Models.Article, { foreignKey: "belong_id", targetKey: "id" });
-Models.Likes.belongsTo(Models.Article, {foreignKey: "belong_id", targetKey: "id" });
+Models.Likes.belongsTo(Models.Article, { foreignKey: "belong_id", targetKey: "id" });
+
+Models.Follow.belongsTo(Models.User, {
+  as: "user_data",
+  targetKey: "id",
+  foreignKey: "blogger_id",
+});

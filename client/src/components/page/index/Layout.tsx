@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import Base, { propsType as basePropsType } from "@/layout/Base";
 import Advertisement from "@/components/common/Advertisement";
-import AuthorRanking from "./AuthorRanking";
+import Ranking from "./Ranking";
 import Footer from "./Footer";
 import Repository from "@/components/page/article/Aside/Repository";
 import AdSense from "@/components/common/AdSense";
@@ -18,7 +18,7 @@ const Layout: FC<basePropsType> = props => {
         <Repository />
         <Advertisement type="index" className="mt-3" />
         <AdSense />
-        <AuthorRanking />
+        <Ranking />
         <Footer />
       </aside>
     </Base>

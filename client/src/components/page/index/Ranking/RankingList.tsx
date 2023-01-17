@@ -1,15 +1,16 @@
+import type { FC } from "react";
 import { Avatar } from "antd";
-import useSWR from "swr";
-import axios from "axios";
 import NoFollowLink from "@/components/next/NoFollowLink";
-const AuthorRanking = () => {
-  let { data, isValidating, error } = useSWR<any[]>("author-ranking", () =>
-    axios.get("/author-ranking").then(res => res.data.data)
-  );
+
+interface propsType {
+  isValidating: boolean;
+  error: boolean;
+  data: any[];
+}
+const RankingList: FC<propsType> = ({ data, error, isValidating }) => {
   return (
     <>
       <div className="bg-white mt-3 shadow-sm">
-        <div className="py-3 px-2 border-b-solid border-slate-200">🎖️作者榜</div>
         {isValidating && <div className="bg-gray-200 h-80"></div>}
         {error && <div className="h-10  flex items-center justify-center">加载错误</div>}
         <div className="px-2">
@@ -32,4 +33,4 @@ const AuthorRanking = () => {
     </>
   );
 };
-export default AuthorRanking;
+export default RankingList;
