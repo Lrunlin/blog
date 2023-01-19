@@ -2,8 +2,8 @@ import axios from "axios";
 import type { response } from "@type/response";
 import type { TypeAttributes, TagAttributes } from "@type/model-attribute";
 
-type responseType = TypeAttributes & {
-  children: [TagAttributes];
+export type responseType = TypeAttributes & {
+  children: TagAttributes[];
 };
 
 /**

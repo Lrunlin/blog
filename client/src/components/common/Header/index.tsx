@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import Search from "./Search";
 import User from "./User";

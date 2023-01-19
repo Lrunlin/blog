@@ -8,7 +8,7 @@ const Comment = () => {
   const columns = [
     {
       title: "文章ID",
-      dataIndex: "article_id",
+      dataIndex: "belong_id",
       render: (article_id: number) => <Link to={`/article/${article_id}`}>{article_id}</Link>,
       width: 160,
     },
@@ -57,7 +57,12 @@ const Comment = () => {
       dataIndex: "create_time",
       render: (create_time: any) => {
         return (
-          <DatePicker inputReadOnly={true} allowClear={false} showTime defaultValue={moment(create_time)} />
+          <DatePicker
+            inputReadOnly={true}
+            allowClear={false}
+            showTime
+            defaultValue={moment(create_time)}
+          />
         );
       },
       width: 120,

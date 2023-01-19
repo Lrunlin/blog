@@ -5,8 +5,7 @@ let router = new Router();
 import verify from "@/common/verify/api-verify/article/update-article";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/article/create-article";
-import integer from "@/common/verify/integer";
-router.put("/article/:id", auth(), integer([], ["id"]), verify, async ctx => {
+router.put("/article/:id",   verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, view_count, state } =
     ctx.request.body;
   let id = +ctx.params.id as number;

@@ -1,6 +1,8 @@
 import type { Sequelize } from "sequelize";
 import { Advertisement as _Advertisement } from "./advertisement";
 import type { AdvertisementAttributes, AdvertisementCreationAttributes } from "./advertisement";
+import { Answer as _Answer } from "./answer";
+import type { AnswerAttributes, AnswerCreationAttributes } from "./answer";
 import { Article as _Article } from "./article";
 import type { ArticleAttributes, ArticleCreationAttributes } from "./article";
 import { Collection as _Collection } from "./collection";
@@ -15,6 +17,8 @@ import { Link as _Link } from "./link";
 import type { LinkAttributes, LinkCreationAttributes } from "./link";
 import { Notice as _Notice } from "./notice";
 import type { NoticeAttributes, NoticeCreationAttributes } from "./notice";
+import { Problem as _Problem } from "./problem";
+import type { ProblemAttributes, ProblemCreationAttributes } from "./problem";
 import { Tag as _Tag } from "./tag";
 import type { TagAttributes, TagCreationAttributes } from "./tag";
 import { Type as _Type } from "./type";
@@ -24,6 +28,7 @@ import type { UserAttributes, UserCreationAttributes } from "./user";
 
 export {
   _Advertisement as Advertisement,
+  _Answer as Answer,
   _Article as Article,
   _Collection as Collection,
   _Comment as Comment,
@@ -31,6 +36,7 @@ export {
   _Likes as Likes,
   _Link as Link,
   _Notice as Notice,
+  _Problem as Problem,
   _Tag as Tag,
   _Type as Type,
   _User as User,
@@ -39,6 +45,8 @@ export {
 export type {
   AdvertisementAttributes,
   AdvertisementCreationAttributes,
+  AnswerAttributes,
+  AnswerCreationAttributes,
   ArticleAttributes,
   ArticleCreationAttributes,
   CollectionAttributes,
@@ -53,6 +61,8 @@ export type {
   LinkCreationAttributes,
   NoticeAttributes,
   NoticeCreationAttributes,
+  ProblemAttributes,
+  ProblemCreationAttributes,
   TagAttributes,
   TagCreationAttributes,
   TypeAttributes,
@@ -63,6 +73,7 @@ export type {
 
 export function initModels(sequelize: Sequelize) {
   const Advertisement = _Advertisement.initModel(sequelize);
+  const Answer = _Answer.initModel(sequelize);
   const Article = _Article.initModel(sequelize);
   const Collection = _Collection.initModel(sequelize);
   const Comment = _Comment.initModel(sequelize);
@@ -70,12 +81,15 @@ export function initModels(sequelize: Sequelize) {
   const Likes = _Likes.initModel(sequelize);
   const Link = _Link.initModel(sequelize);
   const Notice = _Notice.initModel(sequelize);
+  const Problem = _Problem.initModel(sequelize);
   const Tag = _Tag.initModel(sequelize);
   const Type = _Type.initModel(sequelize);
   const User = _User.initModel(sequelize);
 
+
   return {
     Advertisement: Advertisement,
+    Answer: Answer,
     Article: Article,
     Collection: Collection,
     Comment: Comment,
@@ -83,6 +97,7 @@ export function initModels(sequelize: Sequelize) {
     Likes: Likes,
     Link: Link,
     Notice: Notice,
+    Problem: Problem,
     Tag: Tag,
     Type: Type,
     User: User,

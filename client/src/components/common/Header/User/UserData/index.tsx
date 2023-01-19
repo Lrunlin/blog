@@ -22,6 +22,10 @@ const UserData = () => {
                 key: "/write",
               },
               {
+                label: "提问题",
+                key: "/questions/write",
+              },
+              {
                 label: "创作者中心",
                 key: "/creator",
               },

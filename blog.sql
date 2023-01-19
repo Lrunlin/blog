@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 12/01/2023 16:53:49
+ Date: 17/01/2023 08:23:19
 */
 
 SET NAMES utf8mb4;
@@ -30,6 +30,19 @@ CREATE TABLE `advertisement`  (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告投放' ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Table structure for answer
+-- ----------------------------
+DROP TABLE IF EXISTS `answer`;
+CREATE TABLE `answer`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `problem_id` bigint NOT NULL COMMENT '问题ID',
+  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回答内容',
+  `author` bigint NOT NULL COMMENT '回答者ID',
+  `create_time` datetime NOT NULL COMMENT '回答时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for article
@@ -136,6 +149,23 @@ CREATE TABLE `notice`  (
   `create_time` datetime NOT NULL COMMENT '发送时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for problem
+-- ----------------------------
+DROP TABLE IF EXISTS `problem`;
+CREATE TABLE `problem`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题题目',
+  `tag` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'tag类型',
+  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题内筒',
+  `author` bigint NOT NULL COMMENT '发布人ID',
+  `answer_id` bigint NULL DEFAULT NULL COMMENT '采纳答案的ID',
+  `view_count` int NOT NULL COMMENT '阅读量',
+  `create_time` datetime NOT NULL COMMENT '发布时间',
+  `update_time` datetime NOT NULL COMMENT '最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tag

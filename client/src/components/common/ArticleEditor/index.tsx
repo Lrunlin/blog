@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Button, Input, Avatar, Dropdown, Result } from "antd";
 import dynamic from "next/dynamic";
-const MarkDownEditor = dynamic(() => import("./MarkDownEditor"), {
+const MarkDownEditor = dynamic(() => import("../MarkDownEditor"), {
   ssr: false,
 });
 
@@ -76,7 +76,13 @@ const Editor: FC<propsType> = props => {
           <Avatar src={userData.avatar_url} alt="头像" />
         </div>
       </header>
-      <MarkDownEditor />
+      <MarkDownEditor
+        target="article"
+        initValue={articleData.content}
+        onChange={html => {
+          setArticleData(_data => ({ ..._data, content: html }));
+        }}
+      />
     </div>
   ) : (
     <Base className="bg-white">

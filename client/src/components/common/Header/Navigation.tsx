@@ -11,6 +11,13 @@ const Navigation = () => {
         首页
       </ActiveLink>
       <ActiveLink
+        href="/questions"
+        className="ml-4 text-zinc-800 sm:hidden"
+        activeClassName={style["type-active"]}
+      >
+        问答
+      </ActiveLink>
+      <ActiveLink
         href="/link"
         className="ml-4 text-zinc-800 sm:hidden"
         noFollow={true}

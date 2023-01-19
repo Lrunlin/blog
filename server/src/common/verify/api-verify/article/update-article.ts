@@ -5,6 +5,7 @@ import validator from "@/common/middleware/verify/validator";
 import { urlAllowNull } from "../../modules/url";
 import { fileNameAllowNull } from "../../modules/file-name";
 import interger from "@/common/verify/integer";
+import auth from "@/common/middleware/auth";
 import tag from "@/common/verify/modules/tag";
 
 let verifyState = Joi.object({
@@ -43,14 +44,13 @@ const drafts = Joi.object({
   content: Joi.string().min(20).required().error(new Error("文章内容为最短20的HTML字符串")),
 });
 
-async function validatorMiddleware1(ctx: Context, next: Next) {
-  return validator(verifyState, false, true)(ctx, next);
-}
-async function validatorMiddleware2(ctx: Context, next: Next) {
-  return interger([], ["id"])(ctx, next);
-}
-async function validatorMiddleware3(ctx: Context, next: Next) {
+async function validatorMiddleware(ctx: Context, next: Next) {
   return validator(ctx.request.body.state == 1 ? article : drafts)(ctx, next);
 }
 
-export default compose([validatorMiddleware1, validatorMiddleware2, validatorMiddleware3]);
+export default compose([
+  auth(0),
+  validator(verifyState, false, true),
+  interger([], ["id"]),
+  validatorMiddleware,
+]);
