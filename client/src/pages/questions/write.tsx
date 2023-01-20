@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import Head from "@/components/next/Head";
 import dynamic from "next/dynamic";
 import Tag from "@/components/page/questions/write/Tag";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 const MarkDownEditor = dynamic(() => import("@/components/common/MarkDownEditor"), {
   ssr: false,
 });
@@ -10,6 +12,32 @@ const MarkDownEditor = dynamic(() => import("@/components/common/MarkDownEditor"
 const Write = () => {
   let [title, setTitle] = useState("");
   let [content, setContent] = useState("");
+  let [tag, setTag] = useState<number[]>([]);
+  let router = useRouter();
+  function submit() {
+    if (title.length < 5 || title.length > 50) {
+      message.warning("标题长度在5-50之间");
+      return;
+    }
+    if (tag.length < 1 || tag.length > 6) {
+      message.warning("标签个数在1-6之间");
+      return;
+    }
+    if (content.length < 20) {
+      message.warning("内容长度需要大于20");
+      return;
+    }
+
+    axios
+      .post("/problem", { title, tag, content })
+      .then(res => {
+        message.success(res.data.message);
+        router.back();
+      })
+      .catch(() => {
+        message.error("请求失败");
+      });
+  }
 
   return (
     <>
@@ -20,7 +48,9 @@ const Write = () => {
             <div className="max-w-[1440px] h-12 mx-auto flex justify-between items-center px-6">
               <img src="/favicon.svg" className="h-8" alt="logo" />
               <span className="text-gray-500 text-xl">提问题</span>
-              <Button type="primary">发布问题</Button>
+              <Button type="primary" onClick={submit}>
+                发布问题
+              </Button>
             </div>
           </div>
         </header>
@@ -31,7 +61,7 @@ const Write = () => {
             onChange={e => setTitle(e.target.value)}
           />
           <div>
-            <Tag />
+            <Tag onChange={tags => setTag(tags)} />
           </div>
           <div className="mt-2">
             <MarkDownEditor target="questions" onChange={html => setContent(html)} />

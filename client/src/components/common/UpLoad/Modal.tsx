@@ -6,9 +6,9 @@ import getCroppedImg from "./getCroppedImg";
 import type { uploadPropsType } from "./index";
 import type { Area } from "react-easy-crop";
 
-/** 
+/**
  * 弹窗以及图片剪裁
-*/
+ */
 const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = props => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -41,7 +41,6 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
     },
   }));
 
-
   return (
     <>
       <Modal
@@ -52,7 +51,9 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
         onOk={handleOk}
         onCancel={() => {
           setIsModalOpen(false);
+          (document.getElementById(`file-upload-${props.url}`) as HTMLInputElement).value = "";
         }}
+        zIndex={2000}
         {...props.ModalProps}
       >
         <div className="w-full h-96 relative">
@@ -72,7 +73,7 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
         </div>
         <div>
           <span>缩放:</span>
-          <Slider value={zoom} onChange={v => setZoom(v)} min={1} max={5} step={0.01}/>
+          <Slider value={zoom} onChange={v => setZoom(v)} min={1} max={5} step={0.01} />
         </div>
         <div>
           <span>旋转:</span>

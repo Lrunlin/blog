@@ -2,12 +2,11 @@ import Router from "@koa/router";
 import DB from "@/db";
 import sequelize from "@/db/config";
 import id from "@/common/utils/id";
-import auth from "@/common/middleware/auth";
 import verify from "@/common/verify/api-verify/article/create-article";
 import transaction from "@/common/transaction/article/create-article";
 
 let router = new Router();
-router.post("/article", auth(0), verify, async ctx => {
+router.post("/article", verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, state } = ctx.request.body;
   let _id = id();
   let t = await sequelize.transaction();

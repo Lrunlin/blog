@@ -4,7 +4,8 @@ import { urlAllowNull } from "../../modules/url";
 import { fileNameAllowNull } from "../../modules/file-name";
 import validator from "@/common/middleware/verify/validator";
 import compose from "koa-compose";
-import tag from '@/common/verify/modules/tag'
+import tag from "@/common/verify/modules/tag";
+import auth from "@/common/middleware/auth";
 
 let verifyState = Joi.object({
   state: Joi.number().valid(0, 1).error(new Error("State错误")),
@@ -65,4 +66,4 @@ const verifyParamsMiddleware1 = async (ctx: Context, next: Next) =>
 const verifyParamsMiddleware2 = async (ctx: Context, next: Next) =>
   validator(ctx.request.body.state == 1 ? article : drafts)(ctx, next);
 
-export default compose([verifyParamsMiddleware1, verifyParamsMiddleware2]);
+export default compose([auth(0), verifyParamsMiddleware1, verifyParamsMiddleware2]);

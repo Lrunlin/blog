@@ -8,7 +8,7 @@ const tag = Joi.array()
   .min(1)
   .max(6)
   .required()
-  .error(new Error("网站标签为1-5个"))
+  .error(new Error("网站标签为1-6个"))
   .custom((value: number[], helper) => {
     if (new Set(value).size != value.length) {
       return helper.message(new Error("禁止重复的tag_id") as any);
