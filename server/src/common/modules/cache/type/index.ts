@@ -54,7 +54,7 @@ function getData() {
  * 传一个回调函数，项目在启动时候会自动收集回调函数，在执行getData时会遍历保存函数的数组依次执行函数
  * ! 只能在函数顶部使用，保证在初始化时候可以执行
  * */
-export function getDataAfter(effect: () => any) {
+function getDataAfter(effect: () => any) {
   callbackList.push(effect);
 }
 
@@ -64,4 +64,4 @@ setTimeout(() => {
 }, 0);
 
 export default cache;
-export { getData, cache };
+export { getData, cache, getDataAfter };

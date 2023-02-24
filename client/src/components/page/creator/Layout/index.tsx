@@ -20,7 +20,7 @@ const Layout: FC<propsType> = ({ children, className }) => {
 
   let router = useRouter();
   useEffect(() => {
-    router.prefetch("/write");
+    router.prefetch("/article/editor");
     router.prefetch("/article/editor/[id]");
   }, []);
   

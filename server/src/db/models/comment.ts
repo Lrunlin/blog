@@ -1,5 +1,6 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
+import xss from "@/common/utils/xss/comment";
 
 export interface CommentAttributes {
   id: number;
@@ -45,7 +46,7 @@ export class Comment
         type: {
           type: DataTypes.STRING(20),
           allowNull: false,
-          comment: "article或者questions",
+          comment: "article或者problem、answer",
         },
         belong_id: {
           type: DataTypes.BIGINT,
@@ -61,6 +62,9 @@ export class Comment
           type: DataTypes.TEXT,
           allowNull: false,
           comment: "内容",
+          set(this, val) {
+            this.setDataValue("content", xss(val as string));
+          },
         },
         reply: {
           type: DataTypes.BIGINT,

@@ -9,8 +9,8 @@ import ArticleList from "@/components/common/ArticleList";
 import TypeHeader from "@/components/page/index/TypeHeader/index";
 import TypeSelect from "@/components/page/index/TypeSelect";
 
-import getTypeTreeIndex, { responseType as typeTreeRsponseType } from "@/request/type-tree-index";
-import getArticleList, { responseType as articleListResponseType } from "@/request/article-list";
+import getTypeTreeIndex, { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
+import getArticleList, { responseType as articleListResponseType } from "@/request/article/article-list";
 import getAdvertisementList, { responseType as advertisementType } from "@/request/advertisement";
 
 interface propsType {

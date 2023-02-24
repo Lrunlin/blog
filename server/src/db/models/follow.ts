@@ -1,9 +1,10 @@
-import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
+import * as Sequelize from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 
 export interface FollowAttributes {
   id: number;
-  blogger_id: number;
+  type: string;
+  belong_id: number;
   user_id: number;
   create_time: Date;
 }
@@ -12,9 +13,13 @@ export type FollowPk = "id";
 export type FollowId = Follow[FollowPk];
 export type FollowCreationAttributes = FollowAttributes;
 
-export class Follow extends Model<FollowAttributes, FollowCreationAttributes> implements FollowAttributes {
+export class Follow
+  extends Model<FollowAttributes, FollowCreationAttributes>
+  implements FollowAttributes
+{
   id!: number;
-  blogger_id!: number;
+  type!: string;
+  belong_id!: number;
   user_id!: number;
   create_time!: Date;
 
@@ -28,10 +33,15 @@ export class Follow extends Model<FollowAttributes, FollowCreationAttributes> im
           primaryKey: true,
           comment: "ID",
         },
-        blogger_id: {
+        type: {
+          type: DataTypes.STRING(30),
+          allowNull: false,
+          comment: "关注的类型:user、problem",
+        },
+        belong_id: {
           type: DataTypes.BIGINT,
           allowNull: false,
-          comment: "被关注者的ID",
+          comment: "被关注的ID",
         },
         user_id: {
           type: DataTypes.BIGINT,
@@ -47,6 +57,14 @@ export class Follow extends Model<FollowAttributes, FollowCreationAttributes> im
       {
         tableName: "follow",
         timestamps: false,
+        indexes: [
+          {
+            name: "PRIMARY",
+            unique: true,
+            using: "BTREE",
+            fields: [{ name: "id" }],
+          },
+        ],
       }
     ) as typeof Follow;
   }

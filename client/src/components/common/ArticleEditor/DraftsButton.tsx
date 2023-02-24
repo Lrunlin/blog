@@ -17,8 +17,13 @@ const DraftsButton = () => {
 
   /** 判断按钮是否禁止点击*/
   let isDisabled = useMemo(() => {
-    return !/^[\s\S]*.*[^\s][\s\S]*$/.test(title) || title.length > 50 || content.length < 20;
-  }, [title, content]);
+    return (
+      !/^[\s\S]*.*[^\s][\s\S]*$/.test(title) ||
+      title.length > 199 ||
+      content.length < 20 ||
+      tag.length == 0
+    );
+  }, [title, content, tag]);
   let [isLoad, setIsLoad] = useState(false);
 
   function createDrafts() {
@@ -78,9 +83,10 @@ const DraftsButton = () => {
       <Button
         ghost
         type="primary"
-        onClick={pathname == "/write" ? createDrafts : updateDrafts}
+        onClick={pathname == "/article/editor" ? createDrafts : updateDrafts}
         disabled={isDisabled}
         loading={isLoad}
+        title={isDisabled ? "需填写标题、文章内容、标签" : undefined}
       >
         保存至草稿箱
       </Button>

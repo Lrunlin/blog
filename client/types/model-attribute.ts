@@ -3,6 +3,7 @@ export interface TagAttributes {
   name: string;
   belong: number;
   icon_file_name?: string;
+  icon_url?: string;
   create_time: Date;
   indexes: number;
 }
@@ -34,7 +35,9 @@ export interface ArticleAttributes {
   /** 是否展示目录*/
   display_directory: boolean;
   collection_count: number;
+  collection_state: number;
   like_count: number;
+  like_state: number;
 }
 export interface UserAttributes {
   id: number;
@@ -61,29 +64,20 @@ export interface UserAttributes {
 }
 export interface FollowAttributes {
   id: number;
-  blogger_id: number;
+  belong_id: number;
   user_id: number;
   create_time: Date;
 }
 
-type commentUserData = Pick<
-  UserAttributes,
-  "id" | "name" | "auth" | "avatar_file_name" | "avatar_url"
->;
 export interface CommentAttributes {
   id: number;
   belong_id: number;
   user_id: number;
-  user_data: commentUserData;
   content: string;
-  reply: null | {
-    content: string;
-    user_data: Pick<UserAttributes, "id" | "name" | "auth" | "avatar_file_name" | "avatar_url">;
-  };
+  reply: null | number;
   comment_pics: string;
   create_time: Date;
-  type: "article" | "questions";
-  children?: CommentAttributes[];
+  type: "article" | "problem";
 }
 
 export interface LinkAttributes {
@@ -104,4 +98,27 @@ export interface NoticeAttributes {
   type: string;
   is_read: number;
   create_time: Date;
+}
+
+export interface ProblemAttributes {
+  id: number;
+  title: string;
+  tag: TagAttributes[];
+  /** 答案数量*/
+  answer_count: number;
+  content: string;
+  language: string[] | null;
+  author: number;
+  answer_id?: number;
+  view_count: number;
+  create_time: string;
+  update_time?: string;
+}
+
+export interface AnswerAttributes {
+  id: number;
+  problem_id: number;
+  content: string;
+  author: number;
+  create_time: string;
 }

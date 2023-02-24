@@ -4,17 +4,18 @@ import { Image } from "antd";
 import style from "./index.module.scss";
 
 interface propsType {
-  /** 根的ID属性*/
-  rootID: string;
+  /** 根的选择器*/
+  root: string;
 }
 
 /** 文章页面图片预览*/
-const ImagePreview: FC<propsType> = ({ rootID }) => {
+const ImagePreview: FC<propsType> = ({ root }) => {
   const [preview, setPreview] = useState("");
   useEffect(() => {
-    let imgs = document
-      .getElementById(rootID)
-      ?.getElementsByTagName("img") as unknown as HTMLCollectionOf<HTMLImageElement>;
+    let imgs = document.querySelectorAll(
+      `${root} img`
+    ) as unknown as HTMLCollectionOf<HTMLImageElement>;
+
     function setPreviewSrc(e: any) {
       if (e?.target?.src) setPreview(e?.target?.src);
     }
@@ -28,6 +29,33 @@ const ImagePreview: FC<propsType> = ({ rootID }) => {
         const element = imgs[index];
         element.removeEventListener("click", setPreviewSrc);
       }
+    };
+  }, []);
+  useEffect(() => {
+    let imgs = document.querySelectorAll(
+      `${root} img`
+    ) as unknown as HTMLCollectionOf<HTMLImageElement>;
+
+    function imageLazyLoad() {
+      function getTop(e: HTMLElement) {
+        var T = e.offsetTop;
+        while (((e as any) = e.offsetParent)) {
+          T += e.offsetTop;
+        }
+        return T;
+      }
+      var H = document.documentElement.clientHeight;
+      var S = document.documentElement.scrollTop || document.body.scrollTop;
+      for (var i = 0; i < imgs.length; i++) {
+        if (H + S > getTop(imgs[i]) && !imgs[i].src) {
+          imgs[i].src = imgs[i].getAttribute("data-src") + "";
+        }
+      }
+    }
+    imageLazyLoad();
+    window.addEventListener("scroll", imageLazyLoad);
+    return () => {
+      window.removeEventListener("scroll", imageLazyLoad);
     };
   }, []);
   return (

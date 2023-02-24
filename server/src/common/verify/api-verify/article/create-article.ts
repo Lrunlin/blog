@@ -36,25 +36,8 @@ let drafts = Joi.object({
     .required()
     .allow(null)
     .error(new Error("文章介绍为1-200的字符串或者null")),
-  cover_file_name: Joi.string()
-    .allow("")
-    .required()
-    .min(15)
-    .max(50)
-    .allow(null)
-    .lowercase()
-    .pattern(/^((?!http).)*$/)
-    .pattern(/^((?!\/).)*$/)
-    .error(new Error("封面地址为图片名称，禁止包含http、/等字眼")),
-  reprint: Joi.string()
-    .allow("")
-    .required()
-    .min(10)
-    .max(150)
-    .allow(null)
-    .lowercase()
-    .pattern(/^https:\/\/.*/)
-    .error(new Error("转载地址为10-100的字符串，要求为https网址")),
+  cover_file_name: fileNameAllowNull,
+  reprint: urlAllowNull,
   state: Joi.number().valid(0).error(new Error("state错误")),
   tag: tag,
   content: Joi.string().min(20).error(new Error("文章内容为最短20的HTML字符串")),

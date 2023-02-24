@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import Base from "@/layout/Base";
+import Read from "@/layout/Content";
 import Aside from "./Aside";
 import dynamic from "next/dynamic";
 import ToolBar from "./ToolBar";
@@ -13,19 +13,13 @@ interface propsType {
 
 const Layout: FC<propsType> = props => {
   return (
-    <Base className="pb-16">
-      <ToolBar />
-      <div className="mr-4 sm:mr-0 flex-1">
-        <article className="p-8 pb-5 bg-white break-all shadow-sm">{props.children}</article>
-        <div className="p-8 pb-10 mt-4 bg-white shadow-sm">
-          <Comments type="article" />
-        </div>
-        <Recommend />
+    <Read className="pb-16" ToolBar={<ToolBar />} Aside={<Aside />}>
+      <article className="p-8 pb-5 bg-white break-all shadow-sm w-full">{props.children}</article>
+      <div className="p-8 pb-10 mt-4 bg-white shadow-sm">
+        <Comments title="评论" />
       </div>
-      <div className="w-60">
-        <Aside />
-      </div>
-    </Base>
+      <Recommend />
+    </Read>
   );
 };
 export default Layout;

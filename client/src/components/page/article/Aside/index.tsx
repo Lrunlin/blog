@@ -8,13 +8,10 @@ const Catalogue = dynamic(import("./Catalogue"), { ssr: false });
 const Aside = () => {
   return (
     <>
-      <aside className="sm:hidden">
-        <div className="w-60">{/* 占位用的防止左侧内容偏移 */}</div>
-        <Repository />
-        <Advertisement type="article" className="mt-3" />
-        <AdSense />
-        <Catalogue />
-      </aside>
+      <Repository />
+      <Advertisement type="article" className="mt-3" />
+      <AdSense />
+      <Catalogue />
     </>
   );
 };

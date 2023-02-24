@@ -6,7 +6,7 @@ import axios from "axios";
 import Head from "@/components/next/Head";
 import Layout from "@/layout/Base";
 import ArticleList from "@/components/common/ArticleList";
-import type { articleListItemType } from "@type/article-list-item";
+import type { articleListItemType } from "@type/model/article-list-item";
 
 const Search: NextPage = () => {
   const [page, setPage] = useState(1);

@@ -29,22 +29,29 @@ app.use(BodyParser());
 import cors from "@koa/cors";
 app.use(cors());
 
+app.use(async (ctx, next) => {
+  console.log(ctx.path, (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2));
+  await next();
+});
+
 import getAllRouter from "@/common/modules/getAllRouter";
 (async () => {
   let Routers = await getAllRouter();
 
   let routeCount = 0;
   Routers.forEach((item, index) => {
-    import(item).then(_route => {
-      try {
+    import(item)
+      .then(_route => {
         if (_route?.default?.routes()) {
           routeCount += _route.default.routes().router.stack.length;
           app.use(_route.default.routes());
+        } else {
+          console.log(item, _route.default);
         }
-      } catch (error) {
-        console.log(item, _route.default);
-      }
-    });
+      })
+      .catch(err => {
+        console.log(err);
+      });
     if (Routers.length == index + 1) {
       const port = 3000;
       app.listen(port, function () {

@@ -13,13 +13,13 @@ interface propsType {
 const Layout: FC<propsType> = props => {
   let list = [
     {
-      label: "评论通知",
-      href: "comment",
+      label: "通知",
+      href: "notice",
     },
-    {
-      label: "关注通知",
-      href: "article",
-    },
+    // {
+    //   label: "系统通知",
+    //   href: "system-notification",
+    // },
   ];
 
   let userData = useUserData();

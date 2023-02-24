@@ -1,9 +1,9 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import Sequelize from "@/db/config";
-import sequelize from "sequelize";
 let router = new Router();
 
+// 粉丝排行榜
 router.get("/ranking/funs", async ctx => {
   const data = await DB.Follow.findAll({
     offset: 0,
@@ -11,7 +11,9 @@ router.get("/ranking/funs", async ctx => {
     order: [["funs_count", "desc"]],
     attributes: [
       [
-        Sequelize.literal(`(SELECT count(id) FROM user WHERE user.id = follow.blogger_id)`),
+        Sequelize.literal(
+          `(SELECT count(id) FROM user WHERE user.id = follow.belong_id and type="user")`
+        ),
         "funs_count",
       ],
     ],

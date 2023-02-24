@@ -2,24 +2,36 @@ import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import interger from "@/common/verify/integer";
+import sequelize from "@/db/config";
+import transaction from "@/common/transaction/follow/unfollow";
+
 let router = new Router();
 
-router.delete("/follow/:bogger_id", interger([], ["bogger_id"]), auth([0, 1]), async ctx => {
-  let boggerID = +ctx.params.bogger_id;
+router.delete("/follow/:belong_id", interger([], ["belong_id"]), auth(0), async ctx => {
+  let belong_id = +ctx.params.belong_id;
+  
+  let t = await sequelize.transaction();
+  let _t = await transaction(belong_id, ctx.id as number, t);
 
-  await DB.Follow.destroy({
+  let result = await DB.Follow.destroy({
     where: {
-      blogger_id: boggerID,
+      belong_id: belong_id,
       user_id: ctx.id,
     },
   })
-    .then(res => {
-      let isSuccess = !!res;
-      ctx.body = { success: isSuccess, message: isSuccess ? "删除成功" : "删除失败" };
-    })
+    .then(res => !!res)
     .catch(err => {
-      ctx.body = { success: false, message: "关注失败" };
       console.log(err);
+      return false;
     });
+
+  if (result && _t) {
+    ctx.body = { success: true, message: "操作成功" };
+    t.commit();
+  } else {
+    ctx.status = 500;
+    ctx.body = { success: false, message: "操作失败" };
+    t.rollback();
+  }
 });
 export default router;

@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 17/01/2023 08:23:19
+ Date: 23/02/2023 16:23:15
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `answer`  (
   `author` bigint NOT NULL COMMENT '回答者ID',
   `create_time` datetime NOT NULL COMMENT '回答时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for article
@@ -50,7 +50,7 @@ CREATE TABLE `answer`  (
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`  (
   `id` bigint NOT NULL COMMENT '文章ID',
-  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章介绍',
   `tag` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标签',
   `author` bigint NOT NULL COMMENT '发布者ID',
@@ -71,7 +71,7 @@ DROP TABLE IF EXISTS `collection`;
 CREATE TABLE `collection`  (
   `id` bigint NOT NULL COMMENT 'ID',
   `belong_id` bigint NOT NULL COMMENT '文章ID',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型article、question等',
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'article或者problem',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '收藏时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -83,7 +83,7 @@ CREATE TABLE `collection`  (
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
   `id` bigint NOT NULL COMMENT 'ID',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'article或者questions',
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'article或者problem、answer',
   `belong_id` bigint NOT NULL COMMENT '所属上级的ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '内容',
@@ -100,7 +100,8 @@ CREATE TABLE `comment`  (
 DROP TABLE IF EXISTS `follow`;
 CREATE TABLE `follow`  (
   `id` bigint NOT NULL COMMENT 'ID',
-  `blogger_id` bigint NOT NULL COMMENT '被关注者的ID',
+  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '关注的类型:user、problem',
+  `belong_id` bigint NOT NULL COMMENT '被关注的ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '关注时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -112,12 +113,12 @@ CREATE TABLE `follow`  (
 DROP TABLE IF EXISTS `likes`;
 CREATE TABLE `likes`  (
   `id` bigint NOT NULL COMMENT '记录ID',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型article、question等',
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'article或者problem、answer',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `belong_id` bigint NOT NULL COMMENT '文章ID',
   `create_time` datetime NOT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for link
@@ -158,14 +159,14 @@ CREATE TABLE `problem`  (
   `id` bigint NOT NULL COMMENT 'ID',
   `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题题目',
   `tag` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'tag类型',
-  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题内筒',
+  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题内容',
   `author` bigint NOT NULL COMMENT '发布人ID',
   `answer_id` bigint NULL DEFAULT NULL COMMENT '采纳答案的ID',
   `view_count` int NOT NULL COMMENT '阅读量',
   `create_time` datetime NOT NULL COMMENT '发布时间',
-  `update_time` datetime NOT NULL COMMENT '最后更新时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for tag

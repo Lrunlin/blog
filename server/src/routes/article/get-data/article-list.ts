@@ -35,7 +35,7 @@ let attributes = [
 ];
 
 let router = new Router();
-/** 根据前端传递的Query参数进行文章分页查询*/
+/** 用户端搜索:根据前端传递的Query参数进行文章分页查询*/
 router.get("/article/list/page/:page", verify, async ctx => {
   let page = +ctx.params.page;
   let where: WhereOptions<ArticleAttributes> = {};

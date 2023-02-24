@@ -6,13 +6,14 @@ import { modalStateContext } from "@/components/common/Header/Sign";
 import useSWR from "swr";
 import axios from "axios";
 import { userDataContext } from "@/store/user-data";
-import type { response } from "@type/response";
+import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
 
 interface propsType {
   /** 文章作者id*/
-  bloggerID: FollowAttributes["blogger_id"];
+  bloggerID: FollowAttributes["belong_id"];
   articleID: number;
+  type: "article" | "problem";
 }
 /** 文章页面的关注按钮，会自动获取状态并展示对应的按钮*/
 const SwitchButton: FC<propsType> = props => {
@@ -51,7 +52,7 @@ const SwitchButton: FC<propsType> = props => {
                 ? data
                   ? unfollow()
                   : follow()
-                : router.push(`/article/editor/${props.articleID}`);
+                : router.push(`/${props.type}/editor/${props.articleID}`);
             }}
           >
             {userData?.id != props.bloggerID ? (data ? "已关注" : "+关注") : "编辑"}

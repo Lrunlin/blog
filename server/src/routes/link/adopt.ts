@@ -7,7 +7,7 @@ import interger from "@/common/verify/integer";
 
 let router = new Router();
 
-router.put("/link/:id", interger([], ["id"]), auth(0), async ctx => {
+router.put("/link/:id", interger([], ["id"]), auth(), async ctx => {
   let id = ctx.params.id;
   let t = await sequelize.transaction();
   let updateResult = await DB.Link.update({ state: 1 }, { where: { id: id }, transaction: t })

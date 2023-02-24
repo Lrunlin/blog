@@ -7,7 +7,7 @@ import DB from "@/db";
  */
 async function getBloggerList(id: number) {
   return await DB.Follow.findAll({
-    where: { user_id: id },
+    where: { user_id: id, type: "user" },
     attributes: ["id"],
   })
     .then(rows => rows.map(item => item.toJSON().id) as unknown as number[])

@@ -12,7 +12,7 @@ router.post("/article", verify, async ctx => {
   let t = await sequelize.transaction();
   // 只有正式发布才创建通知
   let _t = state == 1 ? await transaction(_id, ctx.id as number, t) : true;
-  let createArticle = await DB.Article.create(
+  let createArticleResult = await DB.Article.create(
     {
       id: _id,
       title: title,
@@ -31,7 +31,7 @@ router.post("/article", verify, async ctx => {
     .then(() => true)
     .catch(() => false);
 
-  if (createArticle && _t) {
+  if (createArticleResult && _t) {
     ctx.body = { success: true, message: `发布成功`, data: { article_id: _id } };
     t.commit();
   } else {

@@ -1,4 +1,4 @@
-import { useState, useEffect, startTransition, useRef, memo } from "react";
+import { useState, useEffect, startTransition, useRef } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
 import Layout from "@/components/page/notification/Layout";
@@ -7,7 +7,47 @@ import { Skeleton, Empty } from "antd";
 import Notice from "@/components/page/notification/Notice";
 import { useSearchParams } from "next/navigation";
 import useUserData from "@/store/user-data";
-const Notification: NextPage = memo(() => {
+import type {
+  NoticeAttributes,
+  UserAttributes,
+  CommentAttributes,
+  ProblemAttributes,
+} from "@type/model-attribute";
+
+/** 通知页面评论相关类型*/
+export interface noticeCommentListType extends NoticeAttributes {
+  label: {
+    type: "problem" | "article";
+    user_data: Pick<UserAttributes, "id" | "name" | "avatar_file_name" | "avatar_url">;
+    content_data: {
+      id: number;
+      title: string;
+    };
+    comment_data: Pick<CommentAttributes, "id" | "content"> & {
+      reply: Pick<CommentAttributes, "content"> | null;
+    };
+  };
+}
+
+/** 通知页面answer类型*/
+export interface noticeAnswerListType extends NoticeAttributes {
+  label: {
+    type: "problem" | "article";
+    user_data: Pick<UserAttributes, "id" | "name" | "avatar_file_name" | "avatar_url">;
+    problem_data: Pick<ProblemAttributes, "id" | "title">;
+  };
+}
+
+/** 通知页面follow类型*/
+export interface noticeFollowListType extends NoticeAttributes {
+  label: {
+    type: "problem" | "article";
+    user_data: Pick<UserAttributes, "id" | "name" | "avatar_file_name" | "avatar_url">;
+    content_data: Pick<ProblemAttributes, "id" | "title">;
+  };
+}
+
+const Notification: NextPage = () => {
   let [userData] = useUserData();
   let searchParams = useSearchParams();
 
@@ -19,7 +59,7 @@ const Notification: NextPage = memo(() => {
     if (
       searchParams.get("type") &&
       userData &&
-      ["article", "comment"].includes(searchParams.get("type") + "")
+      ["notice", "system-notification"].includes(searchParams.get("type") + "")
     ) {
       type.current = searchParams.get("type") as string;
       page.current = 1;
@@ -42,7 +82,7 @@ const Notification: NextPage = memo(() => {
       });
   }
 
-  // 标记已读
+  /** 标记已读*/
   useEffect(() => {
     let noticeList = list.filter(item => item.is_read == 0).map(item => item.id);
     if (noticeList.length) {
@@ -61,7 +101,6 @@ const Notification: NextPage = memo(() => {
           }}
           hasMore={list.length < total}
           loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-          className="w-[700px]"
         >
           <Notice data={list} />
         </InfiniteScroll>
@@ -72,5 +111,5 @@ const Notification: NextPage = memo(() => {
       )}
     </Layout>
   );
-});
+};
 export default Notification;

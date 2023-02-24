@@ -1,6 +1,6 @@
 import { PluginComponent } from "react-markdown-editor-lite";
 import { Modal, Select } from "antd";
-import type { response } from "@type/response";
+import type { response } from "@type/common/response";
 import axios from "axios";
 import { MenuUnfoldOutlined } from "@ant-design/icons";
 

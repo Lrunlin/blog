@@ -5,7 +5,7 @@ import getUserId from "@/common/middleware/getUserId";
 
 let router = new Router();
 
-// 用户的关注列表
+// 用户的关注列表(他是哪些人的粉丝)
 router.get("/following/:user_id", integer(["page"], ["user_id"]), getUserId, async ctx => {
   let userID = ctx.params.user_id;
   let page = +(ctx.query.page as unknown as string);
@@ -16,12 +16,12 @@ router.get("/following/:user_id", integer(["page"], ["user_id"]), getUserId, asy
     offset: (page - 1) * 20,
     limit: 20,
     order: [["create_time", "desc"]],
-    attributes: ["id"],
+    attributes: ["belong_id"],
   });
 
   // 根据关注列表查询指定的用户信息
   let userList = await DB.User.findAll({
-    where: { id: followList.map(item => item.id) },
+    where: { id: followList.map(item => item.belong_id) },
     attributes: ["id", "name", "description", "avatar_file_name", "avatar_url"],
   });
 
@@ -29,7 +29,7 @@ router.get("/following/:user_id", integer(["page"], ["user_id"]), getUserId, asy
   await Promise.all(
     userList.map(item =>
       DB.Follow.findOne({
-        where: { user_id: ctx.id, blogger_id: item.id },
+        where: { user_id: ctx.id, belong_id: item.id },
         attributes: ["id"],
       })
     )

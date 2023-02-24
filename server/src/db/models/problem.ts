@@ -1,5 +1,6 @@
-import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
+import * as Sequelize from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
+import dehydrate from "@/common/utils/xss/article";
 
 export interface ProblemAttributes {
   id: number;
@@ -18,7 +19,10 @@ export type ProblemId = Problem[ProblemPk];
 export type ProblemOptionalAttributes = "answer_id" | "update_time";
 export type ProblemCreationAttributes = Optional<ProblemAttributes, ProblemOptionalAttributes>;
 
-export class Problem extends Model<ProblemAttributes, ProblemCreationAttributes> implements ProblemAttributes {
+export class Problem
+  extends Model<ProblemAttributes, ProblemCreationAttributes>
+  implements ProblemAttributes
+{
   id!: number;
   title!: string;
   tag!: string;
@@ -28,7 +32,6 @@ export class Problem extends Model<ProblemAttributes, ProblemCreationAttributes>
   view_count!: number;
   create_time!: Date;
   update_time?: Date;
-
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Problem {
     return sequelize.define(
@@ -54,13 +57,18 @@ export class Problem extends Model<ProblemAttributes, ProblemCreationAttributes>
           },
           get() {
             let type = this.getDataValue("tag");
-            return /^[\s\S]*.*[^\s][\s\S]*$/.test(type) ? type.split(",").map(item => +item) : [];
+            if (type) {
+              return /^[\s\S]*.*[^\s][\s\S]*$/.test(type) ? type.split(",").map(item => +item) : [];
+            }
           },
         },
         content: {
           type: DataTypes.TEXT,
           allowNull: false,
-          comment: "问题内筒",
+          comment: "问题内容",
+          set(this, val) {
+            this.setDataValue("content", dehydrate(val as string, "problem"));
+          },
         },
         author: {
           type: DataTypes.BIGINT,

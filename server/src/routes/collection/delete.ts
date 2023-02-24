@@ -18,7 +18,7 @@ router.delete("/collection/:belong_id", interger([], ["belong_id"]), auth(0), as
       ctx.body = { success: isSuccess, message: isSuccess ? "删除成功" : "删除失败" };
     })
     .catch(err => {
-      ctx.body = { success: false, message: "删除失败" };
+      ctx.status = 500;
       console.log(err);
     });
 });

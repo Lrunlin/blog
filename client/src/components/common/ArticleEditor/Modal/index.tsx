@@ -40,7 +40,7 @@ const Modal: FC<modalPropsType> = props => {
             hidden
             rules={[
               { required: true, message: "请填写标题" },
-              { min: 3, max: 50, message: "标题字数为3-50" },
+              { min: 3, max: 200, message: "标题字数为3-200" },
             ]}
             children={<div></div>}
           />

@@ -5,12 +5,12 @@ import { modalStateContext } from "@/components/common/Header/Sign";
 import useSWR from "swr";
 import axios from "axios";
 import { userDataContext } from "@/store/user-data";
-import type { response } from "@type/response";
+import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
 import { useRouter } from "next/navigation";
 
 interface propsType {
-  bloggerID: FollowAttributes["blogger_id"];
+  bloggerID: FollowAttributes["belong_id"];
 }
 const SwitchButton: FC<propsType> = props => {
 
@@ -18,7 +18,7 @@ const SwitchButton: FC<propsType> = props => {
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
   function follow() {
-    axios.post<response>(`/follow/${props.bloggerID}`).then(res => {
+    axios.post<response>(`/follow/${props.bloggerID}`,{type:"user"}).then(res => {
       mutate();
     });
   }

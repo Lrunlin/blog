@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useSWR from "swr";
-import getTypeTree from "@/request/type-tree";
+import getTypeTree from "@/request/type/type-tree";
 import classNames from "classnames";
 import { message, Badge } from "antd";
 import { useRecoilState } from "recoil";

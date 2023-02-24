@@ -11,7 +11,7 @@ const Navigation = () => {
         首页
       </ActiveLink>
       <ActiveLink
-        href="/questions"
+        href="/problem"
         className="ml-4 text-zinc-800 sm:hidden"
         activeClassName={style["type-active"]}
       >

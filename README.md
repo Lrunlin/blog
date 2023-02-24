@@ -69,7 +69,7 @@ API 接口文档 Apifox
 2. ~~积分功能~~
 3. 问答功能
 4. 文章页面主题模式
-5. ~~Next.js 13~~ 升级为 app 文件夹并且使用 server component
+5. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
 6. Redis 接口环境以及对应的事务处理
 7. 小组功能
 

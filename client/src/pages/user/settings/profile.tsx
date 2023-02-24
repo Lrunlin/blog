@@ -53,6 +53,13 @@ const Profile: NextPage = () => {
       {data && (
         <div className="flex mt-6">
           <div className="w-3/5 ml-8">
+            <style jsx global>
+              {`
+                .ant-form-item {
+                  margin-bottom: 10px;
+                }
+              `}
+            </style>
             <Form
               form={form}
               labelCol={{ span: 4 }}

@@ -15,5 +15,56 @@ Models.Likes.belongsTo(Models.Article, { foreignKey: "belong_id", targetKey: "id
 Models.Follow.belongsTo(Models.User, {
   as: "user_data",
   targetKey: "id",
-  foreignKey: "blogger_id",
+  foreignKey: "belong_id",
+});
+
+Models.Problem.belongsTo(Models.Answer, {
+  foreignKey: "answer_id",
+  targetKey: "id",
+});
+// Answer根据problem_id生成问题中的answer_list;
+Models.Problem.hasMany(Models.Answer, {
+  as: "answer_list",
+  foreignKey: "problem_id",
+  sourceKey: "id",
+});
+// Models.Problem.hasMany(Models.Follow, {
+//   as: "follow_data",
+//   foreignKey: "belong_id",
+//   sourceKey: "id",
+// });
+Models.Problem.belongsTo(Models.Follow, {
+  as: "follow_data",
+  foreignKey: "id",
+  targetKey: "belong_id",
+});
+
+Models.Problem.belongsTo(Models.User, { as: "author_data", foreignKey: "author", targetKey: "id" });
+Models.Problem.hasMany(Models.Comment, {
+  as: "comment_list",
+  foreignKey: "belong_id",
+  sourceKey: "id",
+});
+Models.Problem.belongsTo(Models.Collection, {
+  as: "collection_data",
+  foreignKey: "id",
+  targetKey: "belong_id",
+});
+Models.Problem.belongsTo(Models.Likes, {
+  as: "like_data",
+  foreignKey: "id",
+  targetKey: "belong_id",
+});
+
+Models.Answer.hasMany(Models.Likes, {
+  foreignKey: "belong_id",
+  sourceKey: "id",
+  as: "like_data",
+});
+
+Models.Answer.belongsTo(Models.User, { as: "author_data", foreignKey: "author", targetKey: "id" });
+Models.Answer.hasMany(Models.Comment, {
+  as: "comment_list",
+  foreignKey: "belong_id",
+  sourceKey: "id",
 });

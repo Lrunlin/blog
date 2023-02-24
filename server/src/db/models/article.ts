@@ -1,6 +1,6 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
-import dehydrate from "@/common/modules/article/set/dehydrate";
+import dehydrate from "@/common/utils/xss/article";
 import hooks from "../hooks/article";
 
 export interface ArticleAttributes {
@@ -56,7 +56,7 @@ export class Article
           comment: "文章ID",
         },
         title: {
-          type: DataTypes.STRING(200),
+          type: DataTypes.TEXT,
           allowNull: false,
           comment: "文章标题",
         },
@@ -94,7 +94,7 @@ export class Article
           allowNull: false,
           comment: "文章内容",
           set(this, val) {
-            this.setDataValue("content", dehydrate(val as string));
+            this.setDataValue("content", dehydrate(val as string, "article"));
           },
         },
         cover_file_name: {
@@ -166,7 +166,7 @@ export class Article
             fields: [{ name: "id" }],
           },
         ],
-        hooks:hooks,
+        hooks: hooks,
       }
     ) as typeof Article;
   }

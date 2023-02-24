@@ -39,7 +39,7 @@
     "qiniu": "7.8.0",
     "qs": "^6.11.0",
     "sanitize-html": "^2.7.0",
-    "sequelize": "^6.21.1",
+    "sequelize": "6.28.0",
     "sha1": "^1.1.1",
     "sharp": "^0.30.1",
     "turndown": "^7.1.1",

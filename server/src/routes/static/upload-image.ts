@@ -15,16 +15,25 @@ let uploadOption = multer({
 });
 
 function verify() {
-  const folderList = ["article", "avatar", "cover", "type", "comment", "advertisement", "link"];
+  const folderList = [
+    "article",
+    "avatar",
+    "cover",
+    "type",
+    "comment",
+    "advertisement",
+    "link",
+    "problem",
+    "answer",
+  ];
   return async (ctx: Context, next: Next) => {
     if (folderList.includes(ctx.params.folder)) {
       await next();
     } else {
       ctx.body = {
         success: false,
-        message: "已经记录日志了",
+        message: "请上传至正确的路径",
       };
-      console.log(`id: ${ctx.id} 尝试瞎上传图片`);
     }
   };
 }
@@ -32,7 +41,6 @@ function verify() {
 router.post("/static/:folder", auth(0), verify(), uploadOption.single("image"), async ctx => {
   let buffer = ctx.file.buffer;
 
-  ;
   let fileName = `${v4().replace(/-/g, "")}.webp`;
 
   await upload(buffer, [ctx.params.folder, fileName])

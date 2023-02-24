@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import type { FC } from "react";
-import { responseType as typeTreeRsponseType } from "@/request/type-tree-index";
+import { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
 import style from "../index.module.scss";
 import classNames from "classnames";
 import { useRecoilValue } from "recoil";

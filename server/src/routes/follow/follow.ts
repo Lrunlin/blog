@@ -1,27 +1,18 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import id from "@/common/utils/id";
-import auth from "@/common/middleware/auth";
-import interger from "@/common/verify/integer";
+import verify from "@/common/verify/api-verify/follow/create";
+
 let router = new Router();
 
-router.post("/follow/:bogger_id", interger([], ["bogger_id"]), auth(0), async ctx => {
-  let boggerID = +ctx.params.bogger_id;
-
-  if (boggerID == ctx.id) {
-    ctx.body = { success: false, message: "不能关注自己！！！" };
-    return;
-  }
-
-  let blogger = await DB.User.findOne({ where: { id: boggerID }, attributes: ["state"] });
-  if (!blogger) {
-    ctx.body = { success: false, message: "没有找到对应的博主" };
-    return;
-  }
+router.post("/follow/:belong_id", verify, async ctx => {
+  let boggerID = +ctx.params.belong_id;
+  let type = ctx.request.body.type;
 
   await DB.Follow.create({
     id: id(),
-    blogger_id: boggerID,
+    belong_id: boggerID,
+    type: type,
     user_id: ctx.id as number,
     create_time: new Date(),
   })
@@ -29,6 +20,7 @@ router.post("/follow/:bogger_id", interger([], ["bogger_id"]), auth(0), async ct
       ctx.body = { success: true, message: "关注成功" };
     })
     .catch(err => {
+      ctx.status = 500;
       ctx.body = { success: false, message: "关注失败" };
       console.log(err);
     });

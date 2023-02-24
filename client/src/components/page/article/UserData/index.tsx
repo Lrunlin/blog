@@ -7,10 +7,11 @@ import type { ArticleAttributes } from "@type/model-attribute";
 
 interface propsType {
   data: Pick<ArticleAttributes, "author_data" | "create_time" | "view_count" | "id">;
+  type: "article" | "problem";
 }
 
 /** 文章页面作者信息展示*/
-const ArticleUserData: FC<propsType> = ({ data }) => {
+const ArticleUserData: FC<propsType> = ({ data, type }) => {
   let router = useRouter();
   return (
     <>
@@ -31,7 +32,7 @@ const ArticleUserData: FC<propsType> = ({ data }) => {
             </div>
           </div>
         </div>
-        <FollwoButton articleID={data.id} bloggerID={data.author_data.id} />
+        <FollwoButton type={type} articleID={data.id} bloggerID={data.author_data.id} />
       </div>
     </>
   );

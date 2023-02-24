@@ -3,6 +3,7 @@ import DB from "@/db";
 import interger from "@/common/verify/integer";
 let router = new Router();
 
+/** 管理系统查询评论*/
 router.get("/comment/list/page/:page", interger([], ["page"]), async ctx => {
   let page = +ctx.params.page;
 

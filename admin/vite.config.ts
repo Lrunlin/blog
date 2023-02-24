@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 // import path from "path"; // https://vitejs.dev/config/
-const path=require('path');
+const path = require("path");
 export default defineConfig({
   resolve: {
     alias: {
@@ -15,11 +15,6 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1024, //大于1mb警报
-    terserOptions: {
-      compress: {
-        drop_console: true,
-      },
-    },
     rollupOptions: {
       output: {
         chunkFileNames: "static/[name].blog.[hash].js",

@@ -27,7 +27,7 @@ router.get("/achievement/:user_id", async ctx => {
   let articleViewCount = (await DB.Article.sum("view_count", { where: { author: userID } })) || 0;
 
   //被多少人关注了
-  let fansCount = DB.Follow.count({ where: { blogger_id: userID } });
+  let fansCount = DB.Follow.count({ where: { belong_id: userID } });
 
   await Promise.all([articleCollectionCount, fansCount, articleList, articleViewCount])
     .then(result => {

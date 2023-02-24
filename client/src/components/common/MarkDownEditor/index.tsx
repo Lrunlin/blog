@@ -1,28 +1,28 @@
 import { memo, useState, useEffect, useRef } from "react";
-import type { FC } from "react";
+import type { FC, CSSProperties } from "react";
 import axios from "axios";
 
 import MdEditor from "react-markdown-editor-lite";
-import { marked } from "marked";
 import "react-markdown-editor-lite/lib/index.css";
+import type { PluginProps } from "react-markdown-editor-lite";
+import { marked } from "marked";
 import { message } from "antd";
-import { useRecoilState } from "recoil";
-import { writeArticleContext } from "../ArticleEditor/index";
 
 import style from "./index.module.scss";
 
 import LanguageListPlugin from "./LanguageListPlugin";
 MdEditor.use(LanguageListPlugin);
 
-interface propsType {
+export interface propsType {
   className?: string;
   /** 上传至哪个文件夹*/
-  target: "article" | "questions";
+  target: "article" | "problem" | "answer";
   /** 初始化数据*/
   initValue?: string;
   onChange?: (html: string) => any;
+  style?: CSSProperties;
+  view?: PluginProps["editorConfig"]["view"];
 }
-
 const MarkDonwEdit: FC<propsType> = memo(props => {
   const [value, setValue] = useState("");
   let allowChangeValue = useRef(true);
@@ -39,8 +39,9 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
   return (
     <>
       <MdEditor
+        view={props.view}
         value={value}
-        style={{ height: "800px" }}
+        style={Object.assign({ height: "800px" }, props.style)}
         renderHTML={text =>
           marked(text, {
             headerIds: false,

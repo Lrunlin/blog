@@ -9,7 +9,7 @@ let router = new Router();
 router.get("/follow/state/:id", interger([], ["id"]), auth(0), async ctx => {
   await DB.Follow.findAndCountAll({
     where: {
-      blogger_id: ctx.params.id,
+      belong_id: ctx.params.id,
       user_id: ctx.id,
     },
   })

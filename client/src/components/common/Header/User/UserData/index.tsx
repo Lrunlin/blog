@@ -19,11 +19,11 @@ const UserData = () => {
             items: [
               {
                 label: "发布文章",
-                key: "/write",
+                key: "/article/editor",
               },
               {
                 label: "提问题",
-                key: "/questions/write",
+                key: "/problem/editor",
               },
               {
                 label: "创作者中心",

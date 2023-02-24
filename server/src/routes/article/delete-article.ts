@@ -21,6 +21,7 @@ router.delete("/article/:id", interger([], ["id"]), auth(0), async ctx => {
     where: where,
     transaction: t,
   });
+
   let _t = await transaction(id, t);
   ctx.body = {
     success: _t && deleteArticleCount,

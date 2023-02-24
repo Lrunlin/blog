@@ -45,7 +45,7 @@ const Aside = () => {
         <Avatar size={48} />
         <div className="w-20 ml-2 text-lg truncate">{userData?.name}</div>
       </div>
-      <Button type="primary" block className="mt-8" onClick={() => router.push("/write")}>
+      <Button type="primary" block className="mt-8" onClick={() => router.push("/article/editor")}>
         写文章
       </Button>
       <div className="mt-4 select-none">

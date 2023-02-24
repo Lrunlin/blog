@@ -1,5 +1,5 @@
 import { FC } from "react";
-import type { articleListItemType } from "@type/article-list-item";
+import type { articleListItemType } from "@type/model/article-list-item";
 import dayjs from "dayjs";
 import style from "./index.module.scss";
 import classNames from "classnames";
@@ -35,7 +35,7 @@ const ArticleItem: FC<propsType> = props => {
             <a
               className={classNames(["text-[#86909c]", style.tag])}
               key={`tag${data.id}${item.name}${index}`}
-              href={`/search?tag=${item.name}`}
+              href={`/tag/${item.name}/article`}
               target="_blank"
             >
               {item.name}
@@ -46,7 +46,7 @@ const ArticleItem: FC<propsType> = props => {
       <div className="flex pb-2">
         <div className={classNames([data.cover_url ? "w-[calc(100%-130px)]" : "w-11/12"])}>
           <a
-            className="font-bold text-lg text-[#1d2129] block truncate"
+            className="w-10/12 block font-bold text-lg text-[#1d2129] truncate"
             href={`/article/${data.id}`}
             target="_blank"
           >

@@ -4,6 +4,6 @@ import Catalogue_ from "./Catalogue";
 /** 文章页面侧边目录*/
 const Catalogue = () => {
   let articleData = useRecoilValue(currentArticleDataContext);
-  return <>{articleData && <Catalogue_ />}</>;
+  return <>{articleData.display_directory && <Catalogue_ />}</>;
 };
 export default Catalogue;

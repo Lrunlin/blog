@@ -36,7 +36,7 @@ export class Likes
         type: {
           type: DataTypes.STRING(20),
           allowNull: false,
-          comment: "类型article、question等",
+          comment: "article或者problem、answer",
         },
         user_id: {
           type: DataTypes.BIGINT,

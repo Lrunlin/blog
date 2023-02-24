@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import type { GetServerSideProps, NextPage } from "next";
 import { atom } from "recoil";
 import axios from "axios";
+import { parse } from "cookie";
 import RecoilRoot from "@/components/page/article/RecoilRoot";
 import Head from "@/components/next/Head";
 import Layout from "@/components/page/article/Layout";
@@ -36,7 +37,7 @@ const Article: NextPage<propsType> = ({ data }) => {
       <RecoilRoot currentArticleData={data}>
         <Layout>
           <h1 className="text-4xl font-semibold">{data.title}</h1>
-          <ArticleUserData data={data} />
+          <ArticleUserData data={data} type="article" />
           <View language={data.language} content={data.content} />
           <Reprint reprint={data.reprint} />
         </Layout>
@@ -47,7 +48,11 @@ const Article: NextPage<propsType> = ({ data }) => {
 export default Article;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  let response = await axios(`/article/${(ctx as any).params.id}`)
+  let { token } = parse(ctx?.req?.headers?.cookie + "");
+
+  let response = await axios(`/article/${(ctx as any).params.id}`, {
+    headers: { authorization: token },
+  })
     .then(res => res.data.data)
     .catch(() => null);
   if (!response) {

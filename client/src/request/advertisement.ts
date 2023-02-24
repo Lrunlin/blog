@@ -1,5 +1,5 @@
 import axios from "axios";
-import { response } from "@type/response";
+import { response } from "@type/common/response";
 interface advertisementType {
   id: number;
   url: string;

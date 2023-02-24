@@ -18,8 +18,8 @@ router.delete("/like/:belong_id", interger([], ["belong_id"]), auth(0), async ct
       ctx.body = { success: isSuccess, message: isSuccess ? "取消成功" : "取消失败" };
     })
     .catch(err => {
-      ctx.body = { success: false, message: "取消失败" };
       console.log(err);
+      ctx.status = 500;
     });
 });
 export default router;

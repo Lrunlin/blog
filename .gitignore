@@ -5,7 +5,6 @@ dist
 .DS_Store
 *.local
 
-
 server/**/.env.development
 server/**/.env.production
 

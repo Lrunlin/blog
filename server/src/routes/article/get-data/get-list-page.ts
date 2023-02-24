@@ -7,6 +7,8 @@ import qs from "qs";
 import getTagData from "@/common/modules/article/get/get-tag-data";
 
 let router = new Router();
+
+/** 管理系统搜索*/
 router.get("/article/page/:page", interger([], ["page"]), auth(), async ctx => {
   let page = +ctx.params.page;
   let query = qs.parse(ctx.querystring);

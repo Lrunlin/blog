@@ -7,18 +7,20 @@ import Editor from "./Editor";
 import Comment from "./Comment";
 
 export interface propsType {
-  type: "article" | "questions";
+  title?: string;
 }
 export const commentContext = createContext({ type: "" });
 /** 文章页面评论组件*/
-const Comments: FC<propsType> = ({ type }) => {
+const Comments: FC<propsType> = ({ title }) => {
   let userData = useRecoilValue(userDataContext);
   let setModalState = useSetRecoilState(modalStateContext);
   return (
-    <commentContext.Provider value={{ type: type }}>
-      <div className="text-xl font-black mb-4" id="comment">
-        评论
-      </div>
+    <>
+      {title && (
+        <div className="text-xl font-black mb-4" id="comment">
+          {title}
+        </div>
+      )}
       <div>
         {userData ? (
           <Editor id="comment" />
@@ -34,7 +36,7 @@ const Comments: FC<propsType> = ({ type }) => {
         )}
       </div>
       <Comment />
-    </commentContext.Provider>
+    </>
   );
 };
 export default Comments;

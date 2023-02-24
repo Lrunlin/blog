@@ -11,7 +11,7 @@ let schema = Joi.object({
 
 router.put("/notice/read", auth(0), verify(schema), async ctx => {
   let list = ctx.request.body.notice_list;
-  await DB.Notice.update({ is_read: 1 }, { where: { id: list } })
+  await DB.Notice.update({ is_read: 1 }, { where: { id: list, user_id: ctx.id } })
     .then(res => {
       ctx.body = {
         success: true,

@@ -1,53 +1,72 @@
 import { FC } from "react";
-import type {
-  ArticleAttributes,
-  NoticeAttributes,
-  UserAttributes,
-  CommentAttributes,
-} from "@type/model-attribute";
 import { Avatar } from "antd";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import dayjs from "dayjs";
-
-interface dataType extends Omit<NoticeAttributes, "is_read"> {
-  label: {
-    user_data: Pick<UserAttributes, "id" | "name" | "avatar_url" | "avatar_file_name">;
-    article_data: Pick<ArticleAttributes, "id" | "title" | "author">;
-    comment_data: Pick<CommentAttributes, "id" | "content" | "reply" | "belong_id" | "type">;
-    raply_comment: Pick<CommentAttributes, "content">;
-  };
+import type { noticeCommentListType } from "@/pages/notification/[type]";
+interface propsType {
+  data: noticeCommentListType;
 }
+function _switch(type: keyof typeof map, reply: boolean) {
+  /** 第一个显示的正常评论下的文字，第二个数组显示的是reply下的显示文字*/
+  let map = {
+    answer: [["评论了你的问题"], ["回复了你在问题", "下的评论"]],
+    problem: [
+      ["评论了你在问题", "下的答案"],
+      ["回复了在问题", "下的评论"],
+    ],
+    article: [["评论了你的文章"], ["回复了你在文章", "下的评论"]],
+  };
 
-const ArticleCommentNotice: FC<{ data: dataType }> = ({ data }) => {
+  let key = Object.keys(map).find(item => type.includes(item)) as string;
+  return map[key as keyof typeof map][reply ? 1 : 0];
+}
+//评论了你的问题XXX  回复了你在XXX下的评论
+//评论了你在问题XXX下的答案  回复了在问题XXX下的评论
+//评论了你的文章XXX  回复了你在问题XXX下的评论
+
+const ArticleCommentNotice: FC<propsType> = ({ data }) => {
+  let _data = _switch(data.type as any, !!data.label.comment_data.reply);
   return (
-    <div className="flex w-[600px]">
-      <Avatar size={40} src={data.label.user_data.avatar_url} alt="用户头像" />
-      <div className="ml-6">
-        <div className="flex mt-0.5">
+    <>
+      <div className="w-10 h-10">
+        <NoFollowLink href={`/user/${data.label.user_data.id}`}>
+          <Avatar size={40} src={data.label.user_data.avatar_url} alt="用户头像" />
+        </NoFollowLink>
+      </div>
+      <div className="max-w-full ml-6">
+        <div className="w-3/4 truncate flex mt-0.5">
           用户
           <NoFollowLink href={`/user/${data.label.user_data.id}`} className="font-bold mx-1">
             {data.label.user_data.name}
           </NoFollowLink>
-          回复了你的在文章
-          <NoFollowLink href={`/${data.label.comment_data.type}/${data.label.article_data.id}`}>
-            <div className="max-w-40 truncate">{data.label.article_data.title}</div>
-          </NoFollowLink>
-          下的评论
-        </div>
-        <div>“{data.label.comment_data.content}”</div>
-        <div className="w-[500px] mt-1 p-2 border border-solid rounded-sm  border-gray-200">
+          {_data[0]}
           <NoFollowLink
-            href={`/${data.label.comment_data.type}/${data.label.article_data.id}`}
-            className="text-gray-700 line-clamp-13"
+            className="font-bold truncate"
+            href={`/${data.label.type}/${data.label.content_data.id}`}
           >
-            {data.label.raply_comment.content}
+            {data.label.content_data.title}
           </NoFollowLink>
+          {_data[1]}
         </div>
+
+        <div className="w-3/4 truncate">“{data.label.comment_data.content}”</div>
+
+        {data.label.comment_data?.reply && (
+          <div className="w-3/4 mt-1 p-1.5 border border-solid rounded-sm border-gray-200">
+            <NoFollowLink
+              href={`/${data.label.type}/${data.label.content_data.id}`}
+              className="text-gray-700 line-clamp-6"
+            >
+              {data.label.comment_data?.reply?.content}
+            </NoFollowLink>
+          </div>
+        )}
+
         <div className="mt-2 text-gray-400">
           {dayjs(data.create_time).fromNow().replace(" ", "")}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default ArticleCommentNotice;

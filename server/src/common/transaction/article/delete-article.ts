@@ -7,20 +7,19 @@ import { Op } from "sequelize";
  * @return {boolean} 结果
  */
 async function transaction(belong_id: number, t: Transaction) {
-  //删除收藏
-  let deleteCollection = await DB.Collection.destroy({
-    where: {
-      belong_id: belong_id,
-    },
-    transaction: t,
+  // 该文章下的评论列表
+  let commentList = await DB.Comment.findAll({
+    where: { belong_id: belong_id },
+    attributes: ["id"],
+    raw: true,
   })
-    .then(() => true)
-    .catch(() => false);
+    .then(rows => rows.map(item => item.id))
+    .catch(() => false as false);
 
-  //删除评论
-  let deleteComment = await DB.Comment.destroy({
+  // 删除文章下评论的通知
+  let deleteCommentNotice = await DB.Notice.destroy({
     where: {
-      belong_id: belong_id,
+      relation_id: commentList,
     },
     transaction: t,
   })
@@ -37,20 +36,10 @@ async function transaction(belong_id: number, t: Transaction) {
     .then(() => true)
     .catch(() => false);
 
-  // 该文章下的评论列表
-  let commentList = await DB.Comment.findAll({
-    where: { belong_id: belong_id },
-    attributes: ["id"],
-    raw: true,
-  })
-    .then(rows => rows.map(item => item.id))
-    .catch(() => false as false);
-
-  //删除文章创建的通知
-  let deleteCommentNotice = await DB.Notice.destroy({
+  // 删除收藏
+  let deleteCollection = await DB.Collection.destroy({
     where: {
-      relation_id: commentList,
-      type: { [Op.or]: ["comment", "article_comment"] },
+      belong_id: belong_id,
     },
     transaction: t,
   })
@@ -59,6 +48,16 @@ async function transaction(belong_id: number, t: Transaction) {
 
   //删除点赞记录
   let deleteLikes = await DB.Likes.destroy({
+    where: {
+      belong_id: belong_id,
+    },
+    transaction: t,
+  })
+    .then(() => true)
+    .catch(() => false);
+
+  //删除评论
+  let deleteComment = await DB.Comment.destroy({
     where: {
       belong_id: belong_id,
     },

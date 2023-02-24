@@ -96,7 +96,7 @@ async function getArticleListData(
     .catch(err => {
       console.log(err);
       return {
-        tptal: 0,
+        total: 0,
         list: [],
       };
     });

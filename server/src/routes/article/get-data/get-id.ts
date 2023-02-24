@@ -11,10 +11,11 @@ import setDescription from "@/common/modules/article/get/set-description";
 import Sequelize from "@/db/config";
 
 import type { ArticleAttributes } from "@/db/models/init-models";
+import getUserId from "@/common/middleware/getUserId";
 
 let router = new Router();
 
-router.get("/article/:id", interger([], ["id"]), async ctx => {
+router.get("/article/:id", interger([], ["id"]), getUserId, async ctx => {
   let id = +ctx.params.id;
 
   await DB.Article.findByPk(id, {
@@ -40,11 +41,26 @@ router.get("/article/:id", interger([], ["id"]), async ctx => {
           "collection_count",
         ],
         [
+          Sequelize.literal(
+            `(SELECT COUNT(id) FROM collection WHERE collection.user_id = ${
+              ctx.id || -1
+            }  and belong_id=${id})`
+          ),
+          "collection_state",
+        ],
+        [
           Sequelize.literal(`(SELECT COUNT(id) FROM likes WHERE likes.belong_id = article.id)`),
           "like_count",
         ],
+        [
+          Sequelize.literal(
+            `(SELECT COUNT(id) FROM likes WHERE likes.user_id = ${
+              ctx.id || -1
+            } and belong_id=${id})`
+          ),
+          "like_state",
+        ],
       ],
-      exclude: ["author"],
     },
   })
     .then(row => {
@@ -59,9 +75,11 @@ router.get("/article/:id", interger([], ["id"]), async ctx => {
           let _getCodeBlockLanguage = getCodeBlockLanguage<typeof _setDescription>(_setDescription);
 
           let _getTagDatagetTagData = getTagData(_getCodeBlockLanguage as any, ["name"]);
-          data = imgPrefix<typeof _getTagDatagetTagData>(_getTagDatagetTagData as any);
+          data = imgPrefix<typeof _getTagDatagetTagData>(_getTagDatagetTagData as any, {
+            prefix: "article",
+          });
         } else {
-          data = imgPrefix<typeof data>(data, true);
+          data = imgPrefix<typeof data>(data, { update: true, prefix: "article" });
           if (ctx.query.update == "md") data = HTMLToMarkDown<typeof data>(data);
         }
 

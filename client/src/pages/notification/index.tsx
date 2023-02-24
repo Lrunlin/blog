@@ -6,7 +6,7 @@ const Notification = () => {
 export const getServerSideProps: GetServerSideProps = async context => {
   return {
     redirect: {
-      destination: "/notification/comment",
+      destination: "/notification/notice",
       permanent: true,
     },
   };

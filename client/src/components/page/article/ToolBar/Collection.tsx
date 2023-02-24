@@ -1,63 +1,64 @@
-import { useState, useEffect } from "react";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
 import useUserData from "@/store/user-data";
 import { useSearchParams } from "next/navigation";
 import { message, Badge } from "antd";
-import axios from "axios";
 import itemClassName from "./class";
 import { currentArticleDataContext } from "@/pages/article/[id]";
 import { useRecoilState } from "recoil";
+import { collection, uncollection } from "@/request/collection";
 
 const Collection = () => {
   let [userData] = useUserData();
   let searchParams = useSearchParams();
-  let id = searchParams.get("id");
+  let id = searchParams.get("id") as string;
   let [currentArticleData, setCurrentArticleData] = useRecoilState(currentArticleDataContext);
-  let [collectionState, setCollectionState] = useState<boolean | undefined>();
-  useEffect(() => {
-    if (!userData) {
-      return;
-    }
-    axios.get(`/collection/state/${id}`).then(res => setCollectionState(res.data.success));
-  }, [userData]);
-  function collection() {
-    axios.post(`/collection/${id}`, { type: "article" }).then(res => {
-      if (res.data.success) {
-        setCollectionState(true);
+  function collectionArticle() {
+    collection(id, "article")
+      .then(() => {
         setCurrentArticleData(_data => ({
           ..._data,
           collection_count: _data.collection_count + 1,
+          collection_state: 1,
         }));
-      } else {
-        message.error(res.data.message);
-      }
-    });
+      })
+      .catch(() => {
+        message.error("收藏失败");
+      });
   }
-  function unCollection() {
-    axios.delete(`/collection/${id}`).then(res => {
-      if (res.data.success) {
-        setCollectionState(false);
+  function unCollectionArticle() {
+    uncollection(id)
+      .then(() => {
         setCurrentArticleData(_data => ({
           ..._data,
           collection_count: _data.collection_count - 1,
+          collection_state: 0,
         }));
-      } else {
-        message.error(res.data.message);
-      }
-    });
+      })
+      .catch(() => {
+        message.error("取消失败");
+      });
   }
+
   return (
     <>
       <div
         className={classNames([itemClassName, "hover:text-blue-500"])}
         onClick={
-          collectionState == undefined ? () => {} : collectionState ? unCollection : collection
+          !userData || userData?.id == currentArticleData.author
+            ? () => {}
+            : currentArticleData.collection_state
+            ? unCollectionArticle
+            : collectionArticle
         }
       >
         <Badge count={currentArticleData.collection_count} color="#adb1b8" offset={[10, -10]}>
           <Image
-            src={collectionState ? "/icon/collection-fill.png" : "/icon/collection.png"}
+            src={
+              currentArticleData.collection_state
+                ? "/icon/collection-fill.png"
+                : "/icon/collection.png"
+            }
             width={24}
             height={24}
             alt="collection"

@@ -3,8 +3,8 @@ import type { FC } from "react";
 import useUserData from "@/store/user-data";
 import { Skeleton, Divider, Empty, Result } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import type { articleListItemType } from "@type/article-list-item";
-import type { response } from "@type/response";
+import type { articleListItemType } from "@type/model/article-list-item";
+import type { response } from "@type/common/response";
 import axios from "axios";
 import ArticleListItem from "./ArticleListItem";
 

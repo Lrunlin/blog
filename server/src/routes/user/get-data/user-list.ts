@@ -28,7 +28,7 @@ router.get("/user/list/:page", interger([], ["page"]), authMiddleware(), async c
         ],
         [
           // 多少人关注了他
-          Sequelize.literal(`(SELECT COUNT(*) FROM follow WHERE follow.blogger_id = user.id)`),
+          Sequelize.literal(`(SELECT COUNT(*) FROM follow WHERE follow.belong_id = user.id)`),
           "follower_count",
         ],
         [

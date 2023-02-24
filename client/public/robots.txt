@@ -9,7 +9,7 @@ Disallow:/search
 # 用户信息
 Disallow:/user
 # 文章发布
-Disallow:/write
+Disallow:/article/editor
 # 消息提示
 Disallow:/notification
 # oauth登录重定向
@@ -19,6 +19,6 @@ Disallow:/result
 # 友链页面
 Disallow:/link
 # 提问
-Disallow:/questions/write
+Disallow:/problem/editor
 
 Sitemap:https://blogweb.cn/sitemap/index.xml

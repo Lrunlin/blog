@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { FC } from "react";
-import { commentContext } from "./index";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { commentEmojiActiveContext } from "./store";
@@ -14,6 +13,7 @@ import i18n from "@emoji-mart/data/i18n/zh.json";
 import axios from "axios";
 import classNames from "classnames";
 import { useSWRConfig } from "swr";
+import { marked } from "marked";
 
 interface propsType {
   id: number | string;
@@ -21,7 +21,9 @@ interface propsType {
   hideAvatar?: true;
   onFocus?: () => any;
   onBlur?: () => any;
+  onFinish?: () => any;
   autoFocus?: boolean;
+  className?: string;
 }
 
 let { TextArea } = Input;
@@ -66,24 +68,30 @@ const Editor: FC<propsType> = props => {
       }
     });
   }
-  let { type } = useContext(commentContext);
   function comment() {
     axios
       .post("/comment", {
         belong_id: articleID,
-        content: value,
+        content: marked.parse(value, { headerIds: false }),
         comment_pics: picture?.file_name || null,
         reply: props.reply || null,
-        type: type,
+        type: "article",
       })
       .then(res => {
         if (res.data.success) {
           setValue("");
           setPicture(null);
-          mutate(`/comment/list/${articleID}`);
+          mutate(`/comment/article/${articleID}`);
         } else {
           message.error(res.data.message);
         }
+      })
+      .catch(err => {
+        message.error("评论失败");
+        console.log(err);
+      })
+      .finally(() => {
+        props.onFinish && props.onFinish();
       });
   }
 
@@ -91,12 +99,12 @@ const Editor: FC<propsType> = props => {
   const [showToolBar, setShowToolBar] = useState(false);
 
   return (
-    <div className="flex">
+    <div className={classNames(["flex", props.className])}>
       {/* 顶部输入框 */}
       {!props.hideAvatar && (
         <Avatar size={40} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
       )}
-      <div className="w-full ml-4">
+      <div className={classNames(["w-full", !props.hideAvatar && "ml-4"])}>
         <div
           className={classNames([
             "w-full pb-2 pl-2 rounded transition-all duration-500",
