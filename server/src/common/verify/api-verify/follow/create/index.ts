@@ -6,8 +6,12 @@ import auth from "@/common/middleware/auth";
 import { typeFollwoProblem } from "@/common/verify/modules/type";
 import { Next, Context } from "koa";
 import DB from "@/db";
-import map, { type } from "../../../utils/map";
-import type { AnswerAttributes, ArticleAttributes, ProblemAttributes } from "@/db/models/init-models";
+import map, { type } from "./map";
+import type {
+  AnswerAttributes,
+  ArticleAttributes,
+  ProblemAttributes,
+} from "@/db/models/init-models";
 
 const schema = Joi.object({
   type: typeFollwoProblem,
