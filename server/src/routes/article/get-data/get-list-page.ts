@@ -54,7 +54,10 @@ router.get("/article/page/:page", interger([], ["page"]), auth(), async ctx => {
           page: page,
           page_size: pageSize,
           total_count: count,
-          list: rows.map(item => getTagData(item.toJSON())),
+          list: rows.map(item => ({
+            ...item.toJSON(),
+            tag: getTagData(item.toJSON().tag as unknown as number[]),
+          })),
         },
       };
     })

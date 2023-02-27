@@ -83,13 +83,16 @@ async function getArticleListData(
         total: count,
         list: rows.map(row => {
           let item = row.toJSON();
-          let _description = setDescription<typeof item>(item);
-          let _item = getTagData<typeof _description>(_description, ["name"]);
-          delete (_item as any).state;
-          delete (_item as any).content;
-          delete (_item as any).reprint;
-          delete (_item as any).cover_file_name;
-          return _item;
+          let description = setDescription(item.content);
+          let tag = getTagData(item.tag as unknown as number[], ["name"]);
+          return Object.assign(item, {
+            description,
+            tag,
+            state: undefined,
+            content: undefined,
+            reprint: undefined,
+            cover_file_name: undefined,
+          });
         }),
       };
     })

@@ -33,8 +33,8 @@ turndownService.addRule("autoLanguage", {
 
 type paramsType = Pick<ArticleAttributes,"content">;
 /** 将HTML字符串转为Markdown*/
-function HTMLToMarkDown<T>(params: paramsType) {
-  return { ...params, content: turndownService.turndown(params.content) } as T & paramsType;
+function HTMLToMarkDown<T>(content:string) {
+  return turndownService.turndown(content);
 }
 export const htmlToMD = (html: string) => turndownService.turndown(html);
 export default HTMLToMarkDown;

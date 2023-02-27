@@ -72,13 +72,16 @@ router.get("/article/recommend/:id", interger([], ["id"]), async ctx => {
       ctx.body = {
         success: true,
         message: "根据文章ID搜索同类型文章",
-        data: rows.map(item => {
-          let _item = getTagData(setDescription(item.toJSON()), ["name"]);
-          delete (_item as any).state;
-          delete (_item as any).content;
-          delete (_item as any).reprint;
-          delete (_item as any).cover_file_name;
-          return _item;
+        data: rows.map(row => {
+          let item = row.toJSON();
+          let description = setDescription(item.content);
+          let tag = getTagData(item.tag as unknown as number[], ["name"]);
+          (item as any).content = undefined;
+          return Object.assign(item, {
+            description,
+            tag,
+            content: undefined,
+          });
         }),
       };
     })

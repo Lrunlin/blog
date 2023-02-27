@@ -3,11 +3,12 @@ import type { ArticleAttributes } from "@/db/models/article";
 
 type paramsType = Pick<ArticleAttributes, "title" | "content">;
 /**对于文章中的图片标签进行处理*/
-function setImageTag<T>(
-  params: paramsType,
-  option: { update?: true; prefix: "article" | "problem" | "answer" }
+function setImageTag(
+  content: string,
+  option: { update?: true; prefix: "article" | "problem" | "answer" },
+  alt?: string
 ) {
-  let $ = load(params.content);
+  let $ = load(content);
   $("img").each((i, el) => {
     if (option.update) {
       $(el).attr("src", `${process.env.CDN}/${option.prefix}/${$(el).attr("src")}`);
@@ -15,10 +16,10 @@ function setImageTag<T>(
       $(el)
         .attr("data-src", `${process.env.CDN}/${option.prefix}/${$(el).attr("src")}`)
         .removeAttr("src")
-        .attr("alt", params.title)
-        .attr("title", params.title);
+        .attr("alt", alt)
+        .attr("title", alt);
     }
   });
-  return { ...params, content: $("body").html() as string } as T & paramsType;
+  return $("body").html() as string;
 }
 export default setImageTag;

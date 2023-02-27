@@ -57,10 +57,16 @@ router.get("/collection/:user_id", integer([], ["user_id"]), async ctx => {
         message: "查询指定用户的文章收藏列表",
         data: {
           total: collectionCount,
-          list: rows.map(item => {
-            let _item = getTagData(setDescription(item.toJSON()), ["name"]);
-            delete (_item as any).content;
-            return _item;
+          list: rows.map(row => {
+            let item = row.toJSON();
+            let description = setDescription(item.content);
+            let tag = getTagData(item.tag as unknown as number[], ["name"]);
+            (item as any).content = undefined;
+            return Object.assign(item, {
+              description,
+              tag,
+              content: undefined,
+            });
           }),
         },
       };

@@ -90,10 +90,14 @@ router.get("/article/list/page/:page", verify, async ctx => {
           total: count,
           list: rows.map(row => {
             let item = row.toJSON();
-            let _description = setDescription<typeof item>(item);
-            let _item = getTagData<typeof _description>(_description, ["name"]);
-            delete (_item as any).content;
-            return _item;
+            let description = setDescription(item.content);
+            let tag = getTagData(item.tag as unknown as number[], ["name"]);
+            (item as any).content = undefined;
+            return Object.assign(item, {
+              description,
+              tag,
+              content: undefined,
+            });
           }),
         },
       };

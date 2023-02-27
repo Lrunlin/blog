@@ -1,15 +1,14 @@
 import { load } from "cheerio";
 import type { ArticleAttributes } from "@/db/models/article";
 
-type paramsType = Pick<ArticleAttributes, "content">;
 
 /**
  * todo 为文章表设置language字段，用来判断代码块使用到了哪些语言
  * TODO 并且设置代码高亮使用的插件
  * ?用于用户查询时
  */
-function getCodeBlockLanguage<T>(params: paramsType) {
-  let $ = load(params.content);
+function getCodeBlockLanguage<T>(content: string) {
+  let $ = load(content);
   let languages: string[] = [];
   $("pre").each((_, el) => {
     /**获取pre和code的class转为数组*/
@@ -27,9 +26,8 @@ function getCodeBlockLanguage<T>(params: paramsType) {
     $(el).addClass("line-numbers");
   });
   return {
-    ...params,
     content: $("body").html() as string,
     language: languages.length ? languages : null,
-  } as T & paramsType & { language: string[] | null };
+  };
 }
 export default getCodeBlockLanguage;

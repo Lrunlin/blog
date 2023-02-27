@@ -16,7 +16,7 @@ router.get("/article/list/tag/:tag", async ctx => {
     return;
   }
 
-  let articleData =await getArticleListData(page, "recommend", {
+  let articleData = await getArticleListData(page, "recommend", {
     tag: {
       [Op.substring]: tagTarget.id,
     },

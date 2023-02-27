@@ -29,11 +29,6 @@ app.use(BodyParser());
 import cors from "@koa/cors";
 app.use(cors());
 
-app.use(async (ctx, next) => {
-  console.log(ctx.path, (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2));
-  await next();
-});
-
 import getAllRouter from "@/common/modules/getAllRouter";
 (async () => {
   let Routers = await getAllRouter();

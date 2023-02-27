@@ -31,7 +31,9 @@ router.get("/problem/page/:page", verify, async ctx => {
         message: `查询问答成功`,
         data: {
           total: count,
-          list: rows.map(item => getTagData(item.toJSON(), ["name"])),
+          list: rows.map(row => {
+            return { ...row, tag: getTagData(row.toJSON().tag as unknown as number[], ["name"]) };
+          }),
         },
       };
     })

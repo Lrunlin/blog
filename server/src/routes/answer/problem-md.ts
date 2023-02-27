@@ -20,12 +20,7 @@ router.get("/answer", verify, async ctx => {
           success: true,
           message: "查询答案并且以MarkDown形式返回内容",
           data: Object.assign(row, {
-            content: htmlToMD(
-              setImageTag(
-                { content: row.content, title: "回答图片" },
-                { update: true, prefix: "answer" }
-              ).content
-            ),
+            content: htmlToMD(setImageTag(row.content, { update: true, prefix: "answer" })),
           }),
         };
       } else {

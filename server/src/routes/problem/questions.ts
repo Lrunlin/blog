@@ -187,7 +187,9 @@ router.get("/problem/:id", verify, async ctx => {
   })
     .then(row => {
       if (row) {
-        let _data = getTagData(row.toJSON(), ["name"]) as unknown as {
+        let data = row.toJSON();
+        let tag = getTagData(data.tag as unknown as number[], ["name"]);
+        let _data = { ...data, tag } as unknown as {
           answer_list: AnswerAttributes[];
           content: string;
         };
@@ -201,8 +203,10 @@ router.get("/problem/:id", verify, async ctx => {
         return createCommentTree(
           problemInit(
             Object.assign(
-              getCodeBlockLanguage({ content: content }),
-              setImageTag(_data as any, { prefix: "problem", update: true })
+              _data,
+              getCodeBlockLanguage(
+                setImageTag(_data.content, { prefix: "problem", update: true }, data.title)
+              )
             )
           )
         );

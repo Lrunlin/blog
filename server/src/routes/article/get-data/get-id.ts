@@ -8,8 +8,8 @@ import imgPrefix from "@/common/modules/article/get/img-add-prefix";
 import getTagData from "@/common/modules/article/get/get-tag-data";
 import getTitleId from "@/common/modules/article/get/set-title-id";
 import setDescription from "@/common/modules/article/get/set-description";
-import Sequelize from "@/db/config";
 
+import Sequelize from "@/db/config";
 import type { ArticleAttributes } from "@/db/models/init-models";
 import getUserId from "@/common/middleware/getUserId";
 
@@ -68,19 +68,31 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async ctx => {
         let data: any = row.toJSON();
 
         if (!ctx.query.update) {
-          let _getTitleId = getTitleId<ArticleAttributes>(data);
+          data = { ...data, ...getTitleId(data.content) };
+          data = { ...data, ...getCodeBlockLanguage(data.content) };
+          let description = setDescription(data.content);
+          let tag = getTagData(data.tag as any, ["name"]);
 
-          let _setDescription = setDescription<typeof _getTitleId>(_getTitleId);
-
-          let _getCodeBlockLanguage = getCodeBlockLanguage<typeof _setDescription>(_setDescription);
-
-          let _getTagDatagetTagData = getTagData(_getCodeBlockLanguage as any, ["name"]);
-          data = imgPrefix<typeof _getTagDatagetTagData>(_getTagDatagetTagData as any, {
-            prefix: "article",
-          });
+          data = {
+            ...data,
+            description,
+            tag,
+            content: imgPrefix(
+              data.content,
+              {
+                prefix: "article",
+              },
+              data.title
+            ),
+          };
         } else {
-          data = imgPrefix<typeof data>(data, { update: true, prefix: "article" });
-          if (ctx.query.update == "md") data = HTMLToMarkDown<typeof data>(data);
+          data = {
+            ...data,
+            content: imgPrefix(data.content, { update: true, prefix: "article" }, data.title),
+          };
+          if (ctx.query.update == "md") {
+            data = { ...data, content: HTMLToMarkDown(data.content) };
+          }
         }
 
         ctx.body = { success: true, message: "查询成功", data: data };
