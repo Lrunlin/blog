@@ -1,8 +1,8 @@
 import type { Request } from "express";
-import Redis from "./redis";
+import redis from "./redis";
 import dayjs from "dayjs";
 import setReferer from "./setReferer";
-let RedisViewHisTory = Redis(2);
+let Redis = redis();
 /**
  * 获取用户端请求IP
  * @params req {Request} express的req
@@ -23,22 +23,20 @@ function getClientIp(req: Request) {
  */
 async function readingRecords(req: Request) {
   const id = req.params.id;
-  // 如果id可以转为NaN说明id不是数字
-  if (isNaN(+id)) {
-    return;
-  }
+
   let ip = getClientIp(req);
 
   let referer = req.headers.referer;
+
+  let type = req.path.split("/")[1]; //article、problem
   if (
     ip &&
-    !(await RedisViewHisTory.exists(`${ip}#${id}`)) &&
-    !(await RedisViewHisTory.exists(`!${ip}#${id}`))
+    !(await Redis.exists([`history-${type}-${ip}-${id}-unentered`, `history-${type}-${ip}-${id}`]))
   ) {
     let { label: referer_label, color: referer_color } = setReferer(referer);
 
-    RedisViewHisTory.set(
-      `!${ip}#${id}`,
+    Redis.set(
+      `history-${type}-${ip}-${id}-unentered`,
       JSON.stringify({
         time: dayjs().format("YYYY-MM-DD"),
         referer_label,

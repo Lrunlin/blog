@@ -18,7 +18,8 @@ function createCommentTree(data: any) {
   return Object.assign(data, {
     answer_list: data.answer_list
       .map((item: any) => {
-        return Object.assign(setImageTag(item, { prefix: "answer", update: true }), {
+        return Object.assign(item, {
+          content: setImageTag(item.content, { prefix: "answer", update: true }),
           comment_list: item.comment_list
             .map((_item: any) => {
               if (_item.reply) {

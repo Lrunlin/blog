@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 5678",
     "dev:server": "cross-env NODE_ENV=development node ./server/dist/index.js",
+    "d": "cross-env NODE_ENV=development nodemon -e ts --exec ts-node ./server/index.ts",
     "build": "next build",
     "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development node ./server/dist/index.js",
     "lint": "next lint",

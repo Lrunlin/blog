@@ -7,7 +7,7 @@ import { Op } from "sequelize";
 import typeCache from "@/common/modules/cache/type";
 import Redis from "@/common/utils/redis";
 
-let redis = Redis(2);
+let redis = Redis();
 interface refererType {
   referer_label: string;
   referer_color: string;
@@ -87,9 +87,9 @@ async function setVisitsData() {
     .catch(() => null);
 }
 
-setVisitsData();
+// setVisitsData();
 setInterval(() => {
-  setVisitsData();
+  // setVisitsData();
 }, 600_000);
 
 let router = new Router();

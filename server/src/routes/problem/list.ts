@@ -32,7 +32,7 @@ router.get("/problem/page/:page", verify, async ctx => {
         data: {
           total: count,
           list: rows.map(row => {
-            return { ...row, tag: getTagData(row.toJSON().tag as unknown as number[], ["name"]) };
+            return { ...row.toJSON(), tag: getTagData(row.toJSON().tag as unknown as number[], ["name"]) };
           }),
         },
       };

@@ -1,22 +1,26 @@
 import redis from "@/common/utils/redis";
 import DB from "@/db";
 
-let Redis = redis(2);
+let Redis = redis();
 function setArticleViewCount() {
   setInterval(() => {
-    Redis.keys("!*", async (err, keys) => {
+    Redis.keys("*-unentered", (err, keys) => {
       if (err) {
         console.log(`获取文章历史记录keys错误：${err}`);
-        return;
+        return [];
       }
-      for (const key of keys as string[]) {
-        let articleID: string = key.split("#").slice(-1) as unknown as string;
-
-        await DB.Article.increment("view_count", { where: { id: articleID } })
+    }).then(async keys => {
+      for (const key of keys) {
+        let type = key.split("-")[1] as "article" | "problem"; //article、problem
+        let id: string = key.split("-")[3];
+        await (DB[type == "article" ? "Article" : "Problem"] as any)
+          .increment("view_count", { where: { id } })
           .then(async () => {
-            await Redis.rename(key, key.replace("!", "")).catch(async () => {});
+            await Redis.rename(key, key.replace("-unentered", "")).catch(() => {});
           })
-          .catch(err => {});
+          .catch((err: any) => {
+            console.log(err);
+          });
       }
     });
   }, 21_600_000);
