@@ -26,9 +26,9 @@ async function setVisitsData() {
   referer = [] as any[];
   /** 用来保存IP记录*/
   let ipHistory: { time: string; ip: string[] }[] = [];
-  for (const key of await redis.keys("*")) {
+  for (const key of await redis.keys("history-article*")) {
     /** 统计七日内文章排行榜*/
-    let articleID = key.split("#").slice(-1)[0];
+    let articleID: string = key.split("-")[3];
     _articleRanking[articleID] ? _articleRanking[articleID]++ : (_articleRanking[articleID] = 1);
     /** 统计访问来源和七日内全站文章访问量*/
     await redis
@@ -55,7 +55,7 @@ async function setVisitsData() {
           ? visitsItem.view_count++
           : visits.push({ time: data.time, view_count: 1, ip_count: 0 });
         //统计IP
-        let ip = key.replace("!", "").split("#")[0];
+        let ip: string = key.split("-")[2];
         let ipItem = ipHistory.find(item => item.time == data.time);
         ipItem ? ipItem.ip.push(ip) : ipHistory.push({ time: data.time, ip: [ip] });
       })
@@ -87,7 +87,7 @@ async function setVisitsData() {
     .catch(() => null);
 }
 
-// setVisitsData();
+setVisitsData();
 setInterval(() => {
   // setVisitsData();
 }, 600_000);
@@ -109,7 +109,8 @@ const getDistData = () => {
   };
 };
 
-router.get("/statistics/visualization", auth(), async ctx => {
+// router.get("/statistics/visualization", auth(), async ctx => {
+router.get("/statistics/visualization", async ctx => {
   let adminID = (await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true })
     .then(rows => rows.map(item => item.id))
     .catch(() => [])) as number[];
