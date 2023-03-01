@@ -2,12 +2,7 @@ import Router from "@koa/router";
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validator";
 import sendEmail from "@/common/utils/email";
-import {
-  setUserData,
-  getRemainingTTL,
-  createKey,
-  hasKey,
-} from "@/common/modules/cache/logon-email";
+import { setUserData, getRemainingTTL, createKey, hasKey } from "@/common/modules/cache/email";
 import DB from "@/db";
 
 let router = new Router();
@@ -33,10 +28,10 @@ router.post("/email/link", validator(schema), async ctx => {
     return;
   }
 
-  let minute = Math.floor(Math.floor(getRemainingTTL(email)) / 1000 / 60);
+  let minute = Math.floor(Math.floor(await getRemainingTTL(email)) / 60);
 
   //  如果非零,并且剩余时间大于5分钟
-  if (hasKey(email) && minute > 5) {
+  if ((await hasKey(createKey(email))) && minute > 5) {
     ctx.body = { success: false, message: `链接已发送并剩余时间:${minute}分钟,请前往邮箱点击链接` };
     return;
   }
@@ -48,6 +43,7 @@ router.post("/email/link", validator(schema), async ctx => {
   <br/>
   <a href="${href}?key=${createKey(email)}" target="_blank">${href}</a>
   `;
+  
   await sendEmail({ target: email, subject: `${process.env.SITE_NAME}-注册`, content })
     .then(res => {
       ctx.body = { success: true, message: "激活邮件发送成功，请在15分钟内点击" };

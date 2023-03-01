@@ -1,5 +1,5 @@
 import Router from "@koa/router";
-import { cache, removeUserData } from "@/common/modules/cache/logon-email";
+import { hasKey, removeKey, getUserData } from "@/common/modules/cache/email";
 import jwt from "jsonwebtoken";
 import qs from "qs";
 import DB from "@/db";
@@ -27,23 +27,17 @@ router.get("/logon/email", validator(schema), async ctx => {
         token,
       },
       {
-        arrayFormat: "repeat",//query中的数组中不携带索引值
+        arrayFormat: "repeat", //query中的数组中不携带索引值
       }
     );
     ctx.status = 302;
     ctx.redirect(`${process.env.CLIENT_HOST}/result?${query}`);
   }
 
-  let key = ctx.query.key;
-
-  // 如果没有key
-  if (!key) {
-    response(false, "错误的激活链接!");
-    return;
-  }
+  let key = ctx.query.key as string;
 
   // 携带了key但是缓存中没有找到
-  if (!cache.has(key)) {
+  if (!(await hasKey(key))) {
     response(false, "您的链接错误", [
       "链接有效期15分钟请返回注册窗口重新发送链接",
       "链接在注册成功后会直接销毁",
@@ -51,13 +45,8 @@ router.get("/logon/email", validator(schema), async ctx => {
     return;
   }
 
-  interface userDataType {
-    email: string;
-    password: string;
-    name: string;
-  }
-
-  let { email, name, password } = cache.get(key) as userDataType;
+  let userData = await getUserData(key);
+  if (!userData) return false;
   let _id = id();
   var data = new Identicon(sha1(_id + ""), {
     size: 50,
@@ -76,9 +65,9 @@ router.get("/logon/email", validator(schema), async ctx => {
 
   let logonResulte = await DB.User.create({
     id: _id,
-    email: email,
-    name: name,
-    password: password,
+    email: userData.email,
+    name: userData?.name,
+    password: userData.password,
     auth: 0,
     avatar_file_name: (uploadResult as any).fileName,
     create_time: new Date(),
@@ -96,10 +85,10 @@ router.get("/logon/email", validator(schema), async ctx => {
       id: _id,
       auth: 0,
     },
-    process.env.KEY as string,
+    process.env.KEY,
     { expiresIn: "365d" }
   );
   response(true, "注册成功", "", token);
-  removeUserData(email);
+  removeKey(key);
 });
 export default router;

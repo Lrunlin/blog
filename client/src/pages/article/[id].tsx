@@ -51,10 +51,14 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   let { token } = parse(ctx?.req?.headers?.cookie + "");
 
   let response = await axios(`/article/${(ctx as any).params.id}`, {
-    headers: { authorization: token },
+    headers: { authorization: token || "" },
   })
     .then(res => res.data.data)
-    .catch(() => null);
+    .catch(err => {
+      console.log(err);
+      return null;
+    });
+
   if (!response) {
     ctx.res.statusCode = 404;
   }

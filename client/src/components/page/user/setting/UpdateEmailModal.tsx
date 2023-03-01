@@ -60,7 +60,7 @@ const UpdateEmailModal: FC<propsType> = props => {
             name="email"
             rules={[{ required: true, type: "email", message: "请填写正确格式的邮箱" }]}
           >
-            <Input placeholder="填写新邮箱，以接受链接" />
+            <Input placeholder="填写新邮箱，以接收链接" />
           </Form.Item>
         </Form>
       </Modal>
