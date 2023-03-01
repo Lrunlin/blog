@@ -28,9 +28,9 @@ const AdSense = () => {
   }
 
   return (
-    <div className="w-full h-[600px] mt-3 flex justify-center bg-white">
+    <div className="w-full h-[600px] my-3 flex justify-center bg-white">
       {isLoad ? (
-        <div className="w-full h-full my-3 bg-gray-100 flex items-center justify-center">请等待...</div>
+        <div className="w-full h-full bg-gray-100 flex items-center justify-center">请等待...</div>
       ) : (
         <ADS />
       )}

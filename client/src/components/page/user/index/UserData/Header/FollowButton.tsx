@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { modalStateContext } from "@/components/common/Header/Sign";
 import useSWR from "swr";
@@ -8,24 +8,33 @@ import { userDataContext } from "@/store/user-data";
 import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
 import { useRouter } from "next/navigation";
+import { follow, unfollow } from "@/request/follow";
 
 interface propsType {
   bloggerID: FollowAttributes["belong_id"];
 }
 const SwitchButton: FC<propsType> = props => {
-
   let { data, error, mutate } = useSWR(`follow-user-state-${props.bloggerID}`, () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
-  function follow() {
-    axios.post<response>(`/follow/${props.bloggerID}`,{type:"user"}).then(res => {
-      mutate();
-    });
+
+  function followUser() {
+    follow(props.bloggerID, "user")
+      .then(() => {
+        mutate();
+      })
+      .catch(() => {
+        message.error("关注失败");
+      });
   }
-  function unfollow() {
-    axios.delete<response>(`/follow/${props.bloggerID}`).then(res => {
-      mutate();
-    });
+  function unFollowUser() {
+    unfollow(props.bloggerID)
+      .then(() => {
+        mutate();
+      })
+      .catch(() => {
+        message.error("取关失败");
+      });
   }
   return (
     <>
@@ -37,12 +46,12 @@ const SwitchButton: FC<propsType> = props => {
               type="primary"
               size="small"
               className="rounded text-[#1e80ff] bg-[rgb(30,128,255)]"
-              onClick={follow}
+              onClick={followUser}
             >
               +关注
             </Button>
           ) : (
-            <Button size="small" ghost type="primary" onClick={unfollow}>
+            <Button size="small" ghost type="primary" onClick={unFollowUser}>
               已关注
             </Button>
           )}

@@ -26,6 +26,7 @@ async function verify(ctx: Context, next: Next) {
   let belong_id = +ctx.params.belong_id;
   let type: type = ctx.request.body.type;
   if (belong_id == ctx.id && type == "user") {
+    ctx.status = 401;
     ctx.body = { success: false, message: "不能关注自己！！！" };
     return;
   }
@@ -36,6 +37,7 @@ async function verify(ctx: Context, next: Next) {
     .catch(() => false as false);
 
   if (!authorData) {
+    ctx.status = 401;
     ctx.body = { success: false, message: "没有找到对应的内容" };
     return;
   }
@@ -44,6 +46,7 @@ async function verify(ctx: Context, next: Next) {
     type != "user" &&
     (authorData as AnswerAttributes | ArticleAttributes | ProblemAttributes).author == ctx.id
   ) {
+    ctx.status = 401;
     ctx.body = { success: false, message: "禁止关注自己发布的内容" };
     return;
   }
@@ -52,6 +55,7 @@ async function verify(ctx: Context, next: Next) {
     where: { belong_id: belong_id, user_id: ctx.id },
   });
   if (followHistory) {
+    ctx.status = 401;
     ctx.body = { success: false, message: "禁止不要重复关注" };
     return;
   }

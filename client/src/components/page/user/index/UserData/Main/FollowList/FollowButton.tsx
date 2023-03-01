@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { useSetRecoilState } from "recoil";
 import useUserData from "@/store/user-data";
 import { modalStateContext } from "@/components/common/Header/Sign";
-import axios from "axios";
+import { follow, unfollow } from "@/request/follow";
 
 interface propsType {
   /** 是否关注了该用户*/
@@ -20,25 +20,21 @@ const FollowButton: FC<propsType> = props => {
     setIsFollow(props.isFollow);
   }, [props.isFollow]);
 
-  function follow() {
-    axios.post(`/follow/${props.bloggerID}`).then(res => {
-      if (res.data.success) {
-        message.success(res.data.message);
+  function followUser() {
+    follow(props.bloggerID, "user")
+      .then(() => {
         setIsFollow(true);
-      } else {
-        message.error(res.data.message);
-      }
-    });
+      })
+      .catch(() => {
+        message.error("关注失败");
+      });
   }
-  function unfollow() {
-    axios.delete(`/follow/${props.bloggerID}`).then(res => {
-      if (res.data.success) {
-        message.success(res.data.message);
+  function unFollowUser() {
+    unfollow(props.bloggerID)
+      .then(() => {
         setIsFollow(false);
-      } else {
-        message.error(res.data.message);
-      }
-    });
+      })
+      .catch(() => {});
   }
 
   let setModalState = useSetRecoilState(modalStateContext);
@@ -52,11 +48,11 @@ const FollowButton: FC<propsType> = props => {
   return (
     <>
       {isFollow ? (
-        <Button type="primary" ghost onClick={unfollow}>
+        <Button type="primary" ghost onClick={unFollowUser}>
           取消关注
         </Button>
       ) : (
-        <Button type="primary" ghost onClick={follow}>
+        <Button type="primary" ghost onClick={followUser}>
           + 关注
         </Button>
       )}

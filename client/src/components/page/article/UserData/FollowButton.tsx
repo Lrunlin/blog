@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { modalStateContext } from "@/components/common/Header/Sign";
 import useSWR from "swr";
@@ -8,6 +8,7 @@ import axios from "axios";
 import { userDataContext } from "@/store/user-data";
 import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
+import { follow, unfollow } from "@/request/follow";
 
 interface propsType {
   /** 文章作者id*/
@@ -23,15 +24,23 @@ const SwitchButton: FC<propsType> = props => {
   let { data, error, isValidating, mutate } = useSWR(`follow-user-state-${props.bloggerID}`, () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
-  function follow() {
-    axios.post<response>(`/follow/${props.bloggerID}`).then(res => {
-      mutate();
-    });
+  function followUser() {
+    follow(props.bloggerID, "user")
+      .then(() => {
+        mutate();
+      })
+      .catch(() => {
+        message.error("关注失败");
+      });
   }
-  function unfollow() {
-    axios.delete<response>(`/follow/${props.bloggerID}`).then(res => {
-      mutate();
-    });
+  function unFollowUser() {
+    unfollow(props.bloggerID)
+      .then(() => {
+        mutate();
+      })
+      .catch(() => {
+        message.error("取关失败");
+      });
   }
   return (
     <>
@@ -50,8 +59,8 @@ const SwitchButton: FC<propsType> = props => {
             onClick={() => {
               userData?.id != props.bloggerID
                 ? data
-                  ? unfollow()
-                  : follow()
+                  ? unFollowUser()
+                  : followUser()
                 : router.push(`/${props.type}/editor/${props.articleID}`);
             }}
           >
