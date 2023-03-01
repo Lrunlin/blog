@@ -2,7 +2,7 @@ import type { Article, ArticleAttributes } from "../models/init-models";
 import init from "./utils/init";
 import redis from "@/common/utils/redis";
 
-let Redis = redis(1);
+let Redis = redis();
 
 export default init<Article, ArticleAttributes>(async (model, type) => {
   //清除Redis缓存

@@ -89,7 +89,7 @@ async function setVisitsData() {
 
 setVisitsData();
 setInterval(() => {
-  // setVisitsData();
+  setVisitsData();
 }, 600_000);
 
 let router = new Router();
