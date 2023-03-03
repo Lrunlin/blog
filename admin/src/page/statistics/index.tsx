@@ -3,23 +3,39 @@ import { Spin } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import useSwr from "swr";
 import axios from "axios";
-import Header from "@/components/page/statistics/Header";
-import Main from "@/components/page/statistics/Main";
-import Aside from "@/components/page/statistics/Aside";
+import Top from "@/components/page/statistics/Top";
+import Bottom from "@/components/page/statistics/Bottom";
 import bg from "@/assets/statistics/bg.jpg";
 import "./index.scss";
+import type { statisticsDataType } from "./type";
+import { atom, useRecoilState } from "recoil";
+
+export type { statisticsDataType };
+export const statisticsDataContext = atom({
+  key: "statistics-data",
+  default: null as unknown as statisticsDataType,
+});
 
 const Statistics = () => {
-  let { data, isValidating, error } = useSwr(
+  let {
+    data: fetchData,
+    isValidating,
+    error,
+  } = useSwr(
     "/statistics/visualization",
     () => axios.get("/statistics/visualization").then(res => res.data.data),
     { refreshInterval: 10000 }
   );
+  let [data, setData] = useRecoilState(statisticsDataContext);
 
   let isFirstLoad = useRef(true);
   useEffect(() => {
     if (isValidating) isFirstLoad.current = false;
   }, [isValidating]);
+
+  useEffect(() => {
+    if (fetchData) setData(fetchData);
+  }, [fetchData]);
 
   return (
     <>
@@ -37,7 +53,6 @@ const Statistics = () => {
           }}
         >
           <div className="container-title">数据分析</div>
-
           {error && (
             <div className="text-white text-center text-2xl font-black mt-10 ">
               <CloseOutlined
@@ -48,22 +63,12 @@ const Statistics = () => {
             </div>
           )}
           {data && (
-            <main className="main flex justify-around">
-              <div className="main-left">
-                <Header type={data.type} user={data.user} link={data.link} />
-                <Main
-                  referer={data.referer}
-                  visits={data.visits}
-                  article={data.article}
-                  loadavg={data.loadavg}
-                />
+            <main className="main">
+              <div className="main-top">
+                <Top />
               </div>
-              <div className="main-right">
-                <Aside
-                  article_ranking={data.article_ranking}
-                  memory={data.memory}
-                  disk={data.disk}
-                />
+              <div>
+                <Bottom />
               </div>
             </main>
           )}

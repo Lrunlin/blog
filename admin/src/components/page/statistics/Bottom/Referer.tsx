@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import type { FC } from "react";
 import * as echarts from "echarts";
 import vw from "@/utils/vw";
-import type { propsType } from "./index";
+import { useRecoilValue } from "recoil";
+import { statisticsDataContext,statisticsDataType } from "@/page/statistics";
 
-function option(data: propsType["referer"]) {
+function option(data: statisticsDataType['referer']) {
   return {
     title: {
       text: "文章访问来源",
@@ -67,8 +67,10 @@ function option(data: propsType["referer"]) {
 }
 
 /** 文章饼状图统计*/
-const Article: FC<{ data: propsType["referer"] }> = ({ data }) => {
+const Article = () => {
+  let _data = useRecoilValue(statisticsDataContext);
   let DOM = useRef<HTMLDivElement>(null);
+  let data = _data.referer;
   useEffect(() => {
     echarts.init(DOM.current as HTMLDivElement).setOption(option(data));
   }, [data]);

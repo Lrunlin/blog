@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
-import type { FC } from "react";
 import * as echarts from "echarts";
 import vw from "@/utils/vw";
-import type { propsType } from "./index";
-
+import { useRecoilValue } from "recoil";
+import { statisticsDataContext } from "@/page/statistics";
 /** 访问量统计*/
-const Visits: FC<{ visits: propsType["visits"] }> = ({ visits }) => {
+const Visits = () => {
+  let data = useRecoilValue(statisticsDataContext);
+  let visits = data.visits;
   let DOM = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let myChart = echarts.init(DOM.current as HTMLElement);

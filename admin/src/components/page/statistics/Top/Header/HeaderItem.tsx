@@ -1,11 +1,11 @@
 import type { ReactNode, FC } from "react";
-import Container from "./Container";
+import Container from "../../Container";
 import "./index.scss";
 
 interface propsType {
   title: string | ReactNode;
   data: string | ReactNode;
-  footer: string | ReactNode;
+  footer?: string | ReactNode;
 }
 /** 大屏页面顶部的数据展示框*/
 const HeaderItem: FC<propsType> = ({ title, data, footer }) => {

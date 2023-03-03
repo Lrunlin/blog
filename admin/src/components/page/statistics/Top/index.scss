@@ -1,4 +1,5 @@
 @import "@/page/statistics/index.scss";
+
 .aside-article-item {
   width: 100%;
   height: vw(400);
@@ -30,4 +31,27 @@
 .server-data-container {
   width: 100%;
   height: vw(245);
+}
+
+@import "@/page/statistics/index.scss";
+
+.main-l {
+  width: vw(750);
+  height: vw(240);
+}
+
+.main-s {
+  width: vw(500);
+  height: vw(240);
+}
+.main-item {
+  margin-top: vw(20);
+  display: flex;
+  justify-content: space-between;
+}
+.main-left {
+  width: vw(1350);
+}
+.main-right {
+  width: vw(450);
 }

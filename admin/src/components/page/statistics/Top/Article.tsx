@@ -1,8 +1,8 @@
-import { useEffect ,useRef} from "react";
-import type { FC } from "react";
+import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/utils/vw";
-import type { propsType } from "./index";
+import { useRecoilValue } from "recoil";
+import { statisticsDataContext } from "@/page/statistics";
 
 function option(data: { value: number; name: string }[]) {
   return {
@@ -59,8 +59,10 @@ function option(data: { value: number; name: string }[]) {
 }
 
 /** 文章饼状图统计*/
-const Article: FC<{ data: propsType["article"] }> = ({ data }) => {
+const Article = () => {
+  let _data = useRecoilValue(statisticsDataContext);
   let DOM = useRef<HTMLDivElement>(null);
+  let data = _data.article;
   useEffect(() => {
     echarts.init(DOM.current as HTMLDivElement).setOption(
       option([

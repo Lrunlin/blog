@@ -3,6 +3,7 @@ import Router from "@koa/router";
 import { getDiskInfoSync } from "node-disk-info";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import moment from "moment";
 import { Op } from "sequelize";
 import typeCache from "@/common/modules/cache/type";
 import Redis from "@/common/utils/redis";
@@ -93,7 +94,7 @@ setInterval(() => {
 }, 600_000);
 
 let router = new Router();
-
+/** 获取内存使用情况*/
 const getDistData = () => {
   let isLinux = os.type().toLowerCase().includes("linux");
 
@@ -109,8 +110,32 @@ const getDistData = () => {
   };
 };
 
-// router.get("/statistics/visualization", auth(), async ctx => {
-router.get("/statistics/visualization", async ctx => {
+const systemOccupation: {
+  loadavg: number;
+  memory: { occupied: number; total: number };
+  disk: { occupied: number; total: number };
+  time: string;
+}[] = [];
+function getSystemOccupation() {
+  systemOccupation.push({
+    loadavg: os.loadavg()[0] * 100,
+    memory: {
+      occupied: os.totalmem() - os.freemem(),
+      total: os.totalmem(),
+    },
+    disk: getDistData(),
+    time: moment().format("hh:mm:ss"),
+  });
+  if (systemOccupation.length > 8) {
+    systemOccupation.splice(8, 1);
+  }
+}
+getSystemOccupation();
+setInterval(() => {
+  getSystemOccupation();
+}, 10_000);
+
+router.get("/statistics/visualization", auth(), async ctx => {
   let adminID = (await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true })
     .then(rows => rows.map(item => item.id))
     .catch(() => [])) as number[];
@@ -195,13 +220,7 @@ router.get("/statistics/visualization", async ctx => {
       },
       visits: visits,
       article_ranking: articleRanking,
-      // 1、5、15 负载
-      loadavg: os.loadavg().map(load => (load * 100).toFixed(0)),
-      memory: {
-        occupied: os.totalmem() - os.freemem(),
-        total: os.totalmem(),
-      },
-      disk: getDistData(),
+      system_occupation: systemOccupation,
       referer: referer,
     },
   };
