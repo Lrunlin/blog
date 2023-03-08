@@ -10,7 +10,6 @@ import getTitleId from "@/common/modules/article/get/set-title-id";
 import setDescription from "@/common/modules/article/get/set-description";
 
 import Sequelize from "@/db/config";
-import type { ArticleAttributes } from "@/db/models/init-models";
 import getUserId from "@/common/middleware/getUserId";
 
 let router = new Router();

@@ -1,6 +1,6 @@
 User-agent: *
 Allow:*
-# 文章修改
+# 文章修改和发布
 Disallow:/article/editor
 # 开发者中心
 Disallow:/creator
@@ -8,8 +8,6 @@ Disallow:/creator
 Disallow:/search
 # 用户信息
 Disallow:/user
-# 文章发布
-Disallow:/article/editor
 # 消息提示
 Disallow:/notification
 # oauth登录重定向

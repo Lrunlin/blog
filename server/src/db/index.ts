@@ -28,11 +28,7 @@ Models.Problem.hasMany(Models.Answer, {
   foreignKey: "problem_id",
   sourceKey: "id",
 });
-// Models.Problem.hasMany(Models.Follow, {
-//   as: "follow_data",
-//   foreignKey: "belong_id",
-//   sourceKey: "id",
-// });
+
 Models.Problem.belongsTo(Models.Follow, {
   as: "follow_data",
   foreignKey: "id",
