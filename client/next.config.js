@@ -1,4 +1,5 @@
 const path = require("path");
+const buildId = require("next-build-id");
 const envObject = require("./env/index");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
@@ -45,6 +46,7 @@ const nextConfig = {
       },
     ];
   },
+  generateBuildId: () => buildId.sync(),
   env: envObject,
 };
 module.exports = withBundleAnalyzer(nextConfig);

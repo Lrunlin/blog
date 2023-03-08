@@ -63,6 +63,7 @@
     "dotenv": "^16.0.1",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.0",
+    "next-build-id": "^3.0.0",
     "node-sass": "^8.0.0",
     "postcss": "^8.4.14",
     "sass": "^1.54.9",
