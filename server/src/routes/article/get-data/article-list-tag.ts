@@ -5,7 +5,7 @@ import { Op } from "sequelize";
 import getArticleListData from "@/common/modules/article/select/option";
 let router = new Router();
 
-router.get("/article/list/tag/:tag", async ctx => {
+router.get("/article/tag/:tag", async ctx => {
   let tag = ctx.params.tag;
   let tags = cache.get<TagAttributes[]>("tag");
   let tagTarget = tags?.find(item => item.name == tag);

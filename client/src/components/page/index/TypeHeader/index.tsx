@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { FC } from "react";
 import { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
 import style from "../index.module.scss";
@@ -6,10 +6,12 @@ import classNames from "classnames";
 import { useRecoilValue } from "recoil";
 import { userDataContext } from "@/store/user-data";
 
+type changeOptionType = { type?: string; tag?: string; follow?: true };
+export type changeType = ({ type, tag }: { type?: string; tag?: string; follow?: true }) => void;
 interface propsType {
   data: typeTreeRsponseType[];
   className?: string;
-  loadMoreData: (url: string) => void;
+  change: ({ type, tag, follow }: changeOptionType) => void;
 }
 /** 首页顶部展示类型选择的头部组件，穿盾type-tree数组即可*/
 const TypeHeader: FC<propsType> = props => {
@@ -17,22 +19,35 @@ const TypeHeader: FC<propsType> = props => {
   let userData = useRecoilValue(userDataContext);
   const [activeTypeKey, setActiveTypeKey] = useState(data[0].id);
   const [activeTagKey, setActiveTagKey] = useState(data[0].id);
+  /** 获取type和tag在数组中的位置，判断是修改了type还是tag*/
+  const typeIndex = data.findIndex(item => item.id == activeTypeKey);
+  const tagIndex = data[typeIndex]?.children?.findIndex(item => item.id == activeTagKey);
 
-  const tagList = useMemo(
-    () => data.find(item => item.id == activeTypeKey)?.children,
-    [activeTypeKey]
-  );
+  const tagList = data.find(item => item.id == activeTypeKey)?.children;
+
+  useEffect(() => {
+    /** 判断是否选择了全部*/
+    let option: changeOptionType =
+      typeIndex == 0
+        ? {}
+        : {
+            /** 如果下属的tag的id index等于0说明找的是type，反之是tag*/
+            type: !tagIndex ? activeTypeKey : undefined,
+            /** 如果自己的id和上面的type的id相同那么设置undefined，否则就是查询tag*/
+            tag: activeTypeKey == activeTagKey ? undefined : activeTagKey,
+          };
+    /** 判断是否选择了关注*/
+    if (typeIndex == 1) {
+      option = { follow: true };
+    }
+    props.change(option);
+  }, [activeTypeKey, activeTagKey]);
 
   function switchType(id: string) {
-    props.loadMoreData(id);
     setActiveTypeKey(id);
     setActiveTagKey(id);
   }
   function switchTag(id: string) {
-    // 如果ID变了就触发文章数据更新(先判断在更新)
-    if (activeTagKey != id) {
-      props.loadMoreData(id);
-    }
     setActiveTagKey(id);
   }
 
@@ -44,7 +59,7 @@ const TypeHeader: FC<propsType> = props => {
           style["type-header"],
           "container-xs bg-white",
           "border-slate-100 border-b-solid",
-          props.className || "",
+          props.className,
         ])}
       >
         <div className="flex">
@@ -70,7 +85,7 @@ const TypeHeader: FC<propsType> = props => {
 
       {tagList?.length && (
         <div className={classNames(["container-xs bg-[#f4f5f5] py-3"])}>
-          <div className="flex">
+          <div className="flex flex-wrap">
             {tagList?.map((item, index) => (
               <div
                 key={item.id}

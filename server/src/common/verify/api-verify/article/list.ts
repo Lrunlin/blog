@@ -1,16 +1,23 @@
 import Joi from "joi";
+import auth from "@/common/middleware/auth";
 import type { Context, Next } from "koa";
 import verify from "@/common/middleware/verify/validator";
-import interger from "../../integer";
 import compose from "koa-compose";
 const schema = Joi.object({
-  author: Joi.number().min(1).error(new Error("ID格式错误")),
-  state: Joi.number().valid(0, 1).error(new Error("文章状态错误")),
-  keyword: Joi.string().min(0).max(30).error(new Error("文章关键词错误")),
-  tag: Joi.string().min(1).max(30).error(new Error("文章标签错误")),
+  page: Joi.number().min(1).required().error(new Error("页数没写")),
+  sort: Joi.string().valid("recommend", "newest", "hottest").error(new Error("排序方式参数错误")),
+  // 暂时 以下三个参数只能通知存在一个
+  tag: Joi.string().min(5).max(18).error(new Error("标签错误")),
+  type: Joi.string().min(5).max(18).error(new Error("类型错误")),
+  follow: Joi.boolean().error(new Error("follow参数错误")),
 });
 
-const verify1 = async (ctx: Context, next: Next) => interger([], ["page"])(ctx, next);
-const verify2 = async (ctx: Context, next: Next) => verify(schema)(ctx, next);
+const _auth = async (ctx: Context, next: Next) => {
+  if (ctx.query.follow) {
+    return auth(1)(ctx, next);
+  } else {
+    await next();
+  }
+};
 
-export default compose([verify1, verify2]);
+export default compose([verify(schema), _auth]);

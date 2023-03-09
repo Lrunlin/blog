@@ -12,7 +12,7 @@ const Main = () => {
   const [articlePage, setArticlePage] = useState(1);
   useEffect(() => {
     axios
-      .get(`/article/list/page/${articlePage}`, {
+      .get(`/article/search/${articlePage}`, {
         params: { state: 1, author: router.query.id },
       })
       .then(res => {

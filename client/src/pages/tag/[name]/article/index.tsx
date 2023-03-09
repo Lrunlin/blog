@@ -20,7 +20,7 @@ interface propsType {
 
 async function fetch(page: number, name: string) {
   return axios
-    .get<response<propsType["data"]>>(`/article/list/tag/${name}`, { params: { page } })
+    .get<response<propsType["data"]>>(`/article/tag/${name}`, { params: { page } })
     .then(res => res.data.data);
 }
 

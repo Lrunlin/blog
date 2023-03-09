@@ -27,16 +27,13 @@ const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
   useEffect(() => {
     let _page = _keyword.current == keyword ? page : 1;
     axios
-      .get<response<{ total: number; list: articleListItemType[] }>>(
-        `/article/list/page/${_page}`,
-        {
-          params: {
-            author: userData?.id,
-            state: state,
-            keyword: keyword,
-          },
-        }
-      )
+      .get<response<{ total: number; list: articleListItemType[] }>>(`/article/search/${_page}`, {
+        params: {
+          author: userData?.id,
+          state: state,
+          keyword: keyword,
+        },
+      })
       .then(res => {
         let list = res.data.data.list;
         setData(_data => (_page == 1 ? list : [...data, ...list]));

@@ -18,9 +18,11 @@ const list = [
 ];
 
 interface propsType {
-  loadMoreData: (type: string) => void;
+  change: (type: string) => void;
 }
-const TypeSelect: FC<propsType> = props => {
+
+/** 选择排序方式*/
+const SortSelect: FC<propsType> = props => {
   const [active, setActive] = useState(list[0].value);
   function switchType(value: string) {
     setActive(value);
@@ -49,7 +51,7 @@ const TypeSelect: FC<propsType> = props => {
             onClick={() => {
               // 如果ID变了就触发文章数据更新(先判断在更新)
               if (item.value != active) {
-                props.loadMoreData(item.value);
+                props.change(item.value);
               }
               switchType(item.value);
             }}
@@ -65,4 +67,4 @@ const TypeSelect: FC<propsType> = props => {
     </>
   );
 };
-export default TypeSelect;
+export default SortSelect;

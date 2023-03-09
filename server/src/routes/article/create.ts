@@ -10,8 +10,8 @@ router.post("/article", verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, state } = ctx.request.body;
   let _id = id();
   let t = await sequelize.transaction();
-  // 只有正式发布才创建通知
-  let _t = state == 1 ? await transaction(_id, ctx.id as number, t) : true;
+  // 只有正式发布才创建通知(转载文章不发布通知)
+  let _t = state == 1 || reprint ? await transaction(_id, ctx.id as number, t) : true;
   let createArticleResult = await DB.Article.create(
     {
       id: _id,

@@ -6,17 +6,27 @@ import Head from "@/components/next/Head";
 
 import Layout from "@/components/page/index/Layout";
 import ArticleList from "@/components/common/ArticleList";
-import TypeHeader from "@/components/page/index/TypeHeader/index";
-import TypeSelect from "@/components/page/index/TypeSelect";
+import TypeHeader, { changeType } from "@/components/page/index/TypeHeader";
+import SortSelect from "@/components/page/index/SortSelect";
 
-import getTypeTreeIndex, { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
-import getArticleList, { responseType as articleListResponseType } from "@/request/article/article-list";
-import getAdvertisementList, { responseType as advertisementType } from "@/request/advertisement";
+import getTypeTreeIndex, {
+  responseType as typeTreeRsponseType,
+} from "@/request/type/type-tree-index";
+import getArticleList, {
+  responseType as articleListResponseType,
+  sortType,
+} from "@/request/article/article-list";
+
+interface optionType {
+  type?: number | string;
+  tag?: number | string;
+  follow?: true;
+  sort: sortType;
+}
 
 interface propsType {
   type: typeTreeRsponseType[];
   article_list: articleListResponseType;
-  advertisement: advertisementType;
 }
 const Home: NextPage<propsType> = props => {
   /** 文章总数*/
@@ -27,12 +37,14 @@ const Home: NextPage<propsType> = props => {
   const [isLoading, setIsLoading] = useState(false);
 
   let page = useRef(1);
-  let requeseURL = useRef("/article/list/recommend");
-  let type = useRef("recommend");
+  let option = useRef<optionType>({ sort: "recommend" });
 
   function loadMoreData() {
     if (page.current == 1) setIsLoading(true);
-    getArticleList(requeseURL.current, page.current, type.current as any)
+    getArticleList({
+      page: page.current,
+      ...option.current,
+    })
       .then(data => {
         if (page.current == 1) {
           setList(data.list);
@@ -59,17 +71,18 @@ const Home: NextPage<propsType> = props => {
         brow={
           <TypeHeader
             data={props.type}
-            loadMoreData={url => {
-              requeseURL.current = url;
+            change={({ type: activeType, tag: activeTag }) => {
+              option.current.tag = activeTag;
+              option.current.type = activeType;
               page.current = 1;
               loadMoreData();
             }}
           />
         }
       >
-        <TypeSelect
-          loadMoreData={_type => {
-            type.current = _type;
+        <SortSelect
+          change={sort => {
+            option.current.sort = sort as sortType;
             page.current = 1;
             loadMoreData();
           }}
@@ -93,15 +106,13 @@ const Home: NextPage<propsType> = props => {
 export const getServerSideProps: GetServerSideProps = async () => {
   let reponse = await Promise.all([
     getTypeTreeIndex(),
-    getArticleList("/article/list/recommend", 1, "recommend"),
-    getAdvertisementList("index"),
+    getArticleList({ page: 1, sort: "recommend" }),
   ]);
 
   return {
     props: {
       type: reponse[0],
       article_list: reponse[1],
-      advertisement: reponse[2],
     },
   };
 };

@@ -22,7 +22,7 @@ const Search: NextPage = () => {
       first.current = false;
     }
     axios
-      .get(`/article/list/page/${page}`, {
+      .get(`/article/search/${page}`, {
         params: {
           state: 1,
           keyword: searchParams.get("keyword") || undefined,
