@@ -6,7 +6,7 @@ import Head from "@/components/next/Head";
 
 import Layout from "@/components/page/index/Layout";
 import ArticleList from "@/components/common/ArticleList";
-import TypeHeader, { changeType } from "@/components/page/index/TypeHeader";
+import TypeHeader from "@/components/page/index/TypeHeader";
 import SortSelect from "@/components/page/index/SortSelect";
 
 import getTypeTreeIndex, {
@@ -38,8 +38,6 @@ const Home: NextPage<propsType> = props => {
 
   let page = useRef(1);
   let option = useRef<optionType>({ sort: "recommend" });
-  console.log(option);
-  
 
   function loadMoreData() {
     if (page.current == 1) setIsLoading(true);

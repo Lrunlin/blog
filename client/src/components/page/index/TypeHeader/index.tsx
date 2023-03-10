@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { FC } from "react";
 import { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
 import style from "../index.module.scss";
@@ -25,7 +25,12 @@ const TypeHeader: FC<propsType> = props => {
 
   const tagList = data.find(item => item.id == activeTypeKey)?.children;
 
+  let fristLoad = useRef(true);
   useEffect(() => {
+    if (fristLoad.current) {
+      fristLoad.current = false;
+      return;
+    }
     /** 判断是否选择了全部*/
     let option: changeOptionType =
       typeIndex == 0
