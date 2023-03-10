@@ -73,7 +73,7 @@ const Article = () => {
   let data = _data.referer;
   useEffect(() => {
     echarts.init(DOM.current as HTMLDivElement).setOption(option(data));
-  }, [data]);
+  }, [_data]);
 
   return (
     <>

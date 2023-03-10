@@ -38,6 +38,8 @@ const Home: NextPage<propsType> = props => {
 
   let page = useRef(1);
   let option = useRef<optionType>({ sort: "recommend" });
+  console.log(option);
+  
 
   function loadMoreData() {
     if (page.current == 1) setIsLoading(true);
@@ -71,9 +73,10 @@ const Home: NextPage<propsType> = props => {
         brow={
           <TypeHeader
             data={props.type}
-            change={({ type: activeType, tag: activeTag }) => {
-              option.current.tag = activeTag;
-              option.current.type = activeType;
+            change={({ type, tag, follow }) => {
+              option.current.tag = tag;
+              option.current.type = type;
+              option.current.follow = follow;
               page.current = 1;
               loadMoreData();
             }}

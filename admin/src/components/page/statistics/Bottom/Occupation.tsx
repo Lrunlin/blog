@@ -102,7 +102,7 @@ const Article = () => {
   let data = _data.system_occupation;
   useEffect(() => {
     echarts.init(DOM.current as HTMLDivElement).setOption(option(data));
-  }, [data]);
+  }, [_data]);
 
   return (
     <>

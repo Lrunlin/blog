@@ -46,7 +46,10 @@ const nextConfig = {
       },
     ];
   },
-  generateBuildId: () => buildId.sync(),
+  generateBuildId: () =>
+    buildId()
+      .then(res => res)
+      .catch(() => +new Date()+''),
   env: envObject,
 };
 module.exports = withBundleAnalyzer(nextConfig);

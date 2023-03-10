@@ -72,7 +72,7 @@ const Article = () => {
         { value: data.user_not_reprint_count, name: "用户原创文章" },
       ])
     );
-  }, [data]);
+  }, [_data]);
 
   return (
     <>

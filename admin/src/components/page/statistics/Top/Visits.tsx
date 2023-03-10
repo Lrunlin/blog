@@ -62,7 +62,7 @@ const Visits = () => {
         },
       ],
     });
-  }, [visits]);
+  }, [data]);
   return (
     <>
       <div ref={DOM} className="w-full h-full main-l"></div>

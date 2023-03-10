@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 import type { articleListItemType } from "@type/model/article-list-item";
 import type { response } from "@type/common/response";
 
@@ -23,10 +23,11 @@ export interface responseType {
  * @params type {recommend | newest | hottest} 请求类型 (综合、最新、热榜)
  * @return data {object[]} 文章数据
  */
-function articleList(params: paramsType) {
+function articleList(params: paramsType, header: AxiosRequestHeaders = {}) {
   return axios
     .get<response<responseType>>(`/article/list`, {
       params: params,
+      headers: header,
     })
     .then(res => res.data.data);
 }

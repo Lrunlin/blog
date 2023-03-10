@@ -127,7 +127,7 @@ function getSystemOccupation() {
     time: moment().format("hh:mm:ss"),
   });
   if (systemOccupation.length > 8) {
-    systemOccupation.splice(8, 1);
+    systemOccupation.splice(0, 1);
   }
 }
 getSystemOccupation();
@@ -135,7 +135,7 @@ setInterval(() => {
   getSystemOccupation();
 }, 10_000);
 
-router.get("/statistics/visualization", auth(), async ctx => {
+router.get("/statistics/visualization", async ctx => {
   let adminID = (await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true })
     .then(rows => rows.map(item => item.id))
     .catch(() => [])) as number[];
