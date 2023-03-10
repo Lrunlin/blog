@@ -135,7 +135,7 @@ setInterval(() => {
   getSystemOccupation();
 }, 10_000);
 
-router.get("/statistics/visualization", async ctx => {
+router.get("/statistics/visualization", auth(), async ctx => {
   let adminID = (await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true })
     .then(rows => rows.map(item => item.id))
     .catch(() => [])) as number[];
