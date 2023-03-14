@@ -5,7 +5,7 @@ let router = new Router();
 import verify from "@/common/verify/api-verify/article/update-article";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/article/create-article";
-router.put("/article/:id",   verify, async ctx => {
+router.put("/article/:id", verify, async ctx => {
   let { title, description, cover_file_name, reprint, content, tag, view_count, state } =
     ctx.request.body;
   let id = +ctx.params.id as number;
@@ -57,8 +57,9 @@ router.put("/article/:id",   verify, async ctx => {
     .then(result => !!result[0])
     .catch(() => false);
 
-  // 说明是从草稿箱发布文章
-  let _t = (state = 1 && oldState == 0) ? await transaction(id, ctx.id as number, t) : true;
+  // 说明是从草稿箱发布文章(非转载)
+  let _t =
+    (state = 1 && oldState == 0) && !reprint ? await transaction(id, ctx.id as number, t) : true;
 
   if (updateResult && _t) {
     ctx.body = { success: true, message: "修改成功" };
