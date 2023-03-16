@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 23/02/2023 16:23:15
+ Date: 16/03/2023 21:41:01
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `answer`  (
   `author` bigint NOT NULL COMMENT '回答者ID',
   `create_time` datetime NOT NULL COMMENT '回答时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '问答中的答案表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for article
@@ -75,7 +75,7 @@ CREATE TABLE `collection`  (
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '收藏时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '收藏表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '收藏表，对问题和文章进行收藏' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for comment
@@ -92,7 +92,7 @@ CREATE TABLE `comment`  (
   `is_review` tinyint NOT NULL COMMENT '是否已经审查了',
   `create_time` datetime NOT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表，存储文章、问题、答案的评论' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for follow
@@ -105,7 +105,7 @@ CREATE TABLE `follow`  (
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '关注时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '关注表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '关注表，用来关注问题或者用户' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for likes
@@ -118,7 +118,7 @@ CREATE TABLE `likes`  (
   `belong_id` bigint NOT NULL COMMENT '文章ID',
   `create_time` datetime NOT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '点赞表，用于储存文章点赞、问题点赞、答案点赞' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for link
@@ -149,7 +149,7 @@ CREATE TABLE `notice`  (
   `is_read` tinyint(1) NOT NULL COMMENT '是否已读',
   `create_time` datetime NOT NULL COMMENT '发送时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for problem
@@ -166,7 +166,7 @@ CREATE TABLE `problem`  (
   `create_time` datetime NOT NULL COMMENT '发布时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '问答中的问题表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for tag
@@ -181,7 +181,7 @@ CREATE TABLE `tag`  (
   `indexes` int NOT NULL COMMENT '索引值',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章标签' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for type

@@ -20,10 +20,12 @@ export interface propsType {
 /** 内容页面(文章、问答)布局*/
 const Layout: FC<propsType> = props => {
   useEffect(() => {
-    let script = document.createElement("script");
-    script.src = `${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`;
-    document.head.append(script);
-  }, []);
+    if (props.language) {
+      let script = document.createElement("script");
+      script.src = `${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`;
+      document.head.append(script);
+    }
+  }, [props.language]);
 
   return (
     <Sidebar className={classNames(["pb-16", props.className])} Aside={props.Aside}>

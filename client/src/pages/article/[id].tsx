@@ -33,12 +33,12 @@ const Article: NextPage<propsType> = ({ data }) => {
           ...data.tag.map(item => item.name),
         ]}
         description={data.description}
-      /> 
+      />
       <RecoilRoot currentArticleData={data}>
         <Layout>
           <h1 className="text-4xl font-semibold">{data.title}</h1>
           <ArticleUserData data={data} type="article" />
-          <View language={data.language} content={data.content} />
+          <View content={data.content} />
           <Reprint reprint={data.reprint} />
         </Layout>
       </RecoilRoot>

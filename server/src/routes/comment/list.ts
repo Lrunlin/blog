@@ -1,6 +1,8 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import interger from "@/common/verify/integer";
+import { load } from "cheerio";
+
 let router = new Router();
 
 /** 管理系统查询评论*/
@@ -24,7 +26,10 @@ router.get("/comment/list/page/:page", interger([], ["page"]), async ctx => {
         success: true,
         message: `查询评论`,
         data: {
-          list: rows,
+          list: rows.map(item => {
+            let $ = load(item.content);
+            return { ...item.toJSON(), content: $("body").text() };
+          }),
           total: count,
         },
       };
