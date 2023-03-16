@@ -13,6 +13,7 @@ const UserData = () => {
     <>
       <div className="flex items-center">
         <Dropdown
+          className="flex items-center"
           menu={{
             onClick: onSelect,
             className: "w-full",

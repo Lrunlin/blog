@@ -8,9 +8,9 @@ import DB from "@/db";
 async function getBloggerList(id: number) {
   return await DB.Follow.findAll({
     where: { user_id: id, type: "user" },
-    attributes: ["id"],
+    attributes: ["belong_id"],
   })
-    .then(rows => rows.map(item => item.toJSON().id) as unknown as number[])
+    .then(rows => rows.map(item => item.toJSON().belong_id) as unknown as number[])
     .catch(() => [] as number[]);
 }
 export default getBloggerList;
