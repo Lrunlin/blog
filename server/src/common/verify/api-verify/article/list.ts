@@ -14,7 +14,7 @@ const schema = Joi.object({
 
 const _auth = async (ctx: Context, next: Next) => {
   if (ctx.query.follow) {
-    return auth(1)(ctx, next);
+    return auth(0)(ctx, next);
   } else {
     await next();
   }
