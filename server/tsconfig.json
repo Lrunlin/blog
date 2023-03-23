@@ -19,7 +19,8 @@
     "skipLibCheck": true, //跳过声明文件的类型检查。
     "esModuleInterop": true, // 允许export=导出，由import from 导入
     "noImplicitAny": true, // 不允许隐式的 any 类型
-    "typeRoots": ["types"]
+    "typeRoots": ["types"],
+    "sourceMap": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/*.d.ts"]

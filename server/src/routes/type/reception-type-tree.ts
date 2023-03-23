@@ -17,8 +17,9 @@ const defaultType = [
 ];
 // 在type缓存更新时重写缓存数据
 getDataAfter(() => {
-  let _data = (cache.get<any[]>("tree")?.filter(item => item.children.length) as any[]).map(
-    item => {
+  let _data = (cache.get("tree") as any[])
+    ?.filter(item => item.children.length)
+    .map(item => {
       return {
         id: item.id,
         name: item.name,
@@ -29,8 +30,7 @@ getDataAfter(() => {
           }))
         ),
       };
-    }
-  );
+    });
   data = [...defaultType, ..._data];
 });
 

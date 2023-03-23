@@ -179,7 +179,7 @@ router.get("/statistics/visualization", auth(), async ctx => {
   /** 类型总数*/
   let typeCount = (typeCache.get("type") as any[]).length;
   /** 标签总数*/
-  let tagCount = (typeCache.get<any[]>("tag") as any[]).length;
+  let tagCount = (typeCache.get("tag") as any[]).length;
 
   /** 普通用户数量*/
   let userCount = await DB.User.findAndCountAll({

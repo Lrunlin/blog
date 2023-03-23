@@ -7,7 +7,7 @@ let router = new Router();
 
 router.get("/article/tag/:tag", async ctx => {
   let tag = ctx.params.tag;
-  let tags = cache.get<TagAttributes[]>("tag");
+  let tags = cache.get("tag") as TagAttributes[];
   let tagTarget = tags?.find(item => item.name == tag);
   let page = +(ctx.query.page as string);
 
