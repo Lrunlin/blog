@@ -88,7 +88,7 @@ const App: React.FC<PropsType> = memo(props => {
           {fileList.length < 1 && "+ Upload"}
         </Upload>
       ) : (
-        <ImgCrop aspect={props.aspect || 1} rotate quality={1} modalTitle="图片剪裁">
+        <ImgCrop aspect={props.aspect || 1} quality={1} modalTitle="图片剪裁">
           <Upload
             action={`${axios.defaults.baseURL}/static/${props.target}`}
             listType="picture-card"
