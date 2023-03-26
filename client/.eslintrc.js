@@ -1,5 +1,5 @@
 module.exports = {
-  extends: "next",
+  extends: "next/babel",
   rules: {
     // 一定要使用next/image
     "@next/next/no-img-element": "off",

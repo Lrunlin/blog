@@ -22,7 +22,7 @@ const ArticleNotice: FC<{ data: noticeFollowListType }> = ({ data }) => {
           <Avatar size={40} src={data.label.user_data.avatar_url} alt="用户头像" />
         </NoFollowLink>
       </div>
-      <div className="max-w-full ml-6">
+      <div className="max-w-full ml-6 flex-1">
         <div className="w-3/4 truncate flex mt-0.5">
           你关注的{_data[0]}
           <NoFollowLink href={`/user/${data.label.user_data.id}`} className="font-bold mx-1">

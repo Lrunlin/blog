@@ -53,7 +53,7 @@ const Index = () => {
           <Divider />
           {error && <>加载错误</>}
           {isValidating && <Skeleton active />}
-          {data?.repository_data && (
+          {data && (
             <div className="flex justify-between cursor-pointer">
               <div className="text-center" onClick={() => navigate("/statistics")}>
                 <img src={dataIcon} alt="data-icon" className="w-12 h-12" />
@@ -61,7 +61,7 @@ const Index = () => {
               </div>
               <a
                 className="text-center block"
-                href={data.repository_data.html_url}
+                href={data?.repository_data?.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -70,7 +70,7 @@ const Index = () => {
               </a>
               <a
                 className="text-center block"
-                href={data.repository_data.homepage}
+                href={data?.repository_data?.homepage}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -79,19 +79,19 @@ const Index = () => {
               </a>
               <div className="text-center">
                 <img src={star} alt="star" className="w-12 h-12" />
-                <div className="mt-1"> {data.repository_data.star_count}</div>
+                <div className="mt-1"> {data?.repository_data?.star_count}</div>
               </div>
               <div className="text-center">
                 <img src={fork} alt="fork" className="w-12 h-12" />
-                <div className="mt-1"> {data.repository_data.fork_count}</div>
+                <div className="mt-1"> {data?.repository_data?.fork_count}</div>
               </div>
               <div className="text-center">
                 <img src={issues} alt="issues" className="w-12 h-12" />
-                <div className="mt-1"> {data.repository_data.issues_count}</div>
+                <div className="mt-1"> {data?.repository_data?.issues_count}</div>
               </div>
               <div className="text-center">
                 <img src={watch} alt="watch" className="w-12 h-12" />
-                <div className="mt-1"> {data.repository_data.watch_count}</div>
+                <div className="mt-1"> {data?.repository_data?.watch_count}</div>
               </div>
             </div>
           )}

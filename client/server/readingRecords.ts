@@ -23,7 +23,7 @@ function getClientIp(req: Request) {
  */
 async function readingRecords(req: Request) {
   const id = req.params.id;
-
+  if (!isNaN(+id)) return false;
   let ip = getClientIp(req);
 
   let referer = req.headers.referer;

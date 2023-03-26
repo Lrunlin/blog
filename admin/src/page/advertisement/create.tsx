@@ -26,7 +26,10 @@ const APP = () => {
   let [form] = useForm();
   let { cache } = useSWRConfig();
   let position = useWatch("position", form);
-  let crop = useMemo(() => positionSelect.find(item => item.position == position)?.crop, [position]);
+  let crop = useMemo(
+    () => positionSelect.find(item => item.position == position)?.crop,
+    [position]
+  );
 
   function onFinish(values: any) {
     axios.post("/advertisement", values).then(res => {
@@ -61,7 +64,16 @@ const APP = () => {
         >
           <Upload target="advertisement" notCrop={!crop} aspect={crop} />
         </Item>
-        <Item label="链接" name="url">
+        <Item
+          label="链接"
+          name="url"
+          rules={[
+            {
+              pattern: /^https:\/\/.{3,98}$/,
+              message: "链接地址为长度100以内的https URL",
+            },
+          ]}
+        >
           <Input placeholder="活动地址" />
         </Item>
         <Item
@@ -78,7 +90,9 @@ const APP = () => {
         <Item label="显示位置" name="position" required>
           <Select style={{ width: 120 }}>
             {positionSelect.map(item => (
-              <Option value={item.position} key={item.position+item.label}>{item.label}</Option>
+              <Option value={item.position} key={item.position + item.label}>
+                {item.label}
+              </Option>
             ))}
           </Select>
         </Item>
