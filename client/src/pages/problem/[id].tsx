@@ -102,7 +102,9 @@ const Problem: FC<propsType> = ({ data: _data }) => {
           />
         </div>
         {!!data.answer_list.length && <Answer />}
-        <Editor onSuccess={reload} view={{ md: true, menu: true, html: false }} />
+        {userData?.id != data.author && (
+          <Editor onSuccess={reload} view={{ md: true, menu: true, html: false }} />
+        )}
       </Layout>
     </Context.Provider>
   );

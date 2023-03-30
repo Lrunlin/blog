@@ -10,7 +10,6 @@ Models.Article.belongsTo(Models.User, { as: "author_data", foreignKey: "author",
 Models.Comment.belongsTo(Models.User, { as: "user_data", foreignKey: "user_id", targetKey: "id" });
 Models.Link.belongsTo(Models.User, { as: "user_data", foreignKey: "user_id", targetKey: "id" });
 Models.Collection.belongsTo(Models.Article, { foreignKey: "belong_id", targetKey: "id" });
-Models.Likes.belongsTo(Models.Article, { foreignKey: "belong_id", targetKey: "id" });
 
 Models.Follow.belongsTo(Models.User, {
   as: "user_data",
@@ -63,4 +62,22 @@ Models.Answer.hasMany(Models.Comment, {
   as: "comment_list",
   foreignKey: "belong_id",
   sourceKey: "id",
+});
+
+Models.Article.hasMany(Models.Likes, { foreignKey: "belong_id", sourceKey: "id", as: "like_data" });
+Models.Likes.belongsTo(Models.Article, {
+  foreignKey: "belong_id",
+  targetKey: "id",
+  as: "like_data",
+});
+
+Models.Article.hasMany(Models.Comment, {
+  foreignKey: "id",
+  sourceKey: "id",
+  as: "comment_data",
+});
+Models.Comment.belongsTo(Models.Article, {
+  foreignKey: "id",
+  targetKey: "id",
+  as: "comment_data",
 });
