@@ -18,6 +18,13 @@ React 状态管理 Recoil
 API 接口文档 Apifox  
 缓存 Token 黑名单、Next.js 页面渲染结果使用 Redis 缓存，其他数据使用 LRU-cache 缓存。
 
+## 联系方式
+
+<div>
+    <img src="https://disk.blogweb.cn/me/qq.svg?qq"  width=160 alt="QQ">
+    <img src="https://disk.blogweb.cn/me/wechat.svg?wx" width=160 alt="微信">
+</div>
+
 ## 其他版本
 
 系统相对完善对博客网站所需的 SEO 有处理可以在生产环境中进行使用,也可以当做毕业设计。
@@ -47,7 +54,6 @@ API 接口文档 Apifox
 6. 关注作者、收藏文章 以及对应的列表查询
 7. 站内信提醒设置(文章、评论)
 8. 文章发布数量、粉丝排行榜
-
 
 ### 管理系统
 
