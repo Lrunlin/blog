@@ -1,3 +1,4 @@
+import { message } from "antd";
 import axios from "axios";
 import type { uploadPropsType } from "./index";
 type paramsType = Pick<uploadPropsType, "onSuccess" | "onError" | "url"> & {
@@ -18,6 +19,10 @@ async function upload(props: paramsType) {
   const file = new Blob([intArray], { type: mimeString });
   const formData = new FormData();
   formData.append("image", file);
+  if (file.size >= 1024 * 1024 * process.env.UPLOAD_MAX_SIZE) {
+    message.warn(`上传图片最大${process.env.UPLOAD_MAX_SIZE}MB`);
+    return;
+  }
   return axios
     .post(`/static/${props.url}`, formData)
     .then(res => {

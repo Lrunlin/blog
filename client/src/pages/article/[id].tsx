@@ -11,6 +11,7 @@ import ArticleUserData from "@/components/page/article/UserData";
 import type { ArticleAttributes } from "@type/model-attribute";
 const NoFound = dynamic(() => import("@/components/page/article/NoFound"), { ssr: false });
 const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
+import readingRecords from "@/common/modules/readingRecords/readingRecords";
 
 interface propsType {
   data: ArticleAttributes | null;
@@ -49,18 +50,18 @@ export default Article;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   let { token } = parse(ctx?.req?.headers?.cookie + "");
-
   let response = await axios(`/article/${(ctx as any).params.id}`, {
     headers: { authorization: token || "" },
   })
     .then(res => res.data.data)
-    .catch(err => {
-      console.log(err);
-      return null;
-    });
+    .catch(err => null);
 
   if (!response) {
     ctx.res.statusCode = 404;
+  } else {
+    if (ctx.req.url?.startsWith("/article/")) {
+      readingRecords(ctx);
+    }
   }
   return {
     props: {

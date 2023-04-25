@@ -53,7 +53,7 @@ const APP = () => {
       title: "发布时间",
       dataIndex: "create_time",
       render(time: string) {
-        return moment(time).format("YYYY-MM-DD hh:mm:ss");
+        return moment(time).format("YYYY-MM-DD HH:mm:ss");
       },
     },
     {

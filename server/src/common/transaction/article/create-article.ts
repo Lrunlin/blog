@@ -1,6 +1,6 @@
 import DB from "@/db";
 import id from "@/common/utils/id";
-import { Transaction } from "sequelize/types";
+import type { Transaction } from "sequelize/types";
 
 /** 创建文章发布的事务处理*/
 async function transaction(article_id: number, author_id: number, t: Transaction) {

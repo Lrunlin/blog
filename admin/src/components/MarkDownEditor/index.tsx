@@ -8,6 +8,8 @@ import { marked } from "marked";
 import zhHans from "bytemd/lib/locales/zh_Hans.json";
 import gfm from "@bytemd/plugin-gfm";
 import LanguageListPlugin from "./LanguageListPlugin";
+import highlight from "@bytemd/plugin-highlight";
+
 import "bytemd/dist/index.css";
 import "./index.css";
 
@@ -45,10 +47,14 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
           );
         }
       }}
-      plugins={[gfm(), LanguageListPlugin() as any]}
+      plugins={[gfm(), LanguageListPlugin() as any, highlight()]}
       uploadImages={async files => {
         let formData = new FormData();
         formData.append("image", files[0]);
+        if (files[0].size >= 1024 * 1024 * import.meta.env.VITE_UPLOAD_MAX_SIZE) {
+          message.warn(`上传图片最大${import.meta.env.VITE_UPLOAD_MAX_SIZE}MB`);
+          return [];
+        }
         return await axios
           .post("/static/article", formData)
           .then(res => {

@@ -30,7 +30,6 @@ function getData() {
     .then(([type, tag]) => {
       cache.set("type", type);
       cache.set("tag", tag);
-
       cache.set(
         "tree",
         type.map(item => {

@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { Button, Input, message } from "antd";
 import Head from "@/components/next/Head";
-import dynamic from "next/dynamic";
 import Tag from "@/components/page/problem/write/Tag";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const MarkDownEditor = dynamic(() => import("@/components/common/MarkDownEditor"), {
-  ssr: false,
-});
+import MarkDownEditor from "@/components/common/MarkDownEditor";
 
 const Write = () => {
   let [title, setTitle] = useState("");

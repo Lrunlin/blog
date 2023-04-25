@@ -1,14 +1,12 @@
 import { useState, useRef } from "react";
 import type { NextPage, GetServerSideProps } from "next";
 import { message, Spin } from "antd";
-
 import Head from "@/components/next/Head";
 
 import Layout from "@/components/page/index/Layout";
 import ArticleList from "@/components/common/ArticleList";
 import TypeHeader from "@/components/page/index/TypeHeader";
 import SortSelect from "@/components/page/index/SortSelect";
-
 import getTypeTreeIndex, {
   responseType as typeTreeRsponseType,
 } from "@/request/type/type-tree-index";

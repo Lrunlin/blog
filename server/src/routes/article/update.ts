@@ -1,5 +1,4 @@
 import Router from "@koa/router";
-import auth from "@/common/middleware/auth";
 import DB from "@/db";
 let router = new Router();
 import verify from "@/common/verify/api-verify/article/update-article";

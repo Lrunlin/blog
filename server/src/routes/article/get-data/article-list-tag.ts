@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import { TagAttributes } from "@/db/models/init-models";
 import cache from "@/common/modules/cache/type";
 import { Op } from "sequelize";
-import getArticleListData from "@/common/modules/article/select/option";
+import getArticleListData from "@/common/modules/article/select/search";
 let router = new Router();
 
 router.get("/article/tag/:tag", async ctx => {

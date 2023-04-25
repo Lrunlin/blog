@@ -9,7 +9,7 @@ import Message from "./Message";
 import { Context } from "@/pages/problem/[id]";
 import useUserData from "@/store/user-data";
 import uswSwr from "swr";
-interface propsType extends Pick<MarkDownPropsType, "view"> {
+interface propsType {
   className?: string;
   onSuccess: () => any;
 }
@@ -97,9 +97,7 @@ const Editor: FC<propsType> = props => {
               <MarkDonwEdit
                 key={key}
                 target="answer"
-                style={{ height: 300 }}
                 onChange={html => setContent(html)}
-                view={props.view}
                 initValue={answerData.content}
               />
               <div className="bg-gray-100 h-8 mt-3 rounded-md"></div>
@@ -109,13 +107,7 @@ const Editor: FC<propsType> = props => {
             </>
           ) : (
             <>
-              <MarkDonwEdit
-                key={key}
-                target="answer"
-                style={{ height: 300 }}
-                onChange={html => setContent(html)}
-                view={props.view}
-              />
+              <MarkDonwEdit key={key} target="answer" onChange={html => setContent(html)} />
               <div className="bg-gray-100 h-7 mt-3 rounded-md"></div>
               <Button type="primary" className="mt-4" onClick={submit}>
                 提交回答

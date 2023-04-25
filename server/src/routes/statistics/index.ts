@@ -17,7 +17,7 @@ function getGtiHubData() {
         watch_count: res.data.subscribers_count,
         html_url: res.data.html_url,
         homepage: res.data.homepage,
-        refresh_time: moment().format("MM-DD hh:mm:ss"),
+        refresh_time: moment().format("MM-DD HH:mm:ss"),
       };
     })
     .catch(err => {

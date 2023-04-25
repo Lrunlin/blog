@@ -8,12 +8,11 @@ import getTypeTree, { responseType } from "@/request/type/type-tree";
 import { CloseOutlined } from "@ant-design/icons";
 interface propsType {
   onChange?: (tagId: number[]) => any;
-  initValue?: string;
+  initValue?: number[];
 }
 
 const Tag: FC<propsType> = props => {
   const { data: dataList, isValidating } = useSWR("/type-tree", () => getTypeTree());
-  let allowChangeValue = useRef(true);
   let [data, setData] = useState<number[]>([]); //选中的tag列表ID
   let [activeType, setActiveType] = useState(0); //选中了那个Type
 
@@ -25,17 +24,15 @@ const Tag: FC<propsType> = props => {
   }, [dataList]);
 
   // 设置初始化值
+  let allowChangeValue = useRef(true);
   useEffect(() => {
-    if (allowChangeValue.current) {
+    if (allowChangeValue.current && props.initValue?.length) {
       allowChangeValue.current = false;
-      props.initValue && setData(props.initValue.split(",").map(item => +item));
-    }
-    if (props.initValue && props.initValue.length == 0) {
-      setData([]);
+      props.initValue && setData(props.initValue.map(item => +item));
     }
   }, [props.initValue]);
 
-  //向上传递结果
+  //向上传递结果l
   useEffect(() => {
     props.onChange && props.onChange(data);
   }, [data]);
@@ -52,20 +49,22 @@ const Tag: FC<propsType> = props => {
 
   return (
     <div className="mt-4 flex items-start">
-      {data.map(item => {
-        return (
-          <Button key={item} className="mr-1">
-            {getTag(item)}
-            <CloseOutlined
-              className="ml-1"
-              style={{ fontSize: 12 }}
-              onClick={() => setData(_data => _data.filter(_item => _item != item))}
-            />
-          </Button>
-        );
-      })}
+      {dataList &&
+        data.map(item => {
+          return (
+            <Button key={item} className="mr-1">
+              {getTag(item)}
+              <CloseOutlined
+                className="ml-1"
+                style={{ fontSize: 12 }}
+                onClick={() => setData(_data => _data.filter(_item => _item != item))}
+              />
+            </Button>
+          );
+        })}
       <Dropdown
         trigger={["click"]}
+        getPopupContainer={() => document.getElementById("createProblemTag") as HTMLElement}
         dropdownRender={() => (
           <div className="w-96 p-3 bg-white shadow-xl rounded-md flex justify-start">
             {isValidating ? (
@@ -133,7 +132,9 @@ const Tag: FC<propsType> = props => {
           </div>
         )}
       >
-        <Button type="primary">添加标签</Button>
+        <Button type="primary" id="createProblemTag">
+          添加标签
+        </Button>
       </Dropdown>
     </div>
   );

@@ -19,6 +19,8 @@ import { Notice as _Notice } from "./notice";
 import type { NoticeAttributes, NoticeCreationAttributes } from "./notice";
 import { Problem as _Problem } from "./problem";
 import type { ProblemAttributes, ProblemCreationAttributes } from "./problem";
+import { Recommend as _Recommend } from "./recommend";
+import type { RecommendAttributes, RecommendCreationAttributes } from "./recommend";
 import { Tag as _Tag } from "./tag";
 import type { TagAttributes, TagCreationAttributes } from "./tag";
 import { Type as _Type } from "./type";
@@ -37,6 +39,7 @@ export {
   _Link as Link,
   _Notice as Notice,
   _Problem as Problem,
+  _Recommend as Recommend,
   _Tag as Tag,
   _Type as Type,
   _User as User,
@@ -63,6 +66,8 @@ export type {
   NoticeCreationAttributes,
   ProblemAttributes,
   ProblemCreationAttributes,
+  RecommendAttributes,
+  RecommendCreationAttributes,
   TagAttributes,
   TagCreationAttributes,
   TypeAttributes,
@@ -82,10 +87,10 @@ export function initModels(sequelize: Sequelize) {
   const Link = _Link.initModel(sequelize);
   const Notice = _Notice.initModel(sequelize);
   const Problem = _Problem.initModel(sequelize);
+  const Recommend = _Recommend.initModel(sequelize);
   const Tag = _Tag.initModel(sequelize);
   const Type = _Type.initModel(sequelize);
   const User = _User.initModel(sequelize);
-
 
   return {
     Advertisement: Advertisement,
@@ -98,6 +103,7 @@ export function initModels(sequelize: Sequelize) {
     Link: Link,
     Notice: Notice,
     Problem: Problem,
+    Recommend: Recommend,
     Tag: Tag,
     Type: Type,
     User: User,

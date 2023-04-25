@@ -4,7 +4,6 @@ const envObject = require("./env/index");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-
 /**
  * @type {import('next').NextConfig}
  */
@@ -49,7 +48,7 @@ const nextConfig = {
   generateBuildId: () =>
     buildId()
       .then(res => res)
-      .catch(() => +new Date()+''),
+      .catch(() => +new Date() + ""),
   env: envObject,
 };
 module.exports = withBundleAnalyzer(nextConfig);

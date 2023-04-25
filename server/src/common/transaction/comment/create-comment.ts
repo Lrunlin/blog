@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize/types";
+import type { Transaction } from "sequelize/types";
 import DB from "@/db";
 import id from "@/common/utils/id";
 import map from "@/common/utils/map";

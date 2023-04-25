@@ -17,6 +17,7 @@ import Comments from "@/components/page/problem/Comments";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import useUserData from "@/store/user-data";
 import ToolBar from "@/components/page/problem/ToolBar";
+import readingRecords from "@/common/modules/readingRecords/readingRecords";
 const Editor = dynamic(() => import("@/components/page/problem/Editor"), { ssr: false });
 const CommentEditor = dynamic(() => import("@/components/page/problem/Comments/Editor"), {
   ssr: false,
@@ -103,7 +104,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
         </div>
         {!!data.answer_list.length && <Answer />}
         {userData?.id != data.author && (
-          <Editor onSuccess={reload} view={{ md: true, menu: true, html: false }} />
+          <Editor onSuccess={reload} />
         )}
       </Layout>
     </Context.Provider>
@@ -119,8 +120,14 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     })
     .then((res: any) => res.data.data)
     .catch(() => null);
-  if (!data) ctx.res.statusCode = 404;
 
+  if (!data) {
+    ctx.res.statusCode = 404;
+  } else {
+    if (ctx.req.url?.startsWith("/problem/")) {
+      readingRecords(ctx);
+    }
+  }
   return {
     props: { data: data },
   };

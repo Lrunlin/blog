@@ -15,10 +15,10 @@ const AdSense = () => {
     };
   }, []);
 
-  if (process.env.NODE_ENV == "development") {
+  if (process.env.NODE_ENV != "production") {
     return (
       <div className="w-full h-[600px] my-3 bg-gray-200 flex items-center justify-center">
-        开发环境不显示广告
+        非生产环境不显示广告
       </div>
     );
   }

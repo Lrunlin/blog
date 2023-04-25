@@ -1,9 +1,6 @@
 // 先关闭端口
 import { kill } from "cross-port-killer";
-kill(3000).catch(() => {
-  console.log(`端口3000关闭失败`);
-});
-
+import moment from "moment";
 // 变量别名
 import moduleAlias from "module-alias";
 moduleAlias.addAlias("@", __dirname);
@@ -49,13 +46,25 @@ import getAllRouter from "@/common/modules/getAllRouter";
       });
     if (Routers.length == index + 1) {
       const port = 3000;
-      app.listen(port, function () {
-        console.log(`项目运行于: ${port} 端口,共${index + 1}个路由文件,${routeCount}个路由`);
-      });
+      kill(3000)
+        .catch(() => {
+          console.log(`端口3000关闭失败`);
+        })
+        .then(() => {
+          app.listen(port, function () {
+            console.log(
+              `${moment().format("YYYY-MM-DD HH:mm:ss")}: 项目运行于: ${port} 端口,共${
+                index + 1
+              }个路由文件,${routeCount}个路由`
+            );
+          });
+        });
     }
   });
 })();
 
 // 执行定时任务
-import start from "@/common/worker";
-start();
+import start from "@/common/tasks";
+setTimeout(() => {
+  start();
+}, 0);

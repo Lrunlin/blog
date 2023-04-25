@@ -1,5 +1,4 @@
-import { useState, Fragment } from "react";
-import { Modal, message, Select } from "antd";
+import { Modal,  Select } from "antd";
 import axios from "axios";
 let data: any[] = [];
 axios.get("/language-list").then(res => {

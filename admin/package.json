@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@bytemd/plugin-gfm": "^1.17.1",
+    "@bytemd/plugin-highlight": "1.17.2",
     "@bytemd/react": "^1.17.1",
     "@pansy/watermark": "^2.2.1",
     "antd": "4.24.7",

@@ -10,7 +10,6 @@ const UserData = () => {
   const { data, isValidating } = useSWR(`/user/${id}`, () =>
     axios.get(`/user/data/${id}`).then(res => res.data.data)
   );
-  console.log(data);
 
   return (
     <div className="p-2 bg-white shadow-sm">

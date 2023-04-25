@@ -124,7 +124,7 @@ function getSystemOccupation() {
       total: os.totalmem(),
     },
     disk: getDistData(),
-    time: moment().format("hh:mm:ss"),
+    time: moment().format("HH:mm:ss"),
   });
   if (systemOccupation.length > 8) {
     systemOccupation.splice(0, 1);

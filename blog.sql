@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 16/03/2023 21:41:01
+ Date: 24/04/2023 16:36:57
 */
 
 SET NAMES utf8mb4;
@@ -169,6 +169,26 @@ CREATE TABLE `problem`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '问答中的问题表' ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Table structure for recommend
+-- ----------------------------
+DROP TABLE IF EXISTS `recommend`;
+CREATE TABLE `recommend`  (
+  `id` bigint NOT NULL COMMENT '文章ID',
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章介绍',
+  `author` json NOT NULL COMMENT '文章发布者信息',
+  `cover` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面地址',
+  `tag` json NOT NULL COMMENT '文章类型',
+  `create_time` datetime NOT NULL COMMENT '文章发布时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '文章最新更新时间',
+  `view` json NOT NULL COMMENT '存储文章的阅读、点赞、评论数量',
+  `recommend` int NULL DEFAULT NULL COMMENT '推荐查询的索引值',
+  `newest` int NULL DEFAULT NULL COMMENT '最新查询的索引值',
+  `hottest` int NULL DEFAULT NULL COMMENT '最热查询的索引值',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章推荐表注释' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
 -- Table structure for tag
 -- ----------------------------
 DROP TABLE IF EXISTS `tag`;
@@ -181,7 +201,7 @@ CREATE TABLE `tag`  (
   `indexes` int NOT NULL COMMENT '索引值',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章标签' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for type

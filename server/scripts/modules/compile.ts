@@ -12,7 +12,6 @@ function compile(path: string) {
       esModuleInterop: true,
       strict: true,
       removeComments: true,
-      sourceMap: true,
     },
   });
   return outputText;

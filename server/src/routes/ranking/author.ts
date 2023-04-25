@@ -5,7 +5,7 @@ import moment from "moment";
 let router = new Router();
 
 router.get("/ranking/author", async ctx => {
-  let time = moment(+new Date() - 604_800_000).format("YYYY-MM-DD hh:mm:ss");
+  let time = moment(+new Date() - 604_800_000).format("YYYY-MM-DD HH:mm:ss");
   let data = await DB.User.findAll({
     attributes: [
       "id",

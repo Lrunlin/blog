@@ -49,19 +49,9 @@ const TableCom = () => {
       render: (author_data: any) => {
         return (
           <Link to={`/user/${author_data.id}`}>
-            <Badge
-              count={
-                author_data.auth == 1 && (
-                  <div>
-                    <img src={king} className="w-4 h-4" style={{ transform: "rotate(45deg)" }} />
-                  </div>
-                )
-              }
-            >
-              <Avatar src={author_data.avatar_url} style={{ verticalAlign: "middle" }} size="large">
-                {(author_data.name as string).substring(0, 1).toLocaleUpperCase()}
-              </Avatar>
-            </Badge>
+            <Avatar src={author_data.avatar_url} style={{ verticalAlign: "middle" }} size="large">
+              {author_data.name.substring(0, 1).toLocaleUpperCase()}
+            </Avatar>
           </Link>
         );
       },

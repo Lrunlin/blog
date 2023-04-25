@@ -62,7 +62,7 @@ const FollowList: FC<propsType> = props => {
           </ul>
         </InfiniteScroll>
       ) : (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="列表为空哦" />
+        <Empty className="py-32" image={Empty.PRESENTED_IMAGE_SIMPLE} description="列表为空哦" />
       )}
     </>
   );

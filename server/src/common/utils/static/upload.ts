@@ -2,7 +2,8 @@ import qiniu from "qiniu";
 import sharp from "sharp";
 import sync from "@/common/utils/sync";
 import zone from "./utils/zone";
-import Mac from './utils/Mac';
+import Mac from "./utils/Mac";
+process.env.VIPS_DISC_THRESHOLD = "750m";
 
 let config = new qiniu.conf.Config({
   zone: zone,
@@ -56,6 +57,7 @@ async function upload(
         );
       })
       .catch(err => {
+        console.log(err);
         reject("图片压缩错误");
       });
   })) as Promise<string | { file_name: string; file_href: string }>;

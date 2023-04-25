@@ -1,6 +1,7 @@
 type target = "type" | "article" | "cover" | "avatar" | "comment";
 import axios from "axios";
 import { response } from "@type/common/response";
+import { message } from "antd";
 
 export interface responseType {
   file_name: string;

@@ -3,7 +3,7 @@ import type { AppProps, AppContext } from "next/app";
 
 import "@/plugin/axios";
 
-import "@/plugin/dayjs.ts";
+import "@/plugin/dayjs";
 
 import "antd/lib/style/index.css";
 

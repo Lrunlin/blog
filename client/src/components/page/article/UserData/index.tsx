@@ -27,7 +27,7 @@ const ArticleUserData: FC<propsType> = ({ data, type }) => {
           <div className="ml-2">
             <div>{data.author_data.name}</div>
             <div>
-              <time>{dayjs(data.create_time).format("YYYY年MM月DD日 hh:mm")}</time>
+              <time>{dayjs(data.create_time).format("YYYY年MM月DD日 HH:mm")}</time>
               <span> · 阅读数 {data.view_count}</span>
             </div>
           </div>

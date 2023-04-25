@@ -11,7 +11,7 @@ export default defineConfig({
   },
   base: "./", // 生产环境下的公共路径
   server: {
-    open: true, // 浏览器自动打开
+    // open: true, // 浏览器自动打开
   },
   build: {
     chunkSizeWarningLimit: 1024, //大于1mb警报

@@ -10,7 +10,7 @@ let uploadOption = multer({
   storage: multer.memoryStorage(),
   limits: {
     files: 1,
-    fileSize: 1024 * 1024 * 30, //3mb
+    fileSize: 1024 * 1024 * 5, //5MB
   },
 });
 

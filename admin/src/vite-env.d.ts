@@ -8,6 +8,8 @@ interface ImportMetaEnv {
   readonly VITE_API_HOST: string;
   /** 网站名称*/
   readonly VITE_SITE_NAME: string;
+  /** 上传图片最大多MB*/
+  readonly VITE_UPLOAD_MAX_SIZE: number;
 }
 
 interface ImportMeta {

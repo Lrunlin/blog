@@ -1,6 +1,7 @@
 import Router from "@koa/router";
 import option from "@/common/modules/article/select/option";
-import { Op } from "sequelize";
+import search from "@/common/modules/article/select/search";
+import { Op, Sequelize } from "sequelize";
 import getTypeChildrenTag from "@/common/modules/article/select/getTypeChildrenTag";
 import getBloggerList from "@/common/modules/article/select/getBloggerList";
 import { ParsedUrlQuery } from "querystring";
@@ -11,7 +12,7 @@ const map = {
   tag: async (tag: number | string) => {
     return {
       tag: {
-        [Op.substring]: tag,
+        [Op.like]: Sequelize.literal(`'%${tag}%'`),
       },
     };
   },
@@ -22,7 +23,7 @@ const map = {
   type: async (type: number) => {
     let tagList = await getTypeChildrenTag(type);
     return {
-      [Op.or]: tagList.map(item => ({ tag: { [Op.substring]: item } })),
+      [Op.or]: tagList.map(item => ({ tag: { [Op.like]: Sequelize.literal(`'%${item}%'`) } })),
     };
   },
 };
@@ -44,7 +45,12 @@ let router = new Router();
 router.get("/article/list", verify, async ctx => {
   let page = +(ctx.query.page as string);
 
-  let data = await option(page, ctx.query.sort as any, await where(ctx.query, ctx.id));
+  let data;
+  if (ctx.query.follow) {
+    data = await search(page, ctx.query.sort as any, await where(ctx.query, ctx.id));
+  } else {
+    data = await option(page, ctx.query.sort as any, await where(ctx.query, ctx.id));
+  }
 
   ctx.body = {
     success: true,

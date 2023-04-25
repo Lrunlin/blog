@@ -41,7 +41,7 @@ const ArticleList: FC<propsType> = props => {
         </InfiniteScroll>
       ) : (
         <div className="bg-white py-32">
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          <Empty description="文章列表为空" image={Empty.PRESENTED_IMAGE_SIMPLE} />
         </div>
       )}
     </>

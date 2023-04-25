@@ -1,7 +1,5 @@
 import { load } from "cheerio";
-import type { ArticleAttributes } from "@/db/models/article";
 
-type paramsType = Pick<ArticleAttributes, "title" | "content">;
 /**对于文章中的图片标签进行处理*/
 function setImageTag(
   content: string,

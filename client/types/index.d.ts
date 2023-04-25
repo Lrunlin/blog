@@ -23,7 +23,7 @@ namespace NodeJS {
     /** Redis端口号*/
     REDIS_PORT: number;
     /** Redis密码*/
-    REDIS_PASSWORD: string | number;
+    REDIS_PASSWORD: string;
     /** GitHub的ClientID用来登录*/
     NEXT_PUBLIC_GITHUB_CLIENT_ID: string;
     /** Google ADS中的client_id 填入数字部分即可*/
@@ -38,5 +38,7 @@ namespace NodeJS {
     GITHUB: string;
     /** ICP 备案号*/
     ICP: string;
+    /** 上传图片最大多MB*/
+    UPLOAD_MAX_SIZE: number;
   }
 }

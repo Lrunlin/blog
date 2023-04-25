@@ -1,99 +1,51 @@
-import type { Order, WhereOptions } from "sequelize";
-import type { ArticleAttributes } from "@/db/models/init-models";
-import Sequelize from "@/db/config";
+import type { WhereOptions } from "sequelize";
+import type { RecommendAttributes } from "@/db/models/init-models";
+import { Op } from "sequelize";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/get-tag-data";
-import setDescription from "@/common/modules/article/get/set-description";
 
-let sort = {
-  recommend: [
-    ["update_time", "desc"],
-    ["comment_count", "desc"],
-    ["create_time", "desc"],
-    ["reprint", "asc"],
-    ["like_count", "desc"],
-    ["view_count", "desc"],
-  ],
-  newest: [
-    ["create_time", "desc"],
-    ["update_time", "desc"],
-    ["reprint", "asc"],
-    ["like_count", "desc"],
-    ["comment_count", "desc"],
-  ],
-  hottest: [
-    ["like_count", "desc"],
-    ["create_time", "desc"],
-    ["view_count", "desc"],
-    ["comment_count", "desc"],
-    ["update_time", "desc"],
-    ["reprint", "asc"],
-  ],
-};
-
-/** 文章查询需要的属性以及表关联属性
- * @params page {number} 页数
- * @params _sort {"recommend" | "newest" | "hottest"} 类型错误
- * @params where {SequelizeWhere} where条件
- * @return 查询好的数据
- */
+/** 文章推荐列表查询*/
 async function getArticleListData(
   page: number,
   _sort: "recommend" | "newest" | "hottest",
-  where?: WhereOptions<ArticleAttributes>
+  where: WhereOptions<RecommendAttributes>
 ) {
-  return await DB.Article.findAndCountAll({
-    attributes: [
-      "id",
-      "title",
-      "description",
-      "view_count",
-      "cover_file_name",
-      "cover_url",
-      "update_time",
-      "create_time",
-      "tag",
-      "content",
-      "reprint",
-      [
-        Sequelize.literal(
-          `(SELECT COUNT(id) FROM comment WHERE comment.belong_id = article.id and type="article")`
-        ),
-        "comment_count",
-      ],
-      [
-        Sequelize.literal(`(SELECT COUNT(id) FROM likes WHERE likes.belong_id = article.id)`),
-        "like_count",
-      ],
-    ],
-    include: [
-      {
-        model: DB.User,
-        as: "author_data",
-        attributes: ["name"],
+  return Promise.all([
+    DB.Recommend.count({
+      where: {
+        [_sort]: {
+          [Op.not]: null,
+        },
+        ...where,
       },
-    ],
-    order: sort[_sort] as Order,
-    offset: (page - 1) * 10,
-    limit: 10,
-    where: { state: 1, ...(where || {}) },
-  })
-    .then(({ count, rows }) => {
+      attributes: ["id"],
+    }),
+    DB.Recommend.findAll({
+      raw: true,
+      limit: 10,
+      order: [[_sort, "asc"]],
+      attributes: { exclude: ["newest", "recommend", "hottest"] },
+      where: {
+        [_sort]: {
+          [Op.gt]: (page - 1) * 10,
+        },
+        ...where,
+      },
+    }),
+  ])
+    .then(([count, rows]) => {
       return {
         total: count,
-        list: rows.map(row => {
-          let item = row.toJSON();
-          let description = setDescription(item.content);
-          let tag = getTagData(item.tag as unknown as number[], ["name"]);
-          return Object.assign(item, {
-            description,
-            tag,
-            state: undefined,
-            content: undefined,
-            reprint: undefined,
-            cover_file_name: undefined,
-          });
-        }),
+        list: rows.map(item => ({
+          ...item,
+          cover_url: item.cover,
+          view_count: (item.view as any).view_count,
+          like_count: (item.view as any).like_count,
+          comment_count: (item.view as any).comment_count,
+          author_data: item.author,
+          view: undefined,
+          cover: undefined,
+          author: undefined,
+        })),
       };
     })
     .catch(err => {

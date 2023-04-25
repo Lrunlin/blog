@@ -1,3 +1,4 @@
+"use client";
 import { useState, useMemo } from "react";
 import { Button, message } from "antd";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";

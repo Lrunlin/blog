@@ -1,15 +1,16 @@
-import type { Request } from "express";
 import redis from "./redis";
 import dayjs from "dayjs";
 import setReferer from "./setReferer";
+import type { GetServerSidePropsContext } from "next";
+
 let Redis = redis();
 /**
  * 获取用户端请求IP
  * @params req {Request} express的req
  * @return ip {string} IP地址
  */
-function getClientIp(req: Request) {
-  let ip = (req?.headers["x-forwarded-for"] || req?.socket.remoteAddress) as string;
+function getClientIp(ctx: GetServerSidePropsContext) {
+  let ip = (ctx.req?.headers["x-forwarded-for"] || ctx.req?.socket.remoteAddress) as string;
   if (!ip) {
     return false;
   }
@@ -21,17 +22,17 @@ function getClientIp(req: Request) {
 /**
  * 保存阅读记录
  */
-async function readingRecords(req: Request) {
-  const id = req.params.id;
-  if (!isNaN(+id)) return false;
-  let ip = getClientIp(req);
+async function readingRecords(ctx: GetServerSidePropsContext) {
+  const id = ctx?.params?.id;
+  let ip = getClientIp(ctx);
 
-  let referer = req.headers.referer;
+  let referer = ctx.req.headers.referer;
 
-  let type = req.path.split("/")[1]; //article、problem
+  let type = ctx?.req?.url?.split("/")[1]; //article、problem
+  
   if (
     ip &&
-    !(await Redis.exists([`history-${type}-${ip}-${id}-unentered`, `history-${type}-${ip}-${id}`]))
+    !(await Redis.exists([`history-${type}-${ip}-${id}`]))
   ) {
     let { label: referer_label, color: referer_color } = setReferer(referer);
 
@@ -47,4 +48,4 @@ async function readingRecords(req: Request) {
     );
   }
 }
-module.exports = readingRecords;
+export default readingRecords;

@@ -1,9 +1,10 @@
 import React, { useState, memo, useEffect } from "react";
-import { Upload, Modal } from "antd";
+import { Upload, Modal, message } from "antd";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 import axios from "axios";
 import { target } from "@type/folder";
 import ImgCrop from "antd-img-crop";
+import { RcFile } from "antd/lib/upload";
 
 interface PropsType {
   target: target;
@@ -83,6 +84,12 @@ const App: React.FC<PropsType> = memo(props => {
           headers={{
             authorization: localStorage.token,
           }}
+          beforeUpload={(file: RcFile) => {
+            if (file.size / 1024 / 1024 > import.meta.env.VITE_UPLOAD_MAX_SIZE) {
+              message.error(`最大支持上传${import.meta.env.VITE_UPLOAD_MAX_SIZE}MB图片`);
+              return false;
+            }
+          }}
           maxCount={1}
         >
           {fileList.length < 1 && "+ Upload"}
@@ -100,6 +107,12 @@ const App: React.FC<PropsType> = memo(props => {
             accept="image/*"
             headers={{
               authorization: localStorage.token,
+            }}
+            beforeUpload={(file: RcFile) => {
+              if (file.size / 1024 / 1024 > import.meta.env.VITE_UPLOAD_MAX_SIZE) {
+                message.error(`最大支持上传${import.meta.env.VITE_UPLOAD_MAX_SIZE}MB图片`);
+                return false;
+              }
             }}
             maxCount={1}
           >
