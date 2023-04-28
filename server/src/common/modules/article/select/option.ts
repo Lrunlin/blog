@@ -21,15 +21,11 @@ async function getArticleListData(
     }),
     DB.Recommend.findAll({
       raw: true,
+      where: where,
       limit: 10,
+      offset: (page - 1) * 10,
       order: [[_sort, "asc"]],
       attributes: { exclude: ["newest", "recommend", "hottest"] },
-      where: {
-        [_sort]: {
-          [Op.gt]: (page - 1) * 10,
-        },
-        ...where,
-      },
     }),
   ])
     .then(([count, rows]) => {

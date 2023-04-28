@@ -1,7 +1,4 @@
 {
-  "env": {
-    "ENV": "development"
-  },
   "watch": "./dist",
   "events": {
     "crash": "node ./bin/dev"

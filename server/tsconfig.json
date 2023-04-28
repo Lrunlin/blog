@@ -21,6 +21,6 @@
     "noImplicitAny": true, // 不允许隐式的 any 类型
     "typeRoots": ["types"],
   },
-  "include": ["src"],
+  "include": ["src","scripts"],
   "exclude": ["node_modules", "**/*.d.ts"]
 }
