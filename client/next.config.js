@@ -13,8 +13,6 @@ const nextConfig = {
     scrollRestoration: true,
     legacyBrowsers: false,
   },
-  //生产版本打包成独立文件夹
-  // output: "standalone",
   eslint: {
     ignoreDuringBuilds: true,
   },

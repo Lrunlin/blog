@@ -21,7 +21,6 @@
     "classnames": "^2.3.1",
     "cookie": "^0.5.0",
     "cross-env": "^7.0.3",
-    "cross-port-killer": "^1.4.0",
     "dayjs": "^1.11.5",
     "emoji-mart": "^5.2.0",
     "express": "^4.18.1",

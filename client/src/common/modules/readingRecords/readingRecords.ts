@@ -29,11 +29,8 @@ async function readingRecords(ctx: GetServerSidePropsContext) {
   let referer = ctx.req.headers.referer;
 
   let type = ctx?.req?.url?.split("/")[1]; //article、problem
-  
-  if (
-    ip &&
-    !(await Redis.exists([`history-${type}-${ip}-${id}`]))
-  ) {
+
+  if (ip && !(await Redis.exists([`history-${type}-${ip}-${id}*`, `history-${type}-${ip}-${id}-unentered`]))) {
     let { label: referer_label, color: referer_color } = setReferer(referer);
 
     Redis.set(

@@ -1,6 +1,5 @@
 import Redis from "@/common/utils/redis";
 let redis = Redis();
-import { RecommendCreationAttributes } from "@/db/models/recommend";
 import getSortArticleList from "./sortArticleList";
 
 export const sort = {
@@ -21,11 +20,11 @@ export const sort = {
   ],
   hottest: [
     ["like_count", "desc"],
-    ["create_time", "desc"],
     ["view_count", "desc"],
+    ["reprint", "asc"],
+    ["create_time", "desc"],
     ["comment_count", "desc"],
     ["update_time", "desc"],
-    ["reprint", "asc"],
   ],
 };
 

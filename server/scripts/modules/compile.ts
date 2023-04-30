@@ -18,3 +18,17 @@ function compile(path: string) {
 }
 
 export default compile;
+
+
+// const { readFileSync, writeFileSync } = require("fs");
+// const { transform, transformSync } = require("@swc/core");
+// const code = readFileSync("./advertisement.ts", "utf-8");
+// let a = transform(code, {
+//   jsc: {
+//     parser: {
+//       syntax: "typescript",
+//       decorators: true,
+//     },
+//     target: "es2015",
+//   },
+// });

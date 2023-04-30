@@ -334,6 +334,72 @@
   resolved "https://registry.npmmirror.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
+"@swc/core-darwin-arm64@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-darwin-arm64/-/core-darwin-arm64-1.3.55.tgz#bd7fdf838a8d27c3df98d279017710a2da6af6a3"
+  integrity sha512-UnHC8aPg/JvHhgXxTU6EhTtfnYNS7nhq8EKB8laNPxlHbwEyMBVQ2QuJHlNCtFtvSfX/uH5l04Ld1iGXnBTfdQ==
+
+"@swc/core-darwin-x64@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-darwin-x64/-/core-darwin-x64-1.3.55.tgz#da7e4076cce35e42f2688f7aae1fd26ecb5dcbef"
+  integrity sha512-VNJkFVARrktIqtaLrD1NFA54gqekH7eAUcUY2U2SdHwO67HYjfMXMxlugLP5PDasSKpTkrVooUdhkffoA5W50g==
+
+"@swc/core-linux-arm-gnueabihf@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-linux-arm-gnueabihf/-/core-linux-arm-gnueabihf-1.3.55.tgz#fd9214d5050987b312cbe9aa105d48365899c1d8"
+  integrity sha512-6OcohhIFKKNW/TpJt26Tpul8zyL7dmp1Lnyj2BX9ycsZZ5UnsNiGqn37mrqJgVTx/ansEmbyOmKu2mzm/Ct6cQ==
+
+"@swc/core-linux-arm64-gnu@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-linux-arm64-gnu/-/core-linux-arm64-gnu-1.3.55.tgz#214a4c1c89d9bab9277843b526b32463a98c516b"
+  integrity sha512-MfZtXGBv21XWwvrSMP0CMxScDolT/iv5PRl9UBprYUehwWr7BNjA3V9W7QQ+kKoPyORWk7LX7OpJZF3FnO618Q==
+
+"@swc/core-linux-arm64-musl@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-linux-arm64-musl/-/core-linux-arm64-musl-1.3.55.tgz#21a11fd919883bc0dc0ceb686f2627c1dc279b71"
+  integrity sha512-iZJo+7L5lv10W0f0C6SlyteAyMJt5Tp+aH3+nlAwKdtc+VjyL1sGhR8DJMXp2/buBRZJ9tjEtpXKDaWUdSdF7Q==
+
+"@swc/core-linux-x64-gnu@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-linux-x64-gnu/-/core-linux-x64-gnu-1.3.55.tgz#3cdf5e669e8d1ef3a1fd4249e535d53d4768a009"
+  integrity sha512-Rmc8ny/mslzzz0+wNK9/mLdyAWVbMZHRSvljhpzASmq48NBkmZ5vk9/WID6MnUz2e9cQ0JxJQs8t39KlFJtW3g==
+
+"@swc/core-linux-x64-musl@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-linux-x64-musl/-/core-linux-x64-musl-1.3.55.tgz#099f75a04827afe59c8755498c749ac667635749"
+  integrity sha512-Ymoc4xxINzS93ZjVd2UZfLZk1jF6wHjdCbC1JF+0zK3IrNrxCIDoWoaAj0+Bbvyo3hD1Xg/cneSTsqX8amnnuQ==
+
+"@swc/core-win32-arm64-msvc@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-win32-arm64-msvc/-/core-win32-arm64-msvc-1.3.55.tgz#e70b3cc06bbd6c04ebb7c1af1da1301d52dc5260"
+  integrity sha512-OhnmFstq2qRU2GI5I0G/8L+vc2rx8+w+IOA6EZBrY4FuMCbPIZKKzlnAIxYn2W+yD4gvBzYP3tgEcaDfQk6EkA==
+
+"@swc/core-win32-ia32-msvc@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-win32-ia32-msvc/-/core-win32-ia32-msvc-1.3.55.tgz#d2780198baec4aff1d01cb89a53dab53003e127c"
+  integrity sha512-3VR5rHZ6uoL/Vo3djV30GgX2oyDwWWsk+Yp+nyvYyBaKYiH2zeHfxdYRLSQV3W7kSlCAH3oDYpSljrWZ0t5XEQ==
+
+"@swc/core-win32-x64-msvc@1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.3.55.tgz#6f9b9ac3f820f5a8476f93863b558c3b727be3d0"
+  integrity sha512-KBtMFtRwnbxBugYf6i2ePqEGdxsk715KcqGMjGhxNg7BTACnXnhj37irHu2e7A7wZffbkUVUYuj/JEgVkEjSxg==
+
+"@swc/core@^1.3.55":
+  version "1.3.55"
+  resolved "https://registry.npmmirror.com/@swc/core/-/core-1.3.55.tgz#0886c07fb6d32803fee85cf135c1a3352142d51f"
+  integrity sha512-w/lN3OuJsuy868yJZKop+voZLVzI5pVSoopQVtgDNkEzejnPuRp9XaeAValvuMaWqKoTMtOjLzEPyv/xiAGYQQ==
+  optionalDependencies:
+    "@swc/core-darwin-arm64" "1.3.55"
+    "@swc/core-darwin-x64" "1.3.55"
+    "@swc/core-linux-arm-gnueabihf" "1.3.55"
+    "@swc/core-linux-arm64-gnu" "1.3.55"
+    "@swc/core-linux-arm64-musl" "1.3.55"
+    "@swc/core-linux-x64-gnu" "1.3.55"
+    "@swc/core-linux-x64-musl" "1.3.55"
+    "@swc/core-win32-arm64-msvc" "1.3.55"
+    "@swc/core-win32-ia32-msvc" "1.3.55"
+    "@swc/core-win32-x64-msvc" "1.3.55"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.npmmirror.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
