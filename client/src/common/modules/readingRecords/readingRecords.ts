@@ -30,19 +30,18 @@ async function readingRecords(ctx: GetServerSidePropsContext) {
 
   let type = ctx?.req?.url?.split("/")[1]; //article、problem
 
-  if (ip && !(await Redis.exists([`history-${type}-${ip}-${id}*`, `history-${type}-${ip}-${id}-unentered`]))) {
+  if (
+    ip &&
+    !(await Redis.exists([`history-${type}-${ip}-${id}`, `history-${type}-${ip}-${id}-unentered`]))
+  ) {
     let { label: referer_label, color: referer_color } = setReferer(referer);
-
-    Redis.set(
+    Redis.rpush(
       `history-${type}-${ip}-${id}-unentered`,
-      JSON.stringify({
-        time: dayjs().format("YYYY-MM-DD"),
-        referer_label,
-        referer_color,
-      }),
-      "EX",
-      604_800
+      dayjs().format("YYYY-MM-DD"),
+      referer_label,
+      referer_color
     );
+    Redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
   }
 }
 export default readingRecords;

@@ -12,19 +12,20 @@ let redis = Redis();
 interface refererType {
   referer_label: string;
   referer_color: string;
-  time: string;
+  count: number;
 }
 /** 访问数量*/
 let visits: { time: string; view_count: number; ip_count: number }[] = new Array(7).fill(0);
 /** 访问来源*/
-let referer: (Omit<refererType, "time"> & { count: number })[] = [];
+let referer: { [key: refererType["referer_label"]]: refererType } = {};
 /** 文章排行*/
 let articleRanking: { id: number; title: string; view_count: number }[] | null = [];
 /** 通过Redis阅读记录获取七日内访问量、作者排行榜、访问来源统计*/
 async function setVisitsData() {
   visits.length = 0;
   let _articleRanking: { [key: string]: number } = {};
-  referer = [] as any[];
+  //清空
+  referer = {};
   /** 用来保存IP记录*/
   let ipHistory: { time: string; ip: string[] }[] = [];
   for (const key of await redis.keys("history-article*")) {
@@ -33,35 +34,35 @@ async function setVisitsData() {
     _articleRanking[articleID] ? _articleRanking[articleID]++ : (_articleRanking[articleID] = 1);
     /** 统计访问来源和七日内全站文章访问量*/
     await redis
-      .get(key)
-      .then(res => {
-        if (res == null) {
+      .lrange(key, 0, -1)
+      .then(([time, referer_label, referer_color]) => {
+        if (!time) {
           return;
         }
         // 统计访问来源
-        let data = JSON.parse(res) as refererType;
-        let refererItem = referer.find(item => item.referer_label == data.referer_label);
+        let refererItem = referer[referer_label];
         if (refererItem) {
           refererItem.count++;
         } else {
-          referer.push({
-            referer_label: data.referer_label,
-            referer_color: data.referer_color,
+          referer[referer_label] = {
+            referer_label: referer_label,
+            referer_color: referer_color,
             count: 1,
-          });
+          };
         }
         // 统计访问量
-        let visitsItem = visits.find(item => item.time == data.time); //通过日期在数组中找到指定的元素
+        let visitsItem = visits.find(item => item.time == time); //通过日期在数组中找到指定的元素
         visitsItem
           ? visitsItem.view_count++
-          : visits.push({ time: data.time, view_count: 1, ip_count: 0 });
+          : visits.push({ time: time, view_count: 1, ip_count: 0 });
         //统计IP
         let ip: string = key.split("-")[2];
-        let ipItem = ipHistory.find(item => item.time == data.time);
-        ipItem ? ipItem.ip.push(ip) : ipHistory.push({ time: data.time, ip: [ip] });
+        let ipItem = ipHistory.find(item => item.time == time);
+        ipItem ? ipItem.ip.push(ip) : ipHistory.push({ time: time, ip: [ip] });
       })
       .catch(() => {});
   }
+
   //只保留7日内站点访问量(处理可能会出现的8个日期的问题)
   visits = visits
     .sort((a, b) => +new Date(a.time) - +new Date(b.time))
@@ -221,7 +222,7 @@ router.get("/statistics/visualization", auth(), async ctx => {
       visits: visits,
       article_ranking: articleRanking,
       system_occupation: systemOccupation,
-      referer: referer,
+      referer: Object.values(referer),
     },
   };
 });
