@@ -7,11 +7,11 @@ import upload from "./uoload";
 const Modal = dynamic(() => import("./Modal"), { ssr: false });
 import Picture from "./Image";
 
-type url = "article" | "avatar" | "cover" | "type" | "comment" | "advertisement" | "link";
+type target = "article" | "avatar" | "cover" | "type" | "comment" | "advertisement" | "link";
 
 export interface uploadPropsType {
   /** 上传地址*/
-  url: url;
+  target: target;
   /** 默认的图片地址*/
   imgURL?: string;
   /** 宽度*/
@@ -25,12 +25,14 @@ export interface uploadPropsType {
     open: () => void;
     close: () => void;
   }>;
+  /** 是否剪切*/
+  noCorp?: boolean;
   onSuccess?: (data: { file_name: string; file_href: string }) => void;
   onError?: (mes: string) => void;
   onDelete?: () => void;
 }
 
-const Upload: FC<uploadPropsType> = props => {
+const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article", width: 100 }) => {
   const [imgURL, setImgURL] = useState<string | undefined>();
   const [cropResult, setCropResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +53,22 @@ const Upload: FC<uploadPropsType> = props => {
         imgURL={imgURL}
         onChange={url => {
           setImgURL(url);
-          event?.current.open();
+          if (props.noCorp) {
+            setIsLoading(true);
+            upload({ target: props.target, base64: url })
+              .then((res: any) => {
+                setCropResult(url);
+                props.onSuccess && props.onSuccess(res.data.data);
+              })
+              .catch(err => {
+                props.onError && props.onError(err.data.message);
+              })
+              .finally(() => {
+                setIsLoading(false);
+              });
+          } else {
+            event?.current.open();
+          }
         }}
         deleteBase64={() => {
           setCropResult("");
@@ -59,21 +76,28 @@ const Upload: FC<uploadPropsType> = props => {
         cropResult={cropResult}
         {...props}
       />
-      <Modal
-        event={event}
-        {...props}
-        imgURL={imgURL}
-        onChange={base64 => {
-          setIsLoading(true);
-          upload({ ...props, base64, event: () => event })
-            .then(() => {
-              setCropResult(base64); //上传base64给图片展示区
-            })
-            .finally(() => {
-              setIsLoading(false);
-            });
-        }}
-      />
+      {!props.noCorp && (
+        <Modal
+          event={event}
+          {...props}
+          imgURL={imgURL}
+          onChange={base64 => {
+            event?.current.close();
+            setIsLoading(true);
+            upload({ target: props.target, base64 })
+              .then((res: any) => {
+                setCropResult(base64);
+                props.onSuccess && props.onSuccess(res.data.data);
+              })
+              .catch(err => {
+                props.onError && props.onError(err.data.message);
+              })
+              .finally(() => {
+                setIsLoading(false);
+              });
+          }}
+        />
+      )}
     </>
   );
 };

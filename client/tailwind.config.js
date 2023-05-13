@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: "jit",
   content: ["./src/**/*.{tsx,html}"],
   theme: {
     extend: {},
@@ -8,5 +9,5 @@ module.exports = {
       sm: { max: "768px" },
     },
   },
-  plugins: [require("@tailwindcss/line-clamp")],
+  plugins: [],
 };

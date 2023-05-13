@@ -8,7 +8,7 @@ const Cover = () => {
   return (
     <>
       <Upload
-        url="cover"
+        target="cover"
         imgURL={articleData.cover_url || undefined}
         width={200}
         aspect={3 / 2}

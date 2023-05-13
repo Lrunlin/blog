@@ -10,7 +10,7 @@ let uploadOption = multer({
   storage: multer.memoryStorage(),
   limits: {
     files: 1,
-    fileSize: 1024 * 1024 * 5, //5MB
+    fileSize: 1024 * 1024 * 51, //5MB
   },
 });
 
@@ -48,6 +48,7 @@ router.post("/static/:folder", auth(0), verify(), uploadOption.single("image"), 
       ctx.body = { success: true, message: "上传成功", data: data };
     })
     .catch(err => {
+      ctx.status = 500;
       ctx.body = { success: false, message: err };
     });
 });

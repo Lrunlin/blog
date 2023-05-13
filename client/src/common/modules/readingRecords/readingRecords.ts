@@ -34,12 +34,11 @@ async function readingRecords(ctx: GetServerSidePropsContext) {
     ip &&
     !(await Redis.exists([`history-${type}-${ip}-${id}`, `history-${type}-${ip}-${id}-unentered`]))
   ) {
-    let { label: referer_label, color: referer_color } = setReferer(referer);
+    let refererResult = setReferer(referer);
     Redis.rpush(
       `history-${type}-${ip}-${id}-unentered`,
       dayjs().format("YYYY-MM-DD"),
-      referer_label,
-      referer_color
+      refererResult
     );
     Redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
   }

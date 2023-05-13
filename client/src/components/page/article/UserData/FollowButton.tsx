@@ -21,7 +21,7 @@ const SwitchButton: FC<propsType> = props => {
   let router = useRouter();
   let userData = useRecoilValue(userDataContext);
 
-  let { data, error, isValidating, mutate } = useSWR(`follow-user-state-${props.bloggerID}`, () =>
+  let { data, error, isValidating, mutate } = useSWR(`follow-user-data-${props.bloggerID}`, () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
   function followUser() {

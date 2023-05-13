@@ -31,6 +31,11 @@ a:hover {
   @apply border-t;
   border-top-style: solid;
 }
+
+.piece {
+  @apply shadow-sm bg-white p-4;
+}
+
 /* @tailwind base;不使用初始化CSS */
 /* @tailwind components;组件也不用 */
 @tailwind utilities;

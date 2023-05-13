@@ -5,6 +5,7 @@ import axios from "axios";
 import classNames from "classnames";
 import style from "@/styles/article.module.scss";
 import dynamic from "next/dynamic";
+import Script from 'next/script'
 const ImagePreview = dynamic(() => import("@/components/page/article/ImagePreview"), {
   ssr: false,
 });
@@ -32,6 +33,7 @@ const Layout: FC<propsType> = props => {
       {props.ToolBar}
       {props.children}
       <ImagePreview root={`.${style.article}`} />
+      <Script src={`${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`} />
       {props.language && (
         <>
           <link

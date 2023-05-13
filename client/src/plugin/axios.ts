@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from 'js-cookie';
+import cookie from "js-cookie";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_HOST;
 axios.interceptors.request.use(
@@ -20,9 +20,8 @@ axios.interceptors.response.use(
   config => {
     /**访问成功**/
     return config;
+  },
+  error => {
+    return Promise.reject({ ...error.response.data, status: error.response.status });
   }
-  // , error => {
-  //   console.log(error);
-  //   return Promise.reject(error);
-  // }
 );

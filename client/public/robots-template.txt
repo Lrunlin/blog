@@ -18,5 +18,7 @@ Disallow:/result
 Disallow:/link
 # 提问
 Disallow:/problem/editor
+# 管理员
+Disallow:/admin
 
 Sitemap:https://blogweb.cn/sitemap/index.xml

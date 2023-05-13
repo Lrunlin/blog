@@ -1,4 +1,4 @@
-import {  useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { FC } from "react";
 // import { Upload } from "antd";
 import Upload from "@/components/common/UpLoad";
@@ -20,7 +20,7 @@ const UploadAvatar: FC<propsType> = props => {
   return (
     <>
       <Upload
-        url="avatar"
+        target="avatar"
         imgURL={props.avatar_url}
         width={90}
         onSuccess={data => {

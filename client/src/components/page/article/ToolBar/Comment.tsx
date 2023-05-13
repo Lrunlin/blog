@@ -11,7 +11,7 @@ const Comment = () => {
     <>
       <a className={classNames([itemClassName, "block"])} href="#comment">
         <Badge count={currentArticleData.comment_count} color="#adb1b8" offset={[10, -10]}>
-          <Image src="/icon/comments.png" height={24} width={24} alt="comments" />
+          <Image src="/icon/client/comments.png" height={24} width={24} alt="comments" />
         </Badge>
       </a>
     </>

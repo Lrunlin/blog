@@ -140,7 +140,7 @@ const Editor: FC<propsType> = props => {
                 onClick={() => setPicture(null)}
               >
                 <img
-                  src="/icon/delete.png"
+                  src="/icon/client/delete.png"
                   className="w-3 h-3 absolute top-0 right-0"
                   alt="delete"
                 />
@@ -165,7 +165,7 @@ const Editor: FC<propsType> = props => {
                   e.stopPropagation();
                 }}
               >
-                <Image src="/icon/emoji.png" width={18} height={18} alt="emoji" />
+                <Image src="/icon/client/emoji.png" width={18} height={18} alt="emoji" />
                 <span className="ml-1 text-sm text-neutral-500">表情</span>
                 <div
                   className={classNames([
@@ -188,7 +188,7 @@ const Editor: FC<propsType> = props => {
                 }}
               >
                 <span className="flex items-center ml-4 cursor-pointer">
-                  <Image src="/icon/picture.png" width={18} height={18} alt="picture" />
+                  <Image src="/icon/client/picture.png" width={18} height={18} alt="picture" />
                   <span className="ml-1 text-sm text-neutral-500">图片</span>
                 </span>
               </label>

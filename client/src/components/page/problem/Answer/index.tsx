@@ -167,7 +167,11 @@ const Answer: FC = () => {
             >
               <Badge count={item.like_data.like_count} color="#adb1b8" offset={[10, -10]}>
                 <Image
-                  src={item.like_data.like_state ? "/icon/likes-fill.png" : "/icon/likes.png"}
+                  src={
+                    item.like_data.like_state
+                      ? "/icon/client/likes-fill.png"
+                      : "/icon/client/likes.png"
+                  }
                   width={24}
                   height={24}
                   alt="likes"

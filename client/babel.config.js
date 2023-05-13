@@ -1,13 +1,11 @@
 module.exports = {
-  presets: ["next/babel"],
-  plugins: [
+  presets: [
     [
-      "import",
+      "next/babel",
       {
-        libraryName: "antd",
-        libraryDirectory: "lib",
-        style: function (name) {
-          return `${name}/style/index.css`;
+        "styled-jsx": {
+          plugins: ["@styled-jsx/plugin-sass"],
+          vendorPrefixes: false,
         },
       },
     ],

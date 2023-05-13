@@ -19,17 +19,17 @@ const Header: FC<{ data: UserAttributes }> = ({ data }) => {
             <div className="flex items-center">
               {data.github && (
                 <NoFollowLink href={`https://github.com/${data.github}`} className="mr-2">
-                  <Image src="/icon/github-fill.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/client/github-fill.png" height={18} width={18} alt="ICON" />
                 </NoFollowLink>
               )}
               {data.email && (
                 <NoFollowLink href={`mailto:${data.email}`} className="mr-2">
-                  <Image src="/icon/email-fill.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/client/email-fill.png" height={18} width={18} alt="ICON" />
                 </NoFollowLink>
               )}
               {data.site && (
                 <NoFollowLink href={data.site} className="mr-2">
-                  <Image src="/icon/website.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/client/website.png" height={18} width={18} alt="ICON" />
                 </NoFollowLink>
               )}
             </div>
@@ -39,13 +39,13 @@ const Header: FC<{ data: UserAttributes }> = ({ data }) => {
             <div className="flex items-center">
               {data.location && (
                 <div className="flex items-center">
-                  <Image src="/icon/briefcase.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/client/briefcase.png" height={18} width={18} alt="ICON" />
                   <span className="ml-1.5">{data.location}</span>
                 </div>
               )}
               {data.unit && (
                 <div className="flex items-center ml-3">
-                  <Image src="/icon/unit.png" height={18} width={18} alt="ICON" />
+                  <Image src="/icon/client/unit.png" height={18} width={18} alt="ICON" />
                   <span className="ml-1.5">{data.unit}</span>
                 </div>
               )}
@@ -56,7 +56,7 @@ const Header: FC<{ data: UserAttributes }> = ({ data }) => {
           {data.description && (
             <div className="w-full mt-2 flex items-start">
               <div className="mt-0.5">
-                <Image src="/icon/postcard.png" height={14} width={18} alt="poster card" />
+                <Image src="/icon/client/postcard.png" height={14} width={18} alt="poster card" />
               </div>
               <div className="w-11/12 ml-1.5 break-all">{data.description}</div>
             </div>

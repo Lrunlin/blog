@@ -31,7 +31,7 @@ const News: FC<propsType> = memo(props => {
         <Badge count={badgeCount} size="small">
           <Image
             className="opacity-50 duration-300 hover:opacity-80 cursor-pointer"
-            src="/icon/small-bell.png"
+            src="/icon/client/small-bell.png"
             height={24}
             width={24}
             alt="bell"

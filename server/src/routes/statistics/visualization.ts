@@ -10,14 +10,13 @@ import Redis from "@/common/utils/redis";
 
 let redis = Redis();
 interface refererType {
-  referer_label: string;
-  referer_color: string;
+  refererResult: string;
   count: number;
 }
 /** 访问数量*/
 let visits: { time: string; view_count: number; ip_count: number }[] = new Array(7).fill(0);
 /** 访问来源*/
-let referer: { [key: refererType["referer_label"]]: refererType } = {};
+let referer: { [key: refererType["refererResult"]]: refererType } = {};
 /** 文章排行*/
 let articleRanking: { id: number; title: string; view_count: number }[] | null = [];
 /** 通过Redis阅读记录获取七日内访问量、作者排行榜、访问来源统计*/
@@ -35,18 +34,17 @@ async function setVisitsData() {
     /** 统计访问来源和七日内全站文章访问量*/
     await redis
       .lrange(key, 0, -1)
-      .then(([time, referer_label, referer_color]) => {
+      .then(([time, refererResult]) => {
         if (!time) {
           return;
         }
         // 统计访问来源
-        let refererItem = referer[referer_label];
+        let refererItem = referer[refererResult];
         if (refererItem) {
           refererItem.count++;
         } else {
-          referer[referer_label] = {
-            referer_label: referer_label,
-            referer_color: referer_color,
+          referer[refererResult] = {
+            refererResult,
             count: 1,
           };
         }

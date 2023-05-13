@@ -51,7 +51,7 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
         onOk={handleOk}
         onCancel={() => {
           setIsModalOpen(false);
-          (document.getElementById(`file-upload-${props.url}`) as HTMLInputElement).value = "";
+          (document.getElementById(`file-upload-${props.target}`) as HTMLInputElement).value = "";
         }}
         zIndex={2000}
         {...props.ModalProps}

@@ -5,7 +5,7 @@ import Layout from "@/components/page/problem/Layout";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import type { ProblemAttributes } from "@type/model-attribute";
-import { Skeleton, Divider, message } from "antd";
+import { Skeleton, Divider, message, Empty } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import classNames from "classnames";
 import type { response } from "@type/common/response";
@@ -45,73 +45,79 @@ const Problem: FC<propsType> = props => {
   return (
     <Layout>
       <Head title={`技术问答 - ${process.env.NEXT_PUBLIC_SITE_NAME}`} />
-      <div>
-        <InfiniteScroll
-          dataLength={list.length}
-          next={loadMore}
-          hasMore={list.length < total}
-          loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-          endMessage={<Divider plain>到底啦 ~ ~ 🤐</Divider>}
-          className={classNames(["bg-white"])}
-        >
-          <ul className="p-0 w-full text-base">
-            {list.map((item, index) => (
-              <li
-                key={item.id}
-                className={classNames([
-                  "flex items-center list-none border-slate-200 border-b-solid p-4 pb-3 max-w-full",
-                  index && "mt-3",
-                ])}
-              >
-                <div
+      {list.length ? (
+        <div>
+          <InfiniteScroll
+            dataLength={list.length}
+            next={loadMore}
+            hasMore={list.length < total}
+            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+            endMessage={<Divider plain>到底啦 ~ ~ 🤐</Divider>}
+            className="bg-white"
+          >
+            <ul className="p-0 w-full text-base">
+              {list.map((item, index) => (
+                <li
+                  key={item.id}
                   className={classNames([
-                    "w-12 h-12 flex flex-col items-center rounded",
-                    item.answer_count
-                      ? "border border-solid border-blue-600 text-blue-600"
-                      : "text-gray-400",
+                    "flex items-center list-none border-slate-200 border-b-solid p-4 pb-3 max-w-full",
+                    index && "mt-3",
                   ])}
                 >
-                  <div>{item.answer_count}</div>
-                  <div>回答</div>
-                </div>
-                <div className="w-12 h-12 ml-2 flex flex-col items-center rounded text-orange-800">
-                  <div>{item.view_count}</div>
-                  <div>阅读</div>
-                </div>
-                <div className="ml-2">
-                  <a
-                    className="max-w-2xl truncate block text-gray-800"
-                    href={`/problem/${item.id}`}
-                    target="_blank"
+                  <div
+                    className={classNames([
+                      "w-12 h-12 flex flex-col items-center rounded",
+                      item.answer_count
+                        ? "border border-solid border-blue-600 text-blue-600"
+                        : "text-gray-400",
+                    ])}
                   >
-                    {item.title}
-                  </a>
-                  <div className="flex items-center mt-1">
-                    {item.tag.map((tag, _index) => (
-                      <Link
-                        href={`/search?tag=${tag.name}`}
-                        key={`problem${item.id}${tag.name}`}
-                        className={classNames([
-                          _index && "ml-2",
-                          "px-1",
-                          "text-sm",
-                          "rounded",
-                          "bg-blue-200",
-                          "text-blue-800",
-                          "cursor-pointer",
-                          "hover:bg-blue-300",
-                        ])}
-                      >
-                        {tag.name}
-                      </Link>
-                    ))}
+                    <div>{item.answer_count}</div>
+                    <div>回答</div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </InfiniteScroll>
-      </div>
+                  <div className="w-12 h-12 ml-2 flex flex-col items-center rounded text-orange-800">
+                    <div>{item.view_count}</div>
+                    <div>阅读</div>
+                  </div>
+                  <div className="ml-2">
+                    <a
+                      className="max-w-2xl truncate block text-gray-800"
+                      href={`/problem/${item.id}`}
+                      target="_blank"
+                    >
+                      {item.title}
+                    </a>
+                    <div className="flex items-center mt-1">
+                      {item.tag.map((tag, _index) => (
+                        <Link
+                          href={`/search?tag=${tag.name}`}
+                          key={`problem${item.id}${tag.name}`}
+                          className={classNames([
+                            _index && "ml-2",
+                            "px-1",
+                            "text-sm",
+                            "rounded",
+                            "bg-blue-200",
+                            "text-blue-800",
+                            "cursor-pointer",
+                            "hover:bg-blue-300",
+                          ])}
+                        >
+                          {tag.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </InfiniteScroll>
+        </div>
+      ) : (
+        <div className="h-96 flex items-center justify-center bg-white">
+          <Empty className="!my-0" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        </div>
+      )}
     </Layout>
   );
 };

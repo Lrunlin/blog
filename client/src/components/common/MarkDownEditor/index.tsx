@@ -97,6 +97,9 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
         .hljs-strong {
           font-weight: 700;
         }
+        .bytemd-fullscreen {
+          z-index: 99 !important;
+        }
       `}</style>
       <Spin spinning={!!uploadProgress} tip={uploadProgress}>
         <Editor

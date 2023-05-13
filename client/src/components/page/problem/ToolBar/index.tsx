@@ -76,7 +76,12 @@ const ToolBar = () => {
           className="flex items-center"
           onClick={!userData ? undefined : unCollectionProblem}
         >
-          <Image src="/icon/problem-collection-white.png" alt="icon" width={14} height={14} />
+          <Image
+            src="/icon/client/problem-collection-white.png"
+            alt="icon"
+            width={14}
+            height={14}
+          />
           <span className="ml-0.5">已收藏 {data.collection_data.collection_count}</span>
         </Button>
       ) : (
@@ -84,7 +89,12 @@ const ToolBar = () => {
           className="flex items-center"
           onClick={userData?.id == data.author || !userData ? undefined : collectionProblem}
         >
-          <Image src="/icon/problem-collection-black.png" alt="icon" width={14} height={14} />
+          <Image
+            src="/icon/client/problem-collection-black.png"
+            alt="icon"
+            width={14}
+            height={14}
+          />
           <span className="ml-0.5">收藏 {data.collection_data.collection_count}</span>
         </Button>
       )}
@@ -94,7 +104,7 @@ const ToolBar = () => {
           className="flex items-center ml-2"
           onClick={!userData ? undefined : unLikeProblem}
         >
-          <Image src="/icon/problem-like-white.png" alt="icon" width={14} height={14} />
+          <Image src="/icon/client/problem-like-white.png" alt="icon" width={14} height={14} />
           <span className="ml-0.5">已点赞 {data.like_data.like_count}</span>
         </Button>
       ) : (
@@ -102,7 +112,7 @@ const ToolBar = () => {
           className="flex items-center ml-2"
           onClick={userData?.id == data.author || !userData ? undefined : likeProblem}
         >
-          <Image src="/icon/problem-like-black.png" alt="icon" width={14} height={14} />
+          <Image src="/icon/client/problem-like-black.png" alt="icon" width={14} height={14} />
           <span className="ml-0.5">点赞 {data.like_data.like_count}</span>
         </Button>
       )}
@@ -112,7 +122,7 @@ const ToolBar = () => {
           className="flex items-center ml-2"
           onClick={!userData ? undefined : unFollowProblem}
         >
-          <Image src="/icon/problem-follow-white.png" alt="icon" width={14} height={14} />
+          <Image src="/icon/client/problem-follow-white.png" alt="icon" width={14} height={14} />
           <span className="ml-0.5">已关注 {data.follow_data.follow_count}</span>
         </Button>
       ) : (
@@ -120,7 +130,7 @@ const ToolBar = () => {
           className="flex items-center ml-2"
           onClick={userData?.id == data.author || !userData ? undefined : followProblem}
         >
-          <Image src="/icon/problem-follow-black.png" alt="icon" width={14} height={14} />
+          <Image src="/icon/client/problem-follow-black.png" alt="icon" width={14} height={14} />
           <span className="ml-0.5">关注 {data.follow_data.follow_count}</span>
         </Button>
       )}

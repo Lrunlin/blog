@@ -16,9 +16,7 @@ export interface propsType {
  * 文章列表组件的单个文章介绍
  * 传递单个文章数据即可
  */
-const ArticleItem: FC<propsType> = props => {
-  let { data, keyword } = props;
-
+const ArticleItem: FC<propsType> = ({ data, keyword }) => {
   return (
     <li className="px-5 pt-3 list-none">
       <div>
@@ -64,7 +62,7 @@ const ArticleItem: FC<propsType> = props => {
           <a
             href={`/article/${data.id}`}
             className={classNames([
-              "text-sm text-[#86909c] block mt-1",
+              "text-sm text-[#86909c] mt-1",
               data.cover_url ? "line-clamp-2 mr-2" : "line-clamp-1",
             ])}
             target="_blank"
@@ -86,15 +84,15 @@ const ArticleItem: FC<propsType> = props => {
           ])}
         >
           <li className={classNames(["flex", "items-center"])}>
-            <Image src="/icon/view.png" width={16} height={16} alt="view icon" />
+            <Image src="/icon/client/view.png" width={16} height={16} alt="view icon" />
             <span className="ml-1">{data.view_count}</span>
           </li>
           <li className={classNames(["flex", "items-center", "mx-3"])}>
-            <Image src="/icon/comment.png" width={16} height={16} alt="comment icon" />
+            <Image src="/icon/client/comment.png" width={16} height={16} alt="comment icon" />
             <span className="ml-1">{data.comment_count}</span>
           </li>
           <li className={classNames(["flex", "items-center"])}>
-            <Image src="/icon/likes.png" width={16} height={16} alt="collection icon" />
+            <Image src="/icon/client/likes.png" width={16} height={16} alt="collection icon" />
             <span className="ml-1">{data.like_count}</span>
           </li>
         </ul>

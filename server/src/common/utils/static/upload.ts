@@ -10,7 +10,8 @@ let config = new qiniu.conf.Config({
 });
 
 let bucket = process.env.OSS_NAME;
-
+// https://sharp.pixelplumbing.com/api-utility#cache
+sharp.cache(false); //不缓存
 /**
  * 将文件上传至七牛云
  * @params buffer {Buffer} 上传图片的Buffer
@@ -29,37 +30,31 @@ async function upload(
   let uploadToken = putPolicy.uploadToken(Mac);
   let formUploader = new qiniu.form_up.FormUploader(config);
   let putExtra = new qiniu.form_up.PutExtra();
-
+  const sharpInstance = sharp(buffer, { animated: true });
+  const processedBuffer = await sharpInstance.webp({ lossless: true, quality: 80 }).toBuffer();
   return (await sync((resolve, reject) => {
-    sharp(buffer, { animated: true })
-      .webp({ lossless: true, quality: 80 })
-      .toBuffer()
-      .then(data => {
-        formUploader.put(
-          uploadToken,
-          fileName.join("/"),
-          data, //处理后的buffer
-          putExtra,
-          function (respErr, respBody, respInfo) {
-            if (respErr) {
-              reject(respErr);
-              return;
-            }
-            if (respInfo.statusCode == 200) {
-              resolve({
-                file_name: respBody.key.replace(`${fileName[0]}/`, ""),
-                file_href: `${process.env.CDN}/${respBody.key}`,
-              });
-            } else {
-              reject("图片上传错误");
-            }
-          }
-        );
-      })
-      .catch(err => {
-        console.log(err);
-        reject("图片压缩错误");
-      });
+    formUploader.put(
+      uploadToken,
+      fileName.join("/"),
+      processedBuffer, //处理后的buffer
+      putExtra,
+      function (respErr, respBody, respInfo) {
+        if (respErr) {
+          reject(respErr);
+          sharpInstance?.destroy();
+          return;
+        }
+        if (respInfo.statusCode == 200) {
+          resolve({
+            file_name: respBody.key.replace(`${fileName[0]}/`, ""),
+            file_href: `${process.env.CDN}/${respBody.key}`,
+          });
+        } else {
+          reject("图片上传错误");
+        }
+        sharpInstance?.destroy();
+      }
+    );
   })) as Promise<string | { file_name: string; file_href: string }>;
 }
 export default upload;

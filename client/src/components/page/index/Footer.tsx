@@ -30,7 +30,7 @@ let list: listItemType[][] = [
       href: "https://beian.miit.gov.cn/#/Integrated/index",
       label: (
         <>
-          <Image src="/icon/police.png" width={20} height={20} alt="police icon" />
+          <Image src="/icon/client/police.png" width={20} height={20} alt="police icon" />
           <span className="ml-1">{process.env.ICP}</span>
         </>
       ),
@@ -75,7 +75,12 @@ const Footer = () => {
               <div className="bg-white w-40 h-52 pt-2 rounded text-center">
                 <div>QQ:{process.env.QQ}</div>
                 <div>
-                  <Image src="/image/qq-qrcode.jpg" width={140} height={140} alt="QQ名片二维码" />
+                  <Image
+                    src="/image/client/qq-qrcode.jpg"
+                    width={140}
+                    height={140}
+                    alt="QQ名片二维码"
+                  />
                 </div>
               </div>
             )}
@@ -83,7 +88,7 @@ const Footer = () => {
             <NoFollowLink
               href={`http://wpa.qq.com/msgrd?v=3&uin=${process.env.QQ}&site=qq&menu=yes`}
             >
-              <Image src="/icon/qq.png" width={24} height={24} alt="QQ图标" />
+              <Image src="/icon/client/qq.png" width={24} height={24} alt="QQ图标" />
             </NoFollowLink>
           </Dropdown>
         </div>
@@ -94,22 +99,27 @@ const Footer = () => {
               <div className="bg-white w-40 h-52 pt-2 rounded text-center">
                 <div>添加站长微信</div>
                 <div>
-                  <Image src="/image/wechat-qrcode.jpg" width={140} height={140} alt="微信二维码" />
+                  <Image
+                    src="/image/client/wechat-qrcode.jpg"
+                    width={140}
+                    height={140}
+                    alt="微信二维码"
+                  />
                 </div>
               </div>
             )}
           >
-            <Image src="/icon/wechat.png" width={24} height={24} alt="微信图标" />
+            <Image src="/icon/client/wechat.png" width={24} height={24} alt="微信图标" />
           </Dropdown>
         </div>
         <div className="mt-3 ml-2">
           <NoFollowLink href={`mailto:${process.env.EMAIL}`}>
-            <Image src="/icon/email.png" width={24} height={24} alt="邮箱图标" />
+            <Image src="/icon/client/email.png" width={24} height={24} alt="邮箱图标" />
           </NoFollowLink>
         </div>
         <div className="mt-3 ml-2">
           <NoFollowLink href={`${process.env.GITHUB}`}>
-            <Image src="/icon/github.png" width={24} height={24} alt="GitHub图标" />
+            <Image src="/icon/client/github.png" width={24} height={24} alt="GitHub图标" />
           </NoFollowLink>
         </div>
       </div>

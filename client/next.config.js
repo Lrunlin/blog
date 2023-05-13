@@ -1,9 +1,9 @@
 const path = require("path");
-const buildId = require("next-build-id");
-const envObject = require("./env/index");
+const { env, buildid } = require("./env/index");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -24,7 +24,7 @@ const nextConfig = {
     return config;
   },
   // CDN地址
-  assetPrefix: envObject.CDN || "",
+  assetPrefix: env.CDN || "",
   // 设置缓存
   async headers() {
     return [
@@ -43,10 +43,7 @@ const nextConfig = {
       },
     ];
   },
-  generateBuildId: () =>
-    buildId()
-      .then(res => res)
-      .catch(() => +new Date() + ""),
-  env: envObject,
+  generateBuildId: () => buildid(),
+  env: env,
 };
 module.exports = withBundleAnalyzer(nextConfig);

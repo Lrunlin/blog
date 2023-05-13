@@ -56,8 +56,8 @@ const Collection = () => {
           <Image
             src={
               currentArticleData.collection_state
-                ? "/icon/collection-fill.png"
-                : "/icon/collection.png"
+                ? "/icon/client/collection-fill.png"
+                : "/icon/client/collection.png"
             }
             width={24}
             height={24}

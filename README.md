@@ -6,8 +6,7 @@
 
 ## 相关技术
 
-用户端:Next.js  
-管理系统:React18+Vite  
+前端:Next.js(React.js 18)  
 服务端:Koa2+Sequelize(ORM)  
 数据库:MySQL(InnoDB)+Redis
 

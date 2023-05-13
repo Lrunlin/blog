@@ -18,7 +18,7 @@ const Image: FC<propsType> = props => {
   const [src, setSrc] = useState("");
   const [visible, setVisible] = useState(false);
 
-  let fileID = `file-upload-${props.url}`;
+  let fileID = `file-upload-${props.target}`;
 
   let first = useRef(true);
   useEffect(() => {
@@ -58,7 +58,7 @@ const Image: FC<propsType> = props => {
                 }}
               />
               <Icon
-                src="/icon/view-white.png"
+                src="/icon/client/view-white.png"
                 width={22}
                 height={22}
                 alt="preview"

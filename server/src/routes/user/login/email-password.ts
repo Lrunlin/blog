@@ -21,7 +21,7 @@ router.post("/login/email", validator(schema), async ctx => {
       email: email,
       password: password,
     },
-    attributes: ["id", "auth"],
+    attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
   })
     .then(row => {
       if (!row) {
@@ -36,7 +36,7 @@ router.post("/login/email", validator(schema), async ctx => {
         process.env.KEY as string,
         { expiresIn: "365d" }
       );
-      ctx.body = { success: true, message: "登录成功", token: token };
+      ctx.body = { success: true, message: "登录成功", token: token, data: row };
     })
     .catch(err => {
       ctx.body = { success: false, message: "登录失败" };

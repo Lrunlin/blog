@@ -95,12 +95,12 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
             className="mt-3 flex items-center cursor-pointer select-none"
             onClick={() => setShowEditor(state => !state)}
           >
-            <Image src="/icon/comment.png" width={14} height={14} alt="comment" />
+            <Image src="/icon/client/comment.png" width={14} height={14} alt="comment" />
             <span className="ml-0.5">{showEditor ? "收起" : "回复"}</span>
           </span>
           {data.user_data.id == userData?.id && (
             <span className="mt-3 ml-3 flex items-center cursor-pointer" onClick={removeComment}>
-              <Image src="/icon/delete-fill.png" width={14} height={14} alt="delete" />
+              <Image src="/icon/client/delete-fill.png" width={14} height={14} alt="delete" />
               <span className="ml-0.5">删除</span>
             </span>
           )}

@@ -21,7 +21,7 @@ const Cover: FC<propsType> = ({ cover_url }) => {
             preview={false}
             className="w-[120px] h-20"
             src={cover_url}
-            fallback="/image/load-error.png"
+            fallback="/image/client/load-error.png"
             alt="cover"
           />
         </div>

@@ -6,10 +6,11 @@ import axios from "axios";
 import { modalStateContext } from "../index";
 import cookie from "js-cookie";
 import useUserData from "@/store/user-data";
-
+import { userDataContext } from "@/store/user-data";
 /** 弹窗中的登录组件*/
 const LogIn = () => {
   let setModalState = useSetRecoilState(modalStateContext);
+  let setUserData = useSetRecoilState(userDataContext);
   const [, refreshDataAction] = useUserData();
 
   const [isLoad, setIsLoad] = useState(false);
@@ -21,8 +22,8 @@ const LogIn = () => {
         if (res.data.success) {
           message.success(res.data.message);
           setModalState(false);
+          setUserData(res.data.data);
           cookie.set("token", res.data.token, { expires: 365 });
-          refreshDataAction();
         } else {
           message.error(res.data.message);
         }

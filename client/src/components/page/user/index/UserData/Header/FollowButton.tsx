@@ -14,7 +14,7 @@ interface propsType {
   bloggerID: FollowAttributes["belong_id"];
 }
 const SwitchButton: FC<propsType> = props => {
-  let { data, error, mutate } = useSWR(`follow-user-state-${props.bloggerID}`, () =>
+  let { data, error, mutate } = useSWR(`follow-user-data-${props.bloggerID}`, () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
 
