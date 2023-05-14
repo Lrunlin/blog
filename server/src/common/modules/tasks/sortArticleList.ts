@@ -52,7 +52,6 @@ async function getSortArticleList(_sort: "recommend" | "newest" | "hottest", pag
         let item = row.toJSON();
         let description = setDescription(item.content);
         let tag = getTagData(item.tag as unknown as number[], ["id", "name"]);
-
         return {
           sort: _sort,
           data: {

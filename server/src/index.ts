@@ -26,10 +26,8 @@ app.use(BodyParser());
 import cors from "@koa/cors";
 app.use(cors());
 
-import getAllRouter from "@/common/modules/getAllRouter";
+import Routers from "@/common/modules/getAllRouter";
 (async () => {
-  let Routers = await getAllRouter();
-
   let routeCount = 0;
   Routers.forEach((item, index) => {
     import(item)

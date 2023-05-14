@@ -2,8 +2,7 @@
 //循环挨个查询redis中的数据进行合并
 //将结果直接写入Mysql数据库
 import DB from "@/db";
-import Redis from "../utils/redis";
-import sleep from "@/common/utils/sleep";
+import Redis from "../../utils/redis";
 import {
   createData,
   setArticleListWriteRedis,
@@ -14,13 +13,8 @@ let redis = Redis();
 /** 根据页数获取推荐文章并且进行批量创建*/
 async function sortArticleList() {
   //开始获取数据并且写入Redis
-  for (let index = 0; index < 20; index++) {
-    // for (let index = 0; index < 2; index++) {
-    await setArticleListWriteRedis(index + 1).catch(err => {
-      console.log(err);
-    });
-    await sleep(100);
-  }
+  await setArticleListWriteRedis();
+
   // 开始对数据进行合并并且写入数据库事务
   /** 获取全部文章的ID(去重后)*/
   function keys() {

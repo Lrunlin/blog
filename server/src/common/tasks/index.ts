@@ -1,13 +1,14 @@
-import fs from "fs";
-let dir = fs.readdirSync(__dirname).filter(item => {
-  let filename = __filename.replace(__dirname, "").substring(1);
-  return item != filename && item.endsWith(".js");
-});
+import path from "path";
+import { globSync } from "glob";
+
 function start() {
-  dir.forEach(item => {
-    import(`./${item}`).then(res => {
-      res.default();
+  if ([undefined, "0"].includes(process.env.NODE_APP_INSTANCE)) {
+    let dir = globSync(`**/*.js`, { ignore: ["index.js"], cwd: __dirname });
+    dir.forEach(item => {
+      import(path.join(__dirname, item)).then(res => {
+        res.default && res.default();
+      });
     });
-  });
+  }
 }
 export default start;

@@ -4,18 +4,14 @@ import {
   setArticleListWriteRedis,
   sort,
 } from "@/common/modules/tasks/set-recommend-data";
-import sleep from "@/common/utils/sleep";
-import Redis from "../utils/redis";
+import Redis from "../../utils/redis";
 
 let redis = Redis();
 /** 向Redis中写入新数据*/
 async function setNewData() {
-  for (let index = 0; index < 20; index++) {
-    await setArticleListWriteRedis(index + 1).catch(err => {
-      console.log(err);
-    });
-    await sleep(100);
-  }
+  //开始获取数据并且写入Redis
+  await setArticleListWriteRedis();
+
   let oldArticleList = await DB.Recommend.findAll({
     attributes: ["id"],
     raw: true,

@@ -1,36 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import axios from "axios";
-import moment from "moment";
 import auth from "@/common/middleware/auth";
 import { Op } from "sequelize";
+import Redis from "@/common/utils/redis";
 
-let repositoryData: any = null;
-function getGtiHubData() {
-  axios
-    .get("https://api.github.com/repos/Lrunlin/blog")
-    .then(res => {
-      repositoryData = {
-        star_count: res.data.stargazers_count,
-        fork_count: res.data.forks_count,
-        issues_count: res.data.open_issues,
-        watch_count: res.data.subscribers_count,
-        html_url: res.data.html_url,
-        homepage: res.data.homepage,
-        refresh_time: moment().format("MM-DD HH:mm:ss"),
-      };
-    })
-    .catch(err => {
-      //开发环境经常因为代码更新快而限制请求频率
-      if (process.env.ENV == "production") {
-        console.log(err);
-      }
-    });
-}
-getGtiHubData();
-setInterval(() => {
-  getGtiHubData();
-}, 3_600_000);
+let redis = Redis();
 
 let router = new Router();
 router.get("/statistics/index", auth(), async ctx => {
@@ -48,6 +22,7 @@ router.get("/statistics/index", auth(), async ctx => {
   })
     .then(({ count }) => ({ type: "comment", count: count }))
     .catch(() => []);
+  let repositoryData = (await redis.get("visualization-github")) as string;
 
   await Promise.all([link, comment])
     .then(data => {
@@ -56,7 +31,7 @@ router.get("/statistics/index", auth(), async ctx => {
         message: "查询首页内容",
         data: {
           notice: data.flat().filter(item => item.count),
-          repository_data: repositoryData,
+          repository_data: JSON.parse(repositoryData),
         },
       };
     })

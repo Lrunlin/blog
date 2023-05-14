@@ -19,6 +19,7 @@
     "cross-env": "^7.0.3",
     "cross-port-killer": "^1.4.0",
     "dotenv": "^16.0.1",
+    "glob": "^10.2.3",
     "identicon.js": "^2.3.3",
     "ioredis": "^5.2.0",
     "joi": "^17.6.0",

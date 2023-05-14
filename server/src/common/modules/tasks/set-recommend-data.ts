@@ -1,7 +1,9 @@
 import Redis from "@/common/utils/redis";
 let redis = Redis();
 import getSortArticleList from "./sortArticleList";
-
+import DB from "@/db";
+import { Op } from "sequelize";
+import sleep from "@/common/utils/sleep";
 export const sort = {
   recommend: [
     ["update_time", "desc"],
@@ -29,28 +31,45 @@ export const sort = {
 };
 
 /** 首次启动。根据页数获取推荐文章，并且全部写入redis（{sort}-{id}）*/
-export const setArticleListWriteRedis = async (page: number) => {
-  const pipeline = redis.pipeline();
-  return await Promise.all(Object.keys(sort).map((_sort: any) => getSortArticleList(_sort, page)))
-    .then(async rows => {
-      rows.flat().forEach((item: any) => {
-        pipeline.mset(`${item.sort}-${item.data.id}`, JSON.stringify(item.data));
-      });
-      return new Promise((resolve, rejcet) => {
-        pipeline.exec((err, results) => {
-          if (err) {
-            console.error(err);
-            rejcet(err);
-          } else {
-            resolve(null);
-          }
+export const setArticleListWriteRedis = async () => {
+  let count = await DB.Article.count({
+    where: {
+      state: 1,
+      // 要求更新文章推荐表时，不存储2小时内发布或者被更新的文章
+      create_time: { [Op.lt]: new Date(+new Date() - 7_200_000) },
+      [Op.or]: [
+        { update_time: null as any },
+        { update_time: { [Op.lt]: new Date(+new Date() - 7_200_000) } },
+      ],
+    },
+  });
+
+  let round = Math.min(20, Math.ceil(count / 1000))+1;
+
+  for (let page = 1; page < round; page++) {
+    const pipeline = redis.pipeline();
+    await Promise.all(Object.keys(sort).map((_sort: any) => getSortArticleList(_sort, page)))
+      .then(async rows => {
+        rows.flat().forEach((item: any) => {
+          pipeline.mset(`${item.sort}-${item.data.id}`, JSON.stringify(item.data));
         });
+        return new Promise((resolve, rejcet) => {
+          pipeline.exec((err, results) => {
+            if (err) {
+              console.error(err);
+              rejcet(err);
+            } else {
+              resolve(null);
+            }
+          });
+        });
+      })
+      .catch(err => {
+        console.log("初始化推荐表错误:");
+        return [];
       });
-    })
-    .catch(err => {
-      console.log("初始化推荐表错误:");
-      return [];
-    });
+    await sleep(100);
+  }
 };
 
 /** 批量创建使用的数据,用于更新或者创建*/
