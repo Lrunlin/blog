@@ -72,11 +72,10 @@ API 接口文档 Apifox
 
 1. 用户端 UI 进行美化以及去 Ant Design
 2. ~~积分功能~~
-3. 问答功能
-4. 文章页面主题模式
-5. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
-6. Redis 接口环境以及对应的事务处理
-7. 小组功能
+5. 文章页面主题模式
+6. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
+7. Redis 接口环境以及对应的事务处理
+8. 小组功能
 
 ## 开发环境启动
 
