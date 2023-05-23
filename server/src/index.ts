@@ -44,7 +44,7 @@ import Routers from "@/common/modules/getAllRouter";
       });
     if (Routers.length == index + 1) {
       const port = 3000;
-      kill(3000)
+      kill(port)
         .catch(() => {
           console.log(`端口3000关闭失败`);
         })

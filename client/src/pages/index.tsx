@@ -39,10 +39,7 @@ const Home: NextPage<propsType> = props => {
 
   function loadMoreData() {
     if (page.current == 1) setIsLoading(true);
-    getArticleList({
-      page: page.current,
-      ...option.current,
-    })
+    getArticleList(page.current, option.current)
       .then(data => {
         if (page.current == 1) {
           setList(data.list);
@@ -103,10 +100,7 @@ const Home: NextPage<propsType> = props => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  let reponse = await Promise.all([
-    getTypeTreeIndex(),
-    getArticleList({ page: 1, sort: "recommend" }),
-  ]);
+  let reponse = await Promise.all([getTypeTreeIndex(), getArticleList(1, { sort: "recommend" })]);
 
   return {
     props: {

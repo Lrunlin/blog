@@ -1,10 +1,9 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 import type { articleListItemType } from "@type/model/article-list-item";
 import type { response } from "@type/common/response";
 
 export type sortType = "recommend" | "newest" | "hottest";
 interface paramsType {
-  page: number;
   sort: sortType;
   type?: number | string;
   tag?: number | string;
@@ -23,12 +22,16 @@ export interface responseType {
  * @params type {recommend | newest | hottest} 请求类型 (综合、最新、热榜)
  * @return data {object[]} 文章数据
  */
-function articleList(params: paramsType, header: AxiosRequestHeaders = {}) {
+function articleList(page: number, params: paramsType, cancel: void) {
   return axios
-    .get<response<responseType>>(`/article/list`, {
+    .get<response<responseType>>(`/article/list/${page}`, {
       params: params,
-      headers: header,
     })
-    .then(res => res.data.data);
+    .then(res => {
+      return res.data.data;
+    })
+    .catch(err => {
+      return { total: 0, list: [] };
+    });
 }
 export default articleList;

@@ -21,7 +21,12 @@ async function getArticleListData(
     }),
     DB.Recommend.findAll({
       raw: true,
-      where: where,
+      where: {
+        [_sort]: {
+          [Op.not]: null,
+        },
+        ...where,
+      },
       limit: 10,
       offset: (page - 1) * 10,
       order: [[_sort, "asc"]],

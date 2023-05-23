@@ -22,6 +22,6 @@ axios.interceptors.response.use(
     return config;
   },
   error => {
-    return Promise.reject({ ...error.response.data, status: error.response.status });
+    return Promise.reject({ ...error.response?.data, status: error.response?.status });
   }
 );

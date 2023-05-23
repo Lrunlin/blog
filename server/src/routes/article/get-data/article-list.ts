@@ -42,8 +42,8 @@ async function where(query: ParsedUrlQuery, user_id?: number) {
 
 let router = new Router();
 // 用户端首页文章列表
-router.get("/article/list", verify, async ctx => {
-  let page = +(ctx.query.page as string);
+router.get("/article/list/:page", verify, async ctx => {
+  let page = +(ctx.params.page as string);
 
   let data;
   if (ctx.query.follow) {
