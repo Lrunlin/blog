@@ -14,7 +14,7 @@ let envObject = dotenv.parse(
 module.exports = {
   buildid: () => {
     return md5(
-      globSync("**/*.*", { ignore: ["node_modules/**", ".next/**", "public/**", "env/**"] })
+      globSync(["src/**/*.*", "./**.js", "./**.json", "./**.ts", "./**.lock"])
         .map(item => {
           let str = fs.readFileSync(item).toString();
           return md5(str);

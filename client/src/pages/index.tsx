@@ -37,9 +37,13 @@ const Home: NextPage<propsType> = props => {
   let page = useRef(1);
   let option = useRef<optionType>({ sort: "recommend" });
 
+  let cancel= useRef<() => void>();
   function loadMoreData() {
+    cancel.current && cancel.current();
     if (page.current == 1) setIsLoading(true);
-    getArticleList(page.current, option.current)
+    getArticleList(page.current, option.current, cancelFunction => {
+      cancel.current = cancelFunction;
+    })
       .then(data => {
         if (page.current == 1) {
           setList(data.list);

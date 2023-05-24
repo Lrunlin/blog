@@ -9,24 +9,20 @@ async function getArticleListData(
   _sort: "recommend" | "newest" | "hottest",
   where: WhereOptions<RecommendAttributes>
 ) {
+  let _where = {
+    [_sort]: {
+      [Op.not]: null,
+    },
+    ...where,
+  };
   return Promise.all([
     DB.Recommend.count({
-      where: {
-        [_sort]: {
-          [Op.not]: null,
-        },
-        ...where,
-      },
+      where: _where,
       attributes: ["id"],
     }),
     DB.Recommend.findAll({
       raw: true,
-      where: {
-        [_sort]: {
-          [Op.not]: null,
-        },
-        ...where,
-      },
+      where: _where,
       limit: 10,
       offset: (page - 1) * 10,
       order: [[_sort, "asc"]],
