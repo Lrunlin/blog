@@ -83,9 +83,8 @@ API 接口文档 Apifox
 
 ### 环境变量
 
-1. admin 文件夹在根目录创建.env.production 文件并按照.env.development 填写完整
-2. client 文件夹在 env 文件夹中.env.production 文件并按照.env.development 填写完整
-3. server 文件夹在 env 文件夹中将 template 重命名为环境变量名后补全内容
+1. client 文件夹在 env 文件夹中.env.production 文件并按照.env.development 填写完整
+2. server 文件夹在 env 文件夹中将 template 重命名为环境变量名(development/production)后补全内容
 
 ### 启动
 
