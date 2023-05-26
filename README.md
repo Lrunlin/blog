@@ -15,13 +15,12 @@
 CSS 解决方案 Tailwind CSS  
 React 状态管理 Recoil  
 API 接口文档 Apifox  
-缓存 Token 黑名单、Next.js 页面渲染结果使用 Redis 缓存，其他数据使用 LRU-cache 缓存。
 
 ## 联系方式
 
 <div>
-    <img src="https://disk.blogweb.cn/me/qq.svg?qq"  width=160 alt="QQ">
-    <img src="https://disk.blogweb.cn/me/wechat.svg?wx" width=160 alt="微信">
+    <img src="https://disk.blogweb.cn/me/qq.webp"  width=160 alt="QQ">
+    <img src="https://disk.blogweb.cn/me/wechat.webp" width=160 alt="微信">
 </div>
 
 ## 其他版本
@@ -72,14 +71,10 @@ API 接口文档 Apifox
 
 1. 用户端 UI 进行美化以及去 Ant Design
 2. ~~积分功能~~
-5. 文章页面主题模式
-6. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
-7. Redis 接口环境以及对应的事务处理
-8. 小组功能
-
-## 开发环境启动
-
-**_Node.js 版本推荐使用 18,同时推荐使用 yarn 作为包管理器_**
+3. 文章页面主题模式
+4. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
+5. Redis 接口环境以及对应的事务处理
+6. 小组功能
 
 ### 环境变量
 
@@ -88,10 +83,18 @@ API 接口文档 Apifox
 
 ### 启动
 
-0. 导入 SQL 文件
-1. npm install yarn -g _(如果有 yarn 请忽略)_
-2. 点击 install.bat 自动安装依赖 _(完成后关闭 cmd 窗口)_
-3. 点击 dev.bat 启动项目
+#### 环境
+
+1. Node.js 18.x
+2. MySQL 8.x
+3. Redis
+
+#### 启动步骤
+
+1. 导入 SQL 文件
+2. npm install yarn -g _(如果有 yarn 请忽略)_
+3. 点击 install.bat 自动安装依赖 _(完成后关闭 cmd 窗口)_
+4. 点击 dev.bat 启动项目
 
 ## 生产环境部署
 
