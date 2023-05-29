@@ -16,7 +16,6 @@
     "@bytemd/react": "^1.21.0",
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
-    "@pansy/watermark": "^2.3.0",
     "antd": "4.24.7",
     "antd-img-crop": "^4.12.2",
     "axios": "^0.27.2",

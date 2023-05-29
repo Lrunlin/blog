@@ -3,8 +3,8 @@ import Header from "@/components/admin/common/Header";
 import Footer from "@/components/admin/common/Footer";
 import { useRouter } from "next/navigation";
 import useUserState from "@/store/user-data";
-// import WaterMark from "./Watermark";
 import axios from "axios";
+import Head from "@/components/next/Head";
 
 interface propsType {
   children: ReactNode;
@@ -27,6 +27,7 @@ const AdminLayout: FC<propsType> = ({ children }) => {
 
   return (
     <>
+      <Head title={`${process.env.NEXT_PUBLIC_SITE_NAME} - 后台管理系统`} />
       <style jsx global>{`
         a {
           color: inherit !important;

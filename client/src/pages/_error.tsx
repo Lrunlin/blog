@@ -6,22 +6,19 @@ import type { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/navigation";
 
 interface propsType {
-  statusCode: ResultProps['status'];
+  statusCode: ResultProps["status"];
 }
-const Error: NextPage<propsType> = ({ statusCode }) => {
+const Error: NextPage<propsType> = ({ statusCode } = { statusCode: 500 }) => {
   let router = useRouter();
+  const code = statusCode || 500;
 
   return (
     <>
-      <Head
-        title={`${statusCode} | 页面加载错误`}
-        description={statusCode + ""}
-        keywords={[statusCode + ""]}
-      />
+      <Head title={`${code} | 页面加载错误`} description={code + ""} keywords={[code + ""]} />
       <Header />
       <Result
-        status={statusCode}
-        title={statusCode}
+        status={code}
+        title={code}
         subTitle="页面加载错误"
         extra={
           <Button type="primary" onClick={() => router.replace("/")}>

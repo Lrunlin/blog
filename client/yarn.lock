@@ -293,11 +293,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pansy/watermark@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.npmmirror.com/@pansy/watermark/-/watermark-2.3.0.tgz#f0173e3677a3c24193555bda0e007ecdaf215a75"
-  integrity sha512-eVq5XD0BGkAkp0I36WgupRJOnEf+d3mJzy4HJUOUx4XzpZAk6fCRu1OKodTx+64FegEhfAMr7QpbUMTmdXrDPQ==
-
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.npmmirror.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
