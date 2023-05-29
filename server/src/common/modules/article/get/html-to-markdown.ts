@@ -1,6 +1,5 @@
 import TurndownService from "turndown";
 let gfm = require("turndown-plugin-gfm");
-import type { ArticleAttributes } from "@/db/models/article";
 
 const turndownService = new TurndownService({
   emDelimiter: "*",
@@ -9,6 +8,7 @@ const turndownService = new TurndownService({
   headingStyle: "atx",
   bulletListMarker: "+",
 });
+
 turndownService.use(gfm.gfm);
 turndownService.addRule("autoLanguage", {
   filter(node, options) {
@@ -31,10 +31,11 @@ turndownService.addRule("autoLanguage", {
   },
 });
 
-type paramsType = Pick<ArticleAttributes,"content">;
+// 取消转义
+turndownService.escape = md => md;
+
 /** 将HTML字符串转为Markdown*/
-function HTMLToMarkDown<T>(content:string) {
+function HTMLToMarkDown(content: string) {
   return turndownService.turndown(content);
 }
-export const htmlToMD = (html: string) => turndownService.turndown(html);
 export default HTMLToMarkDown;

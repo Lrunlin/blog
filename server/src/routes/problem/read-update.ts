@@ -3,7 +3,7 @@ let router = new Router();
 import DB from "@/db";
 import authMiddleware from "@/common/middleware/auth";
 import interger from "@/common/verify/integer";
-import { htmlToMD } from "@/common/modules/article/get/html-to-markdown";
+import htmlToMD from "@/common/modules/article/get/html-to-markdown";
 import imgPrefix from "@/common/modules/article/get/img-add-prefix";
 
 // 查询信息以用于修改问题

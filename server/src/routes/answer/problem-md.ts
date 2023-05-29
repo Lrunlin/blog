@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import { htmlToMD } from "@/common/modules/article/get/html-to-markdown";
+import htmlToMD from "@/common/modules/article/get/html-to-markdown";
 import verify from "@/common/verify/api-verify/answer/problem-md";
 import setImageTag from "@/common/modules/article/get/img-add-prefix";
 let router = new Router();

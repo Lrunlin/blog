@@ -31,12 +31,12 @@ const Write: NextPage<propsType> = props => {
   }, [data]);
 
   // 判断状态是否已经设置了值，设置之后在允许组件渲染
-  let runCount = useRef(0);
+  let fristRender = useRef(true);
   useEffect(() => {
-    if (runCount.current > 0) {
+    if (fristRender.current) {
       setIsValidating(false);
     } else {
-      runCount.current++;
+      fristRender.current = false;
     }
   }, [articleData]);
 
