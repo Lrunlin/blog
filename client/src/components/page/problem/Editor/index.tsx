@@ -1,7 +1,7 @@
 import { useState, useContext, startTransition } from "react";
 import type { FC } from "react";
 import { Button, message } from "antd";
-import MarkDonwEdit, { propsType as MarkDownPropsType } from "@/components/common/MarkDownEditor";
+import TextEditor, { propsType as MarkDownPropsType } from "@/components/common/Editor";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import classNames from "classnames";
@@ -94,7 +94,7 @@ const Editor: FC<propsType> = props => {
           </div>
           {answerData ? (
             <>
-              <MarkDonwEdit
+              <TextEditor
                 key={key}
                 target="answer"
                 onChange={html => setContent(html)}
@@ -107,7 +107,7 @@ const Editor: FC<propsType> = props => {
             </>
           ) : (
             <>
-              <MarkDonwEdit key={key} target="answer" onChange={html => setContent(html)} />
+              <TextEditor key={key} target="answer" onChange={html => setContent(html)} />
               <div className="bg-gray-100 h-7 mt-3 rounded-md"></div>
               <Button type="primary" className="mt-4" onClick={submit}>
                 提交回答

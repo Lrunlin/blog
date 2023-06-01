@@ -2,7 +2,6 @@ import Router from "@koa/router";
 import DB from "@/db";
 import interger from "@/common/verify/integer";
 
-import HTMLToMarkDown from "@/common/modules/article/get/html-to-markdown";
 import getCodeBlockLanguage from "@/common/modules/article/get/get-code-block-language";
 import imgPrefix from "@/common/modules/article/get/img-add-prefix";
 import getTagData from "@/common/modules/article/get/get-tag-data";
@@ -89,9 +88,6 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async ctx => {
             ...data,
             content: imgPrefix(data.content, { update: true, prefix: "article" }, data.title),
           };
-          if (ctx.query.update == "md") {
-            data = { ...data, content: HTMLToMarkDown(data.content) };
-          }
         }
 
         ctx.body = { success: true, message: "查询成功", data: data };

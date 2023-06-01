@@ -58,6 +58,14 @@
   resolved "https://registry.npmmirror.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.19.1.tgz#7eea834cf32901ffdc1a7ee555e2f9c27e249ca2"
   integrity sha512-awrNfaMtnHUr653GgGEs++LlAvW6w+DcPrOliSMXWCKo597CwL5Acf/wWdNkf/tfEQE3mjkeD1YOVZOUV/od1w==
 
+"@babel/runtime-corejs3@^7.11.2":
+  version "7.22.3"
+  resolved "https://registry.npmmirror.com/@babel/runtime-corejs3/-/runtime-corejs3-7.22.3.tgz#a684fb6b2eb987d9eb4ee7f1bba832473a29f0f1"
+  integrity sha512-6bdmknScYKmt8I9VjsJuKKGr+TwUb555FTf6tT1P/ANlCjTHCiYLhiQ4X/O7J731w5NOqu8c1aYHEVuOwPz7jA==
+  dependencies:
+    core-js-pure "^3.30.2"
+    regenerator-runtime "^0.13.11"
+
 "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7":
   version "7.21.0"
   resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
@@ -570,6 +578,11 @@
   integrity sha512-JAUw1iXGO1qaWwEOzxTKJZ/5JxVeON9kvGZ/osgZaJImBnyjyn0cjovPsf6FNLmyGY8Vw9DoXZCMlfMkMwHRWg==
   dependencies:
     "@types/estree" "*"
+
+"@types/turndown@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.npmmirror.com/@types/turndown/-/turndown-5.0.1.tgz#fcda7b02cda4c9d445be1440036df20f335b9387"
+  integrity sha512-N8Ad4e3oJxh9n9BiZx9cbe/0M3kqDpOTm2wzj13wdDUxDPjfjloWIJaquZzWE1cYTAHpjOH3rcTnXQdpEfS/SQ==
 
 "@types/unist@*", "@types/unist@^2.0.0":
   version "2.0.6"
@@ -1188,6 +1201,11 @@ copy-to-clipboard@^3.2.0:
   dependencies:
     toggle-selection "^1.0.6"
 
+core-js-pure@^3.30.2:
+  version "3.30.2"
+  resolved "https://registry.npmmirror.com/core-js-pure/-/core-js-pure-3.30.2.tgz#005a82551f4af3250dcfb46ed360fad32ced114e"
+  integrity sha512-p/npFUJXXBkCCTIlEGBdghofn00jWG6ZOtdoIXSJmAu2QBvN0IqpZXWweOytcwE6cfx8ZvVUy1vw8zxhe4Y2vg==
+
 create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.npmmirror.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
@@ -1491,6 +1509,11 @@ domhandler@^4.2.0, domhandler@^4.3.1:
   integrity sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==
   dependencies:
     domelementtype "^2.2.0"
+
+domino@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.npmmirror.com/domino/-/domino-2.1.6.tgz#fe4ace4310526e5e7b9d12c7de01b7f485a57ffe"
+  integrity sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==
 
 domutils@^2.8.0:
   version "2.8.0"
@@ -5203,6 +5226,11 @@ tslib@^1.8.1:
   resolved "https://registry.npmmirror.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
+tslib@^2.1.0:
+  version "2.5.2"
+  resolved "https://registry.npmmirror.com/tslib/-/tslib-2.5.2.tgz#1b6f07185c881557b0ffa84b111a0106989e8338"
+  integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
+
 tslib@^2.4.0, tslib@^2.5.0:
   version "2.5.0"
   resolved "https://registry.npmmirror.com/tslib/-/tslib-2.5.0.tgz#42bfed86f5787aeb41d031866c8f402429e0fddf"
@@ -5214,6 +5242,18 @@ tsutils@^3.21.0:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
+
+turndown-plugin-gfm@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmmirror.com/turndown-plugin-gfm/-/turndown-plugin-gfm-1.0.2.tgz#6f8678a361f35220b2bdf5619e6049add75bf1c7"
+  integrity sha512-vwz9tfvF7XN/jE0dGoBei3FXWuvll78ohzCZQuOb+ZjWrs3a0XhQVomJEb2Qh4VHTPNRO4GPZh0V7VRbiWwkRg==
+
+turndown@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.npmmirror.com/turndown/-/turndown-7.1.2.tgz#7feb838c78f14241e79ed92a416e0d213e044a29"
+  integrity sha512-ntI9R7fcUKjqBP6QU8rBK2Ehyt8LAzt3UBT9JR9tgo6GtuKvyUzpayWmeMKJw1DPdXzktvtIT8m2mVXz+bL/Qg==
+  dependencies:
+    domino "^2.1.6"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
@@ -5400,6 +5440,22 @@ vfile@^5.0.0, vfile@^5.3.7:
     is-buffer "^2.0.0"
     unist-util-stringify-position "^3.0.0"
     vfile-message "^3.0.0"
+
+wangeditor-for-react@^1.5.6:
+  version "1.5.6"
+  resolved "https://registry.npmmirror.com/wangeditor-for-react/-/wangeditor-for-react-1.5.6.tgz#b554be3b8bb92810dc8baac922af11a5880d9828"
+  integrity sha512-FLxU4K6PXc9AS3SFfU7vZhUR+EpUEWUVraFPRUiSH9VSzt9jLO9fp4IyReT7ebbp/YaMKXHhN5JLu2v2/zvNrA==
+  dependencies:
+    wangeditor "^4.7.12"
+
+wangeditor@^4.7.12, wangeditor@^4.7.15:
+  version "4.7.15"
+  resolved "https://registry.npmmirror.com/wangeditor/-/wangeditor-4.7.15.tgz#38c5e279a79d0428e4fd77ae5be46367e9c819e5"
+  integrity sha512-aPTdREd8BxXVyJ5MI+LU83FQ7u1EPd341iXIorRNYSOvoimNoZ4nPg+yn3FGbB93/owEa6buLw8wdhYnMCJQLg==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    "@babel/runtime-corejs3" "^7.11.2"
+    tslib "^2.1.0"
 
 web-namespaces@^2.0.0:
   version "2.0.1"

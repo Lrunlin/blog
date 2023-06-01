@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MarkDownEditor from "@/components/common/MarkDownEditor";
+import Editor from "@/components/common/Editor";
 import { Button, Form, Input, message, TreeSelect } from "antd";
 import axios from "axios";
 import Upload from "@/components/common/UpLoad";
@@ -112,7 +112,7 @@ const Write = () => {
           rules={[{ required: true, message: "内容不得为空" }]}
         >
           <div>
-            <MarkDownEditor
+            <Editor
               target="article"
               onChange={html => {
                 form.setFieldsValue({ content: html });

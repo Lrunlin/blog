@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import MarkDownEditor from "@/components/common/MarkDownEditor";
+import Editor from "@/components/common/Editor";
 
 const Write = () => {
   let [title, setTitle] = useState("");
@@ -65,7 +65,7 @@ const Write = () => {
             <Tag onChange={tags => setTag(tags)} />
           </div>
           <div className="mt-2">
-            <MarkDownEditor target="problem" onChange={html => setContent(html)} />
+            <Editor target="problem" onChange={html => setContent(html)} />
           </div>
         </main>
       </div>

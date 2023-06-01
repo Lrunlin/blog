@@ -1,6 +1,5 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import htmlToMD from "@/common/modules/article/get/html-to-markdown";
 import verify from "@/common/verify/api-verify/answer/problem-md";
 import setImageTag from "@/common/modules/article/get/img-add-prefix";
 let router = new Router();
@@ -20,7 +19,7 @@ router.get("/answer", verify, async ctx => {
           success: true,
           message: "查询答案并且以MarkDown形式返回内容",
           data: Object.assign(row, {
-            content: htmlToMD(setImageTag(row.content, { update: true, prefix: "answer" })),
+            content: setImageTag(row.content, { update: true, prefix: "answer" }),
           }),
         };
       } else {

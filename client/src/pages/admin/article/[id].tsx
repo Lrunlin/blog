@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import MarkDownEditor from "@/components/common/MarkDownEditor";
+import Editor from "@/components/common/Editor";
 import { Button, Form, Input, message, TreeSelect, Skeleton, Result, InputNumber } from "antd";
 import axios from "axios";
 import Upload from "@/components/common/UpLoad";
@@ -155,7 +155,7 @@ const Update = () => {
             rules={[{ required: true, message: "内容不得为空" }]}
           >
             <div>
-              <MarkDownEditor
+              <Editor
                 target="article"
                 initValue={response?.data.data.content}
                 onChange={html => {

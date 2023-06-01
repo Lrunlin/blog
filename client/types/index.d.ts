@@ -42,3 +42,8 @@ namespace NodeJS {
     UPLOAD_MAX_SIZE: number;
   }
 }
+
+declare module "turndown-plugin-gfm" {
+  let a: any;
+  export default a;
+}

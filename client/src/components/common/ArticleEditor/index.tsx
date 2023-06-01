@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Button, Input, Avatar, Dropdown, Result } from "antd";
-import MarkDownEditor from "../MarkDownEditor";
+import MarkDownEditor from "../Editor";
 import { userDataContext, UserStateAttributes } from "@/store/user-data";
 import { atom, useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
 import Modal from "./Modal";
@@ -72,13 +72,13 @@ const Editor: FC<propsType> = props => {
           <Avatar src={userData.avatar_url} alt="头像" />
         </div>
       </header>
-        <MarkDownEditor
-          target="article"
-          initValue={articleData.content}
-          onChange={html => {
-            setArticleData(_data => ({ ..._data, content: html }));
-          }}
-        />
+      <MarkDownEditor
+        target="article"
+        initValue={articleData.content}
+        onChange={html => {
+          setArticleData(_data => ({ ..._data, content: html }));
+        }}
+      />
     </div>
   ) : (
     <Base className="bg-white">

@@ -1,36 +1,28 @@
-import { memo, useState, useEffect, useRef, startTransition } from "react";
+import { useState, useEffect, useRef, startTransition } from "react";
 import type { FC } from "react";
-import axios from "axios";
-import { message, Spin } from "antd";
-import { Editor } from "node_modules/@bytemd/react";
+import { editorPropsType } from "../index";
+import { message } from "antd";
+import { Editor } from "@bytemd/react";
 import { marked } from "marked";
 import zhHans from "bytemd/lib/locales/zh_Hans.json";
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
 import LanguageListPlugin from "./LanguageListPlugin";
+import UseRichTextPlugin from "./UseRichTextPlugin";
+import HTMLToMarkDown from "@/common/utils/HtmlToMarkDown";
 import "bytemd/dist/index.css";
+import upload from "../upload";
 
-export interface propsType {
-  className?: string;
-  /** 上传至哪个文件夹*/
-  target: "article" | "problem" | "answer";
-  /** 初始化数据*/
-  initValue?: string;
-  onChange?: (html: string) => any;
-}
-const MarkDonwEdit: FC<propsType> = memo(props => {
+const MarkDownEditor: FC<editorPropsType> = props => {
   const [value, setValue] = useState("");
-  const [uploadProgress, setPploadProgress] = useState<null | string>(null);
   let allowChangeValue = useRef(true);
-
   useEffect(() => {
     if (!props.initValue) return;
     if (allowChangeValue.current) {
       allowChangeValue.current = false;
-      setValue(props.initValue);
+      setValue(HTMLToMarkDown(props.initValue));
     }
   }, [props.initValue]);
-
   return (
     <>
       <style jsx global>{`
@@ -101,7 +93,7 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
           z-index: 99 !important;
         }
       `}</style>
-      <Spin spinning={!!uploadProgress} tip={uploadProgress}>
+      <div>
         <Editor
           locale={zhHans as any}
           value={value}
@@ -115,34 +107,22 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
               if (props.onChange) props.onChange(html);
             });
           }}
-          plugins={[gfm(), LanguageListPlugin() as any, highlight()]}
+          plugins={[gfm(), LanguageListPlugin() as any, highlight(), UseRichTextPlugin()]}
           uploadImages={async (files: File[]) => {
-            let formData = new FormData();
-            formData.append("image", files[0]);
-            if (files[0].size >= 1024 * 1024 * process.env.UPLOAD_MAX_SIZE) {
-              message.warn(`上传图片最大${process.env.UPLOAD_MAX_SIZE}MB`);
-              return [];
-            }
-            return await axios
-              .post(`/static/${props.target}`, formData, {
-                onUploadProgress: progressEvent => {
-                  if (progressEvent.lengthComputable) {
-                    let complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-                    if (complete < 100) {
-                      setPploadProgress(`上传中:${complete}%`);
-                    } else {
-                      setPploadProgress("等待响应...");
-                    }
-                  }
-                },
-              })
+            return upload(files, props.target, val => {
+              props.changePploadProgress(val);
+            })
               .then(res => {
-                return [
-                  {
-                    url: res.data.data.file_href,
-                    alt: "",
-                  },
-                ];
+                if (res) {
+                  return [
+                    {
+                      url: res.data.data.file_href,
+                      alt: "",
+                    },
+                  ];
+                } else {
+                  return [];
+                }
               })
               .catch(err => {
                 message.error("上传失败");
@@ -150,12 +130,12 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
                 return [];
               })
               .finally(() => {
-                setPploadProgress(null);
+                props.changePploadProgress(null);
               });
           }}
         />
-      </Spin>
+      </div>
     </>
   );
-});
-export default MarkDonwEdit;
+};
+export default MarkDownEditor;

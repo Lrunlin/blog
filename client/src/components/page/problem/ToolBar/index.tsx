@@ -69,7 +69,7 @@ const ToolBar = () => {
       .catch(() => {});
   }
   return (
-    <>
+    <div className="flex">
       {data.collection_data.collection_state ? (
         <Button
           type="primary"
@@ -134,7 +134,7 @@ const ToolBar = () => {
           <span className="ml-0.5">关注 {data.follow_data.follow_count}</span>
         </Button>
       )}
-    </>
+    </div>
   );
 };
 export default ToolBar;

@@ -5,7 +5,7 @@ import Tag from "@/components/page/problem/write/Tag";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import MarkDownEditor from "@/components/common/MarkDownEditor";
+import Editor from "@/components/common/Editor";
 import useSwr, { useSWRConfig } from "swr";
 import { useRouter as useRoute } from "next/router";
 import Header from "@/components/common/Header";
@@ -83,11 +83,7 @@ const Write = () => {
               <Tag onChange={tags => setTag(tags)} initValue={tag} />
             </div>
             <div className="mt-2">
-              <MarkDownEditor
-                target="problem"
-                initValue={content}
-                onChange={html => setContent(html)}
-              />
+              <Editor target="problem" initValue={content} onChange={html => setContent(html)} />
             </div>
           </main>
         </div>
