@@ -15,6 +15,8 @@ const Write = () => {
   let router = useRouter();
   const [load, setLoad] = useState(false);
   function onFinish(values: any) {
+    console.log(values);
+    
     setLoad(true);
     axios
       .post("/article", { ...values, state: 1 })

@@ -15,21 +15,18 @@ const RechTextEditor: FC<editorPropsType> = props => {
   const [html, setHtml] = useState("");
   let setState = useSetRecoilState(editorModeContext);
 
-  // 工具栏配置
-  const toolbarConfig = {
-    excludeKeys: [
-      "fontSize",
-      "fontName",
-      "indent",
-      "lineHeight",
-      "foreColor",
-      "backColor",
-      "justify",
-      "undo",
-      "video",
-      "redo",
-    ],
-  };
+  const excludeKeys = [
+    "fontSize",
+    "fontName",
+    "indent",
+    "lineHeight",
+    "foreColor",
+    "backColor",
+    "justify",
+    "undo",
+    "video",
+    "redo",
+  ];
 
   useEffect(() => {
     return () => {
@@ -45,7 +42,8 @@ const RechTextEditor: FC<editorPropsType> = props => {
           ref={editor}
           defaultValue={props.initValue}
           config={{
-            excludeMenus: toolbarConfig.excludeKeys,
+            height: 700,
+            excludeMenus: excludeKeys,
             showLinkImg: false,
             uploadImgMaxLength: 1,
             uploadImgAccept: ["jpg", "jpeg", "png", "gif", "bmp", "webp", "svg"],
