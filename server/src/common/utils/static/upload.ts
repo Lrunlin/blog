@@ -1,41 +1,59 @@
 import qiniu from "qiniu";
 import sharp from "sharp";
-import sync from "@/common/utils/sync";
 import zone from "./utils/zone";
 import Mac from "./utils/Mac";
-process.env.VIPS_DISC_THRESHOLD = "750m";
 
+export const folderList = [
+  { folder: "article", quality: 80, animated: true },
+  { folder: "problem", quality: 80, animated: true },
+  { folder: "answer", quality: 80, animated: true },
+  { folder: "comment", quality: 80, animated: true },
+  { folder: "advertisement", quality: 80, animated: true },
+  { folder: "avatar", quality: 90, width: 80, height: 80 },
+  { folder: "cover", quality: 100, width: 195, height: 130 },
+  { folder: "type", quality: 70, width: 80, height: 80 },
+  { folder: "link", quality: 80, width: 80, height: 80 },
+];
+export type FolderItemType = (typeof folderList)[number];
+
+process.env.VIPS_DISC_THRESHOLD = "750m";
 let config = new qiniu.conf.Config({
   zone: zone,
 });
+let options = {
+  scope: process.env.OSS_NAME,
+};
 
-let bucket = process.env.OSS_NAME;
 // https://sharp.pixelplumbing.com/api-utility#cache
 sharp.cache(false); //不缓存
+
 /**
  * 将文件上传至七牛云
  * @params buffer {Buffer} 上传图片的Buffer
- * @params fileName {[folder,file_name]} [上传的文件夹,上传的文件名]
+ * @params option {folder:string,file_name:string,quality:number,width:number,height:number}
  * @return {file_name文件夹名称 file_href文件访问路径}
  * @return mes {string} 错误提示
  */
 async function upload(
   buffer: Buffer,
-  fileName: [string, string]
+  option: { folder: FolderItemType["folder"]; file_name: string }
 ): Promise<{ file_name: string; file_href: string } | string> {
-  let options = {
-    scope: bucket,
-  };
   let putPolicy = new qiniu.rs.PutPolicy(options);
   let uploadToken = putPolicy.uploadToken(Mac);
   let formUploader = new qiniu.form_up.FormUploader(config);
   let putExtra = new qiniu.form_up.PutExtra();
-  const sharpInstance = sharp(buffer, { animated: true });
-  const processedBuffer = await sharpInstance.webp({ lossless: true, quality: 80 }).toBuffer();
-  return (await sync((resolve, reject) => {
+  // 根据folder判断sharp对应的配置
+  let sharpOption = folderList.find(item => item.folder == option.folder) as FolderItemType;
+  let sharpInstance = sharp(buffer, { animated: !!sharpOption.animated });
+  let processed = sharpInstance.webp({ lossless: true, quality: sharpOption.quality });
+  if (sharpOption.width) {
+    processed = processed.resize({ width: sharpOption.width, height: sharpOption.height });
+  }
+  let processedBuffer = await processed.toBuffer();
+  return new Promise((resolve, reject) => {
     formUploader.put(
       uploadToken,
-      fileName.join("/"),
+      `${option.folder}/${option.file_name}`,
       processedBuffer, //处理后的buffer
       putExtra,
       function (respErr, respBody, respInfo) {
@@ -46,15 +64,18 @@ async function upload(
         }
         if (respInfo.statusCode == 200) {
           resolve({
-            file_name: respBody.key.replace(`${fileName[0]}/`, ""),
+            file_name: respBody.key.replace(`${option.folder}/`, ""),
             file_href: `${process.env.CDN}/${respBody.key}`,
           });
         } else {
           reject("图片上传错误");
         }
         sharpInstance?.destroy();
+        sharpInstance = null as any;
+        processedBuffer = null as any;
+        global.gc && global.gc();
       }
     );
-  })) as Promise<string | { file_name: string; file_href: string }>;
+  }) as Promise<string | { file_name: string; file_href: string }>;
 }
 export default upload;

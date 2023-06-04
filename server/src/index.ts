@@ -5,6 +5,16 @@ import moment from "moment";
 import moduleAlias from "module-alias";
 moduleAlias.addAlias("@", __dirname);
 
+const originalConsoleLog = console.log;
+console.log = function () {
+  const stackTrace = new Error().stack as string;
+  const position = stackTrace.split("\n")[2].trim(); // 提取第三行的代码位置
+  originalConsoleLog(
+    `${moment().format("YYYY-MM-DD HH:mm:ss")}  ${position.replace("at Server.<anonymous>", "")}`
+  );
+  originalConsoleLog.apply(console, arguments as any);
+};
+
 //环境变量
 import dotenv from "dotenv";
 import path from "path";
@@ -50,11 +60,7 @@ import Routers from "@/common/modules/getAllRouter";
         })
         .then(() => {
           app.listen(port, function () {
-            console.log(
-              `${moment().format("YYYY-MM-DD HH:mm:ss")}: 项目运行于: ${port} 端口,共${
-                index + 1
-              }个路由文件,${routeCount}个路由`
-            );
+            console.log(`项目运行于: ${port} 端口,共${index + 1}个路由文件,${routeCount}个路由`);
           });
         });
     }

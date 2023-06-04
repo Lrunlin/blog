@@ -1,15 +1,15 @@
 import qiniu from "qiniu";
 import bucketManager from "./utils/bucketManager";
-import sync from "../sync";
+
 function deleteFile(images: string[]) {
   images = images.slice(0, 1000);
   const deleteOperations = images.map(item => {
     return qiniu.rs.deleteOp(process.env.OSS_NAME, item);
   });
-  return sync((success, error) => {
+  return new Promise((success, error) => {
     bucketManager.batch(deleteOperations, function (err, respBody, respInfo) {
       if (err) {
-        error("删除错误", err);
+        error("删除错误：" + err);
       } else {
         if (respInfo.statusCode == 200) {
           success("全部成功");

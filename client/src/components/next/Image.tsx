@@ -6,11 +6,11 @@ const Image: FC<ImageProps> = props => {
   return (
     <>
       <ImageNext
-        loader={({ src, width }) => {
-          return `${src.startsWith("http") ? src : `${process.env.CDN}${src}`}?w=${width}&q=${100}`;
-        }}
         quality={100}
         {...props}
+        src={`${
+          (props.src as string).startsWith("http") ? props.src : `${process.env.CDN}${props.src}`
+        }`}
       />
     </>
   );

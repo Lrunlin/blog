@@ -7,6 +7,7 @@ import Head from "@/components/next/Head";
 import Layout from "@/layout/Base";
 import ArticleList from "@/components/common/ArticleList";
 import type { articleListItemType } from "@type/model/article-list-item";
+import Highlighter from "react-highlight-words";
 
 const Search: NextPage = () => {
   const [page, setPage] = useState(1);
@@ -48,10 +49,19 @@ const Search: NextPage = () => {
       <div className="w-full bg-white">
         <Spin tip="Loading..." spinning={isLoading}>
           <ArticleList
-            keyword={searchParams.get("keyword") as string}
             list={data}
             total={total}
             loadMoreData={() => setPage(_page => ++_page)}
+            titleKeyword={title => {
+              return (
+                <Highlighter
+                  highlightClassName="p-0 bg-white text-red-500"
+                  searchWords={[searchParams.get("keyword") as string]}
+                  autoEscape={true}
+                  textToHighlight={title}
+                />
+              );
+            }}
           />
         </Spin>
       </div>

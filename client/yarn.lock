@@ -702,10 +702,10 @@ antd-img-crop@^4.12.2:
     react-easy-crop "^4.7.4"
     tslib "^2.5.0"
 
-antd@4.24.7:
-  version "4.24.7"
-  resolved "https://registry.npmmirror.com/antd/-/antd-4.24.7.tgz#ad90cc2d6225fe3e0030aeccdc64de6c26edc3e7"
-  integrity sha512-Qr3AYkeqpd3i/c6M7pjca7Y6XlaIv/p6gD3aqe7/0o8Ueg50G7Aeh+TOaiUfXLGDhnVoNEdaVdDiv8aIaoWB5A==
+antd@4.24.10:
+  version "4.24.10"
+  resolved "https://registry.npmmirror.com/antd/-/antd-4.24.10.tgz#9bf371c3b351b881c5b56049a410d5cf16f077ac"
+  integrity sha512-GihdwTGFW0dUaWjcvSIfejFcT63HjEp2EbYd+ojEXayldhey230KrHDJ+C53rkrkzLvymrPBfSxlLxJzyFIZsg==
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.7.0"
@@ -717,7 +717,7 @@ antd@4.24.7:
     lodash "^4.17.21"
     moment "^2.29.2"
     rc-cascader "~3.7.0"
-    rc-checkbox "~2.3.0"
+    rc-checkbox "~3.0.0"
     rc-collapse "~3.4.2"
     rc-dialog "~9.0.2"
     rc-drawer "~6.1.0"
@@ -736,12 +736,12 @@ antd@4.24.7:
     rc-rate "~2.9.0"
     rc-resize-observer "^1.2.0"
     rc-segmented "~2.1.0"
-    rc-select "~14.1.13"
+    rc-select "~14.1.17"
     rc-slider "~10.0.0"
     rc-steps "~5.0.0-alpha.2"
     rc-switch "~3.2.0"
     rc-table "~7.26.0"
-    rc-tabs "~12.5.0"
+    rc-tabs "~12.5.6"
     rc-textarea "~0.4.5"
     rc-tooltip "~5.2.0"
     rc-tree "~5.7.0"
@@ -4100,13 +4100,14 @@ rc-cascader@~3.7.0:
     rc-tree "~5.7.0"
     rc-util "^5.6.1"
 
-rc-checkbox@~2.3.0:
-  version "2.3.2"
-  resolved "https://registry.npmmirror.com/rc-checkbox/-/rc-checkbox-2.3.2.tgz#f91b3678c7edb2baa8121c9483c664fa6f0aefc1"
-  integrity sha512-afVi1FYiGv1U0JlpNH/UaEXdh6WUJjcWokj/nUN2TgG80bfG+MDdbfHKlLcNNba94mbjy2/SXJ1HDgrOkXGAjg==
+rc-checkbox@~3.0.0:
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/rc-checkbox/-/rc-checkbox-3.0.1.tgz#f978771329be339d479cd81465eb2e2f8c82bc87"
+  integrity sha512-k7nxDWxYF+jDI0ZcCvuvj71xONmWRVe5+1MKcERRR9MRyP3tZ69b+yUCSXXh+sik4/Hc9P5wHr2nnUoGS2zBjA==
   dependencies:
     "@babel/runtime" "^7.10.1"
-    classnames "^2.2.1"
+    classnames "^2.3.2"
+    rc-util "^5.25.2"
 
 rc-collapse@~3.4.2:
   version "3.4.2"
@@ -4303,10 +4304,23 @@ rc-segmented@~2.1.0:
     rc-motion "^2.4.4"
     rc-util "^5.17.0"
 
-rc-select@~14.1.0, rc-select@~14.1.13:
+rc-select@~14.1.0:
   version "14.1.16"
   resolved "https://registry.npmmirror.com/rc-select/-/rc-select-14.1.16.tgz#0cc4b5a1fc551a2db7c96bc1ece0896317ecdd47"
   integrity sha512-71XLHleuZmufpdV2vis5oituRkhg2WNvLpVMJBGWRar6WGAVOHXaY9DR5HvwWry3EGTn19BqnL6Xbybje6f8YA==
+  dependencies:
+    "@babel/runtime" "^7.10.1"
+    classnames "2.x"
+    rc-motion "^2.0.1"
+    rc-overflow "^1.0.0"
+    rc-trigger "^5.0.4"
+    rc-util "^5.16.1"
+    rc-virtual-list "^3.2.0"
+
+rc-select@~14.1.17:
+  version "14.1.17"
+  resolved "https://registry.npmmirror.com/rc-select/-/rc-select-14.1.17.tgz#e623eabeaa0dd117d5a63354e6ddaaa118abc5ee"
+  integrity sha512-6qQhMqtoUkkboRqXKKFRR5Nu1mrnw2mC1uxIBIczg7aiJ94qCZBg4Ww8OLT9f4xdyCgbFSGh6r3yB9EBsjoHGA==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
@@ -4355,7 +4369,7 @@ rc-table@~7.26.0:
     rc-util "^5.22.5"
     shallowequal "^1.1.0"
 
-rc-tabs@~12.5.0:
+rc-tabs@~12.5.6:
   version "12.5.10"
   resolved "https://registry.npmmirror.com/rc-tabs/-/rc-tabs-12.5.10.tgz#0e41c723fac66c4f0bcad3271429fff6653b0721"
   integrity sha512-Ay0l0jtd4eXepFH9vWBvinBjqOpqzcsJTerBGwJy435P2S90Uu38q8U/mvc1sxUEVOXX5ZCFbxcWPnfG3dH+tQ==
@@ -4434,6 +4448,14 @@ rc-util@^5.0.1, rc-util@^5.0.6, rc-util@^5.15.0, rc-util@^5.16.0, rc-util@^5.16.
   version "5.29.2"
   resolved "https://registry.npmmirror.com/rc-util/-/rc-util-5.29.2.tgz#a3741fca57b3dce78f315574ed099945f367b222"
   integrity sha512-xHT9Dr3RD6tyvCibnH10l3mudC6TJjWNr9UDy3CrOGZqTY354OfdwP87ahKNe0b3A1dsysDldvx0SBuswhlOeA==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    react-is "^16.12.0"
+
+rc-util@^5.25.2:
+  version "5.33.0"
+  resolved "https://registry.npmmirror.com/rc-util/-/rc-util-5.33.0.tgz#8e673700e467b24c722014f2fe2f2f77aa6c2c07"
+  integrity sha512-mq2NkEAnHklq4fgU/JqjiE0PS8+8u33gEWw2bDUNDPck3OroPpSgw/8oEyuFrvPgaZEmt9BgQdh59JfQt2cU+w==
   dependencies:
     "@babel/runtime" "^7.18.3"
     react-is "^16.12.0"

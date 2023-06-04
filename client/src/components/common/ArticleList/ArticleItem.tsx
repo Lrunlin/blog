@@ -1,22 +1,23 @@
-import { FC } from "react";
+import type { FC, ReactNode } from "react";
 import type { articleListItemType } from "@type/model/article-list-item";
 import dayjs from "dayjs";
 import style from "./index.module.scss";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
-import Highlighter from "react-highlight-words";
-import Cover from "./Cover";
+import { CoverSkeleton } from "./Cover";
+import dynamic from "next/dynamic";
+const Cover = dynamic(() => import("./Cover"), { ssr: false, loading: () => <CoverSkeleton /> });
 
 export interface propsType {
   data: articleListItemType;
-  keyword?: string;
+  titleKeyword?: (title: articleListItemType["title"]) => ReactNode;
 }
 
 /**
  * 文章列表组件的单个文章介绍
  * 传递单个文章数据即可
  */
-const ArticleItem: FC<propsType> = ({ data, keyword }) => {
+const ArticleItem: FC<propsType> = ({ data, titleKeyword }) => {
   return (
     <li className="px-5 pt-3 list-none">
       <div>
@@ -48,16 +49,7 @@ const ArticleItem: FC<propsType> = ({ data, keyword }) => {
             href={`/article/${data.id}`}
             target="_blank"
           >
-            {keyword ? (
-              <Highlighter
-                highlightClassName="p-0 bg-white text-red-500"
-                searchWords={[keyword]}
-                autoEscape={true}
-                textToHighlight={data.title}
-              />
-            ) : (
-              data.title
-            )}
+            {titleKeyword ? titleKeyword(data.title) : data.title}
           </a>
           <a
             href={`/article/${data.id}`}

@@ -5,6 +5,7 @@ import multer from "@koa/multer";
 import { v4 } from "uuid";
 import auth from "@/common/middleware/auth";
 import upload from "@/common/utils/static/upload";
+import { folderList } from "@/common/utils/static/upload";
 
 let uploadOption = multer({
   storage: multer.memoryStorage(),
@@ -15,19 +16,8 @@ let uploadOption = multer({
 });
 
 function verify() {
-  const folderList = [
-    "article",
-    "avatar",
-    "cover",
-    "type",
-    "comment",
-    "advertisement",
-    "link",
-    "problem",
-    "answer",
-  ];
   return async (ctx: Context, next: Next) => {
-    if (folderList.includes(ctx.params.folder)) {
+    if (folderList.some(item => item.folder == ctx.params.folder)) {
       await next();
     } else {
       ctx.body = {
@@ -43,7 +33,10 @@ router.post("/static/:folder", auth(0), verify(), uploadOption.single("image"), 
 
   let fileName = `${v4().replace(/-/g, "")}.webp`;
 
-  await upload(buffer, [ctx.params.folder, fileName])
+  await upload(buffer, {
+    file_name: fileName,
+    folder: ctx.params.folder,
+  })
     .then(data => {
       ctx.body = { success: true, message: "上传成功", data: data };
     })

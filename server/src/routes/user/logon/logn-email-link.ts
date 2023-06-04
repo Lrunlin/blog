@@ -49,12 +49,12 @@ router.get("/logon/email", validator(schema), async ctx => {
   if (!userData) return false;
   let _id = id();
   var data = new Identicon(sha1(_id + ""), {
-    size: 50,
+    size: 80,
     format: "svg",
     background: [240, 240, 240, 255],
   }).toString();
 
-  let uploadResult = await upload(Buffer.from(data, "base64"), ["avatar", `${id()}.webp`])
+  let uploadResult = await upload(Buffer.from(data, "base64"),{ folder: "avatar", file_name: `${id()}.webp` })
     .then(res => ({ success: true, fileName: (res as any).file_name as string }))
     .catch(err => ({ success: false, errMes: err }));
 

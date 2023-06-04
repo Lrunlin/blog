@@ -11,7 +11,7 @@ interface propsType {
   list: articleListItemType[];
   total: number;
   loadMoreData: () => void;
-  keyword?: itemPropsType["keyword"];
+  titleKeyword?: itemPropsType["titleKeyword"];
 }
 
 /**
@@ -35,7 +35,11 @@ const ArticleList: FC<propsType> = props => {
         >
           <ul className="p-0 w-full">
             {list.map(item => (
-              <ArticleItem key={`article-list-${item.id}`} data={item} keyword={props.keyword} />
+              <ArticleItem
+                key={`article-list-${item.id}`}
+                data={item}
+                titleKeyword={props.titleKeyword}
+              />
             ))}
           </ul>
         </InfiniteScroll>
