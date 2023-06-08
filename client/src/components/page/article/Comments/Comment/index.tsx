@@ -1,4 +1,5 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 import useSWR from "swr";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -6,6 +7,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import CommentItem from "./Item";
 import type { articleCommentType } from "@type/model/article-comment";
 import type { response } from "@type/common/response";
+import { editorOptionContext } from "../index";
 
 /** 文章页面评论集合组件*/
 const Comments = () => {
@@ -16,6 +18,12 @@ const Comments = () => {
       .get<response<articleCommentType[]>>(`/comment/article/${articleID}`)
       .then(res => res.data.data)
   );
+  let setEditorOptionContext = useSetRecoilState(editorOptionContext);
+  useEffect(() => {
+    if (data) {
+      setEditorOptionContext(option => ({ ...option, data: data as articleCommentType[] }));
+    }
+  }, [data]);
 
   return (
     <div className="mt-4 border-t-solid border-slate-200">

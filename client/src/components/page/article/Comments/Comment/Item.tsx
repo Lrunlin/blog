@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import type { FC } from "react";
-import { useRecoilValue } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { useSearchParams } from "next/navigation";
 import Image from "@/components/next/Image";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { Image as AntdImage, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -13,6 +13,7 @@ import classNames from "classnames";
 import { useSWRConfig } from "swr";
 import axios from "axios";
 import NoFollowLink from "@/components/next/NoFollowLink";
+import { editorOptionContext } from "../index";
 
 interface propsType {
   data: articleCommentType;
@@ -21,7 +22,12 @@ interface propsType {
 
 /** 文章页面单个评论组件*/
 const CommentItem: FC<propsType> = ({ data, list }) => {
-  const [showEditor, setShowEditor] = useState(false);
+  let [editorOption, setEditorOptionContext] = useRecoilState(editorOptionContext);
+
+  const showEditor = useMemo(
+    () => `comment:${data.id}` == editorOption.activeInputID,
+    [data, editorOption.activeInputID]
+  );
   let userData = useRecoilValue(userDataContext);
   let { mutate } = useSWRConfig();
   let searchParams = useSearchParams();
@@ -35,6 +41,7 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
       }
     });
   }
+
   return (
     <>
       <div
@@ -90,11 +97,16 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
           </div>
         )}
         {/* 回复、删除 */}
-        <div className="flex items-center text-xs text-gray-600">
-          <span
-            className="mt-3 flex items-center cursor-pointer select-none"
-            onClick={() => setShowEditor(state => !state)}
-          >
+        <div
+          className="flex items-center text-xs text-gray-600"
+          onClick={() => {
+            setEditorOptionContext(option => ({
+              ...option,
+              activeInputID: showEditor ? null : `comment:${data.id}`,
+            }));
+          }}
+        >
+          <span className="mt-3 flex items-center cursor-pointer select-none">
             <Image src="/icon/client/comment.png" width={14} height={14} alt="comment" />
             <span className="ml-0.5">{showEditor ? "收起" : "回复"}</span>
           </span>
@@ -107,21 +119,14 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
         </div>
         {/* 编辑器 */}
         {showEditor && (
-          <Editor
-            className="mt-2"
-            id={`comment:${data.id}`}
-            autoFocus={true}
-            hideAvatar={true}
-            reply={data.id}
-            onFinish={() => setShowEditor(false)}
-          />
+          <Editor className="mt-2" id={`comment:${data.id}`} hideAvatar={true} reply={data.id} />
         )}
       </div>
       {/* 渲染子评论 */}
       {data.children &&
         data.children.map((item, index) => (
           <div key={item.id}>
-            <CommentItem data={item as any} list={list} />
+            <CommentItem data={item} list={list} />
           </div>
         ))}
     </>

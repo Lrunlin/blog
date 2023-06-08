@@ -89,7 +89,7 @@ const TypeHeader: FC<propsType> = props => {
       </div>
 
       {tagList?.length && (
-        <div className={classNames(["container-xs bg-[#f4f5f5] py-3"])}>
+        <div className={classNames(["container-xs bg-[#f4f5f5] pb-3 pt-1"])}>
           <div className="flex flex-wrap">
             {tagList?.map((item, index) => (
               <div
@@ -100,7 +100,8 @@ const TypeHeader: FC<propsType> = props => {
                   "bg-white",
                   "rounded-2xl",
                   "text-[#909090]",
-                  index && "ml-2",
+                  "mr-2",
+                  "mt-2"
                 ])}
                 onClick={() => switchTag(item.id)}
               >

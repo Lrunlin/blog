@@ -37,7 +37,8 @@ const Home: NextPage<propsType> = props => {
   let page = useRef(1);
   let option = useRef<optionType>({ sort: "recommend" });
 
-  let cancel= useRef<() => void>();
+  /** 取消请求函数，每次请求数据时设置上，下次请求时运行*/
+  let cancel = useRef<() => void>();
   function loadMoreData() {
     cancel.current && cancel.current();
     if (page.current == 1) setIsLoading(true);

@@ -2,6 +2,8 @@ import qiniu from "qiniu";
 import sharp from "sharp";
 import zone from "./utils/zone";
 import Mac from "./utils/Mac";
+import fs from "fs";
+import { v4 } from "uuid";
 
 export const folderList = [
   { folder: "article", quality: 80, animated: true },
@@ -49,12 +51,21 @@ async function upload(
   if (sharpOption.width) {
     processed = processed.resize({ width: sharpOption.width, height: sharpOption.height });
   }
-  let processedBuffer = await processed.toBuffer();
+
+  let fileName = `${v4()}.webp`;
+  await processed.toFile(`public/${fileName}`); //使用toBuffer在Linux可能会有内存泄漏
+  let _buffer = fs.readFileSync(`public/${fileName}`);
+  try {
+    fs.unlinkSync(`public/${fileName}`);
+  } catch (error) {
+    console.log(error);
+  }
+
   return new Promise((resolve, reject) => {
     formUploader.put(
       uploadToken,
       `${option.folder}/${option.file_name}`,
-      processedBuffer, //处理后的buffer
+      _buffer, //处理后的buffer
       putExtra,
       function (respErr, respBody, respInfo) {
         if (respErr) {
@@ -70,9 +81,6 @@ async function upload(
         } else {
           reject("图片上传错误");
         }
-        sharpInstance?.destroy();
-        sharpInstance = null as any;
-        processedBuffer = null as any;
         global.gc && global.gc();
       }
     );

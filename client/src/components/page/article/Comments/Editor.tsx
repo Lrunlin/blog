@@ -2,9 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import type { FC } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userDataContext } from "@/store/user-data";
-import { commentEmojiActiveContext } from "./store";
 import { Avatar, Button, Input, message } from "antd";
-import Image from "@/components/next/Image";
+import NextImage from "@/components/next/Image";
 import { useSearchParams } from "next/navigation";
 import loadStatic, { responseType } from "@/request/load-static";
 import data from "@emoji-mart/data";
@@ -14,16 +13,15 @@ import axios from "axios";
 import classNames from "classnames";
 import { useSWRConfig } from "swr";
 import { marked } from "marked";
+import { editorOptionContext } from "./index";
 
 interface propsType {
   id: number | string;
   reply?: number;
   hideAvatar?: true;
-  onFocus?: () => any;
-  onBlur?: () => any;
-  onFinish?: () => any;
-  autoFocus?: boolean;
   className?: string;
+  /** 禁止隐藏输入框*/
+  notHideInput?: boolean;
 }
 
 let { TextArea } = Input;
@@ -33,30 +31,60 @@ const Editor: FC<propsType> = props => {
   let articleID = searchParams.get("id");
   let { mutate } = useSWRConfig();
   let userData = useRecoilValue(userDataContext);
-  let [activeEmojiID, setActiveEmojiID] = useRecoilState(commentEmojiActiveContext);
   let [value, setValue] = useState("");
-  let ref = useRef<any>();
+  let [editorOption, setEditorOption] = useRecoilState(editorOptionContext);
 
+  let showEditor = props.notHideInput || props.id == editorOption.activeInputID; //编辑器是否显示
+
+  let inputDOM = useRef<any>(); //输入框DOM节点
+
+  let cursorPosition = useRef<number>(-1); //插入表情前光标位置
   const insertEmoji = (emoji: string) => {
-    let textArea = ref.current?.resizableTextArea?.textArea;
+    let textArea = inputDOM.current?.resizableTextArea?.textArea;
     let start = textArea.selectionStart || 0;
     let end = textArea.selectionEnd || 0;
+    cursorPosition.current = start; //查询前保存光标位置
     setValue(`${value.substring(0, start)}${emoji}${value.substring(end)}`);
-    ref.current.focus();
+    inputDOM.current.focus();
   };
+  useEffect(() => {
+    if (cursorPosition.current < 0) return;
+    inputDOM.current.focus();
+    cursorPosition.current = -1;
+  }, [value]);
+
+  let commentEditorboxDOM = useRef<null | HTMLElement | any>(null); //外部盒子
+  let emojiPickerDOM = useRef<null | HTMLElement | any>(null); //表情选择器
 
   useEffect(() => {
-    function closeEmoji() {
-      setActiveEmojiID("");
-    }
-    window.addEventListener("click", closeEmoji);
-    return () => {
-      closeEmoji();
-      window.removeEventListener("click", closeEmoji);
+    const handleClick = (e: MouseEvent) => {
+      // 判断输入框失去焦点
+      if (!value.length && !document.getElementById("commentRoot")?.contains(e.target as Node)) {
+        setEditorOption(option => ({
+          ...option,
+          activeInputID: null,
+          activeEmojiID: null,
+        }));
+      }
+
+      //判断表情编辑器失去焦点
+      if (!emojiPickerDOM.current?.contains(e.target as Node)) {
+        setEditorOption(option => ({
+          ...option,
+          activeEmojiID: null,
+        }));
+      }
     };
-  }, []);
+    if (props.id == editorOption.activeInputID) {
+      window.addEventListener("click", handleClick);
+    }
+    return () => {
+      window.removeEventListener("click", handleClick);
+    };
+  }, [value, editorOption]); // 将 value
 
   let [picture, setPicture] = useState<responseType | null>(null);
+  let [pictureUploading, setPictureUploading] = useState<false | [number, number]>(false);
   function load() {
     let dom = document.getElementById(`commentInput-${props.id}`) as HTMLInputElement;
     let file = (dom.files as FileList)[0];
@@ -64,13 +92,27 @@ const Editor: FC<propsType> = props => {
       message.warn(`上传图片最大${process.env.UPLOAD_MAX_SIZE}MB`);
       return;
     }
-    loadStatic("comment", file).then(res => {
-      if (res.success) {
-        setPicture(res.data);
-      } else {
-        message.error("上传失败");
-      }
-    });
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (evt) {
+      let replaceSrc = evt.target!.result;
+      let imageObj = new Image();
+      imageObj.src = replaceSrc as string;
+      imageObj.onload = function () {
+        setPictureUploading([imageObj.width, imageObj.height]);
+      };
+    };
+    loadStatic("comment", file)
+      .then(res => {
+        if (res.success) {
+          setPicture(res.data);
+        } else {
+          message.error("上传失败");
+        }
+      })
+      .finally(() => {
+        setPictureUploading(false);
+      });
   }
   function comment() {
     axios
@@ -93,124 +135,142 @@ const Editor: FC<propsType> = props => {
       .catch(err => {
         message.error("评论失败");
         console.log(err);
-      })
-      .finally(() => {
-        props.onFinish && props.onFinish();
       });
   }
-
   // 底部工具栏是否展示
-  const [showToolBar, setShowToolBar] = useState(false);
-
   return (
-    <div className={classNames(["flex", props.className])}>
-      {/* 顶部输入框 */}
-      {!props.hideAvatar && (
-        <Avatar size={40} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
-      )}
-      <div className={classNames(["w-full", !props.hideAvatar && "ml-4"])}>
-        <div
-          className={classNames([
-            "w-full pb-2 pl-2 rounded transition-all duration-500",
-            showToolBar ? "bg-white border-[#1e80ff] border border-solid" : "bg-[#f2f3f5]",
-          ])}
-        >
-          <TextArea
-            ref={input => (ref.current = input)}
-            value={value}
-            onChange={e => setValue(e.target.value)}
-            placeholder="输入评论（Enter换行，Ctrl + Enter发送）"
-            maxLength={600}
-            bordered={false}
-            className={classNames(["group"])}
-            onFocus={e => {
-              setShowToolBar(true);
-              props.onFocus && props.onFocus();
-            }}
-            onBlur={() => {
-              props.onBlur && props.onBlur();
-            }}
-            autoFocus={props.autoFocus}
-          />
-          {/* 使用的图片 */}
-          {picture && (
-            <div className="h-16 relative inline-block">
+    <>
+      {showEditor && (
+        <div className={classNames(["flex", props.className])} ref={commentEditorboxDOM}>
+          {/* 顶部输入框 */}
+          {!props.hideAvatar && (
+            <Avatar size={40} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
+          )}
+          <div className={classNames(["w-full", !props.hideAvatar && "ml-4"])}>
+            <div
+              className={classNames([
+                "w-full pb-2 pl-2 rounded transition-all duration-500 flex flex-wrap",
+                props.id == editorOption.activeInputID
+                  ? "bg-white border-[#1e80ff] border border-solid"
+                  : "bg-[#f2f3f5]",
+              ])}
+            >
+              <TextArea
+                ref={input => (inputDOM.current = input)}
+                value={value}
+                onChange={e => setValue(e.target.value)}
+                placeholder="输入评论"
+                maxLength={600}
+                bordered={false}
+                onFocus={e => {
+                  setEditorOption(option => ({
+                    ...option,
+                    activeInputID: props.id,
+                  }));
+                }}
+              />
               <div
-                className="w-3 h-3 text-xl absolute top-0 right-0 bg-zinc-300  bg-opacity-50"
-                onClick={() => setPicture(null)}
+                style={{
+                  width: pictureUploading
+                    ? pictureUploading[0] / (pictureUploading[1] / 64)
+                    : "auto",
+                }}
+                className={classNames(["relative bg-gray-300", pictureUploading && "h-16"])}
               >
-                <img
-                  src="/icon/client/delete.png"
-                  className="w-3 h-3 absolute top-0 right-0"
-                  alt="delete"
+                {picture ? (
+                  <div className="h-full w-full">
+                    <div
+                      className="w-3 h-3 text-xl absolute top-0 right-0 bg-zinc-300 bg-opacity-50"
+                      onClick={() => setPicture(null)}
+                    >
+                      <NextImage
+                        width={12}
+                        height={12}
+                        src="/icon/client/delete.png"
+                        className="cursor-pointer absolute top-0 right-0"
+                        alt="delete"
+                      />
+                    </div>
+                    <img
+                      src={picture.file_href}
+                      alt="评论图片"
+                      className={classNames(["h-16", "rounded-sm"])}
+                    />
+                  </div>
+                ) : (
+                  <div className="h-full w-full bg-gray-300"></div>
+                )}
+              </div>
+            </div>
+            {/* 底部工具栏 */}
+            <div className="mt-2 flex justify-between select-none">
+              <div className="flex items-center">
+                <span className="relative flex items-center cursor-pointer">
+                  <div className="flex items-center" ref={emojiPickerDOM}>
+                    <div
+                      onClick={() => {
+                        setEditorOption(option => ({
+                          ...option,
+                          activeEmojiID:
+                            editorOption.activeEmojiID == props.id ? null : `${props.id}`,
+                        }));
+                      }}
+                    >
+                      <NextImage src="/icon/client/emoji.png" width={18} height={18} alt="emoji" />
+                      <span className="ml-1 text-sm text-neutral-500">表情</span>
+                    </div>
+                    <div
+                      className={classNames([
+                        "absolute z-10 top-5 left-3 bg-opacity-100",
+                        editorOption.activeEmojiID == props.id ? "block" : "hidden",
+                      ])}
+                    >
+                      <Picker
+                        i18n={i18n}
+                        data={data}
+                        onEmojiSelect={({ native }: { native: string }) => insertEmoji(native)}
+                        previewPosition="none"
+                        searchPosition="none"
+                      />
+                    </div>
+                  </div>
+                </span>
+                <label
+                  htmlFor={`commentInput-${props.id}`}
+                  onClick={() => {
+                    inputDOM.current.focus();
+                  }}
+                >
+                  <span className="flex items-center ml-4 cursor-pointer">
+                    <NextImage
+                      src="/icon/client/picture.png"
+                      width={18}
+                      height={18}
+                      alt="picture"
+                    />
+                    <span className="ml-1 text-sm text-neutral-500">图片</span>
+                  </span>
+                </label>
+                <input
+                  className="hidden"
+                  type="file"
+                  id={`commentInput-${props.id}`}
+                  accept="image/*"
+                  onChange={load}
                 />
               </div>
-              <img
-                src={picture.file_href}
-                alt="评论图片"
-                className={classNames(["h-16", "rounded-sm"])}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* 底部工具栏 */}
-        {showToolBar && (
-          <div className="mt-2 flex justify-between select-none">
-            <div className="flex items-center">
-              <span
-                className="relative flex items-center cursor-pointer"
-                onClick={e => {
-                  setActiveEmojiID(props.id);
-                  e.stopPropagation();
-                }}
+              <Button
+                type="primary"
+                onClick={comment}
+                disabled={!/^[\s\S]*.*[^\s][\s\S]*$/.test(value)}
               >
-                <Image src="/icon/client/emoji.png" width={18} height={18} alt="emoji" />
-                <span className="ml-1 text-sm text-neutral-500">表情</span>
-                <div
-                  className={classNames([
-                    "absolute z-10 top-3 left-30 bg-opacity-100",
-                    activeEmojiID == props.id ? "block" : " hidden",
-                  ])}
-                >
-                  <Picker
-                    i18n={i18n}
-                    data={data}
-                    onEmojiSelect={({ native }: { native: string }) => insertEmoji(native)}
-                    previewPosition="none"
-                  />
-                </div>
-              </span>
-              <label
-                htmlFor={`commentInput-${props.id}`}
-                onClick={() => {
-                  ref.current.focus();
-                }}
-              >
-                <span className="flex items-center ml-4 cursor-pointer">
-                  <Image src="/icon/client/picture.png" width={18} height={18} alt="picture" />
-                  <span className="ml-1 text-sm text-neutral-500">图片</span>
-                </span>
-              </label>
-              <input
-                className="hidden"
-                type="file"
-                id={`commentInput-${props.id}`}
-                accept="image/*"
-                onChange={load}
-              />
+                发表评论
+              </Button>
             </div>
-            <Button
-              type="primary"
-              onClick={comment}
-              disabled={!/^[\s\S]*.*[^\s][\s\S]*$/.test(value)}
-            >
-              发表评论
-            </Button>
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 export default Editor;
