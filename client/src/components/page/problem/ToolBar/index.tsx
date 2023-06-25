@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { Context } from "@/pages/problem/[id]";
 import { Button, message } from "antd";
 import Image from "@/components/next/Image";
@@ -6,21 +6,16 @@ import useUserData from "@/store/user-data";
 import { like, unlike } from "@/request/like";
 import { collection, uncollection } from "@/request/collection";
 import { follow, unfollow } from "@/request/follow";
+import dynamic from "next/dynamic";
+const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr: false });
 
 /** 问答页面对问题的点赞和收藏按钮*/
 const ToolBar = () => {
   let { data, reload } = useContext(Context);
   let [userData] = useUserData();
-  function collectionProblem() {
-    collection(data?.id, "problem")
-      .then(res => {
-        reload();
-        message.success(res.data.message);
-      })
-      .catch(() => {
-        message.error("收藏失败");
-      });
-  }
+  const [isOpen, setIsOpen] = useState(false);
+  console.log((data.collection_state as unknown as number[])?.length);
+
   function unCollectionProblem() {
     uncollection(data?.id)
       .then(res => {
@@ -70,11 +65,17 @@ const ToolBar = () => {
   }
   return (
     <div className="flex">
-      {data.collection_data.collection_state ? (
+      {data.collection_state ? (
         <Button
           type="primary"
           className="flex items-center"
-          onClick={!userData ? undefined : unCollectionProblem}
+          onClick={
+            !userData || userData?.id == data.author_data.id
+              ? () => {}
+              : (data.collection_state as unknown as number[])?.length == 1
+              ? unCollectionProblem
+              : () => setIsOpen(true)
+          }
         >
           <Image
             src="/icon/client/problem-collection-white.png"
@@ -82,20 +83,17 @@ const ToolBar = () => {
             width={14}
             height={14}
           />
-          <span className="ml-0.5">已收藏 {data.collection_data.collection_count}</span>
+          <span className="ml-0.5">已收藏 {data.collection_count}</span>
         </Button>
       ) : (
-        <Button
-          className="flex items-center"
-          onClick={userData?.id == data.author || !userData ? undefined : collectionProblem}
-        >
+        <Button className="flex items-center" onClick={() => setIsOpen(true)}>
           <Image
             src="/icon/client/problem-collection-black.png"
             alt="icon"
             width={14}
             height={14}
           />
-          <span className="ml-0.5">收藏 {data.collection_data.collection_count}</span>
+          <span className="ml-0.5">收藏 {data.collection_count}</span>
         </Button>
       )}
       {data.like_data.like_state ? (
@@ -134,6 +132,21 @@ const ToolBar = () => {
           <span className="ml-0.5">关注 {data.follow_data.follow_count}</span>
         </Button>
       )}
+      <Modal
+        open={isOpen}
+        onCancel={() => setIsOpen(false)}
+        onDelete={() => {
+          reload();
+        }}
+        onUpdate={() => {
+          reload();
+        }}
+        onCreate={() => {
+          reload();
+        }}
+        type="problem"
+        defaultChecked={data.collection_state}
+      />
     </div>
   );
 };

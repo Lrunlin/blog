@@ -32,10 +32,8 @@ export interface problemType extends Omit<ProblemAttributes, "tag"> {
     like_count: number;
     like_state: number;
   };
-  collection_data: {
-    collection_count: number;
-    collection_state: number;
-  };
+  collection_count: number;
+  collection_state: number[] | null;
   follow_data: {
     follow_count: number;
     follow_state: number;

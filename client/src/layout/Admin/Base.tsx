@@ -32,13 +32,6 @@ const AdminLayout: FC<propsType> = ({ children }) => {
         a {
           color: inherit !important;
         }
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
       `}</style>
       <Header />
       <main className="min-h-screen w-full pl-4 pr-4 relative top-4">{children}</main>

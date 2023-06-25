@@ -7,7 +7,7 @@ type authCode = 1 | 0;
  * 传递数字或者数组进行权限判断，如果通过设置id和status
  * @params auth {number[] | number} 身份代码
  */
-function authMiddleware(auth?: authCode[] | authCode) {
+function auth(auth?: authCode[] | authCode) {
   return async (ctx: Context, next: Next) => {
     let token = ctx.headers.authorization;
     if (!token) {
@@ -32,4 +32,4 @@ function authMiddleware(auth?: authCode[] | authCode) {
       });
   };
 }
-export default authMiddleware;
+export default auth;

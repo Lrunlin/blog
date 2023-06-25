@@ -1,38 +1,30 @@
+import { useState } from "react";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
 import useUserData from "@/store/user-data";
 import { useSearchParams } from "next/navigation";
 import { message, Badge } from "antd";
-import itemClassName from "./class";
+import itemClassName from "../class";
 import { currentArticleDataContext } from "@/pages/article/[id]";
 import { useRecoilState } from "recoil";
-import { collection, uncollection } from "@/request/collection";
+import { uncollection } from "@/request/collection";
+import dynamic from "next/dynamic";
+const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr: false });
 
 const Collection = () => {
   let [userData] = useUserData();
   let searchParams = useSearchParams();
   let id = searchParams.get("id") as string;
   let [currentArticleData, setCurrentArticleData] = useRecoilState(currentArticleDataContext);
-  function collectionArticle() {
-    collection(id, "article")
-      .then(() => {
-        setCurrentArticleData(_data => ({
-          ..._data,
-          collection_count: _data.collection_count + 1,
-          collection_state: 1,
-        }));
-      })
-      .catch(() => {
-        message.error("收藏失败");
-      });
-  }
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
   function unCollectionArticle() {
     uncollection(id)
       .then(() => {
         setCurrentArticleData(_data => ({
           ..._data,
           collection_count: _data.collection_count - 1,
-          collection_state: 0,
+          collection_state: [],
         }));
       })
       .catch(() => {
@@ -47,15 +39,15 @@ const Collection = () => {
         onClick={
           !userData || userData?.id == currentArticleData.author
             ? () => {}
-            : currentArticleData.collection_state
+            : currentArticleData.collection_state?.length == 1
             ? unCollectionArticle
-            : collectionArticle
+            : () => setIsOpenModal(true)
         }
       >
         <Badge count={currentArticleData.collection_count} color="#adb1b8" offset={[10, -10]}>
           <Image
             src={
-              currentArticleData.collection_state
+              currentArticleData.collection_state?.length
                 ? "/icon/client/collection-fill.png"
                 : "/icon/client/collection.png"
             }
@@ -65,6 +57,32 @@ const Collection = () => {
           />
         </Badge>
       </div>
+      <Modal
+        type="article"
+        onDelete={() => {
+          setCurrentArticleData(_data => ({
+            ..._data,
+            collection_count: _data.collection_count - 1,
+            collection_state: [],
+          }));
+        }}
+        onUpdate={checkList => {
+          setCurrentArticleData(_data => ({
+            ..._data,
+            collection_state: checkList,
+          }));
+        }}
+        onCreate={checkList => {
+          setCurrentArticleData(_data => ({
+            ..._data,
+            collection_count: _data.collection_count + 1,
+            collection_state: checkList,
+          }));
+        }}
+        defaultChecked={currentArticleData.collection_state}
+        open={isOpenModal}
+        onCancel={() => setIsOpenModal(false)}
+      />
     </>
   );
 };

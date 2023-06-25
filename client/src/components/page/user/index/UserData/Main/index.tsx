@@ -3,6 +3,8 @@ import axios from "axios";
 import { Tabs } from "antd";
 import ArticleList from "@/components/common/ArticleList";
 import FollowList from "./FollowList";
+import Favorites from "./Favorites";
+
 import { useRouter } from "next/router";
 
 const Main = () => {
@@ -20,20 +22,6 @@ const Main = () => {
         setArticleTotal(res.data.data.total);
       });
   }, [articlePage]);
-
-  const [collectionData, setCollectionDetdata] = useState<any[]>([]);
-  const [collectionTotal, setCollectionTotal] = useState(0);
-  const [collectionPage, setCollectionPage] = useState(1);
-  useEffect(() => {
-    axios
-      .get(`/collection/${router.query.id}`, {
-        params: { page: collectionPage },
-      })
-      .then(res => {
-        setCollectionDetdata(_data => [..._data, ...res.data.data.list]);
-        setCollectionTotal(res.data.data.total);
-      });
-  }, [collectionPage]);
 
   let activeKey = useMemo(() => (router.query.key as string) || "article", [router.query]);
   return (
@@ -58,15 +46,9 @@ const Main = () => {
             ),
           },
           {
-            label: "收藏",
+            label: "收藏集",
             key: "collection",
-            children: (
-              <ArticleList
-                list={collectionData}
-                total={collectionTotal}
-                loadMoreData={() => setCollectionPage(_page => ++_page)}
-              />
-            ),
+            children: <Favorites />,
           },
           {
             label: "关注",

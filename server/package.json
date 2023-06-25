@@ -5,8 +5,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node ./scripts/dev",
-    "build": "ts-node ./scripts/build",
+    "dev:debug": "cross-env debug=true ts-node ./scripts/dev",
     "start": "cross-env ENV=production nodemon ./src/index.js",
+    "start:debug": "cross-env ENV=production nodemon --inspect=0.0.0.0:9229 ./src/index.js",
+    "build": "ts-node ./scripts/build",
     "sequelize": "sequelize-auto  -d blog -h localhost -u root  --useDefine  -l ts --noAlias --caseModel p --dialect mysql"
   },
   "dependencies": {

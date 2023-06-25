@@ -40,7 +40,7 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async ctx => {
         ],
         [
           Sequelize.literal(
-            `(SELECT COUNT(id) FROM collection WHERE collection.user_id = ${
+            `(SELECT favorites_id FROM collection WHERE collection.user_id = ${
               ctx.id || -1
             }  and belong_id=${id})`
           ),
@@ -88,6 +88,10 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async ctx => {
             ...data,
             content: imgPrefix(data.content, { update: true, prefix: "article" }, data.title),
           };
+        }
+
+        if (data.collection_state) {
+          data.collection_state = data.collection_state.split(",").map((item: string) => +item);
         }
 
         ctx.body = { success: true, message: "查询成功", data: data };

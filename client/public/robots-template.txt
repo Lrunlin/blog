@@ -18,6 +18,8 @@ Disallow:/result
 Disallow:/link
 # 提问
 Disallow:/problem/editor
+# 收藏页面
+Disallow:/collection
 # 管理员
 Disallow:/admin
 

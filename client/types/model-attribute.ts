@@ -35,7 +35,8 @@ export interface ArticleAttributes {
   /** 是否展示目录*/
   display_directory: boolean;
   collection_count: number;
-  collection_state: number;
+  /** 是收藏（收藏夹ID）*/
+  collection_state: number[] | null;
   like_count: number;
   like_state: number;
 }
@@ -103,7 +104,7 @@ export interface NoticeAttributes {
 export interface ProblemAttributes {
   id: number;
   title: string;
-  tag: TagAttributes[];
+  tag: {name:string}[];
   /** 答案数量*/
   answer_count: number;
   content: string;

@@ -40,11 +40,13 @@ Models.Problem.hasMany(Models.Comment, {
   foreignKey: "belong_id",
   sourceKey: "id",
 });
-Models.Problem.belongsTo(Models.Collection, {
+Models.Problem.hasMany(Models.Collection, {
   as: "collection_data",
-  foreignKey: "id",
-  targetKey: "belong_id",
+  foreignKey: "belong_id",
+  sourceKey: "id",
 });
+// Models.Collection.belongsTo(Models.Problem, { foreignKey: "belong_id", targetKey: "id" });
+
 Models.Problem.belongsTo(Models.Likes, {
   as: "like_data",
   foreignKey: "id",
@@ -80,4 +82,15 @@ Models.Comment.belongsTo(Models.Article, {
   foreignKey: "id",
   targetKey: "id",
   as: "comment_data",
+});
+
+Models.Favorites.hasMany(Models.Collection, {
+  foreignKey: "id",
+  sourceKey: "id",
+  as: "favorites_data",
+});
+Models.Collection.belongsTo(Models.Favorites, {
+  foreignKey: "id",
+  targetKey: "id",
+  as: "favorites_data",
 });

@@ -9,6 +9,8 @@ import { Collection as _Collection } from "./collection";
 import type { CollectionAttributes, CollectionCreationAttributes } from "./collection";
 import { Comment as _Comment } from "./comment";
 import type { CommentAttributes, CommentCreationAttributes } from "./comment";
+import { Favorites as _Favorites } from "./favorites";
+import type { FavoritesAttributes, FavoritesCreationAttributes } from "./favorites";
 import { Follow as _Follow } from "./follow";
 import type { FollowAttributes, FollowCreationAttributes } from "./follow";
 import { Likes as _Likes } from "./likes";
@@ -34,6 +36,7 @@ export {
   _Article as Article,
   _Collection as Collection,
   _Comment as Comment,
+  _Favorites as Favorites,
   _Follow as Follow,
   _Likes as Likes,
   _Link as Link,
@@ -56,6 +59,8 @@ export type {
   CollectionCreationAttributes,
   CommentAttributes,
   CommentCreationAttributes,
+  FavoritesAttributes,
+  FavoritesCreationAttributes,
   FollowAttributes,
   FollowCreationAttributes,
   LikesAttributes,
@@ -82,6 +87,7 @@ export function initModels(sequelize: Sequelize) {
   const Article = _Article.initModel(sequelize);
   const Collection = _Collection.initModel(sequelize);
   const Comment = _Comment.initModel(sequelize);
+  const Favorites = _Favorites.initModel(sequelize);
   const Follow = _Follow.initModel(sequelize);
   const Likes = _Likes.initModel(sequelize);
   const Link = _Link.initModel(sequelize);
@@ -98,6 +104,7 @@ export function initModels(sequelize: Sequelize) {
     Article: Article,
     Collection: Collection,
     Comment: Comment,
+    Favorites: Favorites,
     Follow: Follow,
     Likes: Likes,
     Link: Link,

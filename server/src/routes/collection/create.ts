@@ -12,6 +12,7 @@ router.post("/collection/:belong_id", verify, async ctx => {
     type: ctx.request.body.type as string,
     user_id: ctx.id as number,
     create_time: new Date(),
+    favorites_id: ctx.request.body.favorites_id,
   })
     .then(() => {
       ctx.body = { success: true, message: "收藏成功" };

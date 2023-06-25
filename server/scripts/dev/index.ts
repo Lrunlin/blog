@@ -11,8 +11,11 @@ fs.writeFileSync("dist/.env", fs.readFileSync(`env/.env.development`).toString()
 
 // 开始执行tsc
 shell.exec("tsc");
-
-shell.exec("nodemon ./dist/src/index.js", { async: true });
+if (process.env.debug) {
+  shell.exec("nodemon --inspect ./dist/src/index.js", { async: true });
+} else {
+  shell.exec("nodemon ./dist/src/index.js", { async: true });
+}
 
 import change from "./change";
 import remove from "./remove";

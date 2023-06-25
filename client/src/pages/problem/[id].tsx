@@ -22,6 +22,7 @@ const Editor = dynamic(() => import("@/components/page/problem/Editor"), { ssr: 
 const CommentEditor = dynamic(() => import("@/components/page/problem/Comments/Editor"), {
   ssr: false,
 });
+const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr: false });
 
 interface propsType {
   data: null | problemType;

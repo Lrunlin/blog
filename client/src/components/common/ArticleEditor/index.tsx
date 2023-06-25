@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Button, Input, Avatar, Dropdown, Result } from "antd";
-import MarkDownEditor from "../Editor";
+import Editor from "../Editor";
 import { userDataContext, UserStateAttributes } from "@/store/user-data";
 import { atom, useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
 import Modal from "./Modal";
@@ -40,7 +40,7 @@ interface propsType {
   showDraftsButton?: boolean;
 }
 export type modalPropsType = Pick<propsType, "submit">;
-const Editor: FC<propsType> = props => {
+const ArticleEditor: FC<propsType> = props => {
   let userData = useRecoilValue(userDataContext) as UserStateAttributes;
   let [articleData, setArticleData] = useRecoilState(writeArticleContext);
   let resetArticleData = useResetRecoilState(writeArticleContext);
@@ -72,7 +72,7 @@ const Editor: FC<propsType> = props => {
           <Avatar src={userData.avatar_url} alt="头像" />
         </div>
       </header>
-      <MarkDownEditor
+      <Editor
         target="article"
         initValue={articleData.content}
         onChange={html => {
@@ -89,4 +89,4 @@ const Editor: FC<propsType> = props => {
     </Base>
   );
 };
-export default Editor;
+export default ArticleEditor;

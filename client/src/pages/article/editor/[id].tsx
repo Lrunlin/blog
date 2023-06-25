@@ -18,7 +18,7 @@ const Write: NextPage<propsType> = props => {
   let [articleData, setArticleData] = useRecoilState(writeArticleContext);
   const [isValidating, setIsValidating] = useState(true);
 
-  let { data, error, mutate } = useSWR(`article-update-${props}`, () =>
+  let { data, mutate } = useSWR(`article-update-${props}`, () =>
     axios.get(`/article/${props.id}?update=md`).then(res => res.data.data)
   );
 
@@ -42,7 +42,7 @@ const Write: NextPage<propsType> = props => {
 
   return (
     <div className="bg-white">
-      {!isValidating && data && (
+      {data ? (
         <ArticleEditor
           showDraftsButton={data.state == 0}
           meta={
@@ -68,9 +68,9 @@ const Write: NextPage<propsType> = props => {
               });
           }}
         />
-      )}
-      {isValidating && <Skeleton paragraph={{ rows: 4 }} />}
-      {error && (
+      ) : isValidating ? (
+        <Skeleton paragraph={{ rows: 4 }} />
+      ) : (
         <Result
           status="error"
           title="文章查找错误"

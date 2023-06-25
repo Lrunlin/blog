@@ -54,7 +54,6 @@ function createCommentTree(data: any) {
 /** 为问题的收藏数据、点赞数据、关注数据进行初始化*/
 function problemInit(data: any) {
   return Object.assign(data, {
-    collection_data: data.collection_data || { collection_count: 0, collection_state: 0 },
     like_data: data.like_data || { like_count: 0, like_state: 0 },
     follow_data: data.follow_data || { follow_count: 0, follow_state: 0 },
   });
@@ -64,27 +63,25 @@ function problemInit(data: any) {
 router.get("/problem/:id", verify, async ctx => {
   const id = ctx.params.id;
   const data = await DB.Problem.findByPk(id, {
-    include: [
-      {
-        model: DB.Collection,
-        as: "collection_data",
-        attributes: [
-          [
-            Sequelize.literal(
-              `(SELECT COUNT(id) FROM collection WHERE collection.belong_id = problem.id)`
-            ),
-            "collection_count",
-          ],
-          [
-            Sequelize.literal(
-              `(SELECT COUNT(id) FROM collection WHERE collection.user_id = ${
-                ctx.id || -1
-              } and collection.belong_id=${id})`
-            ),
-            "collection_state",
-          ],
+    attributes: {
+      include: [
+        [
+          Sequelize.literal(
+            `(SELECT COUNT(id) FROM collection WHERE collection.belong_id = problem.id)`
+          ),
+          "collection_count",
         ],
-      },
+        [
+          Sequelize.literal(
+            `(SELECT favorites_id FROM collection WHERE collection.user_id = ${
+              ctx.id || -1
+            }  and belong_id=${id})`
+          ),
+          "collection_state",
+        ],
+      ],
+    },
+    include: [
       {
         model: DB.Likes,
         as: "like_data",
@@ -219,7 +216,9 @@ router.get("/problem/:id", verify, async ctx => {
       console.log(err);
       return null;
     });
-
+  if (data.collection_state) {
+    data.collection_state = data.collection_state.split(",").map((item: string) => +item);
+  }
   ctx.body = { success: !!data, message: data ? "查询成功" : "查询失败", data: data };
 });
 export default router;

@@ -10,11 +10,10 @@
 服务端:Koa2+Sequelize(ORM)  
 数据库:MySQL(InnoDB)+Redis
 
-编程语言 TypeScript  
+开发语言 TypeScript  
 组件库使用 Ant Design  
 CSS 解决方案 Tailwind CSS  
-React 状态管理 Recoil  
-API 接口文档 Apifox  
+React 状态管理 Recoil
 
 ## 联系方式
 
@@ -49,7 +48,7 @@ API 接口文档 Apifox
 3. 文章的增删改查，以及草稿箱功能
 4. 文章评论、点赞
 5. 设置/修改用户基本信息、展示作者基本社交平台账号
-6. 关注作者、收藏文章 以及对应的列表查询
+6. 关注作者、收藏夹功能、收藏文章 以及对应的列表查询
 7. 站内信提醒设置(文章、评论)
 8. 文章发布数量、粉丝排行榜
 
@@ -112,7 +111,6 @@ API 接口文档 Apifox
 
 [使用 puppeteer 爬取掘金文章将数据和图片直接保存为本地文件](https://github.com/Lrunlin/puppeteer-juejin)
 
-[使用 puppeteer 爬取思否文章并直接存入数据库](https://github.com/Lrunlin/puppeteer-sf-blog)
 
 参考文章:[Puppeteer 爬取掘金文章](https://blogweb.cn/article/1197996635410),[Puppeteer 连接已有 Chrome 浏览器](https://blogweb.cn/article/6064301311)
 

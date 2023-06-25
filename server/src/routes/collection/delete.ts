@@ -2,8 +2,9 @@ import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import interger from "@/common/verify/integer";
-
 let router = new Router();
+
+// 直接删除整条收藏信息
 router.delete("/collection/:belong_id", interger([], ["belong_id"]), auth(0), async ctx => {
   let belong_id = +ctx.params.belong_id;
 
