@@ -2,12 +2,14 @@ import useFetch from "@/common/hooks/useFetch";
 import useUserData from "@/store/user-data";
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";
 import { RootObject } from "@type/model/favorites-collection-list";
-import { message } from "antd";
+import { message, Avatar } from "antd";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { FC } from "react";
 import { useState } from "react";
 import FavoritesModal from "./FavoritesModal";
+import Link from "next/link";
+import { RightOutlined } from "@ant-design/icons";
 
 const Brow: FC<{
   favoritesData: RootObject["favorites_data"];
@@ -19,7 +21,7 @@ const Brow: FC<{
   let router = useRouter();
   let id = searchParams.get("id") as string;
   let { isLoading: deleteIsLoading, refetch: deleteRefetch } = useFetch(
-    values =>
+    () =>
       axios
         .delete(`/favorites/${id}`)
         .then(res => {
@@ -57,6 +59,17 @@ const Brow: FC<{
                 )}
               </div>
             )}
+          </div>
+          <div className="my-4 line-clamp-2">{favoritesData.description}</div>
+          <div className="flex">
+            <Avatar className="w-11 h-11" src={authorData.avatar_url} alt="avatar" />
+            <div className="ml-2">
+              <div className="text-base">{authorData.name}</div>
+              <Link className="text-gray-300 text-sm" href={`/user/${authorData.id}?key=collection`}>
+                更多收藏集
+                <RightOutlined size={14} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

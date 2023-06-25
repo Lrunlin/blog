@@ -9,10 +9,10 @@ import dynamic from "next/dynamic";
 const Cover = dynamic(() => import("./Cover"), { ssr: false, loading: () => <CoverSkeleton /> });
 
 export interface propsType {
-  data: articleListItemType;
+  data: Omit<articleListItemType, "state">;
   titleKeyword?: (title: articleListItemType["title"]) => ReactNode;
   topRight?: ReactNode;
-  className?:string;
+  className?: string;
 }
 
 /**

@@ -42,7 +42,7 @@ const CreateFrom: FC<propsType> = props => {
           <Input />
         </Form.Item>
         <Form.Item label="描述" name="description" rules={[{ max: 100, message: "最大长度为100" }]}>
-          <TextArea />
+          <TextArea maxLength={100} />
         </Form.Item>
         <Form.Item name="is_private">
           <Radio.Group className="ml-4">
