@@ -64,6 +64,7 @@ router.put("/article/:id", verify, async ctx => {
     ctx.body = { success: true, message: "修改成功" };
     t.commit();
   } else {
+    ctx.status = 500;
     ctx.body = { success: false, message: "修改失败" };
     t.rollback();
   }

@@ -21,20 +21,21 @@ const Update = () => {
     data: response,
     error,
     isValidating,
-  } = useSwr([`/article/${id}`], () => axios.get(`/article/${id}?update=md`), {
+  } = useSwr(`/article/${id}`, () => axios.get(`/article/${id}?update=md`), {
     revalidateOnMount: true,
   });
 
   /** 更新文章，提交*/
   function onFinish(values: any) {
-    axios.put(`/article/${id}`, { ...values, state: 1 }).then(res => {
-      if (res.data.success) {
+    axios
+      .put(`/article/${id}`, { ...values, state: 1 })
+      .then(res => {
         message.success(res.data.message);
         mutate(`/article/${id}`);
-      } else {
-        message.error(res.data.message);
-      }
-    });
+      })
+      .catch(err => {
+        message.error(err.message);
+      });
   }
 
   //获取typeTree

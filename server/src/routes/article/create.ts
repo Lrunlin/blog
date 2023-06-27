@@ -35,6 +35,7 @@ router.post("/article", verify, async ctx => {
     ctx.body = { success: true, message: `发布成功`, data: { article_id: _id } };
     t.commit();
   } else {
+    ctx.status = 500;
     ctx.body = { success: false, message: "发布失败" };
     t.rollback();
   }

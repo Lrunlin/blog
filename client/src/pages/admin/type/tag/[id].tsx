@@ -17,6 +17,7 @@ import Upload from "@/components/common/UpLoad";
 import { response } from "@type/response";
 import { TypeAttributesList, TagAttributes } from "@type/type";
 import AdminLayout from "@/layout/Admin/Base";
+import useFetch from "@/common/hooks/useFetch";
 
 interface ResponseType extends TagAttributes {
   icon_url: string;
@@ -35,23 +36,19 @@ const UpdateTag = () => {
     });
   });
 
-  //   如果ID格式不对返回
-  useEffect(() => {
-    if (isNaN(+id)) {
-      router.back();
-    }
-  }, []);
-
-  const remove = () => {
-    axios.delete(`/tag/${id}`).then(res => {
-      if (res.data.success) {
-        message.success(res.data.message);
-        router.back();
-      } else {
-        message.error(res.data.message);
-      }
-    });
-  };
+  let { isLoading, refetch: remove } = useFetch(
+    () =>
+      axios
+        .delete(`/tag/${id}`)
+        .then(res => {
+          message.success(res.data.message);
+          router.back();
+        })
+        .catch(err => {
+          message.error(err.message);
+        }),
+    true
+  );
 
   const onFinish = (values: any) => {
     axios.put(`/tag/${id}`, values).then(res => {
@@ -138,7 +135,7 @@ const UpdateTag = () => {
               okText="确认删除"
               cancelText="取消"
             >
-              <Button type="primary" danger className="w-32 ml-24">
+              <Button type="primary" danger className="w-32 ml-24" loading={isLoading}>
                 删除
               </Button>
             </Popconfirm>

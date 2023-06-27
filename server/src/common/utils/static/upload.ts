@@ -81,7 +81,6 @@ async function upload(
         } else {
           reject("图片上传错误");
         }
-        global.gc && global.gc();
       }
     );
   }) as Promise<string | { file_name: string; file_href: string }>;

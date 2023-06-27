@@ -20,16 +20,11 @@ const Profile: NextPage = () => {
     axios
       .put("/user", values)
       .then(res => {
-        if (res.data.success) {
-          message.success(res.data.message);
-          mutate();
-        } else {
-          message.error(res.data.message);
-        }
+        message.success(res.data.message);
+        mutate();
       })
       .catch(err => {
-        let errorMessage = err.response.data.message;
-        message.error(errorMessage || "修改失败");
+        message.error(err.message || "修改失败");
       });
   };
 
@@ -121,7 +116,7 @@ const Profile: NextPage = () => {
                 children={<div></div>}
               />
 
-              <Form.Item wrapperCol={{ offset: 3 }}>
+              <Form.Item wrapperCol={{ offset: 4 }}>
                 <Button type="primary" htmlType="submit">
                   保存修改
                 </Button>

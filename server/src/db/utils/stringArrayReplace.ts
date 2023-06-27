@@ -19,7 +19,7 @@ interface optionType {
  */
 async function stringArrayReplace(
   option: optionType,
-  sequelizeOpeion: QueryOptions | QueryOptionsWithType<QueryTypes.RAW> | undefined
+  sequelizeOpeion?: QueryOptions | QueryOptionsWithType<QueryTypes.RAW> | undefined
 ) {
   //将文章表中的 ,id,  ,id   id,   id  四种方法全部置换
   try {

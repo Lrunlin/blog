@@ -23,15 +23,11 @@ const Write: NextPage = () => {
           axios
             .post("/article", { ...values, state: 1 })
             .then(res => {
-              if (res.data.success) {
-                message.success(res.data.message);
-                router.replace("/creator/content/article");
-              } else {
-                message.error(res.data.message);
-              }
+              message.success(res.data.message);
+              router.replace("/creator/content/article");
             })
             .catch(err => {
-              message.error(err.response?.data?.message);
+              message.error(err.message);
             });
         }}
       />

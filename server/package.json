@@ -9,7 +9,7 @@
     "start": "cross-env ENV=production nodemon ./src/index.js",
     "start:debug": "cross-env ENV=production nodemon --inspect=0.0.0.0:9229 ./src/index.js",
     "build": "ts-node ./scripts/build",
-    "sequelize": "sequelize-auto  -d blog -h localhost -u root  --useDefine  -l ts --noAlias --caseModel p --dialect mysql"
+    "sequelize": "sequelize-auto -d blog -h localhost -u root  --useDefine  -l ts --noAlias --caseModel p --dialect mysql"
   },
   "dependencies": {
     "@koa/cors": "^3.3.0",

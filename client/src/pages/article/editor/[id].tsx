@@ -56,15 +56,11 @@ const Write: NextPage<propsType> = props => {
             axios
               .put(`/article/${props.id}`, { ...values, state: 1 })
               .then(res => {
-                if (res.data.success) {
-                  message.success(res.data.message);
-                  mutate();
-                } else {
-                  message.error(res.data.message);
-                }
+                message.success(res.data.message);
+                mutate();
               })
               .catch(err => {
-                message.error(err.response?.data?.message);
+                message.error(err.message);
               });
           }}
         />
