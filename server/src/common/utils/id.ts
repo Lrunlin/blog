@@ -1,5 +1,5 @@
-/** 根据指定范围生成随机数*/
-const random = (min: number, max: number) => Math.round(Math.random() * (max - min)) + min;
+import random from "./random";
+
 /** 机器号（最大999）*/
 const WorkerID = process.env.NODE_APP_INSTANCE || random(0, 4);
 /** 基础时间，时间戳从这个时间开始算*/

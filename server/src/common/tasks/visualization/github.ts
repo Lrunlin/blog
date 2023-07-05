@@ -1,4 +1,3 @@
-import DB from "@/db";
 import Redis from "@/common/utils/redis";
 import axios from "axios";
 import moment from "moment";
