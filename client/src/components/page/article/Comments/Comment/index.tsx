@@ -12,7 +12,7 @@ import { editorOptionContext } from "../index";
 /** 文章页面评论集合组件*/
 const Comments = () => {
   let searchParams = useSearchParams();
-  let articleID = searchParams.get("id");
+  let articleID = searchParams!.get("id");
   let { data, isValidating, mutate } = useSWR(`/comment/article/${articleID}`, () =>
     axios
       .get<response<articleCommentType[]>>(`/comment/article/${articleID}`)

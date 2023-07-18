@@ -18,7 +18,7 @@ const ToolsBar = dynamic(() => import("@/components/page/collection/ToolsBar"), 
 
 const FavoritesList: FC<{ data: RootObject | null }> = ({ data: propsData }) => {
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   let router = useRouter();
   let [userData] = useUserData();
 

@@ -30,7 +30,7 @@ const Editor: FC<propsType> = props => {
     axios
       .post("/answer", {
         content,
-        problem_id: searchParams.get("id"),
+        problem_id: searchParams!.get("id"),
       })
       .then(res => {
         message.success(res.data.message);
@@ -63,10 +63,10 @@ const Editor: FC<propsType> = props => {
         console.log(err);
       });
   }
-  const { data: answerData } = uswSwr(`answer-md-${searchParams.get("id")}`, () =>
+  const { data: answerData } = uswSwr(`answer-md-${searchParams!.get("id")}`, () =>
     data.answer_list.some(item => item.author == userData?.id)
       ? axios
-          .get(`/answer`, { params: { problem_id: searchParams.get("id") } })
+          .get(`/answer`, { params: { problem_id: searchParams!.get("id") } })
           .then(res => res.data.data)
       : undefined
   );

@@ -16,7 +16,7 @@ interface propsType {
 const ToolsBar: FC<propsType> = ({ belong_id, refetch }) => {
   const [open, setOpen] = useState(false);
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
 
   // 获取单个文章被哪些收藏集收藏过
   let {

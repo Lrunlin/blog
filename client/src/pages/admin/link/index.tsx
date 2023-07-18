@@ -72,7 +72,7 @@ const LinkList = () => {
       dataIndex: "user_data",
       render: (user_data: any) => {
         return user_data ? (
-          <Link href={`/user/${user_data.id}`}>
+          <Link href={`/admin/user/${user_data.id}`}>
             <Avatar src={user_data.avatar_url} alt="用户头像" />
           </Link>
         ) : (

@@ -7,20 +7,20 @@ const ArticleRanking = () => {
   let data = _data.article_ranking;
 
   return (
-    <div className="aside-article-item w-full">
+    <div className="w-full h-21.25vw">
       {data.map((item, index) => {
         return (
           <Link
             key={`echarts-article-ranking-${item.id}`}
-            href={`/article/${item.id}`}
-            className="article-ranking-item max-w-full"
+            href={`/admin/article/${item.id}`}
+            className="max-w-full w-full h-2vw !text-white text-sm border-0 border-b border-solid border-b-statistics-cyan-border-color flex justify-around"
             target="_blank"
           >
-            <div>
-              <div className="article-ranking-item_index">{index + 1}</div>
-              <div className="article-ranking-item_title truncate w-4/5">{item.title}</div>
+            <div className="flex w-4/5">
+              <div >{index + 1}</div>
+              <div className="truncate w-4/5 ml-0.5vw">{item.title}</div>
             </div>
-            <span className="article-ranking-item_count">{item.view_count}</span>
+            <span className="font-bold mr-1.75vw">{item.view_count}</span>
           </Link>
         );
       })}

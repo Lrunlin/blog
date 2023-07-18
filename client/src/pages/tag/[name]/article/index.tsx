@@ -33,7 +33,7 @@ const Article: NextPage<propsType> = ({ data }) => {
   let searchParams = useSearchParams();
 
   function loadMoreData() {
-    fetch(page.current, searchParams.get("name") as string)
+    fetch(page.current, searchParams!.get("name") as string)
       .then(res => {
         let _list = res.article_data.list;
         if (page.current == 1) {

@@ -59,7 +59,7 @@ const DraftsButton = () => {
     }
     setIsLoad(true);
     axios
-      .put(`/article/${searchParams.get("id")}`, {
+      .put(`/article/${searchParams!.get("id")}`, {
         title: /^[\s\S]*.*[^\s][\s\S]*$/.test(title) ? title : "无标题",
         description,
         cover_file_name,
@@ -71,7 +71,7 @@ const DraftsButton = () => {
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);
-          mutate(`article-update-${searchParams.get("id")}`);
+          mutate(`article-update-${searchParams!.get("id")}`);
         } else {
           message.error(res.data.message);
         }

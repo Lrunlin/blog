@@ -9,7 +9,7 @@ import type { statisticsDataType } from "./type";
 import { atom, useRecoilState } from "recoil";
 
 export type { statisticsDataType };
-import style from "./style";
+import Head from "@/components/next/Head";
 export const statisticsDataContext = atom({
   key: "statistics-data",
   default: null as unknown as statisticsDataType,
@@ -37,7 +37,7 @@ const Statistics = () => {
 
   return (
     <>
-      <style jsx>{style}</style>
+      <Head title="数据分析" />
       <Spin
         spinning={isValidating && isFirstLoad.current}
         size="large"
@@ -51,7 +51,7 @@ const Statistics = () => {
             backgroundSize: "100vw 100vh",
           }}
         >
-          <div className="container-title">数据分析</div>
+          <div className="text-2xl text-statistics-cyan-color text-center font-black pt-0.25vw">数据分析</div>
           {error && (
             <div className="text-white text-center text-2xl font-black mt-10 ">
               <CloseOutlined
@@ -62,8 +62,8 @@ const Statistics = () => {
             </div>
           )}
           {data && (
-            <main className="main">
-              <div className="main-top">
+            <main className="mx-auto w-96vw mt-3vh">
+              <div>
                 <Top />
               </div>
               <div>

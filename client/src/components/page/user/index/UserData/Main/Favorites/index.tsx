@@ -21,7 +21,7 @@ interface favoritesListProps {
 }
 const FavoritesList = () => {
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   const [defaultValue, setDefaultValue] = useState<favoritesListProps>();
   const [open, setOpen] = useState(false);
   let [userData] = useUserData();

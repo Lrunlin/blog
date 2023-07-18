@@ -5,7 +5,6 @@ import axios from "axios";
 import Layout from "@/components/page/problem/Layout";
 import NoFound from "@/components/page/problem/NoFound";
 import Answer from "@/components/page/problem/Answer";
-import { parse } from "cookie";
 
 import { useSearchParams } from "next/navigation";
 import ArticleUserData from "@/components/page/article/UserData";
@@ -18,6 +17,7 @@ import NoFollowLink from "@/components/next/NoFollowLink";
 import useUserData from "@/store/user-data";
 import ToolBar from "@/components/page/problem/ToolBar";
 import readingRecords from "@/common/modules/readingRecords/readingRecords";
+import { parse } from "cookie";
 const Editor = dynamic(() => import("@/components/page/problem/Editor"), { ssr: false });
 const CommentEditor = dynamic(() => import("@/components/page/problem/Comments/Editor"), {
   ssr: false,
@@ -37,7 +37,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
   if (!data) return <NoFound />;
   function reload() {
     axios
-      .get(`/problem/${searchParams.get("id")}`)
+      .get(`/problem/${searchParams!.get("id")}`)
       .then((res: any) => setData(res.data.data))
       .catch(err => {
         console.log(err);
@@ -46,7 +46,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
   }
   function deleteProblem() {
     axios
-      .delete(`/problem/${searchParams.get("id")}`)
+      .delete(`/problem/${searchParams!.get("id")}`)
       .then(res => {
         message.success("删除成功");
       })
@@ -77,7 +77,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
               <div>
                 <NoFollowLink
                   className="text-gray-500 cursor-pointer mr-4 hover:text-gray-800"
-                  href={`/problem/editor/${searchParams.get("id")}`}
+                  href={`/problem/editor/${searchParams!.get("id")}`}
                 >
                   编辑
                 </NoFollowLink>
@@ -90,7 +90,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
 
           {problemReplyShrink && (
             <CommentEditor
-              belong_id={+(searchParams.get("id") as string)}
+              belong_id={+(searchParams!.get("id") as string)}
               reply={null}
               type="problem"
               onSuccess={reload}
@@ -98,15 +98,13 @@ const Problem: FC<propsType> = ({ data: _data }) => {
           )}
           <Comments
             type="problem"
-            belong_id={+(searchParams.get("id") as string)}
+            belong_id={+(searchParams!.get("id") as string)}
             data={data.comment_list}
             className="mt-2"
           />
         </div>
         {!!data.answer_list.length && <Answer />}
-        {userData?.id != data.author && (
-          <Editor onSuccess={reload} />
-        )}
+        {userData?.id != data.author && <Editor onSuccess={reload} />}
       </Layout>
     </Context.Provider>
   );

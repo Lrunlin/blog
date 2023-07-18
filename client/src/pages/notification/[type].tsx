@@ -57,11 +57,11 @@ const Notification: NextPage = () => {
   let page = useRef(1);
   useEffect(() => {
     if (
-      searchParams.get("type") &&
+      searchParams!.get("type") &&
       userData &&
-      ["notice", "system-notification"].includes(searchParams.get("type") + "")
+      ["notice", "system-notification"].includes(searchParams!.get("type") + "")
     ) {
-      type.current = searchParams.get("type") as string;
+      type.current = searchParams!.get("type") as string;
       page.current = 1;
       getNoticeData();
     }

@@ -6,6 +6,7 @@ import {
   UsergroupAddOutlined,
   CommentOutlined,
   UserOutlined,
+  CodepenOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 
@@ -79,6 +80,11 @@ const items = [
     href: "/admin/user",
     icon: <UserOutlined />,
   },
+  // {
+  //   label: "对象存储",
+  //   href: "/admin/oss",
+  //   icon: <CodepenOutlined />,
+  // },
 ];
 
 // 递归添加key

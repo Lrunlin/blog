@@ -10,8 +10,8 @@ import { like, unlike } from "@/request/like";
 
 const Likes = () => {
   let [userData] = useUserData();
-  let SearchParams = useSearchParams();
-  let id = SearchParams.get("id") as string;
+  let searchParams = useSearchParams();
+  let id = searchParams!.get("id") as string;
   let [currentArticleData, setCurrentArticleData] = useRecoilState(currentArticleDataContext);
 
   function likeArticle() {

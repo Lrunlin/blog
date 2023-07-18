@@ -6,7 +6,7 @@ import AdminLayout from "@/layout/Admin/Base";
 
 const UserData = () => {
   let searchParams = useSearchParams();
-  let id = searchParams.get('id') as string;
+  let id = searchParams!.get("id") as string;
   let router = useRouter();
   const { data, isValidating } = useSWR(`/user/${id}`, () =>
     axios.get(`/user/data/${id}`).then(res => res.data.data)

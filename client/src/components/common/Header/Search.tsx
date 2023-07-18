@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter,usePathname,useSearchParams } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Input } from "antd";
 
 const { Search } = Input;
@@ -17,8 +17,8 @@ const SearchBox = () => {
   }
 
   useEffect(() => {
-    if (pathname == "/search" && searchParams.get("keyword")) {
-      setKeyword(searchParams.get("keyword") as string);
+    if (pathname == "/search" && searchParams!.get("keyword")) {
+      setKeyword(searchParams!.get("keyword") as string);
     }
   }, []);
 

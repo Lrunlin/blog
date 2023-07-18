@@ -6,7 +6,7 @@ import vw from "@/common/utils/vw";
 /** 大屏统计页面顶部展示部分*/
 const Bottom = () => {
   return (
-    <div className="flex server-mt-20">
+    <div className="flex mt-1vw">
       <Container>
         <Referer />
       </Container>

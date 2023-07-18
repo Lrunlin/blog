@@ -1,6 +1,5 @@
 import Header from "./Header";
 import Container from "../Container";
-import Style from "./Style";
 import Visits from "./Visits";
 import Article from "./Article";
 import ArticleRanking from "./ArticleRanking";
@@ -9,10 +8,9 @@ import ArticleRanking from "./ArticleRanking";
 const Top = () => {
   return (
     <div className="flex justify-between">
-      <style jsx>{Style}</style>
-      <div className="main-left">
+      <div className="w-70.25vw">
         <Header />
-        <div className="main-item">
+        <div className="mt-1vw flex justify-between">
           <Container>
             <Visits />
           </Container>
@@ -21,7 +19,7 @@ const Top = () => {
           </Container>
         </div>
       </div>
-      <div className="main-right">
+      <div className="w-23.5vw">
         <Container className="w-full">
           <ArticleRanking />
         </Container>

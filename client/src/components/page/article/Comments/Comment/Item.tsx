@@ -35,7 +35,7 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
     axios.delete(`/comment/${data.id}`).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
-        mutate(`/comment/article/${searchParams.get("id")}`);
+        mutate(`/comment/article/${searchParams!.get("id")}`);
       } else {
         message.error(res.data.message);
       }

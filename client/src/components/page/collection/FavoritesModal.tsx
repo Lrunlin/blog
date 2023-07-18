@@ -12,7 +12,7 @@ const FavoritesModal: FC<
   Required<Pick<ModalProps, "open">> & { defaultValue: Favorites_data; onCancel: () => void }
 > = props => {
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   let { isLoading, refetch } = useFetch(
     values =>
       axios

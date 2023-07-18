@@ -14,7 +14,7 @@ const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr
 const Collection = () => {
   let [userData] = useUserData();
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   let [currentArticleData, setCurrentArticleData] = useRecoilState(currentArticleDataContext);
 
   const [isOpenModal, setIsOpenModal] = useState(false);

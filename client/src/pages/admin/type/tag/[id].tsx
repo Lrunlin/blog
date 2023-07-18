@@ -26,12 +26,12 @@ interface ResponseType extends TagAttributes {
 const UpdateTag = () => {
   let router = useRouter();
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   let { useForm } = Form;
   let [form] = useForm();
 
-  let { data, error } = useSwr(`/tag/${searchParams.get("id")}`, () => {
-    return axios.get<response<ResponseType>>(`/tag/${searchParams.get("id")}`).then(res => {
+  let { data, error } = useSwr(`/tag/${searchParams!.get("id")}`, () => {
+    return axios.get<response<ResponseType>>(`/tag/${searchParams!.get("id")}`).then(res => {
       return res.data.data;
     });
   });

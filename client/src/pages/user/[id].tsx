@@ -10,7 +10,7 @@ import axios from "axios";
 
 const User: NextPage = () => {
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   let { data, isValidating } = useSWR(`user-data-${id}`, () =>
     axios
       .get(`/user/data/${id}`)

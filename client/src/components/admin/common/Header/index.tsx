@@ -23,7 +23,7 @@ function getKeys(pathname: string) {
 }
 
 const Header: FC = memo(() => {
-  let pathname = usePathname();
+  let pathname = usePathname() as string;
   let { openKey: _openKey, selectKey: _selectKey } = getKeys(pathname);
   const [openKey, setOpenKey] = useState(_openKey);
   const [selectKey, setSelectKey] = useState(_selectKey);

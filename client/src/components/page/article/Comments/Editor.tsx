@@ -28,7 +28,7 @@ let { TextArea } = Input;
 
 const Editor: FC<propsType> = props => {
   let searchParams = useSearchParams();
-  let articleID = searchParams.get("id");
+  let articleID = searchParams!.get("id");
   let { mutate } = useSWRConfig();
   let userData = useRecoilValue(userDataContext);
   let [value, setValue] = useState("");

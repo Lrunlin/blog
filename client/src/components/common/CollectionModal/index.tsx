@@ -29,7 +29,7 @@ const CollectionModal: FC<propsType> = props => {
   let title = { "update-list": "选择收藏夹", list: "选择收藏夹", "create-from": "创建收藏夹" };
   let [type, setType] = useState<"create-from" | "list" | "update-list">("list");
   let searchParams = useSearchParams();
-  let id = props.id || (searchParams.get("id") as string);
+  let id = props.id || (searchParams!.get("id") as string);
   function switchType() {
     if (!props.defaultChecked?.length) {
       setType("list");

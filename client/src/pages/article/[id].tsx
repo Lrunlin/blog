@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import type { GetServerSideProps, NextPage } from "next";
 import { atom } from "recoil";
 import axios from "axios";
-import { parse } from "cookie";
 import RecoilRoot from "@/components/page/article/RecoilRoot";
 import Head from "@/components/next/Head";
 import Layout from "@/components/page/article/Layout";
@@ -12,6 +11,7 @@ import type { ArticleAttributes } from "@type/model-attribute";
 const NoFound = dynamic(() => import("@/components/page/article/NoFound"), { ssr: false });
 const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
 import readingRecords from "@/common/modules/readingRecords/readingRecords";
+import { parse } from "cookie";
 
 interface propsType {
   data: ArticleAttributes | null;

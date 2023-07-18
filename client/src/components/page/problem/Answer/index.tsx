@@ -28,7 +28,7 @@ const Answer: FC = () => {
   /** 采纳答案*/
   function adopt(id: number) {
     axios
-      .put(`/problem/adopt/${searchParams.get("id")}`, { answer_id: id })
+      .put(`/problem/adopt/${searchParams!.get("id")}`, { answer_id: id })
       .then(res => {
         reload();
       })
@@ -40,7 +40,7 @@ const Answer: FC = () => {
   /** 取消采纳*/
   function cancel() {
     axios
-      .put(`/problem/cancel/${searchParams.get("id")}`)
+      .put(`/problem/cancel/${searchParams!.get("id")}`)
       .then(res => {
         reload();
       })

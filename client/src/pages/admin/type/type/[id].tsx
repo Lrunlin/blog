@@ -15,7 +15,7 @@ interface ResponseType extends TypeAttributes {
 const UpdateType = () => {
   let router = useRouter();
   let searchParams = useSearchParams();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   let { useForm } = Form;
   let [form] = useForm();
 

@@ -13,7 +13,7 @@ const Update = () => {
   let [form] = useForm();
   let router = useRouter();
   let searchParams = useSearchParams();
-  let id = searchParams.get("id");
+  let id = searchParams!.get("id");
   let { mutate } = useSWRConfig();
 
   /** 加载，获取文章内容*/

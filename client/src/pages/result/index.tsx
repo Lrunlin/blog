@@ -10,9 +10,9 @@ const ResultFC = () => {
   let router = useRouter();
   let searchParams = useSearchParams();
   const [success, token, href, title] = ["success", "token", "href", "title"].map(item =>
-    searchParams.get(item)
+    searchParams!.get(item)
   );
-  const message = searchParams.getAll("message");
+  const message = searchParams!.getAll("message");
 
   useEffect(() => {
     if (typeof token == "string") cookie.set("token", token, { expires: 365 });

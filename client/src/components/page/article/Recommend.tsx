@@ -9,7 +9,7 @@ import type { articleListItemType } from "@type/model/article-list-item";
 /** 文章页面底部的推荐文章*/
 const Recommend = () => {
   let searchParams = useSearchParams();
-  let articleID = searchParams.get("id");
+  let articleID = searchParams!.get("id");
   let { data, isValidating } = uswSwr(`/article/recommend/${articleID}`, () =>
     axios
       .get<response<articleListItemType[]>>(`/article/recommend/${articleID}`)

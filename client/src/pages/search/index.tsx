@@ -26,8 +26,8 @@ const Search: NextPage = () => {
       .get(`/article/search/${page}`, {
         params: {
           state: 1,
-          keyword: searchParams.get("keyword") || undefined,
-          tag: searchParams.get("tag") || undefined,
+          keyword: searchParams!.get("keyword") || undefined,
+          tag: searchParams!.get("tag") || undefined,
         },
       })
       .then(res => {
@@ -56,7 +56,7 @@ const Search: NextPage = () => {
               return (
                 <Highlighter
                   highlightClassName="p-0 bg-white text-red-500"
-                  searchWords={[searchParams.get("keyword") as string]}
+                  searchWords={[searchParams!.get("keyword") as string]}
                   autoEscape={true}
                   textToHighlight={title}
                 />

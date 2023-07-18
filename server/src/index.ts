@@ -35,6 +35,8 @@ app.use(BodyParser());
 
 import cors from "@koa/cors";
 app.use(cors());
+import http from "http";
+const server = http.createServer(app.callback()); //包装app保证http和socket监听同一端口
 
 import Routers from "@/common/modules/getAllRouter";
 (async () => {
@@ -59,7 +61,7 @@ import Routers from "@/common/modules/getAllRouter";
           console.log(`端口3000关闭失败`);
         })
         .then(() => {
-          app.listen(port, function () {
+          server.listen(port, function () {
             console.log(`项目运行于: ${port} 端口,共${index + 1}个路由文件,${routeCount}个路由`);
           });
         });
@@ -72,3 +74,43 @@ import start from "@/common/tasks";
 setTimeout(() => {
   start();
 }, 0);
+
+// import { Server } from "socket.io";
+// const socketServer = new Server(server, {
+//   path: "/socket", // 在这里指定自定义的路径
+//   cors: {
+//     origin: "*",
+//   },
+// });
+// socketServer.use((socket, next) => {
+//   if (socket.handshake.headers.authorization) {
+//     jwt.verify(
+//       //jsonwebtoken用看是否有被串改的method
+//       socket.handshake.headers.authorization, // 包在query 禮也可以在這看到socket.handshake.query
+//       "secret", //這是妳簽章的secret
+//       async (err, decoded) => {
+//         //認證失敗
+//         if (err) {
+//           return next(new Error("Authentication error"));
+//         }
+//         //認證成功
+//         socket.decoded = decoded; // 把解出來資訊做利用
+//         //。。。(看你要做啥)
+//         return next();
+//       }
+//     );
+//   }
+// });
+
+// socketServer.on("connection", socket => {
+//   console.log("init");
+
+//   // 前端建立了连接后要做什么逻辑
+//   // socket.emit() 是像这个连接进来的socket 发送一个名字为message 的事件,并且附带一个对象{message:"Hello world"} 消息
+//   socket.emit("message", { message: "Hello world" });
+//   socket.on("receive", info => {
+//     // socket.on方法,服务端监听客户端emit的事件，事件名字为 "receive", 并且接收客户端发送过来的信息
+//   });
+// });
+
+// // server.listen(3000);

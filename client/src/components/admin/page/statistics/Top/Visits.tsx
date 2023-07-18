@@ -65,7 +65,7 @@ const Visits = () => {
   }, [data]);
   return (
     <>
-      <div ref={DOM} className="w-full h-full main-l"></div>
+      <div ref={DOM} className="w-39vw h-12.5vw"></div>
     </>
   );
 };

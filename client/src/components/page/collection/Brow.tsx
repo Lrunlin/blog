@@ -19,7 +19,7 @@ const Brow: FC<{
   let [userData] = useUserData();
   let searchParams = useSearchParams();
   let router = useRouter();
-  let id = searchParams.get("id") as string;
+  let id = searchParams!.get("id") as string;
   let { isLoading: deleteIsLoading, refetch: deleteRefetch } = useFetch(
     () =>
       axios
@@ -65,7 +65,10 @@ const Brow: FC<{
             <Avatar className="w-11 h-11" src={authorData.avatar_url} alt="avatar" />
             <div className="ml-2">
               <div className="text-base">{authorData.name}</div>
-              <Link className="text-gray-300 text-sm" href={`/user/${authorData.id}?key=collection`}>
+              <Link
+                className="text-gray-300 text-sm"
+                href={`/user/${authorData.id}?key=collection`}
+              >
                 更多收藏集
                 <RightOutlined size={14} />
               </Link>

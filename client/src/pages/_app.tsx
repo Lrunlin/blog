@@ -8,7 +8,7 @@ import "@/plugin/dayjs";
 import "antd/dist/antd.min.css";
 import "@/styles/globals.scss";
 
-import { parse as cookieParse } from "cookie";
+import { parse } from "cookie";
 
 import axios from "axios";
 
@@ -35,7 +35,7 @@ const APP: NextPage<Props> = ({ Component, pageProps, userInfo }) => {
 APP.getInitialProps = async (params): Promise<any> => {
   let { ctx } = params as unknown as AppContext;
 
-  let { token } = cookieParse(ctx?.req?.headers?.cookie + "");
+  let { token } = parse(ctx?.req?.headers?.cookie + "");
   if (!token) {
     return { userInfo: null };
   }

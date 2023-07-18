@@ -25,7 +25,7 @@ const Notice: FC<propsType> = ({ data }) => {
             <div>
               有 <b>{item.count}</b> {switchText(item.type)}
             </div>
-            <Link href={`/${item.type}`}>
+            <Link href={`/admin/${item.type}`}>
               <Button>去看看</Button>
             </Link>
           </div>

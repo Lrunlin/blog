@@ -11,7 +11,7 @@ const { Option } = Select;
 const Advertisement = () => {
   let router = useRouter();
   let searchParams = useSearchParams();
-  let id = searchParams.get("id");
+  let id = searchParams!.get("id");
   let { useForm } = Form;
   let [form] = useForm();
 

@@ -1,21 +1,17 @@
 import type { ReactNode, FC } from "react";
 import Container from "../../Container";
-import Style from "./Style";
 
 interface propsType {
   title: string | ReactNode;
   data: string | ReactNode;
-  footer?: string | ReactNode;
 }
 /** 大屏页面顶部的数据展示框*/
-const HeaderItem: FC<propsType> = ({ title, data, footer }) => {
+const HeaderItem: FC<propsType> = ({ title, data }) => {
   return (
     <Container>
-      <style jsx>{Style}</style>
-      <div className="header-item">
-        <div className="title">{title}</div>
-        <div className="data">{data}</div>
-        <div className="footer">{footer}</div>
+      <div className="header-item w-14vw h-5vw">
+        <div className="text-lg font-bold text-white">{title}</div>
+        <div className="text-statistics-cyan-color text-lg font-bold">{data}</div>
       </div>
     </Container>
   );

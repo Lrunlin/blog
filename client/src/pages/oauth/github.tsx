@@ -11,7 +11,7 @@ import Head from "@/components/next/Head";
 const Github = () => {
   let router = useRouter();
   let searchParams = useSearchParams();
-  let code = searchParams.get("code");
+  let code = searchParams!.get("code");
 
   let { data, error, isValidating } = useSwr(`oauth-github-${code}`, () =>
     code ? axios.post("/user/github", { code: code }).then(res => res.data) : ""
