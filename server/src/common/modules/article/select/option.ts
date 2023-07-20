@@ -25,7 +25,7 @@ async function getArticleListData(
       where: _where,
       limit: 10,
       offset: (page - 1) * 10,
-      order: [[_sort, "asc"]],
+      order: [[_sort, "desc"]],
       attributes: { exclude: ["newest", "recommend", "hottest"] },
     }),
   ])

@@ -45,12 +45,7 @@ let router = new Router();
 router.get("/article/list/:page", verify, async ctx => {
   let page = +(ctx.params.page as string);
 
-  let data;
-  if (ctx.query.follow) {
-    data = await search(page, ctx.query.sort as any, await where(ctx.query, ctx.id));
-  } else {
-    data = await option(page, ctx.query.sort as any, await where(ctx.query, ctx.id));
-  }
+  let data = await option(page, ctx.query.sort as any, await where(ctx.query, ctx.id));
 
   ctx.body = {
     success: true,
