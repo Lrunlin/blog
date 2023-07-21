@@ -29,6 +29,7 @@ router.delete("/comment/:id", interger([], ["id"]), authMiddleware(0), async ctx
     ctx.body = { success: true, message: "删除成功" };
     t.commit();
   } else {
+    ctx.status = 500;
     ctx.body = { success: false, message: "删除失败" };
     t.rollback();
   }

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { FC } from "react";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { Avatar, Button, Input, message } from "antd";
 import NextImage from "@/components/next/Image";
@@ -14,6 +14,7 @@ import classNames from "classnames";
 import { useSWRConfig } from "swr";
 import { marked } from "marked";
 import { editorOptionContext } from "./index";
+import { currentArticleDataContext } from "@/pages/article/[id]";
 
 interface propsType {
   id: number | string;
@@ -33,6 +34,7 @@ const Editor: FC<propsType> = props => {
   let userData = useRecoilValue(userDataContext);
   let [value, setValue] = useState("");
   let [editorOption, setEditorOption] = useRecoilState(editorOptionContext);
+  let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
 
   let showEditor = props.notHideInput || props.id == editorOption.activeInputID; //编辑器是否显示
 
@@ -124,16 +126,16 @@ const Editor: FC<propsType> = props => {
         type: "article",
       })
       .then(res => {
-        if (res.data.success) {
-          setValue("");
-          setPicture(null);
-          mutate(`/comment/article/${articleID}`);
-        } else {
-          message.error(res.data.message);
-        }
+        setValue("");
+        setPicture(null);
+        mutate(`/comment/article/${articleID}`);
+        setCurrentArticleData(_data => ({
+          ..._data,
+          comment_count: _data.comment_count + 1,
+        }));
       })
       .catch(err => {
-        message.error("评论失败");
+        message.error(err.message);
         console.log(err);
       });
   }

@@ -35,6 +35,7 @@ router.post("/comment", verify, async ctx => {
     await t.commit();
   } else {
     ctx.body = { success: false, message: "评论失败" };
+    ctx.status = 500;
     await t.rollback();
   }
 });

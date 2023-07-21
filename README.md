@@ -12,7 +12,7 @@
 
 开发语言 TypeScript  
 组件库使用 Ant Design  
-CSS 解决方案 Tailwind CSS  
+CSS 方案 Tailwind CSS  
 React 状态管理 Recoil
 
 ## 联系方式
@@ -28,7 +28,7 @@ React 状态管理 Recoil
 系统提供一 份用户端为 Vue3 的 CSR 版本(前端 Vue3,服务端 Node.js 使用 JavaScript)  
 以及一份[Next.js+Vue3+Express 版本](https://github.com/Lrunlin/web_blog "个人博客")（作者主页可见，开源）
 
-可联系 QQ:1974109227
+可联系 QQ:1974109227   微信:webzhizhuo
 
 ## 相关链接
 

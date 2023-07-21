@@ -10,7 +10,9 @@ const Comment = () => {
     {
       title: "文章ID",
       dataIndex: "belong_id",
-      render: (article_id: number) => <Link href={`/admin/article/${article_id}`}>{article_id}</Link>,
+      render: (article_id: number) => (
+        <Link href={`/admin/article/${article_id}`}>{article_id}</Link>
+      ),
       width: 160,
     },
     {
@@ -85,14 +87,15 @@ const Comment = () => {
   const [data, setData] = useState<any[]>([]);
 
   function remove(id: number) {
-    axios.delete(`/comment/${id}`).then(res => {
-      if (res.data.success) {
+    axios
+      .delete(`/comment/${id}`)
+      .then(res => {
         message.success(res.data.message);
         setData(_data => _data.filter(item => item.id != id));
-      } else {
-        message.error(res.data.message);
-      }
-    });
+      })
+      .catch(err => {
+        message.error(err.message);
+      });
   }
   useEffect(() => {
     axios.get(`/comment/list/page/${page}`, { params: {} }).then(res => {

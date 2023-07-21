@@ -1,9 +1,9 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useMemo } from "react";
 import type { FC } from "react";
 import { userDataContext } from "@/store/user-data";
 import { useSearchParams } from "next/navigation";
 import Image from "@/components/next/Image";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { Image as AntdImage, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -14,6 +14,7 @@ import { useSWRConfig } from "swr";
 import axios from "axios";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import { editorOptionContext } from "../index";
+import { currentArticleDataContext } from "@/pages/article/[id]";
 
 interface propsType {
   data: articleCommentType;
@@ -23,6 +24,7 @@ interface propsType {
 /** 文章页面单个评论组件*/
 const CommentItem: FC<propsType> = ({ data, list }) => {
   let [editorOption, setEditorOptionContext] = useRecoilState(editorOptionContext);
+  let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
 
   const showEditor = useMemo(
     () => `comment:${data.id}` == editorOption.activeInputID,
@@ -32,14 +34,19 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
   let { mutate } = useSWRConfig();
   let searchParams = useSearchParams();
   function removeComment() {
-    axios.delete(`/comment/${data.id}`).then(res => {
-      if (res.data.success) {
+    axios
+      .delete(`/comment/${data.id}`)
+      .then(res => {
         message.success(res.data.message);
         mutate(`/comment/article/${searchParams!.get("id")}`);
-      } else {
-        message.error(res.data.message);
-      }
-    });
+        setCurrentArticleData(_data => ({
+          ..._data,
+          comment_count: _data.comment_count - 1,
+        }));
+      })
+      .catch(err => {
+        message.error(err.message);
+      });
   }
 
   return (
@@ -97,16 +104,16 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
           </div>
         )}
         {/* 回复、删除 */}
-        <div
-          className="flex items-center text-xs text-gray-600"
-          onClick={() => {
-            setEditorOptionContext(option => ({
-              ...option,
-              activeInputID: showEditor ? null : `comment:${data.id}`,
-            }));
-          }}
-        >
-          <span className="mt-3 flex items-center cursor-pointer select-none">
+        <div className="flex items-center text-xs text-gray-600">
+          <span
+            className="mt-3 flex items-center cursor-pointer select-none"
+            onClick={() => {
+              setEditorOptionContext(option => ({
+                ...option,
+                activeInputID: showEditor ? null : `comment:${data.id}`,
+              }));
+            }}
+          >
             <Image src="/icon/client/comment.png" width={14} height={14} alt="comment" />
             <span className="ml-0.5">{showEditor ? "收起" : "回复"}</span>
           </span>
