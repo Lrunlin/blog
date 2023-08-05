@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 04/08/2023 01:12:21
+ Date: 05/08/2023 18:17:35
 */
 
 SET NAMES utf8mb4;
@@ -96,6 +96,17 @@ CREATE TABLE `comment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表，存储文章、问题、答案的评论' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
+-- Table structure for external_link
+-- ----------------------------
+DROP TABLE IF EXISTS `external_link`;
+CREATE TABLE `external_link`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `href` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站域名',
+  `create_time` datetime NOT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for favorites
 -- ----------------------------
 DROP TABLE IF EXISTS `favorites`;
@@ -151,17 +162,6 @@ CREATE TABLE `likes`  (
   `create_time` datetime NOT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '点赞表，用于储存文章点赞、问题点赞、答案点赞' ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Table structure for link
--- ----------------------------
-DROP TABLE IF EXISTS `link`;
-CREATE TABLE `link`  (
-  `id` bigint NOT NULL COMMENT 'ID',
-  `href` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站域名',
-  `create_time` datetime NOT NULL COMMENT '添加时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for notice
