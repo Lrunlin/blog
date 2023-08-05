@@ -27,7 +27,7 @@ const MarkDownEditor: FC<editorPropsType> = props => {
     <>
       <style jsx global>{`
         .bytemd {
-          height: 700px;
+          height: ${props.height || 700}px;
         }
         .bytemd-preview img {
           min-width: 30%;

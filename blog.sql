@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 25/06/2023 17:19:21
+ Date: 04/08/2023 01:12:21
 */
 
 SET NAMES utf8mb4;
@@ -107,7 +107,7 @@ CREATE TABLE `favorites`  (
   `is_private` tinyint(1) NOT NULL COMMENT '是否设置为隐私文件夹',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for follow
@@ -121,6 +121,23 @@ CREATE TABLE `follow`  (
   `create_time` datetime NOT NULL COMMENT '关注时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '关注表，用来关注问题或者用户' ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Table structure for friendly_link
+-- ----------------------------
+DROP TABLE IF EXISTS `friendly_link`;
+CREATE TABLE `friendly_link`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站名称',
+  `url` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站链接',
+  `user_id` bigint NULL DEFAULT NULL COMMENT '对应用户的ID',
+  `state` int NOT NULL COMMENT '状态',
+  `logo_file_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片Logo',
+  `create_time` datetime NOT NULL COMMENT '加入时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `url`(`url` ASC) USING BTREE,
+  UNIQUE INDEX `user_id`(`user_id` ASC) USING BTREE COMMENT '一个用户只能申请一次友联'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '友情链接表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for likes
@@ -141,16 +158,10 @@ CREATE TABLE `likes`  (
 DROP TABLE IF EXISTS `link`;
 CREATE TABLE `link`  (
   `id` bigint NOT NULL COMMENT 'ID',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站名称',
-  `url` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站链接',
-  `user_id` bigint NULL DEFAULT NULL COMMENT '对应用户的ID',
-  `state` int NOT NULL COMMENT '状态',
-  `logo_file_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片Logo',
-  `create_time` datetime NOT NULL COMMENT '加入时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `url`(`url` ASC) USING BTREE,
-  UNIQUE INDEX `user_id`(`user_id` ASC) USING BTREE COMMENT '一个用户只能申请一次友联'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '友情链接表' ROW_FORMAT = COMPACT;
+  `href` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站域名',
+  `create_time` datetime NOT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for notice

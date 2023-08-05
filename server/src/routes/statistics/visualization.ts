@@ -67,7 +67,7 @@ router.get("/statistics/visualization", auth(), async ctx => {
     .then(({ count }) => count)
     .catch(() => null);
 
-  let link = await DB.Link.findAndCountAll({
+  let link = await DB.FriendlyLink.findAndCountAll({
     attributes: ["id"],
     raw: true,
     where: { state: 1 },

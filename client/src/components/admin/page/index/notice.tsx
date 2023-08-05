@@ -3,11 +3,11 @@ import  Link  from "next/link";
 import { Empty, Button } from "antd";
 
 interface propsType {
-  data: { type: "link" | "comment"; count: number }[];
+  data: { type: "friendly-link" | "comment"; count: number }[];
 }
 
-function switchText(type: "link" | "comment") {
-  if (type == "link") {
+function switchText(type: "friendly-link" | "comment") {
+  if (type == "friendly-link") {
     return "友情链接申请待处理";
   } else if (type == "comment") {
     return "新评论发布";

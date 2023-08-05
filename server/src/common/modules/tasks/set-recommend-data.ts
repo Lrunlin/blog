@@ -76,6 +76,7 @@ let condition: {
   },
 ];
 
+// 用于forEach循环
 const percentages = new Array(10).fill(null).map((_, index) => index * 10);
 
 /** 初始化站内文章数据*/
@@ -91,8 +92,10 @@ async function init() {
         raw: true,
         order: [[item.key, "desc"]],
       }).then(row => {
-        let value = (row as Article)[item.key as keyof ArticleAttributes] as string | number;
-        dataStandards[item.key][index] = value as number;
+        if (row) {
+          let value = (row as Article)[item.key as keyof ArticleAttributes] as string | number;
+          dataStandards[item.key][index] = value as number;
+        }
       });
     });
   });

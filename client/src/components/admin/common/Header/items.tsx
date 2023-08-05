@@ -6,6 +6,8 @@ import {
   UsergroupAddOutlined,
   CommentOutlined,
   UserOutlined,
+  FileImageOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 
@@ -55,11 +57,11 @@ const items = [
     icon: <UsergroupAddOutlined />,
     children: [
       {
-        href: "/admin/link",
+        href: "/admin/friendly-link",
         label: "友链列表",
       },
       {
-        href: "/admin/link/create",
+        href: "/admin/friendly-link/create",
         label: "添加友链",
       },
     ],
@@ -78,6 +80,16 @@ const items = [
     label: "用户列表",
     href: "/admin/user",
     icon: <UserOutlined />,
+  },
+  {
+    label: "图片管理",
+    href: "/admin/oss",
+    icon: <FileImageOutlined />,
+  },
+  {
+    label: "站外链接跳转管理",
+    href: "/admin/external-link",
+    icon: <LinkOutlined />,
   },
 ];
 

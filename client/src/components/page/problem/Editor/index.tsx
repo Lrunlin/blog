@@ -1,14 +1,14 @@
-import { useState, useContext, startTransition } from "react";
+import { useState, useContext } from "react";
 import type { FC } from "react";
 import { Button, message } from "antd";
-import TextEditor, { propsType as MarkDownPropsType } from "@/components/common/Editor";
+import TextEditor from "@/components/common/Editor";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import classNames from "classnames";
 import Message from "./Message";
 import { Context } from "@/pages/problem/[id]";
 import useUserData from "@/store/user-data";
-import uswSwr from "swr";
+import useFetch from "@/common/hooks/useFetch";
 interface propsType {
   className?: string;
   onSuccess: () => any;
@@ -16,14 +16,13 @@ interface propsType {
 
 /** 问答页面中底部回答答案的评论组件*/
 const Editor: FC<propsType> = props => {
+  const searchParams = useSearchParams();
   /** 是否显示编辑框*/
   const [isEditorState, setIsEditorState] = useState(false);
   /** 编辑框是否使用黏性定位*/
   const [isSticky, setIsSticky] = useState(true);
-  const searchParams = useSearchParams();
 
   const [content, setContent] = useState("");
-  const [key, setKey] = useState(0);
   const [userData] = useUserData();
   const { data, reload } = useContext(Context);
   function submit() {
@@ -35,10 +34,8 @@ const Editor: FC<propsType> = props => {
       .then(res => {
         message.success(res.data.message);
         reload();
+        refetch();
         setIsEditorState(false);
-        startTransition(() => {
-          setKey(_key => ++_key); //刷新MD编辑器
-        });
         props.onSuccess();
       })
       .catch(err => {
@@ -52,10 +49,8 @@ const Editor: FC<propsType> = props => {
       .then(res => {
         message.success(res.data.message);
         reload();
+        refetch();
         setIsEditorState(false);
-        startTransition(() => {
-          setKey(_key => ++_key); //刷新MD编辑器
-        });
         props.onSuccess();
       })
       .catch(err => {
@@ -63,12 +58,11 @@ const Editor: FC<propsType> = props => {
         console.log(err);
       });
   }
-  const { data: answerData } = uswSwr(`answer-md-${searchParams!.get("id")}`, () =>
-    data.answer_list.some(item => item.author == userData?.id)
-      ? axios
-          .get(`/answer`, { params: { problem_id: searchParams!.get("id") } })
-          .then(res => res.data.data)
-      : undefined
+
+  let { data: answerData, refetch } = useFetch(() =>
+    axios
+      .get(`/answer`, { params: { problem_id: searchParams!.get("id") } })
+      .then(res => res.data.data)
   );
 
   return (
@@ -95,21 +89,25 @@ const Editor: FC<propsType> = props => {
           {answerData ? (
             <>
               <TextEditor
-                key={key}
+                height={240}
                 target="answer"
                 onChange={html => setContent(html)}
                 initValue={answerData.content}
               />
-              <div className="bg-gray-100 h-8 mt-3 rounded-md"></div>
-              <Button type="primary" className="mt-4" onClick={update}>
+              <div className="bg-gray-100 h-7 mt-3 rounded-md"></div>
+              <Button type="primary" disabled={!content} className="mt-4" onClick={update}>
                 修改答案
               </Button>
             </>
           ) : (
             <>
-              <TextEditor key={key} target="answer" onChange={html => setContent(html)} />
+              <TextEditor
+                height={240}
+                target="answer"
+                onChange={html => setContent(html)}
+              />
               <div className="bg-gray-100 h-7 mt-3 rounded-md"></div>
-              <Button type="primary" className="mt-4" onClick={submit}>
+              <Button type="primary" disabled={!content} className="mt-4" onClick={submit}>
                 提交回答
               </Button>
             </>

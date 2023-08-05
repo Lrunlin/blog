@@ -3,8 +3,8 @@ import DB from "@/db";
 import getUserId from "@/common/middleware/getUserId";
 
 let router = new Router();
-router.get("/link", getUserId, async ctx => {
-  await DB.Link.findAll({
+router.get("/friendly-link", getUserId, async ctx => {
+  await DB.FriendlyLink.findAll({
     where: ctx.auth != 1 ? { state: 1 } : undefined,
     attributes: { exclude: ctx.auth != 1 ? ["create_time", "is_allow", "user_id"] : ["user_id"] },
     order: [["create_time", "desc"]],

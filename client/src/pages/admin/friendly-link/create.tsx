@@ -7,16 +7,17 @@ const Link = () => {
   let { useForm } = Form;
   let [form] = useForm();
   function onFinish(values: any) {
-    axios.post("/link", values).then(res => {
-      if (res.data.success) {
+    axios
+      .post("/friendly-link", values)
+      .then(res => {
         message.success(res.data.message);
         startTransition(() => {
           form.resetFields();
         });
-      } else {
-        message.error(res.data.message);
-      }
-    });
+      })
+      .catch(err => {
+        message.error(err.message);
+      });
   }
   return (
     <AdminLayout>
@@ -72,7 +73,7 @@ const Link = () => {
               <Upload
                 width={120}
                 aspect={1}
-                target="link"
+                target="friendly-link"
                 onSuccess={({ file_name }) => {
                   form.setFieldsValue({ logo_file_name: file_name });
                 }}

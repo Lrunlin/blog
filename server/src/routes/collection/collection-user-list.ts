@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import setDescription from "@/common/modules/article/get/set-description";
 import Sequelize from "@/db/config";
 import integer from "@/common/verify/integer";

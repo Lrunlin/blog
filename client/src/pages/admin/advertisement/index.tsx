@@ -67,7 +67,7 @@ const APP = () => {
           <div>
             <Upload
               noCorp={true}
-              width={120}
+              width={200}
               aspect={3 / 2}
               target="advertisement"
               onSuccess={({ file_name }) => {

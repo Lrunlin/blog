@@ -4,24 +4,12 @@ import axios from "axios";
 import useUserState from "@/store/user-data";
 import { useRouter } from "next/navigation";
 import Notice from "@/components/admin/page/index/notice";
-import { UserStateAttributes } from "@/store/user-data";
 import AdminLayout from "@/layout/Admin/Base";
 import Image from "@/components/next/Image";
 
-/** 返回展示用户基本信息的打招呼用于*/
-function userMessage() {
-  let hour = new Date().getHours();
-  let greet =
-    hour >= 5 && hour <= 11
-      ? ["早上好", "开始一天的工作吧"]
-      : hour >= 12 && hour <= 19
-      ? ["下午好", "开始一天的工作吧"]
-      : ["晚上好", "早一点休息吧"];
-  return greet;
-}
 const Index = () => {
   let router = useRouter();
-  let [userState] = useUserState() as unknown as [UserStateAttributes];
+  let [userState] = useUserState();
 
   let { data, error, isValidating } = useSWR("statistics-data-index", () =>
     axios.get("/statistics/index").then(res => res.data.data)
@@ -32,9 +20,7 @@ const Index = () => {
       <div className="p-5 bg-white shadow-sm flex">
         <Avatar size={80} src={userState?.avatar_url} alt="用户头像" />
         <div className="ml-4">
-          <h2 className="mb-2">
-            {userMessage()[0]},<b className="mx-1">{userState?.name}</b>,{userMessage()[1]}
-          </h2>
+          <h2 className="mb-2 font-black">{userState?.name}</h2>
           <div>管理员</div>
         </div>
       </div>

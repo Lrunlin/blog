@@ -8,7 +8,7 @@ import AdminLayout from "@/layout/Admin/Base";
 
 const LinkList = () => {
   let { data, error, mutate } = useSWR("link-list", () =>
-    axios.get("/link").then(res => res.data.data)
+    axios.get("/friendly-link").then(res => res.data.data)
   );
 
   if (error) {
@@ -18,7 +18,7 @@ const LinkList = () => {
   const [deleteLinkID, setDeleteLinkID] = useState<null | number>(null);
   const [message, setMessage] = useState("");
   function remove(id: number) {
-    axios.delete(`/link/${id}`, { params: { message: message } }).then(res => {
+    axios.delete(`/friendly-link/${id}`, { params: { message: message } }).then(res => {
       if (res.data.success) {
         messageAlert.success(res.data.message);
         mutate();
@@ -33,7 +33,7 @@ const LinkList = () => {
   }
 
   function adopt(id: number) {
-    axios.put(`/link/${id}`).then(res => {
+    axios.put(`/friendly-link/${id}`).then(res => {
       if (res.data.success) {
         messageAlert.success(res.data.message);
         mutate();

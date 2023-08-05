@@ -3,7 +3,7 @@ import type { WhereOptions } from "sequelize";
 import { Op } from "sequelize";
 import { ArticleAttributes } from "@/db/models/init-models";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import setDescription from "@/common/modules/article/get/set-description";
 import Sequelize from "@/db/config";
 import verify from "@/common/verify/api-verify/article/search";

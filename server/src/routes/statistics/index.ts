@@ -8,8 +8,8 @@ let redis = Redis();
 
 let router = new Router();
 router.get("/statistics/index", auth(), async ctx => {
-  let link = DB.Link.findAndCountAll({ where: { state: 0 }, raw: true })
-    .then(({ count }) => ({ type: "link", count: count }))
+  let link = DB.FriendlyLink.findAndCountAll({ where: { state: 0 }, raw: true })
+    .then(({ count }) => ({ type: "friendly-link", count: count }))
     .catch(() => []);
 
   let adminId = await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true }).then(

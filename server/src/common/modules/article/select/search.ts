@@ -2,7 +2,7 @@ import type { Order, WhereOptions } from "sequelize";
 import type { ArticleAttributes } from "@/db/models/init-models";
 import Sequelize from "@/db/config";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import setDescription from "@/common/modules/article/get/set-description";
 
 let sort = {

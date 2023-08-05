@@ -14,7 +14,7 @@ export const folderList = [
   { folder: "avatar", quality: 90, width: 80, height: 80 },
   { folder: "cover", quality: 100, width: 195, height: 130 },
   { folder: "type", quality: 70, width: 80, height: 80 },
-  { folder: "link", quality: 80, width: 80, height: 80 },
+  { folder: "friendly-link", quality: 80, width: 80, height: 80 },
 ];
 export type FolderItemType = (typeof folderList)[number];
 

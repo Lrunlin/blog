@@ -23,6 +23,7 @@ export interface propsType {
   /** 初始化数据*/
   initValue?: string;
   onChange?: (html: string) => any;
+  height?: number;
 }
 export type editorPropsType = propsType & {
   changePploadProgress: (val: string | null) => void;
@@ -37,7 +38,7 @@ export const editorModeContext = atom({
 });
 
 const MarkDonwEdit: FC<propsType> = memo(props => {
-  const [value, setValue] = useState("");
+  const [initValue, setInitValue] = useState<string | undefined>(undefined);
   const [uploadProgress, setPloadProgress] = useState<null | string>(null);
   let editorMode = useRecoilValue(editorModeContext);
 
@@ -47,10 +48,11 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
 
   // 需要对initValue进行中转
   let allowChangeValue = useRef(true);
+
   useEffect(() => {
     if (!props.initValue) return;
     if (allowChangeValue.current) {
-      setValue(props.initValue);
+      setInitValue(props.initValue);
       allowChangeValue.current = false;
     }
   }, [props.initValue]);
@@ -64,23 +66,17 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
               {...props}
               onChange={html => {
                 props.onChange && props.onChange(html);
-                startTransition(() => {
-                  setValue(html);
-                });
               }}
               changePploadProgress={val => setPloadProgress(val)}
-              initValue={value}
+              initValue={initValue}
             />
           ) : (
             <RichTextEditor
               {...props}
               onChange={html => {
                 props.onChange && props.onChange(html);
-                startTransition(() => {
-                  setValue(html);
-                });
               }}
-              initValue={value}
+              initValue={initValue}
               changePploadProgress={val => setPloadProgress(val)}
             />
           )}

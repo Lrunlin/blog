@@ -13,13 +13,13 @@ const schema = Joi.object({
 
 let router = new Router();
 
-router.delete("/link/:id", interger([], ["id"]), validator(schema), auth(), async ctx => {
+router.delete("/friendly-link/:id", interger([], ["id"]), validator(schema), auth(), async ctx => {
   let message = ctx.query.message as string;
   let id = +(ctx.params.id as string);
   const t = await sequelize.transaction();
 
   //   先判断删除结果
-  let deleteResult = await DB.Link.destroy({ where: { id: id }, transaction: t })
+  let deleteResult = await DB.FriendlyLink.destroy({ where: { id: id }, transaction: t })
     .then(res => !!res)
     .catch(() => false);
 
@@ -36,7 +36,7 @@ router.delete("/link/:id", interger([], ["id"]), validator(schema), auth(), asyn
   }
 
   //   获取友链以及用户ID后发送邮件提醒
-  let linkData = await DB.Link.findByPk(id)
+  let linkData = await DB.FriendlyLink.findByPk(id)
     .then(row => row || false)
     .catch(() => false as false); //!不加断言影响后面的类型推断
   if (!linkData) {

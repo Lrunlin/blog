@@ -25,7 +25,7 @@ const getTagData = () =>
   }).then(rows => rows.map(item => item.toJSON()));
 
 /** 刷新type缓存数据*/
-function getData() {
+function setData() {
   Promise.all([getTypeData(), getTagData()])
     .then(([type, tag]) => {
       cache.set("type", type);
@@ -59,8 +59,8 @@ function getDataAfter(effect: () => any) {
 
 //DB的typeCatch Hooks中使用到了这个模块，首次执行等DB.Type初始化结束在调用
 setTimeout(() => {
-  getData();
+  setData();
 }, 0);
 
 export default cache;
-export { getData, cache, getDataAfter };
+export { setData, cache, getDataAfter };

@@ -15,6 +15,8 @@ Disallow:/oauth
 # 部分链接的结果展示
 Disallow:/result
 # 友链页面
+Disallow:/friendly-link
+#中转页面
 Disallow:/link
 # 提问
 Disallow:/problem/editor

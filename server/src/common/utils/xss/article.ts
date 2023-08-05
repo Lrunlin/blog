@@ -46,6 +46,8 @@ function xss(content: string, imgPrefix: "article" | "problem" | "answer") {
       a: ["href"],
       img: ["src"],
       input: ["type", "checked", "disabled"],
+      code: ["class"],
+      pre: ["class"],
     },
     allowProtocolRelative: false,
     allowedClasses: {

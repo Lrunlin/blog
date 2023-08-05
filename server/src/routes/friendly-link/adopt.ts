@@ -7,10 +7,13 @@ import interger from "@/common/verify/integer";
 
 let router = new Router();
 
-router.put("/link/:id", interger([], ["id"]), auth(), async ctx => {
+router.put("/friendly-link/:id", interger([], ["id"]), auth(), async ctx => {
   let id = ctx.params.id;
   let t = await sequelize.transaction();
-  let updateResult = await DB.Link.update({ state: 1 }, { where: { id: id }, transaction: t })
+  let updateResult = await DB.FriendlyLink.update(
+    { state: 1 },
+    { where: { id: id }, transaction: t }
+  )
     .then(([res]) => !!res)
     .catch(() => false);
 
@@ -20,7 +23,7 @@ router.put("/link/:id", interger([], ["id"]), auth(), async ctx => {
     return;
   }
 
-  let linkData = await DB.Link.findByPk(id, {
+  let linkData = await DB.FriendlyLink.findByPk(id, {
     attributes: [],
     include: [
       {

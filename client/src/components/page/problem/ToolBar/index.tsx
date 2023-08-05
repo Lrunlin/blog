@@ -14,7 +14,6 @@ const ToolBar = () => {
   let { data, reload } = useContext(Context);
   let [userData] = useUserData();
   const [isOpen, setIsOpen] = useState(false);
-  console.log((data.collection_state as unknown as number[])?.length);
 
   function unCollectionProblem() {
     uncollection(data?.id)

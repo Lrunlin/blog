@@ -13,7 +13,7 @@ interface listItemType {
 let list: listItemType[][] = [
   [
     {
-      href: "/link",
+      href: "/friendly-link",
       label: "友情链接",
     },
     {

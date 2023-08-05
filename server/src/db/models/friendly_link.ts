@@ -1,7 +1,7 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
 
-export interface LinkAttributes {
+export interface FriendlyLinkAttributes {
   id: number;
   name: string;
   url: string;
@@ -11,12 +11,18 @@ export interface LinkAttributes {
   create_time: Date;
 }
 
-export type LinkPk = "id";
-export type LinkId = Link[LinkPk];
-export type LinkOptionalAttributes = "user_id";
-export type LinkCreationAttributes = Optional<LinkAttributes, LinkOptionalAttributes>;
+export type FriendlyLinkPk = "id";
+export type FriendlyLinkId = FriendlyLink[FriendlyLinkPk];
+export type FriendlyLinkOptionalAttributes = "user_id";
+export type FriendlyLinkCreationAttributes = Optional<
+  FriendlyLinkAttributes,
+  FriendlyLinkOptionalAttributes
+>;
 
-export class Link extends Model<LinkAttributes, LinkCreationAttributes> implements LinkAttributes {
+export class FriendlyLink
+  extends Model<FriendlyLinkAttributes, FriendlyLinkCreationAttributes>
+  implements FriendlyLinkAttributes
+{
   id!: number;
   name!: string;
   url!: string;
@@ -25,9 +31,9 @@ export class Link extends Model<LinkAttributes, LinkCreationAttributes> implemen
   logo_file_name!: string;
   create_time!: Date;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof Link {
+  static initModel(sequelize: Sequelize.Sequelize): typeof FriendlyLink {
     return sequelize.define(
-      "Link",
+      "FriendlyLink",
       {
         id: {
           type: DataTypes.BIGINT,
@@ -61,12 +67,9 @@ export class Link extends Model<LinkAttributes, LinkCreationAttributes> implemen
           type: DataTypes.STRING(100),
           allowNull: false,
           comment: "图片Logo",
-        },
-        logo_url: {
-          type: DataTypes.VIRTUAL,
           get(this) {
             let logo_file_name = this.getDataValue("logo_file_name");
-            return `${process.env.CDN}/link/${logo_file_name}`;
+            return `${process.env.CDN}/friendly-link/${logo_file_name}`;
           },
         },
         create_time: {
@@ -76,7 +79,7 @@ export class Link extends Model<LinkAttributes, LinkCreationAttributes> implemen
         },
       },
       {
-        tableName: "link",
+        tableName: "friendly_link",
         timestamps: false,
         indexes: [
           {
@@ -99,6 +102,6 @@ export class Link extends Model<LinkAttributes, LinkCreationAttributes> implemen
           },
         ],
       }
-    ) as typeof Link;
+    ) as typeof FriendlyLink;
   }
 }

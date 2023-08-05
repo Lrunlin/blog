@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import type { FC } from "react";
-// import { Upload } from "antd";
 import Upload from "@/components/common/UpLoad";
 interface propsType {
   avatar_file_name: string;

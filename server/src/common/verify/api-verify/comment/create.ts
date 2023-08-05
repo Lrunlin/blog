@@ -7,6 +7,7 @@ import DB from "@/db";
 import { Next, Context } from "koa";
 import map from "@/common/utils/map";
 import { fileNameAllowNull } from "../../modules/file-name";
+import exist from "@/common/utils/static/exist";
 
 const schema = Joi.object({
   belong_id: Joi.number().required().error(new Error("所属ID错误")),
@@ -26,7 +27,14 @@ const schema = Joi.object({
     })
     .error(new Error("没有找到指定的评论ID")),
   content: Joi.string().min(1).max(700).required().error(new Error("评论内容最长为600字")),
-  comment_pics: fileNameAllowNull,
+  comment_pics: fileNameAllowNull.external(async (value: string | null) => {
+    if (value) {
+      let result = await exist([`comment/${value}`])
+        .then(res => res)
+        .catch(err => err);
+      if (!result.success) throw new Error(result.message);
+    }
+  }),
   type: typeLikeComment,
 });
 
@@ -62,7 +70,6 @@ async function verify(ctx: Context, next: Next) {
       console.log(err);
       return false;
     });
-
 
   if (!result) {
     ctx.status = 400;

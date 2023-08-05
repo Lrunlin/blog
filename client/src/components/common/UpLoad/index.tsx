@@ -3,11 +3,18 @@ import { useState, useEffect, useRef } from "react";
 import type { MutableRefObject, FC } from "react";
 import type { ModalProps } from "antd";
 import dynamic from "next/dynamic";
-import upload from "./uoload";
+import upload from "./upload";
 const Modal = dynamic(() => import("./Modal"), { ssr: false });
 import Picture from "./Image";
 
-type target = "article" | "avatar" | "cover" | "type" | "comment" | "advertisement" | "link";
+type target =
+  | "article"
+  | "avatar"
+  | "cover"
+  | "type"
+  | "comment"
+  | "advertisement"
+  | "friendly-link";
 
 export interface uploadPropsType {
   /** 上传地址*/

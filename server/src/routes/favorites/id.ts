@@ -4,7 +4,7 @@ import Sequelize from "@/db/config";
 import interger from "@/common/verify/integer";
 import getUserId from "@/common/middleware/getUserId";
 import setDescription from "@/common/modules/article/get/set-description";
-import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import { Op } from "sequelize";
 
 let router = new Router();

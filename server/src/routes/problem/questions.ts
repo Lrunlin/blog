@@ -1,11 +1,13 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/get-tag-data";
-import getCodeBlockLanguage from "@/common/modules/article/get/get-code-block-language";
+import getTagData from "@/common/modules/article/get/set-tag-data";
+import getCodeBlockLanguage from "@/common/modules/article/get/set-code-block-language";
 import type { AnswerAttributes } from "@/db/models/answer";
 import setImageTag from "@/common/modules/article/get/img-add-prefix";
 import Sequelize from "@/db/config";
 import verify from "@/common/verify/api-verify/problem/questions";
+import setExternalLink from "@/common/modules/article/get/external-link";
+
 let router = new Router();
 
 /** 问答功能评论处理
@@ -19,7 +21,7 @@ function createCommentTree(data: any) {
     answer_list: data.answer_list
       .map((item: any) => {
         return Object.assign(item, {
-          content: setImageTag(item.content, { prefix: "answer", update: true }),
+          content: setImageTag(setExternalLink(item.content), { prefix: "answer", update: true }),
           comment_list: item.comment_list
             .map((_item: any) => {
               if (_item.reply) {
@@ -191,19 +193,17 @@ router.get("/problem/:id", verify, async ctx => {
           answer_list: AnswerAttributes[];
           content: string;
         };
-        // 累加一下，获取问题和所有回答中代码块使用的语言
-        let content = (_data as unknown as { answer_list: AnswerAttributes[] }).answer_list.reduce(
-          (total, item) => {
-            return (total += item.content);
-          },
-          _data.content
-        );
+
         return createCommentTree(
           problemInit(
             Object.assign(
               _data,
               getCodeBlockLanguage(
-                setImageTag(_data.content, { prefix: "problem", update: true }, data.title)
+                setImageTag(
+                  setExternalLink(_data.content),
+                  { prefix: "problem", update: true },
+                  data.title
+                )
               )
             )
           )
@@ -216,9 +216,15 @@ router.get("/problem/:id", verify, async ctx => {
       console.log(err);
       return null;
     });
-  if (data.collection_state) {
+
+  if (data?.collection_state) {
     data.collection_state = data.collection_state.split(",").map((item: string) => +item);
   }
-  ctx.body = { success: !!data, message: data ? "查询成功" : "查询失败", data: data };
+  if (data) {
+    ctx.body = { success: true, message: "查询成功", data: data };
+  } else {
+    ctx.body = { success: false, message: "查询失败" };
+    ctx.status = 404;
+  }
 });
 export default router;

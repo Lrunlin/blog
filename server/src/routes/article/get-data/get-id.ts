@@ -2,14 +2,15 @@ import Router from "@koa/router";
 import DB from "@/db";
 import interger from "@/common/verify/integer";
 
-import getCodeBlockLanguage from "@/common/modules/article/get/get-code-block-language";
+import getCodeBlockLanguage from "@/common/modules/article/get/set-code-block-language";
 import imgPrefix from "@/common/modules/article/get/img-add-prefix";
-import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import getTitleId from "@/common/modules/article/get/set-title-id";
 import setDescription from "@/common/modules/article/get/set-description";
 
 import Sequelize from "@/db/config";
 import getUserId from "@/common/middleware/getUserId";
+import setExternalLink from "@/common/modules/article/get/external-link";
 
 let router = new Router();
 
@@ -83,6 +84,8 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async ctx => {
               data.title
             ),
           };
+
+          data = { ...data, content: setExternalLink(data.content) };
         } else {
           data = {
             ...data,

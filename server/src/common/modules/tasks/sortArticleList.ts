@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import Sequelize from "@/db/config";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import setDescription from "@/common/modules/article/get/set-description";
 import type { TagAttributes, UserAttributes } from "@/db/models/init-models";
 

@@ -7,7 +7,6 @@ import useSwr from "swr";
 import getType from "@/request/getType";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/layout/Admin/Base";
-// 不要吹灭你的灵感和你的想象力; 不要成为你的模型的奴隶。 ——文森特・梵高
 
 const Write = () => {
   let { useForm } = Form;
@@ -15,18 +14,15 @@ const Write = () => {
   let router = useRouter();
   const [load, setLoad] = useState(false);
   function onFinish(values: any) {
-    console.log(values);
-    
     setLoad(true);
     axios
       .post("/article", { ...values, state: 1 })
       .then(res => {
-        if (res.data.success) {
-          message.success(res.data.message);
-          router.replace("/admin/article/list");
-        } else {
-          message.error(res.data.message);
-        }
+        message.success(res.data.message);
+        router.replace("/admin/article/list");
+      })
+      .catch(err => {
+        message.error(err.message);
       })
       .finally(() => {
         setLoad(false);
@@ -45,7 +41,7 @@ const Write = () => {
         form={form}
         initialValues={{
           description: null,
-          cover_url: null,
+          cover_file_name: null,
           reprint: null,
         }}
         labelCol={{ span: 2 }}

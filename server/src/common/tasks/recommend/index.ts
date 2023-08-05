@@ -9,7 +9,7 @@ export default async () => {
       setArticleListWrite();
     }
   });
-  setTimeout(() => {
+  setInterval(() => {
     setArticleListWrite();
   }, 7_200_000);
 };

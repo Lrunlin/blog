@@ -36,7 +36,7 @@ app.use(BodyParser());
 import cors from "@koa/cors";
 app.use(cors());
 import http from "http";
-const server = http.createServer(app.callback()); //包装app保证http和socket监听同一端口
+export const server = http.createServer(app.callback()); //包装app保证http和socket监听同一端口
 
 import Routers from "@/common/modules/getAllRouter";
 (async () => {
@@ -52,7 +52,7 @@ import Routers from "@/common/modules/getAllRouter";
         }
       })
       .catch(err => {
-        console.log(err);
+        console.log(item, err);
       });
     if (Routers.length == index + 1) {
       const port = 3000;
@@ -75,3 +75,8 @@ setTimeout(() => {
   start();
 }, 0);
 
+//socket链接
+import socket from "@/socket";
+setTimeout(() => {
+  socket();
+}, 0);

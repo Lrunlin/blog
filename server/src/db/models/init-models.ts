@@ -9,14 +9,16 @@ import { Collection as _Collection } from "./collection";
 import type { CollectionAttributes, CollectionCreationAttributes } from "./collection";
 import { Comment as _Comment } from "./comment";
 import type { CommentAttributes, CommentCreationAttributes } from "./comment";
+import { ExternalLink as _ExternalLink } from "./external_link";
+import type { ExternalLinkAttributes, ExternalLinkCreationAttributes } from "./external_link";
 import { Favorites as _Favorites } from "./favorites";
 import type { FavoritesAttributes, FavoritesCreationAttributes } from "./favorites";
 import { Follow as _Follow } from "./follow";
 import type { FollowAttributes, FollowCreationAttributes } from "./follow";
+import { FriendlyLink as _FriendlyLink } from "./friendly_link";
+import type { FriendlyLinkAttributes, FriendlyLinkCreationAttributes } from "./friendly_link";
 import { Likes as _Likes } from "./likes";
 import type { LikesAttributes, LikesCreationAttributes } from "./likes";
-import { Link as _Link } from "./link";
-import type { LinkAttributes, LinkCreationAttributes } from "./link";
 import { Notice as _Notice } from "./notice";
 import type { NoticeAttributes, NoticeCreationAttributes } from "./notice";
 import { Problem as _Problem } from "./problem";
@@ -36,10 +38,11 @@ export {
   _Article as Article,
   _Collection as Collection,
   _Comment as Comment,
+  _ExternalLink as ExternalLink,
   _Favorites as Favorites,
   _Follow as Follow,
+  _FriendlyLink as FriendlyLink,
   _Likes as Likes,
-  _Link as Link,
   _Notice as Notice,
   _Problem as Problem,
   _Recommend as Recommend,
@@ -59,14 +62,16 @@ export type {
   CollectionCreationAttributes,
   CommentAttributes,
   CommentCreationAttributes,
+  ExternalLinkAttributes,
+  ExternalLinkCreationAttributes,
   FavoritesAttributes,
   FavoritesCreationAttributes,
   FollowAttributes,
   FollowCreationAttributes,
+  FriendlyLinkAttributes,
+  FriendlyLinkCreationAttributes,
   LikesAttributes,
   LikesCreationAttributes,
-  LinkAttributes,
-  LinkCreationAttributes,
   NoticeAttributes,
   NoticeCreationAttributes,
   ProblemAttributes,
@@ -87,10 +92,11 @@ export function initModels(sequelize: Sequelize) {
   const Article = _Article.initModel(sequelize);
   const Collection = _Collection.initModel(sequelize);
   const Comment = _Comment.initModel(sequelize);
+  const ExternalLink = _ExternalLink.initModel(sequelize);
   const Favorites = _Favorites.initModel(sequelize);
   const Follow = _Follow.initModel(sequelize);
+  const FriendlyLink = _FriendlyLink.initModel(sequelize);
   const Likes = _Likes.initModel(sequelize);
-  const Link = _Link.initModel(sequelize);
   const Notice = _Notice.initModel(sequelize);
   const Problem = _Problem.initModel(sequelize);
   const Recommend = _Recommend.initModel(sequelize);
@@ -104,10 +110,11 @@ export function initModels(sequelize: Sequelize) {
     Article: Article,
     Collection: Collection,
     Comment: Comment,
+    ExternalLink: ExternalLink,
     Favorites: Favorites,
     Follow: Follow,
+    FriendlyLink: FriendlyLink,
     Likes: Likes,
-    Link: Link,
     Notice: Notice,
     Problem: Problem,
     Recommend: Recommend,

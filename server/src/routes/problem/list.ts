@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import verify from "@/common/verify/api-verify/problem/list";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/get-tag-data";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import Sequelize from "@/db/config";
 
 let router = new Router();

@@ -22,7 +22,14 @@ const Image: FC<propsType> = props => {
 
   let first = useRef(true);
   useEffect(() => {
-    if (props.imgURL && first.current) {
+    function isBase64Img(str: string) {
+      return /^\s*data:(?:[a-z]+\/[a-z0-9-+.]+(?:;[a-z-]+=[a-z0-9-]+)?)?(?:;base64)?,([a-z0-9!$&',()*+;=\-._~:@/?%\s]*?)\s*$/i.test(
+        str
+      );
+    }
+
+    // TODO 设计缺陷，需要判断是否base64，可以将src和base64分成两个变量和函数解决 
+    if (props.imgURL && !isBase64Img(props.imgURL) && first.current) {
       setSrc(props.imgURL);
       first.current = false;
     }

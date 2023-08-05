@@ -1,7 +1,6 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
 import dehydrate from "@/common/utils/xss/article";
-import hooks from "../hooks/article";
 
 export interface ArticleAttributes {
   id: number;
@@ -166,7 +165,6 @@ export class Article
             fields: [{ name: "id" }],
           },
         ],
-        hooks: hooks,
       }
     ) as typeof Article;
   }
