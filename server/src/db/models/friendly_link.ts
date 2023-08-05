@@ -67,9 +67,12 @@ export class FriendlyLink
           type: DataTypes.STRING(100),
           allowNull: false,
           comment: "图片Logo",
+        },
+        logo_url: {
+          type: DataTypes.VIRTUAL,
           get(this) {
             let logo_file_name = this.getDataValue("logo_file_name");
-            return `${process.env.CDN}/friendly-link/${logo_file_name}`;
+            return `${process.env.CDN}/link/${logo_file_name}`;
           },
         },
         create_time: {
