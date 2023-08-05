@@ -7,9 +7,13 @@ import { response } from "@type/response";
 
 const ExternalLink = () => {
   const [value, setValue] = useState("");
-  let { data, error, refetch, setData } = useFetch(() =>
-    axios.get<response<any[]>>("/external-link").then(res => res.data.data)
-  );
+  let {
+    data,
+    error,
+    isLoading: listIsLoading,
+    refetch,
+    setData,
+  } = useFetch(() => axios.get<response<any[]>>("/external-link").then(res => res.data.data));
   let disabled = useMemo(
     () =>
       !/^[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/.test(value) ||
@@ -104,7 +108,7 @@ const ExternalLink = () => {
               },
             ]}
           />
-        ) : isLoading ? (
+        ) : listIsLoading ? (
           <div className="h-96 w-full bg-gray-200 animate-pulse"></div>
         ) : (
           <Result
