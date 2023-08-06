@@ -39,16 +39,25 @@ export const editorModeContext = atom({
 
 const MarkDonwEdit: FC<propsType> = memo(props => {
   const [initValue, setInitValue] = useState<string | undefined>(undefined);
+  const [content, setContent] = useState("");
   const [uploadProgress, setPloadProgress] = useState<null | string>(null);
   let editorMode = useRecoilValue(editorModeContext);
 
+  let firstRender = useRef(true);
+  // 保证切换编辑器时value不会消失
   useEffect(() => {
-    window.localStorage.setItem("editor-mode", editorMode);
+    // 首次不执行，防止重复设置inteValue
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      allowChangeValue.current = true;
+      setInitValue(content);
+      window.localStorage.setItem("editor-mode", editorMode);
+    }
   }, [editorMode]);
 
   // 需要对initValue进行中转
   let allowChangeValue = useRef(true);
-
   useEffect(() => {
     if (!props.initValue) return;
     if (allowChangeValue.current) {
@@ -65,6 +74,7 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
             <MarkDownEditor
               {...props}
               onChange={html => {
+                setContent(html);
                 props.onChange && props.onChange(html);
               }}
               changePploadProgress={val => setPloadProgress(val)}
@@ -74,6 +84,7 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
             <RichTextEditor
               {...props}
               onChange={html => {
+                setContent(html);
                 props.onChange && props.onChange(html);
               }}
               initValue={initValue}
