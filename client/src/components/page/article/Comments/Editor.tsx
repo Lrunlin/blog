@@ -61,7 +61,7 @@ const Editor: FC<propsType> = props => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       // 判断输入框失去焦点
-      if (!value.length && !document.getElementById("commentRoot")?.contains(e.target as Node)) {
+      if (!document.getElementById("commentRoot")?.contains(e.target as Node)) {
         setEditorOption(option => ({
           ...option,
           activeInputID: null,

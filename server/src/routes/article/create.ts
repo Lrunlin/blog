@@ -7,7 +7,8 @@ import transaction from "@/common/transaction/article/create-article";
 
 let router = new Router();
 router.post("/article", verify, async ctx => {
-  let { title, description, cover_file_name, reprint, content, tag, state } = ctx.request.body;
+  let { title, description, cover_file_name, reprint, content, tag, state, theme_id } =
+    ctx.request.body;
   let _id = id();
   let t = await sequelize.transaction();
   // 只有正式发布才创建通知(转载文章不发布通知)
@@ -24,6 +25,7 @@ router.post("/article", verify, async ctx => {
       tag: tag,
       state: state,
       view_count: 0,
+      theme_id,
       create_time: new Date(),
     },
     { transaction: t }

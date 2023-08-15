@@ -4,10 +4,10 @@ import Head from "@/components/next/Head";
 import { useRouter } from "next/navigation";
 import ArticleEditor from "@/components/common/ArticleEditor";
 import { Result, Button, message, Skeleton } from "antd";
-import useSWR from "swr";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { writeArticleContext } from "@/components/common/ArticleEditor";
+import useFetch from "@/common/hooks/useFetch";
 
 interface propsType {
   id: number;
@@ -18,15 +18,25 @@ const Write: NextPage<propsType> = props => {
   let [articleData, setArticleData] = useRecoilState(writeArticleContext);
   const [isValidating, setIsValidating] = useState(true);
 
-  let { data, mutate } = useSWR(`article-update-${props}`, () =>
+  let { data, isLoading, refetch } = useFetch(() =>
     axios.get(`/article/${props.id}?update=md`).then(res => res.data.data)
   );
 
   // 为状态设置值
   useEffect(() => {
     if (data) {
-      let { title, content, tag, reprint, description, cover_file_name, cover_url } = data;
-      setArticleData({ title, content, tag, reprint, description, cover_file_name, cover_url });
+      let { title, content, tag, reprint, description, cover_file_name, cover_url, theme_id } =
+        data;
+      setArticleData({
+        title,
+        content,
+        tag,
+        reprint,
+        description,
+        cover_file_name,
+        cover_url,
+        theme_id,
+      });
     }
   }, [data]);
 
@@ -57,14 +67,14 @@ const Write: NextPage<propsType> = props => {
               .put(`/article/${props.id}`, { ...values, state: 1 })
               .then(res => {
                 message.success(res.data.message);
-                mutate();
+                refetch();
               })
               .catch(err => {
                 message.error(err.message);
               });
           }}
         />
-      ) : isValidating ? (
+      ) : isLoading ? (
         <Skeleton paragraph={{ rows: 4 }} />
       ) : (
         <Result

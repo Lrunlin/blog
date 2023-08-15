@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
-import { Button, Input, message, Result } from "antd";
+import { Button, Input, message, Result, Skeleton } from "antd";
 import Head from "@/components/next/Head";
 import Tag from "@/components/page/problem/write/Tag";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Editor from "@/components/common/Editor";
-import useSwr, { useSWRConfig } from "swr";
 import { useRouter as useRoute } from "next/router";
 import Header from "@/components/common/Header";
+import useFetch from "@/common/hooks/useFetch";
 
 const Write = () => {
   let route = useRoute();
-  let { data } = useSwr(`update-problem-${route.query.id}`, () =>
+  let { data, isLoading } = useFetch(() =>
     axios.get(`/problem/update/${route.query.id}`).then(res => res.data.data)
   );
-  let { cache } = useSWRConfig();
   let [title, setTitle] = useState("");
   let [content, setContent] = useState("");
   let [tag, setTag] = useState<number[]>([]);
@@ -47,7 +46,6 @@ const Write = () => {
       .put(`/problem/${route.query.id}`, { title, tag, content })
       .then(res => {
         message.success(res.data.message);
-        cache.delete(`update-problem-${route.query.id}`);
         router.back();
       })
       .catch(() => {
@@ -87,6 +85,8 @@ const Write = () => {
             </div>
           </main>
         </div>
+      ) : isLoading ? (
+        <Skeleton active paragraph={{ rows: 10 }} />
       ) : (
         <>
           <Header />

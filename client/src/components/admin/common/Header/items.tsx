@@ -8,6 +8,7 @@ import {
   UserOutlined,
   FileImageOutlined,
   LinkOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 
@@ -49,6 +50,20 @@ const items = [
       {
         href: "/admin/advertisement/list",
         label: "广告列表",
+      },
+    ],
+  },
+  {
+    label: "主题管理",
+    icon: <AppstoreOutlined />,
+    children: [
+      {
+        href: "/admin/theme",
+        label: "主题列表",
+      },
+      {
+        href: "/admin/theme/create",
+        label: "主题添加",
       },
     ],
   },

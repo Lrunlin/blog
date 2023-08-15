@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 05/08/2023 18:17:35
+ Date: 15/08/2023 14:28:13
 */
 
 SET NAMES utf8mb4;
@@ -58,6 +58,7 @@ CREATE TABLE `article`  (
   `cover_file_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图片名称',
   `reprint` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '转载地址，原创为null',
   `state` int NOT NULL COMMENT '文章状态',
+  `theme_id` bigint NOT NULL COMMENT '主题ID，默认为default',
   `view_count` int NOT NULL DEFAULT 0 COMMENT '阅读次数',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最近一次更新的时间',
   `create_time` datetime NOT NULL COMMENT '创建时间',
@@ -188,6 +189,7 @@ CREATE TABLE `problem`  (
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题内容',
   `author` bigint NOT NULL COMMENT '发布人ID',
   `answer_id` bigint NULL DEFAULT NULL COMMENT '采纳答案的ID',
+  `theme_id` bigint NOT NULL COMMENT '主题ID默认default的ID',
   `view_count` int NOT NULL COMMENT '阅读量',
   `create_time` datetime NOT NULL COMMENT '发布时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最后更新时间',
@@ -223,11 +225,26 @@ CREATE TABLE `tag`  (
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'tag名称',
   `belong` bigint NOT NULL COMMENT '所属Type的ID',
   `icon_file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ICON文件名称',
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `indexes` int NOT NULL COMMENT '索引值',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Table structure for theme
+-- ----------------------------
+DROP TABLE IF EXISTS `theme`;
+CREATE TABLE `theme`  (
+  `id` bigint NOT NULL COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主题名称',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'CSS样式内容',
+  `author` bigint NOT NULL COMMENT '创建者ID',
+  `state` int NOT NULL COMMENT '状态 1为使用 0为正在申请',
+  `indexes` int NOT NULL COMMENT '排序',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for type
@@ -238,8 +255,8 @@ CREATE TABLE `type`  (
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型/标签 名字',
   `indexes` int NOT NULL COMMENT '排序、索引',
   `icon_file_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ICON文件名称',
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '介绍用于meta中description',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '网站文章的类型与标签' ROW_FORMAT = COMPACT;

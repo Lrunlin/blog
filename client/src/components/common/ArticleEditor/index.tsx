@@ -18,6 +18,7 @@ export const initValue = {
   description: null as null | string,
   cover_file_name: null as null | string,
   cover_url: null as null | string,
+  theme_id: 0,
 };
 
 export const writeArticleContext = atom({
@@ -73,11 +74,19 @@ const ArticleEditor: FC<propsType> = props => {
         </div>
       </header>
       <Editor
+        theme={true}
         target="article"
         initValue={articleData.content}
         onChange={html => {
           setArticleData(_data => ({ ..._data, content: html }));
         }}
+        defaultTheme={articleData.theme_id}
+        onSetTheme={id =>
+          setArticleData(_data => {
+            console.log(id);
+            return { ..._data, theme_id: id };
+          })
+        }
       />
     </div>
   ) : (

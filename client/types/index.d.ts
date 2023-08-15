@@ -3,7 +3,13 @@ declare module "@emoji-mart/react" {
   export default a;
 }
 declare module "bytemd/lib/locales/*" {
-  export const a: any;
+  const a: any;
+  export default a;
+}
+
+declare module "turndown-plugin-gfm" {
+  let a: any;
+  export default a;
 }
 
 namespace NodeJS {
@@ -41,9 +47,4 @@ namespace NodeJS {
     /** 上传图片最大多MB*/
     UPLOAD_MAX_SIZE: number;
   }
-}
-
-declare module "turndown-plugin-gfm" {
-  let a: any;
-  export default a;
 }

@@ -48,6 +48,9 @@ const Aside = () => {
       <Button type="primary" block className="mt-8" onClick={() => router.push("/article/editor")}>
         写文章
       </Button>
+      <Button  block className="mt-2" onClick={() => router.push("/theme")}>
+        提交主题
+      </Button>
       <div className="mt-4 select-none">
         <Menu
           onClick={onClick}

@@ -28,7 +28,7 @@ const OSS = () => {
   const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
 
   function start() {
-    setMessageList([])
+    setMessageList([]);
     socket!.emit("start");
   }
   function remove() {
@@ -124,7 +124,7 @@ const OSS = () => {
           className="mt-4"
           type="primary"
           loading={connect && (info == null || info?.code == 2)}
-          disabled={!connect}
+          disabled={!connect || deleteCode == 2}
           onClick={start}
         >
           {info ? info.message : "获取状态中"}
@@ -134,7 +134,10 @@ const OSS = () => {
         <Card title="实时进度" bordered={true}>
           <div className="h-96 overflow-y-scroll scrollbar-corner-black">
             {messageList.map((item, index) => (
-              <div key={item+index+Math.random()} className={classNames("mt-1", !index && "font-bold mt-0 text-lg")}>
+              <div
+                key={item + index + Math.random()}
+                className={classNames("mt-1", !index && "font-bold mt-0 text-lg")}
+              >
                 {item}
               </div>
             ))}

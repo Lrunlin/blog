@@ -60,6 +60,7 @@ const Write = () => {
         >
           <Input placeholder="填写网站标题" maxLength={200} />
         </Form.Item>
+        <Form.Item hidden rules={[{ required: true }]} />
         <Form.Item
           label="标签"
           name="tag"
@@ -111,6 +112,7 @@ const Write = () => {
         >
           <div>
             <Editor
+              theme={true}
               target="article"
               onChange={html => {
                 form.setFieldsValue({ content: html });

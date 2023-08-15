@@ -9,7 +9,7 @@ const Catalogue = () => {
     tocbot.init({
       tocSelector: `.${style["article-page-catalogue"]}`,
       headingSelector: "h1,h2,h3,h4,h5,h6",
-      contentSelector: "#view",
+      contentSelector: ".content-body",
       activeLinkClass: style["is-active-link"],
       collapsibleClass: style["is-collapsible"],
     });

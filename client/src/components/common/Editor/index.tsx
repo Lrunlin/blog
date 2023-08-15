@@ -1,4 +1,4 @@
-import { memo, useState, startTransition, useEffect, useRef } from "react";
+import { memo, useState, useEffect, useRef } from "react";
 import type { FC } from "react";
 import { Spin } from "antd";
 import { atom } from "recoil";
@@ -16,6 +16,10 @@ const RichTextEditor = dynamic(() => import("./RichTextEditor"), {
   loading: () => <Skeleton />,
 });
 
+const StyleLink = dynamic(() => import("./StyleLink"), {
+  ssr: false,
+});
+
 export interface propsType {
   className?: string;
   /** 上传至哪个文件夹*/
@@ -24,6 +28,11 @@ export interface propsType {
   initValue?: string;
   onChange?: (html: string) => any;
   height?: number;
+  /** 是否使用主题*/
+  theme?: boolean;
+  /** 设置主题*/
+  onSetTheme?: (id: number) => void;
+  defaultTheme?: number;
 }
 export type editorPropsType = propsType & {
   changePploadProgress: (val: string | null) => void;
@@ -66,8 +75,22 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
     }
   }, [props.initValue]);
 
+  const [themeID, setThemeID] = useState(0);
+
+  useEffect(() => {
+    if (props.defaultTheme != undefined) {
+      setThemeID(props.defaultTheme);
+    }
+  }, [props.defaultTheme]);
+
   return (
     <>
+      <style jsx global>{`
+        .content-body img {
+          max-width: 60%;
+        }
+      `}</style>
+      <StyleLink id={themeID} />
       <Spin spinning={!!uploadProgress} tip={uploadProgress}>
         <div>
           {editorMode == "markdown" ? (
@@ -79,6 +102,13 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
               }}
               changePploadProgress={val => setPloadProgress(val)}
               initValue={initValue}
+              onSetTheme={id => {
+                if (props.onSetTheme) {
+                  setThemeID(id);
+                  props.onSetTheme(id);
+                }
+              }}
+              defaultTheme={themeID}
             />
           ) : (
             <RichTextEditor
@@ -87,8 +117,15 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
                 setContent(html);
                 props.onChange && props.onChange(html);
               }}
+              onSetTheme={id => {
+                if (props.onSetTheme) {
+                  setThemeID(id);
+                  props.onSetTheme(id);
+                }
+              }}
               initValue={initValue}
               changePploadProgress={val => setPloadProgress(val)}
+              defaultTheme={themeID}
             />
           )}
         </div>

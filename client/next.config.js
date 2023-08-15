@@ -13,6 +13,7 @@ const nextConfig = {
     scrollRestoration: true,
     legacyBrowsers: false,
   },
+  swcMinify: false, //不要关 否则表情选择器会打包出问题
   eslint: {
     ignoreDuringBuilds: true,
   },

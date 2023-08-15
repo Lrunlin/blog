@@ -27,6 +27,8 @@ import { Recommend as _Recommend } from "./recommend";
 import type { RecommendAttributes, RecommendCreationAttributes } from "./recommend";
 import { Tag as _Tag } from "./tag";
 import type { TagAttributes, TagCreationAttributes } from "./tag";
+import { Theme as _Theme } from "./theme";
+import type { ThemeAttributes, ThemeCreationAttributes } from "./theme";
 import { Type as _Type } from "./type";
 import type { TypeAttributes, TypeCreationAttributes } from "./type";
 import { User as _User } from "./user";
@@ -47,6 +49,7 @@ export {
   _Problem as Problem,
   _Recommend as Recommend,
   _Tag as Tag,
+  _Theme as Theme,
   _Type as Type,
   _User as User,
 };
@@ -80,6 +83,8 @@ export type {
   RecommendCreationAttributes,
   TagAttributes,
   TagCreationAttributes,
+  ThemeAttributes,
+  ThemeCreationAttributes,
   TypeAttributes,
   TypeCreationAttributes,
   UserAttributes,
@@ -101,6 +106,7 @@ export function initModels(sequelize: Sequelize) {
   const Problem = _Problem.initModel(sequelize);
   const Recommend = _Recommend.initModel(sequelize);
   const Tag = _Tag.initModel(sequelize);
+  const Theme = _Theme.initModel(sequelize);
   const Type = _Type.initModel(sequelize);
   const User = _User.initModel(sequelize);
 
@@ -119,6 +125,7 @@ export function initModels(sequelize: Sequelize) {
     Problem: Problem,
     Recommend: Recommend,
     Tag: Tag,
+    Theme: Theme,
     Type: Type,
     User: User,
   };

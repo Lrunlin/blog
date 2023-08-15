@@ -11,7 +11,7 @@ const Index = () => {
   let router = useRouter();
   let [userState] = useUserState();
 
-  let { data, error, isValidating } = useSWR("statistics-data-index", () =>
+  let { data, isValidating } = useSWR("statistics-data-index", () =>
     axios.get("/statistics/index").then(res => res.data.data)
   );
   return (
@@ -32,9 +32,7 @@ const Index = () => {
             <span>{data && data.repository_data?.refresh_time}</span>
           </div>
           <Divider />
-          {error && <>加载错误</>}
-          {isValidating && <Skeleton active />}
-          {data && (
+          {data ? (
             <div className="flex justify-between cursor-pointer">
               <div className="text-center" onClick={() => router.push("/admin/statistics")}>
                 <Image width={48} height={48} src="/icon/admin/数据看板.svg" alt="data-icon" />
@@ -75,6 +73,10 @@ const Index = () => {
                 <div className="mt-1"> {data?.repository_data?.watch_count}</div>
               </div>
             </div>
+          ) : isValidating ? (
+            <Skeleton active />
+          ) : (
+            <>加载错误</>
           )}
         </div>
       </div>
@@ -83,9 +85,13 @@ const Index = () => {
         <div>
           <div className="text-lg">消息通知</div>
           <Divider />
-          {error && <>加载错误</>}
-          {isValidating && <Skeleton active />}
-          {data?.notice && <Notice data={data.notice} />}
+          {data?.notice ? (
+            <Notice data={data.notice} />
+          ) : isValidating ? (
+            <Skeleton active />
+          ) : (
+            <>加载错误</>
+          )}
         </div>
       </div>
     </AdminLayout>

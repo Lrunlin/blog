@@ -12,6 +12,7 @@ export interface ArticleAttributes {
   cover_file_name?: string;
   reprint?: string;
   state: number;
+  theme_id: number;
   view_count: number;
   update_time?: Date;
   create_time: Date;
@@ -40,6 +41,7 @@ export class Article
   cover_file_name?: string;
   reprint?: string;
   state!: number;
+  theme_id!: number;
   view_count!: number;
   update_time?: Date;
   create_time!: Date;
@@ -80,7 +82,7 @@ export class Article
           },
           get() {
             let type = this.getDataValue("tag");
-            return /^[\s\S]*.*[^\s][\s\S]*$/.test(type) ? type.split(",").map(item => +item) : [];
+            return type&&/^[\s\S]*.*[^\s][\s\S]*$/.test(type) ? type.split(",").map(item => +item) : [];
           },
         },
         author: {
@@ -136,6 +138,11 @@ export class Article
           type: DataTypes.INTEGER,
           allowNull: false,
           comment: "文章状态",
+        },
+        theme_id: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          comment: "主题ID，默认为default",
         },
         view_count: {
           type: DataTypes.INTEGER,

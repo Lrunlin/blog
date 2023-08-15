@@ -1,5 +1,4 @@
 import { load } from "cheerio";
-import type { ArticleAttributes } from "@/db/models/article";
 
 
 /**
@@ -7,7 +6,7 @@ import type { ArticleAttributes } from "@/db/models/article";
  * TODO 并且设置代码高亮使用的插件
  * ?用于用户查询时
  */
-function getCodeBlockLanguage<T>(content: string) {
+function getCodeBlockLanguage(content: string) {
   let $ = load(content);
   let languages: string[] = [];
   $("pre").each((_, el) => {

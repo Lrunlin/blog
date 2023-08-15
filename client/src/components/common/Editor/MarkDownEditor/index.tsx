@@ -9,6 +9,7 @@ import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
 import LanguageListPlugin from "./LanguageListPlugin";
 import UseRichTextPlugin from "./UseRichTextPlugin";
+import ThemeSelect from "./ThemeSelect";
 import HTMLToMarkDown from "@/common/utils/HtmlToMarkDown";
 import "bytemd/dist/index.css";
 import upload from "../upload";
@@ -23,9 +24,20 @@ const MarkDownEditor: FC<editorPropsType> = props => {
       setValue(HTMLToMarkDown(props.initValue));
     }
   }, [props.initValue]);
+
+  // 后代选择，方式污染
+  let id = `editor-${+new Date()}`;
+  useEffect(() => {
+    document.querySelector(`#${id} .bytemd-preview`)?.classList.add("content-body");
+  }, []);
+
+  /** 主题选择器被选中的主题高亮效果*/
+  const [styleContent, setStyleContent] = useState("");
+
   return (
     <>
       <style jsx global>{`
+        ${styleContent}
         .bytemd {
           height: ${props.height || 700}px;
         }
@@ -93,9 +105,9 @@ const MarkDownEditor: FC<editorPropsType> = props => {
           z-index: 99 !important;
         }
       `}</style>
-      <div>
+      <div id={id}>
         <Editor
-          locale={zhHans as any}
+          locale={zhHans}
           value={value}
           onChange={md => {
             let html = marked(md, {
@@ -107,7 +119,23 @@ const MarkDownEditor: FC<editorPropsType> = props => {
               if (props.onChange) props.onChange(html);
             });
           }}
-          plugins={[gfm(), LanguageListPlugin() as any, highlight(), UseRichTextPlugin()]}
+          plugins={[
+            gfm(),
+            LanguageListPlugin(),
+            highlight(),
+            UseRichTextPlugin(),
+            ...(props.theme
+              ? [
+                  ThemeSelect(
+                    id => {
+                      props.onSetTheme && props.onSetTheme(id);
+                    },
+                    props.defaultTheme!,
+                    styleContent => setStyleContent(styleContent)
+                  ),
+                ]
+              : []),
+          ]}
           uploadImages={async (files: File[]) => {
             return upload(files, props.target, val => {
               props.changePploadProgress(val);

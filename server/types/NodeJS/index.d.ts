@@ -5,13 +5,15 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       /** 环境变量*/
-      ENV?: string;
+      ENV: "development" | "production";
       /** 服务端接口地址*/
-      SITE_API_HOST?: string;
+      SITE_API_HOST: string;
       /** 网站名称*/
-      SITE_NAME?: string;
+      SITE_NAME: string;
       /** 用户端网址*/
-      CLIENT_HOST?: string;
+      CLIENT_HOST: string;
+      /** 用户端使用的CDN地址*/
+      CLIENT_CDN: string;
       /** MySQL域名*/
       DB_MYSQL_HOST?: string;
       /** MySQL用户名*/

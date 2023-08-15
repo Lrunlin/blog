@@ -35,6 +35,9 @@ const Modal: FC<modalPropsType> = props => {
           }}
           onFinish={props.submit}
         >
+          <Item name="theme_id" hidden rules={[{ required: true }]}>
+            <></>
+          </Item>
           <Item
             name="title"
             hidden

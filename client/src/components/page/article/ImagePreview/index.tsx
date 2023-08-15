@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
-import type { FC } from "react";
 import { Image } from "antd";
 import style from "./index.module.scss";
 
-interface propsType {
-  /** 根的选择器*/
-  root: string;
-}
 
 /** 文章页面图片预览*/
-const ImagePreview: FC<propsType> = ({ root }) => {
+const ImagePreview = () => {
   const [preview, setPreview] = useState("");
   useEffect(() => {
     let imgs = document.querySelectorAll(
-      `${root} img`
+      `.content-body img`
     ) as unknown as HTMLCollectionOf<HTMLImageElement>;
 
     function setPreviewSrc(e: any) {
@@ -33,7 +28,7 @@ const ImagePreview: FC<propsType> = ({ root }) => {
   }, []);
   useEffect(() => {
     let imgs = document.querySelectorAll(
-      `${root} img`
+      `.content-body img`
     ) as unknown as HTMLCollectionOf<HTMLImageElement>;
 
     function imageLazyLoad() {

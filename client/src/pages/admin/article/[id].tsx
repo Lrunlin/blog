@@ -93,6 +93,7 @@ const Update = () => {
           >
             <Input placeholder="填写网站标题" maxLength={200} />
           </Form.Item>
+          <Form.Item hidden rules={[{ required: true }]} />
 
           <Form.Item
             label="标签"
@@ -157,11 +158,16 @@ const Update = () => {
           >
             <div>
               <Editor
+                theme={true}
                 target="article"
                 initValue={response?.data.data.content}
                 onChange={html => {
                   form.setFieldsValue({ content: html });
                 }}
+                onSetTheme={id => {
+                  form.setFieldsValue({ theme_id: id });
+                }}
+                defaultTheme={response?.data.data.theme_id}
               />
             </div>
           </Form.Item>

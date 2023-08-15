@@ -1,57 +1,63 @@
-import { useEffect, useRef } from "react";
-import { Spin } from "antd";
+import { useEffect, useMemo } from "react";
+import type { FC } from "react";
 import { CloseOutlined } from "@ant-design/icons";
-import useSwr from "swr";
 import axios from "axios";
+import { RecoilRoot } from "recoil";
+
 import Top from "@/components/admin/page/statistics/Top";
 import Bottom from "@/components/admin/page/statistics/Bottom";
 import type { statisticsDataType } from "./type";
-import { atom, useRecoilState } from "recoil";
+import { atom } from "recoil";
+import { parse } from "cookie";
 
 export type { statisticsDataType };
 import Head from "@/components/next/Head";
+import { GetServerSideProps } from "next";
+import useFetch from "@/common/hooks/useFetch";
+import { response } from "@type/response";
 export const statisticsDataContext = atom({
   key: "statistics-data",
   default: null as unknown as statisticsDataType,
 });
-const Statistics = () => {
+const Statistics: FC<{ data: statisticsDataType }> = props => {
   let {
     data: fetchData,
-    isValidating,
     error,
-  } = useSwr(
-    "/statistics/visualization",
-    () => axios.get("/statistics/visualization").then(res => res.data.data),
-    { refreshInterval: 10000 }
+    refetch,
+  } = useFetch(
+    () =>
+      axios
+        .get<response<statisticsDataType>>("/statistics/visualization")
+        .then(res => res.data.data),
+    true
   );
-  let [data, setData] = useRecoilState(statisticsDataContext);
 
-  let isFirstLoad = useRef(true);
-  useEffect(() => {
-    if (isValidating) isFirstLoad.current = false;
-  }, [isValidating]);
+  let data = useMemo(() => fetchData || props.data, [fetchData, props.data]);
 
+  let timer: any;
   useEffect(() => {
-    if (fetchData) setData(fetchData);
-  }, [fetchData]);
+    timer = setInterval(() => {
+      refetch();
+    }, 20000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <>
-      <Head title="数据分析" />
-      <Spin
-        spinning={isValidating && isFirstLoad.current}
-        size="large"
-        tip="请求中..."
-        className="w-screen h-screen"
-      >
+      <RecoilRoot initializeState={({ set }) => set(statisticsDataContext, data)}>
+        <Head title="数据分析" />
         <div
           className="min-h-screen min-w-full"
           style={{
-            backgroundImage: `url(/image/admin/statistics/bg.jpg)`,
+            backgroundImage: `url(${process.env.CDN}/image/admin/statistics/bg.jpg)`,
             backgroundSize: "100vw 100vh",
           }}
         >
-          <div className="text-2xl text-statistics-cyan-color text-center font-black pt-0.25vw">数据分析</div>
+          <div className="text-2xl text-statistics-cyan-color text-center font-black pt-0.25vw">
+            数据分析
+          </div>
           {error && (
             <div className="text-white text-center text-2xl font-black mt-10 ">
               <CloseOutlined
@@ -72,8 +78,20 @@ const Statistics = () => {
             </main>
           )}
         </div>
-      </Spin>
+      </RecoilRoot>
     </>
   );
 };
 export default Statistics;
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  let { token } = parse(ctx?.req?.headers?.cookie + "");
+
+  let data = await axios
+    .get<response<statisticsDataType>>("/statistics/visualization", {
+      headers: { authorization: token || "" },
+    })
+    .then(res => res.data.data);
+
+  return { props: { data: data } };
+};

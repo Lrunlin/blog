@@ -1,7 +1,8 @@
 import { useSetRecoilState } from "recoil";
 import { editorModeContext } from "../index";
-import type { BytemdAction, BytemdEditorContext } from "bytemd";
-const UseRichTextPlugin = () => {
+import type { BytemdPlugin } from "bytemd";
+
+const UseRichTextPlugin = (): BytemdPlugin => {
   let setState = useSetRecoilState(editorModeContext);
   return {
     actions: [

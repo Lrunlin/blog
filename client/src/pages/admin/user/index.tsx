@@ -57,7 +57,7 @@ const UserList = () => {
             {item.github && (
               <a href={item.github} target="_blank">
                 <img
-                  src="/icon/admin/statistics/github.svg"
+                  src="/icon/admin/github.svg"
                   alt="github图标"
                   className="w-5 cursor-pointer mr-4"
                 />

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Modal, Select } from "antd";
 import axios from "axios";
+import type { BytemdPlugin } from "bytemd";
 
-const { confirm } = Modal;
-const { Option } = Select;
-
-const LanguageListPlugin = () => {
+const LanguageListPlugin = (): BytemdPlugin => {
+  const { confirm } = Modal;
+  const { Option } = Select;
   let [data, setData] = useState<{ title: string; language: string }[]>([]);
   useEffect(() => {
     axios

@@ -39,6 +39,7 @@ export interface ArticleAttributes {
   collection_state: number[] | null;
   like_count: number;
   like_state: number;
+  theme_id: number;
 }
 export interface UserAttributes {
   id: number;
@@ -104,7 +105,7 @@ export interface NoticeAttributes {
 export interface ProblemAttributes {
   id: number;
   title: string;
-  tag: {name:string}[];
+  tag: { name: string }[];
   /** 答案数量*/
   answer_count: number;
   content: string;

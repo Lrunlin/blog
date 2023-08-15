@@ -28,7 +28,7 @@ React 状态管理 Recoil
 系统提供一 份用户端为 Vue3 的 CSR 版本(前端 Vue3,服务端 Node.js 使用 JavaScript)  
 以及一份[Next.js+Vue3+Express 版本](https://github.com/Lrunlin/web_blog "个人博客")（作者主页可见，开源）
 
-可联系 QQ:1974109227   微信:webzhizhuo
+可联系 QQ:1974109227 微信:webzhizhuo
 
 ## 相关链接
 
@@ -51,6 +51,7 @@ React 状态管理 Recoil
 6. 关注作者、收藏夹功能、收藏文章 以及对应的列表查询
 7. 站内信提醒设置(文章、评论)
 8. 文章发布数量、粉丝排行榜
+9. 文章页面主题模式
 
 ### 管理系统
 
@@ -58,21 +59,20 @@ React 状态管理 Recoil
 2. 可以查询指定文章信息并对其修改、删除
 3. 发布文章可以上传图片并对图片进行水印添加和压缩
 4. 可以添加、查询文章类型
-6. 可以简单获取服务器当前信息(大屏数据可视化)
-7. 可以查询用户留言进行并且删除
-8. 爬虫系统，自动文章(思否、掘金)抓取
-9. 推广内容的数据处理
-10. 评论管理
-11. 首页消息通知
+5. 可以简单获取服务器当前信息(大屏数据可视化)
+6. 可以查询用户留言进行并且删除
+7. 爬虫系统，自动文章(思否、掘金)抓取
+8. 推广内容的数据处理
+9. 评论管理
+10. 首页消息通知
 
 ## 更新计划
 
 1. 用户端 UI 进行美化以及去 Ant Design
 2. ~~积分功能~~
-3. 文章页面主题模式
-4. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
-5. Redis 接口缓存以及对应的事务处理
-6. 小组功能
+3. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
+4. Redis 接口缓存以及对应的事务处理
+5. 小组功能
 
 ### 环境变量
 
@@ -109,7 +109,6 @@ React 状态管理 Recoil
 [使用 puppeteer 爬取掘金文章并直接存入数据库](https://github.com/Lrunlin/puppeteer-juejin-blog)
 
 [使用 puppeteer 爬取掘金文章将数据和图片直接保存为本地文件](https://github.com/Lrunlin/puppeteer-juejin)
-
 
 参考文章:[Puppeteer 爬取掘金文章](https://blogweb.cn/article/1197996635410),[Puppeteer 连接已有 Chrome 浏览器](https://blogweb.cn/article/6064301311)
 

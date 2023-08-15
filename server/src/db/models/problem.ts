@@ -9,6 +9,7 @@ export interface ProblemAttributes {
   content: string;
   author: number;
   answer_id?: number;
+  theme_id: number;
   view_count: number;
   create_time: Date;
   update_time?: Date;
@@ -29,6 +30,7 @@ export class Problem
   content!: string;
   author!: number;
   answer_id?: number;
+  theme_id!: number;
   view_count!: number;
   create_time!: Date;
   update_time?: Date;
@@ -79,6 +81,11 @@ export class Problem
           type: DataTypes.BIGINT,
           allowNull: true,
           comment: "采纳答案的ID",
+        },
+        theme_id: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          comment: "主题ID默认default的ID",
         },
         view_count: {
           type: DataTypes.INTEGER,

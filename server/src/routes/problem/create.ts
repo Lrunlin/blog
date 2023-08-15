@@ -12,6 +12,7 @@ router.post("/problem", verify, async ctx => {
     content,
     create_time: new Date(),
     view_count: 0,
+    theme_id: 0,
     author: ctx.id as number,
   })
     .then(res => {

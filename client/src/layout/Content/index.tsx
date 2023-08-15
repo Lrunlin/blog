@@ -3,7 +3,6 @@ import type { FC, ReactNode } from "react";
 import Sidebar from "@/layout/Sidebar";
 import axios from "axios";
 import classNames from "classnames";
-import style from "@/styles/article.module.scss";
 import dynamic from "next/dynamic";
 import Script from 'next/script'
 const ImagePreview = dynamic(() => import("@/components/page/article/ImagePreview"), {
@@ -32,7 +31,7 @@ const Layout: FC<propsType> = props => {
     <Sidebar className={classNames(["pb-16", props.className])} Aside={props.Aside}>
       {props.ToolBar}
       {props.children}
-      <ImagePreview root={`.${style.article}`} />
+      <ImagePreview />
       <Script src={`${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`} />
       {props.language && (
         <>

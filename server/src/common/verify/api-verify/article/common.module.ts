@@ -4,6 +4,7 @@ import { urlAllowNull } from "../../modules/url";
 import { fileNameAllowNull } from "../../modules/file-name";
 import exist from "@/common/utils/static/exist";
 import { load } from "cheerio";
+import DB from "@/db";
 
 /** 创建、更新、文章、草稿箱 多个配置*/
 export default {
@@ -23,6 +24,15 @@ export default {
     }
   }),
   tag: tag,
+  theme_id: Joi.number()
+    .min(0)
+    .required()
+    .external(async (value: number) => {
+      let result = await DB.Theme.findByPk(value, { attributes: ["id"] })
+        .then(res => !!res)
+        .catch(err => false);
+      if (!result) throw new Error('主题ID不存在');
+    }),
   content: Joi.string()
     .min(20)
     .required()

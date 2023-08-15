@@ -5,7 +5,7 @@ import verify from "@/common/verify/api-verify/article/update-article";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/article/create-article";
 router.put("/article/:id", verify, async ctx => {
-  let { title, description, cover_file_name, reprint, content, tag, view_count, state } =
+  let { title, description, cover_file_name, reprint, content, tag, view_count, state, theme_id } =
     ctx.request.body;
   let id = +ctx.params.id as number;
   let where: { id: number; author?: number } = {
@@ -46,6 +46,7 @@ router.put("/article/:id", verify, async ctx => {
       tag: tag,
       state: oldState == 1 ? 1 : state,
       update_time: new Date(),
+      theme_id,
       view_count: ctx.auth == 1 ? view_count : undefined,
     },
     {

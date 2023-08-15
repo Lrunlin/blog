@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { Badge, Button, message } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import style from "@/styles/article.module.scss";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
@@ -107,7 +106,7 @@ const Answer: FC = () => {
               </div>
             </div>
             <div
-              className={classNames(["mt-2", style.article])}
+              className={classNames(["mt-2 content-body"])}
               dangerouslySetInnerHTML={{ __html: item.content }}
             ></div>
             {data.answer_id == item.id ? (

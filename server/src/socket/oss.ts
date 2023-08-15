@@ -72,10 +72,10 @@ async function getOSSList(prefix: string) {
     const pipeline = await redis.pipeline();
     for (const item of result.items) {
       let time = Math.floor(item.putTime / 10000);
-      // if (+new Date() - time > 2_592_000_000 /*30天*/) {
-      let key = item.key.replace(`${prefix}/`, "");
-      await pipeline.sadd(`imagelist-oss-${prefix}`, key);
-      // }
+      if (+new Date() - time > 2_592_000_000 /*30天*/) {
+        let key = item.key.replace(`${prefix}/`, "");
+        await pipeline.sadd(`imagelist-oss-${prefix}`, key);
+      }
     }
     await pipeline.exec();
 
@@ -281,7 +281,7 @@ async function getDataBaseList() {
       });
 
       let values = rows.map(item => item.logo_file_name);
-      pipeline.sadd(`imagelist-database-link`, values);
+      pipeline.sadd(`imagelist-database-friendly-link`, values);
 
       if (rows.length < 2000) {
         break;
