@@ -374,6 +374,7 @@ io.on("connection", socket => {
 
   // 开始执行统计任务
   socket.on("start", async () => {
+    init();
     code = 2;
     io.emit("info", {
       code,

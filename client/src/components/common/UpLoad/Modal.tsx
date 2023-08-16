@@ -73,7 +73,7 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
         </div>
         <div>
           <span>缩放:</span>
-          <Slider value={zoom} onChange={v => setZoom(v)} min={1} max={5} step={0.01} />
+          <Slider value={zoom} onChange={v => setZoom(v)} min={-0.2} max={5} step={0.01} />
         </div>
         <div>
           <span>旋转:</span>

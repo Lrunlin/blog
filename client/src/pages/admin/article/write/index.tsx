@@ -117,6 +117,9 @@ const Write = () => {
               onChange={html => {
                 form.setFieldsValue({ content: html });
               }}
+              onSetTheme={id => {
+                form.setFieldsValue({ theme_id: id });
+              }}
             />
           </div>
         </Form.Item>

@@ -29,6 +29,7 @@ const OSS = () => {
 
   function start() {
     setMessageList([]);
+    setList([]);
     socket!.emit("start");
   }
   function remove() {
