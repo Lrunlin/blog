@@ -10,10 +10,13 @@ const UserData = () => {
   return (
     <>
       <div className="flex items-center">
-        <Dropdown
+        <Dropdown.Button
           arrow={true}
+          icon={<DownOutlined />}
+          type="primary"
           placement="bottomRight"
           className="flex items-center"
+          onClick={() => router.push("/creator")}
           dropdownRender={() => (
             <div className="shadow-md rounded-sm p-2 flex bg-white">
               <div className="p-3 cursor-pointer" onClick={() => router.push("/article/editor")}>
@@ -34,13 +37,8 @@ const UserData = () => {
             </div>
           )}
         >
-          <div>
-            <Button type="primary" onClick={() => router.push("/creator")}>
-              创作者中心
-            </Button>
-            <Button type="primary" icon={<DownOutlined />} />
-          </div>
-        </Dropdown>
+          创作者中心
+        </Dropdown.Button>
         <News className="mx-8" />
         <Avatar />
       </div>

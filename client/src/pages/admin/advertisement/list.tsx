@@ -2,7 +2,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { Skeleton, Result, Table, Image, Button } from "antd";
 import { useRouter } from "next/navigation";
-import moment from "moment";
+import dayjs from "dayjs";
 import AdminLayout from "@/layout/Admin/Base";
 let positionMapping = {
   index: "首页",
@@ -54,7 +54,7 @@ const APP = () => {
       title: "发布时间",
       dataIndex: "create_time",
       render(time: string) {
-        return moment(time).format("YYYY-MM-DD HH:mm:ss");
+        return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
       },
     },
     {

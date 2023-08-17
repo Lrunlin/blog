@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Editor from "@/components/common/Editor";
 import { Button, Form, Input, message, TreeSelect } from "antd";
 import axios from "axios";
@@ -7,27 +6,25 @@ import useSwr from "swr";
 import getType from "@/request/getType";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/layout/Admin/Base";
+import useFetch from "@/common/hooks/useFetch";
 
 const Write = () => {
   let { useForm } = Form;
   let [form] = useForm();
   let router = useRouter();
-  const [load, setLoad] = useState(false);
-  function onFinish(values: any) {
-    setLoad(true);
-    axios
-      .post("/article", { ...values, state: 1 })
-      .then(res => {
-        message.success(res.data.message);
-        router.replace("/admin/article/list");
-      })
-      .catch(err => {
-        message.error(err.message);
-      })
-      .finally(() => {
-        setLoad(false);
-      });
-  }
+  let { isLoading, refetch: onFinish } = useFetch(
+    (values: any) =>
+      axios
+        .post("/article", { ...values, state: 1 })
+        .then(res => {
+          message.success(res.data.message);
+          router.replace("/admin/article/list");
+        })
+        .catch(err => {
+          message.error(err.message);
+        }),
+    true
+  );
 
   let { data: treeData } = useSwr("/type/tree", () =>
     getType().then(res => {
@@ -43,6 +40,7 @@ const Write = () => {
           description: null,
           cover_file_name: null,
           reprint: null,
+          theme_id: 0,
         }}
         labelCol={{ span: 2 }}
         wrapperCol={{ span: 16 }}
@@ -60,7 +58,9 @@ const Write = () => {
         >
           <Input placeholder="填写网站标题" maxLength={200} />
         </Form.Item>
-        <Form.Item hidden rules={[{ required: true }]} />
+        <Form.Item name="theme_id" hidden rules={[{ required: true }]}>
+          <></>
+        </Form.Item>
         <Form.Item
           label="标签"
           name="tag"
@@ -125,7 +125,7 @@ const Write = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 2, span: 16 }}>
-          <Button type="primary" htmlType="submit" disabled={load}>
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             发布
           </Button>
         </Form.Item>

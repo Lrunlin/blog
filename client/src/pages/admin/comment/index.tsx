@@ -2,7 +2,7 @@ import { useState, useEffect, startTransition } from "react";
 import axios from "axios";
 import { message, Table, Avatar, Image, Button, Popover, DatePicker } from "antd";
 import Link from "next/link";
-import moment from "moment";
+import dayjs from "dayjs";
 import AdminLayout from "@/layout/Admin/Base";
 
 const Comment = () => {
@@ -64,7 +64,7 @@ const Comment = () => {
             inputReadOnly={true}
             allowClear={false}
             showTime
-            defaultValue={moment(create_time)}
+            defaultValue={dayjs(create_time)}
           />
         );
       },

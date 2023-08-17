@@ -5,7 +5,7 @@ import "@/plugin/axios";
 
 import "@/plugin/dayjs";
 
-import "antd/dist/antd.min.css";
+import "@/styles/reset.css";
 import "@/styles/globals.scss";
 
 import { parse } from "cookie";

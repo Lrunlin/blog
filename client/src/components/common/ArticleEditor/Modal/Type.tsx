@@ -20,7 +20,7 @@ const Type = () => {
   return (
     <>
       {/* 类型 */}
-      <div className="pb-2 flex flex-wrap">
+      <div className="pb-2 flex flex-wrap w-full">
         {data &&
           data.map((item, index) => (
             <Badge

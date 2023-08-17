@@ -5,11 +5,12 @@ import { Button, Alert, Table, message, Card } from "antd";
 import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client";
 import type { DefaultEventsMap } from "@socket.io/component-emitter";
-import moment from "moment";
+import dayjs from "dayjs";
 import { DeleteOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { DisconnectOutlined, LinkOutlined } from "@ant-design/icons";
 import cookie from "js-cookie";
+dayjs.extend(() => import("dayjs/plugin/duration"));
 
 const OSS = () => {
   const [info, setInfo] = useState<null | { code: -1 | 0 | 1 | 2 | null; message: string }>(null);
@@ -83,7 +84,7 @@ const OSS = () => {
   let timer: any;
   useEffect(() => {
     function setTime() {
-      const du = moment.duration(+new Date(time!) + 86_400_000 - +new Date(), "ms"),
+      const du = dayjs.duration(+new Date(time!) + 86_400_000 - +new Date(), "ms"),
         hours = du.get("hours"),
         mins = du.get("minutes"),
         ss = du.get("seconds");
@@ -151,7 +152,7 @@ const OSS = () => {
               message={
                 <div>
                   <span>数据获取时间:</span>
-                  <b className="mx-1">{moment(time!).format("MM-DD hh:mm:ss")}</b>
+                  <b className="mx-1">{dayjs(time!).format("MM-DD hh:mm:ss")}</b>
                   <span>数据有效时间一天</span>
                   <span className="mx-1">剩余时间：</span>
                   <b>{countdown}</b>

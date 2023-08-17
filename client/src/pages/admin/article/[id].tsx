@@ -7,6 +7,7 @@ import useSwr, { useSWRConfig } from "swr";
 import getType from "@/request/getType";
 import { useRouter, useSearchParams } from "next/navigation";
 import AdminLayout from "@/layout/Admin/Base";
+import useFetch from "@/common/hooks/useFetch";
 
 const Update = () => {
   let { useForm } = Form;
@@ -26,17 +27,19 @@ const Update = () => {
   });
 
   /** 更新文章，提交*/
-  function onFinish(values: any) {
-    axios
-      .put(`/article/${id}`, { ...values, state: 1 })
-      .then(res => {
-        message.success(res.data.message);
-        mutate(`/article/${id}`);
-      })
-      .catch(err => {
-        message.error(err.message);
-      });
-  }
+  let { isLoading, refetch: onFinish } = useFetch(
+    (values: any) =>
+      axios
+        .put(`/article/${id}`, { ...values, state: 1 })
+        .then(res => {
+          message.success(res.data.message);
+          mutate(`/article/${id}`);
+        })
+        .catch(err => {
+          message.error(err.message);
+        }),
+    true
+  );
 
   //获取typeTree
   let { data: treeData } = useSwr("/type/tree", () =>
@@ -93,8 +96,9 @@ const Update = () => {
           >
             <Input placeholder="填写网站标题" maxLength={200} />
           </Form.Item>
-          <Form.Item hidden rules={[{ required: true }]} />
-
+          <Form.Item name="theme_id" hidden rules={[{ required: true }]}>
+            <></>
+          </Form.Item>
           <Form.Item
             label="标签"
             name="tag"
@@ -173,7 +177,7 @@ const Update = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 2, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={isLoading}>
               更新
             </Button>
           </Form.Item>

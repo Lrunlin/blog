@@ -1,7 +1,7 @@
 import { useState, useEffect, startTransition } from "react";
 import { message, Table, Avatar, DatePicker, Popover } from "antd";
 import Link from "next/link";
-import moment from "moment";
+import dayjs from "dayjs";
 import axios from "axios";
 import copy from "copy-to-clipboard";
 import AdminLayout from "@/layout/Admin/Base";
@@ -93,7 +93,7 @@ const UserList = () => {
       dataIndex: "create_time",
       width: 140,
       render: (create_time: string) => {
-        return <DatePicker showTime defaultValue={moment(create_time)} />;
+        return <DatePicker showTime defaultValue={dayjs(create_time)} />;
       },
     },
     {

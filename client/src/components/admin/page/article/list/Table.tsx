@@ -5,7 +5,7 @@ import Link from "next/link";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
 import { articleListDataContext } from "@/pages/admin/article/list/index";
 import classNames from "classnames";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export const tableOptionContext = atom({
   key: "table-option",
@@ -126,7 +126,7 @@ const TableCom = () => {
       title: "发布时间",
       dataIndex: "create_time",
       render: (create_time: any) => {
-        return <DatePicker defaultValue={moment(create_time)} showTime />;
+        return <DatePicker defaultValue={dayjs(create_time)} showTime />;
       },
       width: 200,
     },
