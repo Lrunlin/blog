@@ -22,7 +22,7 @@ const siteData = [
   { label: "网站名称", value: process.env.NEXT_PUBLIC_SITE_NAME },
   { label: "网址", value: process.env.NEXT_PUBLIC_HOST },
   { label: "Logo", value: `${process.env.NEXT_PUBLIC_HOST}/favicon.svg` },
-  { label: "网站介绍", value: `${process.env.NEXT_PUBLIC_SITE_NAME}:一个多人技术博客社区` },
+  { label: "网站介绍", value: `${process.env.NEXT_PUBLIC_SITE_NAME}:一个技术博客社区` },
 ];
 
 const Links: NextPage<{ data: linkItem[] }> = props => {
@@ -125,7 +125,7 @@ const Links: NextPage<{ data: linkItem[] }> = props => {
                 aspect={1}
                 target="friendly-link"
                 width={100}
-                onSuccess={({file_name}) => {
+                onSuccess={({ file_name }) => {
                   form.setFieldsValue({ logo_file_name: file_name });
                 }}
               />

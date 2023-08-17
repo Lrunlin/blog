@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import cookie from "js-cookie";
 import useUserData from "@/store/user-data";
 
-
 interface itemPropsType {
   isValidating: boolean;
   data: ReactNode;
@@ -16,6 +15,7 @@ interface itemPropsType {
 const Item: FC<itemPropsType> = ({ isValidating, data }) => {
   return <>{isValidating ? <span className="px-1 py-0.5 bg-slate-300"></span> : data}</>;
 };
+
 const Menu: FC = () => {
   let router = useRouter();
   let [userData] = useUserData();

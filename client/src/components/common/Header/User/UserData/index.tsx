@@ -14,7 +14,7 @@ const UserData = () => {
           arrow={true}
           icon={<DownOutlined />}
           type="primary"
-          placement="bottomRight"
+          placement="bottomLeft"
           className="flex items-center"
           onClick={() => router.push("/creator")}
           dropdownRender={() => (
