@@ -6,13 +6,15 @@ import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client";
 import type { DefaultEventsMap } from "@socket.io/component-emitter";
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
 import { DeleteOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { DisconnectOutlined, LinkOutlined } from "@ant-design/icons";
 import cookie from "js-cookie";
-dayjs.extend(() => import("dayjs/plugin/duration"));
+dayjs.extend(duration);
 
 const OSS = () => {
+
   const [info, setInfo] = useState<null | { code: -1 | 0 | 1 | 2 | null; message: string }>(null);
   const [deleteCode, setDeleteCode] = useState<null | 0 | 1 | 2>(null);
   const [list, setList] = useState<
