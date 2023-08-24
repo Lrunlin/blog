@@ -13,19 +13,22 @@ import { parse } from "cookie";
 import axios from "axios";
 
 import Recoil, { userInfo } from "@/plugin/recoil";
+import Antd from "@/plugin/antd";
+import SWR from "@/plugin/swr";
+
 export interface Props extends AppProps {
   userInfo: userInfo;
 }
-import SWR from "@/plugin/swr";
-
 const APP: NextPage<Props> = ({ Component, pageProps, userInfo }) => {
   return (
     <>
-      <Recoil userInfo={userInfo}>
-        <SWR>
-          <Component {...pageProps} />
-        </SWR>
-      </Recoil>
+      <Antd>
+        <Recoil userInfo={userInfo}>
+          <SWR>
+            <Component {...pageProps} />
+          </SWR>
+        </Recoil>
+      </Antd>
     </>
   );
 };

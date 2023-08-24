@@ -23,9 +23,9 @@ export function doExtraStyle({ cache }: DoExtraStyleOptions) {
   const fileName = `${hash.substring(0, 18)}.css`;
   const fullpath = path.join(baseDir, fileName);
 
-  if (fs.existsSync(fullpath)) return `/api/antd/${fileName}`;
+  if (fs.existsSync(fullpath)) return `/antd/${fileName}`;
 
   fs.writeFileSync(fullpath, css);
 
-  return `/api/antd/${fileName}`;
+  return `/antd/${fileName}`;
 }

@@ -17,20 +17,22 @@ const MyDocument = () => (
 );
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
-  const cache = createCache();
   let fileName = antdFileNameMap[ctx.pathname] || "";
-  const originalRenderPage = ctx.renderPage;
+
+  let cache = createCache();
+  let originalRenderPage = ctx.renderPage;
   ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: App => props =>
-        (
+        !fileName ? (
           <StyleProvider cache={cache}>
             <App {...props} />
           </StyleProvider>
+        ) : (
+          <App {...props} />
         ),
     });
-
-  const initialProps = await Document.getInitialProps(ctx);
+  let initialProps = await Document.getInitialProps(ctx);
 
   if (!fileName) {
     fileName = doExtraStyle({
@@ -44,7 +46,7 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
     styles: (
       <>
         {initialProps.styles}
-        {fileName && <link rel="stylesheet" href={`${process.env.CDN}${fileName}`} />}
+        <link rel="stylesheet" href={`${process.env.CDN}${fileName}`} />
       </>
     ),
   };

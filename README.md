@@ -89,6 +89,8 @@ React 状态管理 Recoil
 
 #### 启动步骤
 
+_如果在安装时出现了`sharp`插件安装失败的问题，可以翻墙使用代理节点重新执行`install`，或参考[sharp 文档中相关内容 chinese mirror](https://sharp.pixelplumbing.com/install#chinese-mirror)_
+
 1. 导入 SQL 文件
 2. npm install yarn -g _(如果有 yarn 请忽略)_
 3. 点击 install.bat 自动安装依赖 _(完成后关闭 cmd 窗口)_
@@ -103,14 +105,6 @@ React 状态管理 Recoil
 1. 服务器:[腾讯云](https://curl.qcloud.com/VEizLhRn "腾讯云,轻量应用服务器")（推荐）
 2. 服务器:[阿里云](https://www.aliyun.com/daily-act/ecs/activity_selection?userCode=46qdmkc0 "阿里云,轻量应用服务器")
 3. CDN/OSS:[七牛云](https://s.qiniu.com/NZ3Iz2 "七牛云,CDN,OSS")
-
-## 网络爬虫
-
-[使用 puppeteer 爬取掘金文章并直接存入数据库](https://github.com/Lrunlin/puppeteer-juejin-blog)
-
-[使用 puppeteer 爬取掘金文章将数据和图片直接保存为本地文件](https://github.com/Lrunlin/puppeteer-juejin)
-
-参考文章:[Puppeteer 爬取掘金文章](https://blogweb.cn/article/1197996635410),[Puppeteer 连接已有 Chrome 浏览器](https://blogweb.cn/article/6064301311)
 
 ## Star History
 
