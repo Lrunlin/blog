@@ -21,6 +21,9 @@ function setExternalLink(content: string) {
     $(el)
       .attr("href", setURL($(el).attr("href")!))
       .attr("target", "_blank");
+    if (process.env.CLIENT_HOST!.includes(url.parse($(el).attr("href")!).hostname!)) {
+      $(el).attr("rel", "nofollow noopener noreferrer");
+    }
   });
   return $("body").html() as string;
 }

@@ -2,6 +2,11 @@ import { Divider, Button } from "antd";
 import { useSearchParams } from "next/navigation";
 const Link = () => {
   const searchParams = useSearchParams();
+  let textHref = searchParams
+    .get("target")
+    ?.match(
+      /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/
+    );
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
@@ -14,7 +19,7 @@ const Link = () => {
           <div className="text-lg">
             即将离开{process.env.NEXT_PUBLIC_SITE_NAME}，请注意账号财产安全
           </div>
-          <div className="mt-2 text-gray-500">{searchParams.get("target")}</div>
+          <div className="mt-2 text-gray-500 truncate">{textHref ? textHref[0] : "错误的链接"}</div>
           <Divider className="my-3" />
           <div className="flex justify-end">
             <Button type="primary" href={searchParams.get("target")!}>
