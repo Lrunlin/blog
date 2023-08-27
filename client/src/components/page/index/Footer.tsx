@@ -17,8 +17,8 @@ let list: listItemType[][] = [
       label: "友情链接",
     },
     {
-      href: "/sitemap/index.xml",
-      label: "SiteMap",
+      href: "/sitemap/1",
+      label: "站点地图",
     },
     {
       href: "/about",
@@ -50,7 +50,7 @@ const Footer = () => {
   return (
     <footer className="w-60 mb-6">
       {list.map((item, index) => (
-        <ul className="p-0 m-0 text-sm list-none flex items-center" key={`footer-link-${index}`}>
+        <ul className="p-0 m-0 text-sm list-none flex items-center mt-2" key={`footer-link-${index}`}>
           {item.map((_item, _index) => (
             <li
               className={classNames([style["child-a-gray"], _index && "ml-2", "mt-1"])}

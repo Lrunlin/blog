@@ -15,7 +15,7 @@ router.get("/problem/update/:id", authMiddleware(0), interger([], ["id"]), async
           message: "查询成功",
           data: {
             ...row.toJSON(),
-            content: imgPrefix(row.toJSON().content, { prefix: "problem", update: true }),
+            content: imgPrefix(row.toJSON().content, "problem"),
           },
         };
       } else {

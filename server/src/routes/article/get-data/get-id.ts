@@ -76,20 +76,14 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async ctx => {
             ...data,
             description,
             tag,
-            content: imgPrefix(
-              data.content,
-              {
-                prefix: "article",
-              },
-              data.title
-            ),
+            content: imgPrefix(data.content, "article"),
           };
 
           data = { ...data, content: setExternalLink(data.content) };
         } else {
           data = {
             ...data,
-            content: imgPrefix(data.content, { update: true, prefix: "article" }, data.title),
+            content: imgPrefix(data.content, "article"),
           };
         }
 

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import dynamic from "next/dynamic";
 const ADS = dynamic(() => import("./ADS"), { ssr: false });
 
 /** Google ADS*/
-const AdSense = () => {
+const AdSense = memo(() => {
   const [isLoad, setIsLoad] = useState(true); //加载中
 
   useEffect(() => {
@@ -36,5 +36,5 @@ const AdSense = () => {
       )}
     </div>
   );
-};
+});
 export default AdSense;

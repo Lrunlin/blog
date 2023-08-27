@@ -19,7 +19,7 @@ router.get("/answer", verify, async ctx => {
           success: true,
           message: "查询答案并且以MarkDown形式返回内容",
           data: Object.assign(row, {
-            content: setImageTag(row.content, { update: true, prefix: "answer" }),
+            content: setImageTag(row.content, "answer"),
           }),
         };
       } else {

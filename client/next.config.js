@@ -44,6 +44,24 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/sitemap/index:path*.xml",
+        destination: "/sitemap/index[index].xml",
+      },
+      {
+        source: "/sitemap/:path*",
+        destination: "/sitemap/[index]",
+        has: [
+          {
+            type: "query",
+            key: "index",
+          },
+        ],
+      },
+    ];
+  },
   generateBuildId: () => buildid(),
   env: env,
 };

@@ -1,6 +1,5 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import moment from "moment";
 let router = new Router();
 
 router.get("/sitemap", async ctx => {

@@ -1,6 +1,6 @@
 {
   "watch": "./dist",
   "events": {
-    "crash": "node ./bin/dev"
+    "crash": "yarn start"
   }
 }
