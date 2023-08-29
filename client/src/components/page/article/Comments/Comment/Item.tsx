@@ -84,14 +84,14 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
         <div className="mt-3 ml-1 break-all">
           <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
           {data.reply && (
-            <div className="mt-0.5 px-1 py-0.5 text-gray-500 bg-gray-100 border border-solid border-gray-200 rounded-sm line-clamp-1">
+            <div className="mt-1 px-1 py-0.5 text-gray-500 bg-gray-100 border border-solid border-gray-200 rounded-sm line-clamp-1">
               “{data.reply.content}”
             </div>
           )}
         </div>
         {/* 评论图片展示 */}
         {data.comment_pics && (
-          <div>
+          <div className="mt-1">
             <AntdImage
               width={60}
               height={60}

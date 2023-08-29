@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import useSWR from "swr";
 import axios from "axios";
 import Layout from "@/components/page/creator/Layout";
-import { Autoplay, Pagination } from "swiper";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import useUserData from "@/store/user-data";
@@ -28,7 +28,7 @@ const APP: NextPage = () => {
     <Layout>
       <div className="shadow-sm">
         {/* 顶部轮播图部分 */}
-        <div className="w-full h-60 bg-white p-4">
+        <div className="w-full h-60 bg-white">
           {isValidating && <div className="w-full h-full bg-gray-200"></div>}
           {error && <div className="w-full h-full flex items-center justify-center">请求错误</div>}
           {advertisementData && (

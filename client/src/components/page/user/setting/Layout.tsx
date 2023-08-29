@@ -33,11 +33,11 @@ const Layout: FC<propsType> = ({ children }) => {
   return (
     <Base className="container">
       <div className="w-full m-0">
-        <div
-          className="w-full py-3 bg-white shadow-sm"
-          onClick={() => router.push(`/user/${userData?.id}`)}
-        >
-          <span className="ml-4 cursor-pointer">
+        <div className="w-full py-3 bg-white shadow-sm">
+          <span
+            className="ml-4 cursor-pointer"
+            onClick={() => router.push(`/user/${userData?.id}`)}
+          >
             <LeftOutlined />
             返回个人主页
           </span>

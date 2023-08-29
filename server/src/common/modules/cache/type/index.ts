@@ -1,5 +1,5 @@
 import DB from "@/db";
-import LRU from "lru-cache";
+import { LRUCache } from "lru-cache";
 
 let callbackList: Function[] = [];
 
@@ -10,7 +10,7 @@ let callbackList: Function[] = [];
  * tag 全部的tag
  * tree/client 用户端首页展示的类型树
  */
-const cache = new LRU({
+const cache = new LRUCache({
   max: 20,
 });
 

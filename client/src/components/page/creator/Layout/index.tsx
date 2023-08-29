@@ -23,7 +23,7 @@ const Layout: FC<propsType> = ({ children, className }) => {
     router.prefetch("/article/editor");
     router.prefetch("/article/editor/[id]");
   }, []);
-  
+
   return (
     <>
       <Head title="创作者中心" />
@@ -32,8 +32,10 @@ const Layout: FC<propsType> = ({ children, className }) => {
           <Header />
           <div className="container bg-[#f4f5f5] min-h-screen">
             <div className="flex pt-4">
-              <Aside />
-              <main className={classNames(["w-full ml-64", className])}> {children}</main>
+              <div className="mr-60">
+                <Aside />
+              </div>
+              <main className={classNames(["w-[calc(100%-240px)]  ml-4", className])}> {children}</main>
             </div>
           </div>
         </>

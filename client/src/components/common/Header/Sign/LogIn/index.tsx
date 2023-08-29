@@ -31,7 +31,7 @@ const LogIn = () => {
       .finally(() => setIsLoad(false));
   }
 
-  let timer: NodeJS.Timer;
+  let timer: NodeJS.Timer | number;
   function github() {
     let win = window.open(
       `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`,
@@ -48,7 +48,7 @@ const LogIn = () => {
   }
   useEffect(() => {
     return () => {
-      clearInterval(timer);
+      clearInterval(timer as number);
     };
   }, []);
 

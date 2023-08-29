@@ -2,12 +2,12 @@
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-[class^=ant-]::-ms-clear,
-[class*= ant-]::-ms-clear,
-[class^=ant-] input::-ms-clear,
-[class*= ant-] input::-ms-clear,
-[class^=ant-] input::-ms-reveal,
-[class*= ant-] input::-ms-reveal {
+[class^="ant-"]::-ms-clear,
+[class*="ant-"]::-ms-clear,
+[class^="ant-"] input::-ms-clear,
+[class*="ant-"] input::-ms-clear,
+[class^="ant-"] input::-ms-reveal,
+[class*="ant-"] input::-ms-reveal {
   display: none;
 }
 /* stylelint-disable property-no-vendor-prefix, at-rule-no-vendor-prefix */
@@ -40,13 +40,15 @@ body {
   margin: 0;
   color: rgba(0, 0, 0, 0.85);
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
   font-variant: tabular-nums;
   line-height: 1.5715;
   background-color: #fff;
-  font-feature-settings: 'tnum';
+  font-feature-settings: "tnum";
 }
-[tabindex='-1']:focus {
+[tabindex="-1"]:focus {
   outline: none !important;
 }
 hr {
@@ -66,14 +68,13 @@ h6 {
   font-weight: 500;
 }
 p {
-  margin-top: 0;
-  margin-bottom: 1em;
+  margin: 0;
 }
 abbr[title],
 abbr[data-original-title] {
   text-decoration: underline;
   -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
+  text-decoration: underline dotted;
   border-bottom: 0;
   cursor: help;
 }
@@ -82,9 +83,9 @@ address {
   font-style: normal;
   line-height: inherit;
 }
-input[type='text'],
-input[type='password'],
-input[type='number'],
+input[type="text"],
+input[type="password"],
+input[type="number"],
 textarea {
   -webkit-appearance: none;
 }
@@ -134,7 +135,6 @@ sup {
   top: -0.5em;
 }
 a {
-  color: #1890ff;
   text-decoration: none;
   background-color: transparent;
   outline: none;
@@ -166,7 +166,7 @@ code,
 kbd,
 samp {
   font-size: 1em;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 pre {
   margin-top: 0;
@@ -183,8 +183,8 @@ img {
 a,
 area,
 button,
-[role='button'],
-input:not([type='range']),
+[role="button"],
+input:not([type="range"]),
 label,
 select,
 summary,
@@ -227,21 +227,21 @@ html [type="button"],
   -webkit-appearance: button;
 }
 button::-moz-focus-inner,
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner {
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
   padding: 0;
   border-style: none;
 }
-input[type='radio'],
-input[type='checkbox'] {
+input[type="radio"],
+input[type="checkbox"] {
   box-sizing: border-box;
   padding: 0;
 }
-input[type='date'],
-input[type='time'],
-input[type='datetime-local'],
-input[type='month'] {
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"] {
   -webkit-appearance: listbox;
 }
 textarea {
@@ -268,16 +268,16 @@ legend {
 progress {
   vertical-align: baseline;
 }
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
-[type='search'] {
+[type="search"] {
   outline-offset: -2px;
   -webkit-appearance: none;
 }
-[type='search']::-webkit-search-cancel-button,
-[type='search']::-webkit-search-decoration {
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 ::-webkit-file-upload-button {

@@ -2,7 +2,7 @@ import { Button, InputNumber, Form, Input, Select, message } from "antd";
 import axios from "axios";
 import { useSWRConfig } from "swr";
 import Upload from "@/components/common/UpLoad";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import AdminLayout from "@/layout/Admin/Base";
 const positionSelect = [
   {
@@ -28,6 +28,8 @@ const APP = () => {
   let [form] = useForm();
   let { cache } = useSWRConfig();
   let position = useWatch("position", form);
+  let [uploadKey, setUploadKey] = useState("advertisement-upload-key");
+
   let crop = useMemo(
     () => positionSelect.find(item => item.position == position)?.crop,
     [position]
@@ -66,9 +68,9 @@ const APP = () => {
         >
           <div>
             <Upload
-              noCorp={true}
-              width={200}
-              aspect={3 / 2}
+              key={uploadKey}
+              width={Math.min(200 * crop!, 300)}
+              aspect={crop}
               target="advertisement"
               onSuccess={({ file_name }) => {
                 form.setFieldsValue({ poster_file_name: file_name });
@@ -100,7 +102,14 @@ const APP = () => {
           <InputNumber min={1} />
         </Item>
         <Item label="显示位置" name="position" required>
-          <Select style={{ width: 120 }}>
+          <Select
+            style={{ width: 120 }}
+            onChange={() => {
+              // 清除上传的图片
+              setUploadKey(`advertisement-upload-${+new Date()}`);
+              form.setFieldsValue({ poster_file_name: null });
+            }}
+          >
             {positionSelect.map(item => (
               <Option value={item.position} key={item.position + item.label}>
                 {item.label}

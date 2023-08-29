@@ -21,8 +21,8 @@ async function upload(
     }>
   >(`/static/${target}`, formData, {
     onUploadProgress: progressEvent => {
-      if (progressEvent.lengthComputable) {
-        let complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+      if (progressEvent.progress) {
+        let complete = Math.floor(progressEvent.progress * 100);
         if (complete < 100) {
           changePploadProgress(`上传中:${complete}%`);
         } else {

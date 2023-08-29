@@ -1,11 +1,11 @@
 import DB from "@/db";
 import { ExternalLinkAttributes } from "@/db/models/external_link";
-import LRU from "lru-cache";
+import { LRUCache } from "lru-cache";
 
 /**
  * 存储外链列表
  */
-const cache = new LRU<"list", ExternalLinkAttributes['href'][]>({
+const cache = new LRUCache<"list", ExternalLinkAttributes["href"][]>({
   max: 20,
 });
 

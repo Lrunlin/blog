@@ -1,5 +1,4 @@
 import { useState, useEffect, startTransition, useRef } from "react";
-import type { NextPage } from "next";
 import axios from "axios";
 import Layout from "@/components/page/notification/Layout";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -47,25 +46,31 @@ export interface noticeFollowListType extends NoticeAttributes {
   };
 }
 
-const Notification: NextPage = () => {
+const Notification = () => {
   let [userData] = useUserData();
-  let searchParams = useSearchParams();
+  if (!userData) {
+    return (
+      <Layout>
+        <div className="bg-white h-[400px] flex items-center justify-center">
+          <Empty description="请登录后在查看通知" />
+        </div>
+      </Layout>
+    );
+  }
 
+  let searchParams = useSearchParams();
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   let type = useRef("");
   let page = useRef(1);
   useEffect(() => {
-    if (
-      searchParams!.get("type") &&
-      userData &&
-      ["notice", "system-notification"].includes(searchParams!.get("type") + "")
-    ) {
+    //暂时未开通系统通知
+    if (["notice", "system-notification"].includes(searchParams!.get("type") + "")) {
       type.current = searchParams!.get("type") as string;
       page.current = 1;
       getNoticeData();
     }
-  }, [searchParams, userData]);
+  }, [searchParams]);
 
   function getNoticeData() {
     axios

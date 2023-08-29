@@ -4,7 +4,7 @@ import Sidebar from "@/layout/Sidebar";
 import axios from "axios";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
-import Script from 'next/script'
+import Script from "next/script";
 const ImagePreview = dynamic(() => import("@/components/page/article/ImagePreview"), {
   ssr: false,
 });
@@ -19,20 +19,20 @@ export interface propsType {
 
 /** 内容页面(文章、问答)布局*/
 const Layout: FC<propsType> = props => {
-  useEffect(() => {
-    if (props.language) {
-      let script = document.createElement("script");
-      script.src = `${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`;
-      document.head.append(script);
-    }
-  }, [props.language]);
+  if (typeof window != "undefined" && props.language) {
+    let script = document.createElement("script");
+    script.src = `${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`;
+    document.head.append(script);
+  }
 
   return (
     <Sidebar className={classNames(["pb-16", props.className])} Aside={props.Aside}>
       {props.ToolBar}
       {props.children}
       <ImagePreview />
-      <Script src={`${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`} />
+      <Script
+        src={`${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`}
+      />
       {props.language && (
         <>
           <link
