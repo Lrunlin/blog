@@ -18,11 +18,13 @@ function setURL(href: string) {
 function setExternalLink(content: string) {
   let $ = load(content);
   $("a").each((i, el) => {
-    $(el)
-      .attr("href", setURL($(el).attr("href")!))
-      .attr("target", "_blank");
-    if (process.env.CLIENT_HOST!.includes(url.parse($(el).attr("href")!).hostname!)) {
-      $(el).attr("rel", "nofollow noopener noreferrer");
+    if ($(el).attr("href")) {
+      $(el)
+        .attr("href", setURL($(el).attr("href")!))
+        .attr("target", "_blank");
+      if (process.env.CLIENT_HOST!.includes(url.parse($(el).attr("href")!).hostname!)) {
+        $(el).attr("rel", "nofollow noopener noreferrer");
+      }
     }
   });
   return $("body").html() as string;

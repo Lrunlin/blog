@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useRef } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import Header, { searchOptionContext } from "@/components/admin/page/article/list/Header";
 import { tableOptionContext } from "@/components/admin/page/article/list/Table";
@@ -25,11 +25,17 @@ const ArticleList = memo(() => {
   let searchOption = useRecoilValue(searchOptionContext);
   /** 是否加载中*/
   const [isLoading, setIsLoading] = useState(false);
+
+  let cancel = useRef<() => void>();
   useEffect(() => {
     setIsLoading(true);
+    cancel.current && cancel.current();
+    const controller = new AbortController();
+    cancel.current = () => controller.abort();
     axios
       .get(`/article/page/${tableOption.page}`, {
         params: { page_size: tableOption.page_size, ...searchOption },
+        signal: controller.signal,
       })
       .then(res => {
         setArticleList({
