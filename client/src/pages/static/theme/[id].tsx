@@ -3,7 +3,7 @@ import type { GetServerSideProps } from "next";
 
 const Theme = () => null;
 export default Theme;
-export const getServerSideProps: GetServerSideProps = async ({ req, res, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ res, params }) => {
   if (!(params?.id as string).endsWith(".css")) {
     return { notFound: true };
   }

@@ -1,10 +1,7 @@
-import { useEffect } from "react";
 import type { FC, ReactNode } from "react";
 import Sidebar from "@/layout/Sidebar";
-import axios from "axios";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
-import Script from "next/script";
 const ImagePreview = dynamic(() => import("@/components/page/article/ImagePreview"), {
   ssr: false,
 });
@@ -20,8 +17,10 @@ export interface propsType {
 /** 内容页面(文章、问答)布局*/
 const Layout: FC<propsType> = props => {
   if (typeof window != "undefined" && props.language) {
+    document.getElementById("highLightScript");
     let script = document.createElement("script");
-    script.src = `${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`;
+    script.id = "highLightScript";
+    script.src = `${process.env.CDN}/static/high-light/js?languages=${props.language?.join(",")}`;
     document.head.append(script);
   }
 
@@ -30,30 +29,31 @@ const Layout: FC<propsType> = props => {
       {props.ToolBar}
       {props.children}
       <ImagePreview />
-      <Script
-        src={`${axios.defaults.baseURL}/high-light/js?languages=${props.language?.join(",")}`}
-      />
+
+      <style jsx global>
+        {`
+          .toolbar-item {
+            margin-right: 6px;
+          }
+          .toolbar-item > a,
+          .toolbar-item > button,
+          .toolbar-item > span {
+            border: 1px solid #bbb !important;
+            border-radius: 3px !important;
+            cursor: pointer;
+          }
+
+          .content-body img {
+            cursor: zoom-in !important;
+            max-width: 100%;
+          }
+        `}
+      </style>
       {props.language && (
-        <>
-          <link
-            rel="stylesheet"
-            href={`${axios.defaults.baseURL}/high-light/css?languages=${props.language?.join(",")}`}
-          />
-          <style jsx global>
-            {`
-              .toolbar-item {
-                margin-right: 6px;
-              }
-              .toolbar-item > a,
-              .toolbar-item > button,
-              .toolbar-item > span {
-                border: 1px solid #bbb !important;
-                border-radius: 3px !important;
-                cursor: pointer;
-              }
-            `}
-          </style>
-        </>
+        <link
+          rel="stylesheet"
+          href={`${process.env.CDN}/static/high-light/css?languages=${props.language.join(",")}`}
+        />
       )}
     </Sidebar>
   );

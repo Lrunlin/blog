@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, memo } from "react";
+import { useState, useEffect, memo } from "react";
 import type { FC } from "react";
 import { Menu } from "antd";
 import items from "./items";

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Notice from "@/components/admin/page/index/notice";
 import AdminLayout from "@/layout/Admin/Base";
 import Image from "@/components/next/Image";
+import Link from "next/link";
 
 const Index = () => {
   let router = useRouter();
@@ -34,10 +35,13 @@ const Index = () => {
           <Divider />
           {data ? (
             <div className="flex justify-between cursor-pointer">
-              <div className="text-center" onClick={() => router.push("/admin/statistics")}>
+              <Link
+                href="/admin/statistics"
+                className="text-center"
+              >
                 <Image width={48} height={48} src="/icon/admin/数据看板.svg" alt="data-icon" />
                 <div className="mt-1"> 数据分析</div>
-              </div>
+              </Link>
               <a
                 className="text-center block"
                 href={data?.repository_data?.html_url}
