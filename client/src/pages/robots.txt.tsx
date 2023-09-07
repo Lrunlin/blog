@@ -5,7 +5,7 @@ export default Robots;
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   res.setHeader("Content-Type", "text/txt; charset=utf-8");
   if (req.headers["x-from-cdn"]) {
-    res.write(`User-agent: *\nDisllow:/`);
+    res.write(`User-agent: *\nDisallow:/`);
   } else {
     await import("fs")
       .then(fs => {

@@ -22,6 +22,9 @@ axios.interceptors.response.use(
     return config;
   },
   error => {
+    if (axios.isCancel(error)) {
+      return new Promise(() => {}); // 返回一个空Promise 取消请求不触发catch
+    }
     return Promise.reject({ ...error.response?.data, status: error.response?.status });
   }
 );

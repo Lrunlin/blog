@@ -4,7 +4,7 @@ const StyleLink: FC<{ id: number }> = memo(({ id }) => {
   return (
     <link
       rel="stylesheet"
-      href={`${process.env.CDN}/static/theme/${id}.css?v=${+new Date()}`}
+      href={`${process.env.CDN}/static/theme/${id}.css`}
     ></link>
   );
 });

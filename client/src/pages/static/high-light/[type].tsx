@@ -12,6 +12,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res }) => 
       .then(res => res.data);
 
     res.setHeader("Content-Type", `text/${query.type}; charset=utf-8`);
+    res.setHeader("Cache-Control", `public, max-age=9999999999, must-revalidate`);
     res.write(content);
     res.end();
   } else {
