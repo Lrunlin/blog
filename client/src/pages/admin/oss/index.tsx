@@ -118,7 +118,7 @@ const OSS = () => {
         </div>
       </div>
       <Alert
-        className="mt-4"
+        className="!mt-4"
         message="删除30天以前上传OSS但是未在数据库中使用的图片"
         type="info"
         showIcon

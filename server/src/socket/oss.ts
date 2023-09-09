@@ -39,8 +39,8 @@ const io = new Server(server, {
   },
 });
 
-let ossMarkerCount = 0;
 async function getOSSList(prefix: string) {
+  let ossMarkerCount = 0;
   // 记录页数
   let marker: string | undefined = undefined;
 
@@ -85,16 +85,20 @@ async function getOSSList(prefix: string) {
 
     marker = result.marker;
   }
+  ossMarkerCount = 0;
 }
 
 // 里面函数递归会溢出，要使用while循环条件判断break
 async function getDataBaseList() {
   // Article、Cover;
-  const pipeline = await redis.pipeline();
   async function getArticleCoverList() {
     let offset = 1;
 
     while (true) {
+      io.emit("message", { message: `数据库:抓取Article、Cover 第${offset}` });
+
+      const pipeline = await redis.pipeline();
+
       let rows = await DB.Article.findAll({
         attributes: ["content", "cover_file_name"],
         order: [["id", "desc"]],
@@ -102,7 +106,9 @@ async function getDataBaseList() {
         offset: (offset - 1) * 2000,
         raw: true,
       });
-      let valuesCover = rows.map(item => item.cover_file_name!);
+      let valuesCover = rows
+        .filter(item => item.cover_file_name)
+        .map(item => item.cover_file_name!);
       pipeline.sadd(`imagelist-database-cover`, valuesCover);
 
       let valuesArticle = rows
@@ -114,10 +120,10 @@ async function getDataBaseList() {
         })
         .flat();
       pipeline.sadd(`imagelist-database-article`, valuesArticle);
+      await pipeline.exec();
 
       if (rows.length < 2000) break;
       offset++;
-      io.emit("message", { message: `数据库:抓取Article、Cover 第${offset}` });
     }
   }
 
@@ -127,6 +133,8 @@ async function getDataBaseList() {
 
     while (true) {
       io.emit("message", { message: `数据库:抓取Comment 第${offset}` });
+
+      const pipeline = await redis.pipeline();
 
       const rows = await DB.Comment.findAll({
         attributes: ["comment_pics"],
@@ -140,9 +148,9 @@ async function getDataBaseList() {
 
       pipeline.sadd(`imagelist-database-comment`, values);
 
-      if (rows.length < 2000) {
-        break;
-      }
+      await pipeline.exec();
+
+      if (rows.length < 2000) break;
 
       offset++;
     }
@@ -155,6 +163,8 @@ async function getDataBaseList() {
     while (true) {
       io.emit("message", { message: `数据库:Avatar 第${offset}` });
 
+      const pipeline = await redis.pipeline();
+
       const rows = await DB.User.findAll({
         raw: true,
         limit: 2000,
@@ -166,9 +176,9 @@ async function getDataBaseList() {
 
       pipeline.sadd(`imagelist-database-avatar`, values);
 
-      if (rows.length < 2000) {
-        break;
-      }
+      await pipeline.exec();
+
+      if (rows.length < 2000) break;
 
       offset++;
     }
@@ -180,6 +190,8 @@ async function getDataBaseList() {
 
     while (true) {
       io.emit("message", { message: `数据库:Answer 第${offset}` });
+
+      const pipeline = await redis.pipeline();
 
       const rows = await DB.Answer.findAll({
         attributes: ["content"],
@@ -199,9 +211,9 @@ async function getDataBaseList() {
         .flat();
       pipeline.sadd(`imagelist-database-answer`, values);
 
-      if (rows.length < 2000) {
-        break;
-      }
+      await pipeline.exec();
+
+      if (rows.length < 2000) break;
 
       offset++;
     }
@@ -213,6 +225,8 @@ async function getDataBaseList() {
 
     while (true) {
       io.emit("message", { message: `数据库:Problem 第${offset}` });
+
+      const pipeline = await redis.pipeline();
 
       const rows = await DB.Problem.findAll({
         attributes: ["content"],
@@ -232,9 +246,9 @@ async function getDataBaseList() {
         .flat();
       pipeline.sadd(`imagelist-database-problem`, values);
 
-      if (rows.length < 2000) {
-        break;
-      }
+      await pipeline.exec();
+
+      if (rows.length < 2000) break;
 
       offset++;
     }
@@ -247,6 +261,8 @@ async function getDataBaseList() {
     while (true) {
       io.emit("message", { message: `数据库:Advertisement 第${offset}` });
 
+      const pipeline = await redis.pipeline();
+
       const rows = await DB.Advertisement.findAll({
         attributes: ["poster_file_name"],
         raw: true,
@@ -258,9 +274,9 @@ async function getDataBaseList() {
 
       pipeline.sadd(`imagelist-database-advertisement`, values);
 
-      if (rows.length < 2000) {
-        break;
-      }
+      await pipeline.exec();
+
+      if (rows.length < 2000) break;
 
       offset++;
     }
@@ -273,6 +289,8 @@ async function getDataBaseList() {
     while (true) {
       io.emit("message", { message: `数据库:Link 第${offset}` });
 
+      const pipeline = await redis.pipeline();
+
       const rows = await DB.FriendlyLink.findAll({
         attributes: ["logo_file_name"],
         raw: true,
@@ -283,9 +301,9 @@ async function getDataBaseList() {
       let values = rows.map(item => item.logo_file_name);
       pipeline.sadd(`imagelist-database-friendly-link`, values);
 
-      if (rows.length < 2000) {
-        break;
-      }
+      await pipeline.exec();
+
+      if (rows.length < 2000) break;
 
       offset++;
     }
@@ -294,9 +312,12 @@ async function getDataBaseList() {
   //Type Tag
   async function getTypeTagList() {
     let offset = 1;
-    io.emit("message", { message: `数据库:Type、Tag 第${offset}` });
 
     while (true) {
+      io.emit("message", { message: `数据库:Type、Tag 第${offset}` });
+
+      const pipeline = await redis.pipeline();
+
       const typeRows = await DB.Type.findAll({
         attributes: ["icon_file_name"],
         raw: true,
@@ -315,6 +336,8 @@ async function getDataBaseList() {
         pipeline.sadd(`imagelist-database-type`, item.icon_file_name as string);
       }
 
+      await pipeline.exec();
+
       if (typeRows.length < 2000 && tagRows.length < 2000) {
         break;
       }
@@ -331,8 +354,6 @@ async function getDataBaseList() {
   await getAdvertisementList();
   await getLinkList();
   await getTypeTagList();
-
-  await pipeline.exec();
 }
 
 io.disconnectSockets();
@@ -387,7 +408,6 @@ io.on("connection", socket => {
       }
       // 获取数据阶段
       for (let index = 0; index < folderList.length; index++) {
-        ossMarkerCount = 0;
         const folder = folderList[index].folder;
         await getOSSList(folder);
       }
