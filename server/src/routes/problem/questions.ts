@@ -21,7 +21,7 @@ function createCommentTree(data: any) {
     answer_list: data.answer_list
       .map((item: any) => {
         return Object.assign(item, {
-          content: setImageTag(setExternalLink(item.content), "answer"),
+          content: setImageTag(setExternalLink(item.content), "answer", "answer image"),
           comment_list: item.comment_list
             .map((_item: any) => {
               if (_item.reply) {
@@ -198,7 +198,9 @@ router.get("/problem/:id", verify, async ctx => {
           problemInit(
             Object.assign(
               _data,
-              getCodeBlockLanguage(setImageTag(setExternalLink(_data.content), "problem"))
+              getCodeBlockLanguage(
+                setImageTag(setExternalLink(_data.content), "problem", data.title)
+              )
             )
           )
         );

@@ -18,7 +18,8 @@ import ToolBar from "@/components/page/problem/ToolBar";
 import readingRecords from "@/common/modules/readingRecords/readingRecords";
 import { parse } from "cookie";
 import Head from "@/components/next/Head";
-const StyleLink = dynamic(import("@/components/common/Editor/StyleLink"), { ssr: false });
+import StyleLink from "@/components/common/Editor/StyleLink";
+
 const Editor = dynamic(() => import("@/components/page/problem/Editor"), { ssr: false });
 const CommentEditor = dynamic(() => import("@/components/page/problem/Comments/Editor"), {
   ssr: false,
@@ -64,7 +65,11 @@ const Problem: FC<propsType> = ({ data: _data }) => {
         <div className="bg-white p-8">
           <h1 className="text-4xl font-semibold break-all">{data.title}</h1>
           <ArticleUserData data={data as any} type="problem" />
-          <div className={`content-body`} dangerouslySetInnerHTML={{ __html: data.content }}></div>
+          <div
+            className={`content-body`}
+            suppressHydrationWarning={true}
+            dangerouslySetInnerHTML={{ __html: data.content }}
+          ></div>
           <div className="my-2">
             <ToolBar />
           </div>

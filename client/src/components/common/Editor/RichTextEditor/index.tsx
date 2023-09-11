@@ -9,20 +9,16 @@ import upload from "../upload";
 import { useSetRecoilState } from "recoil";
 import axios from "axios";
 
-import useFetch from "@/common/hooks/useFetch";
-import { response } from "@type/response";
 import classNames from "classnames";
+import CodeEditor from "./CodeEditor";
+import type { event } from "./CodeEditor";
 
 const RechTextEditor: FC<editorPropsType> = memo(props => {
   // 两个数组，用于记录按钮和下拉菜单是否全部移出
   const [showThemeListLayer, setShowThemeListLayer] = useState([false, false]);
   const editor = useRef<ReactWEditor | null>(null);
   let setState = useSetRecoilState(editorModeContext);
-  let { data: languageList } = useFetch(() =>
-    axios
-      .get<response<{ title: string; language: string }[]>>("/language-list")
-      .then(res => res.data.data)
-  );
+  let codeEditorRef = useRef<event>(null);
 
   const excludeKeys = [
     "fontSize",
@@ -36,6 +32,7 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
     "video",
     "redo",
     "emoticon",
+    "code",
   ];
   let [themeList, setThemeList] = useState<{ id: number; name: string }[]>([]);
   useEffect(() => {
@@ -66,6 +63,18 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
       document.querySelector(".w-e-toolbar")?.append(useMarkDown);
       useMarkDown.onclick = () => setState("markdown");
     }
+
+    if (!document.getElementById("codeEditorIcon")) {
+      let menuElements = document.querySelectorAll(".w-e-menu");
+      let codeEditorIcon = document.createElement("div");
+      codeEditorIcon.setAttribute("class", "w-e-menu");
+      codeEditorIcon.setAttribute("id", "themeSwitch");
+      codeEditorIcon.setAttribute("data-title", "代码编辑");
+      codeEditorIcon.innerHTML = `<svg t="1694361145942" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4038" width="16" height="16"><path d="M958.17 447.4L760.69 249.92l-65.82 65.83 197.47 197.47L694.87 710.7l65.82 65.82 197.48-197.47 65.83-65.83zM263.3 249.92L65.82 447.4 0 513.22l65.82 65.83L263.3 776.52l65.82-65.82-197.47-197.48 197.47-197.47zM343.247 949.483L590.96 52.19l89.72 24.768-247.713 897.295z" fill="#999999" p-id="4039"></path></svg>`;
+      codeEditorIcon.onclick = () => codeEditorRef.current!.showModal();
+      menuElements[4].parentNode!.insertBefore(codeEditorIcon, menuElements[4].nextSibling);
+    }
+
     if (!document.getElementById("themeSwitch") && props.theme) {
       let themeSwitch = document.createElement("div");
       themeSwitch.setAttribute("class", "w-e-menu");
@@ -84,11 +93,18 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
     return () => {
       document.getElementById("useMarkDown")?.remove();
       document.getElementById("themeSwitch")?.remove();
+      document.getElementById("codeEditorIcon")?.remove();
     };
-  }, [languageList, props]);
+  }, [props]);
 
   return (
     <>
+      <CodeEditor
+        ref={codeEditorRef}
+        onFinish={val => {
+          editor.current?.editor?.cmd.do("insertHTML", val);
+        }}
+      />
       <div className="relative" style={{ border: "1px solid #ccc", zIndex: 10 }}>
         {(showThemeListLayer[0] || showThemeListLayer[1]) && (
           <div
@@ -121,12 +137,11 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
         )}
         <ReactWEditor
           ref={editor}
-          key={props.initValue + "" + languageList?.length}
+          key={props.initValue}
           defaultValue={props.initValue}
           config={{
-            zIndex:10,
+            zIndex: 10,
             showFullScreen: false,
-            languageType: languageList ? languageList.map(item => item.language) : [],
             height: props.height || 700,
             excludeMenus: excludeKeys,
             showLinkImg: false,

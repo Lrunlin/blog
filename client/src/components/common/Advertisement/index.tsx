@@ -24,7 +24,7 @@ const Advertisement: FC<propsType> = props => {
             className={classNames([
               "w-60",
               "relative group cursor-pointer",
-              index && "mt-2",
+              "mb-4",
               "block",
               "w-full",
             ])}

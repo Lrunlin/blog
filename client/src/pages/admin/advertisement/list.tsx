@@ -1,9 +1,9 @@
-import useSWR from "swr";
 import axios from "axios";
 import { Skeleton, Result, Table, Image, Button } from "antd";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import AdminLayout from "@/layout/Admin/Base";
+import useFetch from "@/common/hooks/useFetch";
 let positionMapping = {
   index: "首页",
   article: "文章页面",
@@ -13,7 +13,7 @@ function Position(position: keyof typeof positionMapping) {
   return positionMapping[position];
 }
 const APP = () => {
-  let { data, error, isValidating } = useSWR("/advertisement/list", () =>
+  let { data, error, isLoading } = useFetch(() =>
     axios.get("/advertisement").then(res => res.data.data)
   );
   let router = useRouter();
@@ -62,7 +62,11 @@ const APP = () => {
       dataIndex: "id",
       render(id: string) {
         return (
-          <Button onClick={() => router.push(`/admin/advertisement/${id}`)} size="small" type="primary">
+          <Button
+            onClick={() => router.push(`/admin/advertisement/${id}`)}
+            size="small"
+            type="primary"
+          >
             编辑
           </Button>
         );
@@ -84,7 +88,7 @@ const APP = () => {
         </div>
       )}
       {error && <Result status="error" title="请求错误"></Result>}
-      {isValidating && (
+      {isLoading && (
         <div>
           <Skeleton />
           <Skeleton />

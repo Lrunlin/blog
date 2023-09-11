@@ -17,7 +17,7 @@ const AdSense = memo(() => {
 
   if (process.env.NODE_ENV != "production") {
     return (
-      <div className="w-full h-[600px] my-3 bg-gray-200 flex items-center justify-center">
+      <div className="w-full h-[600px] mb-4 bg-gray-200 flex items-center justify-center">
         非生产环境不显示广告
       </div>
     );
@@ -28,7 +28,7 @@ const AdSense = memo(() => {
   }
 
   return (
-    <div className="w-full h-[600px] my-3 flex justify-center bg-white">
+    <div className="w-full h-[600px] mb-4 flex justify-center bg-white">
       {isLoad ? (
         <div className="w-full h-full bg-gray-100 flex items-center justify-center">请等待...</div>
       ) : (

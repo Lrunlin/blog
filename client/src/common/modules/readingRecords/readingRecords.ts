@@ -1,6 +1,7 @@
 import redis from "./redis";
 import dayjs from "dayjs";
 import setReferer from "./setReferer";
+import setSpider from "./setSpider";
 import type { GetServerSidePropsContext } from "next";
 
 let Redis = redis();
@@ -23,7 +24,7 @@ function getClientIp(ctx: GetServerSidePropsContext) {
  * 保存阅读记录
  */
 async function readingRecords(ctx: GetServerSidePropsContext) {
-  const id = ctx?.params?.id;
+  const id = ctx!.params!.id;
   let ip = getClientIp(ctx);
 
   let referer = ctx.req.headers.referer;
@@ -34,6 +35,19 @@ async function readingRecords(ctx: GetServerSidePropsContext) {
     ip &&
     !(await Redis.exists([`history-${type}-${ip}-${id}`, `history-${type}-${ip}-${id}-unentered`]))
   ) {
+    let ua = ctx.req.headers["user-agent"];
+    let spiderResult = setSpider(ua);
+
+    if (spiderResult) {
+      Redis.rpush(
+        `history-${type}-${ip}-${id}-unentered`,
+        dayjs().format("YYYY-MM-DD"),
+        spiderResult
+      );
+      Redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
+      return;
+    }
+
     let refererResult = setReferer(referer);
     Redis.rpush(
       `history-${type}-${ip}-${id}-unentered`,

@@ -4,7 +4,7 @@ import { useSWRConfig } from "swr";
 import Upload from "@/components/common/UpLoad";
 import { useMemo, useState } from "react";
 import AdminLayout from "@/layout/Admin/Base";
-const positionSelect = [
+export const positionSelect = [
   {
     position: "index",
     label: "首页",

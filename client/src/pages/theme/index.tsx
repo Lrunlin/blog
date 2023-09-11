@@ -1,5 +1,5 @@
 import Base from "@/layout/Base";
-import { Button, Result } from "antd";
+import { Result } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { CreateTheme } from "@/pages/admin/theme/create";
 import useUserData from "@/store/user-data";

@@ -12,7 +12,7 @@ const NoFound = dynamic(() => import("@/components/page/article/NoFound"), { ssr
 const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: false });
 import readingRecords from "@/common/modules/readingRecords/readingRecords";
 import { parse } from "cookie";
-const StyleLink = dynamic(import("@/components/common/Editor/StyleLink"), { ssr: false });
+import StyleLink from "@/components/common/Editor/StyleLink";
 
 interface propsType {
   data: ArticleAttributes | null;
@@ -38,7 +38,7 @@ const Article: NextPage<propsType> = ({ data }) => {
       />
       <StyleLink id={data.theme_id} />
       <RecoilRoot currentArticleData={data}>
-        <Layout>
+        <Layout language={data.language}>
           <h1 className="text-4xl font-semibold">{data.title}</h1>
           <ArticleUserData data={data} type="article" />
           <View content={data.content} />

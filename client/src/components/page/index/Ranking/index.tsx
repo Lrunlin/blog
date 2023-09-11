@@ -7,7 +7,7 @@ const FunsRanking = dynamic(() => import("./FunsRanking"), { ssr: false });
 const Ranking = () => {
   let [key, setKey] = useState("0");
   return (
-    <div className="bg-white">
+    <div className="bg-white mb-4">
       <Tabs
         activeKey={key}
         defaultActiveKey="0"

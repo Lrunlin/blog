@@ -6,6 +6,7 @@ export const list = [
   { key: 3, keyword: "baidu.com", label: "Baidu", color: "#4e6ef2" },
   { key: 4, keyword: "bing.com", label: "Bing", color: "#007daa" },
   { key: 5, keyword: "github.com", label: "GitHub", color: "#24292f" },
+  { key: 6, keyword: "spider", label: "搜索引擎爬虫", color: "red" },
 ];
 
 /**

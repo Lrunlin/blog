@@ -1,32 +1,40 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import useSWR, { useSWRConfig } from "swr";
+import { useMemo, useState } from "react";
 import axios from "axios";
 import { Button, InputNumber, Form, Input, Select, Result, message } from "antd";
 import Upload from "@/components/common/UpLoad";
 import AdminLayout from "@/layout/Admin/Base";
-
-let { Item } = Form;
-const { Option } = Select;
+import { positionSelect } from ".";
+import useFetch from "@/common/hooks/useFetch";
 
 const Advertisement = () => {
   let router = useRouter();
   let searchParams = useSearchParams();
   let id = searchParams!.get("id");
-  let { useForm } = Form;
+  let { useForm, Item, useWatch } = Form;
+  const { Option } = Select;
   let [form] = useForm();
+  let position = useWatch("position", form);
 
-  let { data, error, mutate } = useSWR(`/advertisement/${id}`, () =>
-    axios.get(`/advertisement/${id}`).then(res => res.data.data)
+  let crop = useMemo(
+    () => positionSelect.find(item => item.position == position)?.crop,
+    [position]
   );
 
-  let { cache } = useSWRConfig();
+  let [posterURL, setPosterURL] = useState<undefined | string>();
+  let { data, error, refetch } = useFetch(() =>
+    axios.get(`/advertisement/${id}`).then(res => {
+      setPosterURL(res.data.data.poster_url);
+      return res.data.data;
+    })
+  );
+
   function onFinish(values: any) {
     let { poster_file_name, url, indexes, position } = values;
     axios.put(`/advertisement/${id}`, { poster_file_name, url, indexes, position }).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
-        mutate();
-        cache.delete("/advertisement/list");
+        refetch();
       } else {
         message.error(res.data.message);
       }
@@ -36,14 +44,13 @@ const Advertisement = () => {
     axios.delete(`/advertisement/${id}`).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
-        cache.delete("/advertisement/list");
-        cache.delete(`/advertisement/${id}`);
         router.push("/admin/advertisement/list");
       } else {
         message.error(res.data.message);
       }
     });
   }
+
   return (
     <AdminLayout>
       {error && <Result status="error" title="没找到对应的推广内容" />}
@@ -68,13 +75,17 @@ const Advertisement = () => {
           >
             <div>
               <Upload
-                noCorp={true}
-                width={120}
-                aspect={3 / 2}
+                key={`advertisement-upload-${posterURL}`}
+                width={Math.min(200 * crop!, 300)}
+                aspect={crop}
                 target="advertisement"
-                imgURL={data.poster_url}
-                onSuccess={({ file_name }) => {
+                imgURL={posterURL}
+                onSuccess={({ file_name, file_href }) => {
+                  setPosterURL(file_href);
                   form.setFieldsValue({ poster_file_name: file_name });
+                }}
+                onDelete={() => {
+                  form.setFieldsValue({ poster_file_name: null });
                 }}
               />
             </div>
@@ -94,10 +105,19 @@ const Advertisement = () => {
             <InputNumber min={1} />
           </Item>
           <Item label="显示位置" name="position" required>
-            <Select style={{ width: 120 }}>
-              <Option value="all">全部</Option>
-              <Option value="index">首页</Option>
-              <Option value="article">文章页面</Option>
+            <Select
+              style={{ width: 120 }}
+              onChange={() => {
+                // 清除上传的图片
+                setPosterURL(undefined);
+                form.setFieldsValue({ poster_file_name: null });
+              }}
+            >
+              {positionSelect.map(item => (
+                <Option value={item.position} key={item.position + item.label}>
+                  {item.label}
+                </Option>
+              ))}
             </Select>
           </Item>
           <Item wrapperCol={{ offset: 2, span: 10 }}>

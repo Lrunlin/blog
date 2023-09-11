@@ -13,11 +13,12 @@ const Head: FunctionComponent<props> = props => {
   return (
     <HeadComponent>
       {title && <title>{title}</title>}
-      <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=no"
+      />
       {description && <meta name="description" content={description} />}
-      {keywords && (
-        <meta name="keywords" content={keywords.join(",")} />
-      )}
+      {keywords && <meta name="keywords" content={keywords.join(",")} />}
       <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       {props.children}
     </HeadComponent>
