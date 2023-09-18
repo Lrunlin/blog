@@ -8,5 +8,6 @@ dist
 
 server/**/.env.development
 server/**/.env.production
+server/log
 
 client/env/.env.production
