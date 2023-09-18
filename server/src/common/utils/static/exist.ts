@@ -22,7 +22,7 @@ async function exist(images: string[]): Promise<{ success: boolean; message: str
           resolve({
             success: false,
             message: `有${respBody.reduce((total, item) => {
-              if (item.data.error.code != 200) {
+              if (item.code != 200) {
                 return (total += 1);
               } else {
                 return total;

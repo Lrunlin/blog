@@ -12,24 +12,21 @@ import verify from "@/common/utils/jwt/verify";
 
 let redis = Redis();
 
-let listTime: Date | null;
-let list = folderList.map(item => ({
-  id: v4(),
-  name: item.folder,
-  oss_count: 0,
-  database_count: 0,
-  delete_count: 0,
-}));
-
 function init() {
-  listTime = null;
-  list = folderList.map(item => ({
-    id: v4(),
-    name: item.folder,
-    oss_count: 0,
-    database_count: 0,
-    delete_count: 0,
-  }));
+  redis.del("oss-key-code");
+  redis.del("oss-key-last_time");
+  redis.set(
+    "oss-key-list",
+    JSON.stringify(
+      folderList.map(item => ({
+        id: v4(),
+        name: item.folder,
+        oss_count: 0,
+        database_count: 0,
+        delete_count: 0,
+      }))
+    )
+  );
 }
 
 const io = new Server(server, {
@@ -37,7 +34,10 @@ const io = new Server(server, {
   cors: {
     origin: "*",
   },
+  transports: ["websocket", "polling"],
 });
+
+io.disconnectSockets();
 
 async function getOSSList(prefix: string) {
   let ossMarkerCount = 0;
@@ -356,10 +356,6 @@ async function getDataBaseList() {
   await getTypeTagList();
 }
 
-io.disconnectSockets();
-let code: null | 0 | 1 | 2 = null; //null没有任务  0 失败 1成功 2执行中
-let deleteCode: null | 0 | 1 | 2 = null; //null没有任务 0 失败 1成功 2执行中
-
 io.use(async (socket, next) => {
   let token = socket.handshake.headers.authorization;
   if (token) {
@@ -376,31 +372,36 @@ io.use(async (socket, next) => {
     socket.emit("sign-out");
   }
 });
-io.on("connection", socket => {
-  if (list && listTime) {
-    socket.emit("list", { time: listTime, data: list });
+io.on("connection", async socket => {
+  if ((await redis.get("oss-key-list")) && (await redis.get("oss-key-last_time"))) {
+    socket.emit("list", {
+      time: await redis.get("oss-key-last_time"),
+      data: JSON.parse((await redis.get("oss-key-list")) as string) as any[],
+    });
   }
+
+  let code = (await redis.get("oss-key-code")) as string;
   io.emit("info", {
     code,
     message:
       code == null
         ? "未开始"
-        : code == 0
+        : +code == 0
         ? "数据对比任务失败"
-        : code == 1
+        : +code == 1
         ? "数据对比任务执行成功"
         : "数据对比任务执行中",
-    deleteCode,
+    deleteCode: await redis.get("oss-key-delete_code"),
   });
 
   // 开始执行统计任务
   socket.on("start", async () => {
     init();
-    code = 2;
-    io.emit("info", {
-      code,
-      message: "数据对比任务执行中",
-    });
+    await redis.set("oss-key-code", 2, "EX", 86400),
+      io.emit("info", {
+        code,
+        message: "数据对比任务执行中",
+      });
     try {
       let redisKeys = await redis.keys("imagelist-*");
       if (redisKeys.length) {
@@ -415,6 +416,7 @@ io.on("connection", socket => {
 
       // 获取完成 开始比对oss_count、database_count、delete_count;
       io.emit("message", { message: `开始比对并统计数量` });
+      let list = JSON.parse((await redis.get("oss-key-list")) as string) as any[];
       for (const item of folderList) {
         let folder = item.folder;
         if (await redis.exists(`imagelist-oss-${folder}`)) {
@@ -434,6 +436,8 @@ io.on("connection", socket => {
         }
       }
 
+      await redis.set("oss-key-list", JSON.stringify(list));
+
       // 集体设置过期时间
       let keys = await redis.keys("imagelist-*");
       for (let key of keys) {
@@ -442,21 +446,21 @@ io.on("connection", socket => {
 
       io.emit("message", { message: `比对完成` });
 
-      listTime = new Date();
-      socket.emit("list", { time: listTime, data: list });
-      code = 1;
+      await redis.set("oss-key-last_time", new Date() + "", "EX", 86400);
+      socket.emit("list", {
+        time: await redis.get("oss-key-last_time"),
+        data: JSON.parse((await redis.get("oss-key-list")) as string) as any[],
+      });
+      await redis.set("oss-key-code", 1, "EX", 86400);
       io.emit("info", {
         code,
         message: "数据对比任务执行成功",
       });
-      setTimeout(() => {
-        init();
-      }, 86_400_000);
     } catch (error) {
       console.log(error);
       let redisKeys = await redis.keys("imagelist-*");
       await redis.del(redisKeys);
-      code = 0;
+      await redis.set("oss-key-code", 0, "EX", 86400);
       io.emit("info", {
         code,
         message: "数据对比任务失败",
@@ -468,14 +472,17 @@ io.on("connection", socket => {
 
   // 删除
   socket.on("delete", async () => {
-    if (code != 1 || !listTime) {
+    if (
+      +((await redis.get("oss-key-code")) as string) != 1 ||
+      !(await redis.get("oss-key-last_time"))
+    ) {
       return;
     }
-    deleteCode = 2;
+    await redis.set("oss-key-delete_code", 2, "EX", 86400);
     io.emit("message", { message: `开始删除` });
-    io.emit("delete-schedule", { code: deleteCode });
+    io.emit("delete-schedule", { code: await redis.get("oss-key-delete_code") });
     try {
-      for (const item of list) {
+      for (const item of JSON.parse((await redis.get("oss-key-list")) as string) as any[]) {
         let keys = await redis.sdiff(
           `imagelist-oss-${item.name}`,
           `imagelist-database-${item.name}`
@@ -487,16 +494,16 @@ io.on("connection", socket => {
           io.emit("message", { message: `删除:开始 删除 ${item.name} ${index + 1}` });
         }
       }
-      deleteCode = 1;
-      io.emit("delete-schedule", { code: deleteCode });
+      await redis.set("oss-key-delete_code", 1, "EX", 86400);
+      io.emit("delete-schedule", { code: await redis.get("oss-key-delete_code") });
       init();
       let redisKeys = await redis.keys("imagelist-*");
       await redis.del(redisKeys);
       io.emit("message", { message: `删除任务完成` });
     } catch (error) {
       console.log(error);
-      deleteCode = 0;
-      io.emit("delete-schedule", { code: deleteCode });
+      await redis.set("oss-key-delete_code", 0, "EX", 86400);
+      io.emit("delete-schedule", { code: await redis.get("oss-key-delete_code") });
       io.emit("message", { message: `删除失败` });
     }
   });

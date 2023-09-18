@@ -8,7 +8,7 @@ const AuthorRanking = () => {
   );
   return (
     <>
-      <div className="bg-white mt-3 shadow-sm">
+      <div className="bg-white shadow-sm">
         <RankingList data={data as any[]} isValidating={isValidating} error={error} />
       </div>
     </>

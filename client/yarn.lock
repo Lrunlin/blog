@@ -966,10 +966,10 @@ antd-img-crop@^4.12.2:
     react-easy-crop "^4.7.4"
     tslib "^2.5.0"
 
-antd@5.9.0:
-  version "5.9.0"
-  resolved "https://registry.npmmirror.com/antd/-/antd-5.9.0.tgz#24fc6ed5bf87c31d1a8b2c9b1ca112e0434609dd"
-  integrity sha512-YgLGtz+GbzrQws+R7siXolUN89ERH2Kbcu8Bz98VY4fwwMSDKKhbCGkIjw9mnIhcrXpHT+FXwrqjAV3j9eakSA==
+antd@5.9.1:
+  version "5.9.1"
+  resolved "https://registry.npmmirror.com/antd/-/antd-5.9.1.tgz#ebc8c4e00718d7cf8d53213ca867a9410b0ddf91"
+  integrity sha512-kMjoDCUSNLyktgz2nX0wNys6Ni3DqVLWXiEDao/TESBsqQIrqkAQAbg1q1kX7Pw8yKXcnrx6tR5Fbv+TMKB72w==
   dependencies:
     "@ant-design/colors" "^7.0.0"
     "@ant-design/cssinjs" "^1.16.0"
@@ -1001,7 +1001,7 @@ antd@5.9.0:
     rc-motion "^2.9.0"
     rc-notification "~5.1.1"
     rc-pagination "~3.6.1"
-    rc-picker "~3.13.2"
+    rc-picker "~3.14.1"
     rc-progress "~3.5.1"
     rc-rate "~2.12.0"
     rc-resize-observer "^1.3.1"
@@ -1010,7 +1010,7 @@ antd@5.9.0:
     rc-slider "~10.2.1"
     rc-steps "~6.0.1"
     rc-switch "~4.1.0"
-    rc-table "~7.33.1"
+    rc-table "~7.34.0"
     rc-tabs "~12.12.1"
     rc-textarea "~1.3.4"
     rc-tooltip "~6.0.1"
@@ -4564,10 +4564,10 @@ rc-pagination@~3.6.1:
     classnames "^2.2.1"
     rc-util "^5.32.2"
 
-rc-picker@~3.13.2:
-  version "3.13.2"
-  resolved "https://registry.npmmirror.com/rc-picker/-/rc-picker-3.13.2.tgz#9cbc5bddcbbd86fb5e477172e4d5242474122fb8"
-  integrity sha512-jvmmwo9d2/rUJXx8dydmcReAGF7f2wzbR7GDUgZXymbw0cqxNqXen5GGQIsX0x92JJROKyKb+J/E7bn967Ok9A==
+rc-picker@~3.14.1:
+  version "3.14.1"
+  resolved "https://registry.npmmirror.com/rc-picker/-/rc-picker-3.14.1.tgz#54c49fc4b62d875897a78c4caaf539cb806759e5"
+  integrity sha512-U3XKgD1f3OXwRD6aKyuEcZozTPPSuAzmTZO9F5F4ywrcFzSMdq2JmDzhaHH3jjD7WY8w3SaMlLBV01KmHOr5hA==
   dependencies:
     "@babel/runtime" "^7.10.1"
     "@rc-component/trigger" "^1.5.0"
@@ -4652,10 +4652,10 @@ rc-switch@~4.1.0:
     classnames "^2.2.1"
     rc-util "^5.30.0"
 
-rc-table@~7.33.1:
-  version "7.33.4"
-  resolved "https://registry.npmmirror.com/rc-table/-/rc-table-7.33.4.tgz#6d83eb9e71e37f55853ebead7c7e3610ef14103e"
-  integrity sha512-zgWcNPcI4vCBjvdInjF7PCt3loqDDLIZwVyw7R+Et1nwIGW26UNbdSw/C+pkTOppQd9kRiu9JD/z9xAjhTLE2w==
+rc-table@~7.34.0:
+  version "7.34.0"
+  resolved "https://registry.npmmirror.com/rc-table/-/rc-table-7.34.0.tgz#1841f593c6b5f0958d803fb973e684f9bff946c1"
+  integrity sha512-ueh5AQilBLk0i75FPQj0LekxYbYE6pUKHRNT14wpW0wSbTXfG7QD/LFQqUjdSz5UyAflC8gedmsehTuWI9bp0Q==
   dependencies:
     "@babel/runtime" "^7.10.1"
     "@rc-component/context" "^1.4.0"
@@ -5132,7 +5132,7 @@ slash@^3.0.0:
   resolved "https://registry.npmmirror.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-socket.io-client@^4.7.1:
+socket.io-client@4.7.2:
   version "4.7.2"
   resolved "https://registry.npmmirror.com/socket.io-client/-/socket.io-client-4.7.2.tgz#f2f13f68058bd4e40f94f2a1541f275157ff2c08"
   integrity sha512-vtA0uD4ibrYD793SOIAwlo8cj6haOeMHrGvwPxJsxH7CeIksqJ+3Zc06RvWTIFgiSqx4A3sOnTXpfAEE2Zyz6w==

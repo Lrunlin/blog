@@ -62,7 +62,7 @@ function option(data: statisticsDataType["system_occupation"]) {
           100
         ).toFixed(0)}%`;
 
-        let c = `负载情况:${item.loadavg}%`;
+        let c = `负载情况:${item.loadavg.toFixed(0)}%`;
         return `${m}<br/>${d}<br/>${c}`;
       },
     },
