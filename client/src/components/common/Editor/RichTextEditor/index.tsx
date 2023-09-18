@@ -103,6 +103,7 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
         ref={codeEditorRef}
         onFinish={val => {
           editor.current?.editor?.cmd.do("insertHTML", val);
+          editor.current?.editor?.cmd.do("insertHTML", "<br/>");
         }}
       />
       <div className="relative" style={{ border: "1px solid #ccc", zIndex: 10 }}>
