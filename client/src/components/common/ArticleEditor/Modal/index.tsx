@@ -88,7 +88,7 @@ const Modal: FC<modalPropsType> = props => {
               placeholder="文章简介，最多200字"
               maxLength={200}
               showCount
-              className="w-11/12"
+              className="!w-11/12"
             />
           </Item>
           <Item

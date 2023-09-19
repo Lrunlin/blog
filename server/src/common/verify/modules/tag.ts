@@ -13,8 +13,10 @@ const tag = Joi.array()
     if (new Set(value).size != value.length) {
       return helper.message(new Error("禁止重复的tag_id") as any);
     }
-    let tags = cache.get("tag") as Array<TagAttributes>;
-    if (value.every(item => tags.some(_item => _item.id == item))) {
+
+    let tags = (cache.get("tag") as Array<TagAttributes>).map(item => item.id);
+
+    if (value.every(item => tags.includes(item))) {
       return true;
     } else {
       return helper.message(new Error("tag_id不在数据表内") as any);
