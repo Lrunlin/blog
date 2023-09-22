@@ -1,4 +1,3 @@
-const { env } = require("process");
 const fs = require("fs");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -9,7 +8,7 @@ let envObject = dotenv.parse(
   `${fs.readFileSync(path.join(__dirname, "./.env"))}
   \n
   ${fs.readFileSync(
-    path.join(__dirname, `./.env.${process.env.isPro ? "production" : "development"}`)
+    path.join(__dirname, `./.env.${process.env.NEXT_PUBLIC_ISPRO ? "production" : "development"}`)
   )}`
 );
 

@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env isDev=true next dev -p 5678",
-    "build": "cross-env isPro=true next build",
-    "start": "cross-env isPro=true next start -p 5678",
-    "test": "cross-env isDev=true next build &&cross-env isDev=true next start -p 5678",
+    "dev": "cross-env NEXT_PUBLIC_ISDEV=true next dev -p 5678",
+    "build": "cross-env NEXT_PUBLIC_ISPRO=true next build",
+    "start": "cross-env NEXT_PUBLIC_ISPRO=true next start -p 5678",
+    "test": "cross-env NEXT_PUBLIC_ISDEV=true next build &&cross-env NEXT_PUBLIC_ISDEV=true next start -p 5678",
     "lint": "next lint",
     "analyze": "cross-env ANALYZE=true next build"
   },

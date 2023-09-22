@@ -34,7 +34,7 @@ const nextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: process.env.isPro
+            value: process.env.NEXT_PUBLIC_ISPRO
               ? "public, max-age=9999999999, must-revalidate"
               : "public, max-age=0, must-revalidate",
           },

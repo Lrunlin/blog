@@ -17,9 +17,9 @@ namespace NodeJS {
     /** 环境*/
     NODE_ENV: "development" | "production";
     /** 是否开发环境*/
-    isDev?: true;
+    NEXT_PUBLIC_ISDEV?: true;
     /** 是否生产环境*/
-    isPro?: true;
+    NEXT_PUBLIC_ISPRO?: true;
     /** 网站名称*/
     NEXT_PUBLIC_SITE_NAME: string;
     /** 本站域名*/

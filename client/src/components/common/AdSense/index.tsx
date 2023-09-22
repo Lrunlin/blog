@@ -15,7 +15,7 @@ const AdSense = memo(() => {
     };
   }, []);
 
-  if (!process.env.isPro) {
+  if (!process.env.NEXT_PUBLIC_ISPRO) {
     return (
       <div className="w-full h-[600px] mb-4 bg-gray-200 flex items-center justify-center">
         非生产环境不显示广告
