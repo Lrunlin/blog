@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import { Button, message } from "antd";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, usePathname, useParams } from "next/navigation";
 import { useRecoilValue } from "recoil";
 import { writeArticleContext } from "./index";
 import axios from "axios";
@@ -12,7 +12,7 @@ const DraftsButton = () => {
     useRecoilValue(writeArticleContext);
 
   let router = useRouter();
-  let searchParams = useSearchParams();
+  let params = useParams();
   let pathname = usePathname();
   let { mutate } = useSWRConfig();
 
@@ -59,7 +59,7 @@ const DraftsButton = () => {
     }
     setIsLoad(true);
     axios
-      .put(`/article/${searchParams!.get("id")}`, {
+      .put(`/article/${params.id}`, {
         title: /^[\s\S]*.*[^\s][\s\S]*$/.test(title) ? title : "无标题",
         description,
         cover_file_name,
@@ -71,7 +71,7 @@ const DraftsButton = () => {
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);
-          mutate(`article-update-${searchParams!.get("id")}`);
+          mutate(`article-update-${params.id}`);
         } else {
           message.error(res.data.message);
         }

@@ -8,6 +8,7 @@ import type { UserAttributes } from "@type/model-attribute";
 
 const Aside: FC<{ data: UserAttributes }> = props => {
   let router = useRouter();
+
   let { data, error, isValidating } = useSWR(`achievement-user-${router.query.id}`, () =>
     axios.get(`/achievement/${router.query.id}`).then(res => res.data.data)
   );

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Image from "@/components/next/Image";
 import useUserData from "@/store/user-data";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { message, Badge } from "antd";
 import itemClassName from "./class";
 import { currentArticleDataContext } from "@/pages/article/[id]";
@@ -10,8 +10,9 @@ import { like, unlike } from "@/request/like";
 
 const Likes = () => {
   let [userData] = useUserData();
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
+
   let [currentArticleData, setCurrentArticleData] = useRecoilState(currentArticleDataContext);
 
   function likeArticle() {

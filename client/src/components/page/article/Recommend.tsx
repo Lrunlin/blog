@@ -1,5 +1,5 @@
 import { Skeleton, Result } from "antd";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import uswSwr from "swr";
 import axios from "axios";
 import ArticleList from "@/components/common/ArticleList";
@@ -8,8 +8,9 @@ import type { articleListItemType } from "@type/model/article-list-item";
 
 /** 文章页面底部的推荐文章*/
 const Recommend = () => {
-  let searchParams = useSearchParams();
-  let articleID = searchParams!.get("id");
+  let params = useParams();
+  let articleID = params.id;
+
   let { data, isValidating } = uswSwr(`/article/recommend/${articleID}`, () =>
     axios
       .get<response<articleListItemType[]>>(`/article/recommend/${articleID}`)

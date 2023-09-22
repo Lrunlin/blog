@@ -11,7 +11,6 @@ const nextConfig = {
   pageExtensions: ["tsx"],
   experimental: {
     scrollRestoration: true,
-    legacyBrowsers: false,
   },
   swcMinify: false, //不要关 否则表情选择器会打包出问题
   eslint: {
@@ -35,10 +34,9 @@ const nextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value:
-              process.env.NODE_ENV == "production"
-                ? "public, max-age=9999999999, must-revalidate"
-                : "public, max-age=0, must-revalidate",
+            value: process.env.isPro
+              ? "public, max-age=9999999999, must-revalidate"
+              : "public, max-age=0, must-revalidate",
           },
         ],
       },

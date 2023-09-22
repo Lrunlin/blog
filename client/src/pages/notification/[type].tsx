@@ -4,7 +4,7 @@ import Layout from "@/components/page/notification/Layout";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Skeleton, Empty } from "antd";
 import Notice from "@/components/page/notification/Notice";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import useUserData from "@/store/user-data";
 import type {
   NoticeAttributes,
@@ -58,19 +58,20 @@ const Notification = () => {
     );
   }
 
-  let searchParams = useSearchParams();
+  let params = useParams();
+
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   let type = useRef("");
   let page = useRef(1);
   useEffect(() => {
     //暂时未开通系统通知
-    if (["notice", "system-notification"].includes(searchParams!.get("type") + "")) {
-      type.current = searchParams!.get("type") as string;
+    if (["notice", "system-notification"].includes(params.type + "")) {
+      type.current = params.type as string;
       page.current = 1;
       getNoticeData();
     }
-  }, [searchParams]);
+  }, [params]);
 
   function getNoticeData() {
     axios

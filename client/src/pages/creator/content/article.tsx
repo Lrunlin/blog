@@ -2,19 +2,19 @@ import { useState } from "react";
 import { Input, Tabs } from "antd";
 import Layout from "@/components/page/creator/Layout";
 import ArticleList from "@/components/page/creator/ArticleList";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 // 创作者中心-内容管理-文章管理
 const ContentArticle = () => {
   let { Search } = Input;
   let [keyword, setKeyword] = useState("");
-  let searchParams = useSearchParams();
+  let params = useParams();
 
   return (
     <Layout className="p-4 bg-white">
       <div className="shadow-sm">
         <Tabs
-          defaultActiveKey={(searchParams.get("key") as string | undefined) || "article"}
+          defaultActiveKey={(params.key as string | undefined) || "article"}
           tabBarExtraContent={{
             right: (
               <Search

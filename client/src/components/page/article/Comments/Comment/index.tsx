@@ -2,7 +2,7 @@ import { Fragment, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import useSWR from "swr";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { SyncOutlined } from "@ant-design/icons";
 import CommentItem from "./Item";
 import type { articleCommentType } from "@type/model/article-comment";
@@ -11,8 +11,8 @@ import { editorOptionContext } from "../index";
 
 /** 文章页面评论集合组件*/
 const Comments = () => {
-  let searchParams = useSearchParams();
-  let articleID = searchParams!.get("id");
+  let params = useParams();
+  let articleID = params.id as string;
   let { data, isValidating, mutate } = useSWR(`/comment/article/${articleID}`, () =>
     axios
       .get<response<articleCommentType[]>>(`/comment/article/${articleID}`)

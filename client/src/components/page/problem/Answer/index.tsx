@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Badge, Button, message } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import useUserData from "@/store/user-data";
@@ -21,13 +21,14 @@ const Answer: FC = () => {
   let { data, reload } = useContext(Context);
   // 是否展示回复框
   const [answerReplyShrinkIndex, setAnswerReplyShrinkIndex] = useState<number>(-1);
-  let searchParams = useSearchParams();
+  let params = useParams();
+  let id = params.id as string;
   let [userData] = useUserData();
 
   /** 采纳答案*/
   function adopt(id: number) {
     axios
-      .put(`/problem/adopt/${searchParams!.get("id")}`, { answer_id: id })
+      .put(`/problem/adopt/${id}`, { answer_id: id })
       .then(res => {
         reload();
       })
@@ -39,7 +40,7 @@ const Answer: FC = () => {
   /** 取消采纳*/
   function cancel() {
     axios
-      .put(`/problem/cancel/${searchParams!.get("id")}`)
+      .put(`/problem/cancel/${id}`)
       .then(res => {
         reload();
       })

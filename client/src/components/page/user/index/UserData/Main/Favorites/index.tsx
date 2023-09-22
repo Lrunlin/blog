@@ -1,6 +1,6 @@
 import { useState, startTransition } from "react";
 import { Skeleton, Result, Button, Empty, message } from "antd";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import useFetch from "@/common/hooks/useFetch";
 import axios from "axios";
 import { response } from "@type/response";
@@ -20,8 +20,8 @@ interface favoritesListProps {
   user_id: number;
 }
 const FavoritesList = () => {
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
   const [defaultValue, setDefaultValue] = useState<favoritesListProps>();
   const [open, setOpen] = useState(false);
   let [userData] = useUserData();

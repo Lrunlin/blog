@@ -6,7 +6,7 @@ import Layout from "@/components/page/problem/Layout";
 import NoFound from "@/components/page/problem/NoFound";
 import Answer from "@/components/page/problem/Answer";
 
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import ArticleUserData from "@/components/page/article/UserData";
 import type { problemType } from "@type/model/problem";
 import dynamic from "next/dynamic";
@@ -31,14 +31,15 @@ interface propsType {
 /** 问答页面数据context*/
 export const Context = createContext<{ data: problemType; reload: Function }>({} as any);
 const Problem: FC<propsType> = ({ data: _data }) => {
-  let searchParams = useSearchParams();
+  let params = useParams();
+  let id = params.id as string;
   const [data, setData] = useState(_data);
   const [problemReplyShrink, setProblemReplyShrink] = useState(false);
   let [userData] = useUserData();
   if (!data) return <NoFound />;
   function reload() {
     axios
-      .get(`/problem/${searchParams!.get("id")}`)
+      .get(`/problem/${id}`)
       .then((res: any) => setData(res.data.data))
       .catch(err => {
         console.log(err);
@@ -47,7 +48,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
   }
   function deleteProblem() {
     axios
-      .delete(`/problem/${searchParams!.get("id")}`)
+      .delete(`/problem/${id}`)
       .then(res => {
         message.success("删除成功");
       })
@@ -84,7 +85,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
               <div>
                 <NoFollowLink
                   className="text-gray-500 cursor-pointer mr-4 hover:text-gray-800"
-                  href={`/problem/editor/${searchParams!.get("id")}`}
+                  href={`/problem/editor/${id}`}
                 >
                   编辑
                 </NoFollowLink>
@@ -96,19 +97,9 @@ const Problem: FC<propsType> = ({ data: _data }) => {
           </div>
 
           {problemReplyShrink && (
-            <CommentEditor
-              belong_id={+(searchParams!.get("id") as string)}
-              reply={null}
-              type="problem"
-              onSuccess={reload}
-            />
+            <CommentEditor belong_id={+id} reply={null} type="problem" onSuccess={reload} />
           )}
-          <Comments
-            type="problem"
-            belong_id={+(searchParams!.get("id") as string)}
-            data={data.comment_list}
-            className="mt-2"
-          />
+          <Comments type="problem" belong_id={+id} data={data.comment_list} className="mt-2" />
         </div>
         {!!data.answer_list.length && <Answer />}
         {userData?.id != data.author && <Editor onSuccess={reload} />}

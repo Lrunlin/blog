@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useSwr from "swr";
 import axios from "axios";
 import {
@@ -25,13 +25,13 @@ interface ResponseType extends TagAttributes {
 
 const UpdateTag = () => {
   let router = useRouter();
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
   let { useForm } = Form;
   let [form] = useForm();
 
-  let { data, error } = useSwr(`/tag/${searchParams!.get("id")}`, () => {
-    return axios.get<response<ResponseType>>(`/tag/${searchParams!.get("id")}`).then(res => {
+  let { data, error } = useSwr(`/tag/${id}`, () => {
+    return axios.get<response<ResponseType>>(`/tag/${id}`).then(res => {
       return res.data.data;
     });
   });

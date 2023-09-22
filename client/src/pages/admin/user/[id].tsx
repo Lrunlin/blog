@@ -1,12 +1,12 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useSWR from "swr";
 import axios from "axios";
 import { Skeleton, Button, Result, Descriptions } from "antd";
 import AdminLayout from "@/layout/Admin/Base";
 
 const UserData = () => {
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
   let router = useRouter();
   const { data, isValidating } = useSWR(`/user/${id}`, () =>
     axios.get(`/user/data/${id}`).then(res => res.data.data)

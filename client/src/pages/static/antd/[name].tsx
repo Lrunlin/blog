@@ -5,13 +5,10 @@ import { GetServerSideProps } from "next";
 const Antd = () => null;
 export default Antd;
 export const getServerSideProps: GetServerSideProps = async ({ res, params }) => {
-  let distDir: string = JSON.parse(
-    process.env.__NEXT_PRIVATE_RENDER_WORKER_CONFIG as string
-  ).distDir;
   let name = params!.name as string | undefined;
   if (typeof name == "string" && name?.endsWith(".css")) {
     try {
-      let content = fs.readFileSync(`${distDir}/static/css/${name}`).toString();
+      let content = fs.readFileSync(`.next/static/css/${name}`).toString();
       res.setHeader("Content-Type", "text/css");
       res.statusCode = 200;
       res.write(content);

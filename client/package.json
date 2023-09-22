@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 5678",
-    "build": "next build",
-    "test": "cross-env NODE_ENV=development next build &&cross-env NODE_ENV=development next start -p 5678",
+    "dev": "cross-env isDev=true next dev -p 5678",
+    "build": "cross-env isPro=true next build",
+    "start": "cross-env isPro=true next start -p 5678",
+    "test": "cross-env isDev=true next build &&cross-env isDev=true next start -p 5678",
     "lint": "next lint",
-    "start": "cross-env NODE_ENV=production next start -p 5678",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
@@ -19,7 +19,7 @@
     "@emoji-mart/react": "^1.0.0",
     "@uiw/codemirror-theme-vscode": "^4.21.11",
     "@uiw/react-codemirror": "^4.21.11",
-    "antd": "5.9.1",
+    "antd": "5.9.2",
     "antd-img-crop": "^4.12.2",
     "axios": "^1.5.0",
     "classnames": "^2.3.1",
@@ -32,7 +32,7 @@
     "ioredis": "^5.2.3",
     "js-cookie": "^3.0.1",
     "marked": "^7.0.5",
-    "next": "13.4.19",
+    "next": "13.5.1",
     "nodemon": "^3.0.1",
     "qs": "^6.11.0",
     "react": "18.2.0",

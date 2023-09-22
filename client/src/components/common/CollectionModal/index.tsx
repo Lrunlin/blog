@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { Modal, message } from "antd";
 import type { ModalProps } from "antd";
 import CreateFrom, { valuesType } from "./CreateFrom";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import List from "./List";
 import axios from "axios";
 import useFetch from "@/common/hooks/useFetch";
@@ -28,8 +28,8 @@ export interface propsType extends Pick<ModalProps, "onCancel" | "open"> {
 const CollectionModal: FC<propsType> = props => {
   let title = { "update-list": "选择收藏夹", list: "选择收藏夹", "create-from": "创建收藏夹" };
   let [type, setType] = useState<"create-from" | "list" | "update-list">("list");
-  let searchParams = useSearchParams();
-  let id = props.id || (searchParams!.get("id") as string);
+  let params = useParams();
+  let id = props.id || params.id;
   function switchType() {
     if (!props.defaultChecked?.length) {
       setType("list");

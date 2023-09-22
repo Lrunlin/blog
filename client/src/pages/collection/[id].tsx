@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { FC } from "react";
 import { GetServerSideProps } from "next";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { Tabs, Empty, Result, Button, Spin } from "antd";
 import axios from "axios";
 import { ParsedUrlQuery } from "querystring";
@@ -17,8 +17,8 @@ import useFetch from "@/common/hooks/useFetch";
 const ToolsBar = dynamic(() => import("@/components/page/collection/ToolsBar"), { ssr: false });
 
 const FavoritesList: FC<{ data: RootObject | null }> = ({ data: propsData }) => {
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
   let router = useRouter();
   let [userData] = useUserData();
 

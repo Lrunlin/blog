@@ -5,7 +5,7 @@ import axios from "axios";
 import Upload from "@/components/common/UpLoad";
 import useSwr, { useSWRConfig } from "swr";
 import getType from "@/request/getType";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";
 
@@ -13,8 +13,8 @@ const Update = () => {
   let { useForm } = Form;
   let [form] = useForm();
   let router = useRouter();
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id");
+  let params = useParams();
+  let id = params.id as string;
   let { mutate } = useSWRConfig();
 
   /** 加载，获取文章内容*/

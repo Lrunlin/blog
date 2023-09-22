@@ -8,7 +8,9 @@ const { globSync } = require("glob");
 let envObject = dotenv.parse(
   `${fs.readFileSync(path.join(__dirname, "./.env"))}
   \n
-  ${fs.readFileSync(path.join(__dirname, `./.env.${env.NODE_ENV}`))}`
+  ${fs.readFileSync(
+    path.join(__dirname, `./.env.${process.env.isPro ? "production" : "development"}`)
+  )}`
 );
 
 module.exports = {

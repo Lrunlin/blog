@@ -3,13 +3,14 @@ import axios from "axios";
 import type { FC } from "react";
 import Base from "@/layout/Base";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 const SiteMap: FC<{ pageCount: number; data: { id: number; title: string }[] }> = ({
   pageCount,
   data,
 }) => {
-  let searchParams = useSearchParams();
+  let params = useParams();
+  let index = params.index as string;
   return (
     <Base>
       <div>
@@ -17,9 +18,9 @@ const SiteMap: FC<{ pageCount: number; data: { id: number; title: string }[] }> 
           <a
             className="text-gray-700"
             target="_blank"
-            href={`${process.env.NEXT_PUBLIC_HOST}/sitemap/index${searchParams.get("index")}.xml`}
+            href={`${process.env.NEXT_PUBLIC_HOST}/sitemap/index${index}.xml`}
           >
-            SiteMap{searchParams.get("index")}.xml
+            SiteMap{index}.xml
           </a>
         </div>
         <main className="bg-white w-full p-6 mt-4 flex flex-wrap">

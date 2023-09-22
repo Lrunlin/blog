@@ -4,7 +4,7 @@ import axios from "axios";
 import Layout from "@/components/page/tag/Layout";
 import { TagAttributes, ArticleAttributes } from "@type/model-attribute";
 import ArticleList from "@/components/common/ArticleList";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { message } from "antd";
 import { response } from "@type/common/response";
 
@@ -30,10 +30,11 @@ const Article: NextPage<propsType> = ({ data }) => {
   let [total, setTotal] = useState(data.article_data.total);
   /** 文章数据信息*/
   let [list, setList] = useState(data.article_data.list);
-  let searchParams = useSearchParams();
+  let params = useParams();
+  let name = params.name as string;
 
   function loadMoreData() {
-    fetch(page.current, searchParams!.get("name") as string)
+    fetch(page.current, name)
       .then(res => {
         let _list = res.article_data.list;
         if (page.current == 1) {

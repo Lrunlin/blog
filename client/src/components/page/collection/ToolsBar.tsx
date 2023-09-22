@@ -6,7 +6,7 @@ const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr
 import { response } from "@type/response";
 import axios from "axios";
 import { message, Popconfirm } from "antd";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";
 
 interface propsType {
@@ -15,8 +15,8 @@ interface propsType {
 }
 const ToolsBar: FC<propsType> = ({ belong_id, refetch }) => {
   const [open, setOpen] = useState(false);
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
 
   // 获取单个文章被哪些收藏集收藏过
   let {

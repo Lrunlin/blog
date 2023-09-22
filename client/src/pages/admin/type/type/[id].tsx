@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useSwr from "swr";
 import axios from "axios";
 import { Form, Input, Button, Empty, Skeleton, InputNumber, Popconfirm, message } from "antd";
@@ -14,8 +14,8 @@ interface ResponseType extends TypeAttributes {
 
 const UpdateType = () => {
   let router = useRouter();
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
   let { useForm } = Form;
   let [form] = useForm();
 

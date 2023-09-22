@@ -20,7 +20,7 @@ export function doExtraStyle({ cache }: DoExtraStyleOptions) {
   const md5 = createHash("md5");
   const hash = md5.update(css).digest("hex");
 
-  const fileName = `${hash.substring(0, 18)}.css`;
+  const fileName = `${hash.substring(0, 16)}.css`;
   const fullpath = path.join(baseDir, fileName);
 
   if (fs.existsSync(fullpath)) return `/static/antd/${fileName}`;

@@ -4,7 +4,7 @@ import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { userDataContext } from "@/store/user-data";
 import { Avatar, Button, Input, message } from "antd";
 import NextImage from "@/components/next/Image";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import loadStatic, { responseType } from "@/request/load-static";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
@@ -28,8 +28,9 @@ interface propsType {
 let { TextArea } = Input;
 
 const Editor: FC<propsType> = props => {
-  let searchParams = useSearchParams();
-  let articleID = searchParams!.get("id");
+  let params = useParams();
+  let articleID = params.id as string;
+
   let { mutate } = useSWRConfig();
   let userData = useRecoilValue(userDataContext);
   let [value, setValue] = useState("");

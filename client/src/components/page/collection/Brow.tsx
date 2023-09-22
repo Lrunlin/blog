@@ -4,7 +4,7 @@ import { DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons
 import { RootObject } from "@type/model/favorites-collection-list";
 import { message, Avatar } from "antd";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useState } from "react";
 import FavoritesModal from "./FavoritesModal";
@@ -17,9 +17,9 @@ const Brow: FC<{
 }> = ({ favoritesData, authorData }) => {
   const [open, setOpen] = useState(false);
   let [userData] = useUserData();
-  let searchParams = useSearchParams();
+  let params = useParams();
+  let id = params.id as string;
   let router = useRouter();
-  let id = searchParams!.get("id") as string;
   let { isLoading: deleteIsLoading, refetch: deleteRefetch } = useFetch(
     () =>
       axios

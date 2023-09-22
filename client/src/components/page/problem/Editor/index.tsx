@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { Button, message } from "antd";
 import TextEditor from "@/components/common/Editor";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import classNames from "classnames";
 import Message from "./Message";
 import { Context } from "@/pages/problem/[id]";
@@ -16,7 +16,8 @@ interface propsType {
 
 /** 问答页面中底部回答答案的评论组件*/
 const Editor: FC<propsType> = props => {
-  const searchParams = useSearchParams();
+  let params = useParams();
+  let id = params.id as string;
   /** 是否显示编辑框*/
   const [isEditorState, setIsEditorState] = useState(false);
   /** 编辑框是否使用黏性定位*/
@@ -29,7 +30,7 @@ const Editor: FC<propsType> = props => {
     axios
       .post("/answer", {
         content,
-        problem_id: searchParams!.get("id"),
+        problem_id: id,
       })
       .then(res => {
         message.success(res.data.message);
@@ -60,9 +61,7 @@ const Editor: FC<propsType> = props => {
   }
 
   let { data: answerData, refetch } = useFetch(() =>
-    axios
-      .get(`/answer`, { params: { problem_id: searchParams!.get("id") } })
-      .then(res => res.data.data)
+    axios.get(`/answer`, { params: { problem_id: id } }).then(res => res.data.data)
   );
 
   return (
@@ -101,11 +100,7 @@ const Editor: FC<propsType> = props => {
             </>
           ) : (
             <>
-              <TextEditor
-                height={240}
-                target="answer"
-                onChange={html => setContent(html)}
-              />
+              <TextEditor height={240} target="answer" onChange={html => setContent(html)} />
               <div className="bg-gray-100 h-7 mt-3 rounded-md"></div>
               <Button type="primary" disabled={!content} className="mt-4" onClick={submit}>
                 提交回答

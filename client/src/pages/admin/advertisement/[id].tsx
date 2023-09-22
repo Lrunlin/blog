@@ -1,4 +1,4 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import axios from "axios";
 import { Button, InputNumber, Form, Input, Select, Result, message } from "antd";
@@ -9,8 +9,8 @@ import useFetch from "@/common/hooks/useFetch";
 
 const Advertisement = () => {
   let router = useRouter();
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id");
+  let params = useParams();
+  let id = params.id as string;
   let { useForm, Item, useWatch } = Form;
   const { Option } = Select;
   let [form] = useForm();

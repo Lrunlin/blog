@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Modal, message } from "antd";
 import type { ModalProps } from "antd";
 import { Favorites_data } from "@type/model/favorites-collection-list";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import useFetch from "@/common/hooks/useFetch";
 import axios from "axios";
 import CreateFrom from "@/components/common/CollectionModal/CreateFrom";
@@ -11,8 +11,8 @@ import CreateFrom from "@/components/common/CollectionModal/CreateFrom";
 const FavoritesModal: FC<
   Required<Pick<ModalProps, "open">> & { defaultValue: Favorites_data; onCancel: () => void }
 > = props => {
-  let searchParams = useSearchParams();
-  let id = searchParams!.get("id") as string;
+  let params = useParams();
+  let id = params.id as string;
   let { isLoading, refetch } = useFetch(
     values =>
       axios

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { FC } from "react";
 import { userDataContext } from "@/store/user-data";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import Image from "@/components/next/Image";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { Image as AntdImage, message } from "antd";
@@ -32,13 +32,14 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
   );
   let userData = useRecoilValue(userDataContext);
   let { mutate } = useSWRConfig();
-  let searchParams = useSearchParams();
+  let params = useParams();
+  let id = params.id as string;
   function removeComment() {
     axios
       .delete(`/comment/${data.id}`)
       .then(res => {
         message.success(res.data.message);
-        mutate(`/comment/article/${searchParams!.get("id")}`);
+        mutate(`/comment/article/${id}`);
         setCurrentArticleData(_data => ({
           ..._data,
           comment_count: _data.comment_count - 1,

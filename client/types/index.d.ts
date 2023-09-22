@@ -16,6 +16,10 @@ namespace NodeJS {
   interface ProcessEnv {
     /** 环境*/
     NODE_ENV: "development" | "production";
+    /** 是否开发环境*/
+    isDev?: true;
+    /** 是否生产环境*/
+    isPro?: true;
     /** 网站名称*/
     NEXT_PUBLIC_SITE_NAME: string;
     /** 本站域名*/
