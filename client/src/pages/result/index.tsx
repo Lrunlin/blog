@@ -15,7 +15,10 @@ const ResultFC = () => {
   const message = searchParams!.getAll("message");
 
   useEffect(() => {
-    if (typeof token == "string") cookie.set("token", token, { expires: 365 });
+    if (typeof token == "string") cookie.set("token", token, {
+      expires: 365,
+      domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
+    });
   }, [token]);
 
   function SubTitle() {

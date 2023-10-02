@@ -15,6 +15,8 @@
     "@koa/cors": "^4.0.0",
     "@koa/multer": "^3.0.0",
     "@koa/router": "^12.0.0",
+    "@socket.io/cluster-adapter": "^0.2.2",
+    "@socket.io/sticky": "^1.0.4",
     "axios": "^1.5.0",
     "cheerio": "^1.0.0-rc.10",
     "chokidar": "^3.5.3",

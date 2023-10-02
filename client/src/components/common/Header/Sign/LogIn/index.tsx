@@ -23,7 +23,10 @@ const LogIn = () => {
           message.success(res.data.message);
           setModalState(false);
           setUserData(res.data.data);
-          cookie.set("token", res.data.token, { expires: 365 });
+          cookie.set("token", res.data.token, {
+            expires: 365,
+            domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
+          });
         } else {
           message.error(res.data.message);
         }

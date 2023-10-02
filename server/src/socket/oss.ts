@@ -9,6 +9,9 @@ import { Op } from "sequelize";
 import { v4 } from "uuid";
 import deleteFile from "@/common/utils/static/deleteFile";
 import verify from "@/common/utils/jwt/verify";
+import Cookie from "cookie";
+import { createAdapter } from "@socket.io/cluster-adapter";
+import { setupWorker } from "@socket.io/sticky";
 
 let redis = Redis();
 
@@ -31,13 +34,18 @@ function init() {
 
 const io = new Server(server, {
   path: "/oss",
+  transports: ["websocket"],
   cors: {
-    origin: "*",
+    origin: [process.env.CLIENT_HOST],
+    methods: ["GET", "POST"],
+    credentials: true,
   },
-  transports: ["websocket", "polling"],
 });
 
-io.disconnectSockets();
+if (process.env._pm2_version) {
+  io.adapter(createAdapter());
+  setupWorker(io);
+}
 
 async function getOSSList(prefix: string) {
   let ossMarkerCount = 0;
@@ -357,7 +365,9 @@ async function getDataBaseList() {
 }
 
 io.use(async (socket, next) => {
-  let token = socket.handshake.headers.authorization;
+  let cookie = Cookie.parse(socket.handshake.headers.cookie || "");
+  let token = cookie.token;
+
   if (token) {
     verify(token)
       .then(decode => {
@@ -399,7 +409,7 @@ io.on("connection", async socket => {
     init();
     await redis.set("oss-key-code", 2, "EX", 86400),
       io.emit("info", {
-        code,
+        code: 2,
         message: "数据对比任务执行中",
       });
     try {
@@ -453,7 +463,7 @@ io.on("connection", async socket => {
       });
       await redis.set("oss-key-code", 1, "EX", 86400);
       io.emit("info", {
-        code,
+        code:1,
         message: "数据对比任务执行成功",
       });
     } catch (error) {
@@ -462,7 +472,7 @@ io.on("connection", async socket => {
       await redis.del(redisKeys);
       await redis.set("oss-key-code", 0, "EX", 86400);
       io.emit("info", {
-        code,
+        code: 0,
         message: "数据对比任务失败",
       });
       io.emit("message", { message: `数据对比任务失败` });

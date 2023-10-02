@@ -10,11 +10,9 @@ import duration from "dayjs/plugin/duration";
 import { DeleteOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { DisconnectOutlined, LinkOutlined } from "@ant-design/icons";
-import cookie from "js-cookie";
 dayjs.extend(duration);
 
 const OSS = () => {
-
   const [info, setInfo] = useState<null | { code: -1 | 0 | 1 | 2 | null; message: string }>(null);
   const [deleteCode, setDeleteCode] = useState<null | 0 | 1 | 2>(null);
   const [list, setList] = useState<
@@ -42,9 +40,8 @@ const OSS = () => {
   useEffect(() => {
     const newSocket = io(`${axios.defaults.baseURL}`, {
       path: "/oss",
-      reconnectionAttempts: 20,
-      reconnectionDelay: 3000,
-      extraHeaders: { Authorization: cookie.get("token")! },
+      transports: ["websocket"],
+      withCredentials: true,
     });
     setSocket(newSocket);
     newSocket.on("connect", () => {

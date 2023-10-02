@@ -14,7 +14,7 @@ module.exports = {
       args: process.env.npm_lifecycle_event == "start:debug" ? "--inspect=0.0.0.0:9229" : undefined,
       script: "./src/index.js",
       exec_mode: "cluster",
-      instances: 1, //socket.io的问题只能暂时设置为1
+      instances: 2,
       max_memory_restart: "600M",
       listen_timeout: 3000,
       min_uptime: "60s",
