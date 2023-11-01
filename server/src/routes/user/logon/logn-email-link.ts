@@ -48,7 +48,7 @@ router.get("/logon/email", validator(schema), async ctx => {
   let userData = await getUserData(key);
   if (!userData) return false;
   let _id = id();
-  var data = new Identicon(sha1(_id + ""), {
+  let data = new Identicon(sha1(_id + ""), {
     size: 80,
     format: "svg",
     background: [240, 240, 240, 255],

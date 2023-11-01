@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 import { server } from "@/index";
 import { folderList } from "@/common/utils/static/upload";
 import bucketManager from "@/common/utils/static/utils/bucketManager";
-import Redis from "@/common/utils/redis";
+import redis from "@/common/utils/redis";
 import DB from "@/db";
 import { load } from "cheerio";
 import { Op } from "sequelize";
@@ -13,7 +13,6 @@ import Cookie from "cookie";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
-let redis = Redis();
 
 function init() {
   redis.del("oss-key-code");

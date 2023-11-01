@@ -1,6 +1,5 @@
 import type { Context, Next } from "koa";
-import Redis from "@/common/utils/redis";
-let client = Redis();
+import redis from "@/common/utils/redis";
 
 /**
  * 传递数字或者数组进行权限判断，如果通过设置id和status
@@ -13,14 +12,14 @@ async function cache(
 ) {
   return async (ctx: Context, next: Next) => {
     let _key = key(ctx);
-    let data = await client.get("cache-" + _key);
+    let data = await redis.get("cache-" + _key);
     if (data) {
       ctx.body = JSON.parse(data);
     } else {
       await next();
       let _allowSaveValue = allowSaveValue(ctx);
       if (_allowSaveValue) {
-        client.set(_key, JSON.stringify(ctx.body), "EX", seconds || 300);
+        redis.set(_key, JSON.stringify(ctx.body), "EX", seconds || 300);
       }
     }
   };

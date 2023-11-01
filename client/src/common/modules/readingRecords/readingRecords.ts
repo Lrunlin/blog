@@ -4,7 +4,6 @@ import setReferer from "./setReferer";
 import setSpider from "./setSpider";
 import type { GetServerSidePropsContext } from "next";
 
-let Redis = redis();
 /**
  * 获取用户端请求IP
  * @params req {Request} express的req
@@ -33,28 +32,28 @@ async function readingRecords(ctx: GetServerSidePropsContext) {
 
   if (
     ip &&
-    !(await Redis.exists([`history-${type}-${ip}-${id}`, `history-${type}-${ip}-${id}-unentered`]))
+    !(await redis.exists([`history-${type}-${ip}-${id}`, `history-${type}-${ip}-${id}-unentered`]))
   ) {
     let ua = ctx.req.headers["user-agent"];
     let spiderResult = setSpider(ua);
 
     if (spiderResult) {
-      Redis.rpush(
+      redis.rpush(
         `history-${type}-${ip}-${id}-unentered`,
         dayjs().format("YYYY-MM-DD"),
         spiderResult
       );
-      Redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
+      redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
       return;
     }
 
     let refererResult = setReferer(referer);
-    Redis.rpush(
+    redis.rpush(
       `history-${type}-${ip}-${id}-unentered`,
       dayjs().format("YYYY-MM-DD"),
       refererResult
     );
-    Redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
+    redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
   }
 }
 export default readingRecords;

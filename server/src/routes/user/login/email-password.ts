@@ -2,6 +2,9 @@ import Router from "@koa/router";
 import DB from "@/db";
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validator";
+import jwt from "jsonwebtoken";
+import sha256 from "@/common/utils/sha256";
+
 const schema = Joi.object({
   email: Joi.string().min(5).max(30).required().email().error(new Error("邮箱格式不正确")),
   password: Joi.string()
@@ -11,7 +14,7 @@ const schema = Joi.object({
     .pattern(/^[a-zA-Z0-9_]{8,16}$/)
     .error(new Error("密码格式错误")),
 });
-import jwt from "jsonwebtoken";
+
 let router = new Router();
 router.post("/login/email", validator(schema), async ctx => {
   let { email, password } = ctx.request.body;
@@ -19,7 +22,7 @@ router.post("/login/email", validator(schema), async ctx => {
   await DB.User.findOne({
     where: {
       email: email,
-      password: password,
+      password: sha256(password),
     },
     attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
   })

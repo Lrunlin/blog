@@ -3,9 +3,7 @@ import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import { Op } from "sequelize";
 import typeCache from "@/common/modules/cache/type";
-import Redis from "@/common/utils/redis";
-
-let redis = Redis();
+import redis from "@/common/utils/redis";
 
 let router = new Router();
 

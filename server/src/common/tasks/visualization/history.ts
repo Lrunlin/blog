@@ -1,10 +1,9 @@
 import DB from "@/db";
-import Redis from "@/common/utils/redis";
+import redis from "@/common/utils/redis";
 interface refererType {
   refererResult: string;
   count: number;
 }
-let redis = Redis();
 /** 访问数量*/
 let visits: { time: string; view_count: number; ip_count: number }[] = new Array(7).fill(0);
 /** 访问来源*/

@@ -3,6 +3,7 @@ import Joi from "joi";
 import validator from "@/common/middleware/verify/validator";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
+import sha256 from "@/common/utils/sha256";
 
 const schema = Joi.object({
   password: Joi.string()
@@ -18,7 +19,7 @@ let router = new Router();
 router.put("/user/password", validator(schema), auth(0), async ctx => {
   let { password } = ctx.request.body;
   let userData = await DB.User.findByPk(ctx.id, { attributes: ["password"] });
-  if (userData?.password == password) {
+  if (userData?.password == sha256(password)) {
     ctx.body = { success: false, message: "新旧密码不得相同" };
     return;
   }

@@ -24,5 +24,7 @@ Disallow:/problem/editor
 Disallow:/collection
 # 管理员
 Disallow:/admin
+# 找回密码
+Disallow:/forget-password
 
 Sitemap:https://blogweb.cn/sitemap/index.xml

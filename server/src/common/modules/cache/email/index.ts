@@ -1,6 +1,5 @@
 import sha1 from "sha1";
-import Redis from "@/common/utils/redis";
-let client = Redis();
+import redis from "@/common/utils/redis";
 
 /** 在模块set和get时对redis的key添加前缀*/
 function setPrefix(key: string) {
@@ -14,17 +13,17 @@ export function createKey(email: string) {
 
 /** 将key从内存中删除*/
 export function removeKey(key: string) {
-  client.del(setPrefix(key));
+  redis.del(setPrefix(key));
 }
 
 /** 判断是否有对应的key*/
 export function hasKey(key: string) {
-  return client.exists(setPrefix(key));
+  return redis.exists(setPrefix(key));
 }
 
 /** 根据email查询剩余的秒数*/
 export function getRemainingTTL(email: string) {
-  return client.ttl(setPrefix(createKey(email)));
+  return redis.ttl(setPrefix(createKey(email)));
 }
 
 interface setUserDataType {
@@ -34,7 +33,7 @@ interface setUserDataType {
 }
 /** 将注册的用户信息存储到内存15分钟*/
 export function setUserData(userData: setUserDataType) {
-  client.set(setPrefix(createKey(userData.email)), JSON.stringify(userData), "EX", 900);
+  redis.set(setPrefix(createKey(userData.email)), JSON.stringify(userData), "EX", 900);
 }
 
 interface userDataType {
@@ -44,17 +43,17 @@ interface userDataType {
 }
 /** 通过key或取用户信息*/
 export async function getUserData(key: string) {
-  let data = await client.get(setPrefix(key));
+  let data = await redis.get(setPrefix(key));
   return (data ? JSON.parse(data) : null) as userDataType | null;
 }
 
 /** 将生成key，保存新邮箱*/
 export function setUserEmail(email: string, newEmail: string) {
-  client.set(setPrefix(createKey(email)), JSON.stringify({ newEmail, email }), "EX", 900);
+  redis.set(setPrefix(createKey(email)), JSON.stringify({ newEmail, email }), "EX", 900);
 }
 
 /** 根据key用户用户要修改的新邮箱*/
 export async function getUserEmail(key: string) {
-  let data = (await client.get(setPrefix(key))) as string | null;
+  let data = (await redis.get(setPrefix(key))) as string | null;
   return data ? (JSON.parse(data) as { email: string; newEmail: string }) : null;
 }

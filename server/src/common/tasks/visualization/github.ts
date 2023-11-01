@@ -1,7 +1,6 @@
-import Redis from "@/common/utils/redis";
+import redis from "@/common/utils/redis";
 import axios from "axios";
 import moment from "moment";
-let redis = Redis();
 
 function getGtiHubData() {
   axios

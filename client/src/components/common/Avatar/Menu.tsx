@@ -61,7 +61,9 @@ const Menu: FC = () => {
         <div
           className="cursor-pointer"
           onClick={() => {
-            cookie.remove("token");
+            cookie.remove("token", {
+              domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
+            });
             router.refresh();
           }}
         >

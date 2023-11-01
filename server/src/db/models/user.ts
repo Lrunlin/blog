@@ -1,3 +1,4 @@
+import sha256 from "@/common/utils/sha256";
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
 
@@ -86,9 +87,12 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           unique: "qq",
         },
         password: {
-          type: DataTypes.STRING(30),
+          type: DataTypes.STRING(64),
           allowNull: false,
           comment: "密码",
+          set(this, val: string) {
+            this.setDataValue("password", sha256(val));
+          },
         },
         state: {
           type: DataTypes.INTEGER,

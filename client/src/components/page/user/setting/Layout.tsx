@@ -4,7 +4,7 @@ import { Button, Result } from "antd";
 import { useSetRecoilState } from "recoil";
 import { modalStateContext } from "@/components/common/Header/Sign";
 import Base from "@/layout/Base";
-import { LeftOutlined, IdcardOutlined, SettingOutlined } from "@ant-design/icons";
+import { LeftOutlined, IdcardOutlined, SettingOutlined, DeleteOutlined } from "@ant-design/icons";
 import ActiveLink from "@/components/next/ActiveLink";
 import useUserData from "@/store/user-data";
 
@@ -18,6 +18,11 @@ const list = [
     href: "/user/settings/account",
     icon: <SettingOutlined />,
     label: "账号设置",
+  },
+  {
+    href: "/user/settings/destroy",
+    icon: <DeleteOutlined />,
+    label: "账号注销",
   },
 ];
 

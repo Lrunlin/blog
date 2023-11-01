@@ -40,7 +40,7 @@ React 状态管理 Recoil
 
 ### 用户端
 
-1. 登录/注册  
+1. 登录/注册/注销  
    1.邮箱  
    ~~2. QQ~~  
     3. GitHub(仅支持登录)
@@ -99,7 +99,8 @@ _如果在安装时出现了`sharp`插件安装失败的问题，可以翻墙使
 ## 生产环境部署
 
 本站使用宝塔 Linux 进行网站部署,对于不同开发者来说生产环境服务器不同。如果你在项目部署时遇到了问题可以通过顶部的联系方式联系我。
-项目同时使用了pm2和socket.io所以pm2要替换为@socket.io/pm2，安装过程见install.bat。详情见[scoket.io官网相关内容](https://socket.io/zh-CN/docs/v4/pm2/)
+
+项目同时使用了 pm2 和 socket.io 所以 pm2 要替换为@socket.io/pm2，安装过程见 install.bat。详情见[scoket.io 官网相关内容](https://socket.io/zh-CN/docs/v4/pm2/)
 
 ## 服务器推荐
 

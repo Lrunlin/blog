@@ -2,9 +2,8 @@ import Router from "@koa/router";
 import DB from "@/db";
 import auth from "@/common/middleware/auth";
 import { Op } from "sequelize";
-import Redis from "@/common/utils/redis";
+import redis from "@/common/utils/redis";
 
-let redis = Redis();
 
 let router = new Router();
 router.get("/statistics/index", auth(), async ctx => {

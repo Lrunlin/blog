@@ -1,9 +1,8 @@
 import os from "os";
 import moment from "moment";
-import Redis from "../../utils/redis";
+import redis from "@/common/utils/redis";
 import { getDiskInfoSync } from "node-disk-info";
 
-let redis = Redis();
 
 const getDistData = () => {
   let isLinux = os.type().toLowerCase().includes("linux");
