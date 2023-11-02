@@ -52,13 +52,6 @@ const ArticleList = memo(() => {
   }, [tableOption, searchOption]);
   return (
     <>
-      <style jsx global>
-        {`
-          .article-list_header .ant-form-item {
-            margin: 10px 0px 15px 15px;
-          }
-        `}
-      </style>
       <AdminLayout>
         <Header />
         <Spin tip="Loading..." spinning={isLoading}>

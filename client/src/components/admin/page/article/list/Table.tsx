@@ -178,6 +178,7 @@ const TableCom = () => {
   return (
     <>
       <Table
+        className="mt-4"
         rowKey="id"
         dataSource={articleList.list}
         columns={columns}

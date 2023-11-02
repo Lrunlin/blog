@@ -11,23 +11,34 @@ let router = new Router();
 /** 管理系统搜索*/
 router.get("/article/page/:page", interger([], ["page"]), auth(), async ctx => {
   let page = +ctx.params.page;
+
   let query = qs.parse(ctx.querystring);
+
   let pageSize = query.page_size ? +query.page_size : 10;
   let where: { [key: string]: any } = {};
 
   if (query.id) {
     where.id = +query.id;
   }
+
   if (query.deadline) {
     where.create_time = {
       [Op.gte]: new Date(query.deadline as any),
     };
   }
+
   if (query.article_id) {
     where.id = (query.article_id as string).replace(/ /g, "");
   }
+
   if (query.author_id) {
     where.author = query.author_id;
+  }
+
+  if (query.only_original == "true") {
+    where.reprint = {
+      [Op.is]: null,
+    };
   }
 
   await DB.Article.findAndCountAll({
@@ -57,6 +68,7 @@ router.get("/article/page/:page", interger([], ["page"]), auth(), async ctx => {
           list: rows.map(item => ({
             ...item.toJSON(),
             tag: getTagData(item.toJSON().tag as unknown as number[]),
+            content: undefined,
           })),
         },
       };

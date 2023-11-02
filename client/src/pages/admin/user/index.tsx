@@ -65,11 +65,7 @@ const UserList = () => {
             )}
             {item.email && (
               <a href={`mailto:${item.email}`}>
-                <img
-                  src="/icon/admin/邮箱.svg"
-                  alt="email"
-                  className="w-5 cursor-pointer mr-4"
-                />
+                <img src="/icon/admin/邮箱.svg" alt="email" className="w-5 cursor-pointer mr-4" />
               </a>
             )}
             {item.qq && (
@@ -155,6 +151,7 @@ const UserList = () => {
             total: total,
             defaultPageSize: 10,
             onChange: _page => setPage(_page),
+            position: ["bottomCenter"],
           }}
           columns={columns}
           rowKey="id"

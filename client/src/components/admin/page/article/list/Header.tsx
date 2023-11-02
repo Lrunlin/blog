@@ -1,5 +1,5 @@
 import { atom, useRecoilState } from "recoil";
-import { Form, Input, Select, Button,  DatePicker } from "antd";
+import { Form, Input, Select, Button, DatePicker, Switch, Card } from "antd";
 
 export const searchOptionContext = atom({
   key: "article-list-option",
@@ -14,6 +14,8 @@ export const searchOptionContext = atom({
     article_id: undefined,
     /** 发布者ID*/
     author_id: undefined,
+    /** 是否仅原创文章*/
+    only_original: undefined,
   },
 });
 
@@ -31,14 +33,8 @@ const Header = () => {
 
   const { Option } = Select;
   return (
-    <div className="article-list_header">
-      <Form
-        initialValues={option}
-        onFinish={onFinish}
-        autoComplete="off"
-        layout="inline"
-        size="small"
-      >
+    <Card className="article-list_header">
+      <Form initialValues={option} onFinish={onFinish} autoComplete="off" layout="inline">
         <Form.Item label="文章ID" name="id">
           <Input placeholder="输入文章ID" className="w-40" />
         </Form.Item>
@@ -70,7 +66,11 @@ const Header = () => {
           }
         </Form.List>
 
-        <Form.Item name="deadline" label="截止时间">
+        <Form.Item label="仅原创" name="only_original">
+          <Switch></Switch>
+        </Form.Item>
+
+        <Form.Item label="截止时间" name="deadline">
           <DatePicker showTime placeholder="查询指定时间后发布的文章" className="w-40" />
         </Form.Item>
 
@@ -80,7 +80,14 @@ const Header = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
+      <style jsx global>
+        {`
+          .article-list_header .ant-form-item {
+            margin: 0px 0px 20px 15px !important;
+          }
+        `}
+      </style>
+    </Card>
   );
 };
 export default Header;
