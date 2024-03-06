@@ -25,7 +25,7 @@ React 状态管理 Recoil
 ## 其他版本
 
 系统相对完善对博客网站所需的 SEO 有处理可以在生产环境中进行使用,也可以当做毕业设计。
-系统提供一 份用户端为 Vue3 的 CSR 版本(前端 Vue3,服务端 Node.js 使用 JavaScript)  
+系统提供一 份用户端为 Vue3 的 CSR 版本(前端 Vue3,服务端 Node.js+TS+Sequelize 使用 JavaScript) (非开源 QQ、微信联系)  
 以及一份[Next.js+Vue3+Express 版本](https://github.com/Lrunlin/web_blog "个人博客")（作者主页可见，开源）
 
 可联系 QQ:1974109227 微信:webzhizhuo

@@ -82,7 +82,7 @@ const Article = () => {
 
   return (
     <>
-      <div ref={DOM} className="w-39vw h-12.5vw"></div>
+      <div ref={DOM} className="w-[39vw] h-[12.5vw]"></div>
     </>
   );
 };

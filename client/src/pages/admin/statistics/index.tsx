@@ -34,9 +34,8 @@ const Statistics: FC<{ data: statisticsDataType }> = props => {
 
   let data = useMemo(() => fetchData || props.data, [fetchData, props.data]);
 
-  let timer: any;
   useEffect(() => {
-    timer = setInterval(() => {
+    let timer = setInterval(() => {
       refetch();
     }, 20000);
     return () => {
@@ -50,12 +49,13 @@ const Statistics: FC<{ data: statisticsDataType }> = props => {
         <Head title="数据分析" />
         <div
           className="min-h-screen min-w-full"
+          id="screen"
           style={{
             backgroundImage: `url(${process.env.CDN}/image/admin/statistics/bg.jpg)`,
             backgroundSize: "100vw 100vh",
           }}
         >
-          <div className="text-2xl text-statistics-cyan-color text-center font-black pt-0.25vw">
+          <div className="text-2xl text-statistics-cyan-color text-center font-black pt-[0.25vw]">
             数据分析
           </div>
           {error && (
@@ -68,7 +68,7 @@ const Statistics: FC<{ data: statisticsDataType }> = props => {
             </div>
           )}
           {data && (
-            <main className="mx-auto w-96vw mt-3vh">
+            <main className="mx-auto w-[96vw] mt-3vh">
               <div>
                 <Top />
               </div>

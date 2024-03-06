@@ -9,7 +9,7 @@ interface propsType {
 const HeaderItem: FC<propsType> = ({ title, data }) => {
   return (
     <Container>
-      <div className="header-item w-14vw h-5vw">
+      <div className="header-item w-[14vw] h-[5vw]">
         <div className="text-lg font-bold text-white">{title}</div>
         <div className="text-statistics-cyan-color text-lg font-bold">{data}</div>
       </div>

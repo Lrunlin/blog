@@ -8,9 +8,9 @@ import ArticleRanking from "./ArticleRanking";
 const Top = () => {
   return (
     <div className="flex justify-between">
-      <div className="w-70.25vw">
+      <div className="w-[70.25vw]">
         <Header />
-        <div className="mt-1vw flex justify-between">
+        <div className="mt-[1vw] flex justify-between">
           <Container>
             <Visits />
           </Container>
@@ -19,7 +19,7 @@ const Top = () => {
           </Container>
         </div>
       </div>
-      <div className="w-23.5vw">
+      <div className="w-[23.5vw]">
         <Container className="w-full">
           <ArticleRanking />
         </Container>

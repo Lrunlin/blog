@@ -3,7 +3,11 @@ import Layout from "@/components/page/user/setting/Layout";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import cookie from "js-cookie";
+import useUserData from "@/store/user-data";
+
 const Destroy = () => {
+  let [userData] = useUserData();
+
   function remove() {
     axios
       .post("/user/destroy")
@@ -37,8 +41,9 @@ const Destroy = () => {
           showIcon
         />
         <div className="mt-6 flex justify-center">
-          <Tooltip title="点击就会删除，没有确认">
+          <Tooltip title={userData?.auth != 0 ? "管理员账号禁止注销" : "点击就会删除，没有确认"}>
             <Button
+              disabled={userData?.auth != 0}
               onClick={remove}
               icon={<DeleteOutlined />}
               className="w-40"
