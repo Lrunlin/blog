@@ -7,12 +7,16 @@ import sha1 from "sha1";
 import id from "@/common/utils/id";
 
 let router = new Router();
-router.post("/user/destroy", auth(0), async ctx => {
-  if (ctx.auth != 0) {
-    ctx.body = { success: false, message: "只有普通用户才能注销账号" };
+router.post("/user/destroy/:id", auth(1), async ctx => {
+  let user_id = ctx.params.id;
+  let userData = await DB.User.findByPk(user_id, { attributes: ["auth"] });
+  if (userData?.auth == 1) {
+    ctx.body = { success: false, message: "管理员不能注销账号" };
     ctx.status = 500;
+    return;
   }
-  let data = new Identicon(sha1(ctx.id + ""), {
+
+  let data = new Identicon(sha1(user_id + ""), {
     size: 80,
     format: "svg",
     background: [240, 240, 240, 255],
@@ -26,25 +30,27 @@ router.post("/user/destroy", auth(0), async ctx => {
     .catch(err => ({ success: false, errMes: err }));
 
   if (!uploadResult.success) {
+    ctx.status = 500;
     ctx.body = { success: false, message: "注销失败，请稍后再试" };
     return;
   }
 
   await DB.User.update(
     {
-      name: `用户-${ctx.id}`,
+      name: `用户-${user_id}`,
       github: null as any,
       qq: null as any,
-      email: `1@qq.com`,
+      email: `已注销-${user_id}@destroy.com`,
       description: null as any,
       location: null as any,
       site: null as any,
       unit: null as any,
       avatar_file_name: (uploadResult as any).fileName,
       password: Math.random() + process.env.SITE_API_HOST + +new Date(),
+      state: 0,
     },
     {
-      where: { id: ctx.id },
+      where: { id: user_id },
     }
   )
     .then(([row]) => {

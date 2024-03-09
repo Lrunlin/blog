@@ -68,7 +68,7 @@ const Statistics: FC<{ data: statisticsDataType }> = props => {
             </div>
           )}
           {data && (
-            <main className="mx-auto w-[96vw] mt-3vh">
+            <main className="mx-auto w-[96vw] mt-[4vh]">
               <div>
                 <Top />
               </div>

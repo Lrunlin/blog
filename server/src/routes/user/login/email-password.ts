@@ -23,6 +23,7 @@ router.post("/login/email", validator(schema), async ctx => {
     where: {
       email: email,
       password: sha256(password),
+      state: 1,
     },
     attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
   })

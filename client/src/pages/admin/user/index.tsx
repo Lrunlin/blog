@@ -1,10 +1,22 @@
 import { useState, useEffect, startTransition } from "react";
-import { message, Table, Avatar, DatePicker, Popover } from "antd";
+import {
+  message,
+  Table,
+  Avatar,
+  DatePicker,
+  Popover,
+  Button,
+  Popconfirm,
+  Select,
+  Input,
+  notification,
+} from "antd";
 import Link from "next/link";
 import dayjs from "dayjs";
 import axios from "axios";
 import copy from "copy-to-clipboard";
 import AdminLayout from "@/layout/Admin/Base";
+import { response } from "@type/response";
 
 const UserList = () => {
   const [total, setTotal] = useState(0);
@@ -128,23 +140,155 @@ const UserList = () => {
         );
       },
     },
+    {
+      title: "注销",
+      dataIndex: "id",
+      width: 140,
+      render: (id: number, val: any) => {
+        return (
+          <div>
+            {val.state == 0 ? (
+              <Button type="primary" onClick={() => recovery(id)}>
+                恢复
+              </Button>
+            ) : (
+              <Popconfirm
+                placement="top"
+                title={`注销用户:${val.name}`}
+                description={`注销用户后无法找回`}
+                okText="确定"
+                cancelText="取消"
+                onConfirm={() => destroy(id)}
+              >
+                <Button danger disabled={val.state == 0}>
+                  注销
+                </Button>
+              </Popconfirm>
+            )}
+          </div>
+        );
+      },
+    },
   ];
+
+  const [key, setKey] = useState(+new Date()); //用于触发数据更新
+  let [userId, setUserId] = useState("");
+  const [state, setState] = useState<number | false>(false);
   useEffect(() => {
-    axios.get(`/user/list/${page}`).then(res => {
-      if (res.data.success) {
+    let params: { [key: string]: any } = {};
+    if (state !== false) {
+      params.state = state;
+    }
+    if (/^[\s\S]*.*[^\s][\s\S]*$/.test(userId)) {
+      params.user_id = userId;
+    }
+
+    axios
+      .get(`/user/list/${page}`, { params: params })
+      .then(res => {
         setData(res.data.data.list);
         startTransition(() => {
           setTotal(res.data.data.total);
         });
-      } else {
-        message.error(res.data.message);
-      }
-    });
-  }, [page]);
+      })
+      .catch(err => {
+        message.error(err.message);
+      });
+  }, [page, state, key]);
+
+  // 空的时候重新请求
+  useEffect(() => {
+    if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(userId)) {
+      setKey(val => ++val);
+    }
+  }, [userId]);
+
+  /** 注销账号*/
+  function destroy(id: number) {
+    axios
+      .post<response>(`/user/destroy/${id}`)
+      .then(res => {
+        message.success(res.data.message);
+        setKey(val => ++val);
+      })
+      .catch(err => {
+        message.error(err.message);
+        console.log(err);
+      });
+  }
+  /** 恢复账号*/
+  function recovery(id: number) {
+    axios
+      .post<response<{ email: string; password: string }>>(`/user/recovery/${id}`)
+      .then(res => {
+        if (res.data.success) {
+          setKey(val => ++val);
+          notification.success({
+            message: "恢复成功",
+            duration: 5,
+            description: (
+              <div>
+                <div>
+                  <div className="break-all">
+                    <span className="font-bold">邮箱:</span>
+                    <span className="ml-2">{res.data.data.email}</span>
+                  </div>
+                  <div className="break-all">
+                    <span className="font-bold">密码:</span>
+                    <span className="ml-2">{res.data.data.password}</span>
+                  </div>
+                </div>
+                <Button
+                  className="mt-4"
+                  onClick={() => {
+                    copy(`邮箱:${res.data.data.email}   密码:${res.data.data.password}`);
+                    message.success("复制成功");
+                  }}
+                >
+                  点击复制
+                </Button>
+              </div>
+            ),
+          });
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch(err => {
+        message.error(err.message);
+        console.log(err);
+      });
+  }
 
   return (
     <AdminLayout>
       <div className="piece">
+        <Select
+          defaultValue={state}
+          style={{ width: 120 }}
+          onChange={setState}
+          options={[
+            { value: false, label: "全部" },
+            { value: 1, label: "未注销" },
+            { value: 0, label: "已注销" },
+          ]}
+        />
+        <Input
+          placeholder="根据用户ID搜索"
+          className="!ml-8 !w-56"
+          allowClear={true}
+          onChange={val => setUserId(val.target.value)}
+        />
+        <Button
+          type="primary"
+          onClick={() => setKey(val => ++val)}
+          className="ml-2"
+          disabled={!/^[\s\S]*.*[^\s][\s\S]*$/.test(userId)}
+        >
+          搜索
+        </Button>
+      </div>
+      <div className="piece mt-4">
         <Table
           pagination={{
             current: page,

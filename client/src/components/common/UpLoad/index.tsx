@@ -68,7 +68,7 @@ const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article",
                 props.onSuccess && props.onSuccess(res.data.data);
               })
               .catch(err => {
-                props.onError && props.onError(err.data.message);
+                props.onError && props.onError(err.message);
               })
               .finally(() => {
                 setIsLoading(false);
@@ -97,7 +97,7 @@ const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article",
                 props.onSuccess && props.onSuccess(res.data.data);
               })
               .catch(err => {
-                props.onError && props.onError(err.data.message);
+                props.onError && props.onError(err.message);
               })
               .finally(() => {
                 setIsLoading(false);

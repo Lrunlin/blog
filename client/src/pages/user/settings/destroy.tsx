@@ -6,7 +6,7 @@ import cookie from "js-cookie";
 import useUserData from "@/store/user-data";
 
 const Destroy = () => {
-  let [userData] = useUserData();
+  let [userData, setUserData] = useUserData();
 
   function remove() {
     axios
@@ -17,6 +17,7 @@ const Destroy = () => {
           domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
         });
         message.success(res.data.message);
+        setUserData();
       })
       .catch(err => {
         message.error(err.message);

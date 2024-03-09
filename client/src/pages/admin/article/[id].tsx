@@ -143,6 +143,9 @@ const Update = () => {
                 onSuccess={({ file_name }) => {
                   form.setFieldsValue({ cover_file_name: file_name });
                 }}
+                onError={mes => {
+                  message.error(mes);
+                }}
                 target="cover"
                 width={200}
                 imgURL={uploadInitVlaue?.icon_url}
