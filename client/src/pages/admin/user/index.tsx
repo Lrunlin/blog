@@ -154,8 +154,12 @@ const UserList = () => {
             ) : (
               <Popconfirm
                 placement="top"
-                title={`注销用户:${val.name}`}
-                description={`注销用户后无法找回`}
+                title={
+                  <span>
+                    注销用户:<span className="font-bold mx-1">{val.name}</span>？
+                  </span>
+                }
+                description={`注销后用户信息无法找回`}
                 okText="确定"
                 cancelText="取消"
                 onConfirm={() => destroy(id)}
