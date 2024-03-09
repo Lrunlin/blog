@@ -9,7 +9,7 @@ import getTitleId from "@/common/modules/article/get/set-title-id";
 import setDescription from "@/common/modules/article/get/set-description";
 
 import Sequelize from "@/db/config";
-import getUserId from "@/common/middleware/getUserId";
+import getUserId from "@/common/middleware/auth/getUserId";
 import setExternalLink from "@/common/modules/article/get/external-link";
 
 let router = new Router();

@@ -8,11 +8,10 @@ import { load } from "cheerio";
 import { Op } from "sequelize";
 import { v4 } from "uuid";
 import deleteFile from "@/common/utils/static/deleteFile";
-import verify from "@/common/utils/jwt/verify";
+import verify from "@/common/utils/auth/verify";
 import Cookie from "cookie";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
-
 
 function init() {
   redis.del("oss-key-code");
@@ -462,7 +461,7 @@ io.on("connection", async socket => {
       });
       await redis.set("oss-key-code", 1, "EX", 86400);
       io.emit("info", {
-        code:1,
+        code: 1,
         message: "数据对比任务执行成功",
       });
     } catch (error) {

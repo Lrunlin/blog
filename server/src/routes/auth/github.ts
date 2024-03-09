@@ -1,8 +1,8 @@
 import Router from "@koa/router";
-import getUserId from "@/common/middleware/getUserId";
+import getUserId from "@/common/middleware/auth/getUserId";
 import updata from "@/common/modules/github/updata";
 import getGithubName from "@/common/modules/github/getGithubName";
-import sign from "@/common/utils/jwt/sign";
+import sign from "@/common/utils/auth/sign";
 import DB from "@/db";
 let router = new Router();
 
@@ -37,7 +37,11 @@ router.post("/user/github", getUserId, async ctx => {
       ctx.body = { success: false, message: `没有找到对应的账户` };
     }
   } else {
-    ctx.body = { success: true, message: "登录成功", token: await sign(userData.id) };
+    ctx.body = {
+      success: true,
+      message: "登录成功",
+      token: await sign({ id: userData.id, auth: userData.auth }),
+    };
   }
 });
 export default router;

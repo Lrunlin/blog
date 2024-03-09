@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import DB from "@/db";
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validator";
-import jwt from "jsonwebtoken";
+import sign from "@/common/utils/auth/sign";
 import sha256 from "@/common/utils/sha256";
 
 const schema = Joi.object({
@@ -27,19 +27,15 @@ router.post("/login/email", validator(schema), async ctx => {
     },
     attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
   })
-    .then(row => {
+    .then(async row => {
       if (!row) {
         ctx.body = { success: false, message: "邮箱或密码错误" };
         return;
       }
-      let token = jwt.sign(
-        {
-          id: row.id,
-          auth: row.auth,
-        },
-        process.env.KEY as string,
-        { expiresIn: "365d" }
-      );
+      let token = await sign({
+        id: row.id,
+        auth: row.auth,
+      });
       ctx.body = { success: true, message: "登录成功", token: token, data: row };
     })
     .catch(err => {

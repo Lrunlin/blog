@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import DB from "@/db";
 import Sequelize from "@/db/config";
 import interger from "@/common/verify/integer";
-import getUserId from "@/common/middleware/getUserId";
+import getUserId from "@/common/middleware/auth/getUserId";
 import setDescription from "@/common/modules/article/get/set-description";
 import getTagData from "@/common/modules/article/get/set-tag-data";
 import { Op } from "sequelize";

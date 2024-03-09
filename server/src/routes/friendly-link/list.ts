@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import getUserId from "@/common/middleware/getUserId";
+import getUserId from "@/common/middleware/auth/getUserId";
 
 let router = new Router();
 router.get("/friendly-link", getUserId, async ctx => {

@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import { hasKey, removeKey, getUserData } from "@/common/modules/cache/email";
-import jwt from "jsonwebtoken";
+import sign from "@/common/utils/auth/sign";
 import qs from "qs";
 import DB from "@/db";
 import id from "@/common/utils/id";
@@ -54,7 +54,10 @@ router.get("/logon/email", validator(schema), async ctx => {
     background: [240, 240, 240, 255],
   }).toString();
 
-  let uploadResult = await upload(Buffer.from(data, "base64"),{ folder: "avatar", file_name: `${id()}.webp` })
+  let uploadResult = await upload(Buffer.from(data, "base64"), {
+    folder: "avatar",
+    file_name: `${id()}.webp`,
+  })
     .then(res => ({ success: true, fileName: (res as any).file_name as string }))
     .catch(err => ({ success: false, errMes: err }));
 
@@ -80,14 +83,10 @@ router.get("/logon/email", validator(schema), async ctx => {
     return;
   }
 
-  let token = jwt.sign(
-    {
-      id: _id,
-      auth: 0,
-    },
-    process.env.KEY,
-    { expiresIn: "365d" }
-  );
+  let token = await sign({
+    id: _id,
+    auth: 0,
+  });
   response(true, "注册成功", "", token);
   removeKey(key);
 });

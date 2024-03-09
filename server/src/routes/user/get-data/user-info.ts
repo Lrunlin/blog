@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import jwt from "jsonwebtoken";
+import verify from "@/common/utils/auth/verify";
 
 let router = new Router();
 interface payLoadType {
@@ -14,7 +14,7 @@ router.get("/user/info", async ctx => {
   }
 
   try {
-    let { id } = jwt.verify(token + "", process.env.KEY as string) as payLoadType;
+    let { id } = await verify(token);
     await DB.User.findByPk(id, {
       attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
     })

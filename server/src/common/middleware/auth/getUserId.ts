@@ -1,5 +1,5 @@
 import type { Context, Next } from "koa";
-import verify from "../utils/jwt/verify";
+import verify from "../../utils/auth/verify";
 
 /**
  * 获取用户ID以及身份

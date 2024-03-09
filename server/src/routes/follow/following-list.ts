@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import integer from "@/common/verify/integer";
-import getUserId from "@/common/middleware/getUserId";
+import getUserId from "@/common/middleware/auth/getUserId";
 
 let router = new Router();
 

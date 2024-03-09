@@ -15,6 +15,8 @@
 CSS 方案 Tailwind CSS  
 React 状态管理 Recoil
 
+*系统支持 JWT 和 Session 两种鉴权方式因为系统拥有账号注销功能，而 JWT 是无服务器状态的所以推荐使用 Session 存储在 Redis 中。*
+
 ## 联系方式
 
 <div>

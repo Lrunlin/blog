@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import integer from "@/common/verify/integer";
-import getUserId from "@/common/middleware/getUserId";
+import getUserId from "@/common/middleware/auth/getUserId";
 
 let router = new Router();
 
@@ -18,7 +18,6 @@ router.get("/follower/:user_id", integer(["page"], ["user_id"]), getUserId, asyn
     order: [["create_time", "desc"]],
     attributes: ["user_id"],
   });
-
 
   // 根据粉丝列表查询指定的用户信息
   let userList = await DB.User.findAll({
