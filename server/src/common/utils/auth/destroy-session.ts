@@ -1,16 +1,16 @@
 import redis from "@/common/utils/redis";
-import { setSessionId } from "./sign-session";
 
 async function removeSession(id: number) {
   let retult = true;
-  try {
-    let session_id = setSessionId(id);
+  if (process.env.AUTH == "session") {
+    try {
 
-    let keys = await redis.keys(`${session_id}*`);
+      let keys = await redis.keys(`${id}_*`);
 
-    await redis.del(keys);
-  } catch (error) {
-    retult = false;
+      await redis.del(keys);
+    } catch (error) {
+      retult = false;
+    }
   }
   return retult;
 }

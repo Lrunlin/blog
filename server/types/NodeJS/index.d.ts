@@ -15,7 +15,7 @@ declare global {
       /** 用户端使用的CDN地址*/
       CLIENT_CDN: string;
       /** 验证方式jwt|session*/
-      AUTH?: string;
+      AUTH?: "session" | "jwt";
       /** MySQL域名*/
       DB_MYSQL_HOST?: string;
       /** MySQL用户名*/
