@@ -55,7 +55,7 @@ const TableCom = () => {
       dataIndex: "author_data",
       render: (author_data: any) => {
         return (
-          <Link href={`/user/${author_data.id}`}>
+          <Link href={`/admin/user/${author_data.id}`}>
             <Avatar src={author_data.avatar_url} style={{ verticalAlign: "middle" }} size="large">
               {author_data.name.substring(0, 1).toLocaleUpperCase()}
             </Avatar>

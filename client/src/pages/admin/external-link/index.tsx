@@ -29,7 +29,7 @@ const ExternalLink = () => {
         .then(res => {
           message.success("添加成功");
           refetch();
-          setValue('');
+          setValue("");
         })
         .catch(err => {
           message.error(err.message);
@@ -60,7 +60,7 @@ const ExternalLink = () => {
       <div>
         <Input
           placeholder="输入二级域名"
-          className="w-80"
+          className="!w-80"
           value={value}
           maxLength={150}
           onChange={e => setValue(e.target.value)}
