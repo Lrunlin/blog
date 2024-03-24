@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Skeleton, Result, Table, Image, Button } from "antd";
+import { Skeleton, Result, Table, Image, Button, message } from "antd";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import AdminLayout from "@/layout/Admin/Base";
@@ -13,9 +13,10 @@ function Position(position: keyof typeof positionMapping) {
   return positionMapping[position];
 }
 const APP = () => {
-  let { data, error, isLoading } = useFetch(() =>
+  let { data, error, isLoading, setData } = useFetch(() =>
     axios.get("/advertisement").then(res => res.data.data)
   );
+
   let router = useRouter();
   const columns = [
     {
@@ -72,7 +73,29 @@ const APP = () => {
         );
       },
     },
+    {
+      title: "删除",
+      dataIndex: "id",
+      render(id: string) {
+        return (
+          <Button onClick={() => remove(id)} size="small" type="primary" danger>
+            删除
+          </Button>
+        );
+      },
+    },
   ];
+
+  function remove(id: string) {
+    axios.delete(`/advertisement/${id}`).then(res => {
+      if (res.data.success) {
+        message.success(res.data.message);
+        setData((_data: any[]) => _data.filter(item => item.id != id));
+      } else {
+        message.error(res.data.message);
+      }
+    });
+  }
   return (
     <AdminLayout>
       {data && (

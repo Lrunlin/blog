@@ -28,7 +28,7 @@ const Image: FC<propsType> = props => {
       );
     }
 
-    // TODO 设计缺陷，需要判断是否base64，可以将src和base64分成两个变量和函数解决 
+    // TODO 设计缺陷，需要判断是否base64，可以将src和base64分成两个变量和函数解决
     if (props.imgURL && !isBase64Img(props.imgURL) && first.current) {
       setSrc(props.imgURL);
       first.current = false;
@@ -42,11 +42,17 @@ const Image: FC<propsType> = props => {
   return (
     <label
       htmlFor={fileID}
-      className="relative border border-dashed border-gray-400 hover:border-blue-400 overflow-hidden rounded flex items-center justify-center"
-      style={{
-        width: `${props.width}px`,
-        height: `${props.width / (props?.aspect || 1)}px`,
-      }}
+      className=" relative border border-dashed border-gray-400 hover:border-blue-400 overflow-hidden rounded flex items-center justify-center"
+      style={
+        !src && props?.aspect
+          ? {
+              width: `${props.width}px`,
+              height: `${props.width / (props?.aspect || 1)}px`,
+            }
+          : {
+              width: `${props.width}px`,
+            }
+      }
     >
       <>
         {src ? (
@@ -77,7 +83,6 @@ const Image: FC<propsType> = props => {
               />
             </div>
             <AntdImage
-              width={200}
               src={src}
               alt="展示图片"
               className="hidden"
@@ -85,6 +90,7 @@ const Image: FC<propsType> = props => {
                 visible: visible,
                 src: src,
                 onVisibleChange: visible => setVisible(visible),
+                getContainer: document.querySelector("body")!,
               }}
             />
           </div>

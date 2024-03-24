@@ -102,34 +102,36 @@ const OSS = () => {
 
   return (
     <AdminLayout>
-      <div className="flex justify-end text-4xl">
-        <div
-          className="bg-gray-300 h-14 w-14 flex justify-center items-center rounded-full cursor-pointer"
-          title={connect ? "已连接" : "已断开"}
-        >
-          {connect ? (
-            <LinkOutlined style={{ color: "green" }} />
-          ) : (
-            <DisconnectOutlined style={{ color: "red" }} />
-          )}
+      <div className="piece">
+        <div className="flex justify-end text-4xl ">
+          <div
+            className="bg-gray-300 h-14 w-14 flex justify-center items-center rounded-full cursor-pointer"
+            title={connect ? "已连接" : "已断开"}
+          >
+            {connect ? (
+              <LinkOutlined style={{ color: "green" }} />
+            ) : (
+              <DisconnectOutlined style={{ color: "red" }} />
+            )}
+          </div>
         </div>
-      </div>
-      <Alert
-        className="!mt-4"
-        message="删除30天以前上传OSS但是未在数据库中使用的图片"
-        type="info"
-        showIcon
-      />
-      <div className="flex justify-center">
-        <Button
-          className="mt-4"
-          type="primary"
-          loading={connect && (info == null || info?.code == 2)}
-          disabled={!connect || deleteCode == 2}
-          onClick={start}
-        >
-          {info ? info.message : "获取状态中"}
-        </Button>
+        <Alert
+          className="!mt-4"
+          message="删除30天以前上传OSS但是未在数据库中使用的图片"
+          type="info"
+          showIcon
+        />
+        <div className="flex justify-center">
+          <Button
+            className="mt-4"
+            type="primary"
+            loading={connect && (info == null || info?.code == 2)}
+            disabled={!connect || deleteCode == 2}
+            onClick={start}
+          >
+            {info ? info.message : "获取状态中"}
+          </Button>
+        </div>
       </div>
       <div className="mt-5">
         <Card title="实时进度" bordered={true}>

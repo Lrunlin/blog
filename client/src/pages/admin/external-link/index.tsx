@@ -57,7 +57,7 @@ const ExternalLink = () => {
 
   return (
     <AdminLayout>
-      <div>
+      <div className="piece">
         <Input
           placeholder="输入二级域名"
           className="!w-80"

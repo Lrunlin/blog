@@ -85,7 +85,7 @@ const Index = () => {
         </div>
       </div>
       {/* 消息 */}
-      <div className="mt-8 p-5 bg-white shadow-sm">
+      <div className="mt-4 p-5 bg-white shadow-sm">
         <div>
           <div className="text-lg">消息通知</div>
           <Divider />

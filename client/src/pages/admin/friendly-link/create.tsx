@@ -21,7 +21,7 @@ const Link = () => {
   }
   return (
     <AdminLayout>
-      <div className="pt-6">
+      <div className="pt-6 piece">
         <Form
           form={form}
           labelCol={{ span: 4 }}
