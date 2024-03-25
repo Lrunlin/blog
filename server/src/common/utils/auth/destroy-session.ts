@@ -5,7 +5,7 @@ async function removeSession(id: number) {
   if (process.env.AUTH == "session") {
     try {
 
-      let keys = await redis.keys(`${id}_*`);
+      let keys = await redis.keys(`auth_${id}_*`);
 
       await redis.del(keys);
     } catch (error) {
