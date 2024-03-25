@@ -7,7 +7,7 @@
 ## 系统说明
 
 **文章针对系统进行简单的说明，并且对管理系统进行了展示
-[https://blogweb.cn/article/5488756264910](https://blogweb.cn/admin/article/5488756264910)**
+[https://blogweb.cn/article/5488756264910](https://blogweb.cn/article/5488756264910)**
 
 ## 相关技术
 
