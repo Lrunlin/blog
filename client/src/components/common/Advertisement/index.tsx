@@ -1,7 +1,7 @@
 import { FC } from "react";
 import classNames from "classnames";
 import getAdvertisementList from "@/request/advertisement";
-import useSWR from "swr";
+import useFetch from "@/common/hooks/useFetch";
 
 interface propsType {
   type: "article" | "index";
@@ -10,12 +10,12 @@ interface propsType {
 
 /** 首页右侧推广*/
 const Advertisement: FC<propsType> = props => {
-  let { data } = useSWR(`advertisement-${props.type}`, () => getAdvertisementList(props.type));
+  let { data } = useFetch(() => getAdvertisementList(props.type));
 
   return (
     <div className={props.className}>
       {data &&
-        data.map((item, index) => (
+        data.map(item => (
           <a
             href={item.url}
             target="_blank"

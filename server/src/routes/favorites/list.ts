@@ -10,7 +10,7 @@ router.get("/favorites/:user_id", auth(0), interger([], ["user_id"]), async ctx 
 
   await DB.Favorites.findAll({
     where: {
-      user_id: ctx.id,
+      user_id: userId,
       //如果是查询自己的就展示全部，否则展示非隐私文件夹
       is_private: userId == ctx.id ? [true, false] : false,
     },
@@ -40,7 +40,7 @@ router.get("/favorites/:user_id", auth(0), interger([], ["user_id"]), async ctx 
     })
     .catch(err => {
       ctx.status = 500;
-      ctx.body = { success: true, message: "查询用户对应收藏夹，失败" };
+      ctx.body = { success: true, message: "查询用户对应收藏夹失败" };
       console.log(err);
     });
 });

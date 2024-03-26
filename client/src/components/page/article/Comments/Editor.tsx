@@ -164,7 +164,7 @@ const Editor: FC<propsType> = props => {
                 onChange={e => setValue(e.target.value)}
                 placeholder="输入评论"
                 maxLength={600}
-                bordered={false}
+                variant="borderless"
                 onFocus={e => {
                   setEditorOption(option => ({
                     ...option,

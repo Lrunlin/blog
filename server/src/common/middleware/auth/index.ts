@@ -16,7 +16,6 @@ function auth(auth?: authCode[] | authCode) {
     }
     // ?管理员可以访问全部接口
     let authList = typeof auth == "number" ? [1, auth] : [1, ...(auth || [])];
-
     await verify(token as string)
       .then(async (decoded: any) => {
         if (authList.includes(decoded.auth)) {
@@ -28,6 +27,8 @@ function auth(auth?: authCode[] | authCode) {
         }
       })
       .catch(err => {
+        console.log(err);
+
         ctx.status = 401;
       });
   };

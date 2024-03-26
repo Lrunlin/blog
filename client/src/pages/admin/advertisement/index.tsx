@@ -1,7 +1,6 @@
-import { Button, InputNumber, Form, Input, Select, message } from "antd";
+import { message } from "antd";
 import axios from "axios";
-import Upload from "@/components/common/UpLoad";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import AdminLayout from "@/layout/Admin/Base";
 import AdvertisementForm from "@/components/admin/page/advertisement/AdvertisementForm";
 

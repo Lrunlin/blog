@@ -58,7 +58,7 @@ const ArticleEditor: FC<propsType> = props => {
         <Input
           placeholder="输入文章标题..."
           value={articleData.title}
-          bordered={false}
+          variant="borderless"
           className="mr-10 h-full"
           onChange={e => setArticleData(_data => ({ ..._data, title: e.target.value }))}
           maxLength={200}

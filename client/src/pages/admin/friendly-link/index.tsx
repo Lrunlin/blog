@@ -1,13 +1,13 @@
 import { useState, startTransition } from "react";
 import { Result, Table, Avatar, Image, Button, Modal, Input, message as messageAlert } from "antd";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
-import useSWR from "swr";
 import axios from "axios";
 import Link from "next/link";
 import AdminLayout from "@/layout/Admin/Base";
+import useFetch from "@/common/hooks/useFetch";
 
 const LinkList = () => {
-  let { data, error, mutate } = useSWR("link-list", () =>
+  let { data, error, isLoading, refetch } = useFetch(() =>
     axios.get("/friendly-link").then(res => res.data.data)
   );
 
@@ -18,29 +18,39 @@ const LinkList = () => {
   const [deleteLinkID, setDeleteLinkID] = useState<null | number>(null);
   const [message, setMessage] = useState("");
   function remove(id: number) {
-    axios.delete(`/friendly-link/${id}`, { params: { message: message } }).then(res => {
-      if (res.data.success) {
-        messageAlert.success(res.data.message);
-        mutate();
-        startTransition(() => {
-          setDeleteLinkID(null);
-        });
-        setMessage("");
-      } else {
-        messageAlert.error(res.data.message);
-      }
-    });
+    axios
+      .delete(`/friendly-link/${id}`, { params: { message: message } })
+      .then(res => {
+        if (res.data.success) {
+          messageAlert.success(res.data.message);
+          refetch();
+          startTransition(() => {
+            setDeleteLinkID(null);
+          });
+          setMessage("");
+        } else {
+          messageAlert.error(res.data.message);
+        }
+      })
+      .catch(err => {
+        messageAlert.error(err.message);
+      });
   }
 
   function adopt(id: number) {
-    axios.put(`/friendly-link/${id}`).then(res => {
-      if (res.data.success) {
-        messageAlert.success(res.data.message);
-        mutate();
-      } else {
-        messageAlert.error(res.data.message);
-      }
-    });
+    axios
+      .put(`/friendly-link/${id}`)
+      .then(res => {
+        if (res.data.success) {
+          messageAlert.success(res.data.message);
+          refetch();
+        } else {
+          messageAlert.error(res.data.message);
+        }
+      })
+      .catch(err => {
+        messageAlert.error(err.message);
+      });
   }
 
   const columns = [
@@ -113,7 +123,7 @@ const LinkList = () => {
   return (
     <AdminLayout>
       <div className="piece">
-        <Table rowKey="id" dataSource={data} columns={columns} />
+        <Table loading={isLoading} rowKey="id" dataSource={data} columns={columns} />
       </div>
       <Modal
         title="确定删除友链"

@@ -1,7 +1,7 @@
 // https://codesandbox.io/s/q8q1mnr01w?file=/src/index.js:2821-2837
 import { useState, useEffect, useRef } from "react";
 import type { MutableRefObject, FC } from "react";
-import type { ModalProps } from "antd";
+import { message, type ModalProps } from "antd";
 import dynamic from "next/dynamic";
 import upload from "./upload";
 const Modal = dynamic(() => import("./Modal"), { ssr: false });
@@ -68,7 +68,7 @@ const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article",
                 props.onSuccess && props.onSuccess(res.data.data);
               })
               .catch(err => {
-                props.onError && props.onError(err.message);
+                props.onError ? props.onError(err.message) : message.error(err.message);
               })
               .finally(() => {
                 setIsLoading(false);

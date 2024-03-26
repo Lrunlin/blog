@@ -136,7 +136,11 @@ const FavoritesList = () => {
               </div>
             ))
           ) : (
-            <Empty description="暂无收藏" />
+            <Empty
+              className="py-32"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="列表为空哦"
+            />
           )}
         </div>
       )}

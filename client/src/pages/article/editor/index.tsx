@@ -4,12 +4,14 @@ import axios from "axios";
 import ArticleEditor from "@/components/common/ArticleEditor";
 import { useRouter } from "next/navigation";
 import { message } from "antd";
+import ArticleRemoveWarn from "@/components/page/article/editor/ArticleRemoveWarn";
 
 const Write: NextPage = () => {
   let router = useRouter();
 
   return (
     <div className="bg-white ">
+      {typeof window != "undefined" && <ArticleRemoveWarn />}
       <ArticleEditor
         showDraftsButton={true}
         meta={

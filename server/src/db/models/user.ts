@@ -69,7 +69,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           comment: "身份",
         },
         email: {
-          type: DataTypes.STRING(60),
+          type: DataTypes.STRING(80),
           allowNull: false,
           comment: "用户邮箱",
           unique: "email",

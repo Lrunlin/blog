@@ -4,14 +4,14 @@ interface TypeAttributes {
   belong?: number;
   description: string;
   icon_file_name?: string;
-  time: Date;
+  create_time: Date;
 }
 interface TagAttributes {
   id: number;
   name: string;
   belong?: number;
   icon_file_name?: string;
-  time: Date;
+  create_time: Date;
 }
 interface TypeAttributesList extends TypeAttributes {
   children?: TagAttributes[];

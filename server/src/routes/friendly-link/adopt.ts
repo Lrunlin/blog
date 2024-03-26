@@ -55,6 +55,7 @@ router.put("/friendly-link/:id", interger([], ["id"]), auth(), async ctx => {
       await t.commit();
     })
     .catch(async () => {
+      ctx.status = 500;
       ctx.body = { success: false, message: "修改失败，邮箱发送错误" };
       await t.rollback();
     });

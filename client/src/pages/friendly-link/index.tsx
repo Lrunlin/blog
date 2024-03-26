@@ -128,6 +128,9 @@ const Links: NextPage<{ data: linkItem[] }> = props => {
                 onSuccess={({ file_name }) => {
                   form.setFieldsValue({ logo_file_name: file_name });
                 }}
+                onDelete={() => {
+                  form.setFieldsValue({ logo_file_name: null });
+                }}
               />
             </div>
           </Form.Item>

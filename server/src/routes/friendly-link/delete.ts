@@ -69,6 +69,7 @@ router.delete("/friendly-link/:id", interger([], ["id"]), validator(schema), aut
       await t.commit();
     })
     .catch(async err => {
+      ctx.status = 500;
       ctx.body = { success: false, message: "删除失败,邮件发送错误" };
       await t.rollback();
     });

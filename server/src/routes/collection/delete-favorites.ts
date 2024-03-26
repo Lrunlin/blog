@@ -13,7 +13,6 @@ router.delete(
   "/collection/favorites/:belong_id",
   auth(0),
   interger(["favorites_id"], ["belong_id"]),
-
   async ctx => {
     let favorites_id = ctx.query.favorites_id as string;
     let belong_id = ctx.params.belong_id as string;

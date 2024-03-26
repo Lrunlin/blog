@@ -2,6 +2,7 @@ import { useState, useImperativeHandle } from "react";
 import type { FC, MutableRefObject } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import UpLoad from "@/components/common/UpLoad";
+import TypeForm from "./TypeForm";
 
 export interface TypeFormValueProps {
   name: string;
@@ -22,8 +23,6 @@ interface PropsType {
  */
 const AddTypeModal: FC<PropsType> = props => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  let { useForm } = Form;
-  let [form] = useForm();
   const onFinish = (values: any) => {
     props.onFinish(values);
   };
@@ -46,50 +45,7 @@ const AddTypeModal: FC<PropsType> = props => {
         footer={null}
         destroyOnClose={true}
       >
-        <Form
-          form={form}
-          name="basic"
-          labelCol={{ span: 5 }}
-          wrapperCol={{ span: 16 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          autoComplete="off"
-        >
-          <Form.Item label="上传ICON" name="icon_file_name">
-            <div>
-              <UpLoad
-                width={120}
-                target="type"
-                onSuccess={({ file_name }) => {
-                  form.setFieldsValue({ icon_file_name: file_name });
-                }}
-              />
-            </div>
-          </Form.Item>
-          <Form.Item
-            label="名称"
-            name="name"
-            rules={[{ required: true, message: "请填写类型名称" }]}
-          >
-            <Input placeholder="请填写类型名称" />
-          </Form.Item>
-          <Form.Item
-            label="介绍"
-            name="description"
-            rules={[{ required: true, message: "请输入类型的介绍" }]}
-          >
-            <Input.TextArea
-              rows={6}
-              placeholder="类型介绍,用于HTML的meta标签description"
-              maxLength={150}
-            />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 5, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              确认添加
-            </Button>
-          </Form.Item>
-        </Form>
+        <TypeForm onFinish={onFinish} />
       </Modal>
     </>
   );

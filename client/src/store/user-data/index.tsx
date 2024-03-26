@@ -5,7 +5,7 @@ import { UserAttributes } from "@type/model-attribute";
 
 export type UserStateAttributes = Pick<
   UserAttributes,
-  "id" | "name" | "auth" | "avatar_file_name" | "avatar_url"
+  "id" | "name" | "auth" | "avatar_file_name" | "avatar_url" | "create_time"
 >;
 
 export const userDataContext = atom<UserStateAttributes | null>({

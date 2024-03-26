@@ -98,6 +98,9 @@ const Write = () => {
                 onSuccess={({ file_name }) => {
                   form.setFieldsValue({ cover_file_name: file_name });
                 }}
+                onDelete={() => {
+                  form.setFieldsValue({ icon_file_name: null });
+                }}
               />
             </div>
           </Form.Item>

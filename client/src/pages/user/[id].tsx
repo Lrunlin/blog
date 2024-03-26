@@ -7,11 +7,12 @@ import { useParams } from "next/navigation";
 import type { UserAttributes } from "@type/model-attribute";
 import Layout from "@/layout/Base";
 import axios from "axios";
+import useFetch from "@/common/hooks/useFetch";
 
 const User: NextPage = () => {
   let params = useParams();
   let id = params.id as string;
-  let { data, isValidating } = useSWR(`user-data-${id}`, () =>
+  let { data, isLoading } = useFetch(() =>
     axios
       .get(`/user/data/${id}`)
       .then(res => res.data.data as UserAttributes | null)
@@ -20,7 +21,7 @@ const User: NextPage = () => {
 
   return (
     <Layout className="container-xs">
-      {isValidating ? (
+      {isLoading ? (
         <div className="w-full bg-white p-4">
           <Skeleton active paragraph={{ rows: 5 }} />
           <Skeleton active paragraph={{ rows: 5 }} />

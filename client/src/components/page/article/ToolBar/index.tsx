@@ -1,6 +1,7 @@
 import Collection from "./Collection";
 import Comment from "./Comment";
 import Likes from "./Like";
+import Share from "./Share";
 
 const ToolBar = () => {
   return (
@@ -17,6 +18,8 @@ const ToolBar = () => {
         <Comment />
         {/* 收藏信息 */}
         <Collection />
+        {/* 分享 */}
+        <Share />
       </div>
     </>
   );

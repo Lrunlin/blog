@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import ArticleEditor from "@/components/common/ArticleEditor";
 import { Result, Button, message, Skeleton } from "antd";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { writeArticleContext } from "@/components/common/ArticleEditor";
 import useFetch from "@/common/hooks/useFetch";
 
@@ -15,8 +15,7 @@ interface propsType {
 const Write: NextPage<propsType> = props => {
   let router = useRouter();
 
-  let [articleData, setArticleData] = useRecoilState(writeArticleContext);
-  const [isValidating, setIsValidating] = useState(true);
+  let setArticleData = useSetRecoilState(writeArticleContext);
 
   let { data, isLoading, refetch } = useFetch(() =>
     axios.get(`/article/${props.id}?update=md`).then(res => res.data.data)
@@ -39,16 +38,6 @@ const Write: NextPage<propsType> = props => {
       });
     }
   }, [data]);
-
-  // 判断状态是否已经设置了值，设置之后在允许组件渲染
-  let fristRender = useRef(true);
-  useEffect(() => {
-    if (fristRender.current) {
-      setIsValidating(false);
-    } else {
-      fristRender.current = false;
-    }
-  }, [articleData]);
 
   return (
     <div className="bg-white">

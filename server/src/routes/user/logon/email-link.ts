@@ -4,6 +4,7 @@ import validator from "@/common/middleware/verify/validator";
 import sendEmail from "@/common/utils/email";
 import { setUserData, getRemainingTTL, createKey, hasKey } from "@/common/modules/cache/email";
 import DB from "@/db";
+import isEmailDestroy from "@/common/modules/user/isEmailDestroy";
 
 let router = new Router();
 const schema = Joi.object({
@@ -24,7 +25,14 @@ router.post("/email/link", validator(schema), async ctx => {
   let { count: existEmailCount } = await DB.User.findAndCountAll({ where: { email: email } });
 
   if (existEmailCount) {
+    ctx.status = 500;
     ctx.body = { success: false, message: `已经存在绑定该邮箱的用户，请使用找回密码功能` };
+    return;
+  }
+
+  if (await isEmailDestroy(email)) {
+    ctx.status = 500;
+    ctx.body = { success: false, message: `你的邮箱已被注销，请更换邮箱重新尝试` };
     return;
   }
 
@@ -32,6 +40,7 @@ router.post("/email/link", validator(schema), async ctx => {
 
   //  如果非零,并且剩余时间大于5分钟
   if ((await hasKey(createKey(email))) && minute > 5) {
+    ctx.status = 500;
     ctx.body = { success: false, message: `链接已发送并剩余时间:${minute}分钟,请前往邮箱点击链接` };
     return;
   }
@@ -43,13 +52,14 @@ router.post("/email/link", validator(schema), async ctx => {
   <br/>
   <a href="${href}?key=${createKey(email)}" target="_blank">${href}</a>
   `;
-  
+
   await sendEmail({ target: email, subject: `${process.env.SITE_NAME}-注册`, content })
     .then(res => {
       ctx.body = { success: true, message: "激活邮件发送成功，请在15分钟内点击" };
       setUserData(ctx.request.body);
     })
     .catch(err => {
+      ctx.status = 500;
       ctx.body = { success: false, message: "激活邮件发送失败" };
       console.log(err);
     });

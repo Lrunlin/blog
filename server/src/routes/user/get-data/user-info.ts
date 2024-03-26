@@ -16,7 +16,7 @@ router.get("/user/info", async ctx => {
   try {
     let { id } = await verify(token);
     await DB.User.findByPk(id, {
-      attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
+      attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url", "create_time"],
     })
       .then(row => {
         if (!row) {

@@ -21,6 +21,9 @@ const Logon = () => {
           message.error(res.data.message);
         }
       })
+      .catch(err => {
+        message.error(err.message);
+      })
       .finally(() => setIsLoad(false));
   }
   return (

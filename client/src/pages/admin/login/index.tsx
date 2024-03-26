@@ -11,19 +11,24 @@ const LognIn = () => {
   let router = useRouter();
   let setUserData = useSetRecoilState(userDataContext);
   function onFinish(values: any) {
-    axios.post("/login/email", values).then(res => {
-      if (res.data.success) {
-        message.success(res.data.message);
-        cookie.set("token", res.data.token, {
-          expires: 365,
-          domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
-        });
-        setUserData(res.data.data);
-        router.replace("/admin");
-      } else {
-        message.error(res.data.message);
-      }
-    });
+    axios
+      .post("/login/email", values)
+      .then(res => {
+        if (res.data.success) {
+          message.success(res.data.message);
+          cookie.set("token", res.data.token, {
+            expires: 365,
+            domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
+          });
+          setUserData(res.data.data);
+          router.replace("/admin");
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch(err => {
+        message.error(err.message);
+      });
   }
 
   return (

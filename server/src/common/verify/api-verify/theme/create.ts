@@ -23,4 +23,4 @@ let schema = Joi.object({
   content: Joi.string().min(1).required().error(new Error("样式内容错误")),
 });
 
-export default compose([auth(1), validator(schema)]);
+export default compose([auth(0), validator(schema)]);

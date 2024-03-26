@@ -32,6 +32,7 @@ const CodeEditor: FC<{ onFinish: (val: string) => void; ref: any }> = forwardRef
   function finish() {
     props.onFinish(`<pre class="language-${language}"><code>${content}</code></pre>`);
     setIsModalOpen(false);
+    setContent("");
   }
 
   useImperativeHandle(ref, () => ({
@@ -46,7 +47,12 @@ const CodeEditor: FC<{ onFinish: (val: string) => void; ref: any }> = forwardRef
         footer={
           <div>
             <Button onClick={handleCancel}>取消</Button>
-            <Button type="primary" onClick={finish} disabled={!(language && content.length)}>
+            <Button
+              className="ml-4"
+              type="primary"
+              onClick={finish}
+              disabled={!(language && content.length)}
+            >
               确定
             </Button>
           </div>

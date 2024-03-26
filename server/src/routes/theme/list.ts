@@ -4,7 +4,7 @@ import auth from "@/common/middleware/auth";
 
 let router = new Router();
 
-router.get("/theme", auth(), async ctx => {
+router.get("/theme", auth(0), async ctx => {
   let isAll = ctx.request.query.all;
 
   await DB.Theme.findAll({

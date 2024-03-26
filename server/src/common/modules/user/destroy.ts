@@ -4,6 +4,7 @@ import Identicon from "identicon.js";
 import sha1 from "sha1";
 import id from "@/common/utils/id";
 import removeSession from "@/common/utils/auth/destroy-session";
+import sha256 from "@/common/utils/sha256";
 
 async function destroy(user_id: number) {
   let data = new Identicon(sha1(user_id + ""), {
@@ -22,12 +23,16 @@ async function destroy(user_id: number) {
   if (!uploadResult.success) {
     return { success: false, message: "注销失败，请稍后再试" };
   }
+
+  let userData = await DB.User.findByPk(user_id, { attributes: ["email"], raw: true });
+  let decode = sha256(userData!.email);
+
   return DB.User.update(
     {
       name: `用户-${user_id}`,
       github: null as any,
       qq: null as any,
-      email: `已注销-${user_id}@destroy.com`,
+      email: `${decode}@destroy.com`,
       description: null as any,
       location: null as any,
       site: null as any,

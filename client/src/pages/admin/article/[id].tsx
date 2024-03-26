@@ -147,6 +147,9 @@ const Update = () => {
                   onError={mes => {
                     message.error(mes);
                   }}
+                  onDelete={() => {
+                    form.setFieldsValue({ icon_file_name: null });
+                  }}
                   target="cover"
                   width={200}
                   imgURL={uploadInitVlaue?.icon_url}

@@ -22,6 +22,8 @@ const UserList = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [data, setData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const columns = [
     {
       title: "用户昵称",
@@ -179,6 +181,7 @@ const UserList = () => {
   let [userId, setUserId] = useState("");
   const [state, setState] = useState<number | false>(false);
   useEffect(() => {
+    setIsLoading(true);
     let params: { [key: string]: any } = {};
     if (state !== false) {
       params.state = state;
@@ -197,6 +200,9 @@ const UserList = () => {
       })
       .catch(err => {
         message.error(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [page, state, key]);
 
@@ -294,6 +300,7 @@ const UserList = () => {
       </div>
       <div className="piece mt-4">
         <Table
+          loading={isLoading}
           pagination={{
             current: page,
             total: total,

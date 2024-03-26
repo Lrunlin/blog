@@ -44,7 +44,7 @@ const Image: FC<propsType> = props => {
       htmlFor={fileID}
       className=" relative border border-dashed border-gray-400 hover:border-blue-400 overflow-hidden rounded flex items-center justify-center"
       style={
-        !src && props?.aspect
+        !src || props?.aspect
           ? {
               width: `${props.width}px`,
               height: `${props.width / (props?.aspect || 1)}px`,
