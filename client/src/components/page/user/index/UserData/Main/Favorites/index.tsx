@@ -44,28 +44,31 @@ const FavoritesList = () => {
         .catch(err => {
           message.error("更新失败");
         }),
-    true
+    { manual: true }
   );
 
   const [deleteID, setDeleteID] = useState<null | number>(null);
   //删除收藏夹
-  let { refetch: deleteRefetch } = useFetch((id: number) => {
-    setDeleteID(id);
-    return axios
-      .delete<response>(`/favorites/${id}`)
-      .then(res => {
-        if (data) {
-          setData(data => data?.filter(item => item.id != id) as favoritesListProps[]);
-        }
-        message.success("删除成功");
-      })
-      .catch(err => {
-        message.error("删除失败");
-      })
-      .finally(() => {
-        setDeleteID(null);
-      });
-  }, true);
+  let { refetch: deleteRefetch } = useFetch(
+    (id: number) => {
+      setDeleteID(id);
+      return axios
+        .delete<response>(`/favorites/${id}`)
+        .then(res => {
+          if (data) {
+            setData(data => data?.filter(item => item.id != id) as favoritesListProps[]);
+          }
+          message.success("删除成功");
+        })
+        .catch(err => {
+          message.error("删除失败");
+        })
+        .finally(() => {
+          setDeleteID(null);
+        });
+    },
+    { manual: true }
+  );
 
   return (
     <>

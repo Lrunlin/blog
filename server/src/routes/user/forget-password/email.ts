@@ -12,10 +12,11 @@ const schema = Joi.object({
 
 let router = new Router();
 
+// 忘记密码接口，发送邮件
 router.post("/forget-password/email/:email", validator(schema, true), async ctx => {
   let email = ctx.params.email;
   let row = await DB.User.findOne({
-    where: { email: email },
+    where: { email: email, state: 1 },
     attributes: ["email", "id", "password"],
     raw: true,
   });

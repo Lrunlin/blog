@@ -1,7 +1,6 @@
 import { useState, useImperativeHandle } from "react";
 import type { FC, MutableRefObject } from "react";
-import { Button, Modal, Form, Input } from "antd";
-import UpLoad from "@/components/common/UpLoad";
+import {  Modal } from "antd";
 import TypeForm from "./TypeForm";
 
 export interface TypeFormValueProps {

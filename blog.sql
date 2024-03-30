@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 腾讯云MySQL
  Source Server Type    : MySQL
- Source Server Version : 80027 (8.0.27)
- Source Host           : localhost:3306
+ Source Server Version : 80022 (8.0.22-txsql)
+ Source Host           : bj-cdb-l8i7hhwo.sql.tencentcdb.com:63839
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80027 (8.0.27)
+ Target Server Version : 80022 (8.0.22-txsql)
  File Encoding         : 65001
 
- Date: 09/03/2024 13:25:07
+ Date: 29/03/2024 22:39:37
 */
 
 SET NAMES utf8mb4;
@@ -105,7 +105,7 @@ CREATE TABLE `external_link`  (
   `href` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站域名',
   `create_time` datetime NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for favorites
@@ -119,7 +119,7 @@ CREATE TABLE `favorites`  (
   `is_private` tinyint(1) NOT NULL COMMENT '是否设置为隐私文件夹',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for follow
@@ -244,7 +244,7 @@ CREATE TABLE `theme`  (
   `indexes` int NOT NULL COMMENT '排序',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for type
@@ -268,12 +268,12 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` bigint NOT NULL COMMENT '用户ID',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '昵称',
-  `auth` int NOT NULL COMMENT '身份 0为用户1为管理员',
-  `email` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户邮箱',
+  `auth` int NOT NULL COMMENT '身份',
+  `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户邮箱',
   `github` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'GitHub ID',
   `qq` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'QQ号',
   `password` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '密码',
-  `state` int NOT NULL DEFAULT 1 COMMENT '状态 1为正常 0为注销',
+  `state` int NOT NULL DEFAULT 1 COMMENT '状态，（权限）',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '自我介绍',
   `site` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '个人网站',
   `unit` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '所属单位',

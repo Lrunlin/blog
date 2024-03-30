@@ -34,7 +34,7 @@ const UpdateTag = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    true
+    { manual: true }
   );
 
   const onFinish = (values: any) => {

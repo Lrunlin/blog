@@ -23,7 +23,7 @@ const Write = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    true
+    { manual: true }
   );
 
   let { data: treeData } = useSwr("/type/tree", () =>

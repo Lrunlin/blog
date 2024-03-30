@@ -20,10 +20,6 @@ let list: listItemType[][] = [
       href: "/sitemap/1",
       label: "站点地图",
     },
-    {
-      href: "/about",
-      label: "关于我们",
-    },
   ],
   [
     {

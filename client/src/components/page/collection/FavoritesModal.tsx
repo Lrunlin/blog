@@ -25,7 +25,7 @@ const FavoritesModal: FC<
           message.error("更新失败");
           console.log(err);
         }),
-    true
+    { manual: true }
   );
 
   return (

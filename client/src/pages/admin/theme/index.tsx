@@ -26,7 +26,7 @@ const List = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    true
+    { manual: true }
   );
 
   function updateIndex(id: number, value: number) {
@@ -48,7 +48,7 @@ const List = () => {
           message.error(err.message);
           return err;
         }),
-    true
+    { manual: true }
   );
 
   let { isLoading: uptateContentIsLoading, refetch: updateContent } = useFetch(
@@ -61,7 +61,7 @@ const List = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    true
+    {manual:true}
   );
 
   let { refetch: allow } = useFetch(
@@ -77,7 +77,7 @@ const List = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    true
+    {manual:true}
   );
 
   return (

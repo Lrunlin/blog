@@ -29,7 +29,7 @@ const Statistics: FC<{ data: statisticsDataType }> = props => {
       axios
         .get<response<statisticsDataType>>("/statistics/visualization")
         .then(res => res.data.data),
-    true
+    { manual: true }
   );
 
   let data = useMemo(() => fetchData || props.data, [fetchData, props.data]);

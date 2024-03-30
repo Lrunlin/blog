@@ -1,6 +1,5 @@
-import { useState, useImperativeHandle } from "react";
-import type { FC, MutableRefObject } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import type { FC } from "react";
+import { Button, Form, Input } from "antd";
 import UpLoad from "@/components/common/UpLoad";
 import { TypeAttributes } from "@type/type";
 
@@ -71,7 +70,7 @@ const TypeForm: FC<PropsType> = props => {
             maxLength={150}
           />
         </Form.Item>
-        <Form.Item >
+        <Form.Item>
           <Button className="ml-[60px]" type="primary" htmlType="submit">
             确认
           </Button>

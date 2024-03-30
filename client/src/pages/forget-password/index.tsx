@@ -19,7 +19,7 @@ const ForgetPassword = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    true
+    { manual: true }
   );
 
   return (

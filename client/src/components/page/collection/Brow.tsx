@@ -32,7 +32,7 @@ const Brow: FC<{
           message.error("删除失败");
           console.log(err);
         }),
-    true
+    { manual: true }
   );
   return (
     <>

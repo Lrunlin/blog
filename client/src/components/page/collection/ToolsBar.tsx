@@ -36,7 +36,7 @@ const ToolsBar: FC<propsType> = ({ belong_id, refetch }) => {
           console.log(err);
           return null;
         }),
-    true
+    { manual: true }
   );
 
   // 删除
@@ -55,7 +55,7 @@ const ToolsBar: FC<propsType> = ({ belong_id, refetch }) => {
           console.log(err);
           return null;
         }),
-    true
+    { manual: true }
   );
   return (
     <>

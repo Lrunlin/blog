@@ -16,6 +16,8 @@ const schema = Joi.object({
 
 let router = new Router();
 
+
+// 处理发送忘记密码邮件链接的接口
 router.post("/forget-password/update", validator(schema), async ctx => {
   let { key, password } = ctx.request.body;
 

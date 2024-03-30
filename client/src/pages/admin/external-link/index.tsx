@@ -35,25 +35,28 @@ const ExternalLink = () => {
           message.error(err.message);
           console.log(err);
         }),
-    true
+    {manual:true}
   );
 
   const [removeId, setRemoveId] = useState<null | number>(null);
-  let { refetch: remove } = useFetch((id: number) => {
-    setRemoveId(id);
-    return axios
-      .delete(`/external-link/${id}`)
-      .then(res => {
-        setData(data => data!.filter(item => item.id != id));
-      })
-      .catch(err => {
-        message.error(err.message);
-        console.log(err);
-      })
-      .finally(() => {
-        setRemoveId(null);
-      });
-  }, true);
+  let { refetch: remove } = useFetch(
+    (id: number) => {
+      setRemoveId(id);
+      return axios
+        .delete(`/external-link/${id}`)
+        .then(res => {
+          setData(data => data!.filter(item => item.id != id));
+        })
+        .catch(err => {
+          message.error(err.message);
+          console.log(err);
+        })
+        .finally(() => {
+          setRemoveId(null);
+        });
+    },
+    { manual: true }
+  );
 
   return (
     <AdminLayout>

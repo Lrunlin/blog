@@ -38,7 +38,7 @@ const Update = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    true
+    { manual: true }
   );
 
   //获取typeTree

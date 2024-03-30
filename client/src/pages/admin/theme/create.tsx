@@ -20,7 +20,7 @@ export const CreateTheme = () => {
           message.error(err.message);
           return err;
         }),
-    true
+    {manual:true}
   );
 
   return (

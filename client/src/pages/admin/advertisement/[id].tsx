@@ -1,9 +1,7 @@
-import { useParams, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useParams } from "next/navigation";
 import axios from "axios";
-import { Skeleton, Form, Select, Result, message } from "antd";
+import { Skeleton, Result, message } from "antd";
 import AdminLayout from "@/layout/Admin/Base";
-import { positionSelect } from ".";
 import useFetch from "@/common/hooks/useFetch";
 import AdvertisementForm from "@/components/admin/page/advertisement/AdvertisementForm";
 

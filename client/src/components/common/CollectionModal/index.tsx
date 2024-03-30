@@ -62,7 +62,7 @@ const CollectionModal: FC<propsType> = props => {
           console.log(err);
           return err;
         }),
-    true
+    {manual:true}
   );
 
   // 修改收藏
@@ -84,7 +84,7 @@ const CollectionModal: FC<propsType> = props => {
           console.log(err);
           return err;
         }),
-    true
+    { manual: true }
   );
 
   // 删除收藏
@@ -104,7 +104,7 @@ const CollectionModal: FC<propsType> = props => {
           console.log(err);
           return err;
         }),
-    true
+    { manual: true }
   );
 
   // 创建收藏夹
@@ -121,7 +121,7 @@ const CollectionModal: FC<propsType> = props => {
           message.error("创建失败");
           return err;
         }),
-    true
+    { manual: true }
   );
   return (
     <>

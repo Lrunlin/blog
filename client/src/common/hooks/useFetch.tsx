@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useState, useRef } from "react";
+import type { DependencyList, Dispatch, SetStateAction } from "react";
 import { AxiosError } from "axios";
 
 type FetchResult<T, J> = {
@@ -10,13 +10,20 @@ type FetchResult<T, J> = {
   refetch: (params?: J) => void;
 };
 
+interface optionType {
+  /** 是否手动请求*/
+  manual?: true;
+  /** 依赖数组，触发自动更新*/
+  deps?: DependencyList;
+}
+
 export default function useFetch<T, J>(
   request: (param: J) => Promise<T>,
-  manual = false
+  option: optionType = { deps: [] }
 ): FetchResult<T, J> {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<AxiosError<T> | null>(null);
-  const [isLoading, setIsLoading] = useState(!manual);
+  const [isLoading, setIsLoading] = useState(!option.manual);
 
   const fetchData = async (param?: J) => {
     setIsLoading(true);
@@ -30,9 +37,20 @@ export default function useFetch<T, J>(
     }
   };
 
+  // 如果是自动的就等自动执行完，在允许deps
+  let allowFetch = useRef(option.manual);
   useEffect(() => {
-    if (!manual) {
+    if (option.deps?.length && allowFetch.current) {
       fetchData();
+    }
+  }, option.deps);
+
+  useEffect(() => {
+    if (!option.manual) {
+      fetchData();
+      setTimeout(() => {
+        allowFetch.current = true;
+      }, 0);
     }
   }, []);
 

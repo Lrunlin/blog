@@ -53,7 +53,7 @@ const FavoritesList: FC<{ data: RootObject | null }> = ({ data: propsData }) => 
           console.log(err);
           return null;
         }),
-    true
+    { manual: true }
   );
 
   let data = useMemo(() => refetchData || propsData, [propsData, refetchData]);
