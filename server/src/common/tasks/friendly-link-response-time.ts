@@ -11,6 +11,7 @@ async function friendlyLinkResponsTime() {
     attributes: ["id", "url"],
   });
 
+  let catchData = JSON.parse((await redis.get("friendly-link-response-time")) || "{}");
   for (let item of rows) {
     let startTime = +new Date();
     await axios
@@ -19,7 +20,8 @@ async function friendlyLinkResponsTime() {
         data[item.id] = { response_time: +new Date() - startTime };
       })
       .catch(() => {
-        data[item.id] = { response_error: true };
+        let num = (catchData[item.id]?.response_error as number | undefined) || 0;
+        data[item.id] = { response_error: ++num };
       });
   }
 
@@ -31,5 +33,6 @@ export default async () => {
   }
   setInterval(async () => {
     friendlyLinkResponsTime();
-  }, 3_600_000);
+    // }, 3_600_000);
+  }, 8000);
 };

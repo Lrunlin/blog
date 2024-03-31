@@ -1,5 +1,15 @@
 import { useState, startTransition } from "react";
-import { Result, Table, Avatar, Image, Button, Modal, Input, message as messageAlert } from "antd";
+import {
+  Result,
+  Table,
+  Avatar,
+  Image,
+  Button,
+  Modal,
+  Input,
+  message as messageAlert,
+  Tooltip,
+} from "antd";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Link from "next/link";
@@ -92,30 +102,41 @@ const LinkList = () => {
       width: 100,
     },
     {
-      title: "状态",
+      title: "响应状态",
       render: (values: any) => {
         const ResponseTimeIndicator = () => {
           let colorClass = "";
           let responseTime = values.response_time;
-          if (responseTime < 300) {
+          if (responseTime < 500) {
             colorClass = "text-green-500";
-          } else if (responseTime >= 300 && responseTime < 600) {
+          } else if (responseTime >= 500 && responseTime < 800) {
             colorClass = "text-blue-500";
-          } else if (responseTime >= 600 && responseTime < 1000) {
+          } else if (responseTime >= 800 && responseTime < 1200) {
             colorClass = "text-yellow-500";
           } else {
             colorClass = "text-red-400";
           }
-
-          return <div className={`${colorClass} font-bold`}>{values.response_time}ms</div>;
+          return (
+            <div className={`${colorClass} font-bold cursor-pointer`}>
+              {values.response_time}
+              <span className="ml-1">ms</span>
+            </div>
+          );
         };
 
         return values.response_time ? (
           <ResponseTimeIndicator />
         ) : values.response_error ? (
-          <div className="text-red-400 font-bold">错误</div>
+          <Tooltip placement="top" title={`连续请求错误:${values.response_error}次`}>
+            <span className="text-red-400 font-bold cursor-pointer">
+              错误
+              <span className="ml-1">
+                {values.response_error > 99 ? "99+" : values.response_error}
+              </span>
+            </span>
+          </Tooltip>
         ) : (
-          "无"
+          "无数据"
         );
       },
       width: 80,
