@@ -33,6 +33,5 @@ export default async () => {
   }
   setInterval(async () => {
     friendlyLinkResponsTime();
-    // }, 3_600_000);
-  }, 8000);
+  }, 3_600_000);
 };
