@@ -65,7 +65,7 @@ const LinkList = () => {
       render(logo_url: string) {
         return <Image height={40} src={logo_url} alt="Logo" />;
       },
-      width: 220,
+      width: 150,
     },
     {
       title: "网址",
@@ -90,6 +90,35 @@ const LinkList = () => {
         );
       },
       width: 100,
+    },
+    {
+      title: "状态",
+      render: (values: any) => {
+        const ResponseTimeIndicator = () => {
+          let colorClass = "";
+          let responseTime = values.response_time;
+          if (responseTime < 300) {
+            colorClass = "text-green-500";
+          } else if (responseTime >= 300 && responseTime < 600) {
+            colorClass = "text-blue-500";
+          } else if (responseTime >= 600 && responseTime < 1000) {
+            colorClass = "text-yellow-500";
+          } else {
+            colorClass = "text-red-400";
+          }
+
+          return <div className={`${colorClass} font-bold`}>{values.response_time}ms</div>;
+        };
+
+        return values.response_time ? (
+          <ResponseTimeIndicator />
+        ) : values.response_error ? (
+          <div className="text-red-400 font-bold">错误</div>
+        ) : (
+          "无"
+        );
+      },
+      width: 80,
     },
     {
       title: "操作",
@@ -120,6 +149,7 @@ const LinkList = () => {
       width: 200,
     },
   ];
+
   return (
     <AdminLayout>
       <div className="piece">

@@ -16,7 +16,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import copy from "copy-to-clipboard";
 import AdminLayout from "@/layout/Admin/Base";
-import { response } from "@type/response";
+import type { response } from "@type/response";
 
 const UserList = () => {
   const [total, setTotal] = useState(0);
@@ -206,13 +206,6 @@ const UserList = () => {
       });
   }, [page, state, key]);
 
-  // 空的时候重新请求
-  useEffect(() => {
-    if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(userId)) {
-      setKey(val => ++val);
-    }
-  }, [userId]);
-
   /** 注销账号*/
   function destroy(id: number) {
     axios
@@ -287,7 +280,15 @@ const UserList = () => {
           placeholder="根据用户ID搜索"
           className="!ml-8 !w-56"
           allowClear={true}
-          onChange={val => setUserId(val.target.value)}
+          onChange={val => {
+            setUserId(val.target.value);
+            // 空的时候重新请求
+            if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(userId)) {
+              startTransition(() => {
+                setKey(val => ++val);
+              });
+            }
+          }}
         />
         <Button
           type="primary"
