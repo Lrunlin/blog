@@ -18,7 +18,7 @@ async function transaction(answer_id: string, t: Transaction) {
     });
   if (!deleteNoticeResult) return false;
 
-  /** 获取问题下的全部评论*/
+  /** 获取该答案下的全部评论*/
   let commentList = await DB.Comment.findAll({
     where: {
       belong_id: answer_id,

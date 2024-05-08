@@ -36,7 +36,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
   const [data, setData] = useState(_data);
   const [problemReplyShrink, setProblemReplyShrink] = useState(false);
   let [userData] = useUserData();
-  if (!data) return <NoFound />;
+
   function reload() {
     axios
       .get(`/problem/${id}`)
@@ -59,52 +59,58 @@ const Problem: FC<propsType> = ({ data: _data }) => {
   }
 
   return (
-    <Context.Provider value={{ data, reload }}>
-      <Layout>
-        <Head title={data.title} />
-        <StyleLink id={0} />
-        <div className="bg-white p-8">
-          <h1 className="text-4xl font-semibold break-all">{data.title}</h1>
-          <ArticleUserData data={data as any} type="problem" />
-          <div
-            className={`content-body`}
-            suppressHydrationWarning={true}
-            dangerouslySetInnerHTML={{ __html: data.content }}
-          ></div>
-          <div className="my-2">
-            <ToolBar />
-          </div>
-          {/* 对问题的回复 */}
-          <div className="flex items-center justify-between text-gray-500 cursor-pointer select-none">
-            <div>
-              <span onClick={() => setProblemReplyShrink(state => !state)}>
-                {problemReplyShrink ? "收起" : "回复"}
-              </span>
+    <Layout language={data?.language || undefined}>
+      {data ? (
+        <Context.Provider value={{ data, reload }}>
+          <Head title={data.title} />
+          <StyleLink id={0} />
+          <div className="bg-white p-8">
+            <h1 className="text-4xl font-semibold break-all">{data.title}</h1>
+            <ArticleUserData data={data as any} type="problem" />
+            <div
+              className={`content-body`}
+              suppressHydrationWarning={true}
+              dangerouslySetInnerHTML={{ __html: data.content }}
+            ></div>
+            <div className="my-2">
+              <ToolBar />
             </div>
-            {userData?.id == data.author && (
+            {/* 对问题的回复 */}
+            <div className="flex items-center justify-between text-gray-500 cursor-pointer select-none">
               <div>
-                <NoFollowLink
-                  className="text-gray-500 cursor-pointer mr-4 hover:text-gray-800"
-                  href={`/problem/editor/${id}`}
-                >
-                  编辑
-                </NoFollowLink>
-                <span className="cursor-pointer hover:text-gray-800" onClick={deleteProblem}>
-                  删除问题
+                <span onClick={() => setProblemReplyShrink(state => !state)}>
+                  {problemReplyShrink ? "收起" : "回复"}
                 </span>
               </div>
-            )}
-          </div>
+              {userData?.id == data.author && (
+                <div>
+                  <NoFollowLink
+                    className="text-gray-500 cursor-pointer mr-4 hover:text-gray-800"
+                    href={`/problem/editor/${id}`}
+                  >
+                    编辑
+                  </NoFollowLink>
+                  <span className="cursor-pointer hover:text-gray-800" onClick={deleteProblem}>
+                    删除问题
+                  </span>
+                </div>
+              )}
+            </div>
 
-          {problemReplyShrink && (
-            <CommentEditor belong_id={+id} reply={null} type="problem" onSuccess={reload} />
-          )}
-          <Comments type="problem" belong_id={+id} data={data.comment_list} className="mt-2" />
+            {problemReplyShrink && (
+              <CommentEditor belong_id={+id} reply={null} type="problem" onSuccess={reload} />
+            )}
+            <Comments type="problem" belong_id={+id} data={data.comment_list} className="mt-2" />
+          </div>
+          {!!data.answer_list.length && <Answer />}
+          {userData?.id != data.author && <Editor onSuccess={reload} />}
+        </Context.Provider>
+      ) : (
+        <div className="bg-white">
+          <NoFound />
         </div>
-        {!!data.answer_list.length && <Answer />}
-        {userData?.id != data.author && <Editor onSuccess={reload} />}
-      </Layout>
-    </Context.Provider>
+      )}
+    </Layout>
   );
 };
 export default Problem;

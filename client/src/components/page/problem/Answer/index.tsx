@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import type { FC } from "react";
 import classNames from "classnames";
-import { Badge, Button, message } from "antd";
+import { Badge, Button, Tooltip, message } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useParams } from "next/navigation";
@@ -19,6 +19,7 @@ import Image from "@/components/next/Image";
 /** 问答页面底部的答案区域*/
 const Answer: FC = () => {
   let { data, reload } = useContext(Context);
+
   // 是否展示回复框
   const [answerReplyShrinkIndex, setAnswerReplyShrinkIndex] = useState<number>(-1);
   let params = useParams();
@@ -26,9 +27,9 @@ const Answer: FC = () => {
   let [userData] = useUserData();
 
   /** 采纳答案*/
-  function adopt(id: number) {
+  function adopt(answer_id: number) {
     axios
-      .put(`/problem/adopt/${id}`, { answer_id: id })
+      .put(`/problem/adopt/${id}`, { answer_id: answer_id })
       .then(res => {
         reload();
       })
@@ -58,7 +59,7 @@ const Answer: FC = () => {
         reload();
       })
       .catch(err => {
-        message.error("删除错误");
+        message.error(err.message || "删除错误");
         console.log(err);
       });
   }
@@ -134,12 +135,19 @@ const Answer: FC = () => {
                 >
                   {answerReplyShrinkIndex == index ? "收起" : "回复"}
                 </div>
-                {userData?.id == item.author && (
-                  <div className="cursor-pointer" onClick={() => deleteAnswer(item.id)}>
-                    删除
-                  </div>
-                )}
+                {userData?.id == item.author &&
+                  // 如果已经采纳，就禁止该答案
+                  (data.answer_id == item.id ? (
+                    <Tooltip placement="top" title={"被采纳的答案无法删除"}>
+                      <div className="cursor-pointer text-gray-400">删除</div>
+                    </Tooltip>
+                  ) : (
+                    <div className="cursor-pointer" onClick={() => deleteAnswer(item.id)}>
+                      删除
+                    </div>
+                  ))}
               </div>
+
               {/* 答案回复底部的评论框(回复答案的评论框) */}
               {answerReplyShrinkIndex == index && (
                 <CommentEditor

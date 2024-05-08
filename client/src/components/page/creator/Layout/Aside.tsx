@@ -12,7 +12,10 @@ let items = [
     label: "内容管理",
     key: "content",
     icon: <BookOutlined />,
-    children: [{ label: "文章管理", key: "article" }],
+    children: [
+      { label: "文章管理", key: "article" },
+      { label: "问题管理", key: "problem" },
+    ],
   },
 ];
 

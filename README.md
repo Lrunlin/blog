@@ -79,11 +79,12 @@ _系统支持 JWT 和 Session 两种鉴权方式因为系统拥有账号注销�
 
 ## 更新计划
 
-1. 用户端 UI 进行美化以及去 Ant Design
+1. ~~用户端 UI 进行美化以及去 Ant Design~~
 2. ~~积分功能~~
-3. ~~Next.js 13 升级为 app 文件夹并且使用 server component~~
+3. Next.js 14 升级为 app 文件夹并且使用 server component
 4. Redis 接口缓存以及对应的事务处理
-5. 小组功能
+5. ~~小组功能~~
+6. ~~用户私信~~
 
 ### 环境变量
 

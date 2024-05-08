@@ -6,12 +6,13 @@ import { Context } from "@/pages/problem/[id]";
 
 interface propsType {
   children?: ReactNode;
+  language?:string[];
 }
 
 const Layout: FC<propsType> = props => {
-  let { data } = useContext(Context);
+
   return (
-    <Read className="items-start pb-8" language={data?.language} Aside={<Aside />}>
+    <Read className="items-start pb-8" language={props.language} Aside={<Aside />}>
       <article className={`max-w-[904px]`}>{props.children}</article>
     </Read>
   );

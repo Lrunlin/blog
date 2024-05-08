@@ -12,7 +12,11 @@ async function verifyId(ctx: Context, next: Next) {
       .min(0)
       .required()
       .external(async (value: number) => {
-        let result = await DB.Problem.findOne({ where: { id: value, author: ctx.id } })
+        let result = await DB.Problem.findOne({
+          where: { id: value, author: ctx.id },
+          raw: true,
+          attributes: ["id"],
+        })
           .then(res => !!res)
           .catch(err => {
             console.log(err);

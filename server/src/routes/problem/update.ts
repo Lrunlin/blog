@@ -11,7 +11,7 @@ router.put("/problem/:id", verify, async ctx => {
       tag,
       content,
     },
-    { where: { author: ctx.id } }
+    { where: { author: ctx.id, id: ctx.params.id } }
   )
     .then(res => {
       ctx.body = { success: true, message: "发布成功" };
