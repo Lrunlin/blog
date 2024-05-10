@@ -56,7 +56,7 @@ const Problem: FC<propsType> = props => {
             endMessage={<Divider plain>到底啦 ~ ~ 🤐</Divider>}
             className="bg-white"
           >
-            <List data={props.list} />
+            <List data={list} />
           </InfiniteScroll>
         </div>
       ) : (
