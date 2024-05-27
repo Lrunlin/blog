@@ -2,12 +2,12 @@ import { useState, useContext } from "react";
 import type { FC } from "react";
 import { Button, message } from "antd";
 import TextEditor from "@/components/common/Editor";
-import axios from "axios";
+import axios from "@axios";
 import { useParams } from "next/navigation";
 import classNames from "classnames";
 import Message from "./Message";
 import { Context } from "@/pages/problem/[id]";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import useFetch from "@/common/hooks/useFetch";
 interface propsType {
   className?: string;
@@ -24,7 +24,7 @@ const Editor: FC<propsType> = props => {
   const [isSticky, setIsSticky] = useState(true);
 
   const [content, setContent] = useState("");
-  const [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   const { data, reload } = useContext(Context);
   function submit() {
     axios

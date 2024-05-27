@@ -1,7 +1,7 @@
 import { useState, createContext } from "react";
 import type { FC } from "react";
 import { GetServerSideProps } from "next";
-import axios from "axios";
+import axios from "@axios";
 import Layout from "@/components/page/problem/Layout";
 import NoFound from "@/components/page/problem/NoFound";
 import Answer from "@/components/page/problem/Answer";
@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { message } from "antd";
 import Comments from "@/components/page/problem/Comments";
 import NoFollowLink from "@/components/next/NoFollowLink";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import ToolBar from "@/components/page/problem/ToolBar";
 import readingRecords from "@/common/modules/readingRecords/readingRecords";
 import { parse } from "cookie";
@@ -35,7 +35,7 @@ const Problem: FC<propsType> = ({ data: _data }) => {
   let id = params.id as string;
   const [data, setData] = useState(_data);
   const [problemReplyShrink, setProblemReplyShrink] = useState(false);
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
 
   function reload() {
     axios

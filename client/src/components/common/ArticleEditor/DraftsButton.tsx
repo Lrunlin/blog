@@ -1,16 +1,13 @@
-"use client";
 import { useState, useMemo } from "react";
 import { Button, message } from "antd";
 import { useRouter, usePathname, useParams } from "next/navigation";
-import { useRecoilValue } from "recoil";
-import { writeArticleContext } from "./index";
-import axios from "axios";
+import useUserWriteArticle from "@/store/user/user-write-article";
+import axios from "@axios";
 import { useSWRConfig } from "swr";
 
 const DraftsButton = () => {
-  let { title, description, cover_file_name, reprint, content, tag } =
-    useRecoilValue(writeArticleContext);
-
+  let userWriteArticle = useUserWriteArticle(s=>s.data)
+  let { title, description, cover_file_name, reprint, content, tag } = userWriteArticle;
   let router = useRouter();
   let params = useParams();
   let pathname = usePathname();

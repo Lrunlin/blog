@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Avatar } from "antd";
 import NoFollowLink from "@/components/next/NoFollowLink";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import type { noticeAnswerListType } from "@/pages/notification/[type]";
 
 const ArticleNotice: FC<{ data: noticeAnswerListType }> = ({ data }) => {

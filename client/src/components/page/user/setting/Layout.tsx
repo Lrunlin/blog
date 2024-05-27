@@ -1,12 +1,11 @@
 import type { ReactNode, FC } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Result } from "antd";
-import { useSetRecoilState } from "recoil";
-import { modalStateContext } from "@/components/common/Header/Sign";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import Base from "@/layout/Base";
 import { LeftOutlined, IdcardOutlined, SettingOutlined, DeleteOutlined } from "@ant-design/icons";
 import ActiveLink from "@/components/next/ActiveLink";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 
 const list = [
   {
@@ -31,9 +30,9 @@ interface propsType {
 }
 
 const Layout: FC<propsType> = ({ children }) => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   let router = useRouter();
-  let setModalState = useSetRecoilState(modalStateContext);
+  let setModalState = useUserSignModel(s => s.setData);
 
   return (
     <Base className="container">

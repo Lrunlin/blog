@@ -1,28 +1,26 @@
 import classNames from "classnames";
 import Image from "@/components/next/Image";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { useParams } from "next/navigation";
 import { message, Badge } from "antd";
 import itemClassName from "./class";
-import { currentArticleDataContext } from "@/pages/article/[id]";
-import { useRecoilState } from "recoil";
 import { like, unlike } from "@/request/like";
+import userUserCurrentArticleData from "@/store/user/user-current-article-data";
 
 const Likes = () => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   let params = useParams();
   let id = params.id as string;
 
-  let [currentArticleData, setCurrentArticleData] = useRecoilState(currentArticleDataContext);
+  let currentArticleData = userUserCurrentArticleData(s => s);
 
   function likeArticle() {
     like(id, "article")
       .then(() => {
-        setCurrentArticleData(_data => ({
-          ..._data,
-          like_count: _data.like_count + 1,
+        currentArticleData.updateData({
+          like_count: currentArticleData.data.like_count + 1,
           like_state: 1,
-        }));
+        });
       })
       .catch(() => {
         message.error("点赞失败");
@@ -31,11 +29,10 @@ const Likes = () => {
   function unLikeArticle() {
     unlike(id)
       .then(() => {
-        setCurrentArticleData(_data => ({
-          ..._data,
-          like_count: _data.like_count - 1,
-          like_state: 0,
-        }));
+        currentArticleData.updateData({
+          like_count: currentArticleData.data.like_count - 1,
+          like_state: 1,
+        });
       })
       .catch(() => {
         message.error("取消失败");
@@ -47,17 +44,17 @@ const Likes = () => {
       <div
         className={classNames([itemClassName, "hover:text-blue-500"])}
         onClick={
-          !userData || userData?.id == currentArticleData.author
+          !userData || userData?.id == currentArticleData.data.author
             ? () => {}
-            : currentArticleData.like_count
+            : currentArticleData.data.like_count
             ? unLikeArticle
             : likeArticle
         }
       >
-        <Badge count={currentArticleData.like_count} color="#adb1b8" offset={[10, -10]}>
+        <Badge count={currentArticleData.data.like_count} color="#adb1b8" offset={[10, -10]}>
           <Image
             src={
-              currentArticleData.like_state
+              currentArticleData.data.like_state
                 ? "/icon/client/likes-fill.png"
                 : "/icon/client/likes.png"
             }

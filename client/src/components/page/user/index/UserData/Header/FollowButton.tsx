@@ -1,10 +1,9 @@
 import type { FC } from "react";
 import { Button, message } from "antd";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { modalStateContext } from "@/components/common/Header/Sign";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import useSWR from "swr";
-import axios from "axios";
-import { userDataContext } from "@/store/user-data";
+import axios from "@axios";
+import useUserData from "@/store/user/user-data";
 import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
 import { useRouter } from "next/navigation";
@@ -71,9 +70,10 @@ const SwitchButton: FC<propsType> = props => {
  * @params bloggerID {number} 文章发布者的ID
  */
 const FollowButton: FC<propsType> = props => {
-  let userData = useRecoilValue(userDataContext);
-  let setModalState = useSetRecoilState(modalStateContext);
+  let userData = useUserData(s => s.data);
+  let setModalState = useUserSignModel(s => s.setData);
   let router = useRouter();
+
   return (
     <>
       {userData ? (

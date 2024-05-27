@@ -20,6 +20,8 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@type": path.resolve(__dirname, "./types"),
+      "@axios": path.resolve(__dirname, "./src/plugin/axios.ts"),
+      "@dayjs": path.resolve(__dirname, "./src/plugin/dayjs.ts"),
     };
     return config;
   },

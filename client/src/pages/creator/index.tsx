@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 import useSWR from "swr";
-import axios from "axios";
+import axios from "@axios";
 import Layout from "@/components/page/creator/Layout";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import NoFollowLink from "@/components/next/NoFollowLink";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -19,7 +19,7 @@ const APP: NextPage = () => {
   } = useSWR("advertisement-crtator", () =>
     axios.get("/advertisement", { params: { position: "creator" } }).then(res => res.data.data)
   );
-  let [userInfo] = useUserData();
+  let userInfo = useUserData(s => s.data);
   let { data: userData } = useSWR(`user-data-${userInfo?.id}`, () =>
     axios.get(`/user/data/${userInfo?.id}`).then(res => res.data.data)
   );

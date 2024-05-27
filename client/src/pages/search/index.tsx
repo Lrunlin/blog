@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import type { NextPage } from "next";
 import { useSearchParams } from "next/navigation";
 import { Spin } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import Head from "@/components/next/Head";
 import Layout from "@/layout/Base";
 import ArticleList from "@/components/common/ArticleList";

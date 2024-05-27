@@ -3,10 +3,10 @@ import classNames from "classnames";
 import Image from "@/components/next/Image";
 import { Popover, QRCode } from "antd";
 import { WeiboSquareOutlined, QqOutlined, WechatOutlined } from "@ant-design/icons";
-import { useRecoilValue } from "recoil";
-import { currentArticleDataContext } from "@/pages/article/[id]";
+import userUserCurrentArticleData from "@/store/user/user-current-article-data";
 const Share = () => {
-  let articleData = useRecoilValue(currentArticleDataContext);
+  let currentArticleData = userUserCurrentArticleData(s => s.data);
+
   function link(url: string) {
     let a = document.createElement("a");
     a.target = "_blank";
@@ -16,17 +16,17 @@ const Share = () => {
   function shareWeiBo() {
 
     link(`
-https://service.weibo.com/share/share.php?title=${articleData.title}-${process.env.NEXT_PUBLIC_SITE_NAME} #${process.env.NEXT_PUBLIC_SITE_NAME}文章#
+https://service.weibo.com/share/share.php?title=${currentArticleData.title}-${process.env.NEXT_PUBLIC_SITE_NAME} #${process.env.NEXT_PUBLIC_SITE_NAME}文章#
 &pic=${process.env.NEXT_PUBLIC_HOST}/favicon.svg
 `);
   }
   function shareQQ() {
     link(`
 https://connect.qq.com/widget/shareqq/index.html?url=${window.location.href}
-&title=${articleData.title}-${process.env.NEXT_PUBLIC_SITE_NAME}
+&title=${currentArticleData.title}-${process.env.NEXT_PUBLIC_SITE_NAME}
 &summary=${
-      articleData.description
-        ? articleData.description.substring(0, 20)
+      currentArticleData.description
+        ? currentArticleData.description.substring(0, 20)
         : `${process.env.NEXT_PUBLIC_SITE_NAME}社区的文章分享`
     }
 &pics=${process.env.NEXT_PUBLIC_HOST}/favicon.svg

@@ -1,11 +1,11 @@
 import { useState, useEffect, startTransition, useRef } from "react";
 import type { FC } from "react";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { Skeleton, Divider, Empty, Result } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import type { articleListItemType } from "@type/model/article-list-item";
 import type { response } from "@type/common/response";
-import axios from "axios";
+import axios from "@axios";
 import ArticleListItem from "./ArticleListItem";
 
 interface propsType {
@@ -16,7 +16,7 @@ interface propsType {
 }
 /** 内容管理文章管理组件（文章、草稿箱）*/
 const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   let [page, setPage] = useState(1);
   let [data, setData] = useState<articleListItemType[]>([]);
   let [total, setTotal] = useState(-1);

@@ -1,31 +1,17 @@
 import type { FC } from "react";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { userDataContext } from "@/store/user-data";
-import { modalStateContext } from "@/components/common/Header/Sign";
+import useUserData from "@/store/user/user-data";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import Editor from "./Editor";
 import Comment from "./Comment";
-import { articleCommentType } from "@type/model/article-comment";
-
-export const editorOptionContext = atom<{
-  activeEmojiID: null | string | number;
-  activeInputID: null | string | number;
-  data: articleCommentType[] | null;
-}>({
-  key: "editor-option-context",
-  default: {
-    activeEmojiID: null,
-    activeInputID: null,
-    data: null,
-  },
-});
 
 export interface propsType {
   title?: string;
 }
 /** 文章页面评论组件*/
 const Comments: FC<propsType> = ({ title }) => {
-  let userData = useRecoilValue(userDataContext);
-  let setModalState = useSetRecoilState(modalStateContext);
+  let userData = useUserData(s => s.data);
+  let setModalState = useUserSignModel(s => s.setData);
+
   return (
     <div id="commentRoot">
       {title && (

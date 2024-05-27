@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Button, message } from "antd";
 import type { FC } from "react";
-import { useSetRecoilState } from "recoil";
-import useUserData from "@/store/user-data";
-import { modalStateContext } from "@/components/common/Header/Sign";
+import useUserData from "@/store/user/user-data";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import { follow, unfollow } from "@/request/follow";
 
 interface propsType {
@@ -14,8 +13,10 @@ interface propsType {
 }
 
 const FollowButton: FC<propsType> = props => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
+  let setModalState = useUserSignModel(s => s.setData);
   let [isFollow, setIsFollow] = useState(false);
+
   useEffect(() => {
     setIsFollow(props.isFollow);
   }, [props.isFollow]);
@@ -37,7 +38,6 @@ const FollowButton: FC<propsType> = props => {
       .catch(() => {});
   }
 
-  let setModalState = useSetRecoilState(modalStateContext);
   if (!userData) {
     return (
       <Button type="primary" ghost onClick={() => setModalState("LogIn")}>

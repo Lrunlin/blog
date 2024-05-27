@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
-import axios from "axios";
-import { useSetRecoilState } from "recoil";
-import { modalStateContext } from "../index";
+import axios from "@axios";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 
 const Logon = () => {
   const [isLoad, setIsLoad] = useState(false);
-  const setModalState = useSetRecoilState(modalStateContext);
+  let setModalState = useUserSignModel(s => s).setData;
 
   function logOn(values: any) {
     setIsLoad(true);

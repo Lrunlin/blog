@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import AdminLayout from "@/layout/Admin/Base";
-import axios from "axios";
+import axios from "@axios";
 import { Button, Alert, Table, message, Card } from "antd";
 import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client";
 import type { DefaultEventsMap } from "@socket.io/component-emitter";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import duration from "dayjs/plugin/duration";
 import { DeleteOutlined } from "@ant-design/icons";
 import classNames from "classnames";

@@ -5,7 +5,7 @@ import UserData from "@/components/page/user/index/UserData";
 import { useParams } from "next/navigation";
 import type { UserAttributes } from "@type/model-attribute";
 import Layout from "@/layout/Base";
-import axios from "axios";
+import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
 
 const User: NextPage = () => {

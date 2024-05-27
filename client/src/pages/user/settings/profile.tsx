@@ -1,16 +1,16 @@
 import type { NextPage } from "next";
 import Layout from "@/components/page/user/setting/Layout";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { Button, Result, Form, Input, message } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import useSwr from "swr";
-import axios from "axios";
+import axios from "@axios";
 import UploadAvatar from "@/components/page/user/setting/UploadAvatar";
 
 let { useForm } = Form;
 const Profile: NextPage = () => {
   let [form] = useForm();
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
 
   let { data, error, mutate } = useSwr(`user-set-${userData?.id}`, () =>
     userData ? axios.get(`/user/data/${userData?.id}`).then(res => res.data.data) : undefined

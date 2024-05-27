@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Skeleton, Pagination, Dropdown, MenuProps, message, Result, Button } from "antd";
 import Layout from "@/components/page/creator/Layout";
 import useFetch from "@/common/hooks/useFetch";
-import axios from "axios";
+import axios from "@axios";
 import { CheckOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 

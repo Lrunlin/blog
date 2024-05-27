@@ -1,8 +1,7 @@
 import type { FC } from "react";
 import Container from "./HeaderItem";
 import useAnimateNumber from "use-animate-number";
-import { useRecoilValue } from "recoil";
-import { statisticsDataContext } from "@/pages/admin/statistics/index";
+import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 const AnimateNumer: FC<{ number: number }> = ({ number }) => {
   const [animateValue] = useAnimateNumber(number, { decimals: 0 });
   return <>{animateValue}</>;
@@ -10,7 +9,7 @@ const AnimateNumer: FC<{ number: number }> = ({ number }) => {
 
 /** 大屏页面左侧顶部数据展示*/
 const Header: FC = () => {
-  let data = useRecoilValue(statisticsDataContext);
+  let data = userAdminStatisticsData(s => s.data);
 
   return (
     <div className="flex justify-between">

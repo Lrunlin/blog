@@ -1,7 +1,7 @@
 import { startTransition } from "react";
 import { Input, Button, Form, message } from "antd";
 import Upload from "@/components/common/UpLoad";
-import axios from "axios";
+import axios from "@axios";
 import AdminLayout from "@/layout/Admin/Base";
 const Link = () => {
   let { useForm } = Form;

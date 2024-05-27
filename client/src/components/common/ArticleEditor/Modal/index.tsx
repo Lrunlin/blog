@@ -1,7 +1,6 @@
 import { FC, useEffect } from "react";
 import { Button, Input, Form, message } from "antd";
-import { useRecoilState } from "recoil";
-import { writeArticleContext } from "../index";
+import useUserWriteArticle from "@/store/user/user-write-article";
 import Type from "./Type";
 import Cover from "./Cover";
 import Reprint from "./Reprint";
@@ -10,7 +9,9 @@ import type { modalPropsType } from "../index";
 const Modal: FC<modalPropsType> = props => {
   let { TextArea } = Input;
   let { Item, useForm } = Form;
-  let [articleData, setArticleData] = useRecoilState(writeArticleContext);
+  let articleData = useUserWriteArticle(s => s.data);
+  let updateData = useUserWriteArticle(s => s.updateData);
+
   const [form] = useForm();
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const Modal: FC<modalPropsType> = props => {
           >
             <TextArea
               value={articleData.description || ""}
-              onChange={e => setArticleData(_data => ({ ..._data, description: e.target.value }))}
+              onChange={e => updateData({ description: e.target.value })}
               rows={4}
               placeholder="文章简介，最多200字"
               maxLength={200}

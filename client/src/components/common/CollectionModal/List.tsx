@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import type { FC } from "react";
 import { Button, Empty, Checkbox } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
 import { response } from "@type/response";
 import { PlusOutlined, LockOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { favoritesListProps } from "./index";
 import type { propsType } from "./index";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 
 const List: FC<
   {
@@ -17,7 +17,7 @@ const List: FC<
     onSubmit: (checkList: number[]) => any;
   } & Pick<propsType, "defaultChecked">
 > = ({ onSwitchType, isLoading: buttonIsLoading, onSubmit, defaultChecked }) => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   const [checkList, setCheckList] = useState<number[]>([]);
   let { data, error, isLoading, refetch } = useFetch(() =>
     axios

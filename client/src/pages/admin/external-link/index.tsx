@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { message, Button, Input, Table, Result } from "antd";
 import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";
-import axios from "axios";
+import axios from "@axios";
 import { response } from "@type/response";
 
 const ExternalLink = () => {
@@ -35,7 +35,7 @@ const ExternalLink = () => {
           message.error(err.message);
           console.log(err);
         }),
-    {manual:true}
+    { manual: true }
   );
 
   const [removeId, setRemoveId] = useState<null | number>(null);

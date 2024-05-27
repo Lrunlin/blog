@@ -1,11 +1,11 @@
-import { atom, useRecoilState } from "recoil";
 import { Modal } from "antd";
 import dynamic from "next/dynamic";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 const LogIn = dynamic(import("./LogIn"), { ssr: false });
 const LogOn = dynamic(import("./LogOn"), { ssr: false });
 const ForgetPassword = dynamic(import("./ForgetPassword"), { ssr: false });
 
-let componentsList = {
+export const componentsList = {
   LogIn: {
     title: "登录",
     component: <LogIn />,
@@ -20,27 +20,20 @@ let componentsList = {
   },
 };
 
-/** 弹窗组件显示的状态管理管理*/
-export const modalStateContext = atom<false | keyof typeof componentsList>({
-  key: "modal-state",
-  default: false,
-});
-
 /** Modal弹窗，处理用户的注册和登录*/
 const Sign = () => {
-  const [ComponentsValue, setComponentsValue] = useRecoilState(modalStateContext);
-
+  let userSignModel = useUserSignModel(s => s);
   function Components() {
-    return ComponentsValue ? componentsList[ComponentsValue].component : <></>;
+    return userSignModel.data ? componentsList[userSignModel.data].component : <></>;
   }
   return (
     <>
       <Modal
-        title={<b>{ComponentsValue ? componentsList[ComponentsValue].title : ""}</b>}
-        open={!!ComponentsValue}
+        title={<b>{userSignModel.data ? componentsList[userSignModel.data].title : ""}</b>}
+        open={!!userSignModel.data}
         width={315}
         footer={null}
-        onCancel={() => setComponentsValue(false)}
+        onCancel={() => userSignModel.setData(false)}
       >
         <Components />
       </Modal>

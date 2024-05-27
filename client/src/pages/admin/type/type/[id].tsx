@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import useSwr from "swr";
-import axios from "axios";
+import axios from "@axios";
 import { Form, Input, Button, Empty, Skeleton, InputNumber, Popconfirm, message } from "antd";
 import Upload from "@/components/common/UpLoad";
 import { response } from "@type/response";

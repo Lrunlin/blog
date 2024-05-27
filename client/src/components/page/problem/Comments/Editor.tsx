@@ -2,7 +2,7 @@ import { useState, useContext, startTransition } from "react";
 import type { FC } from "react";
 import { message, Input, Button, Alert } from "antd";
 import { marked } from "marked";
-import axios from "axios";
+import axios from "@axios";
 import type { CommentAttributes } from "@type/model-attribute";
 import { Context } from "@/pages/problem/[id]";
 interface propsType {

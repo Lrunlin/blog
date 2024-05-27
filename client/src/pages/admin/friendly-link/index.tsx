@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "antd";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
-import axios from "axios";
+import axios from "@axios";
 import Link from "next/link";
 import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";

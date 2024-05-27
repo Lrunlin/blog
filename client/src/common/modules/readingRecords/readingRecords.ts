@@ -1,5 +1,5 @@
 import redis from "./redis";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import setReferer from "./setReferer";
 import setSpider from "./setSpider";
 import type { GetServerSidePropsContext } from "next";

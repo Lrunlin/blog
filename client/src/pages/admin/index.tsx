@@ -1,7 +1,7 @@
 import { Divider, Skeleton, Avatar } from "antd";
 import useSWR from "swr";
-import axios from "axios";
-import useUserState from "@/store/user-data";
+import axios from "@axios";
+import useUserData from "@/store/user/user-data";
 import { useRouter } from "next/navigation";
 import Notice from "@/components/admin/page/index/notice";
 import AdminLayout from "@/layout/Admin/Base";
@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Index = () => {
   let router = useRouter();
-  let [userState] = useUserState();
+  let userData = useUserData(s => s.data);
 
   let { data, isValidating } = useSWR("statistics-data-index", () =>
     axios.get("/statistics/index").then(res => res.data.data)
@@ -19,9 +19,9 @@ const Index = () => {
     <AdminLayout>
       {/* 顶部用户信息 */}
       <div className="p-5 bg-white shadow-sm flex">
-        <Avatar size={80} src={userState?.avatar_url} alt="用户头像" />
+        <Avatar size={80} src={userData?.avatar_url} alt="用户头像" />
         <div className="ml-4">
-          <h2 className="mb-2 font-black">{userState?.name}</h2>
+          <h2 className="mb-2 font-black">{userData?.name}</h2>
           <div>管理员</div>
         </div>
       </div>
@@ -35,10 +35,7 @@ const Index = () => {
           <Divider />
           {data ? (
             <div className="flex justify-between cursor-pointer">
-              <Link
-                href="/admin/statistics"
-                className="text-center"
-              >
+              <Link href="/admin/statistics" className="text-center">
                 <Image width={48} height={48} src="/icon/admin/数据看板.svg" alt="data-icon" />
                 <div className="mt-1"> 数据分析</div>
               </Link>

@@ -1,5 +1,5 @@
 import { message } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import { useState } from "react";
 import AdminLayout from "@/layout/Admin/Base";
 import AdvertisementForm from "@/components/admin/page/advertisement/AdvertisementForm";

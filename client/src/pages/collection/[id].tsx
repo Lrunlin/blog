@@ -3,13 +3,13 @@ import type { FC } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter, useParams } from "next/navigation";
 import { Tabs, Empty, Result, Button, Spin } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import { ParsedUrlQuery } from "querystring";
 import ArticleItem from "@/components/common/ArticleList/ArticleItem";
 import Brow from "@/components/page/collection/Brow";
 import ProblemList from "@/components/page/problem/List";
 import Base from "@/layout/Base";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { RootObject } from "@type/model/favorites-collection-list";
 import { response } from "@type/response";
 import dynamic from "next/dynamic";
@@ -20,7 +20,7 @@ const FavoritesList: FC<{ data: RootObject | null }> = ({ data: propsData }) => 
   let params = useParams();
   let id = params.id as string;
   let router = useRouter();
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
 
   if (!propsData) {
     return (

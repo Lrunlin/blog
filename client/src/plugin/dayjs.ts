@@ -8,3 +8,5 @@ dayjs.extend(relativeTime);
 dayjs.locale("zh-cn");
 dayjs.extend(weekday);
 dayjs.extend(localeData);
+
+export default dayjs;

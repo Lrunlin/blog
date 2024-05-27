@@ -1,33 +1,32 @@
 import { NextPage } from "next";
 import type { AppProps, AppContext } from "next/app";
-
-import "@/plugin/axios";
-
-import "@/plugin/dayjs";
+import { UserDataStoreProvider, UserInfoDataType } from "@/store/user/user-data";
 
 import "@/styles/reset.css";
 import "@/styles/globals.scss";
 
 import { parse } from "cookie";
 
-import axios from "axios";
+import axios from "@axios";
 
-import Recoil, { userInfo } from "@/plugin/recoil";
 import Antd from "@/plugin/antd";
 import SWR from "@/plugin/swr";
+import dynamic from "next/dynamic";
+const Sign = dynamic(import("@/components/common/Header/Sign"), { ssr: false });
 
 export interface Props extends AppProps {
-  userInfo: userInfo;
+  userInfo: UserInfoDataType;
 }
 const APP: NextPage<Props> = ({ Component, pageProps, userInfo }) => {
   return (
     <>
       <Antd>
-        <Recoil userInfo={userInfo}>
+        <UserDataStoreProvider data={{ data: userInfo }}>
           <SWR>
             <Component {...pageProps} />
           </SWR>
-        </Recoil>
+          <Sign />
+        </UserDataStoreProvider>
       </Antd>
     </>
   );

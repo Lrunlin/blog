@@ -2,9 +2,9 @@ import { useState, startTransition } from "react";
 import { Skeleton, Result, Button, Empty, message } from "antd";
 import { useParams } from "next/navigation";
 import useFetch from "@/common/hooks/useFetch";
-import axios from "axios";
+import axios from "@axios";
 import { response } from "@type/response";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import classNames from "classnames";
 import { LockOutlined, EditOutlined, DeleteOutlined, SyncOutlined } from "@ant-design/icons";
 import dynamic from "next/dynamic";
@@ -24,7 +24,7 @@ const FavoritesList = () => {
   let id = params.id as string;
   const [defaultValue, setDefaultValue] = useState<favoritesListProps>();
   const [open, setOpen] = useState(false);
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   // 列表获取
   let { data, error, isLoading, refetch, setData } = useFetch(() =>
     axios

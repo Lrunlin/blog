@@ -1,9 +1,8 @@
 import { memo, useState, useEffect, useRef } from "react";
 import type { FC } from "react";
 import { Spin } from "antd";
-import { atom } from "recoil";
 import dynamic from "next/dynamic";
-import { useRecoilValue } from "recoil";
+import useEditorMode from "@/store/common/editor-mode";
 
 const Skeleton = () => <div className="w-full h-[700px] bg-gray-200 animate-pulse"></div>;
 const MarkDownEditor = dynamic(() => import("./MarkDownEditor"), {
@@ -38,19 +37,11 @@ export type editorPropsType = propsType & {
   changePploadProgress: (val: string | null) => void;
 };
 
-export const editorModeContext = atom({
-  key: "editorModeContext",
-  default:
-    typeof window != "undefined"
-      ? window.localStorage.getItem("editor-mode") || "markdown"
-      : "markdown", //markdown|rich-text
-});
-
 const MarkDonwEdit: FC<propsType> = memo(props => {
   const [initValue, setInitValue] = useState<string | undefined>(undefined);
   const [content, setContent] = useState("");
   const [uploadProgress, setPloadProgress] = useState<null | string>(null);
-  let editorMode = useRecoilValue(editorModeContext);
+  let editorMode = useEditorMode(s => s.data);
 
   let firstRender = useRef(true);
   // 保证切换编辑器时value不会消失

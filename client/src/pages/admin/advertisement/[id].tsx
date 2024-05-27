@@ -1,5 +1,5 @@
 import { useParams } from "next/navigation";
-import axios from "axios";
+import axios from "@axios";
 import { Skeleton, Result, message } from "antd";
 import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";

@@ -1,28 +1,21 @@
 import { useState, useEffect, memo, useRef } from "react";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import Header, { searchOptionContext } from "@/components/admin/page/article/list/Header";
-import { tableOptionContext } from "@/components/admin/page/article/list/Table";
+import Header from "@/components/admin/page/article/list/Header";
 import dynamic from "next/dynamic";
 const Table = dynamic(import("@/components/admin/page/article/list/Table"), { ssr: false });
 import { message, Spin } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import AdminLayout from "@/layout/Admin/Base";
-
-export const articleListDataContext = atom({
-  key: "article-list-data",
-  default: {
-    list: [],
-    total_count: 0,
-  },
-});
+import useAdminArticleSearch from "@/store/admin/admin-search-option";
+import useAdminArticleList from "@/store/admin/admin-article-list";
+import useAdminTableOption from "@/store/admin/admin-table-option";
 
 const ArticleList = memo(() => {
   /** 设置文章数据*/
-  let setArticleList = useSetRecoilState(articleListDataContext);
+  let setArticleList = useAdminArticleList(s => s.setData);
   /** 获取表格配置的page和page_size*/
-  let tableOption = useRecoilValue(tableOptionContext);
+  let tableOption = useAdminTableOption(s=>s.data);
   /** 顶部Header中的搜索配置*/
-  let searchOption = useRecoilValue(searchOptionContext);
+  let searchOption = useAdminArticleSearch(s => s.data);
   /** 是否加载中*/
   const [isLoading, setIsLoading] = useState(false);
 

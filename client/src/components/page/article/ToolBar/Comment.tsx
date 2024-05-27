@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import Image from "@/components/next/Image";
-import { currentArticleDataContext } from "@/pages/article/[id]";
-import { useRecoilValue } from "recoil";
 import itemClassName from "./class";
 import { Badge } from "antd";
+import userUserCurrentArticleData from "@/store/user/user-current-article-data";
 
 const Comment = () => {
-  let currentArticleData = useRecoilValue(currentArticleDataContext);
+  let currentArticleData = userUserCurrentArticleData(s => s.data);
+
   return (
     <>
       <a className={classNames([itemClassName, "block"])} href="#comment">

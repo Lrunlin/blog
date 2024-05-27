@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { Button, Modal } from "antd";
 import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
-import axios from "axios";
+import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
 import { response } from "@type/response";
 import { Select } from "antd";

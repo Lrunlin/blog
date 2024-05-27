@@ -1,12 +1,12 @@
 import { Alert, Button, Tooltip, message } from "antd";
 import Layout from "@/components/page/user/setting/Layout";
 import { DeleteOutlined } from "@ant-design/icons";
-import axios from "axios";
+import axios from "@axios";
 import cookie from "js-cookie";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 
 const Destroy = () => {
-  let [userData, setUserData] = useUserData();
+  let userDataStore = useUserData(s => s);
 
   function remove() {
     axios
@@ -17,7 +17,7 @@ const Destroy = () => {
           domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
         });
         message.success(res.data.message);
-        setUserData();
+        userDataStore.setData(null);
       })
       .catch(err => {
         message.error(err.message);
@@ -42,9 +42,11 @@ const Destroy = () => {
           showIcon
         />
         <div className="mt-6 flex justify-center">
-          <Tooltip title={userData?.auth != 0 ? "管理员账号禁止注销" : "点击就会删除，没有确认"}>
+          <Tooltip
+            title={userDataStore?.data?.auth != 0 ? "管理员账号禁止注销" : "点击就会删除，没有确认"}
+          >
             <Button
-              disabled={userData?.auth != 0}
+              disabled={userDataStore?.data?.auth != 0}
               onClick={remove}
               icon={<DeleteOutlined />}
               className="w-40"

@@ -1,9 +1,9 @@
 import useFetch from "@/common/hooks/useFetch";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";
 import { RootObject } from "@type/model/favorites-collection-list";
 import { message, Avatar } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import { useParams, useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useState } from "react";
@@ -16,7 +16,7 @@ const Brow: FC<{
   authorData: RootObject["author_data"];
 }> = ({ favoritesData, authorData }) => {
   const [open, setOpen] = useState(false);
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   let params = useParams();
   let id = params.id as string;
   let router = useRouter();

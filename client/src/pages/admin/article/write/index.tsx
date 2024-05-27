@@ -1,6 +1,6 @@
 import Editor from "@/components/common/Editor";
 import { Button, Form, Input, message, TreeSelect } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import Upload from "@/components/common/UpLoad";
 import useSwr from "swr";
 import getType from "@/request/getType";

@@ -1,15 +1,14 @@
 import { useState, startTransition } from "react";
-import axios from "axios";
+import axios from "@axios";
 import { Modal, Form, Input, message, Collapse, Badge } from "antd";
 import type { GetServerSideProps, NextPage } from "next";
 import Header from "@/components/common/Header";
 import Head from "@/components/next/Head";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import type { LinkAttributes } from "@type/model-attribute";
 import type { userDataType } from "@type/common/user-data";
 import type { response } from "@type/common/response";
-import { modalStateContext } from "@/components/common/Header/Sign";
-import { useSetRecoilState } from "recoil";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import Link from "next/link";
 import classNames from "classnames";
 import UpLoad from "@/components/common/UpLoad";
@@ -28,8 +27,8 @@ const siteData = [
 const Links: NextPage<{ data: linkItem[] }> = props => {
   let { useForm } = Form;
   let [form] = useForm();
-  let [userData] = useUserData();
-  let setModalState = useSetRecoilState(modalStateContext);
+  let userData = useUserData(s => s.data);
+  let setModalState = useUserSignModel(s => s.setData);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 

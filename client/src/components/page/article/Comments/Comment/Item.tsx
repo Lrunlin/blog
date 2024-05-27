@@ -1,20 +1,19 @@
 import { useMemo } from "react";
 import type { FC } from "react";
-import { userDataContext } from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { useParams } from "next/navigation";
 import Image from "@/components/next/Image";
-import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { Image as AntdImage, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import type { articleCommentType } from "@type/model/article-comment";
 import Editor from "../Editor";
 import classNames from "classnames";
 import { useSWRConfig } from "swr";
-import axios from "axios";
+import axios from "@axios";
 import NoFollowLink from "@/components/next/NoFollowLink";
-import { editorOptionContext } from "../index";
-import { currentArticleDataContext } from "@/pages/article/[id]";
+import userUserCurrentArticleData from "@/store/user/user-current-article-data";
+import useUserArticleComment from "@/store/user/user-article-comment";
 
 interface propsType {
   data: articleCommentType;
@@ -23,14 +22,15 @@ interface propsType {
 
 /** 文章页面单个评论组件*/
 const CommentItem: FC<propsType> = ({ data, list }) => {
-  let [editorOption, setEditorOptionContext] = useRecoilState(editorOptionContext);
-  let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
+  let editorOption = useUserArticleComment(s => s.data);
+  let setEditorOption = useUserArticleComment(s => s.setData);
+  let currentArticleData = userUserCurrentArticleData(s => s);
 
   const showEditor = useMemo(
     () => `comment:${data.id}` == editorOption.activeInputID,
     [data, editorOption.activeInputID]
   );
-  let userData = useRecoilValue(userDataContext);
+  let userData = useUserData(s => s.data);
   let { mutate } = useSWRConfig();
   let params = useParams();
   let id = params.id as string;
@@ -40,10 +40,9 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
       .then(res => {
         message.success(res.data.message);
         mutate(`/comment/article/${id}`);
-        setCurrentArticleData(_data => ({
-          ..._data,
-          comment_count: _data.comment_count - 1,
-        }));
+        currentArticleData.updateData({
+          comment_count: currentArticleData.data.comment_count - 1,
+        });
       })
       .catch(err => {
         message.error(err.message);
@@ -109,10 +108,9 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
           <span
             className="mt-3 flex items-center cursor-pointer select-none"
             onClick={() => {
-              setEditorOptionContext(option => ({
-                ...option,
+              setEditorOption({
                 activeInputID: showEditor ? null : `comment:${data.id}`,
-              }));
+              });
             }}
           >
             <Image src="/icon/client/comment.png" width={14} height={14} alt="comment" />

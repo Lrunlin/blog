@@ -1,6 +1,6 @@
 import { useParams, useRouter } from "next/navigation";
 import useSWR from "swr";
-import axios from "axios";
+import axios from "@axios";
 import { Skeleton, Button, Result, Descriptions } from "antd";
 import AdminLayout from "@/layout/Admin/Base";
 

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@axios";
 import type { TypeAttributesList } from "@type/type";
 import type { response } from "@type/response";
 async function getType() {

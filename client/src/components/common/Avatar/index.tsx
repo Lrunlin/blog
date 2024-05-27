@@ -1,13 +1,17 @@
 import { memo } from "react";
 import type { FC } from "react";
-import { Avatar, Dropdown } from "antd";
-import type { AvatarProps } from "antd";
-import useUserData from "@/store/user-data";
+import { Dropdown } from "antd";
+import useUserData from "@/store/user/user-data";
 import Menu from "./Menu";
+import classNames from "classnames";
+
+interface propsType {
+  className?: string;
+}
 
 /** 登录用户的头像（根据userData自动获取链接）*/
-const Avatar_: FC<AvatarProps> = memo(props => {
-  let [userData] = useUserData();
+const Avatar_: FC<propsType> = memo(props => {
+  let userData = useUserData(s => s.data);
   return (
     <div>
       <Dropdown
@@ -19,7 +23,17 @@ const Avatar_: FC<AvatarProps> = memo(props => {
         placement="bottomRight"
         trigger={["click"]}
       >
-        <Avatar src={userData?.avatar_url} className="cursor-pointer" alt="头像" {...props} />
+        <img
+          src={userData?.avatar_url}
+          className={classNames([
+            "cursor-pointer",
+            "rounded-full",
+            "w-[30px]",
+            "h-[30]",
+            props.className,
+          ])}
+          alt="头像"
+        />
       </Dropdown>
     </div>
   );

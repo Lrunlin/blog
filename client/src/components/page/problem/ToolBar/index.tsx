@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { Context } from "@/pages/problem/[id]";
 import { Button, message } from "antd";
 import Image from "@/components/next/Image";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { like, unlike } from "@/request/like";
 import { collection, uncollection } from "@/request/collection";
 import { follow, unfollow } from "@/request/follow";
@@ -12,7 +12,7 @@ const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr
 /** 问答页面对问题的点赞和收藏按钮*/
 const ToolBar = () => {
   let { data, reload } = useContext(Context);
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   const [isOpen, setIsOpen] = useState(false);
 
   function unCollectionProblem() {

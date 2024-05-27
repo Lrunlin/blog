@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Avatar } from "antd";
 import NoFollowLink from "@/components/next/NoFollowLink";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import type { noticeCommentListType } from "@/pages/notification/[type]";
 interface propsType {
   data: noticeCommentListType;

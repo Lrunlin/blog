@@ -4,7 +4,7 @@ import Head from "@/components/next/Head";
 import Layout from "@/components/page/problem/Layout";
 import { GetServerSideProps } from "next";
 import List from "@/components/page/problem/List";
-import axios from "axios";
+import axios from "@axios";
 import type { ProblemAttributes } from "@type/model-attribute";
 import { Skeleton, Divider, message, Empty } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";

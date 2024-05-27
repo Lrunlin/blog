@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Button, Input, Avatar, Dropdown, Result } from "antd";
 import Editor from "../Editor";
-import { userDataContext, UserStateAttributes } from "@/store/user-data";
-import { atom, useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
+import useUserData from "@/store/user/user-data";
+import useUserWriteArticle from "@/store/user/user-write-article";
 import Modal from "./Modal";
 import DraftsButton from "./DraftsButton";
 import { SmileOutlined } from "@ant-design/icons";
@@ -21,11 +21,6 @@ export const initValue = {
   theme_id: 0,
 };
 
-export const writeArticleContext = atom({
-  key: "write-article-data",
-  default: initValue,
-});
-
 type articleContextType = typeof initValue;
 type articleDataType = Omit<articleContextType, "coverUrl">;
 /** 用于和服务器交互的当前文章参数*/
@@ -42,9 +37,11 @@ interface propsType {
 }
 export type modalPropsType = Pick<propsType, "submit">;
 const ArticleEditor: FC<propsType> = props => {
-  let userData = useRecoilValue(userDataContext) as UserStateAttributes;
-  let [articleData, setArticleData] = useRecoilState(writeArticleContext);
-  let resetArticleData = useResetRecoilState(writeArticleContext);
+  let userData = useUserData(s => s.data);
+  let articleData = useUserWriteArticle(s => s.data);
+  let updateData = useUserWriteArticle(s => s.updateData);
+  let resetArticleData = useUserWriteArticle(s => s.resetData);
+
   useEffect(() => {
     return () => {
       resetArticleData();
@@ -60,7 +57,7 @@ const ArticleEditor: FC<propsType> = props => {
           value={articleData.title}
           variant="borderless"
           className="mr-10 h-full"
-          onChange={e => setArticleData(_data => ({ ..._data, title: e.target.value }))}
+          onChange={e => updateData({ title: e.target.value })}
           maxLength={200}
         />
         <div className="flex mr-5">
@@ -77,16 +74,9 @@ const ArticleEditor: FC<propsType> = props => {
         theme={true}
         target="article"
         initValue={articleData.content}
-        onChange={html => {
-          setArticleData(_data => ({ ..._data, content: html }));
-        }}
+        onChange={html => updateData({ content: html })}
         defaultTheme={articleData.theme_id}
-        onSetTheme={id =>
-          setArticleData(_data => {
-            console.log(id);
-            return { ..._data, theme_id: id };
-          })
-        }
+        onSetTheme={id => updateData({ theme_id: id })}
       />
     </div>
   ) : (

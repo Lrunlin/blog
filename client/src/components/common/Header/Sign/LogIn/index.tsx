@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 import { Button, Form, Input, Divider, message } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
-import { useSetRecoilState } from "recoil";
-import axios from "axios";
-import { modalStateContext } from "../index";
+import axios from "@axios";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import cookie from "js-cookie";
-import useUserData from "@/store/user-data";
-import { userDataContext } from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 /** 弹窗中的登录组件*/
 const LogIn = () => {
-  let setModalState = useSetRecoilState(modalStateContext);
-  let setUserData = useSetRecoilState(userDataContext);
-  const [, refreshDataAction] = useUserData();
+  let setModalState = useUserSignModel(s => s.setData);
 
+  const userDataStore = useUserData(s => s);
+  let userData = useUserData(s => s);
   const [isLoad, setIsLoad] = useState(false);
   function logIn(values: any) {
     setIsLoad(true);
@@ -22,7 +20,7 @@ const LogIn = () => {
         if (res.data.success) {
           message.success(res.data.message);
           setModalState(false);
-          setUserData(res.data.data);
+          userDataStore.setData(res.data.data);
           cookie.set("token", res.data.token, {
             expires: 365,
             domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
@@ -47,7 +45,7 @@ const LogIn = () => {
     // 开启后监听是否关闭，如果关闭了就重新获取一下userData
     timer = setInterval(() => {
       if (win.closed) {
-        refreshDataAction();
+        userDataStore.refreshData();
         setModalState(false);
       }
     }, 500);

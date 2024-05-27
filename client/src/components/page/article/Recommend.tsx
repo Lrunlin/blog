@@ -1,7 +1,7 @@
 import { Skeleton, Result } from "antd";
 import { useParams } from "next/navigation";
 import uswSwr from "swr";
-import axios from "axios";
+import axios from "@axios";
 import ArticleList from "@/components/common/ArticleList";
 import type { response } from "@type/common/response";
 import type { articleListItemType } from "@type/model/article-list-item";

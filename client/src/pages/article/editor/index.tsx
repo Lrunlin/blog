@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "@/components/next/Head";
-import axios from "axios";
+import axios from "@axios";
 import ArticleEditor from "@/components/common/ArticleEditor";
 import { useRouter } from "next/navigation";
 import { message } from "antd";

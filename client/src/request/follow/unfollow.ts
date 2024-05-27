@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@axios";
 import type { response } from "@type/common/response";
 /** 取消关注*/
 function unFollow(id: number | string) {

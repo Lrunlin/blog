@@ -2,10 +2,10 @@ import Base from "@/layout/Base";
 import { Result } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { CreateTheme } from "@/pages/admin/theme/create";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 
 const Theme = () => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
 
   return (
     <Base>

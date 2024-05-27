@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
-import { useRecoilValue } from "recoil";
-import { statisticsDataContext, statisticsDataType } from "@/pages/admin/statistics";
+import { statisticsDataType } from "@/pages/admin/statistics";
+import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
+
 const byteConvert = function (bytes: number) {
   let symbols = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let exp = Math.floor(Math.log(bytes) / Math.log(2));
@@ -97,7 +98,8 @@ function option(data: statisticsDataType["system_occupation"]) {
 
 /** 文章饼状图统计*/
 const Article = () => {
-  let _data = useRecoilValue(statisticsDataContext);
+  let _data = userAdminStatisticsData(s=>s.data);
+
   let DOM = useRef<HTMLDivElement>(null);
   let data = _data.system_occupation;
   useEffect(() => {

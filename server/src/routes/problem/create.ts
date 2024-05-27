@@ -1,8 +1,9 @@
 import Router from "@koa/router";
-let router = new Router();
 import verify from "@/common/verify/api-verify/problem/create";
 import DB from "@/db";
 import id from "@/common/utils/id";
+
+let router = new Router();
 router.post("/problem", verify, async ctx => {
   const { title, tag, content } = ctx.request.body;
   await DB.Problem.create({

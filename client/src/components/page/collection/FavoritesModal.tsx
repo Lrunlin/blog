@@ -4,7 +4,7 @@ import type { ModalProps } from "antd";
 import { Favorites_data } from "@type/model/favorites-collection-list";
 import { useParams } from "next/navigation";
 import useFetch from "@/common/hooks/useFetch";
-import axios from "axios";
+import axios from "@axios";
 import CreateFrom from "@/components/common/CollectionModal/CreateFrom";
 
 /** 编辑收藏集的弹窗*/

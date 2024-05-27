@@ -1,5 +1,5 @@
 type target = "type" | "article" | "cover" | "avatar" | "comment";
-import axios from "axios";
+import axios from "@axios";
 import { response } from "@type/common/response";
 import { message } from "antd";
 

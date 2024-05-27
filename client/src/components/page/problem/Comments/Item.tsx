@@ -1,12 +1,11 @@
 import { useState, useContext } from "react";
 import type { FC } from "react";
-import { useRecoilValue } from "recoil";
-import { userDataContext } from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import Image from "@/components/next/Image";
 import { message } from "antd";
 import Editor from "./Editor";
 import classNames from "classnames";
-import axios from "axios";
+import axios from "@axios";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import type { problemCommentType } from "@type/model/problem";
 import { Context } from "@/pages/problem/[id]";
@@ -24,7 +23,7 @@ interface propsType {
 /** 问答功能中回复评论的的单个评论组件*/
 const CommentItem: FC<propsType> = ({ data, list, belong_id, type }) => {
   const [showEditor, setShowEditor] = useState(false);
-  let userData = useRecoilValue(userDataContext);
+  let userData = useUserData(s => s.data);
   let { reload } = useContext(Context);
   function removeComment() {
     axios.delete(`/comment/${data.id}`).then(res => {

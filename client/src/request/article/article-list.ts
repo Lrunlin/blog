@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@axios";
 import type { articleListItemType } from "@type/model/article-list-item";
 import type { response } from "@type/common/response";
 

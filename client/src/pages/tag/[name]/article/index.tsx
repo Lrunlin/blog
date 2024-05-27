@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
-import axios from "axios";
+import axios from "@axios";
 import Layout from "@/components/page/tag/Layout";
 import { TagAttributes, ArticleAttributes } from "@type/model-attribute";
 import ArticleList from "@/components/common/ArticleList";

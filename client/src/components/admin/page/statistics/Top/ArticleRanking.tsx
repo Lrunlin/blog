@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
-import { statisticsDataContext } from "@/pages/admin/statistics";
+import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 
 const ArticleRanking = () => {
-  let _data = useRecoilValue(statisticsDataContext);
+  let _data = userAdminStatisticsData(s => s.data);
   let data = _data.article_ranking;
 
   return (

@@ -1,5 +1,5 @@
 import { message } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import type { uploadPropsType } from "./index";
 type paramsType = Pick<uploadPropsType, "target"> & {
   base64: string;

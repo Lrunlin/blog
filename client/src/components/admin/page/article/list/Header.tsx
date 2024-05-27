@@ -1,26 +1,8 @@
-import { atom, useRecoilState } from "recoil";
 import { Form, Input, Select, Button, DatePicker, Switch, Card } from "antd";
-
-export const searchOptionContext = atom({
-  key: "article-list-option",
-  default: {
-    /** 发布人 管理员或者用户*/
-    auth: undefined,
-    /** 设置正序还是倒序*/
-    sort: ["create_time", "desc"],
-    /** 时间线，查询某某之后create_time的文章*/
-    deadline: undefined,
-    /** 根据ID进行查询*/
-    article_id: undefined,
-    /** 发布者ID*/
-    author_id: undefined,
-    /** 是否仅原创文章*/
-    only_original: undefined,
-  },
-});
+import useAdminArticleSearch from "@/store/admin/admin-search-option";
 
 const Header = () => {
-  let [option, setOption] = useRecoilState(searchOptionContext);
+  let searchOption = useAdminArticleSearch(s => s);
 
   // 更新Store
   function onFinish(values: any) {
@@ -28,13 +10,18 @@ const Header = () => {
       ...values,
       deadline: values?.deadline?._d || undefined,
     };
-    setOption(_option);
+    searchOption.setData(_option);
   }
 
   const { Option } = Select;
   return (
     <Card className="article-list_header">
-      <Form initialValues={option} onFinish={onFinish} autoComplete="off" layout="inline">
+      <Form
+        initialValues={searchOption.data}
+        onFinish={onFinish}
+        autoComplete="off"
+        layout="inline"
+      >
         <Form.Item label="文章ID" name="id">
           <Input placeholder="输入文章ID" className="w-40" />
         </Form.Item>
@@ -47,7 +34,7 @@ const Header = () => {
           {fields =>
             fields.map((field, index) => (
               <Form.Item {...field} label={index == 0 ? "排序" : ""}>
-                <Select value={option.sort[index]} style={{ width: "120px" }}>
+                <Select value={searchOption.data.sort[index]} style={{ width: "120px" }}>
                   {index == 0 ? (
                     <>
                       <Option value="create_time">发布时间</Option>

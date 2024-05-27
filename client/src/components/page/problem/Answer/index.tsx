@@ -3,11 +3,11 @@ import type { FC } from "react";
 import classNames from "classnames";
 import { Badge, Button, Tooltip, message } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import axios from "axios";
-import useUserData from "@/store/user-data";
+import axios from "@axios";
+import useUserData from "@/store/user/user-data";
 const CommentEditor = dynamic(() => import("@/components/page/problem/Comments/Editor"), {
   ssr: false,
 });
@@ -24,7 +24,7 @@ const Answer: FC = () => {
   const [answerReplyShrinkIndex, setAnswerReplyShrinkIndex] = useState<number>(-1);
   let params = useParams();
   let id = params.id as string;
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
 
   /** 采纳答案*/
   function adopt(answer_id: number) {

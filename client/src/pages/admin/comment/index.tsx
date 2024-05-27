@@ -1,8 +1,8 @@
 import { useState, useEffect, startTransition } from "react";
-import axios from "axios";
+import axios from "@axios";
 import { message, Table, Avatar, Image, Button, Popover, DatePicker } from "antd";
 import Link from "next/link";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import AdminLayout from "@/layout/Admin/Base";
 
 const Comment = () => {

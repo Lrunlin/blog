@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import useSWR from "swr";
-import axios from "axios";
+import axios from "@axios";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
 import Image from "@/components/next/Image";

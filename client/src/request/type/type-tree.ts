@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@axios";
 import type { response } from "@type/common/response";
 import type { TypeAttributes, TagAttributes } from "@type/model-attribute";
 

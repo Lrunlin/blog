@@ -1,13 +1,12 @@
 import { Fragment, useEffect } from "react";
-import { useSetRecoilState } from "recoil";
 import useSWR from "swr";
-import axios from "axios";
+import axios from "@axios";
 import { useParams } from "next/navigation";
 import { SyncOutlined } from "@ant-design/icons";
 import CommentItem from "./Item";
 import type { articleCommentType } from "@type/model/article-comment";
 import type { response } from "@type/common/response";
-import { editorOptionContext } from "../index";
+import useUserArticleComment from "@/store/user/user-article-comment";
 
 /** 文章页面评论集合组件*/
 const Comments = () => {
@@ -18,10 +17,11 @@ const Comments = () => {
       .get<response<articleCommentType[]>>(`/comment/article/${articleID}`)
       .then(res => res.data.data)
   );
-  let setEditorOptionContext = useSetRecoilState(editorOptionContext);
+  let setEditorOption= useUserArticleComment(s=>s.setData);
+
   useEffect(() => {
     if (data) {
-      setEditorOptionContext(option => ({ ...option, data: data as articleCommentType[] }));
+      setEditorOption({ list: data as articleCommentType[] });
     }
   }, [data]);
 

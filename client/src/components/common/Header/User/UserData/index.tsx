@@ -40,7 +40,7 @@ const UserData = () => {
           创作者中心
         </Dropdown.Button>
         <News className="mx-8" />
-        <Avatar size={30} />
+        <Avatar  />
       </div>
     </>
   );

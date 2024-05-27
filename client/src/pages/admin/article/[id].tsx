@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import Editor from "@/components/common/Editor";
 import { Button, Form, Input, message, TreeSelect, Skeleton, Result, InputNumber } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import Upload from "@/components/common/UpLoad";
 import useSwr, { useSWRConfig } from "swr";
 import getType from "@/request/getType";

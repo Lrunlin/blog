@@ -7,7 +7,7 @@
 ## 系统说明
 
 **文章针对系统进行简单的说明，并且对管理系统进行了展示
-[https://blogweb.cn/article/5488756264910](https://blogweb.cn/article/5488756264910)**
+[https://blogweb.cn/article/5488756264910](https://blogweb.cn/article/5488756264910)** 系统包含论文两篇
 
 ## 相关技术
 
@@ -18,7 +18,7 @@
 开发语言 TypeScript  
 组件库使用 Ant Design  
 CSS 方案 Tailwind CSS  
-React 状态管理 Recoil
+React 状态管理 Zustand
 
 _系统支持 JWT 和 Session 两种鉴权方式因为系统拥有账号注销功能，而 JWT 是无服务器状态的所以推荐使用 Session 存储在 Redis 中。_
 

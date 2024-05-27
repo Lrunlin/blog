@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import axios from "axios";
+import axios from "@axios";
 import type { FC } from "react";
 import Base from "@/layout/Base";
 import Link from "next/link";

@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
+import axios from "@axios";
 import { Button, Empty, Skeleton, Popconfirm, message } from "antd";
 import { response } from "@type/response";
 import { TagAttributes } from "@type/type";

@@ -2,8 +2,8 @@ import { FC, ReactNode } from "react";
 import Header from "@/components/admin/common/Header";
 import Footer from "@/components/admin/common/Footer";
 import { useRouter } from "next/navigation";
-import useUserState from "@/store/user-data";
-import axios from "axios";
+import useUserData from "@/store/user/user-data";
+import axios from "@axios";
 import Head from "@/components/next/Head";
 
 interface propsType {
@@ -20,8 +20,8 @@ axios.interceptors.request.use(
 );
 const AdminLayout: FC<propsType> = ({ children }) => {
   const router = useRouter();
-  let [userState] = useUserState();
-  if (typeof window !== "undefined" && userState?.auth != 1) {
+  let userData = useUserData(s => s.data);
+  if (typeof window !== "undefined" && userData?.auth != 1) {
     router.replace("/admin/login");
   }
 

@@ -2,7 +2,7 @@ import useFetch from "@/common/hooks/useFetch";
 import CodeEdite from "@/components/admin/page/theme/CodeEdite";
 import AdminLayout from "@/layout/Admin/Base";
 import { Input, Form, Button, Card, Alert, message } from "antd";
-import axios from "axios";
+import axios from "@axios";
 
 export const CreateTheme = () => {
   let { useForm } = Form;
@@ -20,7 +20,7 @@ export const CreateTheme = () => {
           message.error(err.message);
           return err;
         }),
-    {manual:true}
+    { manual: true }
   );
 
   return (

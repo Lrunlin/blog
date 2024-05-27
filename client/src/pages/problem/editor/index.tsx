@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Input, message } from "antd";
 import Head from "@/components/next/Head";
 import Tag from "@/components/page/problem/write/Tag";
-import axios from "axios";
+import axios from "@axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

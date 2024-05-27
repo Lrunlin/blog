@@ -1,17 +1,16 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 腾讯云MySQL
+ Source Server         : 腾讯服务器
  Source Server Type    : MySQL
- Source Server Version : 80022 (8.0.22-txsql)
- Source Host           : bj-cdb-l8i7hhwo.sql.tencentcdb.com:63839
+ Source Server Version : 80024 (8.0.24)
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80022 (8.0.22-txsql)
+ Target Server Version : 80024 (8.0.24)
  File Encoding         : 65001
 
- Date: 29/03/2024 22:39:37
+ Date: 27/05/2024 11:24:41
 */
 
 SET NAMES utf8mb4;
@@ -244,7 +243,7 @@ CREATE TABLE `theme`  (
   `indexes` int NOT NULL COMMENT '排序',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for type

@@ -5,7 +5,7 @@ import type { ModalProps } from "antd";
 import CreateFrom, { valuesType } from "./CreateFrom";
 import { useParams } from "next/navigation";
 import List from "./List";
-import axios from "axios";
+import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
 import { response } from "@type/response";
 
@@ -62,7 +62,7 @@ const CollectionModal: FC<propsType> = props => {
           console.log(err);
           return err;
         }),
-    {manual:true}
+    { manual: true }
   );
 
   // 修改收藏

@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from "@axios";
 import { Skeleton, Result, Table, Image, Button, message } from "antd";
 import { useRouter } from "next/navigation";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";
 let positionMapping = {

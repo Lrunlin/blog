@@ -1,6 +1,6 @@
 import Base from "@/layout/Base";
 import useFetch from "@/common/hooks/useFetch";
-import axios from "axios";
+import axios from "@axios";
 import { Button, message, Form, Input } from "antd";
 import { useSearchParams } from "next/navigation";
 

@@ -1,7 +1,7 @@
 import { useImperativeHandle, useState, useEffect, useRef } from "react";
 import type { MutableRefObject, FC } from "react";
 import { Modal, Form, Input, message } from "antd";
-import axios from "axios";
+import axios from "@axios";
 
 export type event = MutableRefObject<{ onOpen: () => void }>;
 interface propsType {

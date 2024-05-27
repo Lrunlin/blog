@@ -1,5 +1,5 @@
 import { memo } from "react";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import Avatar from "@/components/common/Avatar";
 import { Button } from "antd";
 import { useRouter, usePathname } from "next/navigation";
@@ -21,7 +21,7 @@ let items = [
 
 /** 创作者中心的左侧导航*/
 const Aside = () => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   let router = useRouter();
   let pathname = usePathname();
 
@@ -52,7 +52,7 @@ const Aside = () => {
   return (
     <aside className="w-60 h-5/6 p-4 fixed shadow-sm bg-white flex flex-col">
       <div className="flex items-center">
-        <Avatar size={48} />
+        <Avatar className="w-12 h-12" />
         <div className="w-20 ml-2 text-lg truncate">{userData?.name}</div>
       </div>
       <Button type="primary" block className="mt-8" onClick={() => router.push("/article/editor")}>

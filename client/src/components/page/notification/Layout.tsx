@@ -4,8 +4,8 @@ import Base from "@/layout/Base";
 import Head from "@/components/next/Head";
 import ActiveLink from "@/components/next/ActiveLink";
 import classNames from "classnames";
-import useUserData from "@/store/user-data";
-import axios from "axios";
+import useUserData from "@/store/user/user-data";
+import axios from "@axios";
 
 interface propsType {
   children: ReactNode;
@@ -22,7 +22,7 @@ const Layout: FC<propsType> = props => {
     // },
   ];
 
-  let userData = useUserData();
+  let userData = useUserData(s => s.data);
   const [noticeList, setNoticeList] = useState<string[] | false>(false);
   useEffect(() => {
     if (userData && !noticeList) {

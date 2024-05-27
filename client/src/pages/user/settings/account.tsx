@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { Result } from "antd";
 import useSwr from "swr";
-import axios from "axios";
-import useUserData from "@/store/user-data";
+import axios from "@axios";
+import useUserData from "@/store/user/user-data";
 import Layout from "@/components/page/user/setting/Layout";
 import UpdateEmailModal, { event } from "@/components/page/user/setting/UpdateEmailModal";
 import UpdatePasswordModal, {
@@ -10,7 +10,7 @@ import UpdatePasswordModal, {
 } from "@/components/page/user/setting/UpdatePasswordModal";
 
 const Account = () => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   let { data, error } = useSwr(`user-account-set-${userData?.id}`, () =>
     userData ? axios.get(`/user/data/${userData?.id}`).then(res => res.data.data) : undefined
   );

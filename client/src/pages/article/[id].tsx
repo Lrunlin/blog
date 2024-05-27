@@ -1,8 +1,7 @@
 import dynamic from "next/dynamic";
 import type { GetServerSideProps, NextPage } from "next";
-import { atom } from "recoil";
-import axios from "axios";
-import RecoilRoot from "@/components/page/article/RecoilRoot";
+
+import axios from "@axios";
 import Head from "@/components/next/Head";
 import Layout from "@/components/page/article/Layout";
 import View from "@/components/page/article/View";
@@ -13,16 +12,24 @@ const Reprint = dynamic(import("@/components/page/article/Reprint"), { ssr: fals
 import readingRecords from "@/common/modules/readingRecords/readingRecords";
 import { parse } from "cookie";
 import StyleLink from "@/components/common/Editor/StyleLink";
+import userUserCurrentArticleData from "@/store/user/user-current-article-data";
+import { useEffect } from "react";
 
 interface propsType {
   data: ArticleAttributes | null;
 }
-export const currentArticleDataContext = atom<ArticleAttributes>({
-  key: "current-article-data",
-  default: {} as ArticleAttributes,
-});
+
 const Article: NextPage<propsType> = ({ data }) => {
   if (!data) return <NoFound />;
+  let setUserCurrentArticleData = userUserCurrentArticleData(s => s.setArticleData);
+  let resetUserCurrentArticleData = userUserCurrentArticleData(s => s.resetData);
+
+  useEffect(() => {
+    setUserCurrentArticleData(data);
+    return () => {
+      resetUserCurrentArticleData();
+    };
+  }, []);
 
   return (
     <>
@@ -37,14 +44,12 @@ const Article: NextPage<propsType> = ({ data }) => {
         description={data.description}
       />
       <StyleLink id={data.theme_id} />
-      <RecoilRoot currentArticleData={data}>
-        <Layout language={data.language}>
-          <h1 className="text-4xl font-semibold">{data.title}</h1>
-          <ArticleUserData data={data} type="article" />
-          <View content={data.content} />
-          <Reprint reprint={data.reprint} />
-        </Layout>
-      </RecoilRoot>
+      <Layout language={data.language}>
+        <h1 className="text-4xl font-semibold">{data.title}</h1>
+        <ArticleUserData data={data} type="article" />
+        <View content={data.content} />
+        <Reprint reprint={data.reprint} />
+      </Layout>
     </>
   );
 };

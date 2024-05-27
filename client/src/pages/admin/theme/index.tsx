@@ -1,5 +1,5 @@
 import useFetch from "@/common/hooks/useFetch";
-import axios from "axios";
+import axios from "@axios";
 import { Table, Button, message, Modal, Skeleton, Result, Tag, Popconfirm } from "antd";
 import { useState } from "react";
 import { Select } from "antd";
@@ -61,7 +61,7 @@ const List = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    {manual:true}
+    { manual: true }
   );
 
   let { refetch: allow } = useFetch(
@@ -77,7 +77,7 @@ const List = () => {
         .catch(err => {
           message.error(err.message);
         }),
-    {manual:true}
+    { manual: true }
   );
 
   return (

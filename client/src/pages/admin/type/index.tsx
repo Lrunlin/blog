@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import axios from "axios";
+import axios from "@axios";
 import { Button, message, Tree } from "antd";
 import useSwr, { useSWRConfig } from "swr";
 import getType from "@/request/getType";

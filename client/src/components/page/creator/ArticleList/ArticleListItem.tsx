@@ -4,7 +4,7 @@ import { DashOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, message } from "antd";
 import Link from "next/link";
 import type { articleListItemType } from "@type/model/article-list-item";
-import axios from "axios";
+import axios from "@axios";
 interface propsType {
   data: articleListItemType;
   dispatch: {

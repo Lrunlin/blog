@@ -1,11 +1,10 @@
 import type { FC } from "react";
 import { useRouter } from "next/navigation";
 import { Button, message } from "antd";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { modalStateContext } from "@/components/common/Header/Sign";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import useSWR from "swr";
-import axios from "axios";
-import { userDataContext } from "@/store/user-data";
+import axios from "@axios";
+import useUserData from "@/store/user/user-data";
 import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
 import { follow, unfollow } from "@/request/follow";
@@ -19,7 +18,7 @@ interface propsType {
 /** 文章页面的关注按钮，会自动获取状态并展示对应的按钮*/
 const SwitchButton: FC<propsType> = props => {
   let router = useRouter();
-  let userData = useRecoilValue(userDataContext);
+  let userData = useUserData(s => s.data);
 
   let { data, error, isValidating, mutate } = useSWR(`follow-user-data-${props.bloggerID}`, () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
@@ -78,8 +77,9 @@ const SwitchButton: FC<propsType> = props => {
  * @params articleID {number} 文章的ID
  */
 const FollowButton: FC<propsType> = props => {
-  let userData = useRecoilValue(userDataContext);
-  let setModalState = useSetRecoilState(modalStateContext);
+  let userData = useUserData(s => s.data);
+  let setModalState = useUserSignModel(s => s.setData);
+
   return (
     <>
       {userData ? (

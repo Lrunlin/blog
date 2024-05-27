@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 import type { articleListItemType } from "@type/model/article-list-item";
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 import style from "./index.module.scss";
 import classNames from "classnames";
 import Image from "@/components/next/Image";

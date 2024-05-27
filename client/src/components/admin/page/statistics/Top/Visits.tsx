@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
-import { useRecoilValue } from "recoil";
-import { statisticsDataContext } from "@/pages/admin/statistics";
+import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 /** 访问量统计*/
 const Visits = () => {
-  let data = useRecoilValue(statisticsDataContext);
+  let data = userAdminStatisticsData(s => s.data);
   let visits = data.visits;
   let DOM = useRef<HTMLDivElement>(null);
   useEffect(() => {

@@ -3,8 +3,7 @@ import type { FC } from "react";
 import { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
 import style from "../index.module.scss";
 import classNames from "classnames";
-import { useRecoilValue } from "recoil";
-import { userDataContext } from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 
 type changeOptionType = { type?: string; tag?: string; follow?: true };
 export type changeType = ({ type, tag }: { type?: string; tag?: string; follow?: true }) => void;
@@ -16,7 +15,7 @@ interface propsType {
 /** 首页顶部展示类型选择的头部组件，穿盾type-tree数组即可*/
 const TypeHeader: FC<propsType> = props => {
   let { data } = props;
-  let userData = useRecoilValue(userDataContext);
+  let userData = useUserData(s => s.data);
   const [activeTypeKey, setActiveTypeKey] = useState(data[0].id);
   const [activeTagKey, setActiveTagKey] = useState(data[0].id);
   /** 获取type和tag在数组中的位置，判断是修改了type还是tag*/
@@ -101,7 +100,7 @@ const TypeHeader: FC<propsType> = props => {
                   "rounded-2xl",
                   "text-[#909090]",
                   "mr-2",
-                  "mt-2"
+                  "mt-2",
                 ])}
                 onClick={() => switchTag(item.id)}
               >

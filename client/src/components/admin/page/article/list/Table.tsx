@@ -1,32 +1,17 @@
-import axios from "axios";
+import axios from "@axios";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Table, Popover, Avatar, Modal, Button, Tooltip, message, DatePicker } from "antd";
 import Link from "next/link";
-import { atom, useRecoilValue, useRecoilState } from "recoil";
-import { articleListDataContext } from "@/pages/admin/article/list/index";
+import useAdminArticleList from "@/store/admin/admin-article-list";
+import useAdminTableOption from "@/store/admin/admin-table-option";
 import classNames from "classnames";
-import dayjs from "dayjs";
-
-export const tableOptionContext = atom({
-  key: "table-option",
-  default: {
-    key: 0, //用于刷新表格
-    page:
-      typeof window !== "undefined" && !isNaN(+window?.sessionStorage.page)
-        ? +window?.sessionStorage.page
-        : 1,
-    page_size:
-      typeof window !== "undefined" && !isNaN(+window?.sessionStorage.page_size)
-        ? +window?.sessionStorage.page_size
-        : 10,
-  },
-});
+import dayjs from "@dayjs";
 
 const TableCom = () => {
   /** 文章列表数据 */
-  let articleList = useRecoilValue(articleListDataContext);
+  let articleList = useAdminArticleList(s => s.data);
   /** table的选择*/
-  let [tableOption, setTableOption] = useRecoilState(tableOptionContext);
+  let tableOption = useAdminTableOption(s => s);
 
   const { confirm } = Modal;
   const destroyAll = () => {
@@ -155,7 +140,7 @@ const TableCom = () => {
                     axios.delete(`/article/${id}`).then(res => {
                       if (res.data.success) {
                         message.success(res.data.message);
-                        setTableOption(option => ({ ...option, key: +new Date() }));
+                        tableOption.setData({ ...tableOption.data, key: +new Date() });
                       } else {
                         message.error(res.data.message);
                       }
@@ -185,12 +170,12 @@ const TableCom = () => {
         pagination={{
           position: ["bottomCenter"],
           total: articleList.total_count,
-          current: tableOption.page,
-          pageSize: tableOption.page_size,
+          current: tableOption.data.page,
+          pageSize: tableOption.data.page_size,
           onChange: (page, pageSize) => {
             window.sessionStorage.page = page;
             window.sessionStorage.page_size = pageSize;
-            setTableOption({ page: page, page_size: pageSize, key: 0 });
+            tableOption.setData({ page: page, page_size: pageSize, key: 0 });
           },
           showSizeChanger: true,
           showQuickJumper: true,

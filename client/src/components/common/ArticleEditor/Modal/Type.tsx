@@ -3,12 +3,12 @@ import useSWR from "swr";
 import getTypeTree from "@/request/type/type-tree";
 import classNames from "classnames";
 import { message, Badge } from "antd";
-import { useRecoilState } from "recoil";
-import { writeArticleContext } from "../index";
+import useUserWriteArticle from "@/store/user/user-write-article";
 
 const Type = () => {
   let [type, setType] = useState<number>(-1);
-  let [articleData, setArticleData] = useRecoilState(writeArticleContext);
+  let articleData = useUserWriteArticle(s => s.data);
+  let updateData = useUserWriteArticle(s => s.updateData);
 
   let { data } = useSWR("/type-tree", () => {
     let _data = getTypeTree();
@@ -63,13 +63,13 @@ const Type = () => {
                   // 先判断是否点击过了
                   // 点击过了就取消没点过就先判断是否6个了在判断添加和删除
                   if (articleData.tag.includes(item.id)) {
-                    setArticleData(_data => ({
-                      ..._data,
-                      tag: _data.tag.filter(_item => item.id != _item),
-                    }));
+                    updateData({
+                      ...articleData.tag,
+                      tag: articleData.tag.filter(_item => item.id != _item),
+                    });
                   } else {
                     if (articleData.tag.length < 6) {
-                      setArticleData(_data => ({ ..._data, tag: [..._data.tag, item.id] }));
+                      updateData({ tag: [...articleData.tag, item.id] });
                     } else {
                       message.warning("最多选择6个标签");
                     }

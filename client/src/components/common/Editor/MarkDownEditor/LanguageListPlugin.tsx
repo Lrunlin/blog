@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Modal, Select } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import type { BytemdPlugin } from "bytemd";
 
 const LanguageListPlugin = (): BytemdPlugin => {

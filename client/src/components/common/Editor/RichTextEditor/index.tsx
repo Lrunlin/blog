@@ -2,12 +2,10 @@ import { useEffect, useRef, useState, memo } from "react";
 import type { FC } from "react";
 import type { editorPropsType } from "../index";
 import { message, List } from "antd";
-import { editorModeContext } from "../index";
-
+import useEditorMode from "@/store/common/editor-mode";
 import ReactWEditor from "wangeditor-for-react";
 import upload from "../upload";
-import { useSetRecoilState } from "recoil";
-import axios from "axios";
+import axios from "@axios";
 
 import classNames from "classnames";
 import CodeEditor from "./CodeEditor";
@@ -17,7 +15,8 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
   // 两个数组，用于记录按钮和下拉菜单是否全部移出
   const [showThemeListLayer, setShowThemeListLayer] = useState([false, false]);
   const editor = useRef<ReactWEditor | null>(null);
-  let setState = useSetRecoilState(editorModeContext);
+  let setState = useEditorMode(s=>s.setData);
+  
   let codeEditorRef = useRef<event>(null);
 
   const excludeKeys = [

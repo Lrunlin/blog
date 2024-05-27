@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
-import { useRecoilValue } from "recoil";
-import { statisticsDataContext } from "@/pages/admin/statistics";
+import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 
 function option(data: { value: number; name: string }[]) {
   return {
@@ -60,7 +59,7 @@ function option(data: { value: number; name: string }[]) {
 
 /** 文章饼状图统计*/
 const Article = () => {
-  let _data = useRecoilValue(statisticsDataContext);
+  let _data = userAdminStatisticsData(s => s.data);
   let DOM = useRef<HTMLDivElement>(null);
   let data = _data.article;
   useEffect(() => {

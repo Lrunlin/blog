@@ -1,11 +1,11 @@
 import { useState, useEffect, startTransition, useRef } from "react";
-import axios from "axios";
+import axios from "@axios";
 import Layout from "@/components/page/notification/Layout";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Skeleton, Empty } from "antd";
 import Notice from "@/components/page/notification/Notice";
 import { useParams } from "next/navigation";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import type {
   NoticeAttributes,
   UserAttributes,
@@ -47,7 +47,7 @@ export interface noticeFollowListType extends NoticeAttributes {
 }
 
 const Notification = () => {
-  let [userData] = useUserData();
+  let userData = useUserData(s => s.data);
   if (!userData) {
     return (
       <Layout>

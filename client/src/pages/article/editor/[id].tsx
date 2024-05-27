@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "@/components/next/Head";
 import { useRouter } from "next/navigation";
 import ArticleEditor from "@/components/common/ArticleEditor";
 import { Result, Button, message, Skeleton } from "antd";
-import axios from "axios";
-import { useSetRecoilState } from "recoil";
-import { writeArticleContext } from "@/components/common/ArticleEditor";
+import axios from "@axios";
+import useUserWriteArticle from "@/store/user/user-write-article";
 import useFetch from "@/common/hooks/useFetch";
 
 interface propsType {
@@ -14,8 +13,7 @@ interface propsType {
 }
 const Write: NextPage<propsType> = props => {
   let router = useRouter();
-
-  let setArticleData = useSetRecoilState(writeArticleContext);
+  let updateData = useUserWriteArticle(s => s.updateData);
 
   let { data, isLoading, refetch } = useFetch(() =>
     axios.get(`/article/${props.id}?update=md`).then(res => res.data.data)
@@ -26,7 +24,7 @@ const Write: NextPage<propsType> = props => {
     if (data) {
       let { title, content, tag, reprint, description, cover_file_name, cover_url, theme_id } =
         data;
-      setArticleData({
+      updateData({
         title,
         content,
         tag,

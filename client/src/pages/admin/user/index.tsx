@@ -12,8 +12,8 @@ import {
   notification,
 } from "antd";
 import Link from "next/link";
-import dayjs from "dayjs";
-import axios from "axios";
+import dayjs from "@dayjs";
+import axios from "@axios";
 import copy from "copy-to-clipboard";
 import AdminLayout from "@/layout/Admin/Base";
 import type { response } from "@type/response";

@@ -1,15 +1,14 @@
 import { Form, Input, Button, message } from "antd";
-import axios from "axios";
+import axios from "@axios";
 import { useRouter } from "next/navigation";
 import Footer from "@/components/admin/common/Footer";
 import cookie from "js-cookie";
-import { userDataContext } from "@/store/user-data";
-import { useSetRecoilState } from "recoil";
+import useUserData from "@/store/user/user-data";
 import Head from "@/components/next/Head";
 
 const LognIn = () => {
   let router = useRouter();
-  let setUserData = useSetRecoilState(userDataContext);
+  let setUserData = useUserData(s => s.setData);
   function onFinish(values: any) {
     axios
       .post("/login/email", values)

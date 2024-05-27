@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import axios from "@axios";
 import { Tabs } from "antd";
 import ArticleList from "@/components/common/ArticleList";
 import FollowList from "./FollowList";

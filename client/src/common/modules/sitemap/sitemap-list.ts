@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from "@dayjs";
 
 interface sitemapItemType {
   href: string | number;

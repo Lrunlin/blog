@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { FC } from "react";
-import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
-import { userDataContext } from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import { Avatar, Button, Input, message } from "antd";
 import NextImage from "@/components/next/Image";
 import { useParams } from "next/navigation";
@@ -9,12 +8,12 @@ import loadStatic, { responseType } from "@/request/load-static";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import i18n from "@emoji-mart/data/i18n/zh.json";
-import axios from "axios";
+import axios from "@axios";
 import classNames from "classnames";
 import { useSWRConfig } from "swr";
 import { marked } from "marked";
-import { editorOptionContext } from "./index";
-import { currentArticleDataContext } from "@/pages/article/[id]";
+import useUserArticleComment from "@/store/user/user-article-comment";
+import userUserCurrentArticleData from "@/store/user/user-current-article-data";
 
 interface propsType {
   id: number | string;
@@ -32,10 +31,12 @@ const Editor: FC<propsType> = props => {
   let articleID = params.id as string;
 
   let { mutate } = useSWRConfig();
-  let userData = useRecoilValue(userDataContext);
+  let userData = useUserData(s => s.data);
   let [value, setValue] = useState("");
-  let [editorOption, setEditorOption] = useRecoilState(editorOptionContext);
-  let setCurrentArticleData = useSetRecoilState(currentArticleDataContext);
+  let editorOption = useUserArticleComment(s => s.data);
+  let setEditorOption = useUserArticleComment(s => s.setData);
+
+  let currentArticleData = userUserCurrentArticleData(s => s);
 
   let showEditor = props.notHideInput || props.id == editorOption.activeInputID; //编辑器是否显示
 
@@ -63,19 +64,17 @@ const Editor: FC<propsType> = props => {
     const handleClick = (e: MouseEvent) => {
       // 判断输入框失去焦点
       if (!document.getElementById("commentRoot")?.contains(e.target as Node)) {
-        setEditorOption(option => ({
-          ...option,
+        setEditorOption({
           activeInputID: null,
           activeEmojiID: null,
-        }));
+        });
       }
 
       //判断表情编辑器失去焦点
       if (!emojiPickerDOM.current?.contains(e.target as Node)) {
-        setEditorOption(option => ({
-          ...option,
+        setEditorOption({
           activeEmojiID: null,
-        }));
+        });
       }
     };
     if (props.id == editorOption.activeInputID) {
@@ -92,7 +91,7 @@ const Editor: FC<propsType> = props => {
     let dom = document.getElementById(`commentInput-${props.id}`) as HTMLInputElement;
     let file = (dom.files as FileList)[0];
     console.log(file);
-    
+
     if (file.size >= 1024 * 1024 * process.env.UPLOAD_MAX_SIZE) {
       message.warning(`上传图片最大${process.env.UPLOAD_MAX_SIZE}MB`);
       return;
@@ -132,10 +131,9 @@ const Editor: FC<propsType> = props => {
         setValue("");
         setPicture(null);
         mutate(`/comment/article/${articleID}`);
-        setCurrentArticleData(_data => ({
-          ..._data,
-          comment_count: _data.comment_count + 1,
-        }));
+        currentArticleData.updateData({
+          comment_count: currentArticleData.data.comment_count + 1,
+        });
       })
       .catch(err => {
         message.error(err.message);
@@ -168,10 +166,9 @@ const Editor: FC<propsType> = props => {
                 maxLength={600}
                 variant="borderless"
                 onFocus={e => {
-                  setEditorOption(option => ({
-                    ...option,
+                  setEditorOption({
                     activeInputID: props.id,
-                  }));
+                  });
                 }}
               />
               <div
@@ -214,11 +211,10 @@ const Editor: FC<propsType> = props => {
                   <div className="flex items-center" ref={emojiPickerDOM}>
                     <div
                       onClick={() => {
-                        setEditorOption(option => ({
-                          ...option,
+                        setEditorOption({
                           activeEmojiID:
                             editorOption.activeEmojiID == props.id ? null : `${props.id}`,
-                        }));
+                        });
                       }}
                     >
                       <NextImage src="/icon/client/emoji.png" width={18} height={18} alt="emoji" />

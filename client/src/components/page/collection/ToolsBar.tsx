@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import useFetch from "@/common/hooks/useFetch";
 const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr: false });
 import { response } from "@type/response";
-import axios from "axios";
+import axios from "@axios";
 import { message, Popconfirm } from "antd";
 import { useParams } from "next/navigation";
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";

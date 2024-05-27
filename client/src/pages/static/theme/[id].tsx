@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@axios";
 import type { GetServerSideProps } from "next";
 
 const Theme = () => null;

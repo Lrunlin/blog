@@ -40,7 +40,7 @@
     "react-easy-crop": "^5.0.0",
     "react-highlight-words": "^0.20.0",
     "react-infinite-scroll-component": "^6.1.0",
-    "recoil": "^0.7.6",
+    "sharp": "^0.33.4",
     "socket.io-client": "4.7.2",
     "swiper": "^10.2.0",
     "swr": "2.2.2",
@@ -50,7 +50,8 @@
     "upgrade": "^1.1.0",
     "use-animate-number": "1.0.5",
     "wangeditor": "^4.7.15",
-    "wangeditor-for-react": "^1.5.6"
+    "wangeditor-for-react": "^1.5.6",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.4.19",
@@ -76,7 +77,7 @@
     "postcss": "^8.4.14",
     "sass": "^1.66.1",
     "tailwind-scrollbar": "^3.0.4",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "3.4.3",
     "ts-node": "^10.9.1",
     "typescript": "5.2.2"
   }

@@ -1,9 +1,8 @@
 import type { FC, ReactNode } from "react";
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
-import { modalStateContext } from "@/components/common/Header/Sign";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 import { Result, Button } from "antd";
-import useUserData from "@/store/user-data";
+import useUserData from "@/store/user/user-data";
 import Header from "./Header";
 import Aside from "./Aside";
 import classNames from "classnames";
@@ -15,10 +14,10 @@ interface propsType {
   className?: string;
 }
 const Layout: FC<propsType> = ({ children, className }) => {
-  let [userData] = useUserData();
-  let setModalState = useSetRecoilState(modalStateContext);
-
+  let userData = useUserData(s => s.data);
+  let setModalState = useUserSignModel(s => s.setData);
   let router = useRouter();
+
   useEffect(() => {
     router.prefetch("/article/editor");
     router.prefetch("/article/editor/[id]");
@@ -35,7 +34,10 @@ const Layout: FC<propsType> = ({ children, className }) => {
               <div className="mr-60">
                 <Aside />
               </div>
-              <main className={classNames(["w-[calc(100%-240px)]  ml-4", className])}> {children}</main>
+              <main className={classNames(["w-[calc(100%-240px)]  ml-4", className])}>
+                {" "}
+                {children}
+              </main>
             </div>
           </div>
         </>

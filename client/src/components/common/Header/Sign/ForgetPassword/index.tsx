@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
-import axios from "axios";
-import { modalStateContext } from "../index";
-import { useSetRecoilState } from "recoil";
+import axios from "@axios";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 
 const ForgetPassword = () => {
   const [isLoad, setIsLoad] = useState(false);
+  let setModalState = useUserSignModel(s => s.setData);
 
-  let setModalState = useSetRecoilState(modalStateContext);
   function forgetPassword(values: any) {
     setIsLoad(true);
     axios

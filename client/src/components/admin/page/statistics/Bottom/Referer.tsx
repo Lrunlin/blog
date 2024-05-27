@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
-import { useRecoilValue } from "recoil";
-import { statisticsDataContext, statisticsDataType } from "@/pages/admin/statistics";
+import {  statisticsDataType } from "@/pages/admin/statistics";
 import { list } from "@/common/modules/readingRecords/setReferer";
+import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 
 function option(data: statisticsDataType["referer"]) {
   return {
@@ -73,7 +73,7 @@ function option(data: statisticsDataType["referer"]) {
 
 /** 文章饼状图统计*/
 const Article = () => {
-  let _data = useRecoilValue(statisticsDataContext);
+  let _data = userAdminStatisticsData(s => s.data);
   let DOM = useRef<HTMLDivElement>(null);
   let data = _data.referer;
   useEffect(() => {

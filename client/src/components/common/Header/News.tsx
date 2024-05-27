@@ -3,8 +3,8 @@ import type { FC } from "react";
 import Image from "@/components/next/Image";
 import Link from "next/link";
 import classNames from "classnames";
-import useUserData from "@/store/user-data";
-import axios from "axios";
+import useUserData from "@/store/user/user-data";
+import axios from "@axios";
 import { Badge } from "antd";
 
 interface propsType {
@@ -13,7 +13,7 @@ interface propsType {
 
 /** Header中的小铃铛用来跳转到通知页面*/
 const News: FC<propsType> = memo(props => {
-  let userData = useUserData();
+  let userData = useUserData(s => s.data);
   const [badgeCount, setBadgeCount] = useState(0);
   useEffect(() => {
     if (userData) {

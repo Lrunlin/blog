@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Layout from "@/layout/Base";
-import axios from "axios";
+import axios from "@axios";
 import { RedoOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 import useSwr from "swr";
