@@ -5,24 +5,27 @@ import hooks from "@/db/hooks/type";
 export interface TagAttributes {
   id: number;
   name: string;
-  belong: number;
+  belong_id?: number; // 修改为belong_id
   icon_file_name?: string;
   create_time: Date;
   indexes: number;
+  description?: string; // 添加description字段
 }
 
 export type TagPk = "id";
 export type TagId = Tag[TagPk];
-export type TagOptionalAttributes = "icon_file_name" | "create_time";
+export type TagOptionalAttributes = "icon_file_name" | "create_time" | "description" | "belong_id";
+
 export type TagCreationAttributes = Optional<TagAttributes, TagOptionalAttributes>;
 
 export class Tag extends Model<TagAttributes, TagCreationAttributes> implements TagAttributes {
   id!: number;
   name!: string;
-  belong!: number;
+  belong_id?: number;
   icon_file_name?: string;
   create_time!: Date;
   indexes!: number;
+  description?: string;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Tag {
     return sequelize.define(
@@ -40,10 +43,10 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           comment: "tag名称",
           unique: "name",
         },
-        belong: {
+        belong_id: {
           type: DataTypes.BIGINT,
-          allowNull: false,
-          comment: "所属Type的ID",
+          allowNull: true,
+          comment: "所属Type的ID", // 修改为belong_id
         },
         icon_file_name: {
           type: DataTypes.STRING(255),
@@ -54,7 +57,7 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           type: DataTypes.VIRTUAL,
           get(this) {
             let icon_file_name = this.getDataValue("icon_file_name");
-            return icon_file_name ? `${process.env.CDN}/type/${icon_file_name}` : null;
+            return icon_file_name ? `${process.env.CDN}/tag/${icon_file_name}` : null;
           },
         },
         create_time: {
@@ -67,6 +70,11 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           type: DataTypes.INTEGER,
           allowNull: false,
           comment: "索引值",
+        },
+        description: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+          comment: "标签介绍", // 添加description字段
         },
       },
       {

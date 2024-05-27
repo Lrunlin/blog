@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import axios from "@axios";
 import { Button, message, Tree } from "antd";
-import useSwr, { useSWRConfig } from "swr";
-import getType from "@/request/getType";
+import getType from "@/request/type/getTag";
 import AddTypeModal, {
   event as typeEvent,
   TypeFormValueProps,
@@ -13,17 +12,16 @@ import AddTagModal, {
 } from "@/components/admin/page/type/AddTagModal";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/layout/Admin/Base";
+import useFetch from "@/common/hooks/useFetch";
 const TypeList = () => {
   let router = useRouter();
-  const { mutate } = useSWRConfig();
-  let { data } = useSwr("/type/tree", () => getType());
+  let { data } = useFetch(() => getType("tree"));
   let typeEvent = useRef({} as typeEvent);
   const createType = (values: TypeFormValueProps) => {
-    axios.post("/type", values).then(res => {
+    axios.post("/tag", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         typeEvent.current.onClose();
-        mutate("/type/tree");
       } else {
         message.error(res.data.message);
       }
@@ -33,7 +31,6 @@ const TypeList = () => {
     axios.post("/tag", values).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
-        mutate("/type/tree");
         tagEvent.current.onClose();
       } else {
         message.error(res.data.message);

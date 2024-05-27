@@ -6,19 +6,20 @@ import authMiddleware from "@/common/middleware/auth";
 let router = new Router();
 
 router.post("/tag", authMiddleware(), async ctx => {
-  let { name, belong, icon_file_name } = ctx.request.body;
+  let { name, belong_id, icon_file_name, description } = ctx.request.body;
   let indexes = await DB.Tag.findAndCountAll({
     where: {
-      belong: belong,
+      belong_id: belong_id,
     },
   });
 
   await DB.Tag.create({
     id: id(),
     name: name,
-    belong: belong,
+    belong_id: belong_id,
     icon_file_name: icon_file_name,
     indexes: indexes.count + 1,
+    description,
   })
     .then(res => {
       ctx.body = { success: true, message: `成功添加类型:${name}` };

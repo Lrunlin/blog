@@ -9,11 +9,11 @@ import dayjs from "@dayjs";
 import type { articleCommentType } from "@type/model/article-comment";
 import Editor from "../Editor";
 import classNames from "classnames";
-import { useSWRConfig } from "swr";
 import axios from "@axios";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import userUserCurrentArticleData from "@/store/user/user-current-article-data";
 import useUserArticleComment from "@/store/user/user-article-comment";
+import { refetchKey } from "@/common/hooks/useFetch";
 
 interface propsType {
   data: articleCommentType;
@@ -31,7 +31,6 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
     [data, editorOption.activeInputID]
   );
   let userData = useUserData(s => s.data);
-  let { mutate } = useSWRConfig();
   let params = useParams();
   let id = params.id as string;
   function removeComment() {
@@ -39,10 +38,10 @@ const CommentItem: FC<propsType> = ({ data, list }) => {
       .delete(`/comment/${data.id}`)
       .then(res => {
         message.success(res.data.message);
-        mutate(`/comment/article/${id}`);
         currentArticleData.updateData({
           comment_count: currentArticleData.data.comment_count - 1,
         });
+        refetchKey(`/comment/article/${id}`);
       })
       .catch(err => {
         message.error(err.message);

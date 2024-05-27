@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Button, Form, Input, Select } from "antd";
 import UpLoad from "@/components/common/UpLoad";
-import getType from "@/request/getType";
+import getType from "@/request/type/getTag";
 import useFetch from "@/common/hooks/useFetch";
 import { TagAttributes } from "@type/type";
 
@@ -28,7 +28,7 @@ const TagForm: FC<PropsType> = props => {
   };
 
   //查询并设置类型选择器（belong）
-  let { data } = useFetch(() => getType());
+  let { data } = useFetch(() => getType("tag"));
   let { Option } = Select;
   return (
     <>
@@ -49,7 +49,7 @@ const TagForm: FC<PropsType> = props => {
           <div>
             <UpLoad
               width={120}
-              target="type"
+              target="tag"
               imgURL={props?.initialValue?.icon_url}
               onSuccess={({ file_name }) => {
                 form.setFieldsValue({ icon_file_name: file_name });

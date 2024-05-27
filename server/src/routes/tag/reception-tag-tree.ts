@@ -35,7 +35,7 @@ getDataAfter(() => {
 });
 
 // 返回前台整个类型栏
-router.get("/type-tree-client", async ctx => {
+router.get("/tag-tree-client", async ctx => {
   ctx.body = { success: true, message: "用户查询首页类型信息(树形结构)", data: data };
 });
 export default router;

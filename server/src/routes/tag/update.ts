@@ -5,14 +5,28 @@ import authMiddleware from "@/common/middleware/auth";
 let router = new Router();
 
 router.put("/tag/:id", interger([], ["id"]), authMiddleware(), async ctx => {
-  let { name, indexes, icon_file_name, belong } = ctx.request.body;
+  let { name, indexes, icon_file_name, belong_id, description } = ctx.request.body;
   let { id } = ctx.params;
+
+  let { count } = await DB.Tag.findAndCountAll({
+    where: {
+      belong_id: id,
+    },
+  });
+
+  //如果有子标签则禁止删除
+  if (count) {
+    ctx.body = { success: false, message: "禁止删除包含子标签的标签" };
+    return;
+  }
+
   await DB.Tag.update(
     {
       name,
       indexes,
       icon_file_name,
-      belong,
+      belong_id,
+      description,
     },
     { where: { id: id } }
   )

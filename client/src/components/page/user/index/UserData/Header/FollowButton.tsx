@@ -1,26 +1,26 @@
 import type { FC } from "react";
 import { Button, message } from "antd";
 import useUserSignModel from "@/store/user/user-sign-model-state";
-import useSWR from "swr";
 import axios from "@axios";
 import useUserData from "@/store/user/user-data";
 import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
 import { useRouter } from "next/navigation";
 import { follow, unfollow } from "@/request/follow";
+import useFetch from "@/common/hooks/useFetch";
 
 interface propsType {
   bloggerID: FollowAttributes["belong_id"];
 }
 const SwitchButton: FC<propsType> = props => {
-  let { data, error, mutate } = useSWR(`follow-user-data-${props.bloggerID}`, () =>
+  let { data, error, refetch } = useFetch( () =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
 
   function followUser() {
     follow(props.bloggerID, "user")
       .then(() => {
-        mutate();
+        refetch();
       })
       .catch(() => {
         message.error("关注失败");
@@ -29,7 +29,7 @@ const SwitchButton: FC<propsType> = props => {
   function unFollowUser() {
     unfollow(props.bloggerID)
       .then(() => {
-        mutate();
+        refetch();
       })
       .catch(() => {
         message.error("取关失败");

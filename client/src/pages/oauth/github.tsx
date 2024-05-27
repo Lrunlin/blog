@@ -3,17 +3,17 @@ import Layout from "@/layout/Base";
 import axios from "@axios";
 import { RedoOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
-import useSwr from "swr";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Head from "@/components/next/Head";
+import useFetch from "@/common/hooks/useFetch";
 
 const Github = () => {
   let router = useRouter();
   let searchParams = useSearchParams();
   let code = searchParams!.get("code");
 
-  let { data, error, isValidating } = useSwr(`oauth-github-${code}`, () =>
+  let { data, error, isLoading } = useFetch(async () =>
     code ? axios.post("/user/github", { code: code }).then(res => res.data) : ""
   );
   useEffect(() => {
@@ -35,7 +35,7 @@ const Github = () => {
     <Layout>
       <div className="bg-white shadow-sm w-full">
         <div>
-          {isValidating ? (
+          {isLoading ? (
             <>
               <Head title="GitHub登录" />
               <Result icon={<RedoOutlined spin />} title="请求中..." />

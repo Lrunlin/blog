@@ -11,7 +11,7 @@ type target =
   | "article"
   | "avatar"
   | "cover"
-  | "type"
+  | "tag"
   | "comment"
   | "advertisement"
   | "friendly-link";

@@ -3,8 +3,7 @@ import Editor from "@/components/common/Editor";
 import { Button, Form, Input, message, TreeSelect, Skeleton, Result, InputNumber } from "antd";
 import axios from "@axios";
 import Upload from "@/components/common/UpLoad";
-import useSwr, { useSWRConfig } from "swr";
-import getType from "@/request/getType";
+import getType from "@/request/type/getTag";
 import { useParams, useRouter } from "next/navigation";
 import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";
@@ -15,16 +14,13 @@ const Update = () => {
   let router = useRouter();
   let params = useParams();
   let id = params.id as string;
-  let { mutate } = useSWRConfig();
 
   /** 加载，获取文章内容*/
   let {
     data: response,
     error,
-    isValidating,
-  } = useSwr(`/article/${id}`, () => axios.get(`/article/${id}?update=md`), {
-    revalidateOnMount: true,
-  });
+    isLoading: isGetDataLoading,
+  } = useFetch(() => axios.get(`/article/${id}?update=md`));
 
   /** 更新文章，提交*/
   let { isLoading, refetch: onFinish } = useFetch(
@@ -33,7 +29,6 @@ const Update = () => {
         .put(`/article/${id}`, { ...values, state: 1 })
         .then(res => {
           message.success(res.data.message);
-          mutate(`/article/${id}`);
         })
         .catch(err => {
           message.error(err.message);
@@ -42,8 +37,8 @@ const Update = () => {
   );
 
   //获取typeTree
-  let { data: treeData } = useSwr("/type/tree", () =>
-    getType().then(res => {
+  let { data: treeData } = useFetch(() =>
+    getType("tree").then(res => {
       return res.map(item => ({
         ...item,
         checkable: false,
@@ -64,7 +59,7 @@ const Update = () => {
   return (
     <AdminLayout>
       <div className="piece">
-        {isValidating && <Skeleton avatar paragraph={{ rows: 4 }} />}
+        {isGetDataLoading && <Skeleton avatar paragraph={{ rows: 4 }} />}
         {error && (
           <Result
             status={(response?.status as any) || 404}

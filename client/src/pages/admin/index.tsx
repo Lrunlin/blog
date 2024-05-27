@@ -1,5 +1,4 @@
 import { Divider, Skeleton, Avatar } from "antd";
-import useSWR from "swr";
 import axios from "@axios";
 import useUserData from "@/store/user/user-data";
 import { useRouter } from "next/navigation";
@@ -7,14 +6,13 @@ import Notice from "@/components/admin/page/index/notice";
 import AdminLayout from "@/layout/Admin/Base";
 import Image from "@/components/next/Image";
 import Link from "next/link";
+import useFetch from "@/common/hooks/useFetch";
 
 const Index = () => {
   let router = useRouter();
   let userData = useUserData(s => s.data);
 
-  let { data, isValidating } = useSWR("statistics-data-index", () =>
-    axios.get("/statistics/index").then(res => res.data.data)
-  );
+  let { data, isLoading } = useFetch(() => axios.get("/statistics/index").then(res => res.data.data));
   return (
     <AdminLayout>
       {/* 顶部用户信息 */}
@@ -74,7 +72,7 @@ const Index = () => {
                 <div className="mt-1"> {data?.repository_data?.watch_count}</div>
               </div>
             </div>
-          ) : isValidating ? (
+          ) : isLoading ? (
             <Skeleton active />
           ) : (
             <>加载错误</>
@@ -88,7 +86,7 @@ const Index = () => {
           <Divider />
           {data?.notice ? (
             <Notice data={data.notice} />
-          ) : isValidating ? (
+          ) : isLoading ? (
             <Skeleton active />
           ) : (
             <>加载错误</>

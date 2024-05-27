@@ -2,12 +2,12 @@ import type { FC } from "react";
 import { useRouter } from "next/navigation";
 import { Button, message } from "antd";
 import useUserSignModel from "@/store/user/user-sign-model-state";
-import useSWR from "swr";
 import axios from "@axios";
 import useUserData from "@/store/user/user-data";
 import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
 import { follow, unfollow } from "@/request/follow";
+import useFetch from "@/common/hooks/useFetch";
 
 interface propsType {
   /** 文章作者id*/
@@ -20,13 +20,13 @@ const SwitchButton: FC<propsType> = props => {
   let router = useRouter();
   let userData = useUserData(s => s.data);
 
-  let { data, error, isValidating, mutate } = useSWR(`follow-user-data-${props.bloggerID}`, () =>
+  let { data, error, isLoading, refetch } = useFetch(() =>
     axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
   );
   function followUser() {
     follow(props.bloggerID, "user")
       .then(() => {
-        mutate();
+        refetch();
       })
       .catch(() => {
         message.error("关注失败");
@@ -35,7 +35,7 @@ const SwitchButton: FC<propsType> = props => {
   function unFollowUser() {
     unfollow(props.bloggerID)
       .then(() => {
-        mutate();
+        refetch();
       })
       .catch(() => {
         message.error("取关失败");
@@ -47,7 +47,7 @@ const SwitchButton: FC<propsType> = props => {
         <Button ghost disabled danger>
           请求错误
         </Button>
-      ) : isValidating ? (
+      ) : isLoading ? (
         <div>加载中</div>
       ) : (
         <>

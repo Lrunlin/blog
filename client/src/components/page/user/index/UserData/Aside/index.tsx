@@ -1,15 +1,15 @@
 import type { FC } from "react";
-import useSWR from "swr";
 import axios from "@axios";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
 import Image from "@/components/next/Image";
 import type { UserAttributes } from "@type/model-attribute";
+import useFetch from "@/common/hooks/useFetch";
 
 const Aside: FC<{ data: UserAttributes }> = props => {
   let router = useRouter();
 
-  let { data, error, isValidating } = useSWR(`achievement-user-${router.query.id}`, () =>
+  let { data, error, isLoading } = useFetch(() =>
     axios.get(`/achievement/${router.query.id}`).then(res => res.data.data)
   );
 
@@ -19,7 +19,7 @@ const Aside: FC<{ data: UserAttributes }> = props => {
         <div className="text-xl font-medium pb-2 text-gray-900 border-b-solid border-gray-200">
           个人成就
         </div>
-        {isValidating ? (
+        {isLoading ? (
           <Skeleton />
         ) : error ? (
           <div className="py-6 text-center">请求错误</div>

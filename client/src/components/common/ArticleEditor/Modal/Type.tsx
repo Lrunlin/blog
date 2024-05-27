@@ -1,22 +1,22 @@
 import { useState } from "react";
-import useSWR from "swr";
-import getTypeTree from "@/request/type/type-tree";
 import classNames from "classnames";
 import { message, Badge } from "antd";
 import useUserWriteArticle from "@/store/user/user-write-article";
+import useFetch from "@/common/hooks/useFetch";
+import getTag from "@/request/type/getTag";
 
 const Type = () => {
   let [type, setType] = useState<number>(-1);
   let articleData = useUserWriteArticle(s => s.data);
   let updateData = useUserWriteArticle(s => s.updateData);
 
-  let { data } = useSWR("/type-tree", () => {
-    let _data = getTypeTree();
-    _data.then(res => {
+  let { data } = useFetch(() =>
+    getTag("tree").then(res => {
       setType(res[0].id);
-    });
-    return _data;
-  });
+      return res;
+    })
+  );
+
   return (
     <>
       {/* 类型 */}
@@ -50,8 +50,8 @@ const Type = () => {
       <div className="pt-2 border-t-solid border-slate-200 flex flex-wrap">
         {data &&
           data
-            ?.find(item => item.id == type)
-            ?.children.map((item, index) => (
+            .find(item => item.id == type)
+            ?.children?.map((item, index) => (
               <div
                 className={classNames([
                   "!w-1/5 h-full py-1 !ml-1 rounded text-gray-500 text-center hover:bg-gray-200 cursor-pointer",

@@ -3,12 +3,10 @@ import DB from "@/db";
 import interger from "@/common/verify/integer";
 
 let router = new Router();
-router.get(["/type/:id", "/tag/:id"], interger([], ["id"]), async ctx => {
+router.get("/tag/:id", interger([], ["id"]), async ctx => {
   let { id } = ctx.params;
 
-  let Target = ctx.path.includes("/type/") ? DB.Type : DB.Tag;
-  await (Target as any)
-    .findByPk(id)
+  await DB.Tag.findByPk(id)
     .then((row: any) => {
       let isSuccess = !!row;
       if (!isSuccess) {

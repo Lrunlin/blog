@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import type { FC } from "react";
-import useSWR from "swr";
 import classNames from "classnames";
 import { Button, Divider, message } from "antd";
 import { Dropdown, Badge } from "antd";
-import getTypeTree, { responseType } from "@/request/type/type-tree";
 import { CloseOutlined } from "@ant-design/icons";
+import useFetch from "@/common/hooks/useFetch";
+import getArticleTag from "@/request/type/getTag";
+
 interface propsType {
   onChange?: (tagId: number[]) => any;
   initValue?: number[];
 }
 
 const Tag: FC<propsType> = props => {
-  const { data: dataList, isValidating } = useSWR("/type-tree", () => getTypeTree());
+  const { data: dataList, isLoading } = useFetch(() => getArticleTag("tree"));
   let [data, setData] = useState<number[]>([]); //选中的tag列表ID
   let [activeType, setActiveType] = useState(0); //选中了那个Type
 
@@ -38,9 +39,9 @@ const Tag: FC<propsType> = props => {
   }, [data]);
 
   function getTag(id: number) {
-    for (let index = 0; index < (dataList as responseType[]).length; index++) {
-      let item = (dataList as responseType[])[index];
-      let result = item.children.find(_item => _item.id == id);
+    for (let index = 0; index < dataList!.length; index++) {
+      let item = dataList![index];
+      let result = item.children!.find(_item => _item.id == id);
       if (result) {
         return result.name;
       }
@@ -67,7 +68,7 @@ const Tag: FC<propsType> = props => {
         getPopupContainer={() => document.getElementById("createProblemTag") as HTMLElement}
         dropdownRender={() => (
           <div className="w-96 p-3 bg-white shadow-xl rounded-md flex justify-start">
-            {isValidating ? (
+            {isLoading ? (
               <div className="w-full h-full bg-gray-300"></div>
             ) : dataList ? (
               <div className="w-full">
@@ -98,8 +99,8 @@ const Tag: FC<propsType> = props => {
                 {/* tag */}
                 <div className="w-full flex flex-wrap">
                   {dataList
-                    .find(i => i.id == activeType)
-                    ?.children.map((item, index) => {
+                    ?.find(i => i.id == activeType)
+                    ?.children?.map((item, index) => {
                       return (
                         <div
                           key={item.id}

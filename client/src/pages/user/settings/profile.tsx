@@ -3,16 +3,16 @@ import Layout from "@/components/page/user/setting/Layout";
 import useUserData from "@/store/user/user-data";
 import { Button, Result, Form, Input, message } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
-import useSwr from "swr";
 import axios from "@axios";
 import UploadAvatar from "@/components/page/user/setting/UploadAvatar";
+import useFetch from "@/common/hooks/useFetch";
 
 let { useForm } = Form;
 const Profile: NextPage = () => {
   let [form] = useForm();
   let userData = useUserData(s => s.data);
 
-  let { data, error, mutate } = useSwr(`user-set-${userData?.id}`, () =>
+  let { data, error, refetch } = useFetch(async() =>
     userData ? axios.get(`/user/data/${userData?.id}`).then(res => res.data.data) : undefined
   );
 
@@ -21,7 +21,7 @@ const Profile: NextPage = () => {
       .put("/user", values)
       .then(res => {
         message.success(res.data.message);
-        mutate();
+        refetch();
       })
       .catch(err => {
         message.error(err.message || "修改失败");

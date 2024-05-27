@@ -1,17 +1,17 @@
 import { Skeleton, Result } from "antd";
 import { useParams } from "next/navigation";
-import uswSwr from "swr";
 import axios from "@axios";
 import ArticleList from "@/components/common/ArticleList";
 import type { response } from "@type/common/response";
 import type { articleListItemType } from "@type/model/article-list-item";
+import useFetch from "@/common/hooks/useFetch";
 
 /** 文章页面底部的推荐文章*/
 const Recommend = () => {
   let params = useParams();
   let articleID = params.id;
 
-  let { data, isValidating } = uswSwr(`/article/recommend/${articleID}`, () =>
+  let { data, isLoading } = useFetch( () =>
     axios
       .get<response<articleListItemType[]>>(`/article/recommend/${articleID}`)
       .then(res => res.data.data)
@@ -25,7 +25,7 @@ const Recommend = () => {
           total={data.length}
           loadMoreData={() => {}}
         />
-      ) : isValidating ? (
+      ) : isLoading ? (
         <>
           <Skeleton active />
           <Skeleton active />

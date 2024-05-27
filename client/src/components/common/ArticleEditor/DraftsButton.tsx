@@ -3,15 +3,13 @@ import { Button, message } from "antd";
 import { useRouter, usePathname, useParams } from "next/navigation";
 import useUserWriteArticle from "@/store/user/user-write-article";
 import axios from "@axios";
-import { useSWRConfig } from "swr";
 
 const DraftsButton = () => {
-  let userWriteArticle = useUserWriteArticle(s=>s.data)
+  let userWriteArticle = useUserWriteArticle(s => s.data);
   let { title, description, cover_file_name, reprint, content, tag } = userWriteArticle;
   let router = useRouter();
   let params = useParams();
   let pathname = usePathname();
-  let { mutate } = useSWRConfig();
 
   /** 判断按钮是否禁止点击*/
   let isDisabled = useMemo(() => {
@@ -68,7 +66,6 @@ const DraftsButton = () => {
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);
-          mutate(`article-update-${params.id}`);
         } else {
           message.error(res.data.message);
         }

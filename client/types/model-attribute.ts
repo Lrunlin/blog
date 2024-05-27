@@ -7,14 +7,8 @@ export interface TagAttributes {
   create_time: Date;
   indexes: number;
 }
-export interface TypeAttributes {
-  id: number;
-  name: string;
-  indexes: number;
-  icon_file_name?: string;
-  create_time: Date;
-  description: string;
-}
+
+
 export interface ArticleAttributes {
   id: number;
   title: string;

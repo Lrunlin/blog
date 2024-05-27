@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { Result } from "antd";
-import useSwr from "swr";
 import axios from "@axios";
 import useUserData from "@/store/user/user-data";
 import Layout from "@/components/page/user/setting/Layout";
@@ -8,10 +7,11 @@ import UpdateEmailModal, { event } from "@/components/page/user/setting/UpdateEm
 import UpdatePasswordModal, {
   event as updatePasswordEvent,
 } from "@/components/page/user/setting/UpdatePasswordModal";
+import useFetch from "@/common/hooks/useFetch";
 
 const Account = () => {
   let userData = useUserData(s => s.data);
-  let { data, error } = useSwr(`user-account-set-${userData?.id}`, () =>
+  let { data, error } = useFetch(async () =>
     userData ? axios.get(`/user/data/${userData?.id}`).then(res => res.data.data) : undefined
   );
 

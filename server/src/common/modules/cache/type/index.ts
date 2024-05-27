@@ -1,5 +1,6 @@
 import DB from "@/db";
 import { LRUCache } from "lru-cache";
+import { Op } from "sequelize";
 
 let callbackList: Function[] = [];
 
@@ -15,13 +16,19 @@ const cache = new LRUCache({
 });
 
 const getTypeData = () =>
-  DB.Type.findAll({
+  DB.Tag.findAll({
     order: [["indexes", "asc"]],
+    where: {
+      belong_id: { [Op.is]: null! },
+    },
   }).then(rows => rows.map(item => item.toJSON()));
 
 const getTagData = () =>
   DB.Tag.findAll({
     order: [["indexes", "asc"]],
+    where: {
+      belong_id: { [Op.not]: null! },
+    },
   }).then(rows => rows.map(item => item.toJSON()));
 
 /** 刷新type缓存数据*/
@@ -34,7 +41,7 @@ function setData() {
         "tree",
         type.map(item => {
           return Object.assign(item, {
-            children: tag.filter(_item => _item.belong == item.id),
+            children: tag.filter(_item => _item.belong_id == item.id),
           });
         })
       );

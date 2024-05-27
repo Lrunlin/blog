@@ -2,8 +2,7 @@ import Editor from "@/components/common/Editor";
 import { Button, Form, Input, message, TreeSelect } from "antd";
 import axios from "@axios";
 import Upload from "@/components/common/UpLoad";
-import useSwr from "swr";
-import getType from "@/request/getType";
+import getType from "@/request/type/getTag";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";
@@ -26,8 +25,8 @@ const Write = () => {
     { manual: true }
   );
 
-  let { data: treeData } = useSwr("/type/tree", () =>
-    getType().then(res => {
+  let { data: treeData } = useFetch(() =>
+    getType("tree").then(res => {
       return res.map(item => ({ ...item, checkable: false }));
     })
   );
@@ -71,7 +70,7 @@ const Write = () => {
             ]}
           >
             <TreeSelect
-              treeData={treeData}
+              treeData={treeData!}
               treeCheckable={true}
               treeDefaultExpandAll
               placeholder="选择文章对应的标签"

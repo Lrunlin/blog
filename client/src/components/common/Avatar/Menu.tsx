@@ -1,11 +1,11 @@
 import { Avatar } from "antd";
 import Link from "next/link";
 import type { FC, ReactNode } from "react";
-import useSWR from "swr";
 import axios from "@axios";
 import { useRouter } from "next/navigation";
 import cookie from "js-cookie";
 import useUserData from "@/store/user/user-data";
+import useFetch from "@/common/hooks/useFetch";
 
 interface itemPropsType {
   isValidating: boolean;
@@ -19,7 +19,7 @@ const Item: FC<itemPropsType> = ({ isValidating, data }) => {
 const Menu: FC = () => {
   let router = useRouter();
   let userData = useUserData(s => s.data);
-  let { data, isValidating } = useSWR(`achievement-user-${userData?.id}`, () =>
+  let { data, isLoading } = useFetch(() =>
     axios.get(`/achievement/${userData?.id}`).then(res => res.data.data)
   );
 
@@ -37,19 +37,19 @@ const Menu: FC = () => {
         <div className="text-center">
           <div className="text-base">关注者</div>
           <div>
-            <Item isValidating={isValidating} data={data?.funs_count} />
+            <Item isValidating={isLoading} data={data?.funs_count} />
           </div>
         </div>
         <div className="text-center">
           <div className="text-base">被收藏</div>
           <div>
-            <Item isValidating={isValidating} data={data?.article_collection_count} />
+            <Item isValidating={isLoading} data={data?.article_collection_count} />
           </div>
         </div>
         <div className="text-center">
           <div className="text-base">文章</div>
           <div>
-            <Item isValidating={isValidating} data={data?.article_count} />
+            <Item isValidating={isLoading} data={data?.article_count} />
           </div>
         </div>
       </div>

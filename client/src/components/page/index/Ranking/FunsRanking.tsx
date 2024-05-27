@@ -1,15 +1,15 @@
-import useSWR from "swr";
 import axios from "@axios";
 import RankingList from "./RankingList";
+import useFetch from "@/common/hooks/useFetch";
 
 const FunsRanking = () => {
-  let { data, isValidating, error } = useSWR<any[]>("/ranking/funs", () =>
+  let { data, isLoading, error } = useFetch(() =>
     axios.get("/ranking/funs").then(res => res.data.data)
   );
   return (
     <>
       <div className="bg-white shadow-sm">
-        <RankingList data={data as any[]} isValidating={isValidating} error={error} />
+        <RankingList data={data as any[]} isValidating={isLoading} error={!!error} />
       </div>
     </>
   );

@@ -1,5 +1,4 @@
 import { Fragment, useEffect } from "react";
-import useSWR from "swr";
 import axios from "@axios";
 import { useParams } from "next/navigation";
 import { SyncOutlined } from "@ant-design/icons";
@@ -7,15 +6,18 @@ import CommentItem from "./Item";
 import type { articleCommentType } from "@type/model/article-comment";
 import type { response } from "@type/common/response";
 import useUserArticleComment from "@/store/user/user-article-comment";
+import useFetch from "@/common/hooks/useFetch";
 
 /** 文章页面评论集合组件*/
 const Comments = () => {
   let params = useParams();
   let articleID = params.id as string;
-  let { data, isValidating, mutate } = useSWR(`/comment/article/${articleID}`, () =>
-    axios
-      .get<response<articleCommentType[]>>(`/comment/article/${articleID}`)
-      .then(res => res.data.data)
+  let { data, isLoading, refetch } = useFetch(
+    () =>
+      axios
+        .get<response<articleCommentType[]>>(`/comment/article/${articleID}`)
+        .then(res => res.data.data),
+    { key: `/comment/article/${articleID}` }
   );
   let setEditorOption= useUserArticleComment(s=>s.setData);
 
@@ -38,12 +40,12 @@ const Comments = () => {
             );
           })}
         </>
-      ) : isValidating ? (
+      ) : isLoading ? (
         <div className="bg-gray-100 h-40"></div>
       ) : (
         <div className="py-20 text-center">
           <div>评论区加载错误</div>
-          <SyncOutlined className="text-2xl mt-4 block" onClick={() => mutate()} />
+          <SyncOutlined className="text-2xl mt-4 block" onClick={() => refetch()} />
         </div>
       )}
     </div>

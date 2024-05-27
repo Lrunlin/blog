@@ -315,21 +315,14 @@ async function getDataBaseList() {
     }
   }
 
-  //Type Tag
-  async function getTypeTagList() {
+  //Tag
+  async function getTagList() {
     let offset = 1;
 
     while (true) {
-      io.emit("message", { message: `数据库:Type、Tag 第${offset}` });
+      io.emit("message", { message: `数据库:Tag 第${offset}` });
 
       const pipeline = await redis.pipeline();
-
-      const typeRows = await DB.Type.findAll({
-        attributes: ["icon_file_name"],
-        raw: true,
-        limit: 2000,
-        offset: (offset - 1) * 2000,
-      });
 
       const tagRows = await DB.Tag.findAll({
         attributes: ["icon_file_name"],
@@ -338,13 +331,13 @@ async function getDataBaseList() {
         offset: (offset - 1) * 2000,
       });
 
-      for (const item of [...typeRows, ...tagRows]) {
-        pipeline.sadd(`imagelist-database-type`, item.icon_file_name as string);
+      for (const item of tagRows) {
+        pipeline.sadd(`imagelist-database-tag`, item.icon_file_name as string);
       }
 
       await pipeline.exec();
 
-      if (typeRows.length < 2000 && tagRows.length < 2000) {
+      if (tagRows.length < 2000) {
         break;
       }
 
@@ -359,7 +352,7 @@ async function getDataBaseList() {
   await getProblemList();
   await getAdvertisementList();
   await getLinkList();
-  await getTypeTagList();
+  await getTagList();
 }
 
 io.use(async (socket, next) => {

@@ -43,7 +43,6 @@
     "sharp": "^0.33.4",
     "socket.io-client": "4.7.2",
     "swiper": "^10.2.0",
-    "swr": "2.2.2",
     "tocbot": "^4.18.2",
     "turndown": "^7.1.2",
     "turndown-plugin-gfm": "^1.0.2",

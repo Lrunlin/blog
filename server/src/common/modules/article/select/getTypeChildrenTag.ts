@@ -6,7 +6,7 @@ import DB from "@/db";
  * @return tagID {number[]} 归属于该type的tag_id
  */
 async function getTypeChildrenTag(id: number) {
-  return await DB.Tag.findAll({ where: { belong: id }, attributes: ["id"] })
+  return await DB.Tag.findAll({ where: { belong_id: id }, attributes: ["id"] })
     .then(rows => rows.map(item => item.toJSON().id) as unknown as number[])
     .catch(() => [] as number[]);
 }

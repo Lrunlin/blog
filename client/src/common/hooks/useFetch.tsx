@@ -15,7 +15,15 @@ interface optionType {
   manual?: true;
   /** 依赖数组，触发自动更新*/
   deps?: DependencyList;
+  /** 缓存Key*/
+  key?: string;
 }
+
+let cache: { [key: string]: () => Promise<any> } = {};
+
+export const refetchKey = (key: string) => {
+  if (cache[key]) cache[key]();
+};
 
 export default function useFetch<T, J>(
   request: (param: J) => Promise<T>,
@@ -36,6 +44,10 @@ export default function useFetch<T, J>(
       setIsLoading(false);
     }
   };
+
+  if (option.key) {
+    cache[option.key] = fetchData;
+  }
 
   // 如果是自动的就等自动执行完，在允许deps
   let allowFetch = useRef(option.manual);

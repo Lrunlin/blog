@@ -1,15 +1,14 @@
-import { memo, useEffect, useMemo } from "react";
+import { memo } from "react";
 import { useParams, useRouter } from "next/navigation";
-import useSwr from "swr";
 import axios from "@axios";
-import { Form, Input, Button, Empty, Skeleton, InputNumber, Popconfirm, message } from "antd";
-import Upload from "@/components/common/UpLoad";
+import { Form, Button, Empty, Skeleton, Popconfirm, message } from "antd";
 import { response } from "@type/response";
-import { TypeAttributes } from "@type/type";
+import { TagAttributes } from "@type/type";
 import AdminLayout from "@/layout/Admin/Base";
 import TypeForm from "@/components/admin/page/type/TypeForm";
+import useFetch from "@/common/hooks/useFetch";
 
-interface ResponseType extends TypeAttributes {
+interface ResponseType extends TagAttributes {
   icon_url: string;
 }
 
@@ -20,14 +19,12 @@ const UpdateType = () => {
   let { useForm } = Form;
   let [form] = useForm();
 
-  let { data, error } = useSwr(`/type/${id})}`, () => {
-    return axios.get<response<ResponseType>>(`/type/${id}`).then(res => {
-      return res.data.data;
-    });
-  });
+  let { data, error } = useFetch(() =>
+    axios.get<response<ResponseType>>(`/tag/${id}`).then(res => res.data.data)
+  );
 
   const remove = () => {
-    axios.delete(`/type/${id}`).then(res => {
+    axios.delete(`/tag/${id}`).then(res => {
       if (res.data.success) {
         message.success(res.data.message);
         router.back();
@@ -39,7 +36,7 @@ const UpdateType = () => {
 
   const onFinish = (values: any) => {
     axios
-      .put(`/type/${id}`, values)
+      .put(`/tag/${id}`, values)
       .then(res => {
         if (res.data.success) {
           message.success(res.data.message);

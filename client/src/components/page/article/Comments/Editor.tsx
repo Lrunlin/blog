@@ -10,10 +10,10 @@ import Picker from "@emoji-mart/react";
 import i18n from "@emoji-mart/data/i18n/zh.json";
 import axios from "@axios";
 import classNames from "classnames";
-import { useSWRConfig } from "swr";
 import { marked } from "marked";
 import useUserArticleComment from "@/store/user/user-article-comment";
 import userUserCurrentArticleData from "@/store/user/user-current-article-data";
+import { refetchKey } from "@/common/hooks/useFetch";
 
 interface propsType {
   id: number | string;
@@ -30,7 +30,6 @@ const Editor: FC<propsType> = props => {
   let params = useParams();
   let articleID = params.id as string;
 
-  let { mutate } = useSWRConfig();
   let userData = useUserData(s => s.data);
   let [value, setValue] = useState("");
   let editorOption = useUserArticleComment(s => s.data);
@@ -130,10 +129,10 @@ const Editor: FC<propsType> = props => {
       .then(res => {
         setValue("");
         setPicture(null);
-        mutate(`/comment/article/${articleID}`);
         currentArticleData.updateData({
           comment_count: currentArticleData.data.comment_count + 1,
         });
+        refetchKey(`/comment/article/${articleID}`);
       })
       .catch(err => {
         message.error(err.message);

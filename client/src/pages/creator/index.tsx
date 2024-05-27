@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import useSWR from "swr";
 import axios from "@axios";
 import Layout from "@/components/page/creator/Layout";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -10,17 +9,18 @@ import useUserData from "@/store/user/user-data";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
+import useFetch from "@/common/hooks/useFetch";
 
 const APP: NextPage = () => {
   let {
     data: advertisementData,
-    isValidating,
+    isLoading,
     error,
-  } = useSWR("advertisement-crtator", () =>
+  } = useFetch(() =>
     axios.get("/advertisement", { params: { position: "creator" } }).then(res => res.data.data)
   );
   let userInfo = useUserData(s => s.data);
-  let { data: userData } = useSWR(`user-data-${userInfo?.id}`, () =>
+  let { data: userData } = useFetch(() =>
     axios.get(`/user/data/${userInfo?.id}`).then(res => res.data.data)
   );
 
@@ -29,7 +29,7 @@ const APP: NextPage = () => {
       <div className="shadow-sm">
         {/* 顶部轮播图部分 */}
         <div className="w-full h-60 bg-white">
-          {isValidating && <div className="w-full h-full bg-gray-200"></div>}
+          {isLoading && <div className="w-full h-full bg-gray-200"></div>}
           {error && <div className="w-full h-full flex items-center justify-center">请求错误</div>}
           {advertisementData && (
             <Swiper

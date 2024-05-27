@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Button, Form, Input } from "antd";
 import UpLoad from "@/components/common/UpLoad";
-import { TypeAttributes } from "@type/type";
+import { TagAttributes } from "@type/type";
 
 export interface TypeFormValueProps {
   name: string;
@@ -13,7 +13,7 @@ export type event = { onOpen: () => void; onClose: () => void };
 
 interface PropsType {
   onFinish: (value: TypeFormValueProps) => void;
-  initialValue?: TypeAttributes & { icon_url: string };
+  initialValue?: TagAttributes & { icon_url: string };
 }
 
 /**
@@ -45,7 +45,7 @@ const TypeForm: FC<PropsType> = props => {
           <div>
             <UpLoad
               width={120}
-              target="type"
+              target="tag"
               imgURL={props?.initialValue?.icon_url}
               onSuccess={({ file_name }) => {
                 form.setFieldsValue({ icon_file_name: file_name });

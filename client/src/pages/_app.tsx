@@ -10,7 +10,6 @@ import { parse } from "cookie";
 import axios from "@axios";
 
 import Antd from "@/plugin/antd";
-import SWR from "@/plugin/swr";
 import dynamic from "next/dynamic";
 const Sign = dynamic(import("@/components/common/Header/Sign"), { ssr: false });
 
@@ -22,9 +21,7 @@ const APP: NextPage<Props> = ({ Component, pageProps, userInfo }) => {
     <>
       <Antd>
         <UserDataStoreProvider data={{ data: userInfo }}>
-          <SWR>
-            <Component {...pageProps} />
-          </SWR>
+          <Component {...pageProps} />
           <Sign />
         </UserDataStoreProvider>
       </Antd>

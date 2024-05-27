@@ -1,21 +1,21 @@
 import { useParams, useRouter } from "next/navigation";
-import useSWR from "swr";
 import axios from "@axios";
 import { Skeleton, Button, Result, Descriptions } from "antd";
 import AdminLayout from "@/layout/Admin/Base";
+import useFetch from "@/common/hooks/useFetch";
 
 const UserData = () => {
   let params = useParams();
   let id = params.id as string;
   let router = useRouter();
-  const { data, isValidating } = useSWR(`/user/${id}`, () =>
+  const { data, isLoading } = useFetch(() =>
     axios.get(`/user/data/${id}`).then(res => res.data.data)
   );
 
   return (
     <AdminLayout>
       <div className="p-2 bg-white shadow-sm">
-        {isValidating ? (
+        {isLoading ? (
           <Skeleton paragraph={{ rows: 3 }} active />
         ) : data ? (
           <div>
