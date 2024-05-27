@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账号注册</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #0066ff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            color: #333333;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            color: #666666;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+        }
+        .link-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0066ff;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>账号注册</h1>
+        </div>
+        <div class="content">
+            <b>你好：</b>
+            <p>您正在网站 <%= site_name %> 使用邮箱进行账号注册</p>
+            <p>如果是您本人进行操作，请点击以下链接，否则请忽略</p>
+            <br/>
+            <a href="<%= href %>?key=<%= key %>" target="_blank" class="link-button"><%= site_name %></a>
+        </div>
+        <div class="footer">
+            <p>此邮件由系统自动发送，请勿回复。</p>
+        </div>
+    </div>
+</body>
+</html>

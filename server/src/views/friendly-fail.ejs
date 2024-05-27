@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>友情链接通知</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: #0066ff;
+        color: #ffffff;
+        padding: 20px;
+        text-align: center;
+      }
+      .content {
+        padding: 20px;
+        color: #333333;
+      }
+      .message {
+        margin-top: 24px;
+      }
+      .footer {
+        background-color: #f1f1f1;
+        color: #666666;
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>友情链接通知</h1>
+      </div>
+      <div class="content">
+        <h2><%= state == 1 ? "您的友链链接被删除" : "您的友链链接互换申请失败" %></h2>
+        <div>站名: <%= site_name %> (<%= site_href %>)</div>
+        <div>名称: <%= name %></div>
+        <div>链接: <%= url %></div>
+        <div class="message">回复: <%= message %></div>
+      </div>
+      <div class="footer">
+        <p>此邮件由系统自动发送，请勿回复。</p>
+      </div>
+    </div>
+  </body>
+</html>

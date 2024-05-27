@@ -5,6 +5,8 @@ import validator from "@/common/middleware/verify/validator";
 import sendEmail from "@/common/utils/email";
 import redis from "@/common/utils/redis";
 import sha256 from "@/common/utils/sha256";
+import fs from "fs";
+import ejs from "ejs";
 
 const schema = Joi.object({
   email: Joi.string().min(5).max(30).required().email().error(new Error("邮箱不正确")),
@@ -26,11 +28,12 @@ router.post("/forget-password/email/:email", validator(schema, true), async ctx 
   }
   let key = sha256(row.id + row.email + row.password) + row.id;
 
-  let content = `
-<div>你的<a href="${process.env.CLIENT_HOST}">${process.env.SITE_NAME}</a>账号正在执行找回密码,邮箱:${email}</div>
-<div>如果是您本人操作请点击链接:<a href="${process.env.CLIENT_HOST}/forget-password?key=${key}">找回链接</a></div>
-<pre>${process.env.CLIENT_HOST}/find-password?key=${key}</pre>
-`;
+  const content = ejs.render(fs.readFileSync("src/views/forget-password.ejs").toString(), {
+    email: row?.email,
+    site_name: process.env.SITE_NAME,
+    site_href: process.env.CLIENT_HOST,
+    key: key,
+  });
 
   await sendEmail({
     subject: "找回密码链接",

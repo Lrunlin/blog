@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>友情链接添加通知</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #0066ff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            color: #333333;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            color: #666666;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+        }
+        .link-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0066ff;
+color: #ffffff !important;            text-decoration: none;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>友情链接添加成功</h1>
+        </div>
+        <div class="content">
+            <p>尊敬的用户 <%= user_name %>:</p>
+            <p>您的友情链接申请已经通过！感谢您对我们的支持。</p>
+            <p>您现在可以访问我们的官方网站查看链接：</p>
+            <a href="<%= site_href %>" class="link-button"><%= site_name %></a>
+        </div>
+        <div class="footer">
+            <p>此邮件由系统自动发送，请勿回复。</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -6,6 +6,8 @@ import validator from "@/common/middleware/verify/validator";
 import email from "@/common/utils/email";
 import sequelize from "@/db/config";
 import interger from "@/common/verify/integer";
+import fs from "fs";
+import ejs from "ejs";
 
 const schema = Joi.object({
   message: Joi.string().min(0).error(new Error("回复内容错误")),
@@ -18,7 +20,7 @@ router.delete("/friendly-link/:id", interger([], ["id"]), validator(schema), aut
   let id = +(ctx.params.id as string);
   const t = await sequelize.transaction();
 
-  //   先判断删除结果
+  //先判断删除结果
   let deleteResult = await DB.FriendlyLink.destroy({ where: { id: id }, transaction: t })
     .then(res => !!res)
     .catch(() => false);
@@ -53,15 +55,18 @@ router.delete("/friendly-link/:id", interger([], ["id"]), validator(schema), aut
     return;
   }
 
+  const content = ejs.render(fs.readFileSync("src/views/friendly-fail.ejs").toString(), {
+    state: linkData.state,
+    site_name: process.env.SITE_NAME,
+    site_href: process.env.CLIENT_HOST,
+    name: linkData.name,
+    url: linkData.url,
+    message: message,
+  });
+
   let emailOption = {
     subject: linkData.state == 1 ? "您的友情链接被删除" : "您的友情链接没有通过",
-    content: `
-      <h2>${linkData.state == 1 ? "您的友链链接被删除" : "您的友链链接互换申请失败"}</h2>
-      <div>站名:${process.env.SITE_NAME} (${process.env.CLIENT_HOST})</div>
-      <div>名称:${linkData.name}</div>
-      <div>链接:${linkData.url}</div>
-      <div>回复:${message}</div>
-      `,
+    content: content,
   };
   await email({ ...emailOption, target: userData.email })
     .then(async res => {

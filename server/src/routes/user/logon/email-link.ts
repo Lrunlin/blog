@@ -5,6 +5,8 @@ import sendEmail from "@/common/utils/email";
 import { setUserData, getRemainingTTL, createKey, hasKey } from "@/common/modules/cache/email";
 import DB from "@/db";
 import isEmailDestroy from "@/common/modules/user/isEmailDestroy";
+import fs from "fs";
+import ejs from "ejs";
 
 let router = new Router();
 const schema = Joi.object({
@@ -44,14 +46,14 @@ router.post("/email/link", validator(schema), async ctx => {
     ctx.body = { success: false, message: `链接已发送并剩余时间:${minute}分钟,请前往邮箱点击链接` };
     return;
   }
+
   let href = `${process.env.SITE_API_HOST}/logon/email`;
-  let content = `
-  <b>你好：</b>
-  <p>您正在网站${process.env.SITE_NAME}使用邮箱进行账号注册</p>
-  <p>如果是您本人进行操作，请点击以下链接，否则请忽略</p>
-  <br/>
-  <a href="${href}?key=${createKey(email)}" target="_blank">${href}</a>
-  `;
+  const content = ejs.render(fs.readFileSync("src/views/logn-up.ejs").toString(), {
+    site_name: process.env.SITE_NAME,
+    href: href,
+    key: createKey(email),
+  });
+
 
   await sendEmail({ target: email, subject: `${process.env.SITE_NAME}-注册`, content })
     .then(res => {
