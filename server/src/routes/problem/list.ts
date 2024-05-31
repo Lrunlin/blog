@@ -24,6 +24,7 @@ router.get("/problem/page/:page", verify, async ctx => {
         "answer_count",
       ],
     ],
+    order: [["create_time", "desc"]],
   })
     .then(({ count, rows }) => {
       ctx.body = {
@@ -32,7 +33,10 @@ router.get("/problem/page/:page", verify, async ctx => {
         data: {
           total: count,
           list: rows.map(row => {
-            return { ...row.toJSON(), tag: getTagData(row.toJSON().tag as unknown as number[], ["name"]) };
+            return {
+              ...row.toJSON(),
+              tag: getTagData(row.toJSON().tag as unknown as number[], ["name"]),
+            };
           }),
         },
       };

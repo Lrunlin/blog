@@ -26,6 +26,7 @@ router.get("/problem/list/:page", auth(0), async ctx => {
       ],
     ],
     where: { author: ctx.id },
+    order: [["create_time", "desc"]],
   })
     .then(({ count, rows }) => {
       ctx.body = {
@@ -40,7 +41,7 @@ router.get("/problem/list/:page", auth(0), async ctx => {
             };
           }),
         },
-      };    
+      };
     })
     .catch(err => {
       ctx.body = { success: false, message: "请求错误" };
