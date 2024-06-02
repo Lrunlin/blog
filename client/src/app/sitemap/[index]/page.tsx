@@ -55,3 +55,4 @@ const SiteMap = async ({ params: { index } }: { params: { index: string } }) => 
 };
 export default SiteMap;
 
+export const dynamic = "force-dynamic";

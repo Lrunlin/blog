@@ -104,7 +104,7 @@ _系统支持 JWT 和 Session 两种鉴权方式因为系统拥有账号注销�
 
 #### 环境
 
-1. Node.js 18.x
+1. Node.js 18.20+
 2. MySQL 8.x
 3. Redis
 
