@@ -1,18 +1,15 @@
-import { useState, useContext } from "react";
+import { useState, useContext, Suspense } from "react";
 import type { FC } from "react";
 import classNames from "classnames";
 import { Badge, Button, Tooltip, message } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import dayjs from "@dayjs";
 import { useParams } from "next/navigation";
-import dynamic from "next/dynamic";
 import axios from "@axios";
 import useUserData from "@/store/user/user-data";
-const CommentEditor = dynamic(() => import("@/components/page/problem/Comments/Editor"), {
-  ssr: false,
-});
-const Comments = dynamic(() => import("@/components/page/problem/Comments"), { ssr: false });
-import { Context } from "@/pages/problem/[id]";
+import CommentEditor from "@/components/page/problem/Comments/Editor";
+import Comments from "@/components/page/problem/Comments";
+import { Context } from "@/components/page/problem/ProblemDetail";
 import itemClassName from "../../article/ToolBar/class";
 import Image from "@/components/next/Image";
 
@@ -160,7 +157,10 @@ const Answer: FC = () => {
                   }}
                 />
               )}
+              <Suspense>
+
               <Comments type="answer" belong_id={item.id} data={item.comment_list} />
+              </Suspense>
             </div>
             {/* 左侧点赞 */}
             <div

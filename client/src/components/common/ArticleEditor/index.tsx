@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from "react";
 import { Button, Input, Avatar, Dropdown, Result } from "antd";
 import Editor from "../Editor";

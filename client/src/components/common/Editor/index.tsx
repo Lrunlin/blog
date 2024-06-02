@@ -1,23 +1,15 @@
+"use client";
 import { memo, useState, useEffect, useRef } from "react";
 import type { FC } from "react";
 import { Spin } from "antd";
-import dynamic from "next/dynamic";
 import useEditorMode from "@/store/common/editor-mode";
+import StyleLink from "./StyleLink";
+import dynamic from "next/dynamic";
+
+const MarkDownEditor = dynamic(() => import("./MarkDownEditor"));
+const RichTextEditor = dynamic(() => import("./RichTextEditor"));
 
 const Skeleton = () => <div className="w-full h-[700px] bg-gray-200 animate-pulse"></div>;
-const MarkDownEditor = dynamic(() => import("./MarkDownEditor"), {
-  ssr: false,
-  loading: () => <Skeleton />,
-});
-
-const RichTextEditor = dynamic(() => import("./RichTextEditor"), {
-  ssr: false,
-  loading: () => <Skeleton />,
-});
-
-const StyleLink = dynamic(() => import("./StyleLink"), {
-  ssr: false,
-});
 
 export interface propsType {
   className?: string;
@@ -42,8 +34,12 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
   const [content, setContent] = useState("");
   const [uploadProgress, setPloadProgress] = useState<null | string>(null);
   let editorMode = useEditorMode(s => s.data);
-
   let firstRender = useRef(true);
+
+  if (typeof window == "undefined") {
+    return <Skeleton />;
+  }
+
   // 保证切换编辑器时value不会消失
   useEffect(() => {
     // 首次不执行，防止重复设置inteValue
@@ -78,7 +74,7 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
     <>
       <style jsx global>{`
         .content-body img {
-          max-width: 60%;
+          max-width: 60% !important;
         }
       `}</style>
       <StyleLink id={themeID} />

@@ -1,16 +1,31 @@
-import type { FC } from "react";
+import { useCallback, type FC } from "react";
 import axios from "@axios";
 import { Skeleton } from "antd";
-import { useRouter } from "next/router";
+import { useRouter, useParams, useSearchParams, usePathname } from "next/navigation";
 import Image from "@/components/next/Image";
 import type { UserAttributes } from "@type/model-attribute";
 import useFetch from "@/common/hooks/useFetch";
 
 const Aside: FC<{ data: UserAttributes }> = props => {
   let router = useRouter();
+  let params = useParams();
+  let id = params.id;
+  let searchParams = useSearchParams();
+  let key = searchParams.get("key");
+  const pathname = usePathname();
 
   let { data, error, isLoading } = useFetch(() =>
-    axios.get(`/achievement/${router.query.id}`).then(res => res.data.data)
+    axios.get(`/achievement/${id}`).then(res => res.data.data)
+  );
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
   );
 
   return (
@@ -27,7 +42,9 @@ const Aside: FC<{ data: UserAttributes }> = props => {
           <div className="mt-3">
             <div
               className="h-8 flex items-center cursor-pointer"
-              onClick={() => router.push({ query: { ...router.query, key: "article" } })}
+              onClick={() => {
+                router.push(pathname + "?" + createQueryString("key", "article"));
+              }}
             >
               <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-50">
                 <Image src="/icon/client/view-blue.png" height={14} width={14} alt="view icon" />
@@ -53,14 +70,18 @@ const Aside: FC<{ data: UserAttributes }> = props => {
       <div className="w-60 p-4 mt-3 flex justify-around bg-white shadow-sm">
         <div
           className="text-center cursor-pointer"
-          onClick={() => router.push({ query: { ...router.query, key: "following" } })}
+          onClick={() => {
+            router.push(pathname + "?" + createQueryString("key", "following"));
+          }}
         >
           <div className="text-base">关注了</div>
           <b>{props.data.followee_count}</b>
         </div>
         <div
           className="text-center cursor-pointer"
-          onClick={() => router.push({ query: { ...router.query, key: "follower" } })}
+          onClick={() => {
+            router.push(pathname + "?" + createQueryString("key", "follower"));
+          }}
         >
           <div className="text-base">关注者</div>
           <b>{props.data.follower_count}</b>
@@ -69,14 +90,18 @@ const Aside: FC<{ data: UserAttributes }> = props => {
       <div className="mt-4">
         <div
           className="h-8 cursor-pointer flex items-center border-t-solid border-gray-200"
-          onClick={() => router.push({ query: { ...router.query, key: "collection" } })}
+          onClick={() => {
+            router.push(pathname + "?" + createQueryString("key", "collection"));
+          }}
         >
           收藏文章 {props.data.collection_count} 篇
         </div>
         {data && (
           <div
             className="h-8 cursor-pointer flex items-center border-t-solid border-gray-200"
-            onClick={() => router.push({ query: { ...router.query, key: "article" } })}
+            onClick={() => {
+              router.push(pathname + "?" + createQueryString("key", "article"));
+            }}
           >
             发布文章 {data.article_count} 篇
           </div>

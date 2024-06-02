@@ -3,11 +3,11 @@ import { create } from "zustand";
 const initValues = {
   key: 0, //用于刷新表格
   page:
-    typeof window !== "undefined" && !isNaN(+window?.sessionStorage.page)
+    typeof window != "undefined" && !isNaN(+window?.sessionStorage.page)
       ? +window?.sessionStorage.page
       : 1,
   page_size:
-    typeof window !== "undefined" && !isNaN(+window?.sessionStorage.page_size)
+    typeof window != "undefined" && !isNaN(+window?.sessionStorage.page_size)
       ? +window?.sessionStorage.page_size
       : 10,
 };

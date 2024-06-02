@@ -9,12 +9,13 @@ interface propsType {
 }
 
 /** 首页右侧推广*/
-const Advertisement: FC<propsType> = props => {
-  let { data } = useFetch(() => getAdvertisementList(props.type));
+const Advertisement: FC<propsType> = async props => {
+  // let { data } = useFetch(() => getAdvertisementList(props.type));
+let data = await getAdvertisementList(props.type);
 
   return (
     <div className={props.className}>
-      {data &&
+      {
         data.map(item => (
           <a
             href={item.url}

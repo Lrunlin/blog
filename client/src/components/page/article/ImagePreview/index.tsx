@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { Image } from "antd";
 import style from "./index.module.scss";

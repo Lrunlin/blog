@@ -1,5 +1,5 @@
-import { statisticsDataType } from "@/pages/admin/statistics";
 import axios from "@axios";
+import { statisticsDataType } from "@type/statistics-type";
 import { create } from "zustand";
 
 export type AdminStatisticsDataType = { data: statisticsDataType };

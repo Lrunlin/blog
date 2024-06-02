@@ -15,12 +15,12 @@ const AdvertisementForm: FC<propsType> = props => {
     {
       position: "index",
       label: "首页",
-      // crop: 3 / 2,
+      crop: undefined,
     },
     {
       position: "article",
       label: "文章页面",
-      // crop: 3 / 2,
+      crop: undefined,
     },
     {
       position: "creator",
@@ -28,6 +28,7 @@ const AdvertisementForm: FC<propsType> = props => {
       crop: 896 / 240,
     },
   ];
+
   let { Item, useForm, useWatch } = Form;
   const { Option } = Select;
 

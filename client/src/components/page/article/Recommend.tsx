@@ -1,3 +1,4 @@
+"use client";
 import { Skeleton, Result } from "antd";
 import { useParams } from "next/navigation";
 import axios from "@axios";
@@ -11,7 +12,7 @@ const Recommend = () => {
   let params = useParams();
   let articleID = params.id;
 
-  let { data, isLoading } = useFetch( () =>
+  let { data, isLoading } = useFetch(() =>
     axios
       .get<response<articleListItemType[]>>(`/article/recommend/${articleID}`)
       .then(res => res.data.data)

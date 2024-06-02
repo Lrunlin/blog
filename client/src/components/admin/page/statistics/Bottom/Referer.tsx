@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
-import {  statisticsDataType } from "@/pages/admin/statistics";
 import { list } from "@/common/modules/readingRecords/setReferer";
 import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
+import { statisticsDataType } from "@type/statistics-type";
 
 function option(data: statisticsDataType["referer"]) {
   return {

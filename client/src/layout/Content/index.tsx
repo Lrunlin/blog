@@ -1,12 +1,8 @@
-import type { FC, ReactNode } from "react";
+import { Suspense, type FC, type ReactNode } from "react";
 import Sidebar from "@/layout/Sidebar";
 import classNames from "classnames";
-import dynamic from "next/dynamic";
 import HightLight from "./HightLight";
-
-const ImagePreview = dynamic(() => import("@/components/page/article/ImagePreview"), {
-  ssr: false,
-});
+import ImagePreview from "@/components/page/article/ImagePreview";
 
 export interface propsType {
   children: ReactNode;
@@ -24,15 +20,9 @@ const Layout: FC<propsType> = props => {
       <Sidebar className={classNames(["pb-16", props.className])} Aside={props.Aside}>
         {props.ToolBar}
         {props.children}
-        <ImagePreview />
-        <style jsx global>
-          {`
-            .content-body img {
-              cursor: zoom-in !important;
-              max-width: 100%;
-            }
-          `}
-        </style>
+        <Suspense>
+          <ImagePreview />
+        </Suspense>
       </Sidebar>
     </>
   );

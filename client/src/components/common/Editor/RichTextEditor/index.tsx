@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef, useState, memo } from "react";
 import type { FC } from "react";
 import type { editorPropsType } from "../index";
@@ -15,8 +16,8 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
   // 两个数组，用于记录按钮和下拉菜单是否全部移出
   const [showThemeListLayer, setShowThemeListLayer] = useState([false, false]);
   const editor = useRef<ReactWEditor | null>(null);
-  let setState = useEditorMode(s=>s.setData);
-  
+  let setState = useEditorMode(s => s.setData);
+
   let codeEditorRef = useRef<event>(null);
 
   const excludeKeys = [

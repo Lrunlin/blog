@@ -1,3 +1,4 @@
+"use client";
 import classNames from "classnames";
 import { useState, useEffect } from "react";
 import Navigation from "./Navigation";

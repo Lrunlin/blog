@@ -1,3 +1,4 @@
+"use client";
 import Image from "@/components/next/Image";
 import { Dropdown } from "antd";
 import classNames from "classnames";

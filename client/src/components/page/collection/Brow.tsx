@@ -1,3 +1,4 @@
+"use client";
 import useFetch from "@/common/hooks/useFetch";
 import useUserData from "@/store/user/user-data";
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";

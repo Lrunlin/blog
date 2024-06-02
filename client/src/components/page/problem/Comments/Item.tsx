@@ -8,7 +8,7 @@ import classNames from "classnames";
 import axios from "@axios";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import type { problemCommentType } from "@type/model/problem";
-import { Context } from "@/pages/problem/[id]";
+import { Context } from "@/components/page/problem/ProblemDetail";
 
 interface propsType {
   belong_id: number;

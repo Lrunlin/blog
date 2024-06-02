@@ -2,9 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import type { MutableRefObject, FC } from "react";
 import { message, type ModalProps } from "antd";
-import dynamic from "next/dynamic";
+import Modal from "./Modal";
 import upload from "./upload";
-const Modal = dynamic(() => import("./Modal"), { ssr: false });
 import Picture from "./Image";
 
 type target =

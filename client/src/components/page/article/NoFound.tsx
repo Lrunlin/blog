@@ -1,3 +1,4 @@
+'use client';
 import Head from "@/components/next/Head";
 import Header from "@/components/common/Header";
 import { Button, Result } from "antd";

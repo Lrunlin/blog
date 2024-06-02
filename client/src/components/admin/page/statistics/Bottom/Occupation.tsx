@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
-import { statisticsDataType } from "@/pages/admin/statistics";
 import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
+import type { statisticsDataType } from "@type/statistics-type";
 
 const byteConvert = function (bytes: number) {
   let symbols = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
@@ -98,7 +98,7 @@ function option(data: statisticsDataType["system_occupation"]) {
 
 /** 文章饼状图统计*/
 const Article = () => {
-  let _data = userAdminStatisticsData(s=>s.data);
+  let _data = userAdminStatisticsData(s => s.data);
 
   let DOM = useRef<HTMLDivElement>(null);
   let data = _data.system_occupation;

@@ -1,13 +1,13 @@
 import { useState, useContext } from "react";
-import { Context } from "@/pages/problem/[id]";
+import { Context } from "@/components/page/problem/ProblemDetail";
+
 import { Button, message } from "antd";
 import Image from "@/components/next/Image";
 import useUserData from "@/store/user/user-data";
 import { like, unlike } from "@/request/like";
-import { collection, uncollection } from "@/request/collection";
+import { uncollection } from "@/request/collection";
 import { follow, unfollow } from "@/request/follow";
-import dynamic from "next/dynamic";
-const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr: false });
+import Modal from "@/components/common/CollectionModal";
 
 /** 问答页面对问题的点赞和收藏按钮*/
 const ToolBar = () => {

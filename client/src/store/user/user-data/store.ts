@@ -1,3 +1,4 @@
+"use client";
 import axios from "@axios";
 import { create } from "zustand";
 
@@ -14,7 +15,7 @@ export type UserInfoType = { data: UserInfoDataType | null };
 
 export type UserDataActions = {
   refreshData: () => void;
-  setData: (data:UserInfoDataType | null) => any;
+  setData: (data: UserInfoDataType | null) => any;
 };
 
 export type UserDataStore = UserInfoType & UserDataActions;

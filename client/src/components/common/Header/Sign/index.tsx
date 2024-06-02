@@ -1,9 +1,10 @@
+"use client";
+import { Suspense } from "react";
 import { Modal } from "antd";
-import dynamic from "next/dynamic";
 import useUserSignModel from "@/store/user/user-sign-model-state";
-const LogIn = dynamic(import("./LogIn"), { ssr: false });
-const LogOn = dynamic(import("./LogOn"), { ssr: false });
-const ForgetPassword = dynamic(import("./ForgetPassword"), { ssr: false });
+import LogIn from "./LogIn";
+import LogOn from "./LogOn";
+import ForgetPassword from "./ForgetPassword";
 
 export const componentsList = {
   LogIn: {
@@ -35,7 +36,9 @@ const Sign = () => {
         footer={null}
         onCancel={() => userSignModel.setData(false)}
       >
-        <Components />
+        <Suspense>
+          <Components />
+        </Suspense>
       </Modal>
     </>
   );

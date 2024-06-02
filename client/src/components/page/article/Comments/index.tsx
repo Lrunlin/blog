@@ -1,3 +1,4 @@
+"use client";
 import type { FC } from "react";
 import useUserData from "@/store/user/user-data";
 import useUserSignModel from "@/store/user/user-sign-model-state";

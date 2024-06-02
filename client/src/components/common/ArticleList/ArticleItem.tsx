@@ -4,9 +4,7 @@ import dayjs from "@dayjs";
 import style from "./index.module.scss";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
-import { CoverSkeleton } from "./Cover";
-import dynamic from "next/dynamic";
-const Cover = dynamic(() => import("./Cover"), { ssr: false, loading: () => <CoverSkeleton /> });
+import Cover from "./Cover";
 
 export interface propsType {
   data: Omit<articleListItemType, "state">;

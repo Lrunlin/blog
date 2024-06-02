@@ -33,8 +33,10 @@ const AdminLayout: FC<propsType> = ({ children }) => {
           color: inherit !important;
         }
       `}</style>
-      <Header />
-      <main className="min-h-screen w-full pl-4 pr-4 relative top-4">{children}</main>
+      <div className="flex justify-between">
+        <Header />
+        <main className="min-h-screen w-full pl-4 pr-4 relative top-4 ml-[192px] flex-1">{children}</main>
+      </div>
       <Footer />
     </>
   );

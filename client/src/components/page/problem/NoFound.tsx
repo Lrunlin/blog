@@ -1,5 +1,5 @@
+'use client';
 import Head from "@/components/next/Head";
-import { useState, useEffect } from "react";
 import { Button, Result } from "antd";
 import { useRouter } from "next/navigation";
 

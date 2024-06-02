@@ -1,3 +1,4 @@
+"use client";
 import type { FC } from "react";
 import { useRouter } from "next/navigation";
 import { Button, message } from "antd";

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import type { FC } from "react";
-import dynamic from "next/dynamic";
+import Modal from "@/components/common/CollectionModal";
 import useFetch from "@/common/hooks/useFetch";
-const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr: false });
 import { response } from "@type/response";
 import axios from "@axios";
 import { message, Popconfirm } from "antd";

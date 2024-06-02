@@ -1,14 +1,12 @@
 import type { FC } from "react";
-import dynamic from "next/dynamic";
 import type {
   noticeCommentListType,
   noticeAnswerListType,
   noticeFollowListType,
-} from "@/pages/notification/[type]";
-
-const CommentItem = dynamic(import("./Comment"));
-const FollowItem = dynamic(import("./Follow"));
-const AnswerItem = dynamic(import("./Answer"));
+} from "@/app/notification/[type]/page";
+import CommentItem from "./Comment";
+import FollowItem from "./Follow";
+import AnswerItem from "./Answer";
 
 type componentsType = "comment" | "follow" | "answer";
 

@@ -1,3 +1,4 @@
+"use client";
 import classNames from "classnames";
 import { FC } from "react";
 import Item from "./Item";

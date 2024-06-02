@@ -1,8 +1,8 @@
+"use client";
 import { useState } from "react";
-import dynamic from "next/dynamic";
+import FunsRanking from "./FunsRanking";
 import { Tabs } from "antd";
 import AuthorRanking from "./AuthorRanking";
-const FunsRanking = dynamic(() => import("./FunsRanking"), { ssr: false });
 
 const Ranking = () => {
   let [key, setKey] = useState("0");

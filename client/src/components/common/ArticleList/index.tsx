@@ -1,3 +1,4 @@
+"use client";
 import type { FC } from "react";
 import type { articleListItemType } from "@type/model/article-list-item";
 import { Skeleton, Divider, Empty } from "antd";

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 import type { FC } from "react";
 import { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
@@ -44,7 +45,9 @@ const TypeHeader: FC<propsType> = props => {
     if (typeIndex == 1) {
       option = { follow: true };
     }
-    props.change(option);
+    if (option.tag != undefined && option.type != undefined) {
+      props.change(option);
+    }
   }, [activeTypeKey, activeTagKey]);
 
   function switchType(id: string) {

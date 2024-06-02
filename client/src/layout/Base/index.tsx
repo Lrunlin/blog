@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
-import { FloatButton } from "antd";
 import classNames from "classnames";
 import Header from "@/components/common/Header";
+import BackTop from "@/components/common/BackTop";
 
 export interface propsType {
   children: ReactNode;
@@ -32,7 +32,7 @@ const Base: FC<propsType> = props => {
           {props.children}
         </main>
       </div>
-      <FloatButton.BackTop />
+      <BackTop />
     </>
   );
 };

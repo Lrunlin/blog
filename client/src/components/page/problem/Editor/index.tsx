@@ -6,7 +6,8 @@ import axios from "@axios";
 import { useParams } from "next/navigation";
 import classNames from "classnames";
 import Message from "./Message";
-import { Context } from "@/pages/problem/[id]";
+import { Context } from "@/components/page/problem/ProblemDetail";
+
 import useUserData from "@/store/user/user-data";
 import useFetch from "@/common/hooks/useFetch";
 interface propsType {

@@ -2,7 +2,8 @@ import type { FC } from "react";
 import { Avatar } from "antd";
 import NoFollowLink from "@/components/next/NoFollowLink";
 import dayjs from "@dayjs";
-import type { noticeFollowListType } from "@/pages/notification/[type]";
+import { noticeFollowListType } from "@/app/notification/[type]/page";
+
 function _switch(type: keyof typeof map) {
   let map = {
     problem: ["问题", "有了采纳的答案"],

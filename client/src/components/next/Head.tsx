@@ -1,4 +1,3 @@
-import HeadComponent from "next/head";
 import type { FunctionComponent } from "react";
 interface props {
   title?: string;
@@ -11,7 +10,7 @@ interface props {
 const Head: FunctionComponent<props> = props => {
   let { title, description, keywords } = props;
   return (
-    <HeadComponent>
+    <>
       {title && <title>{title}</title>}
       <meta
         name="viewport"
@@ -21,7 +20,7 @@ const Head: FunctionComponent<props> = props => {
       {keywords && <meta name="keywords" content={keywords.join(",")} />}
       <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       {props.children}
-    </HeadComponent>
+    </>
   );
 };
 

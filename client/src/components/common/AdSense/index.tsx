@@ -1,6 +1,6 @@
-import { useEffect, useState, memo } from "react";
-import dynamic from "next/dynamic";
-const ADS = dynamic(() => import("./ADS"), { ssr: false });
+"use client";
+import { useEffect, useState, memo, Suspense } from "react";
+import ADS from "./ADS";
 
 /** Google ADS*/
 const AdSense = memo(() => {
@@ -32,7 +32,9 @@ const AdSense = memo(() => {
       {isLoad ? (
         <div className="w-full h-full bg-gray-100 flex items-center justify-center">请等待...</div>
       ) : (
-        <ADS />
+        <Suspense>
+          <ADS />
+        </Suspense>
       )}
     </div>
   );

@@ -1,5 +1,5 @@
+"use client";
 import type { FC } from "react";
-import Script from "next/script";
 
 interface propsType {
   language: string[];
@@ -17,8 +17,7 @@ const HightLight: FC<propsType> = ({ language }) => {
     <>
       {
         <>
-          <Script
-            strategy="beforeInteractive"
+          <script
             src={`${process.env.CDN}/static/high-light/js?languages=${language?.join(",")}`}
           />
           <link

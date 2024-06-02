@@ -1,3 +1,4 @@
+"use client";
 import { useState, startTransition } from "react";
 import { Skeleton, Result, Button, Empty, message } from "antd";
 import { useParams } from "next/navigation";
@@ -7,9 +8,8 @@ import { response } from "@type/response";
 import useUserData from "@/store/user/user-data";
 import classNames from "classnames";
 import { LockOutlined, EditOutlined, DeleteOutlined, SyncOutlined } from "@ant-design/icons";
-import dynamic from "next/dynamic";
 import { valuesType } from "@/components/common/CollectionModal/CreateFrom";
-const Modal = dynamic(() => import("./Modal"), { ssr: false });
+import Modal from "./Modal";
 
 interface favoritesListProps {
   id: number;

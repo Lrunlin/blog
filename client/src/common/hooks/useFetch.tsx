@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState, useRef } from "react";
 import type { DependencyList, Dispatch, SetStateAction } from "react";
 import { AxiosError } from "axios";

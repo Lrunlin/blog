@@ -1,13 +1,13 @@
+"use client";
 import { createContext, useRef, useContext } from "react";
 import { FC } from "react";
 import { StoreApi, useStore } from "zustand";
-import { statisticsDataType } from "@/pages/admin/statistics";
-
 import {
   AdminStatisticsDataStore,
   createAdminStatisticsDataStore,
   AdminStatisticsDataType,
 } from "./store";
+import { statisticsDataType } from "@type/statistics-type";
 
 export type { AdminStatisticsDataType };
 export const AdminStatisticsDataStoreContext =

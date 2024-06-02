@@ -8,11 +8,16 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  pageExtensions: ["tsx"],
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    // ignoreBuildErrors: true,
+  },
   experimental: {
     scrollRestoration: true,
   },
-  swcMinify: false, //不要关 否则表情选择器会打包出问题
   eslint: {
     ignoreDuringBuilds: true,
   },

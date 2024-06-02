@@ -38,7 +38,6 @@ const Header: FC = memo(() => {
     <>
       <style jsx global>{`
         body {
-          padding-left: 192px;
           background-color: rgb(243 244 246);
         }
       `}</style>

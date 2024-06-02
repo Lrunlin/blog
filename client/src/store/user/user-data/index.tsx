@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useRef, useContext } from "react";
 import { FC } from "react";
 import { StoreApi, useStore } from "zustand";

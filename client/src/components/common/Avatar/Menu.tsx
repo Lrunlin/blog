@@ -1,3 +1,4 @@
+"use client";
 import { Avatar } from "antd";
 import Link from "next/link";
 import type { FC, ReactNode } from "react";
@@ -19,6 +20,7 @@ const Item: FC<itemPropsType> = ({ isValidating, data }) => {
 const Menu: FC = () => {
   let router = useRouter();
   let userData = useUserData(s => s.data);
+  let resetUserData = useUserData(s => s.refreshData);
   let { data, isLoading } = useFetch(() =>
     axios.get(`/achievement/${userData?.id}`).then(res => res.data.data)
   );
@@ -64,7 +66,7 @@ const Menu: FC = () => {
             cookie.remove("token", {
               domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
             });
-            router.refresh();
+            resetUserData();
           }}
         >
           退出登录

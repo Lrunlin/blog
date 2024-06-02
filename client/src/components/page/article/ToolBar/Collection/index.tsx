@@ -6,9 +6,8 @@ import { useParams } from "next/navigation";
 import { message, Badge } from "antd";
 import itemClassName from "../class";
 import { uncollection } from "@/request/collection";
-import dynamic from "next/dynamic";
+import Modal from "@/components/common/CollectionModal";
 import userUserCurrentArticleData from "@/store/user/user-current-article-data";
-const Modal = dynamic(() => import("@/components/common/CollectionModal"), { ssr: false });
 
 const Collection = () => {
   let userData = useUserData(s => s.data);

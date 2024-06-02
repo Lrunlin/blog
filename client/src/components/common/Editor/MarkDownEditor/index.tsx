@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef, startTransition } from "react";
 import type { FC } from "react";
 import { editorPropsType } from "../index";
