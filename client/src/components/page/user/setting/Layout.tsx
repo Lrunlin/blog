@@ -18,12 +18,15 @@ const list = [
     icon: <SettingOutlined />,
     label: "账号设置",
   },
-  {
+];
+
+if (process.env.AUTH_MODE) {
+  list.push({
     href: "/user/settings/destroy",
     icon: <DeleteOutlined />,
     label: "账号注销",
-  },
-];
+  });
+}
 
 interface propsType {
   children: ReactNode;

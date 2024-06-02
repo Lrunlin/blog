@@ -49,6 +49,8 @@ namespace NodeJS {
     /** ICP 备案号*/
     ICP: string;
     /** 上传图片最大多MB*/
-    UPLOAD_MAX_SIZE: number;
+    UPLOAD_MAX_SIZE: number 
+    /** 验证方式jwt|session*/;
+    AUTH_MODE?: "session" | "jwt";
   }
 }

@@ -10,6 +10,7 @@ import {
   Select,
   Input,
   notification,
+  Tooltip,
 } from "antd";
 import Link from "next/link";
 import dayjs from "@dayjs";
@@ -153,7 +154,7 @@ const UserList = () => {
               <Button type="primary" onClick={() => recovery(id)}>
                 恢复
               </Button>
-            ) : (
+            ) : process.env.AUTH_MODE == "session" ? (
               <Popconfirm
                 placement="top"
                 title={
@@ -170,6 +171,12 @@ const UserList = () => {
                   注销
                 </Button>
               </Popconfirm>
+            ) : (
+              <Tooltip placement="top" title={"服务器未使用Session鉴权，禁止用户注销"}>
+                <Button type="primary" disabled>
+                  注销
+                </Button>
+              </Tooltip>
             )}
           </div>
         );
