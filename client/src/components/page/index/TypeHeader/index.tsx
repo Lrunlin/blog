@@ -16,6 +16,7 @@ interface propsType {
 /** 首页顶部展示类型选择的头部组件，穿盾type-tree数组即可*/
 const TypeHeader: FC<propsType> = props => {
   let { data } = props;
+
   let userData = useUserData(s => s.data);
   const [activeTypeKey, setActiveTypeKey] = useState(data[0].id);
   const [activeTagKey, setActiveTagKey] = useState(data[0].id);
@@ -27,25 +28,30 @@ const TypeHeader: FC<propsType> = props => {
 
   let fristLoad = useRef(true);
   useEffect(() => {
+    
     if (fristLoad.current) {
       fristLoad.current = false;
       return;
     }
     /** 判断是否选择了全部*/
     let option: changeOptionType =
+    typeIndex == 0
+    ? {}
+    : {
+      /** 如果下属的tag的id index等于0说明找的是type，反之是tag*/
+      type: !tagIndex ? activeTypeKey : undefined,
+      /** 如果自己的id和上面的type的id相同那么设置undefined，否则就是查询tag*/
+      tag: activeTypeKey == activeTagKey ? undefined : activeTagKey,
+      /** 判断是否选择了关注*/
+      follow: typeIndex == 0 || undefined,
+    };
+
+    if (
+      option.tag != undefined ||
+      option.type != undefined ||
+      option.follow != undefined ||
       typeIndex == 0
-        ? {}
-        : {
-            /** 如果下属的tag的id index等于0说明找的是type，反之是tag*/
-            type: !tagIndex ? activeTypeKey : undefined,
-            /** 如果自己的id和上面的type的id相同那么设置undefined，否则就是查询tag*/
-            tag: activeTypeKey == activeTagKey ? undefined : activeTagKey,
-          };
-    /** 判断是否选择了关注*/
-    if (typeIndex == 1) {
-      option = { follow: true };
-    }
-    if (option.tag != undefined && option.type != undefined) {
+    ) {
       props.change(option);
     }
   }, [activeTypeKey, activeTagKey]);
