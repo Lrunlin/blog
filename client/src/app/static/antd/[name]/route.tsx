@@ -1,11 +1,11 @@
 import fs from "fs";
-import path from "path";
+import { NextRequest } from "next/server";
 
 type Params = {
   name: string;
 };
 
-export async function GET(res: Request, context: { params: Params }) {
+export async function GET(res: NextRequest, context: { params: Params }) {
   let name = context.params!.name as string | undefined;
   if (typeof name == "string" && name?.endsWith(".css")) {
     try {

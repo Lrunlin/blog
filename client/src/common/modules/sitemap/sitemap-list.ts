@@ -9,7 +9,7 @@ function setSiteMap(list: sitemapItemType[]) {
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
   let body = list.map(item => {
     return `
-    <sitemap >
+    <sitemap>
      <loc>${item.href}</loc>
      <lastmod>${dayjs().format("YYYY-MM-DD")}</lastmod>
     </sitemap>`;
