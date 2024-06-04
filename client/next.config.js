@@ -18,6 +18,8 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
   },
+  //https://nextjs.org/docs/app/api-reference/next-config-js/output
+  output: process.env.output ? "standalone" : undefined,
   eslint: {
     ignoreDuringBuilds: true,
   },

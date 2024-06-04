@@ -1,0 +1,11 @@
+{
+  "watch": [],
+  "ext": "js",
+  "ignore": ["*"],
+  "restartable": "rs",
+  "exec": "node ./server.js",
+  "env": {
+    "PORT": "5678",
+    "NEXT_PUBLIC_ISPRO": true
+  }
+}

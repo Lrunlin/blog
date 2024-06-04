@@ -6,8 +6,10 @@
     "dev": "cross-env NEXT_PUBLIC_ISDEV=true next dev -p 5678",
     "build": "cross-env NEXT_PUBLIC_ISPRO=true next build",
     "start": "cross-env NEXT_PUBLIC_ISPRO=true next start -p 5678",
+    "build:output": "cross-env NEXT_PUBLIC_ISPRO=true output=true next build && node ./scripts/build-output/index.js",
+    "start:output1": "cross-env NEXT_PUBLIC_ISPRO=true PORT=5678 nodemon --ext js .next/standalone/server.js",
+    "start:output": "nodemon",
     "test": "cross-env NEXT_PUBLIC_ISDEV=true next build &&cross-env NEXT_PUBLIC_ISDEV=true next start -p 5678",
-    "lint": "next lint",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
@@ -34,7 +36,6 @@
     "js-cookie": "^3.0.1",
     "marked": "^7.0.5",
     "next": "^14.2.3",
-    "nodemon": "^3.0.1",
     "qs": "^6.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -47,7 +48,6 @@
     "tocbot": "^4.18.2",
     "turndown": "^7.1.2",
     "turndown-plugin-gfm": "^1.0.2",
-    "upgrade": "^1.1.0",
     "use-animate-number": "1.0.5",
     "wangeditor": "^4.7.15",
     "wangeditor-for-react": "^1.5.6",
