@@ -1,5 +1,6 @@
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
+import hooks from "@/db/hooks/advertisement";
 
 export interface AdvertisementAttributes {
   id: number;
@@ -88,6 +89,7 @@ export class Advertisement
             fields: [{ name: "id" }],
           },
         ],
+        hooks: hooks,
       }
     ) as typeof Advertisement;
   }

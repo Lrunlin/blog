@@ -17,7 +17,7 @@ const Layout: FC<basePropsType> = props => {
       <div className="mr-4 w-[calc(100%-256px)] sm:w-full sm:mr-0">{props.children}</div>
       <aside className="w-60 sm:hidden">
         <Repository />
-        {/* <Advertisement type="index" /> */}
+        <Advertisement type="index" />
         <AdSense />
         <Ranking />
         <Footer />

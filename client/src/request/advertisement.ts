@@ -5,6 +5,7 @@ export interface advertisementType {
   url: string;
   poster_file_name: string;
   poster_url: string;
+  image_size: { width: number; height: number };
 }
 
 export type responseType = advertisementType[];
@@ -13,6 +14,7 @@ export type responseType = advertisementType[];
 function getAdvertisementList(position: string) {
   return axios
     .get<response<responseType>>("/advertisement", { params: { position } })
-    .then(res => res.data.data);
+    .then(res => res.data.data)
+    .catch(err => []);
 }
 export default getAdvertisementList;
