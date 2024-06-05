@@ -7,7 +7,6 @@
     "build": "cross-env NEXT_PUBLIC_ISPRO=true next build",
     "start": "cross-env NEXT_PUBLIC_ISPRO=true next start -p 5678",
     "build:output": "cross-env NEXT_PUBLIC_ISPRO=true output=true next build && node ./scripts/build-output/index.js",
-    "start:output1": "cross-env NEXT_PUBLIC_ISPRO=true PORT=5678 nodemon --ext js .next/standalone/server.js",
     "start:output": "nodemon",
     "test": "cross-env NEXT_PUBLIC_ISDEV=true next build &&cross-env NEXT_PUBLIC_ISDEV=true next start -p 5678",
     "analyze": "cross-env ANALYZE=true next build"
