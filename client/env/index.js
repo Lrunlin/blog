@@ -12,18 +12,6 @@ let envObject = dotenv.parse(
   )}
   `
 );
-// 将服务器环境变量的AUTH_MODE导入，前端判断是否限制注销
-try {
-  const envServerFilePath = path.resolve(
-    __dirname,
-    `../../server/env/.env.${process.env.NEXT_PUBLIC_ISPRO ? "production" : "development"}`
-  );
-  const envServerFileContent = fs.readFileSync(envServerFilePath, "utf8");
-  let envServerObject = dotenv.parse(envServerFileContent);
-  envObject.AUTH_MODE = envServerObject.AUTH_MODE;
-} catch (error) {
-  console.log(error);
-}
 
 module.exports = {
   buildid: () => {

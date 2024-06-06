@@ -4,16 +4,15 @@ import redis from "@/common/utils/redis";
 import { getDiskInfoSync } from "node-disk-info";
 
 const getDistData = () => {
-  let total = 0;
-  let occupied = 0;
-  getDiskInfoSync().forEach(item => {
-    total += item.blocks;
-    occupied += item.used;
-  });
-  return {
-    occupied: occupied,
-    total: total,
-  };
+  let isLinux = os.type().toLowerCase().includes("linux");
+  return getDiskInfoSync().reduce(
+    (total, item) => {
+      total.total += item.blocks * (isLinux ? 1000 : 1);
+      total.occupied += item.used * (isLinux ? 1000 : 1);
+      return total;
+    },
+    { occupied: 0, total: 0 }
+  );
 };
 
 const systemOccupation: {

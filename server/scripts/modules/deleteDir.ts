@@ -1,22 +1,40 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 
-// (可以使用CMD命令，但是为了保证其他系统使用node进行删除)
-/** 递归删除文件夹*/
-function deleteDir(dirpath: string) {
-  if (!fs.existsSync(dirpath)) {
-    return;
+async function directoryExists(dirPath: string): Promise<boolean> {
+  try {
+    await fs.access(dirPath);
+    return true;
+  } catch {
+    return false;
   }
-  let fileList = fs.readdirSync(dirpath);
-  fileList.forEach(x => {
-    let p = path.resolve(dirpath, x);
-    let pinfo = fs.statSync(p);
-    if (pinfo.isFile()) {
-      fs.unlinkSync(p);
-    } else if (pinfo.isDirectory()) {
-      deleteDir(p);
-    }
-  });
-  fs.rmdirSync(dirpath);
 }
+
+/** 递归删除文件夹 */
+async function deleteDir(dirpath: string): Promise<void> {
+  try {
+    // 检查目录是否存在
+    if (!(await directoryExists(dirpath))) {
+      return;
+    }
+
+    const fileList = await fs.readdir(dirpath);
+    await Promise.all(
+      fileList.map(async file => {
+        const filePath = path.resolve(dirpath, file);
+        const fileInfo = await fs.stat(filePath);
+        if (fileInfo.isFile()) {
+          await fs.unlink(filePath);
+        } else if (fileInfo.isDirectory()) {
+          await deleteDir(filePath);
+        }
+      })
+    );
+
+    await fs.rmdir(dirpath);
+  } catch (err) {
+    console.error(`Error deleting directory ${dirpath}:`, err);
+  }
+}
+
 export default deleteDir;

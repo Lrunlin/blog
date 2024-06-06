@@ -47,3 +47,10 @@ fs.copyFileSync(
 console.log(`移动 ${staticSrc} 到 ${staticDest}...`);
 moveDirectory(staticSrc, staticDest);
 console.log("Static 移动结束");
+
+// 文件夹重命名
+moveDirectory(
+  path.resolve(__dirname, "../../.next/standalone"),
+  path.resolve(__dirname, "../../.next/blog_client")
+);
+console.log("文件夹重命名完成");

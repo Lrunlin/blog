@@ -9,5 +9,6 @@ dist
 server/**/.env.development
 server/**/.env.production
 server/log
+server/blog_server
 
 client/env/.env.production
