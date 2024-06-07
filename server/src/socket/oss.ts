@@ -1,17 +1,17 @@
 import { Server } from "socket.io";
 import { server } from "@/index";
-import { folderList } from "@/common/utils/static/upload";
-import bucketManager from "@/common/utils/static/utils/bucketManager";
+import folderList from "@/common/utils/static/folderList";
 import redis from "@/common/utils/redis";
 import DB from "@/db";
 import { load } from "cheerio";
 import { Op } from "sequelize";
 import { v4 } from "uuid";
-import deleteFile from "@/common/utils/static/deleteFile";
+import { deleteFile } from "@/common/utils/static";
 import verify from "@/common/utils/auth/verify";
 import Cookie from "cookie";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
+import { listPrefix } from "@/common/utils/static";
 
 function init() {
   redis.del("oss-key-code");
@@ -54,26 +54,7 @@ async function getOSSList(prefix: string) {
     ossMarkerCount++;
     io.emit("message", { message: `OSS:抓取${prefix} 第${ossMarkerCount}` });
 
-    let getList = new Promise((resolve, reject) => {
-      bucketManager.listPrefix(
-        process.env.OSS_BUCKET,
-        {
-          limit: 1000,
-          prefix: `${prefix}/`,
-          marker: marker,
-        },
-        function (err, respBody, respInfo) {
-          if (err) {
-            console.log(err);
-            reject(err);
-            return;
-          }
-          resolve({ items: respBody.items, marker: respBody.marker });
-        }
-      );
-    });
-
-    let result = (await getList) as { items: any[]; marker?: string };
+    let result = await listPrefix(prefix, marker);
 
     const pipeline = await redis.pipeline();
     for (const item of result.items) {

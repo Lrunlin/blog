@@ -1,6 +1,5 @@
 import { createHash } from "crypto";
-// import fs from "fs";
-// import path from "path";
+
 import type Entity from "@ant-design/cssinjs/lib/Cache";
 import { extractStyle } from "@ant-design/cssinjs";
 

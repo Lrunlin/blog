@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import refreshUrls from "@/common/utils/static/refreshUrls";
+import { refreshUrls } from "@/common/utils/static";
 import verify from "@/common/verify/api-verify/theme/update";
 
 let router = new Router();

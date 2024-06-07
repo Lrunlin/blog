@@ -4,7 +4,7 @@ import sign from "@/common/utils/auth/sign";
 import qs from "qs";
 import DB from "@/db";
 import id from "@/common/utils/id";
-import upload from "@/common/utils/static/upload";
+import { upload } from "@/common/utils/static";
 import Identicon from "identicon.js";
 import sha1 from "sha1";
 let router = new Router();

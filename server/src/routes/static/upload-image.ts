@@ -4,8 +4,8 @@ let router = new Router();
 import multer from "@koa/multer";
 import { v4 } from "uuid";
 import auth from "@/common/middleware/auth";
-import upload from "@/common/utils/static/upload";
-import { folderList } from "@/common/utils/static/upload";
+import { upload } from "@/common/utils/static";
+import folderList from "@/common/utils/static/folderList";
 
 let uploadOption = multer({
   storage: multer.memoryStorage(),

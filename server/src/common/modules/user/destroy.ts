@@ -1,5 +1,5 @@
 import DB from "@/db";
-import upload from "@/common/utils/static/upload";
+import { upload } from "@/common/utils/static";
 import Identicon from "identicon.js";
 import sha1 from "sha1";
 import id from "@/common/utils/id";

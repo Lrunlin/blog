@@ -4,7 +4,7 @@ import validator from "@/common/middleware/verify/validatorAsync";
 import authMiddleware from "@/common/middleware/auth";
 import tag from "@/common/verify/modules/tag";
 import { load } from "cheerio";
-import exist from "@/common/utils/static/exist";
+import { exist } from "@/common/utils/static";
 
 const schema = Joi.object({
   title: Joi.string().min(5).max(200).required().error(new Error("标题为5-50的字符串")),

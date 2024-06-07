@@ -2,7 +2,8 @@ import Joi from "joi";
 import validator from "@/common/middleware/verify/validatorAsync";
 import { fileName } from "../../modules/file-name";
 import { urlAllowNull } from "../../modules/url";
-import exist from "@/common/utils/static/exist";
+import { exist } from "@/common/utils/static";
+
 const option = Joi.object({
   name: Joi.string().min(1).max(12).required().error(new Error("用户昵称格式错误")),
   location: Joi.string().allow(null).allow("").min(1).max(12).error(new Error("地区格式错误")),

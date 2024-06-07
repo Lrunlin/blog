@@ -2,7 +2,7 @@ import Joi from "joi";
 import validator from "@/common/middleware/verify/validatorAsync";
 import { fileName } from "../../modules/file-name";
 import { url } from "../../modules/url";
-import exist from "@/common/utils/static/exist";
+import { exist } from "@/common/utils/static";
 
 const schema = Joi.object({
   name: Joi.string().required().min(2).max(30).error(new Error("网站名称填写错误")),

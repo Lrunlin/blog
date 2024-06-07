@@ -2,8 +2,9 @@ import Joi from "joi";
 import validator from "@/common/middleware/verify/validatorAsync";
 import compose from "koa-compose";
 import auth from "@/common/middleware/auth";
-import exist from "@/common/utils/static/exist";
+import { exist } from "@/common/utils/static";
 import { load } from "cheerio";
+
 let verifyId = Joi.object({
   id: Joi.number().min(0).required().error(new Error("答案ID格式错误")),
 });

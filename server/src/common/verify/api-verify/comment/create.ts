@@ -7,7 +7,7 @@ import DB from "@/db";
 import { Next, Context } from "koa";
 import map from "@/common/utils/map";
 import { fileNameAllowNull } from "../../modules/file-name";
-import exist from "@/common/utils/static/exist";
+import { exist } from "@/common/utils/static";
 
 const schema = Joi.object({
   belong_id: Joi.number().required().error(new Error("所属ID错误")),

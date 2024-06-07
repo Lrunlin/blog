@@ -2,7 +2,7 @@ import Joi from "joi";
 import tag from "@/common/verify/modules/tag";
 import { urlAllowNull } from "../../modules/url";
 import { fileNameAllowNull } from "../../modules/file-name";
-import exist from "@/common/utils/static/exist";
+import { exist } from "@/common/utils/static";
 import { load } from "cheerio";
 import DB from "@/db";
 

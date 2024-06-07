@@ -4,8 +4,9 @@ import compose from "koa-compose";
 import auth from "@/common/middleware/auth";
 import DB from "@/db";
 import { Next, Context } from "koa";
-import exist from "@/common/utils/static/exist";
+import { exist } from "@/common/utils/static";
 import { load } from "cheerio";
+
 async function verify(ctx: Context, next: Next) {
   /** 如果为false则终止*/
   let result = await DB.Answer.findOne({

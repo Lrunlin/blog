@@ -1,7 +1,7 @@
 import qiniu from "qiniu";
 import Mac from "./utils/Mac";
 
-function refreshUrls(list: string[]):Promise<string|undefined> {
+function refreshUrls(list: string[]): Promise<string | undefined> {
   let cdnManager = new qiniu.cdn.CdnManager(Mac);
   return new Promise((resolve, reject) => {
     cdnManager.refreshUrls(list, function (err, respBody, respInfo) {
