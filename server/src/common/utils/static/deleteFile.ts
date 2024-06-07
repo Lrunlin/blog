@@ -4,7 +4,7 @@ import bucketManager from "./utils/bucketManager";
 function deleteFile(images: string[]) {
   images = images.slice(0, 1000);
   const deleteOperations = images.map(item => {
-    return qiniu.rs.deleteOp(process.env.OSS_NAME, item);
+    return qiniu.rs.deleteOp(process.env.OSS_BUCKET, item);
   });
   return new Promise((success, error) => {
     bucketManager.batch(deleteOperations, function (err, respBody, respInfo) {

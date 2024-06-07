@@ -4,4 +4,4 @@ let zone = {
   huabei: qiniu.zone.Zone_z1,
   huanan: qiniu.zone.Zone_z2,
 };
-export default zone[process.env.OSS_ZONE];
+export default zone[process.env.OSS_REGION];

@@ -56,7 +56,7 @@ async function getOSSList(prefix: string) {
 
     let getList = new Promise((resolve, reject) => {
       bucketManager.listPrefix(
-        process.env.OSS_NAME,
+        process.env.OSS_BUCKET,
         {
           limit: 1000,
           prefix: `${prefix}/`,

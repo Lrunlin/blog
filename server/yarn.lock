@@ -2524,10 +2524,10 @@ pump@^3.0.0:
     end-of-stream "^1.1.0"
     once "^1.3.1"
 
-qiniu@7.9.0:
-  version "7.9.0"
-  resolved "https://registry.npmmirror.com/qiniu/-/qiniu-7.9.0.tgz#2e976dac909cee7a682c2c4cc56dec491db48367"
-  integrity sha512-ivtGZnhd9vtQLNdTOWRqgN29Ay0UfiHqaSjrrDHa9TGz6l4DtjZlDxZuhg2wzcp43z2EiHUjeJ1+KE3tBdGAyg==
+qiniu@7.12.0:
+  version "7.12.0"
+  resolved "https://registry.npmmirror.com/qiniu/-/qiniu-7.12.0.tgz#f010a8e79086198492cb5d03959deef362650810"
+  integrity sha512-l7yzuB+9SFlAVvvQegrMndYwX6r3Fyg5o9Gmt7X1WhJJJmCLr59eWMRtmfy9clptutKuvo2Y4bLYFFN8YReVdA==
   dependencies:
     agentkeepalive "^4.0.2"
     before "^0.0.1"
@@ -2539,7 +2539,8 @@ qiniu@7.9.0:
     mime "^2.4.4"
     mockdate "^3.0.5"
     tunnel-agent "^0.6.0"
-    urllib "^2.34.1"
+    typescript "^4.9.4"
+    urllib "^2.41.0"
 
 qs@^6.11.2, qs@^6.4.0, qs@^6.5.2:
   version "6.11.2"
@@ -3129,6 +3130,11 @@ typescript@5.2.2:
   resolved "https://registry.npmmirror.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
   integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
 
+typescript@^4.9.4:
+  version "4.9.5"
+  resolved "https://registry.npmmirror.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
+  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+
 undefsafe@^2.0.5:
   version "2.0.5"
   resolved "https://registry.npmmirror.com/undefsafe/-/undefsafe-2.0.5.tgz#38733b9327bdcd226db889fb723a6efd162e6e2c"
@@ -3154,7 +3160,7 @@ update-browserslist-db@^1.0.11:
     escalade "^3.1.1"
     picocolors "^1.0.0"
 
-urllib@^2.34.1:
+urllib@^2.41.0:
   version "2.41.0"
   resolved "https://registry.npmmirror.com/urllib/-/urllib-2.41.0.tgz#be15705e62af4eadcafcfeadda1014b526ae2d0d"
   integrity sha512-pNXdxEv52L67jahLT+/7QE+Fup1y2Gc6EdmrAhQ6OpQIC2rl14oWwv9hvk1GXOZqEnJNwRXHABuwgPOs1CtL7g==

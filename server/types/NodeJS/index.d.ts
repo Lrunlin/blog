@@ -27,13 +27,13 @@ declare global {
       /** CDN地址*/
       CDN: string;
       /** 七牛云 AK*/
-      QINIU_AK: string;
+      CLOUD_SERVER_ACCESS_KEY_ID: string;
       /** 七牛云SK*/
-      QINIU_SK: string;
+      CLOUD_SERVER_ACCESS_KEY_SECRET: string;
       /** OSS 名称*/
-      OSS_NAME: string;
+      OSS_BUCKET: string;
       /** OSS区 (只支持国内区)*/
-      OSS_ZONE: "huadong" | "huabei" | "huanan";
+      OSS_REGION: "huadong" | "huabei" | "huanan";
       /** 百度地图AK*/
       BAIDU_MAP_AK: string;
       /** GitHub Client ID*/

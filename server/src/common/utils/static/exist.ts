@@ -5,7 +5,7 @@ import bucketManager from "./utils/bucketManager";
  * 传递多张图片，判断
  */
 async function exist(images: string[]): Promise<{ success: boolean; message: string }> {
-  let statOperations = images.map(item => qiniu.rs.statOp(process.env.OSS_NAME, item));
+  let statOperations = images.map(item => qiniu.rs.statOp(process.env.OSS_BUCKET, item));
 
   return new Promise((resolve, reject) => {
     bucketManager.batch(statOperations, function (err, respBody: any[], respInfo) {

@@ -1,6 +1,5 @@
 import qiniu from "qiniu";
 import sharp from "sharp";
-import zone from "./utils/zone";
 import Mac from "./utils/Mac";
 import fs from "fs";
 import { v4 } from "uuid";
@@ -19,11 +18,9 @@ export const folderList = [
 export type FolderItemType = (typeof folderList)[number];
 
 process.env.VIPS_DISC_THRESHOLD = "750m";
-let config = new qiniu.conf.Config({
-  zone: zone,
-});
+let config = new qiniu.conf.Config({});
 let options = {
-  scope: process.env.OSS_NAME,
+  scope: process.env.OSS_BUCKET,
 };
 
 // https://sharp.pixelplumbing.com/api-utility#cache
