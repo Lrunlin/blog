@@ -71,5 +71,18 @@ const nextConfig = {
   },
   generateBuildId: () => buildid(),
   env: env,
+  images: env.CDN
+    ? {
+        remotePatterns: [
+          {
+            protocol: new URL(env.CDN).protocol.replace(":", ""), // 获取协议并去掉末尾的冒号
+            hostname: new URL(env.CDN).hostname,
+            pathname: "/**",
+          },
+        ],
+        domains: [new URL(env.CDN).hostname],
+      }
+    : undefined,
 };
+
 module.exports = withBundleAnalyzer(nextConfig);

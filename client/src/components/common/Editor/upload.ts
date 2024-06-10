@@ -1,7 +1,7 @@
 import axios from "@axios";
 import { response } from "@type/response";
 import { message } from "antd";
-import { editorPropsType } from "./index";
+import { editorPropsType } from "./Editor";
 
 async function upload(
   files: File[],

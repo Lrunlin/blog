@@ -15,7 +15,14 @@ let listPrefix = (prefix: string, marker?: string): Promise<{ items: any[]; mark
           reject(err);
           return;
         }
-        resolve({ items: respBody.items, marker: respBody.marker });
+
+        resolve({
+          items: respBody.items.map((item: any) => ({
+            key: item.key.replace(`${prefix}/`, ""),
+            create_time: new Date(item.putTime / 10000),
+          })),
+          marker: respBody.marker,
+        });
       }
     );
   });

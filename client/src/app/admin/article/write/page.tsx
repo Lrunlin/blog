@@ -1,5 +1,7 @@
 "use client";
 import Editor from "@/components/common/Editor";
+// import dynamic from "next/dynamic";
+// const Editor = dynamic(() => import("@/components/common/Editor"), { ssr: false });
 import { Button, Form, Input, message, TreeSelect } from "antd";
 import axios from "@axios";
 import Upload from "@/components/common/UpLoad";
@@ -60,7 +62,7 @@ const Write = () => {
             <Input placeholder="填写网站标题" maxLength={200} />
           </Form.Item>
           <Form.Item name="theme_id" hidden rules={[{ required: true }]}>
-            <></>
+            <Input type="hidden" />
           </Form.Item>
           <Form.Item
             label="标签"

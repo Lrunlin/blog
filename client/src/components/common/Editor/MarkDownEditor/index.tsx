@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, startTransition } from "react";
 import type { FC } from "react";
-import { editorPropsType } from "../index";
+import { editorPropsType } from "../Editor";
 import { message } from "antd";
 import { Editor } from "@bytemd/react";
 import { marked } from "marked";
@@ -26,8 +26,8 @@ const MarkDownEditor: FC<editorPropsType> = props => {
     }
   }, [props.initValue]);
 
-  // 后代选择，方式污染
-  let id = `editor-${+new Date()}`;
+  // 后代选择，防止污染
+  let id = `editor-markdown`;
   useEffect(() => {
     document.querySelector(`#${id} .bytemd-preview`)?.classList.add("content-body");
   }, []);

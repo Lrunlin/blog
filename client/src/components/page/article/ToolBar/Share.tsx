@@ -14,7 +14,6 @@ const Share = () => {
     a.click();
   }
   function shareWeiBo() {
-
     link(`
 https://service.weibo.com/share/share.php?title=${currentArticleData.title}-${process.env.NEXT_PUBLIC_SITE_NAME} #${process.env.NEXT_PUBLIC_SITE_NAME}文章#
 &pic=${process.env.NEXT_PUBLIC_HOST}/favicon.svg

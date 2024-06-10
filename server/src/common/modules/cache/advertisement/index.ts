@@ -1,7 +1,6 @@
 import redis from "@/common/utils/redis";
+import { imageInfo } from "@/common/utils/static";
 import DB from "@/db";
-import { AdvertisementAttributes } from "@/db/models/advertisement";
-import axios from "axios";
 
 /** 刷新缓存数据*/
 function setData() {
@@ -13,32 +12,27 @@ function setData() {
     for (let index = 0; index < data.length; index++) {
       const item = data[index];
 
-      let url = `${process.env.CDN}/advertisement/${item.poster_file_name}?imageInfo`;
-
-      await axios
-        .get(url)
-        .then(res => {
-          let { width, height } = res.data;
-          if (width && height) {
-            let itemData = {
-              id: item.id,
-              poster_url: (item as any).poster_url,
-              url: item.url,
-              image_size: { width, height },
-            };
-            if (list[item.position]) {
-              list[item.position].push(itemData);
-            } else {
-              list[item.position] = [itemData];
-            }
+      await imageInfo(`/advertisement/${item.poster_file_name}`)
+        .then(({ width, height }) => {
+          let itemData = {
+            id: item.id,
+            poster_url: (item as any).poster_url,
+            url: item.url,
+            image_size: { width, height },
+          };
+          if (list[item.position]) {
+            list[item.position].push(itemData);
           } else {
-            console.log("获取推广图片宽高错误:", item.id, url, width, height);
+            list[item.position] = [itemData];
           }
         })
         .catch(err => {
-          console.log(err);
+          if (process.env.ENV == "production") {
+            console.log("推广海报图片信息获取错误:", item.id, item.poster_file_name);
+          }
         });
     }
+
     for (let key in list) {
       let value = list[key];
       redis.set(`advertisement-list-${key}`, JSON.stringify(value));

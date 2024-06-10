@@ -77,6 +77,8 @@ setTimeout(() => {
 
 //socket链接
 import socket from "@/socket";
+import { refreshUrls } from "./common/utils/static";
 setTimeout(() => {
   socket();
 }, 0);
+refreshUrls(["http://cdn-test.blogweb.cn/index.css"]);

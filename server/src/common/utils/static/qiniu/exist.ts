@@ -32,7 +32,7 @@ async function exist(images: string[]): Promise<{ success: boolean; message: str
         } else {
           reject({
             success: false,
-            message: "文件系统响应失败，建议您先将文章保存在草稿箱，稍后在试。",
+            message: "文件系统响应失败，请稍后在试。",
           });
           console.log(respInfo.statusCode);
           console.log(respBody);
@@ -41,4 +41,5 @@ async function exist(images: string[]): Promise<{ success: boolean; message: str
     });
   });
 }
+
 export default exist;

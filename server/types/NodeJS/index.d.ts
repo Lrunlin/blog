@@ -26,14 +26,16 @@ declare global {
       DB_MYSQL_PASSWORD: string;
       /** CDN地址*/
       CDN: string;
-      /** 七牛云 AK*/
+      /** 云服务商 阿里、七牛*/
+      CLOUD_SERVER: "ali" | "qiniu";
+      /** 云服务商 AK*/
       CLOUD_SERVER_ACCESS_KEY_ID: string;
-      /** 七牛云SK*/
+      /** 云服务商*/
       CLOUD_SERVER_ACCESS_KEY_SECRET: string;
       /** OSS 名称*/
       OSS_BUCKET: string;
       /** OSS区 (只支持国内区)*/
-      OSS_REGION: "huadong" | "huabei" | "huanan";
+      OSS_REGION: "huadong" | "huabei" | "huanan" | string;
       /** 百度地图AK*/
       BAIDU_MAP_AK: string;
       /** GitHub Client ID*/

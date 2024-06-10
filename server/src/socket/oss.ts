@@ -6,12 +6,11 @@ import DB from "@/db";
 import { load } from "cheerio";
 import { Op } from "sequelize";
 import { v4 } from "uuid";
-import { deleteFile } from "@/common/utils/static";
 import verify from "@/common/utils/auth/verify";
 import Cookie from "cookie";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
-import { listPrefix } from "@/common/utils/static";
+import { listPrefix, deleteFile } from "@/common/utils/static";
 
 function init() {
   redis.del("oss-key-code");
@@ -58,10 +57,9 @@ async function getOSSList(prefix: string) {
 
     const pipeline = await redis.pipeline();
     for (const item of result.items) {
-      let time = Math.floor(item.putTime / 10000);
-      if (+new Date() - time > 2_592_000_000 /*30天*/) {
-        let key = item.key.replace(`${prefix}/`, "");
-        await pipeline.sadd(`imagelist-oss-${prefix}`, key);
+      // if (+new Date() - +item.create_time > 2_592_000_000 /*30天*/) {
+      if (+new Date() - +item.create_time > 2_5 /*30天*/) {
+        await pipeline.sadd(`imagelist-oss-${prefix}`, item.key);
       }
     }
     await pipeline.exec();

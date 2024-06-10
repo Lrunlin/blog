@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, memo } from "react";
 import type { FC } from "react";
-import type { editorPropsType } from "../index";
+import type { editorPropsType } from "../Editor";
 import { message, List } from "antd";
 import useEditorMode from "@/store/common/editor-mode";
 import ReactWEditor from "wangeditor-for-react";
