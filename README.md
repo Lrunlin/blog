@@ -9,7 +9,7 @@
 **文章针对系统进行简单的说明，并且对管理系统进行了展示
 [https://blogweb.cn/article/5488756264910](https://blogweb.cn/article/5488756264910)** 系统包含论文两篇
 
-**关于前端(2024/06)**
+**关于前端Next.js (2024/06)**
 前端由 pages router 切换至 app router，如果想要使用 pages router 的版本,可以克隆[pages router 的最后一个版本](https://github.com/Lrunlin/blog/commit/9d837612d2bbc50b80248ec06b8af04f9c5ecf01)
 
 ```bash
@@ -28,12 +28,13 @@ git checkout 9d837612d2bbc50b80248ec06b8af04f9c5ecf01
 
 前端:Next.js (React.js 18、app router)  
 服务端:Koa2+Sequelize(ORM)  
-数据库:MySQL(InnoDB)+Redis
+数据库:MySQL、Redis
 
 开发语言 TypeScript  
 组件库使用 Ant Design  
 CSS 方案 Tailwind CSS  
 React 状态管理 Zustand
+OSS 支持阿里云和七牛云
 
 _系统支持 JWT 和 Session 两种鉴权方式因为系统拥有账号注销功能，而 JWT 是无服务器状态的所以推荐使用 Session 存储在 Redis 中。_
 
