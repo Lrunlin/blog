@@ -30,7 +30,7 @@ router.post("/answer", verify, async ctx => {
   let isSuccess = result && _t;
   if (isSuccess) {
     t.commit();
-    ctx.body = { success: true, message: "回答成功" };
+    ctx.body = { success: true, message: "回答成功", data: _id };
   } else {
     ctx.status = 500;
     t.rollback();

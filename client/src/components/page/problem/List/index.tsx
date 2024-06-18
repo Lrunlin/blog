@@ -6,7 +6,7 @@ import classNames from "classnames";
 
 export type dataItemPropsType = Pick<
   ProblemAttributes,
-  "id" | "answer_count" | "view_count" | "title" | "tag"
+  "id" | "answer_count" | "view_count" | "title" | "tag" | "answer_id"
 >;
 const List: FC<
   {
@@ -20,7 +20,7 @@ const List: FC<
           <Item
             key={item.id}
             {...item}
-            className={classNames(index && "mt-3",className)}
+            className={classNames(index && "mt-3", className)}
             topRight={topRight}
           />
         ))}

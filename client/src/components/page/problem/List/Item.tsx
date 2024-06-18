@@ -17,15 +17,17 @@ const Item: FC<dataItemPropsType & childrenPropsType> = props => {
           className={classNames([
             "w-12 h-12 flex flex-col items-center rounded",
             props.answer_count
-              ? "border border-solid border-blue-600 text-blue-600"
+              ? props.answer_id
+                ? "bg-blue-600 text-white"
+                : "border border-solid border-blue-600 text-blue-600"
               : "text-gray-400",
           ])}
         >
-          <div>{props.answer_count}</div>
-          <div>回答</div>
+          <div className="truncate">{props.answer_count}</div>
+          <div>{props.answer_id ? "解决" : "回答"}</div>
         </div>
         <div className="w-12 h-12 ml-2 flex flex-col items-center rounded text-orange-800">
-          <div>{props.view_count}</div>
+          <div className="truncate">{props.view_count}</div>
           <div>阅读</div>
         </div>
         <div className="ml-2 w-full">

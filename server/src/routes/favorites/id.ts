@@ -102,6 +102,7 @@ router.get("/favorites/list/:id", getUserId, interger([], ["id"]), async ctx => 
       "view_count",
       "create_time",
       "update_time",
+      "answer_id",
       [
         Sequelize.literal(`(SELECT COUNT(id) FROM answer WHERE problem.id = answer.problem_id)`),
         "answer_count",

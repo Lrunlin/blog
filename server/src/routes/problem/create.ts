@@ -5,9 +5,10 @@ import id from "@/common/utils/id";
 
 let router = new Router();
 router.post("/problem", verify, async ctx => {
+  let _id = id();
   const { title, tag, content } = ctx.request.body;
   await DB.Problem.create({
-    id: id(),
+    id: _id,
     title,
     tag,
     content,
@@ -17,7 +18,7 @@ router.post("/problem", verify, async ctx => {
     author: ctx.id as number,
   })
     .then(res => {
-      ctx.body = { success: true, message: "发布成功" };
+      ctx.body = { success: true, message: "发布成功", data: _id };
     })
     .catch(err => {
       console.log(err);
