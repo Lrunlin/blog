@@ -19,7 +19,7 @@ const Problem = async ({ params: { id } }: { params: { id: string } }) => {
   if (!data) {
     new Response(undefined, { status: 404 });
   } else {
-    readingRecords(header, id, "article");
+    readingRecords(header, id, "problem");
   }
 
   return (

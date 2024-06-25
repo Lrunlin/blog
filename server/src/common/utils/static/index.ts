@@ -14,22 +14,21 @@
 
 // export { deleteFile, exist, listPrefix, refreshUrls, upload, imageInfo };
 
-
 // 阿里云模块
-import aliDeleteFile from './ali/deleteFile';
-import aliExist from './ali/exist';
-import aliListPrefix from './ali/listPrefix';
-import aliRefreshUrls from './ali/refreshUrls';
-import aliImageInfo from './ali/imageInfo';
-import aliUpload from './ali/upload';
+import aliDeleteFile from "./ali/deleteFile";
+import aliExist from "./ali/exist";
+import aliListPrefix from "./ali/listPrefix";
+import aliRefreshUrls from "./ali/refreshUrls";
+import aliImageInfo from "./ali/imageInfo";
+import aliUpload from "./ali/upload";
 
 // 七牛模块
-import qiniuDeleteFile from './qiniu/deleteFile';
-import qiniuExist from './qiniu/exist';
-import qiniuListPrefix from './qiniu/listPrefix';
-import qiniuRefreshUrls from './qiniu/refreshUrls';
-import qiniuImageInfo from './qiniu/imageInfo';
-import qiniuUpload from './qiniu/upload';
+import qiniuDeleteFile from "./qiniu/deleteFile";
+import qiniuExist from "./qiniu/exist";
+import qiniuListPrefix from "./qiniu/listPrefix";
+import qiniuRefreshUrls from "./qiniu/refreshUrls";
+import qiniuImageInfo from "./qiniu/imageInfo";
+import qiniuUpload from "./qiniu/upload";
 
 // 创建两个对象来存储模块
 const ali = {
@@ -38,7 +37,7 @@ const ali = {
   listPrefix: aliListPrefix,
   refreshUrls: aliRefreshUrls,
   imageInfo: aliImageInfo,
-  upload: aliUpload
+  upload: aliUpload,
 };
 
 const qiniu = {
@@ -47,17 +46,10 @@ const qiniu = {
   listPrefix: qiniuListPrefix,
   refreshUrls: qiniuRefreshUrls,
   imageInfo: qiniuImageInfo,
-  upload: qiniuUpload
+  upload: qiniuUpload,
 };
 
 // 根据环境变量选择导出哪个对象
-const modules = process.env.CLIENT_HOST == 'ali' ? ali : qiniu;
+const modules = process.env.CLIENT_HOST == "ali" ? ali : qiniu;
 
-export const {
-  deleteFile,
-  exist,
-  listPrefix,
-  refreshUrls,
-  imageInfo,
-  upload
-} = modules;
+export const { deleteFile, exist, listPrefix, refreshUrls, imageInfo, upload } = modules;
