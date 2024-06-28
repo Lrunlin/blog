@@ -10,6 +10,7 @@ import { Context } from "@/components/page/problem/ProblemDetail";
 
 import useUserData from "@/store/user/user-data";
 import useFetch from "@/common/hooks/useFetch";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 interface propsType {
   className?: string;
   onSuccess: () => any;
@@ -26,6 +27,8 @@ const Editor: FC<propsType> = props => {
 
   const [content, setContent] = useState("");
   let userData = useUserData(s => s.data);
+  let setUserData = useUserSignModel(s => s.setData);
+
   const { data, reload } = useContext(Context);
   function submit() {
     axios
@@ -112,7 +115,17 @@ const Editor: FC<propsType> = props => {
       ) : (
         <>
           <Message />
-          <Button type="primary" className="mt-4" onClick={() => setIsEditorState(true)}>
+          <Button
+            type="primary"
+            className="mt-4"
+            onClick={() => {
+              if (userData?.id) {
+                setIsEditorState(true);
+              } else {
+                setUserData("LogIn");
+              }
+            }}
+          >
             {data.answer_list.some(item => item.author == userData?.id) ? "修改答案" : "撰写回答"}
           </Button>
         </>
