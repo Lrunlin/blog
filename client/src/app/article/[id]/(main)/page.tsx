@@ -7,7 +7,6 @@ import ArticleUserData from "@/components/page/article/UserData";
 import type { ArticleAttributes } from "@type/model-attribute";
 import Comments from "@/components/page/article/Comments";
 import Recommend from "@/components/page/article/Recommend";
-import NoFound from "@/components/page/article/NoFound";
 import Reprint from "@/components/page/article/Reprint";
 import readingRecords from "@/common/modules/readingRecords";
 import { response } from "@type/response";
@@ -29,14 +28,9 @@ const Article = async ({ params: { id } }: { params: { id: string } }) => {
     .catch(err => null);
 
   if (!data) {
-    new Response(undefined, { status: 404 });
+    return notFound();
   } else {
     readingRecords(header, id, "article");
-  }
-
-  // if (!data) return <NoFound />;
-  if (!data) {
-    notFound();
   }
 
   return (

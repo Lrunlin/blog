@@ -106,6 +106,7 @@ const Answer: FC = () => {
             </div>
             <div
               className={classNames(["mt-2 content-body"])}
+              suppressHydrationWarning={true}
               dangerouslySetInnerHTML={{ __html: item.content }}
             ></div>
             {data.answer_id == item.id ? (
@@ -158,8 +159,7 @@ const Answer: FC = () => {
                 />
               )}
               <Suspense>
-
-              <Comments type="answer" belong_id={item.id} data={item.comment_list} />
+                <Comments type="answer" belong_id={item.id} data={item.comment_list} />
               </Suspense>
             </div>
             {/* 左侧点赞 */}

@@ -200,7 +200,17 @@ router.get("/problem/:id", verify, async ctx => {
               _data,
               getCodeBlockLanguage(
                 setImageTag(setExternalLink(_data.content), "problem", data.title)
-              )
+              ),
+              {
+                answer_list: _data.answer_list.map(item =>
+                  Object.assign(
+                    item,
+                    getCodeBlockLanguage(
+                      setImageTag(setExternalLink(item.content), "answer", data.title)
+                    )
+                  )
+                ),
+              }
             )
           )
         );
@@ -216,6 +226,24 @@ router.get("/problem/:id", verify, async ctx => {
   if (data?.collection_state) {
     data.collection_state = data.collection_state.split(",").map((item: string) => +item);
   }
+
+  if (data) {
+    let language = (data.answer_list || []).reduce((total: any, item: any, index: number) => {
+      if (item.language) {
+        let data = total.concat(item.language);
+        item.language = undefined;
+        return data;
+      } else {
+        item.language = undefined;
+        return total;
+      }
+    }, data.language || []);
+
+    if (language) {
+      data.language = [...new Set(language)];
+    }
+  }
+
   if (data) {
     ctx.body = { success: true, message: "查询成功", data: data };
   } else {
