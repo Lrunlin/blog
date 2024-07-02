@@ -26,7 +26,7 @@ console.log = function () {
   const stackTrace = new Error().stack as string;
   const position = stackTrace.split("\n")[2].trim(); // 提取第三行的代码位置
   originalConsoleLog(
-    `${moment().format("YYYY-MM-DD HH:mm:ss")}  ${position.replace("at Server.<anonymous>", "")}`,
+    `${moment().format('YYYY-MM-DD HH:mm:ss')}  ${position.replace("at Server.<anonymous>", "")}`,
   );
   originalConsoleLog.apply(console, arguments as any);
 };
