@@ -26,14 +26,14 @@ console.log = function () {
   const stackTrace = new Error().stack as string;
   const position = stackTrace.split("\n")[2].trim(); // 提取第三行的代码位置
   originalConsoleLog(
-    `${moment().format('YYYY-MM-DD HH:mm:ss')}  ${position.replace("at Server.<anonymous>", "")}`,
+    `${moment().format("YYYY-MM-DD HH:mm:ss")}  ${position.replace("at Server.<anonymous>", "")}`,
   );
   originalConsoleLog.apply(console, arguments as any);
 };
 
 dotenv.config({
   path: path.join(__dirname, `../.env`), // 配置文件路径
-  encoding: 'utf8', // 编码方式，默认utf8
+  encoding: "utf8", // 编码方式，默认utf8
   debug: false, // 是否开启debug，默认false
 }).parsed;
 
