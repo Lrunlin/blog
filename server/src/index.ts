@@ -33,7 +33,7 @@ console.log = function () {
 
 dotenv.config({
   path: path.join(__dirname, `../.env`), // 配置文件路径
-  encoding: "utf8", // 编码方式，默认utf8
+  encoding: 'utf8', // 编码方式，默认utf8
   debug: false, // 是否开启debug，默认false
 }).parsed;
 
