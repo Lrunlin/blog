@@ -1,10 +1,11 @@
 "use client";
+
 import { Suspense } from "react";
 import { Modal } from "antd";
 import useUserSignModel from "@/store/user/user-sign-model-state";
+import ForgetPassword from "./ForgetPassword";
 import LogIn from "./LogIn";
 import LogOn from "./LogOn";
-import ForgetPassword from "./ForgetPassword";
 
 export const componentsList = {
   LogIn: {
@@ -23,14 +24,22 @@ export const componentsList = {
 
 /** Modal弹窗，处理用户的注册和登录*/
 const Sign = () => {
-  let userSignModel = useUserSignModel(s => s);
+  let userSignModel = useUserSignModel((s) => s);
   function Components() {
-    return userSignModel.data ? componentsList[userSignModel.data].component : <></>;
+    return userSignModel.data ? (
+      componentsList[userSignModel.data].component
+    ) : (
+      <></>
+    );
   }
   return (
     <>
       <Modal
-        title={<b>{userSignModel.data ? componentsList[userSignModel.data].title : ""}</b>}
+        title={
+          <b>
+            {userSignModel.data ? componentsList[userSignModel.data].title : ""}
+          </b>
+        }
         open={!!userSignModel.data}
         width={315}
         footer={null}

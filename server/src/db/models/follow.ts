@@ -65,7 +65,7 @@ export class Follow
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Follow;
   }
 }

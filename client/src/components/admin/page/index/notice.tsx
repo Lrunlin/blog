@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import  Link  from "next/link";
-import { Empty, Button } from "antd";
+import Link from "next/link";
+import { Button, Empty } from "antd";
 
 interface propsType {
   data: { type: "friendly-link" | "comment"; count: number }[];
@@ -20,8 +20,11 @@ const Notice: FC<propsType> = ({ data }) => {
   return (
     <>
       {data.length ? (
-        data.map(item => (
-          <div className="flex justify-between" key={`index-${item.type}-${item.count}`}>
+        data.map((item) => (
+          <div
+            className="flex justify-between"
+            key={`index-${item.type}-${item.count}`}
+          >
             <div>
               有 <b>{item.count}</b> {switchText(item.type)}
             </div>
@@ -31,7 +34,10 @@ const Notice: FC<propsType> = ({ data }) => {
           </div>
         ))
       ) : (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂时没有通知" />
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="暂时没有通知"
+        />
       )}
     </>
   );

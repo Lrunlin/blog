@@ -1,6 +1,6 @@
 import axios from "@axios";
-import type { articleListItemType } from "@type/model/article-list-item";
 import type { response } from "@type/common/response";
+import type { articleListItemType } from "@type/model/article-list-item";
 
 export type sortType = "recommend" | "newest" | "hottest";
 interface paramsType {
@@ -22,7 +22,11 @@ export interface responseType {
  * @params type {recommend | newest | hottest} 请求类型 (综合、最新、热榜)
  * @return data {object[]} 文章数据
  */
-function articleList(page: number, params: paramsType, cancelCallback?: (cancel: any) => any) {
+function articleList(
+  page: number,
+  params: paramsType,
+  cancelCallback?: (cancel: any) => any,
+) {
   const controller = new AbortController();
   cancelCallback && cancelCallback(() => controller.abort());
   return axios
@@ -30,10 +34,10 @@ function articleList(page: number, params: paramsType, cancelCallback?: (cancel:
       params: params,
       signal: controller.signal,
     })
-    .then(res => {
+    .then((res) => {
       return res.data.data;
     })
-    .catch(err => {
+    .catch((err) => {
       return { total: 0, list: [] };
     });
 }

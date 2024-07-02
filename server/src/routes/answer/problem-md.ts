@@ -1,11 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import verify from "@/common/verify/api-verify/answer/problem-md";
 import setImageTag from "@/common/modules/article/get/img-add-prefix";
+import verify from "@/common/verify/api-verify/answer/problem-md";
+
 let router = new Router();
 
 /** 查询用户在某个问题下的回答内容(返回MarkDown)*/
-router.get("/answer", verify, async ctx => {
+router.get("/answer", verify, async (ctx) => {
   await DB.Answer.findOne({
     where: {
       problem_id: ctx.query.problem_id,
@@ -13,7 +14,7 @@ router.get("/answer", verify, async ctx => {
     },
     attributes: ["id", "content"],
   })
-    .then(row => {
+    .then((row) => {
       if (row) {
         ctx.body = {
           success: true,
@@ -26,7 +27,7 @@ router.get("/answer", verify, async ctx => {
         ctx.status = 404;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       ctx.status = 500;
     });

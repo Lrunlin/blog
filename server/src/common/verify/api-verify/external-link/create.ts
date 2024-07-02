@@ -1,6 +1,6 @@
+import DB from "@/db";
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validatorAsync";
-import DB from "@/db";
 
 const schema = Joi.object({
   href: Joi.string()

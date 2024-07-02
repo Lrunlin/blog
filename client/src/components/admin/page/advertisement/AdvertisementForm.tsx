@@ -1,8 +1,8 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { FC } from "react";
+import { Button, Form, Input, InputNumber, Select, message } from "antd";
 import { advertisementType } from "@type/model/advertisement";
 import Upload from "@/components/common/UpLoad";
-import { Button, InputNumber, Form, Input, Select, message } from "antd";
 
 interface propsType {
   initialValue?: advertisementType & { poster_url: string };
@@ -10,7 +10,7 @@ interface propsType {
   submitText?: string;
 }
 
-const AdvertisementForm: FC<propsType> = props => {
+const AdvertisementForm: FC<propsType> = (props) => {
   const positionSelect = [
     {
       position: "index",
@@ -39,8 +39,8 @@ const AdvertisementForm: FC<propsType> = props => {
   let [posterURL, setPosterURL] = useState<undefined | string>();
 
   let crop = useMemo(
-    () => positionSelect.find(item => item.position == position)?.crop,
-    [position]
+    () => positionSelect.find((item) => item.position == position)?.crop,
+    [position],
   );
 
   let oldPosition = useRef("index");
@@ -56,8 +56,9 @@ const AdvertisementForm: FC<propsType> = props => {
       //初始化时候是undefined
       // 如果要求的比例不一样，清除上传的图片
       if (
-        positionSelect.find(item => item.position == position)?.crop !=
-        positionSelect.find(item => item.position == oldPosition.current)?.crop
+        positionSelect.find((item) => item.position == position)?.crop !=
+        positionSelect.find((item) => item.position == oldPosition.current)
+          ?.crop
       ) {
         setUploadKey(`advertisement-upload-${+new Date()}`);
         setPosterURL(undefined);
@@ -76,7 +77,12 @@ const AdvertisementForm: FC<propsType> = props => {
         onFinish={props.onSubmit}
         autoComplete="off"
         initialValues={
-          props.initialValue || { poster_file_name: "", indexes: 1, url: null, position: "index" }
+          props.initialValue || {
+            poster_file_name: "",
+            indexes: 1,
+            url: null,
+            position: "index",
+          }
         }
         validateTrigger="onSubmit"
       >
@@ -133,7 +139,7 @@ const AdvertisementForm: FC<propsType> = props => {
         </Item>
         <Item label="显示位置" name="position" required>
           <Select style={{ width: 120 }}>
-            {positionSelect.map(item => (
+            {positionSelect.map((item) => (
               <Option value={item.position} key={item.position + item.label}>
                 {item.label}
               </Option>

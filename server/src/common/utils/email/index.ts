@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+
 interface paramsType {
   /** 接收人*/
   target: string;
@@ -18,7 +19,7 @@ let transporter = nodemailer.createTransport({
   },
 });
 function sendEmail(params: paramsType) {
-  return new Promise<void>((resolve, reject)=> {
+  return new Promise<void>((resolve, reject) => {
     let mailOptions = {
       from: process.env.EMAIL_USER,
       to: params.target,

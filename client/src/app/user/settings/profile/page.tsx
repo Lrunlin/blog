@@ -1,28 +1,31 @@
 "use client";
-import useUserData from "@/store/user/user-data";
-import { Button, Result, Form, Input, message } from "antd";
+
+import { Button, Form, Input, Result, message } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import UploadAvatar from "@/components/page/user/setting/UploadAvatar";
 import useFetch from "@/common/hooks/useFetch";
+import UploadAvatar from "@/components/page/user/setting/UploadAvatar";
+import useUserData from "@/store/user/user-data";
 
 const Profile = () => {
   let { useForm } = Form;
   let [form] = useForm();
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
 
   let { data, error, refetch } = useFetch(async () =>
-    userData ? axios.get(`/user/data/${userData?.id}`).then(res => res.data.data) : undefined
+    userData
+      ? axios.get(`/user/data/${userData?.id}`).then((res) => res.data.data)
+      : undefined,
   );
 
   const onFinish = (values: any) => {
     axios
       .put("/user", values)
-      .then(res => {
+      .then((res) => {
         message.success(res.data.message);
         refetch();
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message || "修改失败");
       });
   };
@@ -32,7 +35,7 @@ const Profile = () => {
   function getLocation() {
     axios
       .get("/location")
-      .then(res => {
+      .then((res) => {
         form.setFieldsValue({ location: res.data.data });
       })
       .catch(() => {
@@ -42,11 +45,11 @@ const Profile = () => {
 
   return (
     <>
-      <h2 className="pb-2 border-b-solid border-gray-200">个人资料</h2>
+      <h2 className="border-b-solid border-gray-200 pb-2">个人资料</h2>
       {error && <Result status="404" title="没有找到指定的用户" />}
       {data && (
-        <div className="flex mt-6">
-          <div className="w-3/5 ml-8">
+        <div className="mt-6 flex">
+          <div className="ml-8 w-3/5">
             <style jsx global>
               {`
                 .ant-form-item {
@@ -89,7 +92,11 @@ const Profile = () => {
                 rules={[{ max: 15, message: "地区的最大长度为15" }]}
               >
                 <>
-                  <EnvironmentOutlined onClick={getLocation} title="重新定位" className="text-lg" />
+                  <EnvironmentOutlined
+                    onClick={getLocation}
+                    title="重新定位"
+                    className="text-lg"
+                  />
                   <span className="ml-2">{location}</span>
                 </>
               </Form.Item>
@@ -111,7 +118,9 @@ const Profile = () => {
               <Form.Item
                 name="avatar_file_name"
                 hidden
-                rules={[{ required: true, min: 1, max: 50, message: "请上传头像" }]}
+                rules={[
+                  { required: true, min: 1, max: 50, message: "请上传头像" },
+                ]}
                 children={<div></div>}
               />
 
@@ -126,7 +135,7 @@ const Profile = () => {
             <UploadAvatar
               avatar_file_name={data.avatar_file_name}
               avatar_url={data.avatar_url}
-              onChange={val => {
+              onChange={(val) => {
                 form.setFieldsValue({ avatar_file_name: val });
               }}
             />

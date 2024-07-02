@@ -1,6 +1,6 @@
-import sha256 from "@/common/utils/sha256";
 import * as Sequelize from "sequelize";
 import { DataTypes, Model, Optional } from "sequelize";
+import sha256 from "@/common/utils/sha256";
 
 export interface UserAttributes {
   id: number;
@@ -30,9 +30,15 @@ export type UserOptionalAttributes =
   | "unit"
   | "location"
   | "create_time";
-export type UserCreationAttributes = Optional<UserAttributes, UserOptionalAttributes>;
+export type UserCreationAttributes = Optional<
+  UserAttributes,
+  UserOptionalAttributes
+>;
 
-export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+export class User
+  extends Model<UserAttributes, UserCreationAttributes>
+  implements UserAttributes
+{
   id!: number;
   name!: string;
   auth!: number;
@@ -105,7 +111,10 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           allowNull: true,
           comment: "自我介绍",
           set(this, val) {
-            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+            if (
+              typeof val == "string" &&
+              /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)
+            ) {
               this.setDataValue("description", val);
             } else {
               this.setDataValue("description", null as any);
@@ -117,7 +126,10 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           allowNull: true,
           comment: "个人网站",
           set(this, val) {
-            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+            if (
+              typeof val == "string" &&
+              /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)
+            ) {
               this.setDataValue("site", val);
             } else {
               this.setDataValue("site", null as any);
@@ -129,7 +141,10 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           allowNull: true,
           comment: "所属单位",
           set(this, val) {
-            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+            if (
+              typeof val == "string" &&
+              /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)
+            ) {
               this.setDataValue("unit", val);
             } else {
               this.setDataValue("unit", null as any);
@@ -141,7 +156,10 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
           allowNull: true,
           comment: "所在地区",
           set(this, val) {
-            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+            if (
+              typeof val == "string" &&
+              /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)
+            ) {
               this.setDataValue("location", val);
             } else {
               this.setDataValue("location", null as any);
@@ -196,7 +214,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             fields: [{ name: "qq" }],
           },
         ],
-      }
+      },
     ) as typeof User;
   }
 }

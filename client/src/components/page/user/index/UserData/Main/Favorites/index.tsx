@@ -1,14 +1,20 @@
 "use client";
-import { useState, startTransition } from "react";
-import { Skeleton, Result, Button, Empty, message } from "antd";
+
+import { startTransition, useState } from "react";
 import { useParams } from "next/navigation";
-import useFetch from "@/common/hooks/useFetch";
+import { Button, Empty, Result, Skeleton, message } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  LockOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
 import axios from "@axios";
 import { response } from "@type/response";
-import useUserData from "@/store/user/user-data";
 import classNames from "classnames";
-import { LockOutlined, EditOutlined, DeleteOutlined, SyncOutlined } from "@ant-design/icons";
+import useFetch from "@/common/hooks/useFetch";
 import { valuesType } from "@/components/common/CollectionModal/CreateFrom";
+import useUserData from "@/store/user/user-data";
 import Modal from "./Modal";
 
 interface favoritesListProps {
@@ -24,27 +30,32 @@ const FavoritesList = () => {
   let id = params.id as string;
   const [defaultValue, setDefaultValue] = useState<favoritesListProps>();
   const [open, setOpen] = useState(false);
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   // 列表获取
   let { data, error, isLoading, refetch, setData } = useFetch(() =>
     axios
-      .get<response<favoritesListProps[]>>(`/favorites/${id}`, { params: { edit: true } })
-      .then(res => res.data.data)
+      .get<
+        response<favoritesListProps[]>
+      >(`/favorites/${id}`, { params: { edit: true } })
+      .then((res) => res.data.data),
   );
   // 更新收藏夹
   let { isLoading: updateIsLoading, refetch: updateRefetch } = useFetch(
     (values: valuesType) =>
       axios
-        .put<response<favoritesListProps[]>>(`/favorites/${defaultValue?.id}`, values)
-        .then(res => {
+        .put<response<favoritesListProps[]>>(
+          `/favorites/${defaultValue?.id}`,
+          values,
+        )
+        .then((res) => {
           message.success("更新成功");
           refetch();
           setOpen(false);
         })
-        .catch(err => {
+        .catch((err) => {
           message.error("更新失败");
         }),
-    { manual: true }
+    { manual: true },
   );
 
   const [deleteID, setDeleteID] = useState<null | number>(null);
@@ -54,20 +65,23 @@ const FavoritesList = () => {
       setDeleteID(id);
       return axios
         .delete<response>(`/favorites/${id}`)
-        .then(res => {
+        .then((res) => {
           if (data) {
-            setData(data => data?.filter(item => item.id != id) as favoritesListProps[]);
+            setData(
+              (data) =>
+                data?.filter((item) => item.id != id) as favoritesListProps[],
+            );
           }
           message.success("删除成功");
         })
-        .catch(err => {
+        .catch((err) => {
           message.error("删除失败");
         })
         .finally(() => {
           setDeleteID(null);
         });
     },
-    { manual: true }
+    { manual: true },
   );
 
   return (
@@ -91,26 +105,30 @@ const FavoritesList = () => {
               <div
                 key={item.id}
                 className={classNames(
-                  "px-2 py-2 cursor-pointer group",
-                  index && "border-0 border-t border-solid border-gray-200"
+                  "group cursor-pointer px-2 py-2",
+                  index && "border-0 border-t border-solid border-gray-200",
                 )}
               >
                 <a
                   href={`/collection/${item.id}`}
                   target="_blank"
-                  className="text-lg flex items-center text-black"
+                  className="flex items-center text-lg text-black"
                 >
                   <span>{item.name}</span>
-                  {!!item.is_private && <LockOutlined className="text-gray-400 ml-2" />}
+                  {!!item.is_private && (
+                    <LockOutlined className="ml-2 text-gray-400" />
+                  )}
                 </a>
-                <div className="text-sm text-gray-400 my-1">{item.description}</div>
-                <div className="text-sm text-gray-400 flex justify-between items-center">
+                <div className="my-1 text-sm text-gray-400">
+                  {item.description}
+                </div>
+                <div className="flex items-center justify-between text-sm text-gray-400">
                   <div>
                     {item.favorites_collection_count}
                     <span className="ml-1">篇文章</span>
                   </div>
                   {userData?.id == item.user_id && (
-                    <div className="text-gray-500 hidden group-hover:flex">
+                    <div className="hidden text-gray-500 group-hover:flex">
                       <div
                         className="mr-4"
                         onClick={() => {
@@ -149,10 +167,12 @@ const FavoritesList = () => {
       )}
       <Modal
         defaultValue={
-          defaultValue ? { ...defaultValue, is_private: !!defaultValue?.is_private } : undefined
+          defaultValue
+            ? { ...defaultValue, is_private: !!defaultValue?.is_private }
+            : undefined
         }
         open={open}
-        onSubmit={values => updateRefetch(values)}
+        onSubmit={(values) => updateRefetch(values)}
         isLoading={updateIsLoading}
         onCancel={() => setOpen(false)}
       />

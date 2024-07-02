@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { CloseCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 /** 问答页面底部评论组件的提示上方提示文字*/
 const Message = () => {
@@ -30,9 +30,12 @@ const Message = () => {
       {list.map((item, index) => (
         <Fragment key={`${item.title}-${index}`}>
           <div className={`${item.colorClassName} text-lg`}>{item.title}</div>
-          <ul className={`list-none p-0 mb-2`}>
+          <ul className={`mb-2 list-none p-0`}>
             {item.message.map((mes, _index) => (
-              <li key={`${mes}-${_index}`} className="text-base flex items-center">
+              <li
+                key={`${mes}-${_index}`}
+                className="flex items-center text-base"
+              >
                 <span className={`${item.colorClassName}`}>{item.icon}</span>
                 <span className="ml-2">{mes}</span>
               </li>

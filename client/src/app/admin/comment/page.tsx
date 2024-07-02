@@ -1,8 +1,17 @@
 "use client";
-import { useState, useEffect, startTransition } from "react";
-import axios from "@axios";
-import { message, Table, Avatar, Image, Button, Popover, DatePicker } from "antd";
+
+import { startTransition, useEffect, useState } from "react";
 import Link from "next/link";
+import {
+  Avatar,
+  Button,
+  DatePicker,
+  Image,
+  Popover,
+  Table,
+  message,
+} from "antd";
+import axios from "@axios";
 import dayjs from "@dayjs";
 import AdminLayout from "@/layout/Admin/Base";
 
@@ -34,7 +43,9 @@ const Comment = () => {
           {comment_pics ? (
             <Image width={100} src={comment_pics} />
           ) : (
-            <div className="w-24 h-10 flex items-center justify-center">未上传图片</div>
+            <div className="flex h-10 w-24 items-center justify-center">
+              未上传图片
+            </div>
           )}
         </>
       ),
@@ -47,10 +58,12 @@ const Comment = () => {
         return (
           <Popover
             placement="topLeft"
-            content={<div className="break-all w-52">{content}</div>}
+            content={<div className="w-52 break-all">{content}</div>}
             trigger="hover"
           >
-            <div className="break-all line-clamp-2 w-48 cursor-pointer">{content}</div>
+            <div className="line-clamp-2 w-48 cursor-pointer break-all">
+              {content}
+            </div>
           </Popover>
         );
       },
@@ -90,16 +103,16 @@ const Comment = () => {
   function remove(id: number) {
     axios
       .delete(`/comment/${id}`)
-      .then(res => {
+      .then((res) => {
         message.success(res.data.message);
-        setData(_data => _data.filter(item => item.id != id));
+        setData((_data) => _data.filter((item) => item.id != id));
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       });
   }
   useEffect(() => {
-    axios.get(`/comment/list/page/${page}`, { params: {} }).then(res => {
+    axios.get(`/comment/list/page/${page}`, { params: {} }).then((res) => {
       if (res.data.success) {
         startTransition(() => {
           setData(res.data.data.list);
@@ -113,7 +126,7 @@ const Comment = () => {
 
   // 修改审阅字段
   useEffect(() => {
-    let list = data.filter(item => !item.is_review).map(item => item.id);
+    let list = data.filter((item) => !item.is_review).map((item) => item.id);
     if (list.length) {
       axios
         .put("/comment", { id: list })
@@ -130,7 +143,7 @@ const Comment = () => {
             current: page,
             total: total,
             defaultPageSize: 10,
-            onChange: _page => setPage(_page),
+            onChange: (_page) => setPage(_page),
           }}
           columns={columns}
           rowKey="id"

@@ -5,13 +5,13 @@ import useUserSignModel from "@/store/user/user-sign-model-state";
 
 const ForgetPassword = () => {
   const [isLoad, setIsLoad] = useState(false);
-  let setModalState = useUserSignModel(s => s.setData);
+  let setModalState = useUserSignModel((s) => s.setData);
 
   function forgetPassword(values: any) {
     setIsLoad(true);
     axios
       .post(`/forget-password/email/${values.email}`)
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
           setModalState(false);
@@ -41,10 +41,16 @@ const ForgetPassword = () => {
         </Form.Item>
       </Form>
       <div className="flex justify-between">
-        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogIn")}>
+        <span
+          className="cursor-pointer text-sky-600"
+          onClick={() => setModalState("LogIn")}
+        >
           登录
         </span>
-        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogOn")}>
+        <span
+          className="cursor-pointer text-sky-600"
+          onClick={() => setModalState("LogOn")}
+        >
           注册
         </span>
       </div>

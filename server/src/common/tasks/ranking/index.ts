@@ -1,8 +1,8 @@
-import redis from "@/common/utils/redis";
 import DB from "@/db";
-import type { UserAttributes } from "@/db/models/user";
-import Sequelize from "@/db/config";
 import moment from "moment";
+import Sequelize from "@/db/config";
+import type { UserAttributes } from "@/db/models/user";
+import redis from "@/common/utils/redis";
 
 async function setRankingData() {
   // 粉丝榜
@@ -21,20 +21,20 @@ async function setRankingData() {
       "location",
       [
         Sequelize.literal(
-          `(SELECT count(id) FROM follow WHERE user.id = follow.belong_id and type="user")`
+          `(SELECT count(id) FROM follow WHERE user.id = follow.belong_id and type="user")`,
         ),
         "funs_count",
       ],
     ],
     where: { state: 1 },
   })
-    .then(rows => {
+    .then((rows) => {
       type userType = UserAttributes & { funs_count: number };
-      return rows.filter(item => {
+      return rows.filter((item) => {
         return !!(item.toJSON() as userType).funs_count;
       });
     })
-    .catch(e => {
+    .catch((e) => {
       console.log(e);
       return [];
     });
@@ -53,7 +53,7 @@ async function setRankingData() {
       // 根据7日内发布的文章数量排序
       [
         Sequelize.literal(
-          `(select count(id) from article where article.author=user.id and article.state=1 and article.create_time>"${time}")`
+          `(select count(id) from article where article.author=user.id and article.state=1 and article.create_time>"${time}")`,
         ),
         "article_count",
       ],
@@ -63,7 +63,7 @@ async function setRankingData() {
     order: [["article_count", "desc"]],
     where: { state: 1 },
   })
-    .then(rows => rows)
+    .then((rows) => rows)
     .catch(() => []);
 
   redis.set("ranking-author", JSON.stringify(author));

@@ -1,9 +1,9 @@
-import compose from "koa-compose";
-import Joi from "joi";
 import type { Context, Next } from "koa";
+import Joi from "joi";
+import compose from "koa-compose";
+import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/verify/validatorAsync";
 import interger from "@/common/verify/integer";
-import auth from "@/common/middleware/auth";
 import option from "./common.module";
 
 let verifyState = Joi.object({

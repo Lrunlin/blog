@@ -14,9 +14,9 @@ async function getGithubName(code: string) {
         headers: {
           accept: "application/json",
         },
-      }
+      },
     )
-    .then(res => res.data.access_token)
+    .then((res) => res.data.access_token)
     .catch(() => false as false);
 
   if (!accessToken) {
@@ -31,7 +31,7 @@ async function getGithubName(code: string) {
       Authorization: `token ${accessToken}`,
     },
   })
-    .then(res => res.data.login)
+    .then((res) => res.data.login)
     .catch(() => false as false);
 
   return githubData || false;

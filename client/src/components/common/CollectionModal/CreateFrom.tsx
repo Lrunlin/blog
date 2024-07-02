@@ -1,17 +1,21 @@
 import type { FC } from "react";
-import { Form, Button, Input, Radio } from "antd";
+import { Button, Form, Input, Radio } from "antd";
 // import { useForm } from "antd/es/form/Form";
 // https://stackoverflow.com/questions/64428363/syntaxerror-cannot-use-import-statement-outside-a-module-react-js-antd
 import { useForm } from "antd/lib/form/Form";
 
-export type valuesType = { name: string; description: string; is_private: boolean };
+export type valuesType = {
+  name: string;
+  description: string;
+  is_private: boolean;
+};
 export interface propsType {
   onCancel: () => void;
   onSubmit: (values: valuesType) => void;
   isLoading: boolean;
   defaultValue?: valuesType;
 }
-const CreateFrom: FC<propsType> = props => {
+const CreateFrom: FC<propsType> = (props) => {
   let [form] = useForm();
   const { TextArea } = Input;
 
@@ -20,7 +24,7 @@ const CreateFrom: FC<propsType> = props => {
       <Form
         initialValues={props.defaultValue || { is_private: false }}
         form={form}
-        onFinish={values => {
+        onFinish={(values) => {
           props.onSubmit({
             ...values,
             description: /^[\s\S]*.*[^\s][\s\S]*$/.test(values.description)
@@ -41,7 +45,11 @@ const CreateFrom: FC<propsType> = props => {
         >
           <Input />
         </Form.Item>
-        <Form.Item label="描述" name="description" rules={[{ max: 100, message: "最大长度为100" }]}>
+        <Form.Item
+          label="描述"
+          name="description"
+          rules={[{ max: 100, message: "最大长度为100" }]}
+        >
           <TextArea maxLength={100} />
         </Form.Item>
         <Form.Item name="is_private">
@@ -58,7 +66,7 @@ const CreateFrom: FC<propsType> = props => {
           </Radio.Group>
         </Form.Item>
       </Form>
-      <div className="flex justify-end mt-5">
+      <div className="mt-5 flex justify-end">
         <Button className="mr-4" onClick={props.onCancel}>
           取消
         </Button>

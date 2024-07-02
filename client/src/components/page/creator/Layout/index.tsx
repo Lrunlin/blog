@@ -1,21 +1,21 @@
 import type { FC, ReactNode } from "react";
 import { useEffect } from "react";
-import useUserSignModel from "@/store/user/user-sign-model-state";
-import { Result, Button } from "antd";
-import useUserData from "@/store/user/user-data";
-import Header from "./Header";
-import Aside from "./Aside";
+import { useRouter } from "next/navigation";
+import { Button, Result } from "antd";
 import classNames from "classnames";
 import Head from "@/components/next/Head";
-import { useRouter } from "next/navigation";
+import useUserData from "@/store/user/user-data";
+import useUserSignModel from "@/store/user/user-sign-model-state";
+import Aside from "./Aside";
+import Header from "./Header";
 
 interface propsType {
   children: ReactNode;
   className?: string;
 }
 const Layout: FC<propsType> = ({ children, className }) => {
-  let userData = useUserData(s => s.data);
-  let setModalState = useUserSignModel(s => s.setData);
+  let userData = useUserData((s) => s.data);
+  let setModalState = useUserSignModel((s) => s.setData);
   let router = useRouter();
 
   useEffect(() => {
@@ -29,12 +29,14 @@ const Layout: FC<propsType> = ({ children, className }) => {
       {userData ? (
         <>
           <Header />
-          <div className="container bg-[#f4f5f5] min-h-screen">
+          <div className="container min-h-screen bg-[#f4f5f5]">
             <div className="flex pt-4">
               <div className="mr-60">
                 <Aside />
               </div>
-              <main className={classNames(["w-[calc(100%-240px)]  ml-4", className])}>
+              <main
+                className={classNames(["ml-4 w-[calc(100%-240px)]", className])}
+              >
                 {" "}
                 {children}
               </main>

@@ -1,18 +1,18 @@
+import { useParams } from "next/navigation";
+import { Badge, message } from "antd";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
-import useUserData from "@/store/user/user-data";
-import { useParams } from "next/navigation";
-import { message, Badge } from "antd";
-import itemClassName from "./class";
-import { like, unlike } from "@/request/like";
 import userUserCurrentArticleData from "@/store/user/user-current-article-data";
+import useUserData from "@/store/user/user-data";
+import { like, unlike } from "@/request/like";
+import itemClassName from "./class";
 
 const Likes = () => {
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   let params = useParams();
   let id = params.id as string;
 
-  let currentArticleData = userUserCurrentArticleData(s => s);
+  let currentArticleData = userUserCurrentArticleData((s) => s);
 
   function likeArticle() {
     like(id, "article")
@@ -47,11 +47,15 @@ const Likes = () => {
           !userData || userData?.id == currentArticleData.data.author
             ? () => {}
             : currentArticleData.data.like_count
-            ? unLikeArticle
-            : likeArticle
+              ? unLikeArticle
+              : likeArticle
         }
       >
-        <Badge count={currentArticleData.data.like_count} color="#adb1b8" offset={[10, -10]}>
+        <Badge
+          count={currentArticleData.data.like_count}
+          color="#adb1b8"
+          offset={[10, -10]}
+        >
           <Image
             src={
               currentArticleData.data.like_state

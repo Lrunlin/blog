@@ -6,14 +6,25 @@ const Models = initModels(sequelizeConfig);
 export default Models;
 
 //进行表关联
-Models.Article.belongsTo(Models.User, { as: "author_data", foreignKey: "author", targetKey: "id" });
-Models.Comment.belongsTo(Models.User, { as: "user_data", foreignKey: "user_id", targetKey: "id" });
+Models.Article.belongsTo(Models.User, {
+  as: "author_data",
+  foreignKey: "author",
+  targetKey: "id",
+});
+Models.Comment.belongsTo(Models.User, {
+  as: "user_data",
+  foreignKey: "user_id",
+  targetKey: "id",
+});
 Models.FriendlyLink.belongsTo(Models.User, {
   as: "user_data",
   foreignKey: "user_id",
   targetKey: "id",
 });
-Models.Collection.belongsTo(Models.Article, { foreignKey: "belong_id", targetKey: "id" });
+Models.Collection.belongsTo(Models.Article, {
+  foreignKey: "belong_id",
+  targetKey: "id",
+});
 
 Models.Follow.belongsTo(Models.User, {
   as: "user_data",
@@ -38,7 +49,11 @@ Models.Problem.belongsTo(Models.Follow, {
   targetKey: "belong_id",
 });
 
-Models.Problem.belongsTo(Models.User, { as: "author_data", foreignKey: "author", targetKey: "id" });
+Models.Problem.belongsTo(Models.User, {
+  as: "author_data",
+  foreignKey: "author",
+  targetKey: "id",
+});
 Models.Problem.hasMany(Models.Comment, {
   as: "comment_list",
   foreignKey: "belong_id",
@@ -63,14 +78,22 @@ Models.Answer.hasMany(Models.Likes, {
   as: "like_data",
 });
 
-Models.Answer.belongsTo(Models.User, { as: "author_data", foreignKey: "author", targetKey: "id" });
+Models.Answer.belongsTo(Models.User, {
+  as: "author_data",
+  foreignKey: "author",
+  targetKey: "id",
+});
 Models.Answer.hasMany(Models.Comment, {
   as: "comment_list",
   foreignKey: "belong_id",
   sourceKey: "id",
 });
 
-Models.Article.hasMany(Models.Likes, { foreignKey: "belong_id", sourceKey: "id", as: "like_data" });
+Models.Article.hasMany(Models.Likes, {
+  foreignKey: "belong_id",
+  sourceKey: "id",
+  as: "like_data",
+});
 Models.Likes.belongsTo(Models.Article, {
   foreignKey: "belong_id",
   targetKey: "id",

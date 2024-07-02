@@ -6,13 +6,17 @@ interface decodeType {
 
 async function verify(token: string): Promise<decodeType> {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, process.env.KEY as string, async function (err, decoded: any) {
-      if (err) {
-        reject();
-      } else {
-        resolve(decoded);
-      }
-    });
+    jwt.verify(
+      token,
+      process.env.KEY as string,
+      async function (err, decoded: any) {
+        if (err) {
+          reject();
+        } else {
+          resolve(decoded);
+        }
+      },
+    );
   });
 }
 export default verify;

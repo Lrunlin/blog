@@ -1,14 +1,15 @@
 import Router from "@koa/router";
-import { TagAttributes } from "@/db/models/init-models";
-import cache from "@/common/modules/cache/type";
 import { Op } from "sequelize";
+import { TagAttributes } from "@/db/models/init-models";
 import getArticleListData from "@/common/modules/article/select/search";
+import cache from "@/common/modules/cache/type";
+
 let router = new Router();
 
-router.get("/article/tag/:tag", async ctx => {
+router.get("/article/tag/:tag", async (ctx) => {
   let tag = ctx.params.tag;
   let tags = cache.get("tag") as TagAttributes[];
-  let tagTarget = tags?.find(item => item.name == tag);
+  let tagTarget = tags?.find((item) => item.name == tag);
   let page = +(ctx.query.page as string);
 
   if (!tagTarget) {

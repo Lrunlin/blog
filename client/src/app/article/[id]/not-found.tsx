@@ -1,15 +1,20 @@
 "use client";
-import Head from "@/components/next/Head";
-import { Result, Button } from "antd";
-import Header from "@/components/common/Header";
+
 import { useRouter } from "next/navigation";
+import { Button, Result } from "antd";
+import Header from "@/components/common/Header";
+import Head from "@/components/next/Head";
 
 const Error = () => {
   let router = useRouter();
 
   return (
     <>
-      <Head title={`404-没有找到对应文章`} description={"404"} keywords={["404"]} />
+      <Head
+        title={`404-没有找到对应文章`}
+        description={"404"}
+        keywords={["404"]}
+      />
       <Header />
       <Result
         status={"404"}

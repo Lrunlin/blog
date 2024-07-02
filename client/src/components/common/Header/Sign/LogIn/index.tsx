@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
-import { Button, Form, Input, Divider, message } from "antd";
+import { useEffect, useState } from "react";
+import { Button, Divider, Form, Input, message } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import useUserSignModel from "@/store/user/user-sign-model-state";
 import cookie from "js-cookie";
 import useUserData from "@/store/user/user-data";
+import useUserSignModel from "@/store/user/user-sign-model-state";
+
 /** 弹窗中的登录组件*/
 const LogIn = () => {
-  let setModalState = useUserSignModel(s => s.setData);
+  let setModalState = useUserSignModel((s) => s.setData);
 
-  const userDataStore = useUserData(s => s);
-  let userData = useUserData(s => s);
+  const userDataStore = useUserData((s) => s);
+  let userData = useUserData((s) => s);
   const [isLoad, setIsLoad] = useState(false);
   function logIn(values: any) {
     setIsLoad(true);
     axios
       .post("/login/email", values)
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
           setModalState(false);
@@ -29,7 +30,7 @@ const LogIn = () => {
           message.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       })
       .finally(() => setIsLoad(false));
@@ -40,7 +41,7 @@ const LogIn = () => {
     let win = window.open(
       `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`,
       "_blank",
-      "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes"
+      "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes",
     ) as Window;
     // 开启后监听是否关闭，如果关闭了就重新获取一下userData
     timer = setInterval(() => {
@@ -90,11 +91,14 @@ const LogIn = () => {
         </Form.Item>
       </Form>
       <div className="flex justify-between">
-        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogOn")}>
+        <span
+          className="cursor-pointer text-sky-600"
+          onClick={() => setModalState("LogOn")}
+        >
           邮箱注册
         </span>
         <span
-          className="text-sky-600 cursor-pointer"
+          className="cursor-pointer text-sky-600"
           onClick={() => setModalState("ForgetPassword")}
         >
           忘记密码
@@ -103,7 +107,7 @@ const LogIn = () => {
       <div>
         <Divider className="my-3" />
         <div className="flex justify-evenly">
-          <GithubOutlined className="text-xl cursor-pointer" onClick={github} />
+          <GithubOutlined className="cursor-pointer text-xl" onClick={github} />
         </div>
       </div>
     </>

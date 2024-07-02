@@ -76,7 +76,7 @@ export class Favorites
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Favorites;
   }
 }

@@ -1,8 +1,9 @@
-import { useState, useEffect, memo } from "react";
+import { memo, useEffect, useState } from "react";
 import type { FC } from "react";
+import { usePathname } from "next/navigation";
 import { Menu } from "antd";
 import items from "./items";
-import { usePathname } from "next/navigation";
+
 function getKeys(pathname: string) {
   let keys = { selectKey: [""], openKey: [""] };
   for (const item of items) {
@@ -42,7 +43,7 @@ const Header: FC = memo(() => {
         }
       `}</style>
       <Menu
-        className="h-screen fixed left-0 !w-48"
+        className="fixed left-0 h-screen !w-48"
         defaultSelectedKeys={selectKey}
         selectedKeys={selectKey}
         defaultOpenKeys={openKey}
@@ -50,7 +51,7 @@ const Header: FC = memo(() => {
         mode="inline"
         theme="dark"
         items={items}
-        onOpenChange={keys => {
+        onOpenChange={(keys) => {
           setOpenKey(keys);
         }}
       />

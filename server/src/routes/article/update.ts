@@ -1,12 +1,23 @@
 import Router from "@koa/router";
 import DB from "@/db";
-let router = new Router();
-import verify from "@/common/verify/api-verify/article/update-article";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/article/create-article";
-router.put("/article/:id", verify, async ctx => {
-  let { title, description, cover_file_name, reprint, content, tag, view_count, state, theme_id } =
-    ctx.request.body;
+import verify from "@/common/verify/api-verify/article/update-article";
+
+let router = new Router();
+
+router.put("/article/:id", verify, async (ctx) => {
+  let {
+    title,
+    description,
+    cover_file_name,
+    reprint,
+    content,
+    tag,
+    view_count,
+    state,
+    theme_id,
+  } = ctx.request.body;
   let id = +ctx.params.id as number;
   let where: { id: number; author?: number } = {
     id: id,
@@ -17,8 +28,11 @@ router.put("/article/:id", verify, async ctx => {
   }
 
   /** 如果state本来就是1那么就不接受修改否则可以修改*/
-  let oldState = await DB.Article.findByPk(id, { attributes: ["state"], raw: true })
-    .then(res => {
+  let oldState = await DB.Article.findByPk(id, {
+    attributes: ["state"],
+    raw: true,
+  })
+    .then((res) => {
       if (res) {
         return res.state;
       } else {
@@ -52,14 +66,16 @@ router.put("/article/:id", verify, async ctx => {
     {
       where: where,
       transaction: t,
-    }
+    },
   )
-    .then(result => !!result[0])
+    .then((result) => !!result[0])
     .catch(() => false);
 
   // 说明是从草稿箱发布文章(非转载)
   let _t =
-    (state = 1 && oldState == 0) && !reprint ? await transaction(id, ctx.id as number, t) : true;
+    (state = 1 && oldState == 0) && !reprint
+      ? await transaction(id, ctx.id as number, t)
+      : true;
 
   if (updateResult && _t) {
     ctx.body = { success: true, message: "修改成功" };

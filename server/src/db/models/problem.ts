@@ -18,7 +18,10 @@ export interface ProblemAttributes {
 export type ProblemPk = "id";
 export type ProblemId = Problem[ProblemPk];
 export type ProblemOptionalAttributes = "answer_id" | "update_time";
-export type ProblemCreationAttributes = Optional<ProblemAttributes, ProblemOptionalAttributes>;
+export type ProblemCreationAttributes = Optional<
+  ProblemAttributes,
+  ProblemOptionalAttributes
+>;
 
 export class Problem
   extends Model<ProblemAttributes, ProblemCreationAttributes>
@@ -60,7 +63,9 @@ export class Problem
           get() {
             let type = this.getDataValue("tag");
             if (type) {
-              return /^[\s\S]*.*[^\s][\s\S]*$/.test(type) ? type.split(",").map(item => +item) : [];
+              return /^[\s\S]*.*[^\s][\s\S]*$/.test(type)
+                ? type.split(",").map((item) => +item)
+                : [];
             }
           },
         },
@@ -114,7 +119,7 @@ export class Problem
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Problem;
   }
 }

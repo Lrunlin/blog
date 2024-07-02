@@ -12,7 +12,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >`;
-  let body = list.map(item => {
+  let body = list.map((item) => {
     return `
   <url>
   <loc>${item.href}</loc>

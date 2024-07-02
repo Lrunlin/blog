@@ -1,13 +1,15 @@
-import classNames from "classnames";
 import type { FC, ReactNode } from "react";
+import classNames from "classnames";
 
 const Main: FC<{
   children: ReactNode;
   mainClassName?: classNames.ArgumentArray;
   containerClassName?: classNames.ArgumentArray;
-}> = props => {
+}> = (props) => {
   return (
-    <div className={classNames(["bg-[#f4f5f5]", "pt-2", props.containerClassName])}>
+    <div
+      className={classNames(["bg-[#f4f5f5]", "pt-2", props.containerClassName])}
+    >
       <main
         className={classNames([
           "max-w-[960px]",

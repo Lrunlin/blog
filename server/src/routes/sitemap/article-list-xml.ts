@@ -2,9 +2,10 @@ import Router from "@koa/router";
 import DB from "@/db";
 import moment from "moment";
 import integer from "@/common/verify/integer";
+
 let router = new Router();
 
-router.get("/sitemap/:index", integer([], ["index"]), async ctx => {
+router.get("/sitemap/:index", integer([], ["index"]), async (ctx) => {
   let index = +ctx.params.index as number;
   let limit = 1000;
   await DB.Article.findAll({
@@ -14,8 +15,8 @@ router.get("/sitemap/:index", integer([], ["index"]), async ctx => {
     attributes: ["id", "create_time"],
     order: [["id", "asc"]],
     raw: true,
-  }).then(rows => {
-    let list = rows.map(item => ({
+  }).then((rows) => {
+    let list = rows.map((item) => ({
       href: `${process.env.CLIENT_HOST}/article/${item.id}`,
       priority: 0.9,
       create_time: moment(item.create_time).format("YYYY-MM-DD"),

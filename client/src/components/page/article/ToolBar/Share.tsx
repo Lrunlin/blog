@@ -1,11 +1,16 @@
-import itemClassName from "./class";
+import { Popover, QRCode } from "antd";
+import {
+  QqOutlined,
+  WechatOutlined,
+  WeiboSquareOutlined,
+} from "@ant-design/icons";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
-import { Popover, QRCode } from "antd";
-import { WeiboSquareOutlined, QqOutlined, WechatOutlined } from "@ant-design/icons";
 import userUserCurrentArticleData from "@/store/user/user-current-article-data";
+import itemClassName from "./class";
+
 const Share = () => {
-  let currentArticleData = userUserCurrentArticleData(s => s.data);
+  let currentArticleData = userUserCurrentArticleData((s) => s.data);
 
   function link(url: string) {
     let a = document.createElement("a");
@@ -37,28 +42,30 @@ https://connect.qq.com/widget/shareqq/index.html?url=${window.location.href}
       <Popover
         placement="right"
         content={
-          <div className="w-24 text-gray-500 font-bold">
+          <div className="w-24 font-bold text-gray-500">
             <Popover
               placement="right"
               content={
-                typeof window != "undefined" && <QRCode size={100} value={window.location.href} />
+                typeof window != "undefined" && (
+                  <QRCode size={100} value={window.location.href} />
+                )
               }
             >
-              <div className="py-1 cursor-pointer hover:bg-gray-50 hover:text-gray-600">
+              <div className="cursor-pointer py-1 hover:bg-gray-50 hover:text-gray-600">
                 <WechatOutlined className="ml-2" size={20} />
                 <span className="ml-2">微信</span>
               </div>
             </Popover>
             <div
               onClick={shareWeiBo}
-              className="py-1 cursor-pointer hover:bg-gray-50 hover:text-gray-600"
+              className="cursor-pointer py-1 hover:bg-gray-50 hover:text-gray-600"
             >
               <WeiboSquareOutlined className="ml-2" size={20} />
               <span className="ml-2">新浪微博</span>
             </div>
             <div
               onClick={shareQQ}
-              className="py-1 cursor-pointer hover:bg-gray-50 hover:text-gray-600"
+              className="cursor-pointer py-1 hover:bg-gray-50 hover:text-gray-600"
             >
               <QqOutlined className="ml-2" size={20} />
               <span className="ml-2">QQ</span>
@@ -67,7 +74,12 @@ https://connect.qq.com/widget/shareqq/index.html?url=${window.location.href}
         }
       >
         <div className={classNames([itemClassName, "hover:text-blue-500"])}>
-          <Image src="/icon/client/share.png" width={24} height={24} alt="share" />
+          <Image
+            src="/icon/client/share.png"
+            width={24}
+            height={24}
+            alt="share"
+          />
         </div>
       </Popover>
     </>

@@ -1,11 +1,12 @@
 import Router from "@koa/router";
-let router = new Router();
-import integer from "@/common/verify/integer";
 import DB from "@/db";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/problem/delete";
+import integer from "@/common/verify/integer";
 
-router.delete("/problem/:id", integer([], ["id"]), async ctx => {
+let router = new Router();
+
+router.delete("/problem/:id", integer([], ["id"]), async (ctx) => {
   const id = ctx.params.id;
   let t = await sequelize.transaction();
   let result = await DB.Problem.destroy({
@@ -14,8 +15,8 @@ router.delete("/problem/:id", integer([], ["id"]), async ctx => {
     },
     transaction: t,
   })
-    .then(res => !!res)
-    .catch(err => {
+    .then((res) => !!res)
+    .catch((err) => {
       console.log(err);
       return false;
     });

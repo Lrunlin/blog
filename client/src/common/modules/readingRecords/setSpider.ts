@@ -5,7 +5,7 @@ function setSpider(ua: string | undefined) {
   return ua
     .toLocaleLowerCase()
     .match(
-      /googlebot|bingbot|baiduspider|linkedinbot|slackbot|Applebot|360spider|Sosospider|YoudaoBot|Sogou web spider/i
+      /googlebot|bingbot|baiduspider|linkedinbot|slackbot|Applebot|360spider|Sosospider|YoudaoBot|Sogou web spider/i,
     )
     ? 6
     : false;

@@ -1,5 +1,5 @@
-import type { NoticeAttributes } from "@/db/models/notice";
 import DB from "@/db";
+import type { NoticeAttributes } from "@/db/models/notice";
 
 // 转换 answer 类型的通知
 async function switchNoticeAnswer(data: NoticeAttributes) {
@@ -8,7 +8,7 @@ async function switchNoticeAnswer(data: NoticeAttributes) {
     attributes: ["problem_id", "author"],
     raw: true,
   })
-    .then(row => row)
+    .then((row) => row)
     .catch(() => false as false);
   if (!answerData) return false;
 
@@ -17,7 +17,7 @@ async function switchNoticeAnswer(data: NoticeAttributes) {
     attributes: ["id", "title"],
     raw: true,
   })
-    .then(row => row)
+    .then((row) => row)
     .catch(() => false as false);
   if (!problemData) return false;
 

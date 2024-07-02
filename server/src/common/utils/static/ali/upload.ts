@@ -1,5 +1,5 @@
-import sharp from "sharp";
 import fs from "fs";
+import sharp from "sharp";
 import { v4 } from "uuid";
 import folderList from "../folderList";
 import aliOSS from "./utils/oss";
@@ -20,14 +20,22 @@ sharp.cache(false); //不缓存
  */
 async function upload(
   buffer: Buffer,
-  option: { folder: FolderItemType["folder"]; file_name: string }
+  option: { folder: FolderItemType["folder"]; file_name: string },
 ): Promise<{ file_name: string; file_href: string } | string> {
   // 根据folder判断sharp对应的配置
-  let sharpOption = folderList.find(item => item.folder == option.folder) as FolderItemType;
+  let sharpOption = folderList.find(
+    (item) => item.folder == option.folder,
+  ) as FolderItemType;
   let sharpInstance = sharp(buffer, { animated: !!sharpOption.animated });
-  let processed = sharpInstance.webp({ lossless: true, quality: sharpOption.quality });
+  let processed = sharpInstance.webp({
+    lossless: true,
+    quality: sharpOption.quality,
+  });
   if (sharpOption.width) {
-    processed = processed.resize({ width: sharpOption.width, height: sharpOption.height });
+    processed = processed.resize({
+      width: sharpOption.width,
+      height: sharpOption.height,
+    });
   }
 
   let fileName = `${v4()}.webp`;
@@ -42,13 +50,13 @@ async function upload(
   return new Promise(async (resolve, reject) => {
     aliOSS
       .put(`${option.folder}/${option.file_name}`, _buffer)
-      .then(res => {
+      .then((res) => {
         resolve({
           file_name: option.file_name.replace(`${option.folder}/`, ""),
           file_href: `${process.env.CDN}/${option.folder}/${option.file_name}`,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         reject(err);
       });
   });

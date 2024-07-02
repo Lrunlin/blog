@@ -1,11 +1,11 @@
 import Router from "@koa/router";
+import DB from "@/db";
 import type { WhereOptions } from "sequelize";
 import { Op } from "sequelize";
-import { ArticleAttributes } from "@/db/models/init-models";
-import DB from "@/db";
-import getTagData from "@/common/modules/article/get/set-tag-data";
-import setDescription from "@/common/modules/article/get/set-description";
 import Sequelize from "@/db/config";
+import { ArticleAttributes } from "@/db/models/init-models";
+import setDescription from "@/common/modules/article/get/set-description";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 import verify from "@/common/verify/api-verify/article/search";
 
 let articleAttribute = [
@@ -13,12 +13,14 @@ let articleAttribute = [
   "update_time",
   [
     Sequelize.literal(
-      `(SELECT COUNT(*) FROM comment WHERE comment.belong_id = article.id and type="article")`
+      `(SELECT COUNT(*) FROM comment WHERE comment.belong_id = article.id and type="article")`,
     ),
     "comment_count",
   ],
   [
-    Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.belong_id = article.id)`),
+    Sequelize.literal(
+      `(SELECT COUNT(*) FROM likes WHERE likes.belong_id = article.id)`,
+    ),
     "like_count",
   ],
 ];
@@ -36,7 +38,7 @@ let attributes = [
 
 let router = new Router();
 /** 用户端搜索:根据前端传递的Query参数进行文章分页查询*/
-router.get("/article/search/:page", verify, async ctx => {
+router.get("/article/search/:page", verify, async (ctx) => {
   let page = +ctx.params.page;
   let where: WhereOptions<ArticleAttributes> = {};
   let { state, author, keyword, tag } = ctx.query;
@@ -50,9 +52,11 @@ router.get("/article/search/:page", verify, async ctx => {
       },
       attributes: ["id"],
     })
-      .then(row => {
+      .then((row) => {
         if (row) {
-          where = Object.assign(where, { tag: { [Op.substring]: row.id as number } });
+          where = Object.assign(where, {
+            tag: { [Op.substring]: row.id as number },
+          });
         }
       })
       .catch(() => {});
@@ -73,7 +77,9 @@ router.get("/article/search/:page", verify, async ctx => {
     limit: 20,
     order: [["create_time", "desc"]],
     attributes:
-      ctx.request.body.state != 0 ? attributes.concat(articleAttribute as any) : attributes,
+      ctx.request.body.state != 0
+        ? attributes.concat(articleAttribute as any)
+        : attributes,
     include: [
       {
         model: DB.User,
@@ -88,7 +94,7 @@ router.get("/article/search/:page", verify, async ctx => {
         message: "根据条件查询查询文章列表",
         data: {
           total: count,
-          list: rows.map(row => {
+          list: rows.map((row) => {
             let item = row.toJSON();
             let description = setDescription(item.content);
             let tag = getTagData(item.tag as unknown as number[], ["name"]);
@@ -102,7 +108,7 @@ router.get("/article/search/:page", verify, async ctx => {
         },
       };
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.body = {
         success: false,
         message: "查询失败",

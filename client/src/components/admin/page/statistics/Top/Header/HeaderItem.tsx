@@ -1,4 +1,4 @@
-import type { ReactNode, FC } from "react";
+import type { FC, ReactNode } from "react";
 import Container from "../../Container";
 
 interface propsType {
@@ -9,9 +9,11 @@ interface propsType {
 const HeaderItem: FC<propsType> = ({ title, data }) => {
   return (
     <Container>
-      <div className="header-item w-[14vw] h-[5vw]">
+      <div className="header-item h-[5vw] w-[14vw]">
         <div className="text-lg font-bold text-white">{title}</div>
-        <div className="text-statistics-cyan-color text-lg font-bold">{data}</div>
+        <div className="text-lg font-bold text-statistics-cyan-color">
+          {data}
+        </div>
       </div>
     </Container>
   );

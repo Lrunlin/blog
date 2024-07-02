@@ -1,11 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import sequelize from "@/db/config";
-import verify from '@/common/verify/api-verify/theme/remove'
+import verify from "@/common/verify/api-verify/theme/remove";
 
 let router = new Router();
 
-router.delete("/theme/:id", verify, async ctx => {
+router.delete("/theme/:id", verify, async (ctx) => {
   let t = await sequelize.transaction();
 
   //   需要将使用到主题的文章的主题ID换成默认ID

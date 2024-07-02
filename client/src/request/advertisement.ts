@@ -1,5 +1,6 @@
 import axios from "@axios";
 import { response } from "@type/common/response";
+
 export interface advertisementType {
   id: number;
   url: string;
@@ -14,7 +15,7 @@ export type responseType = advertisementType[];
 function getAdvertisementList(position: string) {
   return axios
     .get<response<responseType>>("/advertisement", { params: { position } })
-    .then(res => res.data.data)
-    .catch(err => []);
+    .then((res) => res.data.data)
+    .catch((err) => []);
 }
 export default getAdvertisementList;

@@ -1,12 +1,13 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { Button, message } from "antd";
-import { useRouter, usePathname, useParams } from "next/navigation";
-import useUserWriteArticle from "@/store/user/user-write-article";
 import axios from "@axios";
+import useUserWriteArticle from "@/store/user/user-write-article";
 
 const DraftsButton = () => {
-  let userWriteArticle = useUserWriteArticle(s => s.data);
-  let { title, description, cover_file_name, reprint, content, tag } = userWriteArticle;
+  let userWriteArticle = useUserWriteArticle((s) => s.data);
+  let { title, description, cover_file_name, reprint, content, tag } =
+    userWriteArticle;
   let router = useRouter();
   let params = useParams();
   let pathname = usePathname();
@@ -37,7 +38,7 @@ const DraftsButton = () => {
         tag,
         state: 0,
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
           router.push("/creator/content/article");
@@ -63,7 +64,7 @@ const DraftsButton = () => {
         tag,
         state: 0,
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
         } else {

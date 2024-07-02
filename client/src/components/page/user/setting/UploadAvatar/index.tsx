@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 import type { FC } from "react";
 import Upload from "@/components/common/UpLoad";
+
 interface propsType {
   avatar_file_name: string;
   avatar_url: string;
   onChange: (value: string) => void;
 }
 
-const UploadAvatar: FC<propsType> = props => {
+const UploadAvatar: FC<propsType> = (props) => {
   let first = useRef(true);
   useEffect(() => {
     if (first.current) {
@@ -22,7 +23,7 @@ const UploadAvatar: FC<propsType> = props => {
         target="avatar"
         imgURL={props.avatar_url}
         width={90}
-        onSuccess={data => {
+        onSuccess={(data) => {
           props.onChange(data.file_name);
         }}
         onDelete={() => {

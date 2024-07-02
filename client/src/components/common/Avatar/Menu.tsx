@@ -1,12 +1,13 @@
 "use client";
-import { Avatar } from "antd";
-import Link from "next/link";
+
 import type { FC, ReactNode } from "react";
-import axios from "@axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Avatar } from "antd";
+import axios from "@axios";
 import cookie from "js-cookie";
-import useUserData from "@/store/user/user-data";
 import useFetch from "@/common/hooks/useFetch";
+import useUserData from "@/store/user/user-data";
 
 interface itemPropsType {
   isValidating: boolean;
@@ -14,25 +15,33 @@ interface itemPropsType {
 }
 
 const Item: FC<itemPropsType> = ({ isValidating, data }) => {
-  return <>{isValidating ? <span className="px-1 py-0.5 bg-slate-300"></span> : data}</>;
+  return (
+    <>
+      {isValidating ? <span className="bg-slate-300 px-1 py-0.5"></span> : data}
+    </>
+  );
 };
 
 const Menu: FC = () => {
   let router = useRouter();
-  let userData = useUserData(s => s.data);
-  let resetUserData = useUserData(s => s.refreshData);
+  let userData = useUserData((s) => s.data);
+  let resetUserData = useUserData((s) => s.refreshData);
   let { data, isLoading } = useFetch(() =>
-    axios.get(`/achievement/${userData?.id}`).then(res => res.data.data)
+    axios.get(`/achievement/${userData?.id}`).then((res) => res.data.data),
   );
 
   return (
-    <div className="w-60 p-4 mb-6 bg-white rounded-xl shadow-md border border-solid border-gray-200">
+    <div className="mb-6 w-60 rounded-xl border border-solid border-gray-200 bg-white p-4 shadow-md">
       {/* 顶部 */}
       <div className="flex">
         <Link href={`/user/${userData?.id}`}>
-          <Avatar size={48} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
+          <Avatar
+            size={48}
+            src={userData?.avatar_url}
+            alt={`${userData?.name}头像`}
+          />
         </Link>
-        <div className="text-lg ml-4 truncate">{userData?.name}</div>
+        <div className="ml-4 truncate text-lg">{userData?.name}</div>
       </div>
       {/* 中间 */}
       <div className="mt-4 flex justify-around">
@@ -45,7 +54,10 @@ const Menu: FC = () => {
         <div className="text-center">
           <div className="text-base">被收藏</div>
           <div>
-            <Item isValidating={isLoading} data={data?.article_collection_count} />
+            <Item
+              isValidating={isLoading}
+              data={data?.article_collection_count}
+            />
           </div>
         </div>
         <div className="text-center">
@@ -56,8 +68,11 @@ const Menu: FC = () => {
         </div>
       </div>
       {/* 底部 */}
-      <div className="text-gray-400 mt-8 flex justify-between">
-        <div className="cursor-pointer" onClick={() => router.push("/user/settings/profile")}>
+      <div className="mt-8 flex justify-between text-gray-400">
+        <div
+          className="cursor-pointer"
+          onClick={() => router.push("/user/settings/profile")}
+        >
           账号设置
         </div>
         <div

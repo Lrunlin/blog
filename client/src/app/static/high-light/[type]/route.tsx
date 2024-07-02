@@ -1,7 +1,10 @@
-import axios from "@axios";
 import type { NextRequest } from "next/server";
+import axios from "@axios";
 
-export async function GET(res: NextRequest, { params: { type } }: { params: { type: string } }) {
+export async function GET(
+  res: NextRequest,
+  { params: { type } }: { params: { type: string } },
+) {
   const searchParams = res.nextUrl.searchParams;
   const languages = searchParams.get("languages");
   if (languages && ["js", "css"].includes(String(type))) {
@@ -9,7 +12,7 @@ export async function GET(res: NextRequest, { params: { type } }: { params: { ty
       .get(`/high-light/${type}`, {
         params: { languages: languages },
       })
-      .then(res => res.data);
+      .then((res) => res.data);
     return new Response(content, {
       status: 200,
       headers: {

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Button, Form, Input } from "antd";
-import UpLoad from "@/components/common/UpLoad";
 import { TagAttributes } from "@type/type";
+import UpLoad from "@/components/common/UpLoad";
 
 export interface TypeFormValueProps {
   name: string;
@@ -19,7 +19,7 @@ interface PropsType {
 /**
  * @params onFinish {(value:object)=>void} 表单提交
  */
-const TypeForm: FC<PropsType> = props => {
+const TypeForm: FC<PropsType> = (props) => {
   let { useForm } = Form;
   let [form] = useForm();
   const onFinish = (values: any) => {
@@ -56,7 +56,11 @@ const TypeForm: FC<PropsType> = props => {
             />
           </div>
         </Form.Item>
-        <Form.Item label="名称" name="name" rules={[{ required: true, message: "请填写类型名称" }]}>
+        <Form.Item
+          label="名称"
+          name="name"
+          rules={[{ required: true, message: "请填写类型名称" }]}
+        >
           <Input placeholder="请填写类型名称" />
         </Form.Item>
         <Form.Item

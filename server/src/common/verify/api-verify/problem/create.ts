@@ -1,13 +1,17 @@
-import compose from "koa-compose";
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validatorAsync";
-import authMiddleware from "@/common/middleware/auth";
-import tag from "@/common/verify/modules/tag";
 import { load } from "cheerio";
+import Joi from "joi";
+import compose from "koa-compose";
+import authMiddleware from "@/common/middleware/auth";
+import validator from "@/common/middleware/verify/validatorAsync";
 import { exist } from "@/common/utils/static";
+import tag from "@/common/verify/modules/tag";
 
 const schema = Joi.object({
-  title: Joi.string().min(5).max(200).required().error(new Error("标题为5-50的字符串")),
+  title: Joi.string()
+    .min(5)
+    .max(200)
+    .required()
+    .error(new Error("标题为5-50的字符串")),
   content: Joi.string()
     .min(20)
     .required()
@@ -19,8 +23,8 @@ const schema = Joi.object({
 
       if (images.length) {
         let result = await exist(images)
-          .then(res => res)
-          .catch(err => err);
+          .then((res) => res)
+          .catch((err) => err);
         if (!result.success) throw new Error(result.message);
       }
     })

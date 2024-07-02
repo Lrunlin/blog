@@ -65,7 +65,7 @@ export class Likes
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Likes;
   }
 }

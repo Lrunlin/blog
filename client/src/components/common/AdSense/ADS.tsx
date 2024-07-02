@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 const ADS = () => {
   useEffect(() => {
     let script = document.createElement("script");

@@ -1,19 +1,20 @@
 "use client";
-import { Form, Input, Button, message } from "antd";
-import axios from "@axios";
+
 import { useRouter } from "next/navigation";
-import Footer from "@/components/admin/common/Footer";
+import { Button, Form, Input, message } from "antd";
+import axios from "@axios";
 import cookie from "js-cookie";
-import useUserData from "@/store/user/user-data";
+import Footer from "@/components/admin/common/Footer";
 import Head from "@/components/next/Head";
+import useUserData from "@/store/user/user-data";
 
 const LognIn = () => {
   let router = useRouter();
-  let setUserData = useUserData(s => s.setData);
+  let setUserData = useUserData((s) => s.setData);
   function onFinish(values: any) {
     axios
       .post("/login/email", values)
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
           cookie.set("token", res.data.token, {
@@ -26,27 +27,32 @@ const LognIn = () => {
           message.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       });
   }
 
   return (
     <>
-      <Head title={`登录 - ${process.env.NEXT_PUBLIC_SITE_NAME} - 后台管理系统`} />
-      <div className="w-screen h-screen" style={{ backgroundImage: `url(/image/admin/bg.svg)` }}>
+      <Head
+        title={`登录 - ${process.env.NEXT_PUBLIC_SITE_NAME} - 后台管理系统`}
+      />
+      <div
+        className="h-screen w-screen"
+        style={{ backgroundImage: `url(/image/admin/bg.svg)` }}
+      >
         <div className="relative top-20">
           <div className="flex items-center justify-center">
-            <img src="/favicon.svg" alt="Logo" className="w-12 h-12" />
+            <img src="/favicon.svg" alt="Logo" className="h-12 w-12" />
             <a
               target="_blank"
               href="https://github.com/Lrunlin/blog"
-              className="text-black no-underline hover:text-black font-semibold text-3xl ml-6"
+              className="ml-6 text-3xl font-semibold text-black no-underline hover:text-black"
             >
               {process.env.NEXT_PUBLIC_SITE_NAME}
             </a>
           </div>
-          <div className="flex justify-center mt-20">
+          <div className="mt-20 flex justify-center">
             <Form
               className="w-96"
               initialValues={{ remember: true }}
@@ -72,8 +78,15 @@ const LognIn = () => {
                 name="password"
                 rules={[
                   { required: true, message: "请填写密码" },
-                  { min: 8, max: 16, message: "密码为8-16位的数字、字母、特殊字符" },
-                  { pattern: /^[a-zA-Z0-9_]{8,16}$/, message: "密码格式为数字、字母或下划线" },
+                  {
+                    min: 8,
+                    max: 16,
+                    message: "密码为8-16位的数字、字母、特殊字符",
+                  },
+                  {
+                    pattern: /^[a-zA-Z0-9_]{8,16}$/,
+                    message: "密码格式为数字、字母或下划线",
+                  },
                 ]}
               >
                 <Input.Password />

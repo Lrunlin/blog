@@ -7,7 +7,7 @@ export async function GET() {
         headers: {
           "content-type": "text/txt; charset=utf-8",
         },
-      }
+      },
     );
   } else {
     return new Response(undefined, {

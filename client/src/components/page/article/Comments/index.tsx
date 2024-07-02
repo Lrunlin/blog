@@ -1,22 +1,23 @@
 "use client";
+
 import type { FC } from "react";
 import useUserData from "@/store/user/user-data";
 import useUserSignModel from "@/store/user/user-sign-model-state";
-import Editor from "./Editor";
 import Comment from "./Comment";
+import Editor from "./Editor";
 
 export interface propsType {
   title?: string;
 }
 /** 文章页面评论组件*/
 const Comments: FC<propsType> = ({ title }) => {
-  let userData = useUserData(s => s.data);
-  let setModalState = useUserSignModel(s => s.setData);
+  let userData = useUserData((s) => s.data);
+  let setModalState = useUserSignModel((s) => s.setData);
 
   return (
     <div id="commentRoot">
       {title && (
-        <div className="text-xl font-black mb-4" id="comment">
+        <div className="mb-4 text-xl font-black" id="comment">
           {title}
         </div>
       )}

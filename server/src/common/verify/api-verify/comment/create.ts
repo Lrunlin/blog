@@ -1,13 +1,13 @@
-import compose from "koa-compose";
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validatorAsync";
-import { typeLikeComment } from "@/common/verify/modules/type";
-import authMiddleware from "@/common/middleware/auth";
+import { Context, Next } from "koa";
 import DB from "@/db";
-import { Next, Context } from "koa";
+import Joi from "joi";
+import compose from "koa-compose";
+import authMiddleware from "@/common/middleware/auth";
+import validator from "@/common/middleware/verify/validatorAsync";
 import map from "@/common/utils/map";
-import { fileNameAllowNull } from "../../modules/file-name";
 import { exist } from "@/common/utils/static";
+import { typeLikeComment } from "@/common/verify/modules/type";
+import { fileNameAllowNull } from "../../modules/file-name";
 
 const schema = Joi.object({
   belong_id: Joi.number().required().error(new Error("所属ID错误")),
@@ -17,8 +17,8 @@ const schema = Joi.object({
     .external(async (value: number | null) => {
       if (value) {
         let result = DB.Comment.findByPk(value, { attributes: ["id"] })
-          .then(res => !!res)
-          .catch(err => {
+          .then((res) => !!res)
+          .catch((err) => {
             console.log(err);
             return false;
           });
@@ -26,12 +26,16 @@ const schema = Joi.object({
       }
     })
     .error(new Error("没有找到指定的评论ID")),
-  content: Joi.string().min(1).max(700).required().error(new Error("评论内容最长为600字")),
+  content: Joi.string()
+    .min(1)
+    .max(700)
+    .required()
+    .error(new Error("评论内容最长为600字")),
   comment_pics: fileNameAllowNull.external(async (value: string | null) => {
     if (value) {
       let result = await exist([`comment/${value}`])
-        .then(res => res)
-        .catch(err => err);
+        .then((res) => res)
+        .catch((err) => err);
       if (!result.success) throw new Error(result.message);
     }
   }),
@@ -65,8 +69,8 @@ async function verify(ctx: Context, next: Next) {
 
   let result = await map(type as "article" | "problem" | "answer")
     .db(belong_id)
-    .then(res => !!res)
-    .catch(err => {
+    .then((res) => !!res)
+    .catch((err) => {
       console.log(err);
       return false;
     });

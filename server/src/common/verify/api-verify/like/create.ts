@@ -1,11 +1,11 @@
-import compose from "koa-compose";
+import { Context, Next } from "koa";
+import DB from "@/db";
 import Joi from "joi";
+import compose from "koa-compose";
+import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/verify/validator";
 import interger from "@/common/verify/integer";
-import auth from "@/common/middleware/auth";
 import { typeLikeComment } from "@/common/verify/modules/type";
-import { Next, Context } from "koa";
-import DB from "@/db";
 import map from "../../../utils/map";
 
 const schema = Joi.object({
@@ -15,7 +15,7 @@ async function verify(ctx: Context, next: Next) {
   let belong_id: string = ctx.params.belong_id;
   let authorData = await map(ctx.request.body.type, ["author"])
     .db(+belong_id)
-    .then(res => res)
+    .then((res) => res)
     .catch(() => false as false);
 
   if (!authorData) {
@@ -38,4 +38,9 @@ async function verify(ctx: Context, next: Next) {
   await next();
 }
 
-export default compose([interger([], ["belong_id"]), auth(0), validator(schema), verify]);
+export default compose([
+  interger([], ["belong_id"]),
+  auth(0),
+  validator(schema),
+  verify,
+]);

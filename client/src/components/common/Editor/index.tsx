@@ -1,7 +1,12 @@
 "use client";
+
 import { FC } from "react";
 import dynamic from "next/dynamic";
-const Editor = dynamic(() => import("./Editor"), { ssr: false, loading: () => <Skeleton /> });
+
+const Editor = dynamic(() => import("./Editor"), {
+  ssr: false,
+  loading: () => <Skeleton />,
+});
 
 export interface propsType {
   className?: string;
@@ -18,9 +23,11 @@ export interface propsType {
   defaultTheme?: number;
 }
 
-export const Skeleton = () => <div className="w-full h-[700px] bg-gray-200 animate-pulse"></div>;
+export const Skeleton = () => (
+  <div className="h-[700px] w-full animate-pulse bg-gray-200"></div>
+);
 
-const ComponentName: FC<propsType> = props => {
+const ComponentName: FC<propsType> = (props) => {
   return (
     <>
       <Editor {...props} />

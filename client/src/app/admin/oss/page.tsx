@@ -1,20 +1,25 @@
 "use client";
-import { useState, useEffect } from "react";
-import AdminLayout from "@/layout/Admin/Base";
+
+import { useEffect, useState } from "react";
+import { Alert, Button, Card, Table, message } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { DisconnectOutlined, LinkOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import { Button, Alert, Table, message, Card } from "antd";
+import dayjs from "@dayjs";
+import type { DefaultEventsMap } from "@socket.io/component-emitter";
+import classNames from "classnames";
+import duration from "dayjs/plugin/duration";
 import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client";
-import type { DefaultEventsMap } from "@socket.io/component-emitter";
-import dayjs from "@dayjs";
-import duration from "dayjs/plugin/duration";
-import { DeleteOutlined } from "@ant-design/icons";
-import classNames from "classnames";
-import { DisconnectOutlined, LinkOutlined } from "@ant-design/icons";
+import AdminLayout from "@/layout/Admin/Base";
+
 dayjs.extend(duration);
 
 const OSS = () => {
-  const [info, setInfo] = useState<null | { code: -1 | 0 | 1 | 2 | null; message: string }>(null);
+  const [info, setInfo] = useState<null | {
+    code: -1 | 0 | 1 | 2 | null;
+    message: string;
+  }>(null);
   const [deleteCode, setDeleteCode] = useState<null | 0 | 1 | 2>(null);
   const [list, setList] = useState<
     {
@@ -27,7 +32,10 @@ const OSS = () => {
   >();
   const [time, setTime] = useState<Date>();
   const [messageList, setMessageList] = useState<string[]>([]);
-  const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
+  const [socket, setSocket] = useState<Socket<
+    DefaultEventsMap,
+    DefaultEventsMap
+  > | null>(null);
 
   function start() {
     setMessageList([]);
@@ -48,25 +56,25 @@ const OSS = () => {
     newSocket.on("connect", () => {
       setConnect(true);
       // 服务端状态初始化
-      newSocket.on("info", params => {
+      newSocket.on("info", (params) => {
         setInfo(params);
         setDeleteCode(params.deleteCode);
       });
       // 结果列表获取
-      newSocket.on("list", params => {
+      newSocket.on("list", (params) => {
         setTime(params.time);
         setList(params.data);
       });
       // 删除情况获取
-      newSocket.on("delete-schedule", params => {
+      newSocket.on("delete-schedule", (params) => {
         setDeleteCode(params.code);
         if (params.code == 1) {
           message.success("删除成功");
         }
       });
       // 消息、日志打印
-      newSocket.on("message", params => {
-        setMessageList(message => [params.message, ...message].slice(0, 50));
+      newSocket.on("message", (params) => {
+        setMessageList((message) => [params.message, ...message].slice(0, 50));
       });
       // 断开链接
       newSocket.on("disconnect", function () {
@@ -84,7 +92,10 @@ const OSS = () => {
   let timer: any;
   useEffect(() => {
     function setTime() {
-      const du = dayjs.duration(+new Date(time!) + 86_400_000 - +new Date(), "ms"),
+      const du = dayjs.duration(
+          +new Date(time!) + 86_400_000 - +new Date(),
+          "ms",
+        ),
         hours = du.get("hours"),
         mins = du.get("minutes"),
         ss = du.get("seconds");
@@ -104,9 +115,9 @@ const OSS = () => {
   return (
     <AdminLayout>
       <div className="piece">
-        <div className="flex justify-end text-4xl ">
+        <div className="flex justify-end text-4xl">
           <div
-            className="bg-gray-300 h-14 w-14 flex justify-center items-center rounded-full cursor-pointer"
+            className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-gray-300"
             title={connect ? "已连接" : "已断开"}
           >
             {connect ? (
@@ -140,7 +151,10 @@ const OSS = () => {
             {messageList.map((item, index) => (
               <div
                 key={item + index + Math.random()}
-                className={classNames("mt-1", !index && "font-bold mt-0 text-lg")}
+                className={classNames(
+                  "mt-1",
+                  !index && "mt-0 text-lg font-bold",
+                )}
               >
                 {item}
               </div>
@@ -154,7 +168,9 @@ const OSS = () => {
               message={
                 <div>
                   <span>数据获取时间:</span>
-                  <b className="mx-1">{dayjs(time!).format("MM-DD hh:mm:ss")}</b>
+                  <b className="mx-1">
+                    {dayjs(time!).format("MM-DD hh:mm:ss")}
+                  </b>
                   <span>数据有效时间一天</span>
                   <span className="mx-1">剩余时间：</span>
                   <b>{countdown}</b>
@@ -187,21 +203,21 @@ const OSS = () => {
                   },
                 ]}
               />
-              <div className="flex justify-center mt-4">
+              <div className="mt-4 flex justify-center">
                 <Button
                   loading={deleteCode == 2}
                   icon={<DeleteOutlined />}
                   type="primary"
                   onClick={remove}
-                  disabled={!list.some(item => item.delete_count) || !connect}
+                  disabled={!list.some((item) => item.delete_count) || !connect}
                 >
                   {deleteCode == 0
                     ? "删除失败"
                     : deleteCode == 1
-                    ? "删除成功"
-                    : deleteCode == 2
-                    ? "删除中"
-                    : "删除"}
+                      ? "删除成功"
+                      : deleteCode == 2
+                        ? "删除中"
+                        : "删除"}
                 </Button>
               </div>
             </div>

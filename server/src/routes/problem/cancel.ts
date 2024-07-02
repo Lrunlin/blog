@@ -1,22 +1,22 @@
 import Router from "@koa/router";
-import verify from "@/common/verify/api-verify/problem/cancel";
 import DB from "@/db";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/problem/adopt";
+import verify from "@/common/verify/api-verify/problem/cancel";
 
 let router = new Router();
 
 /** 取消采纳答案*/
-router.put("/problem/cancel/:id", verify, async ctx => {
+router.put("/problem/cancel/:id", verify, async (ctx) => {
   let t = await sequelize.transaction();
   let _t = await transaction(+ctx.params.id, t);
 
   let result = await DB.Problem.update(
     { answer_id: null as any },
-    { where: { id: ctx.params.id, author: ctx.id }, transaction: t }
+    { where: { id: ctx.params.id, author: ctx.id }, transaction: t },
   )
     .then(([res]) => !!res)
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return false;
     });

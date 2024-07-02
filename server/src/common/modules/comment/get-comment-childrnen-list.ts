@@ -4,7 +4,10 @@ import DB from "@/db";
 async function getCommentChildrenList(id: number) {
   let idHub: number[] = [id];
   async function _collectCommentID(_id: number) {
-    await DB.Comment.findAll({ where: { reply: _id }, attributes: ["id"] }).then(async rows => {
+    await DB.Comment.findAll({
+      where: { reply: _id },
+      attributes: ["id"],
+    }).then(async (rows) => {
       for (let index = 0; index < rows.length; index++) {
         const id = rows[index].id;
         idHub.push(id);

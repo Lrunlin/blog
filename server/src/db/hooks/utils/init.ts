@@ -1,4 +1,6 @@
-function init<T = any, J = any>(callback: (modal: J, type: "create" | "update" | "delete") => any) {
+function init<T = any, J = any>(
+  callback: (modal: J, type: "create" | "update" | "delete") => any,
+) {
   return {
     beforeBulkCreate(options: any) {
       options.individualHooks = true;

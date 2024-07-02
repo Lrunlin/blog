@@ -1,10 +1,10 @@
-import compose from "koa-compose";
+import { Context, Next } from "koa";
+import DB from "@/db";
 import Joi from "joi";
+import compose from "koa-compose";
+import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/verify/validator";
 import interger from "@/common/verify/integer";
-import auth from "@/common/middleware/auth";
-import { Next, Context } from "koa";
-import DB from "@/db";
 
 const schema = Joi.object({
   favorites_id: Joi.array().items(Joi.number()).required().min(1),
@@ -28,4 +28,9 @@ async function verify(ctx: Context, next: Next) {
   await next();
 }
 
-export default compose([auth(0), interger([], ["belong_id"]), validator(schema), verify]);
+export default compose([
+  auth(0),
+  interger([], ["belong_id"]),
+  validator(schema),
+  verify,
+]);

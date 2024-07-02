@@ -1,6 +1,6 @@
-import redis from "@/common/utils/redis";
 import DB from "@/db";
 import axios from "axios";
+import redis from "@/common/utils/redis";
 
 async function friendlyLinkResponsTime() {
   let data: { [key: string]: any } = {};
@@ -11,7 +11,9 @@ async function friendlyLinkResponsTime() {
     attributes: ["id", "url"],
   });
 
-  let catchData = JSON.parse((await redis.get("friendly-link-response-time")) || "{}");
+  let catchData = JSON.parse(
+    (await redis.get("friendly-link-response-time")) || "{}",
+  );
   for (let item of rows) {
     let startTime = +new Date();
     await axios
@@ -20,12 +22,18 @@ async function friendlyLinkResponsTime() {
         data[item.id] = { response_time: +new Date() - startTime };
       })
       .catch(() => {
-        let num = (catchData[item.id]?.response_error as number | undefined) || 0;
+        let num =
+          (catchData[item.id]?.response_error as number | undefined) || 0;
         data[item.id] = { response_error: ++num };
       });
   }
 
-  await redis.set("friendly-link-response-time", JSON.stringify(data), "EX", 7_200_000);
+  await redis.set(
+    "friendly-link-response-time",
+    JSON.stringify(data),
+    "EX",
+    7_200_000,
+  );
 }
 export default async () => {
   if (!(await redis.get("friendly-link-response-time"))) {

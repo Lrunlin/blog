@@ -8,24 +8,36 @@ interface propsType {
 }
 
 /** 首页右侧推广*/
-const Advertisement: FC<propsType> = async props => {
+const Advertisement: FC<propsType> = async (props) => {
   let data = await getAdvertisementList(props.type);
 
   return (
     <div className={props.className}>
-      {data.map(item => (
+      {data.map((item) => (
         <a
           href={item.url}
           target="_blank"
           rel="noopener noreferrer nofollow"
           key={item.id}
-          className={classNames(["w-60", "relative  cursor-pointer", "mb-4", "block", "w-full"])}
-          style={{ height: `${240 / (item.image_size.width / item.image_size.height)}px` }}
+          className={classNames([
+            "w-60",
+            "relative cursor-pointer",
+            "mb-4",
+            "block",
+            "w-full",
+          ])}
+          style={{
+            height: `${240 / (item.image_size.width / item.image_size.height)}px`,
+          }}
         >
           {/* 骨架屏 */}
-          <div className="bg-gray-50 absolute top-0 left-0 w-full h-full"></div>
+          <div className="absolute left-0 top-0 h-full w-full bg-gray-50"></div>
           {/* 内容区 */}
-          <img src={item.poster_url} alt="推广" className="w-full absolute z-10" />
+          <img
+            src={item.poster_url}
+            alt="推广"
+            className="absolute z-10 w-full"
+          />
           <span
             className={classNames([
               "py-px",
@@ -34,8 +46,8 @@ const Advertisement: FC<propsType> = async props => {
               "text-white",
               "bg-gray-800",
               "opacity-50",
-              "border border-solid border-white rounded",
-              "absolute right-3 bottom-1 z-20",
+              "rounded border border-solid border-white",
+              "absolute bottom-1 right-3 z-20",
             ])}
           >
             广告

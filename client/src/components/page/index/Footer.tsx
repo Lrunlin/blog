@@ -1,9 +1,10 @@
 "use client";
-import Image from "@/components/next/Image";
+
 import { Dropdown } from "antd";
 import classNames from "classnames";
-import style from "./index.module.scss";
+import Image from "@/components/next/Image";
 import NoFollowLink from "@/components/next/NoFollowLink";
+import style from "./index.module.scss";
 
 interface listItemType {
   key: string;
@@ -27,7 +28,12 @@ let list: listItemType[][] = [
       href: "https://beian.miit.gov.cn/#/Integrated/index",
       label: (
         <>
-          <Image src="/icon/client/police.png" width={20} height={20} alt="police icon" />
+          <Image
+            src="/icon/client/police.png"
+            width={20}
+            height={20}
+            alt="police icon"
+          />
           <span className="ml-1">{process.env.ICP}</span>
         </>
       ),
@@ -40,20 +46,27 @@ let list: listItemType[][] = [
     },
   ],
 ].map((item, index) =>
-  item.map((_item, _index) => ({ ..._item, key: `footer-link-${index}-${_index}` }))
+  item.map((_item, _index) => ({
+    ..._item,
+    key: `footer-link-${index}-${_index}`,
+  })),
 );
 
 const Footer = () => {
   return (
-    <footer className="w-60 mb-6">
+    <footer className="mb-6 w-60">
       {list.map((item, index) => (
         <ul
-          className="p-0 m-0 text-sm list-none flex items-center mt-2"
+          className="m-0 mt-2 flex list-none items-center p-0 text-sm"
           key={`footer-link-${index}`}
         >
           {item.map((_item, _index) => (
             <li
-              className={classNames([style["child-a-gray"], _index && "ml-2", "mt-1"])}
+              className={classNames([
+                style["child-a-gray"],
+                _index && "ml-2",
+                "mt-1",
+              ])}
               key={_item.key}
             >
               {_item.href ? (
@@ -72,7 +85,7 @@ const Footer = () => {
           <Dropdown
             placement="bottom"
             dropdownRender={() => (
-              <div className="bg-white w-40 h-52 pt-2 rounded text-center">
+              <div className="h-52 w-40 rounded bg-white pt-2 text-center">
                 <div>QQ:{process.env.QQ}</div>
                 <div>
                   <Image
@@ -88,15 +101,20 @@ const Footer = () => {
             <NoFollowLink
               href={`http://wpa.qq.com/msgrd?v=3&uin=${process.env.QQ}&site=qq&menu=yes`}
             >
-              <Image src="/icon/client/qq.png" width={24} height={24} alt="QQ图标" />
+              <Image
+                src="/icon/client/qq.png"
+                width={24}
+                height={24}
+                alt="QQ图标"
+              />
             </NoFollowLink>
           </Dropdown>
         </div>
-        <div className="mt-3 ml-2 cursor-pointer">
+        <div className="ml-2 mt-3 cursor-pointer">
           <Dropdown
             placement="bottom"
             dropdownRender={() => (
-              <div className="bg-white w-40 h-52 pt-2 rounded text-center">
+              <div className="h-52 w-40 rounded bg-white pt-2 text-center">
                 <div>添加站长微信</div>
                 <div>
                   <Image
@@ -109,17 +127,32 @@ const Footer = () => {
               </div>
             )}
           >
-            <Image src="/icon/client/wechat.png" width={24} height={24} alt="微信图标" />
+            <Image
+              src="/icon/client/wechat.png"
+              width={24}
+              height={24}
+              alt="微信图标"
+            />
           </Dropdown>
         </div>
-        <div className="mt-3 ml-2">
+        <div className="ml-2 mt-3">
           <NoFollowLink href={`mailto:${process.env.EMAIL}`}>
-            <Image src="/icon/client/email.png" width={24} height={24} alt="邮箱图标" />
+            <Image
+              src="/icon/client/email.png"
+              width={24}
+              height={24}
+              alt="邮箱图标"
+            />
           </NoFollowLink>
         </div>
-        <div className="mt-3 ml-2">
+        <div className="ml-2 mt-3">
           <NoFollowLink href={`${process.env.GITHUB}`}>
-            <Image src="/icon/client/github.png" width={24} height={24} alt="GitHub图标" />
+            <Image
+              src="/icon/client/github.png"
+              width={24}
+              height={24}
+              alt="GitHub图标"
+            />
           </NoFollowLink>
         </div>
       </div>

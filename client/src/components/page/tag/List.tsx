@@ -1,9 +1,10 @@
 "use client";
+
 import { FC, useRef, useState } from "react";
-import ArticleList from "@/components/common/ArticleList";
 import { useParams } from "next/navigation";
 import { message } from "antd";
 import { propsType } from "@/app/tag/[name]/article/page";
+import ArticleList from "@/components/common/ArticleList";
 import getTagArticleLData from "@/request/type/getTagArticleLData";
 
 const List: FC<propsType> = ({ data }) => {
@@ -17,13 +18,13 @@ const List: FC<propsType> = ({ data }) => {
 
   function loadMoreData() {
     getTagArticleLData(page.current, name)
-      .then(res => {
+      .then((res) => {
         let _list = res.article_data.list;
         if (page.current == 1) {
           setList(_list);
           setTotal(res.article_data.total);
         } else {
-          setList(currentList => [...currentList, ..._list]);
+          setList((currentList) => [...currentList, ..._list]);
         }
       })
       .catch(() => {

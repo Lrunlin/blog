@@ -1,21 +1,23 @@
 "use client";
-import Head from "@/components/next/Head";
-import axios from "@axios";
-import ArticleEditor from "@/components/common/ArticleEditor";
+
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { message } from "antd";
-import dynamic from "next/dynamic";
+import axios from "@axios";
+import ArticleEditor from "@/components/common/ArticleEditor";
+import Head from "@/components/next/Head";
+
 const ArticleRemoveWarn = dynamic(
   () => import("@/components/page/article/editor/ArticleRemoveWarn"),
   {
     ssr: false,
-  }
+  },
 );
 const Write = () => {
   let router = useRouter();
 
   return (
-    <div className="bg-white ">
+    <div className="bg-white">
       <ArticleRemoveWarn />
       <ArticleEditor
         showDraftsButton={true}
@@ -26,14 +28,14 @@ const Write = () => {
             keywords={["文章发布", "MarkDown"]}
           />
         }
-        submit={values => {
+        submit={(values) => {
           axios
             .post("/article", { ...values, state: 1 })
-            .then(res => {
+            .then((res) => {
               message.success(res.data.message);
               router.replace("/creator/content/article");
             })
-            .catch(err => {
+            .catch((err) => {
               message.error(err.message);
             });
         }}

@@ -1,5 +1,6 @@
-import type { Transaction } from "sequelize/types";
 import DB from "@/db";
+import type { Transaction } from "sequelize/types";
+
 /**
  * 删除文章进行的事务处理
  * @params id {number} 被删除文章的ID
@@ -12,7 +13,7 @@ async function transaction(id: number, t: Transaction) {
     attributes: ["id"],
     raw: true,
   })
-    .then(rows => rows.map(item => item.id))
+    .then((rows) => rows.map((item) => item.id))
     .catch(() => false as false);
 
   // 删除文章下评论的通知
@@ -66,7 +67,10 @@ async function transaction(id: number, t: Transaction) {
     .catch(() => false);
 
   /** 删除文章推荐列表中的记录*/
-  let deleteResult = await DB.Recommend.destroy({ where: { id }, transaction: t })
+  let deleteResult = await DB.Recommend.destroy({
+    where: { id },
+    transaction: t,
+  })
     .then(() => true)
     .catch(() => false);
 

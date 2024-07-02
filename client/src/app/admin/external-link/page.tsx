@@ -1,10 +1,11 @@
 "use client";
-import { useState, useMemo } from "react";
-import { message, Button, Input, Table, Result } from "antd";
-import AdminLayout from "@/layout/Admin/Base";
-import useFetch from "@/common/hooks/useFetch";
+
+import { useMemo, useState } from "react";
+import { Button, Input, Result, Table, message } from "antd";
 import axios from "@axios";
 import { response } from "@type/response";
+import useFetch from "@/common/hooks/useFetch";
+import AdminLayout from "@/layout/Admin/Base";
 
 const ExternalLink = () => {
   const [value, setValue] = useState("");
@@ -14,29 +15,31 @@ const ExternalLink = () => {
     isLoading: listIsLoading,
     refetch,
     setData,
-  } = useFetch(() => axios.get<response<any[]>>("/external-link").then(res => res.data.data));
+  } = useFetch(() =>
+    axios.get<response<any[]>>("/external-link").then((res) => res.data.data),
+  );
   let disabled = useMemo(
     () =>
       !/^[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/.test(value) ||
       !data ||
-      data.some(item => item.href == value),
-    [value, data]
+      data.some((item) => item.href == value),
+    [value, data],
   );
 
   let { refetch: submit, isLoading } = useFetch(
     () =>
       axios
         .post("/external-link", { href: value })
-        .then(res => {
+        .then((res) => {
           message.success("添加成功");
           refetch();
           setValue("");
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
           console.log(err);
         }),
-    { manual: true }
+    { manual: true },
   );
 
   const [removeId, setRemoveId] = useState<null | number>(null);
@@ -45,10 +48,10 @@ const ExternalLink = () => {
       setRemoveId(id);
       return axios
         .delete(`/external-link/${id}`)
-        .then(res => {
-          setData(data => data!.filter(item => item.id != id));
+        .then((res) => {
+          setData((data) => data!.filter((item) => item.id != id));
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
           console.log(err);
         })
@@ -56,7 +59,7 @@ const ExternalLink = () => {
           setRemoveId(null);
         });
     },
-    { manual: true }
+    { manual: true },
   );
 
   return (
@@ -67,7 +70,7 @@ const ExternalLink = () => {
           className="!w-80"
           value={value}
           maxLength={150}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
         />
         <Button
           type="primary"
@@ -113,7 +116,7 @@ const ExternalLink = () => {
             ]}
           />
         ) : listIsLoading ? (
-          <div className="h-96 w-full bg-gray-200 animate-pulse"></div>
+          <div className="h-96 w-full animate-pulse bg-gray-200"></div>
         ) : (
           <Result
             status="error"

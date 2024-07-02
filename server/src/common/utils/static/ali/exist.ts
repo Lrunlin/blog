@@ -1,17 +1,19 @@
 import aliOSS from "./utils/oss";
 
-async function exist(images: string[]): Promise<{ success: boolean; message: string }> {
+async function exist(
+  images: string[],
+): Promise<{ success: boolean; message: string }> {
   return new Promise(async (resolve, reject) => {
     await Promise.all(
-      images.map(item =>
+      images.map((item) =>
         aliOSS
           .head(item)
-          .then(res => true)
-          .catch(err => false)
-      )
+          .then((res) => true)
+          .catch((err) => false),
+      ),
     )
-      .then(res => {
-        if (res.some(item => item == false)) {
+      .then((res) => {
+        if (res.some((item) => item == false)) {
           resolve({
             success: false,
             message: `有${res.reduce((total, item) => {
@@ -26,7 +28,7 @@ async function exist(images: string[]): Promise<{ success: boolean; message: str
           resolve({ success: true, message: "成功" });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         reject({
           success: false,
           message: "文件系统响应失败，请稍后在试。",

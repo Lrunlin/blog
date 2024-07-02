@@ -1,4 +1,4 @@
-import { useParams,  usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 // 获取page router下的router.pathname
 // https://github.com/vercel/next.js/discussions/61846
@@ -15,7 +15,9 @@ function useGetRawPath() {
       const segment = splittedRoute[i];
 
       // Check if the segment matches any value in the params object
-      const matchingKey = Object.keys(params).find(key => params[key] === segment);
+      const matchingKey = Object.keys(params).find(
+        (key) => params[key] === segment,
+      );
 
       if (matchingKey) {
         // Replace the segment with the dynamic segment

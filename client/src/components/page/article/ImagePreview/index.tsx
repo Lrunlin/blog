@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import { Image } from "antd";
 import style from "./index.module.scss";
 
@@ -8,7 +9,7 @@ const ImagePreview = () => {
   const [preview, setPreview] = useState("");
   useEffect(() => {
     let imgs = document.querySelectorAll(
-      `.content-body img`
+      `.content-body img`,
     ) as unknown as HTMLCollectionOf<HTMLImageElement>;
 
     function setPreviewSrc(e: any) {
@@ -38,7 +39,7 @@ const ImagePreview = () => {
           preview={{
             mask: false,
             getContainer: "#preview",
-            onVisibleChange: visible => {
+            onVisibleChange: (visible) => {
               if (visible == false) setPreview("");
             },
             visible: !!preview,

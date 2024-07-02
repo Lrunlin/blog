@@ -1,12 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/set-tag-data";
-import getCodeBlockLanguage from "@/common/modules/article/get/set-code-block-language";
-import type { AnswerAttributes } from "@/db/models/answer";
-import setImageTag from "@/common/modules/article/get/img-add-prefix";
 import Sequelize from "@/db/config";
-import verify from "@/common/verify/api-verify/problem/questions";
+import type { AnswerAttributes } from "@/db/models/answer";
 import setExternalLink from "@/common/modules/article/get/external-link";
+import setImageTag from "@/common/modules/article/get/img-add-prefix";
+import getCodeBlockLanguage from "@/common/modules/article/get/set-code-block-language";
+import getTagData from "@/common/modules/article/get/set-tag-data";
+import verify from "@/common/verify/api-verify/problem/questions";
 
 let router = new Router();
 
@@ -16,16 +16,24 @@ let router = new Router();
  */
 function createCommentTree(data: any) {
   /** 获取答案中的的全部评论*/
-  let answerCommentList = data.answer_list.map((item: any) => item.comment_list).flat();
+  let answerCommentList = data.answer_list
+    .map((item: any) => item.comment_list)
+    .flat();
   return Object.assign(data, {
     answer_list: data.answer_list
       .map((item: any) => {
         return Object.assign(item, {
-          content: setImageTag(setExternalLink(item.content), "answer", "answer image"),
+          content: setImageTag(
+            setExternalLink(item.content),
+            "answer",
+            "answer image",
+          ),
           comment_list: item.comment_list
             .map((_item: any) => {
               if (_item.reply) {
-                let target = answerCommentList.find((_comment: any) => _comment.id == _item.reply);
+                let target = answerCommentList.find(
+                  (_comment: any) => _comment.id == _item.reply,
+                );
                 return Object.assign(_item, {
                   reply: target.user_data,
                 });
@@ -33,8 +41,13 @@ function createCommentTree(data: any) {
                 return _item;
               }
             })
-            .sort((a: any, b: any) => +new Date(a.create_time) - +new Date(b.create_time)),
-          like_data: item.like_data.length ? item.like_data[0] : { like_count: 0, like_state: 0 },
+            .sort(
+              (a: any, b: any) =>
+                +new Date(a.create_time) - +new Date(b.create_time),
+            ),
+          like_data: item.like_data.length
+            ? item.like_data[0]
+            : { like_count: 0, like_state: 0 },
         });
       })
       .sort((a: any) => {
@@ -43,13 +56,17 @@ function createCommentTree(data: any) {
     comment_list: data.comment_list
       .map((_item: any) => {
         if (_item.reply) {
-          let target = data.comment_list.find((_comment: any) => _comment.id == _item.reply);
+          let target = data.comment_list.find(
+            (_comment: any) => _comment.id == _item.reply,
+          );
           return Object.assign(_item, { reply: target.user_data });
         } else {
           return _item;
         }
       })
-      .sort((a: any, b: any) => +new Date(a.create_time) - +new Date(b.create_time)),
+      .sort(
+        (a: any, b: any) => +new Date(a.create_time) - +new Date(b.create_time),
+      ),
   });
 }
 
@@ -62,14 +79,14 @@ function problemInit(data: any) {
 }
 
 /** 查看问题以及回答详情*/
-router.get("/problem/:id", verify, async ctx => {
+router.get("/problem/:id", verify, async (ctx) => {
   const id = ctx.params.id;
   const data = await DB.Problem.findByPk(id, {
     attributes: {
       include: [
         [
           Sequelize.literal(
-            `(SELECT COUNT(id) FROM collection WHERE collection.belong_id = problem.id)`
+            `(SELECT COUNT(id) FROM collection WHERE collection.belong_id = problem.id)`,
           ),
           "collection_count",
         ],
@@ -77,7 +94,7 @@ router.get("/problem/:id", verify, async ctx => {
           Sequelize.literal(
             `(SELECT favorites_id FROM collection WHERE collection.user_id = ${
               ctx.id || -1
-            }  and belong_id=${id})`
+            }  and belong_id=${id})`,
           ),
           "collection_state",
         ],
@@ -89,14 +106,16 @@ router.get("/problem/:id", verify, async ctx => {
         as: "like_data",
         attributes: [
           [
-            Sequelize.literal(`(SELECT COUNT(id) FROM likes WHERE likes.belong_id = problem.id)`),
+            Sequelize.literal(
+              `(SELECT COUNT(id) FROM likes WHERE likes.belong_id = problem.id)`,
+            ),
             "like_count",
           ],
           [
             Sequelize.literal(
               `(SELECT COUNT(id) FROM likes WHERE likes.user_id = ${
                 ctx.id || -1
-              } and likes.belong_id=${id})`
+              } and likes.belong_id=${id})`,
             ),
             "like_state",
           ],
@@ -112,14 +131,16 @@ router.get("/problem/:id", verify, async ctx => {
         as: "follow_data",
         attributes: [
           [
-            Sequelize.literal(`(SELECT COUNT(id) FROM follow WHERE follow.belong_id = problem.id)`),
+            Sequelize.literal(
+              `(SELECT COUNT(id) FROM follow WHERE follow.belong_id = problem.id)`,
+            ),
             "follow_count",
           ],
           [
             Sequelize.literal(
               `(SELECT COUNT(id) FROM follow WHERE follow.user_id = ${
                 ctx.id || -1
-              } and follow.belong_id=problem.id)`
+              } and follow.belong_id=problem.id)`,
             ),
             "follow_state",
           ],
@@ -150,13 +171,13 @@ router.get("/problem/:id", verify, async ctx => {
             attributes: [
               [
                 Sequelize.literal(
-                  `(SELECT COUNT(id) FROM likes WHERE likes.belong_id = answer.id)`
+                  `(SELECT COUNT(id) FROM likes WHERE likes.belong_id = answer.id)`,
                 ),
                 "like_count",
               ],
               [
                 Sequelize.literal(
-                  `(SELECT COUNT(id) FROM likes WHERE likes.user_id = ${ctx.id || -1})`
+                  `(SELECT COUNT(id) FROM likes WHERE likes.user_id = ${ctx.id || -1})`,
                 ),
                 "like_state",
               ],
@@ -165,7 +186,13 @@ router.get("/problem/:id", verify, async ctx => {
           {
             model: DB.User,
             as: "author_data",
-            attributes: ["id", "name", "auth", "avatar_file_name", "avatar_url"],
+            attributes: [
+              "id",
+              "name",
+              "auth",
+              "avatar_file_name",
+              "avatar_url",
+            ],
           },
           {
             model: DB.Comment,
@@ -185,7 +212,7 @@ router.get("/problem/:id", verify, async ctx => {
       },
     ],
   })
-    .then(row => {
+    .then((row) => {
       if (row) {
         let data = row.toJSON();
         let tag = getTagData(data.tag as unknown as number[], ["name"]);
@@ -199,40 +226,52 @@ router.get("/problem/:id", verify, async ctx => {
             Object.assign(
               _data,
               getCodeBlockLanguage(
-                setImageTag(setExternalLink(_data.content), "problem", data.title)
+                setImageTag(
+                  setExternalLink(_data.content),
+                  "problem",
+                  data.title,
+                ),
               ),
               {
-                answer_list: _data.answer_list.map(item =>
-                  Object.assign(item, getCodeBlockLanguage(setExternalLink(item.content)))
+                answer_list: _data.answer_list.map((item) =>
+                  Object.assign(
+                    item,
+                    getCodeBlockLanguage(setExternalLink(item.content)),
+                  ),
                 ),
-              }
-            )
-          )
+              },
+            ),
+          ),
         );
       } else {
         return row;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return null;
     });
 
   if (data?.collection_state) {
-    data.collection_state = data.collection_state.split(",").map((item: string) => +item);
+    data.collection_state = data.collection_state
+      .split(",")
+      .map((item: string) => +item);
   }
 
   if (data) {
-    let language = (data.answer_list || []).reduce((total: any, item: any, index: number) => {
-      if (item.language) {
-        let data = total.concat(item.language);
-        item.language = undefined;
-        return data;
-      } else {
-        item.language = undefined;
-        return total;
-      }
-    }, data.language || []);
+    let language = (data.answer_list || []).reduce(
+      (total: any, item: any, index: number) => {
+        if (item.language) {
+          let data = total.concat(item.language);
+          item.language = undefined;
+          return data;
+        } else {
+          item.language = undefined;
+          return total;
+        }
+      },
+      data.language || [],
+    );
 
     if (language) {
       data.language = [...new Set(language)];

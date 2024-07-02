@@ -1,5 +1,5 @@
-import type { NoticeAttributes } from "@/db/models/notice";
 import DB from "@/db";
+import type { NoticeAttributes } from "@/db/models/notice";
 
 // 转换 follow-article 类型的通知
 async function switchNoticeFollowProblem(data: NoticeAttributes) {
@@ -8,8 +8,8 @@ async function switchNoticeFollowProblem(data: NoticeAttributes) {
     attributes: ["id", "author", "title"],
     raw: true,
   })
-    .then(row => row)
-    .catch(err => {
+    .then((row) => row)
+    .catch((err) => {
       return false as false;
     });
 

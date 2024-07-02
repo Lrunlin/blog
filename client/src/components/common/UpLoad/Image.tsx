@@ -1,9 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
-import { PlusOutlined, LoadingOutlined, DeleteOutlined } from "@ant-design/icons";
-import type { uploadPropsType } from "./index";
-import Icon from "@/components/next/Image";
 import { Image as AntdImage } from "antd";
+import {
+  DeleteOutlined,
+  LoadingOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import Icon from "@/components/next/Image";
+import type { uploadPropsType } from "./index";
 
 type propsType = uploadPropsType & {
   onChange: (url: string) => void;
@@ -14,7 +18,7 @@ type propsType = uploadPropsType & {
 /**
  * 上传框以及图片预览
  */
-const Image: FC<propsType> = props => {
+const Image: FC<propsType> = (props) => {
   const [src, setSrc] = useState("");
   const [visible, setVisible] = useState(false);
 
@@ -24,7 +28,7 @@ const Image: FC<propsType> = props => {
   useEffect(() => {
     function isBase64Img(str: string) {
       return /^\s*data:(?:[a-z]+\/[a-z0-9-+.]+(?:;[a-z-]+=[a-z0-9-]+)?)?(?:;base64)?,([a-z0-9!$&',()*+;=\-._~:@/?%\s]*?)\s*$/i.test(
-        str
+        str,
       );
     }
 
@@ -42,7 +46,7 @@ const Image: FC<propsType> = props => {
   return (
     <label
       htmlFor={fileID}
-      className=" relative border border-dashed border-gray-400 hover:border-blue-400 overflow-hidden rounded flex items-center justify-center"
+      className="relative flex items-center justify-center overflow-hidden rounded border border-dashed border-gray-400 hover:border-blue-400"
       style={
         !src || props?.aspect
           ? {
@@ -56,17 +60,18 @@ const Image: FC<propsType> = props => {
     >
       <>
         {src ? (
-          <div className="w-full h-full relative group">
-            <img className="w-full h-full" src={src} alt="upload" />
-            <div className="w-full h-full z-10 absolute top-0 left-0 group-hover:flex bg-black bg-opacity-30 hidden items-center justify-center">
+          <div className="group relative h-full w-full">
+            <img className="h-full w-full" src={src} alt="upload" />
+            <div className="absolute left-0 top-0 z-10 hidden h-full w-full items-center justify-center bg-black bg-opacity-30 group-hover:flex">
               <DeleteOutlined
                 style={{ color: "white", fontSize: 22 }}
-                onClick={e => {
+                onClick={(e) => {
                   //!在清除时一定要吧base64和图片路径、input值都删除
                   setSrc("");
                   props.deleteBase64();
                   props.onDelete && props.onDelete();
-                  (document.getElementById(fileID) as HTMLInputElement).value = "";
+                  (document.getElementById(fileID) as HTMLInputElement).value =
+                    "";
                   e.preventDefault();
                 }}
               />
@@ -76,7 +81,7 @@ const Image: FC<propsType> = props => {
                 height={22}
                 alt="preview"
                 className="ml-3 cursor-pointer"
-                onClick={e => {
+                onClick={(e) => {
                   setVisible(true);
                   e.preventDefault();
                 }}
@@ -89,7 +94,7 @@ const Image: FC<propsType> = props => {
               preview={{
                 visible: visible,
                 src: src,
-                onVisibleChange: visible => setVisible(visible),
+                onVisibleChange: (visible) => setVisible(visible),
                 getContainer: document.querySelector("body")!,
               }}
             />
@@ -99,7 +104,7 @@ const Image: FC<propsType> = props => {
         )}
         {/* 上传中的加载效果 */}
         {props.isLoading && (
-          <div className="w-full h-full absolute top-0 left-0 z-10 flex items-center justify-center bg-white bg-opacity-50">
+          <div className="absolute left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-white bg-opacity-50">
             <LoadingOutlined style={{ fontSize: 26 }} />
           </div>
         )}
@@ -111,7 +116,8 @@ const Image: FC<propsType> = props => {
         id={fileID}
         accept="image/*"
         onInput={() => {
-          let files = (document.getElementById(fileID) as HTMLInputElement).files;
+          let files = (document.getElementById(fileID) as HTMLInputElement)
+            .files;
           if (files?.length) {
             const reader = new FileReader();
             reader.readAsDataURL(files[0]);

@@ -1,16 +1,20 @@
 "use client";
-import { useState, startTransition, FC } from "react";
-import axios from "@axios";
-import { Modal, Form, Input, message, Collapse, Badge } from "antd";
-import useUserData from "@/store/user/user-data";
-import type { LinkAttributes } from "@type/model-attribute";
-import type { userDataType } from "@type/common/user-data";
-import useUserSignModel from "@/store/user/user-sign-model-state";
+
+import { FC, startTransition, useState } from "react";
 import Link from "next/link";
+import { Badge, Collapse, Form, Input, Modal, message } from "antd";
+import axios from "@axios";
+import type { userDataType } from "@type/common/user-data";
+import type { LinkAttributes } from "@type/model-attribute";
 import classNames from "classnames";
 import UpLoad from "@/components/common/UpLoad";
+import useUserData from "@/store/user/user-data";
+import useUserSignModel from "@/store/user/user-sign-model-state";
 
-type linkItem = Pick<LinkAttributes, "id" | "name" | "logo_file_name" | "logo_url" | "url"> & {
+type linkItem = Pick<
+  LinkAttributes,
+  "id" | "name" | "logo_file_name" | "logo_url" | "url"
+> & {
   user_data?: userDataType;
 };
 
@@ -18,28 +22,31 @@ const siteData = [
   { label: "网站名称", value: process.env.NEXT_PUBLIC_SITE_NAME },
   { label: "网址", value: process.env.NEXT_PUBLIC_HOST },
   { label: "Logo", value: `${process.env.NEXT_PUBLIC_HOST}/favicon.svg` },
-  { label: "网站介绍", value: `${process.env.NEXT_PUBLIC_SITE_NAME}:一个技术博客社区` },
+  {
+    label: "网站介绍",
+    value: `${process.env.NEXT_PUBLIC_SITE_NAME}:一个技术博客社区`,
+  },
 ];
 
-const FriendlyLink: FC<{ data: linkItem[] }> = props => {
+const FriendlyLink: FC<{ data: linkItem[] }> = (props) => {
   let { useForm } = Form;
   let [form] = useForm();
-  let userData = useUserData(s => s.data);
-  let setModalState = useUserSignModel(s => s.setData);
+  let userData = useUserData((s) => s.data);
+  let setModalState = useUserSignModel((s) => s.setData);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function onFinish(values: any) {
     axios
       .post("/friendly-link/apply", values)
-      .then(res => {
+      .then((res) => {
         message.success(res.data.message);
         setIsModalVisible(false);
         startTransition(() => {
           form.resetFields();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       });
   }
@@ -56,8 +63,11 @@ const FriendlyLink: FC<{ data: linkItem[] }> = props => {
       >
         <Collapse className="select-none">
           <Collapse.Panel header="点击查看本站信息" key="1">
-            {siteData.map(item => (
-              <div className="mt-2 flex select-text" key={item.value + item.label}>
+            {siteData.map((item) => (
+              <div
+                className="mt-2 flex select-text"
+                key={item.value + item.label}
+              >
                 <div className="w-20 text-right">{item.label}:</div>
                 <div className="ml-2">{item.value}</div>
               </div>
@@ -79,7 +89,12 @@ const FriendlyLink: FC<{ data: linkItem[] }> = props => {
             name="name"
             rules={[
               { required: true, message: "请填写网站名称" },
-              { type: "string", min: 2, max: 30, message: "网站名称为长度2-30位" },
+              {
+                type: "string",
+                min: 2,
+                max: 30,
+                message: "网站名称为长度2-30位",
+              },
             ]}
           >
             <Input maxLength={30} placeholder="网站名称为长度2-30位" />
@@ -131,10 +146,10 @@ const FriendlyLink: FC<{ data: linkItem[] }> = props => {
         </Form>
       </Modal>
       <div>
-        <h2 className="text-center mt-10">友情链接</h2>
-        <div className="w-[992px] p-4 mt-12 mx-auto flex flex-wrap">
+        <h2 className="mt-10 text-center">友情链接</h2>
+        <div className="mx-auto mt-12 flex w-[992px] flex-wrap p-4">
           <div
-            className="w-44 h-16 mr-4 mt-4 bg-gray-100 flex items-center justify-center cursor-pointer border border-solid border-gray-200"
+            className="mr-4 mt-4 flex h-16 w-44 cursor-pointer items-center justify-center border border-solid border-gray-200 bg-gray-100"
             onClick={
               userData
                 ? () => setIsModalVisible(true)
@@ -146,22 +161,28 @@ const FriendlyLink: FC<{ data: linkItem[] }> = props => {
           >
             + 申请友链
           </div>
-          {props.data.map(item => (
+          {props.data.map((item) => (
             <Badge.Ribbon
               key={item.id}
               text={
                 item.user_data && (
-                  <Link href={`/user/${item.user_data.id}`} className="text-white">
+                  <Link
+                    href={`/user/${item.user_data.id}`}
+                    className="text-white"
+                  >
                     {item.user_data.name}
                   </Link>
                 )
               }
-              className={classNames(["cursor-pointer", !item.user_data && "hidden"])}
+              className={classNames([
+                "cursor-pointer",
+                !item.user_data && "hidden",
+              ])}
             >
               <a
                 target="_blank"
                 href={item.url}
-                className="w-44 h-16 mr-4 mt-4 relative group flex items-center justify-center cursor-pointer border border-solid border-gray-200"
+                className="group relative mr-4 mt-4 flex h-16 w-44 cursor-pointer items-center justify-center border border-solid border-gray-200"
               >
                 <span className="hidden group-hover:inline">{item.name}</span>
                 <img

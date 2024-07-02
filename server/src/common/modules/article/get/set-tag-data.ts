@@ -12,23 +12,23 @@ function getTagData(tags: TagAttributes["id"][], attributes?: string[]) {
 
   if (attributes) {
     return tags
-      .map(item => {
-        let _tag = tag.find(_item => _item.id == item) as TagAttributes;
+      .map((item) => {
+        let _tag = tag.find((_item) => _item.id == item) as TagAttributes;
         // 转好的二维数组，在返回时转成对象
         if (_tag) {
           let _tagArray = Object.keys(_tag)
-            .filter(item => attributes.includes(item))
-            .map(item => [item, _tag[item as keyof TagAttributes]]);
+            .filter((item) => attributes.includes(item))
+            .map((item) => [item, _tag[item as keyof TagAttributes]]);
           return Object.fromEntries(_tagArray);
         }
       })
-      .filter(item => !!item); //开发时可能会手动删除一些tag或者导入数据，防止tag对不上;
+      .filter((item) => !!item); //开发时可能会手动删除一些tag或者导入数据，防止tag对不上;
   } else {
     return tags
-      .map(item => {
-        return tag.find(_item => _item.id == item);
+      .map((item) => {
+        return tag.find((_item) => _item.id == item);
       })
-      .filter(item => !!item);
+      .filter((item) => !!item);
   }
 }
 export default getTagData;

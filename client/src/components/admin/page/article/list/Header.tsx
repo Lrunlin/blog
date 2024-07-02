@@ -1,8 +1,8 @@
-import { Form, Input, Select, Button, DatePicker, Switch, Card } from "antd";
+import { Button, Card, DatePicker, Form, Input, Select, Switch } from "antd";
 import useAdminArticleSearch from "@/store/admin/admin-search-option";
 
 const Header = () => {
-  let searchOption = useAdminArticleSearch(s => s);
+  let searchOption = useAdminArticleSearch((s) => s);
 
   // 更新Store
   function onFinish(values: any) {
@@ -31,10 +31,13 @@ const Header = () => {
         </Form.Item>
 
         <Form.List name="sort">
-          {fields =>
+          {(fields) =>
             fields.map((field, index) => (
               <Form.Item {...field} label={index == 0 ? "排序" : ""}>
-                <Select value={searchOption.data.sort[index]} style={{ width: "120px" }}>
+                <Select
+                  value={searchOption.data.sort[index]}
+                  style={{ width: "120px" }}
+                >
                   {index == 0 ? (
                     <>
                       <Option value="create_time">发布时间</Option>
@@ -58,7 +61,11 @@ const Header = () => {
         </Form.Item>
 
         <Form.Item label="截止时间" name="deadline">
-          <DatePicker showTime placeholder="查询指定时间后发布的文章" className="w-40" />
+          <DatePicker
+            showTime
+            placeholder="查询指定时间后发布的文章"
+            className="w-40"
+          />
         </Form.Item>
 
         <Form.Item>

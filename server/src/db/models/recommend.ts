@@ -123,7 +123,7 @@ export class Recommend
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Recommend;
   }
 }

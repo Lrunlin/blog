@@ -5,14 +5,14 @@ import useUserSignModel from "@/store/user/user-sign-model-state";
 
 const Logon = () => {
   const [isLoad, setIsLoad] = useState(false);
-  let setModalState = useUserSignModel(s => s).setData;
+  let setModalState = useUserSignModel((s) => s).setData;
 
   function logOn(values: any) {
     setIsLoad(true);
     let { email, name, password } = values;
     axios
       .post("/email/link", { email, name, password })
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
           setModalState(false);
@@ -20,7 +20,7 @@ const Logon = () => {
           message.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       })
       .finally(() => setIsLoad(false));
@@ -84,7 +84,10 @@ const Logon = () => {
         </Form.Item>
       </Form>
       <div className="flex justify-between">
-        <span className="text-sky-600 cursor-pointer" onClick={() => setModalState("LogIn")}>
+        <span
+          className="cursor-pointer text-sky-600"
+          onClick={() => setModalState("LogIn")}
+        >
           登录
         </span>
       </div>

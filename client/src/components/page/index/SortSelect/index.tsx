@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import type { FC } from "react";
 import classNames from "classnames";
@@ -23,7 +24,7 @@ interface propsType {
 }
 
 /** 选择排序方式*/
-const SortSelect: FC<propsType> = props => {
+const SortSelect: FC<propsType> = (props) => {
   const [active, setActive] = useState(list[0].value);
   function switchType(value: string) {
     setActive(value);
@@ -58,7 +59,11 @@ const SortSelect: FC<propsType> = props => {
             }}
           >
             <span
-              className={index == 1 ? "border-slate-200 px-4 border-l-solid border-r-solid" : ""}
+              className={
+                index == 1
+                  ? "border-l-solid border-r-solid border-slate-200 px-4"
+                  : ""
+              }
             >
               {item.label}
             </span>

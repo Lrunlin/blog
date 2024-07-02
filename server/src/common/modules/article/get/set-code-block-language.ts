@@ -1,6 +1,5 @@
 import { load } from "cheerio";
 
-
 /**
  * todo 为文章表设置language字段，用来判断代码块使用到了哪些语言
  * TODO 并且设置代码高亮使用的插件
@@ -15,8 +14,12 @@ function getCodeBlockLanguage(content: string) {
       .children("code")
       .eq(0)
       .attr("class")}`.split(" ");
-    let hasClassNames = allClassNames.find(item => item.includes("language-"));
-    let language = hasClassNames ? hasClassNames.replace("language-", "") : false;
+    let hasClassNames = allClassNames.find((item) =>
+      item.includes("language-"),
+    );
+    let language = hasClassNames
+      ? hasClassNames.replace("language-", "")
+      : false;
     if (language) {
       if (!languages.includes(language)) languages.push(language);
     }

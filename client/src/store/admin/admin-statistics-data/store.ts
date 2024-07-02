@@ -9,19 +9,20 @@ export type AdminStatisticsDataActions = {
   setData: (data: statisticsDataType) => any;
 };
 
-export type AdminStatisticsDataStore = AdminStatisticsDataType & AdminStatisticsDataActions;
+export type AdminStatisticsDataStore = AdminStatisticsDataType &
+  AdminStatisticsDataActions;
 
 export const defaultInitState = { data: {} as statisticsDataType };
 
 export const createAdminStatisticsDataStore = (
-  initState: AdminStatisticsDataType = defaultInitState
+  initState: AdminStatisticsDataType = defaultInitState,
 ) => {
-  return create<AdminStatisticsDataStore>(set => ({
+  return create<AdminStatisticsDataStore>((set) => ({
     ...initState,
     refreshData: () => {
       axios
         .get("/user/info")
-        .then(res => {
+        .then((res) => {
           set(() => ({ data: res.data.data || null }));
         })
         .catch(() => set({ data: {} as any }));

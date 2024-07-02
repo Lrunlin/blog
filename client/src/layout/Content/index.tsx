@@ -1,8 +1,8 @@
-import { Suspense, type FC, type ReactNode } from "react";
-import Sidebar from "@/layout/Sidebar";
+import { type FC, type ReactNode, Suspense } from "react";
 import classNames from "classnames";
-import HightLight from "./HightLight";
+import Sidebar from "@/layout/Sidebar";
 import ImagePreview from "@/components/page/article/ImagePreview";
+import HightLight from "./HightLight";
 
 export interface propsType {
   children: ReactNode;
@@ -13,11 +13,14 @@ export interface propsType {
 }
 
 /** 内容页面(文章、问答)布局*/
-const Layout: FC<propsType> = props => {
+const Layout: FC<propsType> = (props) => {
   return (
     <>
       {props.language && <HightLight language={props.language} />}
-      <Sidebar className={classNames(["pb-16", props.className])} Aside={props.Aside}>
+      <Sidebar
+        className={classNames(["pb-16", props.className])}
+        Aside={props.Aside}
+      >
         {props.ToolBar}
         {props.children}
         <Suspense>

@@ -1,12 +1,12 @@
 import type { FC } from "react";
 import type {
-  noticeCommentListType,
   noticeAnswerListType,
+  noticeCommentListType,
   noticeFollowListType,
 } from "@/app/notification/[type]/page";
+import AnswerItem from "./Answer";
 import CommentItem from "./Comment";
 import FollowItem from "./Follow";
-import AnswerItem from "./Answer";
 
 type componentsType = "comment" | "follow" | "answer";
 
@@ -29,10 +29,15 @@ const Component: FC<{
       component: <AnswerItem data={data as noticeAnswerListType} />,
     },
   ];
-  return map.find(_item => type.startsWith(_item.lable))?.component as JSX.Element;
+  return map.find((_item) => type.startsWith(_item.lable))
+    ?.component as JSX.Element;
 };
 
-type listData = (noticeCommentListType | noticeAnswerListType | noticeFollowListType)[];
+type listData = (
+  | noticeCommentListType
+  | noticeAnswerListType
+  | noticeFollowListType
+)[];
 
 /** 对多个通知数据进行指定类型的转换*/
 const Notice: FC<{
@@ -40,15 +45,15 @@ const Notice: FC<{
 }> = ({ data }) => {
   return (
     <div className="w-5/6">
-      {data.map(item => {
+      {data.map((item) => {
         return (
           <div
             key={`notice-${item.id}`}
-            className="bg-white p-2 mt-2 relative shadow-sm flex max-w-full"
+            className="relative mt-2 flex max-w-full bg-white p-2 shadow-sm"
           >
             <Component type={item.type as componentsType} data={item} />
             {item.is_read == 0 && (
-              <div className="w-2 h-2 absolute bg-red-400 rounded-full top-3 right-3"></div>
+              <div className="absolute right-3 top-3 h-2 w-2 rounded-full bg-red-400"></div>
             )}
           </div>
         );

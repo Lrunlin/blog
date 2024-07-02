@@ -16,9 +16,8 @@ const schema = Joi.object({
 
 let router = new Router();
 
-
 // 处理发送忘记密码邮件链接的接口
-router.post("/forget-password/update", validator(schema), async ctx => {
+router.post("/forget-password/update", validator(schema), async (ctx) => {
   let { key, password } = ctx.request.body;
 
   let email = await redis.get(`forget-password-${key}`);
@@ -32,7 +31,7 @@ router.post("/forget-password/update", validator(schema), async ctx => {
     { password: password },
     {
       where: { email: email },
-    }
+    },
   )
     .then(([count]) => {
       if (count) {
@@ -43,7 +42,7 @@ router.post("/forget-password/update", validator(schema), async ctx => {
         ctx.status = 500;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.body = { success: false, message: "修改失败" };
       ctx.status = 500;
     });

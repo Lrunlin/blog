@@ -1,10 +1,10 @@
 import { FC, ReactNode } from "react";
-import Header from "@/components/admin/common/Header";
-import Footer from "@/components/admin/common/Footer";
 import { useRouter } from "next/navigation";
-import useUserData from "@/store/user/user-data";
 import axios from "@axios";
+import Footer from "@/components/admin/common/Footer";
+import Header from "@/components/admin/common/Header";
 import Head from "@/components/next/Head";
+import useUserData from "@/store/user/user-data";
 
 interface propsType {
   children: ReactNode;
@@ -14,13 +14,13 @@ axios.interceptors.request.use(
     config.headers["isadmin"] = true;
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 const AdminLayout: FC<propsType> = ({ children }) => {
   const router = useRouter();
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   if (typeof window !== "undefined" && userData?.auth != 1) {
     router.replace("/admin/login");
   }
@@ -35,7 +35,9 @@ const AdminLayout: FC<propsType> = ({ children }) => {
       `}</style>
       <div className="flex justify-between">
         <Header />
-        <main className="min-h-screen w-full pl-4 pr-4 relative top-4 ml-[192px] flex-1">{children}</main>
+        <main className="relative top-4 ml-[192px] min-h-screen w-full flex-1 pl-4 pr-4">
+          {children}
+        </main>
       </div>
       <Footer />
     </>

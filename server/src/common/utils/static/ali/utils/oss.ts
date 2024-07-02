@@ -1,4 +1,5 @@
 import OSS from "ali-oss";
+
 const aliOSS = new OSS({
   region: process.env.OSS_REGION,
   accessKeyId: process.env.CLOUD_SERVER_ACCESS_KEY_ID,

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Input } from "antd";
 
 const { Search } = Input;
@@ -29,10 +29,10 @@ const SearchBox = () => {
         className="sm:hidden"
         placeholder="搜索"
         allowClear
-        onSearch={val => onSearch(val)}
+        onSearch={(val) => onSearch(val)}
         maxLength={30}
         style={{ width: 200 }}
-        onChange={e => setKeyword(e.target.value)}
+        onChange={(e) => setKeyword(e.target.value)}
       />
     </>
   );

@@ -1,11 +1,12 @@
 "use client";
-import { Skeleton, Result } from "antd";
+
 import { useParams } from "next/navigation";
+import { Result, Skeleton } from "antd";
 import axios from "@axios";
-import ArticleList from "@/components/common/ArticleList";
 import type { response } from "@type/common/response";
 import type { articleListItemType } from "@type/model/article-list-item";
 import useFetch from "@/common/hooks/useFetch";
+import ArticleList from "@/components/common/ArticleList";
 
 /** 文章页面底部的推荐文章*/
 const Recommend = () => {
@@ -15,7 +16,7 @@ const Recommend = () => {
   let { data, isLoading } = useFetch(() =>
     axios
       .get<response<articleListItemType[]>>(`/article/recommend/${articleID}`)
-      .then(res => res.data.data)
+      .then((res) => res.data.data),
   );
   return (
     <div>

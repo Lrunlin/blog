@@ -1,9 +1,9 @@
+import { Context, Next } from "koa";
+import DB from "@/db";
 import Joi from "joi";
-import validator from "@/common/middleware/verify/validatorAsync";
 import compose from "koa-compose";
 import auth from "@/common/middleware/auth";
-import { Next, Context } from "koa";
-import DB from "@/db";
+import validator from "@/common/middleware/verify/validatorAsync";
 
 let schema = Joi.object({
   id: Joi.number().min(0).required().error(new Error("答案ID格式不正确")),
@@ -15,7 +15,7 @@ async function verify(ctx: Context, next: Next) {
     raw: true,
     attributes: ["id"],
   })
-    .then(async row => {
+    .then(async (row) => {
       if (row) {
         ctx.status = 400;
         ctx.body = { success: false, message: "被采纳的答案无法删除" };

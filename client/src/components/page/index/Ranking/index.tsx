@@ -1,18 +1,19 @@
 "use client";
+
 import { useState } from "react";
-import FunsRanking from "./FunsRanking";
 import { Tabs } from "antd";
 import AuthorRanking from "./AuthorRanking";
+import FunsRanking from "./FunsRanking";
 
 const Ranking = () => {
   let [key, setKey] = useState("0");
   return (
-    <div className="bg-white mb-4">
+    <div className="mb-4 bg-white">
       <Tabs
         activeKey={key}
         defaultActiveKey="0"
         centered={true}
-        onChange={activeKey => setKey(activeKey)}
+        onChange={(activeKey) => setKey(activeKey)}
         items={[
           {
             label: "作者榜",

@@ -1,19 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Button, Input, message, Result, Skeleton } from "antd";
-import Head from "@/components/next/Head";
-import Tag from "@/components/page/problem/write/Tag";
-import axios from "@axios";
-import { useParams, useRouter } from "next/navigation";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { Button, Input, Result, Skeleton, message } from "antd";
+import axios from "@axios";
+import useFetch from "@/common/hooks/useFetch";
 import Editor from "@/components/common/Editor";
 import Header from "@/components/common/Header";
-import useFetch from "@/common/hooks/useFetch";
+import Head from "@/components/next/Head";
+import Tag from "@/components/page/problem/write/Tag";
 
 const Write = () => {
   let params = useParams();
   let { data, isLoading } = useFetch(() =>
-    axios.get(`/problem/update/${params.id}`).then(res => res.data.data)
+    axios.get(`/problem/update/${params.id}`).then((res) => res.data.data),
   );
 
   let [title, setTitle] = useState("");
@@ -45,7 +46,7 @@ const Write = () => {
 
     axios
       .put(`/problem/${params.id}`, { title, tag, content })
-      .then(res => {
+      .then((res) => {
         message.success(res.data.message);
         router.back();
       })
@@ -58,31 +59,35 @@ const Write = () => {
     <>
       <Head title="提问" />
       {data ? (
-        <div className="bg-[#f4f5f5] min-w-screen min-h-screen relative">
-          <header className="w-full h-12 bg-white shadow-sm top-0">
-            <div className="w-full fixed z-50 bg-white">
-              <div className="max-w-[1440px] h-12 mx-auto flex justify-between items-center px-6">
+        <div className="min-w-screen relative min-h-screen bg-[#f4f5f5]">
+          <header className="top-0 h-12 w-full bg-white shadow-sm">
+            <div className="fixed z-50 w-full bg-white">
+              <div className="mx-auto flex h-12 max-w-[1440px] items-center justify-between px-6">
                 <Link href="/">
                   <img src="/favicon.svg" className="h-8" alt="logo" />
                 </Link>
-                <span className="text-gray-500 text-xl">提问题</span>
+                <span className="text-xl text-gray-500">提问题</span>
                 <Button type="primary" onClick={submit}>
                   发布问题
                 </Button>
               </div>
             </div>
           </header>
-          <main className="w-4/5 max-w-[1200px] mx-auto mt-2 bg-[#f4f5f5] ">
+          <main className="mx-auto mt-2 w-4/5 max-w-[1200px] bg-[#f4f5f5]">
             <Input
               placeholder="请输入问题标题"
               value={title}
-              onChange={e => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <div>
-              <Tag onChange={tags => setTag(tags)} initValue={tag} />
+              <Tag onChange={(tags) => setTag(tags)} initValue={tag} />
             </div>
             <div className="mt-2">
-              <Editor target="problem" initValue={content} onChange={html => setContent(html)} />
+              <Editor
+                target="problem"
+                initValue={content}
+                onChange={(html) => setContent(html)}
+              />
             </div>
           </main>
         </div>

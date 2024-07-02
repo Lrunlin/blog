@@ -1,28 +1,30 @@
 "use client";
+
 import { startTransition } from "react";
-import { Input, Button, Form, message } from "antd";
-import Upload from "@/components/common/UpLoad";
+import { Button, Form, Input, message } from "antd";
 import axios from "@axios";
 import AdminLayout from "@/layout/Admin/Base";
+import Upload from "@/components/common/UpLoad";
+
 const Link = () => {
   let { useForm } = Form;
   let [form] = useForm();
   function onFinish(values: any) {
     axios
       .post("/friendly-link", values)
-      .then(res => {
+      .then((res) => {
         message.success(res.data.message);
         startTransition(() => {
           form.resetFields();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       });
   }
   return (
     <AdminLayout>
-      <div className="pt-6 piece">
+      <div className="piece pt-6">
         <Form
           form={form}
           labelCol={{ span: 4 }}
@@ -37,7 +39,12 @@ const Link = () => {
             name="name"
             rules={[
               { required: true, message: "请填写网站名称" },
-              { type: "string", min: 2, max: 30, message: "网站名称为长度2-30位" },
+              {
+                type: "string",
+                min: 2,
+                max: 30,
+                message: "网站名称为长度2-30位",
+              },
             ]}
           >
             <Input maxLength={30} placeholder="网站名称为长度2-30位" />

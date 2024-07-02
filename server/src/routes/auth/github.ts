@@ -1,13 +1,14 @@
 import Router from "@koa/router";
-import getUserId from "@/common/middleware/auth/getUserId";
-import updata from "@/common/modules/github/updata";
-import getGithubName from "@/common/modules/github/getGithubName";
-import sign from "@/common/utils/auth/sign";
 import DB from "@/db";
+import getUserId from "@/common/middleware/auth/getUserId";
+import getGithubName from "@/common/modules/github/getGithubName";
+import updata from "@/common/modules/github/updata";
+import sign from "@/common/utils/auth/sign";
+
 let router = new Router();
 
 // 如果有绑定了指定github的字段就登录，否则就是绑定
-router.post("/user/github", getUserId, async ctx => {
+router.post("/user/github", getUserId, async (ctx) => {
   let { code } = ctx.request.body;
   let githubName = await getGithubName(code);
 
@@ -22,7 +23,7 @@ router.post("/user/github", getUserId, async ctx => {
     attributes: ["id", "auth"],
     raw: true,
   })
-    .then(row => row)
+    .then((row) => row)
     .catch(() => false as false);
 
   if (userData == false) {

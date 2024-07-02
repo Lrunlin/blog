@@ -90,7 +90,7 @@ export class Advertisement
           },
         ],
         hooks: hooks,
-      }
+      },
     ) as typeof Advertisement;
   }
 }

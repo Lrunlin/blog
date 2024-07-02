@@ -1,5 +1,5 @@
-import fs from "fs";
 import { NextRequest } from "next/server";
+import fs from "fs";
 
 type Params = {
   name: string;

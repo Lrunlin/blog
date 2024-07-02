@@ -9,10 +9,16 @@ import id from "@/common/utils/id";
  * @params t {object} 事务处理对象
  * @return result {t} 事务处理执行结果
  */
-async function transaction(answer_id: number, problem_id: number, t: Transaction) {
+async function transaction(
+  answer_id: number,
+  problem_id: number,
+  t: Transaction,
+) {
   /** 获取对应问题的用户ID*/
-  let problemUserData = await DB.Problem.findByPk(problem_id, { attributes: ["author"] })
-    .then(row => row?.author)
+  let problemUserData = await DB.Problem.findByPk(problem_id, {
+    attributes: ["author"],
+  })
+    .then((row) => row?.author)
     .catch(() => false as false);
   if (!problemUserData) return false;
 
@@ -28,10 +34,10 @@ async function transaction(answer_id: number, problem_id: number, t: Transaction
     },
     {
       transaction: t,
-    }
+    },
   )
     .then(() => true)
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return false;
     });

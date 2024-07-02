@@ -1,4 +1,5 @@
 "use client";
+
 import { Alert, Button, Tooltip, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "@axios";
@@ -6,12 +7,12 @@ import cookie from "js-cookie";
 import useUserData from "@/store/user/user-data";
 
 const Destroy = () => {
-  let userDataStore = useUserData(s => s);
-  
+  let userDataStore = useUserData((s) => s);
+
   function remove() {
     axios
       .post("/user/destroy")
-      .then(res => {
+      .then((res) => {
         cookie.remove("token", {
           expires: 365,
           domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
@@ -19,7 +20,7 @@ const Destroy = () => {
         message.success(res.data.message);
         userDataStore.setData(null);
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       });
   }
@@ -43,7 +44,11 @@ const Destroy = () => {
         />
         <div className="mt-6 flex justify-center">
           <Tooltip
-            title={userDataStore?.data?.auth != 0 ? "管理员账号禁止注销" : "点击就会删除，没有确认"}
+            title={
+              userDataStore?.data?.auth != 0
+                ? "管理员账号禁止注销"
+                : "点击就会删除，没有确认"
+            }
           >
             <Button
               disabled={userDataStore?.data?.auth != 0}

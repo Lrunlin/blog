@@ -7,7 +7,7 @@ interface sitemapItemType {
 function setSiteMap(list: sitemapItemType[]) {
   const header = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
-  let body = list.map(item => {
+  let body = list.map((item) => {
     return `
     <sitemap>
      <loc>${item.href}</loc>

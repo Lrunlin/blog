@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Avatar } from "antd";
-import NoFollowLink from "@/components/next/NoFollowLink";
-import dayjs from "@dayjs";
 import { noticeCommentListType } from "@/app/notification/[type]/page";
+import dayjs from "@dayjs";
+import NoFollowLink from "@/components/next/NoFollowLink";
+
 interface propsType {
   data: noticeCommentListType;
 }
@@ -17,7 +18,7 @@ function _switch(type: keyof typeof map, reply: boolean) {
     article: [["评论了你的文章"], ["回复了你在文章", "下的评论"]],
   };
 
-  let key = Object.keys(map).find(item => type.includes(item)) as string;
+  let key = Object.keys(map).find((item) => type.includes(item)) as string;
   return map[key as keyof typeof map][reply ? 1 : 0];
 }
 //评论了你的问题XXX  回复了你在XXX下的评论
@@ -28,20 +29,27 @@ const ArticleCommentNotice: FC<propsType> = ({ data }) => {
   let _data = _switch(data.type as any, !!data.label.comment_data.reply);
   return (
     <>
-      <div className="w-10 h-10">
+      <div className="h-10 w-10">
         <NoFollowLink href={`/user/${data.label.user_data.id}`}>
-          <Avatar size={40} src={data.label.user_data.avatar_url} alt="用户头像" />
+          <Avatar
+            size={40}
+            src={data.label.user_data.avatar_url}
+            alt="用户头像"
+          />
         </NoFollowLink>
       </div>
-      <div className="max-w-full ml-6 flex-1">
-        <div className="w-3/4 truncate flex mt-0.5">
+      <div className="ml-6 max-w-full flex-1">
+        <div className="mt-0.5 flex w-3/4 truncate">
           用户
-          <NoFollowLink href={`/user/${data.label.user_data.id}`} className="font-bold mx-1">
+          <NoFollowLink
+            href={`/user/${data.label.user_data.id}`}
+            className="mx-1 font-bold"
+          >
             {data.label.user_data.name}
           </NoFollowLink>
           {_data[0]}
           <NoFollowLink
-            className="font-bold truncate"
+            className="truncate font-bold"
             href={`/${data.label.type}/${data.label.content_data.id}`}
           >
             {data.label.content_data.title}
@@ -49,13 +57,15 @@ const ArticleCommentNotice: FC<propsType> = ({ data }) => {
           {_data[1]}
         </div>
 
-        <div className="w-3/4 truncate">“{data.label.comment_data.content}”</div>
+        <div className="w-3/4 truncate">
+          “{data.label.comment_data.content}”
+        </div>
 
         {data.label.comment_data?.reply && (
-          <div className="w-3/4 mt-1 p-1.5 border border-solid rounded-sm border-gray-200">
+          <div className="mt-1 w-3/4 rounded-sm border border-solid border-gray-200 p-1.5">
             <NoFollowLink
               href={`/${data.label.type}/${data.label.content_data.id}`}
-              className="text-gray-700 line-clamp-6"
+              className="line-clamp-6 text-gray-700"
             >
               {data.label.comment_data?.reply?.content}
             </NoFollowLink>

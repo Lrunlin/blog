@@ -1,10 +1,10 @@
 import Router from "@koa/router";
+import { ParsedUrlQuery } from "querystring";
+import { Op, Sequelize } from "sequelize";
+import getBloggerList from "@/common/modules/article/select/getBloggerList";
+import getTypeChildrenTag from "@/common/modules/article/select/getTypeChildrenTag";
 import option from "@/common/modules/article/select/option";
 import search from "@/common/modules/article/select/search";
-import { Op, Sequelize } from "sequelize";
-import getTypeChildrenTag from "@/common/modules/article/select/getTypeChildrenTag";
-import getBloggerList from "@/common/modules/article/select/getBloggerList";
-import { ParsedUrlQuery } from "querystring";
 import verify from "@/common/verify/api-verify/article/list";
 
 /** 处理客户端的查询类型返回对应的where*/
@@ -23,7 +23,9 @@ const map = {
   type: async (type: number) => {
     let tagList = await getTypeChildrenTag(type);
     return {
-      [Op.or]: tagList.map(item => ({ tag: { [Op.like]: Sequelize.literal(`'%${item}%'`) } })),
+      [Op.or]: tagList.map((item) => ({
+        tag: { [Op.like]: Sequelize.literal(`'%${item}%'`) },
+      })),
     };
   },
 };
@@ -42,10 +44,14 @@ async function where(query: ParsedUrlQuery, user_id?: number) {
 
 let router = new Router();
 // 用户端首页文章列表
-router.get("/article/list/:page", verify, async ctx => {
+router.get("/article/list/:page", verify, async (ctx) => {
   let page = +(ctx.params.page as string);
 
-  let data = await option(page, ctx.query.sort as any, await where(ctx.query, ctx.id));
+  let data = await option(
+    page,
+    ctx.query.sort as any,
+    await where(ctx.query, ctx.id),
+  );
 
   ctx.body = {
     success: true,

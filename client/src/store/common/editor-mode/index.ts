@@ -7,7 +7,7 @@ type actionType = {
 };
 
 /** 文章编辑器切换*/
-const useEditorMode = create<{ data: dataType } & actionType>(set => ({
+const useEditorMode = create<{ data: dataType } & actionType>((set) => ({
   data: (typeof window != "undefined"
     ? window.localStorage.getItem("editor-mode") || "markdown"
     : "markdown") as dataType,

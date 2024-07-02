@@ -1,5 +1,5 @@
-import type { Transaction } from "sequelize/types";
 import DB from "@/db";
+import type { Transaction } from "sequelize/types";
 
 /**
  * 删除问题的事务处理
@@ -14,7 +14,7 @@ async function transaction(problem_id: number, t: Transaction) {
     raw: true,
     attributes: ["id"],
   })
-    .then(rows => rows.map(item => item.id))
+    .then((rows) => rows.map((item) => item.id))
     .catch(() => false as false);
   if (!answerList) return false;
 
@@ -25,7 +25,7 @@ async function transaction(problem_id: number, t: Transaction) {
       belong_id: [...answerList, problem_id],
     },
   })
-    .then(rows => rows.map(item => item.id))
+    .then((rows) => rows.map((item) => item.id))
     .catch(() => false as false);
   if (!commentList) return false;
 
@@ -50,7 +50,10 @@ async function transaction(problem_id: number, t: Transaction) {
   if (!deleteCommentResult) return false;
 
   /** 删除答案*/
-  let answerDeleteResult = await DB.Answer.destroy({ where: { problem_id }, transaction: t })
+  let answerDeleteResult = await DB.Answer.destroy({
+    where: { problem_id },
+    transaction: t,
+  })
     .then(() => true)
     .catch(() => false);
   if (!answerDeleteResult) return false;

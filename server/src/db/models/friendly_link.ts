@@ -104,7 +104,7 @@ export class FriendlyLink
             fields: [{ name: "user_id" }],
           },
         ],
-      }
+      },
     ) as typeof FriendlyLink;
   }
 }

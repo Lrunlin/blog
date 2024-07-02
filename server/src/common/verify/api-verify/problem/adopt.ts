@@ -1,9 +1,9 @@
-import compose from "koa-compose";
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validatorAsync";
-import authMiddleware from "@/common/middleware/auth";
+import { Context, Next } from "koa";
 import DB from "@/db";
-import { Next, Context } from "koa";
+import Joi from "joi";
+import compose from "koa-compose";
+import authMiddleware from "@/common/middleware/auth";
+import validator from "@/common/middleware/verify/validatorAsync";
 
 /** 确定问题的所属权*/
 async function verifyId(ctx: Context, next: Next) {
@@ -17,8 +17,8 @@ async function verifyId(ctx: Context, next: Next) {
           raw: true,
           attributes: ["id"],
         })
-          .then(res => !!res)
-          .catch(err => {
+          .then((res) => !!res)
+          .catch((err) => {
             console.log(err);
             return false;
           });
@@ -37,9 +37,11 @@ async function verifyAnswerId(ctx: Context, next: Next) {
       .min(0)
       .required()
       .external(async (value: number) => {
-        let result = await DB.Answer.findOne({ where: { id: value, problem_id: ctx.params.id } })
-          .then(res => !!res)
-          .catch(err => {
+        let result = await DB.Answer.findOne({
+          where: { id: value, problem_id: ctx.params.id },
+        })
+          .then((res) => !!res)
+          .catch((err) => {
             console.log(err);
             return false;
           });

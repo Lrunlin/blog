@@ -1,4 +1,5 @@
 import Joi from "joi";
+
 /** 类型:文章、问题*/
 export const typeCollection = Joi.valid("article", "problem")
   .required()

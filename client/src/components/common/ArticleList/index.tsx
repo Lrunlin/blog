@@ -1,10 +1,11 @@
 "use client";
+
 import type { FC } from "react";
+import { Divider, Empty, Skeleton } from "antd";
 import type { articleListItemType } from "@type/model/article-list-item";
-import { Skeleton, Divider, Empty } from "antd";
+import classNames from "classnames";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ArticleItem from "./ArticleItem";
-import classNames from "classnames";
 import type { propsType as itemPropsType } from "./ArticleItem";
 
 interface propsType {
@@ -21,7 +22,7 @@ interface propsType {
  * @params total {number} 总数
  * @params loadMoreData {function} 获取更多数据
  */
-const ArticleList: FC<propsType> = props => {
+const ArticleList: FC<propsType> = (props) => {
   let { list, total, loadMoreData, className } = props;
   return (
     <>
@@ -34,8 +35,8 @@ const ArticleList: FC<propsType> = props => {
           endMessage={<Divider plain>到底啦 ~ ~ 🤐</Divider>}
           className={classNames(["bg-white", className])}
         >
-          <ul className="p-0 w-full">
-            {list.map(item => (
+          <ul className="w-full p-0">
+            {list.map((item) => (
               <ArticleItem
                 key={`article-list-${item.id}`}
                 data={item}
@@ -46,7 +47,10 @@ const ArticleList: FC<propsType> = props => {
         </InfiniteScroll>
       ) : (
         <div className="bg-white py-32">
-          <Empty description="文章列表为空" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          <Empty
+            description="文章列表为空"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          />
         </div>
       )}
     </>

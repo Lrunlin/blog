@@ -1,8 +1,8 @@
-import Joi from "joi";
 import type { Context, Next } from "koa";
-import validator from "@/common/middleware/verify/validatorAsync";
+import Joi from "joi";
 import compose from "koa-compose";
 import auth from "@/common/middleware/auth";
+import validator from "@/common/middleware/verify/validatorAsync";
 import option from "./common.module";
 
 let verifyState = Joi.object({
@@ -28,4 +28,8 @@ const verifyParamsMiddleware1 = async (ctx: Context, next: Next) =>
 const verifyParamsMiddleware2 = async (ctx: Context, next: Next) =>
   validator(ctx.request.body.state == 1 ? article : drafts)(ctx, next);
 
-export default compose([auth(0), verifyParamsMiddleware1, verifyParamsMiddleware2]);
+export default compose([
+  auth(0),
+  verifyParamsMiddleware1,
+  verifyParamsMiddleware2,
+]);

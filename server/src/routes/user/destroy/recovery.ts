@@ -3,7 +3,7 @@ import DB from "@/db";
 import auth from "@/common/middleware/auth";
 
 let router = new Router();
-router.post("/user/recovery/:id", auth(1), async ctx => {
+router.post("/user/recovery/:id", auth(1), async (ctx) => {
   let user_id = ctx.params.id;
 
   await DB.User.update(
@@ -14,7 +14,7 @@ router.post("/user/recovery/:id", auth(1), async ctx => {
     },
     {
       where: { id: user_id, state: 0 },
-    }
+    },
   )
     .then(([row]) => {
       if (row) {
@@ -31,7 +31,7 @@ router.post("/user/recovery/:id", auth(1), async ctx => {
         ctx.status = 500;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.body = { success: false, message: "恢复失败" };
       ctx.status = 500;
       console.log(err);

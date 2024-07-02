@@ -1,8 +1,8 @@
-import Header from "./Header";
 import Container from "../Container";
-import Visits from "./Visits";
 import Article from "./Article";
 import ArticleRanking from "./ArticleRanking";
+import Header from "./Header";
+import Visits from "./Visits";
 
 /** 大屏统计页面顶部展示部分*/
 const Top = () => {

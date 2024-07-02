@@ -14,11 +14,21 @@ export interface TagAttributes {
 
 export type TagPk = "id";
 export type TagId = Tag[TagPk];
-export type TagOptionalAttributes = "icon_file_name" | "create_time" | "description" | "belong_id";
+export type TagOptionalAttributes =
+  | "icon_file_name"
+  | "create_time"
+  | "description"
+  | "belong_id";
 
-export type TagCreationAttributes = Optional<TagAttributes, TagOptionalAttributes>;
+export type TagCreationAttributes = Optional<
+  TagAttributes,
+  TagOptionalAttributes
+>;
 
-export class Tag extends Model<TagAttributes, TagCreationAttributes> implements TagAttributes {
+export class Tag
+  extends Model<TagAttributes, TagCreationAttributes>
+  implements TagAttributes
+{
   id!: number;
   name!: string;
   belong_id?: number;
@@ -57,7 +67,9 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           type: DataTypes.VIRTUAL,
           get(this) {
             let icon_file_name = this.getDataValue("icon_file_name");
-            return icon_file_name ? `${process.env.CDN}/tag/${icon_file_name}` : null;
+            return icon_file_name
+              ? `${process.env.CDN}/tag/${icon_file_name}`
+              : null;
           },
         },
         create_time: {
@@ -95,7 +107,7 @@ export class Tag extends Model<TagAttributes, TagCreationAttributes> implements 
           },
         ],
         hooks: hooks,
-      }
+      },
     ) as typeof Tag;
   }
 }

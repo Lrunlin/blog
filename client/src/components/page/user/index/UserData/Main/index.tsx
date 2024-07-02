@@ -1,11 +1,15 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import axios from "@axios";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { Tabs } from "antd";
+import axios from "@axios";
 import ArticleList from "@/components/common/ArticleList";
-import FollowList from "./FollowList";
 import Favorites from "./Favorites";
-
-import { useRouter, useParams, useSearchParams, usePathname } from "next/navigation";
+import FollowList from "./FollowList";
 
 const Main = () => {
   let router = useRouter();
@@ -24,8 +28,8 @@ const Main = () => {
       .get(`/article/search/${articlePage}`, {
         params: { state: 1, author: id },
       })
-      .then(res => {
-        setArticleDetdata(_data => [..._data, ...res.data.data.list]);
+      .then((res) => {
+        setArticleDetdata((_data) => [..._data, ...res.data.data.list]);
         setArticleTotal(res.data.data.total);
       });
   }, [articlePage]);
@@ -37,7 +41,7 @@ const Main = () => {
 
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   let activeKey = useMemo(() => (key as string) || "article", [searchParams]);
@@ -45,7 +49,7 @@ const Main = () => {
     <>
       <Tabs
         activeKey={activeKey}
-        onChange={key => {
+        onChange={(key) => {
           router.push(pathname + "?" + createQueryString("key", key));
         }}
         items={[
@@ -56,7 +60,7 @@ const Main = () => {
               <ArticleList
                 list={articleData}
                 total={articleTotal}
-                loadMoreData={() => setArticlePage(_page => ++_page)}
+                loadMoreData={() => setArticlePage((_page) => ++_page)}
               />
             ),
           },
@@ -71,10 +75,12 @@ const Main = () => {
             children: (
               <FollowList
                 loadMoreData={(page, setTotal, setData) => {
-                  axios.get(`/following/${id}`, { params: { page: page } }).then(res => {
-                    setTotal(res.data.data.total);
-                    setData(_data => [..._data, ...res.data.data.list]);
-                  });
+                  axios
+                    .get(`/following/${id}`, { params: { page: page } })
+                    .then((res) => {
+                      setTotal(res.data.data.total);
+                      setData((_data) => [..._data, ...res.data.data.list]);
+                    });
                 }}
               />
             ),
@@ -85,10 +91,12 @@ const Main = () => {
             children: (
               <FollowList
                 loadMoreData={(page, setTotal, setData) => {
-                  axios.get(`/follower/${id}`, { params: { page: page } }).then(res => {
-                    setTotal(res.data.data.total);
-                    setData(_data => [..._data, ...res.data.data.list]);
-                  });
+                  axios
+                    .get(`/follower/${id}`, { params: { page: page } })
+                    .then((res) => {
+                      setTotal(res.data.data.total);
+                      setData((_data) => [..._data, ...res.data.data.list]);
+                    });
                 }}
               />
             ),

@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import tocbot from "tocbot";
+import { useEffect, useState } from "react";
 import { Divider } from "antd";
-import style from "./index.module.scss";
 import classNames from "classnames";
+import tocbot from "tocbot";
+import style from "./index.module.scss";
 
 const Catalogue = () => {
   useEffect(() => {
@@ -22,7 +22,8 @@ const Catalogue = () => {
   let [isShrink, setIsShrink] = useState(false);
   useEffect(() => {
     const scrollSwitch = () => {
-      let scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+      let scrollY =
+        document.documentElement.scrollTop || document.body.scrollTop;
       // 大于600缩回，小于540伸出
       if (scrollY > 600 && !isShrink) {
         setIsShrink(true);
@@ -40,15 +41,17 @@ const Catalogue = () => {
   return (
     <div
       className={classNames([
-        "bg-white shadow-sm sticky mt-2 duration-200",
+        "sticky mt-2 bg-white shadow-sm duration-200",
         isShrink ? "top-2" : "top-14",
       ])}
     >
-      <div className="text-lg p-4 pb-0">
+      <div className="p-4 pb-0 text-lg">
         <div>目录</div>
         <Divider className="my-2" />
       </div>
-      <div className={classNames([style["article-page-catalogue"], "pb-2"])}></div>
+      <div
+        className={classNames([style["article-page-catalogue"], "pb-2"])}
+      ></div>
     </div>
   );
 };

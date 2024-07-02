@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import { Button, Form, Input, Select } from "antd";
+import { TagAttributes } from "@type/type";
+import useFetch from "@/common/hooks/useFetch";
 import UpLoad from "@/components/common/UpLoad";
 import getType from "@/request/type/getTag";
-import useFetch from "@/common/hooks/useFetch";
-import { TagAttributes } from "@type/type";
 
 export interface TagFormValueProps {
   name: string;
@@ -19,7 +19,7 @@ interface PropsType {
 /**
  * @params onFinish {(value:object)=>void} 表单提交
  */
-const TagForm: FC<PropsType> = props => {
+const TagForm: FC<PropsType> = (props) => {
   let { useForm } = Form;
   let [form] = useForm();
 
@@ -60,13 +60,21 @@ const TagForm: FC<PropsType> = props => {
             />
           </div>
         </Form.Item>
-        <Form.Item label="名称" name="name" rules={[{ required: true, message: "请输入标签名称" }]}>
+        <Form.Item
+          label="名称"
+          name="name"
+          rules={[{ required: true, message: "请输入标签名称" }]}
+        >
           <Input placeholder="请填写标签名称" />
         </Form.Item>
-        <Form.Item label="归属" name="belong" rules={[{ required: true, message: "请选择归属" }]}>
+        <Form.Item
+          label="归属"
+          name="belong"
+          rules={[{ required: true, message: "请选择归属" }]}
+        >
           <Select style={{ width: 180 }} loading={!data}>
             {data &&
-              data.map(item => {
+              data.map((item) => {
                 return (
                   <Option key={item.id} value={item.id}>
                     {item.name}

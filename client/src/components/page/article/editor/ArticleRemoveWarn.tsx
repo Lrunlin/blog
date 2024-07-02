@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Button, Modal } from "antd";
-import useUserData from "@/store/user/user-data";
 import dayjs from "@dayjs";
+import useUserData from "@/store/user/user-data";
 
 /** 通知三天内注册的新用户删除文章*/
 const ArticleRemoveWarn = () => {
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   let day = dayjs(new Date()).diff(userData?.create_time || new Date(), "day");
   const [isModalOpen, setIsModalOpen] = useState(
-    !!userData && day <= 3 && !localStorage.article_remove_warn
+    !!userData && day <= 3 && !localStorage.article_remove_warn,
   );
 
   return (

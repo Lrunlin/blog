@@ -1,12 +1,12 @@
+import { message } from "antd";
 import axios from "@axios";
 import { response } from "@type/response";
-import { message } from "antd";
 import { editorPropsType } from "./Editor";
 
 async function upload(
   files: File[],
   target: editorPropsType["target"],
-  changePploadProgress: (val: string) => void
+  changePploadProgress: (val: string) => void,
 ) {
   let formData = new FormData();
   formData.append("image", files[0]);
@@ -20,7 +20,7 @@ async function upload(
       file_href: string;
     }>
   >(`/static/${target}`, formData, {
-    onUploadProgress: progressEvent => {
+    onUploadProgress: (progressEvent) => {
       if (progressEvent.progress) {
         let complete = Math.floor(progressEvent.progress * 100);
         if (complete < 100) {

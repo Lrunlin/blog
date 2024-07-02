@@ -1,9 +1,9 @@
-import type { Order, WhereOptions } from "sequelize";
-import type { ArticleAttributes } from "@/db/models/init-models";
-import Sequelize from "@/db/config";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/set-tag-data";
+import type { Order, WhereOptions } from "sequelize";
+import Sequelize from "@/db/config";
+import type { ArticleAttributes } from "@/db/models/init-models";
 import setDescription from "@/common/modules/article/get/set-description";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 
 let sort = {
   recommend: [
@@ -40,7 +40,7 @@ let sort = {
 async function getArticleListData(
   page: number,
   _sort: "recommend" | "newest" | "hottest",
-  where?: WhereOptions<ArticleAttributes>
+  where?: WhereOptions<ArticleAttributes>,
 ) {
   return await DB.Article.findAndCountAll({
     attributes: [
@@ -57,12 +57,14 @@ async function getArticleListData(
       "reprint",
       [
         Sequelize.literal(
-          `(SELECT COUNT(id) FROM comment WHERE comment.belong_id = article.id and type="article")`
+          `(SELECT COUNT(id) FROM comment WHERE comment.belong_id = article.id and type="article")`,
         ),
         "comment_count",
       ],
       [
-        Sequelize.literal(`(SELECT COUNT(id) FROM likes WHERE likes.belong_id = article.id)`),
+        Sequelize.literal(
+          `(SELECT COUNT(id) FROM likes WHERE likes.belong_id = article.id)`,
+        ),
         "like_count",
       ],
     ],
@@ -81,7 +83,7 @@ async function getArticleListData(
     .then(({ count, rows }) => {
       return {
         total: count,
-        list: rows.map(row => {
+        list: rows.map((row) => {
           let item = row.toJSON();
           let description = setDescription(item.content);
           let tag = getTagData(item.tag as unknown as number[], ["name"]);
@@ -96,7 +98,7 @@ async function getArticleListData(
         }),
       };
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return {
         total: 0,

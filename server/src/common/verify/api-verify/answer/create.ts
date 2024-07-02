@@ -1,11 +1,11 @@
+import { Context, Next } from "koa";
+import DB from "@/db";
+import { load } from "cheerio";
 import Joi from "joi";
-import validator from "@/common/middleware/verify/validatorAsync";
 import compose from "koa-compose";
 import auth from "@/common/middleware/auth";
-import DB from "@/db";
-import { Next, Context } from "koa";
+import validator from "@/common/middleware/verify/validatorAsync";
 import { exist } from "@/common/utils/static";
-import { load } from "cheerio";
 
 async function verify(ctx: Context, next: Next) {
   /** 如果为false则终止*/
@@ -13,7 +13,7 @@ async function verify(ctx: Context, next: Next) {
     where: { author: ctx.id, problem_id: ctx.request.body.problem_id },
     attributes: ["id"],
   })
-    .then(res => !res)
+    .then((res) => !res)
     .catch();
 
   if (!result) {
@@ -25,8 +25,8 @@ async function verify(ctx: Context, next: Next) {
   let problemResult = await DB.Problem.findByPk(ctx.request.body.problem_id, {
     attributes: ["author"],
   })
-    .then(row => row?.toJSON())
-    .catch(err => {
+    .then((row) => row?.toJSON())
+    .catch((err) => {
       console.log(err);
       return false as false;
     });
@@ -59,8 +59,8 @@ let schema = Joi.object({
 
       if (images.length) {
         let result = await exist(images)
-          .then(res => res)
-          .catch(err => err);
+          .then((res) => res)
+          .catch((err) => err);
 
         if (!result.success) throw new Error(result.message);
       }

@@ -1,7 +1,8 @@
 "use client";
-import AdminLayout from "@/layout/Admin/Base";
-import { Button, Result } from "antd";
+
 import { useRouter } from "next/navigation";
+import { Button, Result } from "antd";
+import AdminLayout from "@/layout/Admin/Base";
 import Head from "@/components/next/Head";
 
 const NoFound = () => {

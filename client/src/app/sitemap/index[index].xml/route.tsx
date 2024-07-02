@@ -1,6 +1,6 @@
+import { NextRequest } from "next/server";
 import axios from "@axios";
 import setSiteMap from "@/common/modules/sitemap/sitemap-list";
-import { NextRequest } from "next/server";
 
 export async function GET(res: NextRequest) {
   let match = res.nextUrl.pathname.match(/\/sitemap\/index(\d+)\.xml/);
@@ -13,8 +13,8 @@ export async function GET(res: NextRequest) {
 
   let sitemap = await axios
     .get(`/sitemap/${match[1]}`)
-    .then(res => setSiteMap(res.data.data))
-    .catch(err => {
+    .then((res) => setSiteMap(res.data.data))
+    .catch((err) => {
       console.log(err);
       return `<error></error>`;
     });

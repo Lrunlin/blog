@@ -1,13 +1,14 @@
 "use client";
+
 import { useEffect } from "react";
-import Layout from "@/layout/Base";
-import axios from "@axios";
-import { RedoOutlined } from "@ant-design/icons";
-import { Button, Result } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Button, Result } from "antd";
+import { RedoOutlined } from "@ant-design/icons";
+import axios from "@axios";
 import Cookies from "js-cookie";
-import Head from "@/components/next/Head";
 import useFetch from "@/common/hooks/useFetch";
+import Layout from "@/layout/Base";
+import Head from "@/components/next/Head";
 
 const Github = () => {
   let router = useRouter();
@@ -15,7 +16,9 @@ const Github = () => {
   let code = searchParams!.get("code");
 
   let { data, error, isLoading } = useFetch(async () =>
-    code ? axios.post("/user/github", { code: code }).then(res => res.data) : ""
+    code
+      ? axios.post("/user/github", { code: code }).then((res) => res.data)
+      : "",
   );
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -34,7 +37,7 @@ const Github = () => {
 
   return (
     <Layout>
-      <div className="bg-white shadow-sm w-full">
+      <div className="w-full bg-white shadow-sm">
         <div>
           {isLoading ? (
             <>
@@ -49,7 +52,10 @@ const Github = () => {
                 title="请求错误"
                 subTitle="这可能不是您的原因，也许是GitHub受到防火墙影响。"
                 extra={
-                  <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
+                  <Button
+                    type="primary"
+                    onClick={() => router.replace("/creator/content/article")}
+                  >
                     返回
                   </Button>
                 }
@@ -63,7 +69,10 @@ const Github = () => {
                 title={data.success ? "成功" : "失败"}
                 subTitle={data.message}
                 extra={
-                  <Button type="primary" onClick={() => router.replace("/creator/content/article")}>
+                  <Button
+                    type="primary"
+                    onClick={() => router.replace("/creator/content/article")}
+                  >
                     返回
                   </Button>
                 }

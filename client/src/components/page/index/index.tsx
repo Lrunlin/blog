@@ -1,17 +1,17 @@
 "use client";
-import { useState, useRef } from "react";
-import type { FC, ReactNode } from "react";
-import { message, Spin } from "antd";
 
+import { useRef, useState } from "react";
+import type { FC, ReactNode } from "react";
+import { Spin, message } from "antd";
 import Main from "@/layout/Main";
 import ArticleList from "@/components/common/ArticleList";
-import TypeHeader from "@/components/page/index/TypeHeader";
 import SortSelect from "@/components/page/index/SortSelect";
-import { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
+import TypeHeader from "@/components/page/index/TypeHeader";
 import getArticleList, {
   responseType as articleListResponseType,
   sortType,
 } from "@/request/article/article-list";
+import { responseType as typeTreeRsponseType } from "@/request/type/type-tree-index";
 
 interface optionType {
   type?: number | string;
@@ -25,11 +25,13 @@ interface propsType {
   article_list: articleListResponseType;
   children: ReactNode;
 }
-const Home: FC<propsType> = props => {
+const Home: FC<propsType> = (props) => {
   /** 文章总数*/
   let [total, setTotal] = useState(props.article_list.total);
   /** 文章数据信息*/
-  let [list, setList] = useState<articleListResponseType["list"]>(props.article_list.list);
+  let [list, setList] = useState<articleListResponseType["list"]>(
+    props.article_list.list,
+  );
   /** 判断是否在加载中*/
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,14 +43,14 @@ const Home: FC<propsType> = props => {
   function loadMoreData() {
     cancel.current && cancel.current();
     if (page.current == 1) setIsLoading(true);
-    getArticleList(page.current, option.current, cancelFunction => {
+    getArticleList(page.current, option.current, (cancelFunction) => {
       cancel.current = cancelFunction;
     })
-      .then(data => {
+      .then((data) => {
         if (page.current == 1) {
           setList(data.list);
         } else {
-          setList(_list => [...list, ...data.list]);
+          setList((_list) => [...list, ...data.list]);
         }
         setTotal(data.total);
       })
@@ -72,9 +74,9 @@ const Home: FC<propsType> = props => {
         }}
       />
       <Main>
-        <div className="mr-4 w-[calc(100%-256px)] sm:w-full sm:mr-0">
+        <div className="mr-4 w-[calc(100%-256px)] sm:mr-0 sm:w-full">
           <SortSelect
-            change={sort => {
+            change={(sort) => {
               option.current.sort = sort as sortType;
               page.current = 1;
               loadMoreData();
@@ -84,7 +86,7 @@ const Home: FC<propsType> = props => {
             <ArticleList
               list={list}
               total={total}
-              className="shadow-sm w-full"
+              className="w-full shadow-sm"
               loadMoreData={() => {
                 page.current++;
                 loadMoreData();

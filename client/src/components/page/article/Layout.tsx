@@ -1,4 +1,4 @@
-import { Suspense, type FC, type ReactNode } from "react";
+import { type FC, type ReactNode, Suspense } from "react";
 import Read from "@/layout/Content";
 import type { propsType as contentLayoutPropsType } from "@/layout/Content";
 import Aside from "./Aside";
@@ -10,11 +10,18 @@ interface propsType extends Pick<contentLayoutPropsType, "language"> {
   children: ReactNode;
 }
 
-const Layout: FC<propsType> = props => {
+const Layout: FC<propsType> = (props) => {
   return (
-    <Read className="pb-16" language={props.language} ToolBar={<ToolBar />} Aside={<Aside />}>
-      <article className="p-8 pb-5 bg-white break-all shadow-sm w-full">{props.children}</article>
-      <div className="p-8 pb-10 mt-4 bg-white shadow-sm">
+    <Read
+      className="pb-16"
+      language={props.language}
+      ToolBar={<ToolBar />}
+      Aside={<Aside />}
+    >
+      <article className="w-full break-all bg-white p-8 pb-5 shadow-sm">
+        {props.children}
+      </article>
+      <div className="mt-4 bg-white p-8 pb-10 shadow-sm">
         <Suspense>
           <Comments title="评论" />
         </Suspense>

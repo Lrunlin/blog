@@ -13,6 +13,6 @@ export default function refreshUrls(url: string[]) {
   req.objectPath = url.join("\n");
   return new Cdn(config)
     .refreshObjectCaches(req)
-    .then(res => res)
-    .catch(err => err);
+    .then((res) => res)
+    .catch((err) => err);
 }

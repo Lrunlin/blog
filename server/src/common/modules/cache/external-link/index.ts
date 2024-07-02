@@ -1,6 +1,6 @@
 import DB from "@/db";
-import { ExternalLinkAttributes } from "@/db/models/external_link";
 import { LRUCache } from "lru-cache";
+import { ExternalLinkAttributes } from "@/db/models/external_link";
 
 /**
  * 存储外链列表
@@ -11,10 +11,10 @@ const cache = new LRUCache<"list", ExternalLinkAttributes["href"][]>({
 
 /** 刷新缓存数据*/
 function setData() {
-  DB.ExternalLink.findAll({ raw: true }).then(rows => {
+  DB.ExternalLink.findAll({ raw: true }).then((rows) => {
     cache.set(
       "list",
-      rows.map(item => item.href)
+      rows.map((item) => item.href),
     );
   });
 }

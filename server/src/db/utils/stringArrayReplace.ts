@@ -1,6 +1,11 @@
-import { Sequelize, type QueryOptions, type QueryOptionsWithType, QueryTypes } from "sequelize";
-import sequelize from "@/db/config";
 import DB from "@/db";
+import {
+  type QueryOptions,
+  type QueryOptionsWithType,
+  QueryTypes,
+  Sequelize,
+} from "sequelize";
+import sequelize from "@/db/config";
 
 interface optionType {
   /** 表名*/
@@ -19,7 +24,10 @@ interface optionType {
  */
 async function stringArrayReplace(
   option: optionType,
-  sequelizeOpeion?: QueryOptions | QueryOptionsWithType<QueryTypes.RAW> | undefined
+  sequelizeOpeion?:
+    | QueryOptions
+    | QueryOptionsWithType<QueryTypes.RAW>
+    | undefined,
 ) {
   //将文章表中的 ,id,  ,id   id,   id  四种方法全部置换
   try {
@@ -30,7 +38,7 @@ async function stringArrayReplace(
       },',${option.oldValue},','${option.newValue},') WHERE ${option.field} like '%${
         option.oldValue
       }%' ${option.whereSql || ""}`,
-      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion }
+      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion },
     );
 
     // 最后一个 ,id 换为空
@@ -40,7 +48,7 @@ async function stringArrayReplace(
       },',${option.oldValue}','') WHERE ${option.field} like '%${option.oldValue}%' ${
         option.whereSql || ""
       }`,
-      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion }
+      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion },
     );
 
     // 第一个 id, 换为空
@@ -50,7 +58,7 @@ async function stringArrayReplace(
       },'${option.oldValue},','') WHERE ${option.field} like '%${option.oldValue}%' ${
         option.whereSql || ""
       }`,
-      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion }
+      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion },
     );
     //  只有一个的情况下  直接置换为空
     await sequelize.query(
@@ -59,7 +67,7 @@ async function stringArrayReplace(
       },'${option.oldValue}','${option.newValue}') WHERE ${option.field} like '%${
         option.oldValue
       }%' ${option.whereSql || ""}`,
-      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion }
+      { type: QueryTypes.UPDATE, raw: false, ...sequelizeOpeion },
     );
     return true;
   } catch (error) {

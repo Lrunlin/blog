@@ -1,10 +1,11 @@
 "use client";
-import { useState, useContext, startTransition } from "react";
+
+import { startTransition, useContext, useState } from "react";
 import type { FC } from "react";
-import { message, Input, Button, Alert } from "antd";
-import { marked } from "marked";
+import { Alert, Button, Input, message } from "antd";
 import axios from "@axios";
 import type { CommentAttributes } from "@type/model-attribute";
+import { marked } from "marked";
 import { Context } from "@/components/page/problem/ProblemDetail";
 
 interface propsType {
@@ -15,7 +16,7 @@ interface propsType {
 }
 
 /** 问答页面中用于回复的评论组件*/
-const Editor: FC<propsType> = props => {
+const Editor: FC<propsType> = (props) => {
   const { TextArea } = Input;
   /** 最终的值HTML*/
   const [content, setContent] = useState("");
@@ -33,7 +34,7 @@ const Editor: FC<propsType> = props => {
         reply: props.reply || null,
         type: props.type,
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
           props.onSuccess && props.onSuccess();
@@ -43,7 +44,7 @@ const Editor: FC<propsType> = props => {
           message.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         message.error("评论失败");
         console.log(err);
       });
@@ -55,13 +56,13 @@ const Editor: FC<propsType> = props => {
         value={value}
         rows={3}
         className="!mt-2"
-        onChange={e => {
+        onChange={(e) => {
           setValue(e.target.value);
           startTransition(() => {
             setContent(
               marked(e.target.value, {
                 headerIds: false,
-              })
+              }),
             );
           });
         }}

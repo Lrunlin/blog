@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import * as echarts from "echarts";
-import vw from "@/common/utils/vw";
-import { list } from "@/common/modules/readingRecords/setReferer";
-import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 import { statisticsDataType } from "@type/statistics-type";
+import * as echarts from "echarts";
+import { list } from "@/common/modules/readingRecords/setReferer";
+import vw from "@/common/utils/vw";
+import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 
 function option(data: statisticsDataType["referer"]) {
   return {
@@ -44,8 +44,8 @@ function option(data: statisticsDataType["referer"]) {
       {
         type: "pie",
         radius: "70%",
-        data: data.map(item => {
-          let result = list.find(_item => _item.key == +item.refererResult);
+        data: data.map((item) => {
+          let result = list.find((_item) => _item.key == +item.refererResult);
           return {
             name: result?.label,
             value: item.count,
@@ -62,7 +62,9 @@ function option(data: statisticsDataType["referer"]) {
         },
         itemStyle: {
           color: function (colors: any) {
-            let result = list.find(_item => _item.key == +data[colors.dataIndex].refererResult);
+            let result = list.find(
+              (_item) => _item.key == +data[colors.dataIndex].refererResult,
+            );
             return result?.color;
           },
         },
@@ -73,7 +75,7 @@ function option(data: statisticsDataType["referer"]) {
 
 /** 文章饼状图统计*/
 const Article = () => {
-  let _data = userAdminStatisticsData(s => s.data);
+  let _data = userAdminStatisticsData((s) => s.data);
   let DOM = useRef<HTMLDivElement>(null);
   let data = _data.referer;
   useEffect(() => {
@@ -82,7 +84,7 @@ const Article = () => {
 
   return (
     <>
-      <div ref={DOM} className="w-[39vw] h-[12.5vw]"></div>
+      <div ref={DOM} className="h-[12.5vw] w-[39vw]"></div>
     </>
   );
 };

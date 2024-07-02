@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import type { ProblemAttributes } from "@type/model-attribute";
+import classNames from "classnames";
 import Item from "./Item";
 import type { childrenPropsType } from "./Item";
-import classNames from "classnames";
 
 export type dataItemPropsType = Pick<
   ProblemAttributes,
@@ -15,7 +15,7 @@ const List: FC<
 > = ({ data, className, topRight }) => {
   return (
     <>
-      <ul className="p-0 w-full text-base">
+      <ul className="w-full p-0 text-base">
         {data.map((item, index) => (
           <Item
             key={item.id}

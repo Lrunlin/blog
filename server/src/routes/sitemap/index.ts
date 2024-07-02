@@ -1,8 +1,9 @@
 import Router from "@koa/router";
 import DB from "@/db";
+
 let router = new Router();
 
-router.get("/sitemap", async ctx => {
+router.get("/sitemap", async (ctx) => {
   await DB.Article.findAndCountAll({
     where: { state: 1 },
     attributes: ["id"],

@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import type { DependencyList, Dispatch, SetStateAction } from "react";
 import { AxiosError } from "axios";
 
@@ -28,7 +29,7 @@ export const refetchKey = (key: string) => {
 
 export default function useFetch<T, J>(
   request: (param: J) => Promise<T>,
-  option: optionType = { deps: [] }
+  option: optionType = { deps: [] },
 ): FetchResult<T, J> {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<AxiosError<T> | null>(null);

@@ -1,12 +1,13 @@
-'use client';
+"use client";
+
+import { useParams } from "next/navigation";
 import { Skeleton } from "antd";
+import axios from "@axios";
+import type { UserAttributes } from "@type/model-attribute";
+import useFetch from "@/common/hooks/useFetch";
+import Layout from "@/layout/Base";
 import NotFind from "@/components/page/user/index/NotFind";
 import UserData from "@/components/page/user/index/UserData";
-import { useParams } from "next/navigation";
-import type { UserAttributes } from "@type/model-attribute";
-import Layout from "@/layout/Base";
-import axios from "@axios";
-import useFetch from "@/common/hooks/useFetch";
 
 const User = () => {
   let params = useParams();
@@ -16,9 +17,9 @@ const User = () => {
     () =>
       axios
         .get(`/user/data/${id}`)
-        .then(res => res.data.data as UserAttributes | null)
+        .then((res) => res.data.data as UserAttributes | null)
         .catch(() => null),
-    { deps: [id] }
+    { deps: [id] },
   );
 
   return (

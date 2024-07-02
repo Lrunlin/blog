@@ -16,11 +16,13 @@ const initValues = {
 };
 
 type actionType = {
-  setData:(data: typeof initValues) =>any
+  setData: (data: typeof initValues) => any;
 };
 
-const useAdminArticleSearch = create<{ data: typeof initValues } & actionType>(set => ({
-  data: initValues,
-  setData: (data: typeof initValues) => set(() => ({ data: data })),
-}));
+const useAdminArticleSearch = create<{ data: typeof initValues } & actionType>(
+  (set) => ({
+    data: initValues,
+    setData: (data: typeof initValues) => set(() => ({ data: data })),
+  }),
+);
 export default useAdminArticleSearch;

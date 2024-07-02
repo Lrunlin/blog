@@ -1,10 +1,10 @@
 // https://codesandbox.io/s/q8q1mnr01w?file=/src/index.js:2821-2837
-import { useState, useEffect, useRef } from "react";
-import type { MutableRefObject, FC } from "react";
-import { message, type ModalProps } from "antd";
+import { useEffect, useRef, useState } from "react";
+import type { FC, MutableRefObject } from "react";
+import { type ModalProps, message } from "antd";
+import Picture from "./Image";
 import Modal from "./Modal";
 import upload from "./upload";
-import Picture from "./Image";
 
 type target =
   | "article"
@@ -38,7 +38,9 @@ export interface uploadPropsType {
   onDelete?: () => void;
 }
 
-const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article", width: 100 }) => {
+const Upload: FC<uploadPropsType> = (
+  props = { noCorp: false, target: "article", width: 100 },
+) => {
   const [imgURL, setImgURL] = useState<string | undefined>();
   const [cropResult, setCropResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +59,7 @@ const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article",
       <Picture
         isLoading={isLoading}
         imgURL={imgURL}
-        onChange={url => {
+        onChange={(url) => {
           setImgURL(url);
           if (props.noCorp) {
             setIsLoading(true);
@@ -66,8 +68,10 @@ const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article",
                 setCropResult(url);
                 props.onSuccess && props.onSuccess(res.data.data);
               })
-              .catch(err => {
-                props.onError ? props.onError(err.message) : message.error(err.message);
+              .catch((err) => {
+                props.onError
+                  ? props.onError(err.message)
+                  : message.error(err.message);
               })
               .finally(() => {
                 setIsLoading(false);
@@ -87,7 +91,7 @@ const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article",
           event={event}
           {...props}
           imgURL={imgURL}
-          onChange={base64 => {
+          onChange={(base64) => {
             event?.current.close();
             setIsLoading(true);
             upload({ target: props.target, base64 })
@@ -95,7 +99,7 @@ const Upload: FC<uploadPropsType> = (props = { noCorp: false, target: "article",
                 setCropResult(base64);
                 props.onSuccess && props.onSuccess(res.data.data);
               })
-              .catch(err => {
+              .catch((err) => {
                 props.onError && props.onError(err.message);
               })
               .finally(() => {

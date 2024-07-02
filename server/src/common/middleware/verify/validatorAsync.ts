@@ -1,11 +1,11 @@
-import type { ObjectSchema } from "joi";
 import type { Context, Next } from "koa";
+import type { ObjectSchema } from "joi";
 
 /** 对query和body的参数进行验证（支持异步）*/
 export default function validator(
   schema: ObjectSchema<any>,
   isParams?: boolean,
-  allowUnknown?: boolean
+  allowUnknown?: boolean,
 ) {
   return async (ctx: Context, next: Next) => {
     await schema
@@ -13,14 +13,14 @@ export default function validator(
         isParams
           ? ctx.params
           : "DELETE,GET".includes(ctx.method)
-          ? ctx.request.query
-          : ctx.request.body,
-        { allowUnknown: allowUnknown }
+            ? ctx.request.query
+            : ctx.request.body,
+        { allowUnknown: allowUnknown },
       )
-      .then(async res => {
+      .then(async (res) => {
         await next();
       })
-      .catch(err => {
+      .catch((err) => {
         ctx.status = 400;
         ctx.body = { success: false, message: err + "" || "请求参数错误" };
       });

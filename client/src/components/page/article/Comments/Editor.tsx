@@ -1,19 +1,19 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
-import useUserData from "@/store/user/user-data";
-import { Avatar, Button, Input, message } from "antd";
-import NextImage from "@/components/next/Image";
 import { useParams } from "next/navigation";
-import loadStatic, { responseType } from "@/request/load-static";
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
-import i18n from "@emoji-mart/data/i18n/zh.json";
+import { Avatar, Button, Input, message } from "antd";
 import axios from "@axios";
+import data from "@emoji-mart/data";
+import i18n from "@emoji-mart/data/i18n/zh.json";
+import Picker from "@emoji-mart/react";
 import classNames from "classnames";
 import { marked } from "marked";
+import { refetchKey } from "@/common/hooks/useFetch";
+import NextImage from "@/components/next/Image";
 import useUserArticleComment from "@/store/user/user-article-comment";
 import userUserCurrentArticleData from "@/store/user/user-current-article-data";
-import { refetchKey } from "@/common/hooks/useFetch";
+import useUserData from "@/store/user/user-data";
+import loadStatic, { responseType } from "@/request/load-static";
 
 interface propsType {
   id: number | string;
@@ -26,16 +26,16 @@ interface propsType {
 
 let { TextArea } = Input;
 
-const Editor: FC<propsType> = props => {
+const Editor: FC<propsType> = (props) => {
   let params = useParams();
   let articleID = params.id as string;
 
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   let [value, setValue] = useState("");
-  let editorOption = useUserArticleComment(s => s.data);
-  let setEditorOption = useUserArticleComment(s => s.setData);
+  let editorOption = useUserArticleComment((s) => s.data);
+  let setEditorOption = useUserArticleComment((s) => s.setData);
 
-  let currentArticleData = userUserCurrentArticleData(s => s);
+  let currentArticleData = userUserCurrentArticleData((s) => s);
 
   let showEditor = props.notHideInput || props.id == editorOption.activeInputID; //编辑器是否显示
 
@@ -85,9 +85,13 @@ const Editor: FC<propsType> = props => {
   }, [value, editorOption]); // 将 value
 
   let [picture, setPicture] = useState<responseType | null>(null);
-  let [pictureUploading, setPictureUploading] = useState<false | [number, number]>(false);
+  let [pictureUploading, setPictureUploading] = useState<
+    false | [number, number]
+  >(false);
   function load() {
-    let dom = document.getElementById(`commentInput-${props.id}`) as HTMLInputElement;
+    let dom = document.getElementById(
+      `commentInput-${props.id}`,
+    ) as HTMLInputElement;
     let file = (dom.files as FileList)[0];
     console.log(file);
 
@@ -106,7 +110,7 @@ const Editor: FC<propsType> = props => {
       };
     };
     loadStatic("comment", file)
-      .then(res => {
+      .then((res) => {
         if (res.success) {
           setPicture(res.data);
         } else {
@@ -126,7 +130,7 @@ const Editor: FC<propsType> = props => {
         reply: props.reply || null,
         type: "article",
       })
-      .then(res => {
+      .then((res) => {
         setValue("");
         setPicture(null);
         currentArticleData.updateData({
@@ -134,7 +138,7 @@ const Editor: FC<propsType> = props => {
         });
         refetchKey(`/comment/article/${articleID}`);
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
         console.log(err);
       });
@@ -143,28 +147,35 @@ const Editor: FC<propsType> = props => {
   return (
     <>
       {showEditor && (
-        <div className={classNames(["flex", props.className])} ref={commentEditorboxDOM}>
+        <div
+          className={classNames(["flex", props.className])}
+          ref={commentEditorboxDOM}
+        >
           {/* 顶部输入框 */}
           {!props.hideAvatar && (
-            <Avatar size={40} src={userData?.avatar_url} alt={`${userData?.name}头像`} />
+            <Avatar
+              size={40}
+              src={userData?.avatar_url}
+              alt={`${userData?.name}头像`}
+            />
           )}
           <div className={classNames(["w-full", !props.hideAvatar && "ml-4"])}>
             <div
               className={classNames([
-                "w-full pb-2 pl-2 rounded transition-all duration-500 flex flex-wrap",
+                "flex w-full flex-wrap rounded pb-2 pl-2 transition-all duration-500",
                 props.id == editorOption.activeInputID
-                  ? "bg-white border-[#1e80ff] border border-solid"
+                  ? "border border-solid border-[#1e80ff] bg-white"
                   : "bg-[#f2f3f5]",
               ])}
             >
               <TextArea
-                ref={input => (inputDOM.current = input)}
+                ref={(input) => (inputDOM.current = input)}
                 value={value}
-                onChange={e => setValue(e.target.value)}
+                onChange={(e) => setValue(e.target.value)}
                 placeholder="输入评论"
                 maxLength={600}
                 variant="borderless"
-                onFocus={e => {
+                onFocus={(e) => {
                   setEditorOption({
                     activeInputID: props.id,
                   });
@@ -176,19 +187,22 @@ const Editor: FC<propsType> = props => {
                     ? pictureUploading[0] / (pictureUploading[1] / 64)
                     : "auto",
                 }}
-                className={classNames(["relative bg-gray-300", pictureUploading && "h-16"])}
+                className={classNames([
+                  "relative bg-gray-300",
+                  pictureUploading && "h-16",
+                ])}
               >
                 {picture ? (
                   <div className="h-full w-full">
                     <div
-                      className="w-3 h-3 text-xl absolute top-0 right-0 bg-zinc-300 bg-opacity-50"
+                      className="absolute right-0 top-0 h-3 w-3 bg-zinc-300 bg-opacity-50 text-xl"
                       onClick={() => setPicture(null)}
                     >
                       <NextImage
                         width={12}
                         height={12}
                         src="/icon/client/delete.png"
-                        className="cursor-pointer absolute top-0 right-0"
+                        className="absolute right-0 top-0 cursor-pointer"
                         alt="delete"
                       />
                     </div>
@@ -204,31 +218,44 @@ const Editor: FC<propsType> = props => {
               </div>
             </div>
             {/* 底部工具栏 */}
-            <div className="mt-2 flex justify-between select-none">
+            <div className="mt-2 flex select-none justify-between">
               <div className="flex items-center">
-                <span className="relative flex items-center cursor-pointer">
+                <span className="relative flex cursor-pointer items-center">
                   <div className="flex items-center" ref={emojiPickerDOM}>
                     <div
                       onClick={() => {
                         setEditorOption({
                           activeEmojiID:
-                            editorOption.activeEmojiID == props.id ? null : `${props.id}`,
+                            editorOption.activeEmojiID == props.id
+                              ? null
+                              : `${props.id}`,
                         });
                       }}
                     >
-                      <NextImage src="/icon/client/emoji.png" width={18} height={18} alt="emoji" />
-                      <span className="ml-1 text-sm text-neutral-500">表情</span>
+                      <NextImage
+                        src="/icon/client/emoji.png"
+                        width={18}
+                        height={18}
+                        alt="emoji"
+                      />
+                      <span className="ml-1 text-sm text-neutral-500">
+                        表情
+                      </span>
                     </div>
                     <div
                       className={classNames([
-                        "absolute z-10 top-5 left-3 bg-opacity-100",
-                        editorOption.activeEmojiID == props.id ? "block" : "hidden",
+                        "absolute left-3 top-5 z-10 bg-opacity-100",
+                        editorOption.activeEmojiID == props.id
+                          ? "block"
+                          : "hidden",
                       ])}
                     >
                       <Picker
                         i18n={i18n}
                         data={data}
-                        onEmojiSelect={({ native }: { native: string }) => insertEmoji(native)}
+                        onEmojiSelect={({ native }: { native: string }) =>
+                          insertEmoji(native)
+                        }
                         previewPosition="none"
                         searchPosition="none"
                       />
@@ -241,7 +268,7 @@ const Editor: FC<propsType> = props => {
                     inputDOM.current.focus();
                   }}
                 >
-                  <span className="flex items-center ml-4 cursor-pointer">
+                  <span className="ml-4 flex cursor-pointer items-center">
                     <NextImage
                       src="/icon/client/picture.png"
                       width={18}

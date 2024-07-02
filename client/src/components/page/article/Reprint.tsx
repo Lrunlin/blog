@@ -9,7 +9,7 @@ const Reprint: FC<propsType> = ({ reprint }) => {
   return (
     <>
       {reprint && (
-        <blockquote className="mt-20 pl-4 border-l-solid border-l-4 rounded-sm border-l-blue-600">
+        <blockquote className="border-l-solid mt-20 rounded-sm border-l-4 border-l-blue-600 pl-4">
           转载自:{reprint}
         </blockquote>
       )}

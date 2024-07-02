@@ -1,15 +1,17 @@
-import { useState, useImperativeHandle } from "react";
+import { useImperativeHandle, useState } from "react";
 import { FC } from "react";
-import { Slider, Modal } from "antd";
+import { Modal, Slider } from "antd";
 import Cropper from "react-easy-crop";
+import type { Area } from "react-easy-crop";
 import getCroppedImg from "./getCroppedImg";
 import type { uploadPropsType } from "./index";
-import type { Area } from "react-easy-crop";
 
 /**
  * 弹窗以及图片剪裁
  */
-const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = props => {
+const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = (
+  props,
+) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   /** 缩放度数*/
@@ -23,7 +25,7 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
       const croppedImage = await getCroppedImg(
         props.imgURL as string,
         croppedAreaPixels as Area,
-        rotation
+        rotation,
       );
       // 保存的base64
       props.onChange && croppedImage && props.onChange(croppedImage);
@@ -51,12 +53,16 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
         onOk={handleOk}
         onCancel={() => {
           setIsModalOpen(false);
-          (document.getElementById(`file-upload-${props.target}`) as HTMLInputElement).value = "";
+          (
+            document.getElementById(
+              `file-upload-${props.target}`,
+            ) as HTMLInputElement
+          ).value = "";
         }}
         zIndex={2000}
         {...props.ModalProps}
       >
-        <div className="w-full h-96 relative">
+        <div className="relative h-96 w-full">
           <Cropper
             image={props.imgURL}
             crop={crop}
@@ -73,11 +79,22 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = prop
         </div>
         <div>
           <span>缩放:</span>
-          <Slider value={zoom} onChange={v => setZoom(v)} min={-0.2} max={5} step={0.01} />
+          <Slider
+            value={zoom}
+            onChange={(v) => setZoom(v)}
+            min={-0.2}
+            max={5}
+            step={0.01}
+          />
         </div>
         <div>
           <span>旋转:</span>
-          <Slider value={rotation} onChange={v => setRotation(v)} min={0} max={360} />
+          <Slider
+            value={rotation}
+            onChange={(v) => setRotation(v)}
+            min={0}
+            max={360}
+          />
         </div>
       </Modal>
     </>

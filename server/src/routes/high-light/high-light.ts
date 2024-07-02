@@ -1,11 +1,13 @@
 import Router from "@koa/router";
-let router = new Router();
 import StreamZip from "node-stream-zip";
+
+let router = new Router();
+
 const zip = new StreamZip({
   file: "public/prism.zip",
   storeEntries: true,
 });
-zip.on("error", err => {
+zip.on("error", (err) => {
   throw new Error("文件解压错误");
 });
 
@@ -51,7 +53,7 @@ decompressionPrism.then(() => {
   cors = prism["prism-core.min.js"];
   themes = prism[`themes/prism-${config.themes}.min.css`];
   // 设置插件CSS、JS
-  config.plugins.forEach(item => {
+  config.plugins.forEach((item) => {
     if (prism[`plugins/${item}/prism-${item}.min.css`]) {
       plugins.css += `/**插件:${item}-css**/${prism[`plugins/${item}/prism-${item}.min.css`]}`;
     }
@@ -59,7 +61,7 @@ decompressionPrism.then(() => {
       plugins.js += `/**插件:${item}-js**/${prism[`plugins/${item}/prism-${item}.min.js`]}`;
     }
   });
-  Object.keys(prism).forEach(item => {
+  Object.keys(prism).forEach((item) => {
     if (item.startsWith("language/prism-")) {
       let _key = item.replace(`language/prism-`, "").replace(`.min.js`, "");
       language[_key] = prism[item];
@@ -83,7 +85,7 @@ function getAllType(type: string) {
       typeHub.unshift(languageRequire);
       requireType(languageRequire);
     } else {
-      languageRequire.forEach(item => {
+      languageRequire.forEach((item) => {
         typeHub.unshift(item);
         requireType(item);
       });
@@ -93,7 +95,7 @@ function getAllType(type: string) {
   return typeHub;
 }
 
-router.get("/high-light/:type", async ctx => {
+router.get("/high-light/:type", async (ctx) => {
   ctx.set("Cache-Control", "max-age=2592000"); //缓存一个月
   if (ctx.params.type == "css") {
     ctx.response.set("Content-Type", "text/css;charset=UTF-8");
@@ -103,20 +105,22 @@ router.get("/high-light/:type", async ctx => {
 
   let _language = (ctx.query.languages + "")
     .split(",")
-    .map(item => {
+    .map((item) => {
       //如果没有类型，将使用别名，转化为正确名称
       if (language[item]) return item;
       let aliasIndex = Object.values(components).findIndex((index: any) => {
         if (!index.alias) return false;
-        return typeof index.alias == "string" ? index.alias == item : index.alias.includes(item);
+        return typeof index.alias == "string"
+          ? index.alias == item
+          : index.alias.includes(item);
       });
       //既没有别名，又没找到语言的返回false
       return aliasIndex != -1 ? Object.keys(components)[aliasIndex] : false;
     })
-    .filter(item => !!item)
-    .map(item => getAllType(item as string))
+    .filter((item) => !!item)
+    .map((item) => getAllType(item as string))
     .flat()
-    .map(item => {
+    .map((item) => {
       return language[item] ? `/**language:${item}**/\n${language[item]}` : "";
     })
     .join(`\n`);

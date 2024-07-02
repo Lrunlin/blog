@@ -53,7 +53,7 @@ export class ExternalLink
           },
         ],
         hooks: hooks,
-      }
+      },
     ) as typeof ExternalLink;
   }
 }

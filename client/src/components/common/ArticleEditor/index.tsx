@@ -1,15 +1,16 @@
 "use client";
+
 import { useEffect } from "react";
-import { Button, Input, Avatar, Dropdown, Result } from "antd";
-import Editor from "../Editor";
+import { FC, ReactNode } from "react";
+import { Avatar, Button, Dropdown, Input, Result } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
+import Base from "@/layout/Base";
+import Head from "@/components/next/Head";
 import useUserData from "@/store/user/user-data";
 import useUserWriteArticle from "@/store/user/user-write-article";
-import Modal from "./Modal";
+import Editor from "../Editor";
 import DraftsButton from "./DraftsButton";
-import { SmileOutlined } from "@ant-design/icons";
-import Head from "@/components/next/Head";
-import { FC, ReactNode } from "react";
-import Base from "@/layout/Base";
+import Modal from "./Modal";
 
 export const initValue = {
   title: "",
@@ -37,11 +38,11 @@ interface propsType {
   showDraftsButton?: boolean;
 }
 export type modalPropsType = Pick<propsType, "submit">;
-const ArticleEditor: FC<propsType> = props => {
-  let userData = useUserData(s => s.data);
-  let articleData = useUserWriteArticle(s => s.data);
-  let updateData = useUserWriteArticle(s => s.updateData);
-  let resetArticleData = useUserWriteArticle(s => s.resetData);
+const ArticleEditor: FC<propsType> = (props) => {
+  let userData = useUserData((s) => s.data);
+  let articleData = useUserWriteArticle((s) => s.data);
+  let updateData = useUserWriteArticle((s) => s.updateData);
+  let resetArticleData = useUserWriteArticle((s) => s.resetData);
 
   useEffect(() => {
     return () => {
@@ -52,18 +53,21 @@ const ArticleEditor: FC<propsType> = props => {
   return userData ? (
     <div className="w-full">
       {props.meta}
-      <header className="h-12 flex justify-between items-center">
+      <header className="flex h-12 items-center justify-between">
         <Input
           placeholder="输入文章标题..."
           value={articleData.title}
           variant="borderless"
           className="mr-10 h-full"
-          onChange={e => updateData({ title: e.target.value })}
+          onChange={(e) => updateData({ title: e.target.value })}
           maxLength={200}
         />
-        <div className="flex mr-5">
+        <div className="mr-5 flex">
           {props.showDraftsButton && <DraftsButton />}
-          <Dropdown trigger={["click"]} dropdownRender={() => <Modal {...props} />}>
+          <Dropdown
+            trigger={["click"]}
+            dropdownRender={() => <Modal {...props} />}
+          >
             <Button type="primary" className="mx-4">
               发布
             </Button>
@@ -75,14 +79,14 @@ const ArticleEditor: FC<propsType> = props => {
         theme={true}
         target="article"
         initValue={articleData.content}
-        onChange={html => updateData({ content: html })}
+        onChange={(html) => updateData({ content: html })}
         defaultTheme={articleData.theme_id}
-        onSetTheme={id => updateData({ theme_id: id })}
+        onSetTheme={(id) => updateData({ theme_id: id })}
       />
     </div>
   ) : (
     <Base className="bg-white">
-      <div className="w-full flex justify-center">
+      <div className="flex w-full justify-center">
         <Head title="请登录" />
         <Result icon={<SmileOutlined />} title="请登录后再发布文章" />
       </div>

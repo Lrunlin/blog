@@ -3,7 +3,7 @@ import DB from "@/db";
 import interger from "@/common/verify/integer";
 
 let router = new Router();
-router.get("/tag/:id", interger([], ["id"]), async ctx => {
+router.get("/tag/:id", interger([], ["id"]), async (ctx) => {
   let { id } = ctx.params;
 
   await DB.Tag.findByPk(id)

@@ -1,13 +1,14 @@
 "use client";
-import { createContext, useRef, useContext } from "react";
+
+import { createContext, useContext, useRef } from "react";
 import { FC } from "react";
+import { statisticsDataType } from "@type/statistics-type";
 import { StoreApi, useStore } from "zustand";
 import {
   AdminStatisticsDataStore,
-  createAdminStatisticsDataStore,
   AdminStatisticsDataType,
+  createAdminStatisticsDataStore,
 } from "./store";
-import { statisticsDataType } from "@type/statistics-type";
 
 export type { AdminStatisticsDataType };
 export const AdminStatisticsDataStoreContext =
@@ -21,7 +22,10 @@ export interface AdminStatisticsDataStoreProviderProps {
 export const AdminStatisticsDataStoreProvider: FC<{
   children: any;
   data: statisticsDataType;
-}> = ({ children, data = {} as statisticsDataType }: AdminStatisticsDataStoreProviderProps) => {
+}> = ({
+  children,
+  data = {} as statisticsDataType,
+}: AdminStatisticsDataStoreProviderProps) => {
   const storeRef = useRef<StoreApi<AdminStatisticsDataStore>>();
   if (!storeRef.current) {
     storeRef.current = createAdminStatisticsDataStore({ data: data });
@@ -34,8 +38,12 @@ export const AdminStatisticsDataStoreProvider: FC<{
   );
 };
 
-const useAdminStatisticsData = <T,>(selector: (store: AdminStatisticsDataStore) => T): T => {
-  const adminStatisticsDataStoreContext = useContext(AdminStatisticsDataStoreContext);
+const useAdminStatisticsData = <T,>(
+  selector: (store: AdminStatisticsDataStore) => T,
+): T => {
+  const adminStatisticsDataStoreContext = useContext(
+    AdminStatisticsDataStoreContext,
+  );
 
   if (!adminStatisticsDataStoreContext) {
     throw new Error(`useAdminStatisticsData必须在useAdminStatisticsData中使用`);

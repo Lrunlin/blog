@@ -1,21 +1,22 @@
 "use client";
-import { useState, useEffect, memo, useRef } from "react";
-import Header from "@/components/admin/page/article/list/Header";
-import Table from "@/components/admin/page/article/list/Table";
-import { message, Spin } from "antd";
+
+import { memo, useEffect, useRef, useState } from "react";
+import { Spin, message } from "antd";
 import axios from "@axios";
 import AdminLayout from "@/layout/Admin/Base";
-import useAdminArticleSearch from "@/store/admin/admin-search-option";
+import Header from "@/components/admin/page/article/list/Header";
+import Table from "@/components/admin/page/article/list/Table";
 import useAdminArticleList from "@/store/admin/admin-article-list";
+import useAdminArticleSearch from "@/store/admin/admin-search-option";
 import useAdminTableOption from "@/store/admin/admin-table-option";
 
 const ArticleList = memo(() => {
   /** 设置文章数据*/
-  let setArticleList = useAdminArticleList(s => s.setData);
+  let setArticleList = useAdminArticleList((s) => s.setData);
   /** 获取表格配置的page和page_size*/
-  let tableOption = useAdminTableOption(s => s.data);
+  let tableOption = useAdminTableOption((s) => s.data);
   /** 顶部Header中的搜索配置*/
-  let searchOption = useAdminArticleSearch(s => s.data);
+  let searchOption = useAdminArticleSearch((s) => s.data);
   /** 是否加载中*/
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +31,7 @@ const ArticleList = memo(() => {
         params: { page_size: tableOption.page_size, ...searchOption },
         signal: controller.signal,
       })
-      .then(res => {
+      .then((res) => {
         setArticleList({
           list: res.data.data.list,
           total_count: res.data.data.total_count,

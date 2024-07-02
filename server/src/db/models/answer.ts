@@ -69,7 +69,7 @@ export class Answer
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Answer;
   }
 }

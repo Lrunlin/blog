@@ -1,6 +1,7 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import classNames from "classnames";
-import { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import Search from "./Search";
 import User from "./User";
@@ -10,7 +11,8 @@ const Header = () => {
 
   useEffect(() => {
     const scrollSwitch = () => {
-      let scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+      let scrollY =
+        document.documentElement.scrollTop || document.body.scrollTop;
       // 大于600缩回，小于540伸出
       if (scrollY > 600 && !isShrink) {
         setIsShrink(true);
@@ -27,10 +29,13 @@ const Header = () => {
 
   return (
     <header
-      className={classNames(["w-full h-12 border-slate-100 duration-200", isShrink && "-mt-12"])}
+      className={classNames([
+        "h-12 w-full border-slate-100 duration-200",
+        isShrink && "-mt-12",
+      ])}
     >
-      <div className="w-full h-12 fixed bg-white z-50 shadow-sm">
-        <div className="max-w-[1440px] h-12 mx-auto flex justify-between items-center px-6">
+      <div className="fixed z-50 h-12 w-full bg-white shadow-sm">
+        <div className="mx-auto flex h-12 max-w-[1440px] items-center justify-between px-6">
           <Navigation />
           <Search />
           <User />

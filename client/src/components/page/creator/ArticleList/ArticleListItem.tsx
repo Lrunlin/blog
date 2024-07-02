@@ -1,10 +1,11 @@
 import { memo } from "react";
-import type { FC, Dispatch, SetStateAction } from "react";
-import { DashOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, message } from "antd";
+import type { Dispatch, FC, SetStateAction } from "react";
 import Link from "next/link";
-import type { articleListItemType } from "@type/model/article-list-item";
+import { Dropdown, Menu, message } from "antd";
+import { DashOutlined } from "@ant-design/icons";
 import axios from "@axios";
+import type { articleListItemType } from "@type/model/article-list-item";
+
 interface propsType {
   data: articleListItemType;
   dispatch: {
@@ -17,14 +18,14 @@ interface propsType {
 function createMenu(
   id: number,
   setData: propsType["dispatch"]["setData"],
-  setTotal: propsType["dispatch"]["setTotal"]
+  setTotal: propsType["dispatch"]["setTotal"],
 ) {
   function remove() {
-    axios.delete(`/article/${id}`).then(res => {
+    axios.delete(`/article/${id}`).then((res) => {
       if (res.data.success) {
         message.success(res.data.message);
-        setData(_data => _data.filter(item => item.id != id));
-        setTotal(_total => --_total);
+        setData((_data) => _data.filter((item) => item.id != id));
+        setTotal((_total) => --_total);
       } else {
         message.error(res.data.message);
       }
@@ -54,15 +55,15 @@ function createMenu(
 const ArticleListItem: FC<propsType> = memo(({ data, dispatch }) => {
   return (
     <>
-      <li className="px-1 py-4 border-b-solid border-gray-300">
+      <li className="border-b-solid border-gray-300 px-1 py-4">
         <div className="flex justify-between">
-          <span className="text-black text-base">{data.title}</span>
+          <span className="text-base text-black">{data.title}</span>
           <Dropdown
             menu={createMenu(data.id, dispatch.setData, dispatch.setTotal)}
             placement="bottom"
             arrow
           >
-            <span className="px-1 hover:bg-gray-300 rounded-sm duration-200 cursor-pointer">
+            <span className="cursor-pointer rounded-sm px-1 duration-200 hover:bg-gray-300">
               <DashOutlined />
             </span>
           </Dropdown>

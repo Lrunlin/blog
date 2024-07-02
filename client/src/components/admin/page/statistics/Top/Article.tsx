@@ -59,7 +59,7 @@ function option(data: { value: number; name: string }[]) {
 
 /** 文章饼状图统计*/
 const Article = () => {
-  let _data = userAdminStatisticsData(s => s.data);
+  let _data = userAdminStatisticsData((s) => s.data);
   let DOM = useRef<HTMLDivElement>(null);
   let data = _data.article;
   useEffect(() => {
@@ -69,13 +69,13 @@ const Article = () => {
         { value: data.admin_not_reprint_count, name: "管理员原创文章" },
         { value: data.user_reprint_count, name: "用户转载文章" },
         { value: data.user_not_reprint_count, name: "用户原创文章" },
-      ])
+      ]),
     );
   }, [_data]);
 
   return (
     <>
-      <div ref={DOM} className="w-[26.5vw] h-[12.5vw]"></div>
+      <div ref={DOM} className="h-[12.5vw] w-[26.5vw]"></div>
     </>
   );
 };

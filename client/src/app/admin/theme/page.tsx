@@ -1,37 +1,47 @@
 "use client";
-import useFetch from "@/common/hooks/useFetch";
-import axios from "@axios";
-import { Table, Button, message, Modal, Skeleton, Result, Tag, Popconfirm } from "antd";
+
 import { useState } from "react";
+import {
+  Button,
+  Modal,
+  Popconfirm,
+  Result,
+  Skeleton,
+  Table,
+  Tag,
+  message,
+} from "antd";
 import { Select } from "antd";
+import { CheckCircleOutlined, FieldTimeOutlined } from "@ant-design/icons";
+import axios from "@axios";
+import useFetch from "@/common/hooks/useFetch";
 import AdminLayout from "@/layout/Admin/Base";
 import CodeEdite from "@/components/admin/page/theme/CodeEdite";
-import { CheckCircleOutlined, FieldTimeOutlined } from "@ant-design/icons";
 
 const List = () => {
   const [previewID, setPreviewID] = useState<null | number>(null);
   const [content, setContent] = useState<string>("");
 
   let { data, isLoading, error, setData, refetch } = useFetch(() =>
-    axios.get("/theme", { params: { all: true } }).then(res => res.data.data)
+    axios.get("/theme", { params: { all: true } }).then((res) => res.data.data),
   );
 
   let { isLoading: removeIsLoading, refetch: remove } = useFetch(
     (id: number) =>
       axios
         .delete(`/theme/${id}`)
-        .then(res => {
+        .then((res) => {
           message.success(res.data.message);
-          setData((_data: any[]) => _data.filter(item => item.id != id));
+          setData((_data: any[]) => _data.filter((item) => item.id != id));
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
         }),
-    { manual: true }
+    { manual: true },
   );
 
   function updateIndex(id: number, value: number) {
-    axios.put(`/theme/${id}`, { indexes: value }).catch(err => {
+    axios.put(`/theme/${id}`, { indexes: value }).catch((err) => {
       message.error(err.message);
     });
   }
@@ -40,45 +50,45 @@ const List = () => {
     (id: number) =>
       axios
         .get(`/theme/${id}`)
-        .then(res => {
+        .then((res) => {
           setContent(res.data.data.content);
           setPreviewID(id);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           message.error(err.message);
           return err;
         }),
-    { manual: true }
+    { manual: true },
   );
 
   let { isLoading: uptateContentIsLoading, refetch: updateContent } = useFetch(
     () =>
       axios
         .put(`/theme/${previewID}`, { content: content })
-        .then(res => {
+        .then((res) => {
           message.success(res.data.message);
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
         }),
-    { manual: true }
+    { manual: true },
   );
 
   let { refetch: allow } = useFetch(
     (id: number) =>
       axios
         .put(`/theme/${id}`, { state: 1 })
-        .then(res => {
+        .then((res) => {
           message.success(res.data.message);
           setData((_data: any[]) =>
-            _data.map(item => (item.id == id ? { ...item, state: 1 } : item))
+            _data.map((item) => (item.id == id ? { ...item, state: 1 } : item)),
           );
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
         }),
-    { manual: true }
+    { manual: true },
   );
 
   return (
@@ -92,13 +102,17 @@ const List = () => {
         footer={
           <>
             <Button onClick={() => setPreviewID(null)}>取消</Button>
-            <Button onClick={updateContent} type="primary" loading={uptateContentIsLoading}>
+            <Button
+              onClick={updateContent}
+              type="primary"
+              loading={uptateContentIsLoading}
+            >
               确定修改
             </Button>
           </>
         }
       >
-        <CodeEdite defaultValue={content} onChange={val => setContent(val)} />
+        <CodeEdite defaultValue={content} onChange={(val) => setContent(val)} />
       </Modal>
       <div>
         {data ? (
@@ -142,11 +156,13 @@ const List = () => {
                     <Select
                       defaultValue={indexes}
                       style={{ width: 120 }}
-                      onChange={val => updateIndex(option.id, val)}
-                      options={new Array(data.length).fill(null).map((item, index) => ({
-                        value: index + 1,
-                        label: index + 1,
-                      }))}
+                      onChange={(val) => updateIndex(option.id, val)}
+                      options={new Array(data.length)
+                        .fill(null)
+                        .map((item, index) => ({
+                          value: index + 1,
+                          label: index + 1,
+                        }))}
                     />
                   );
                 },
@@ -165,7 +181,7 @@ const List = () => {
                 title: "删除",
                 dataIndex: "id",
                 width: 180,
-                render: id => (
+                render: (id) => (
                   <Button
                     type="primary"
                     loading={removeIsLoading}

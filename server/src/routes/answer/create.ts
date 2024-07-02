@@ -1,12 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import id from "@/common/utils/id";
-import verify from "@/common/verify/api-verify/answer/create";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/answer/create";
+import id from "@/common/utils/id";
+import verify from "@/common/verify/api-verify/answer/create";
 
 let router = new Router();
-router.post("/answer", verify, async ctx => {
+router.post("/answer", verify, async (ctx) => {
   const { content, problem_id } = ctx.request.body;
   let t = await sequelize.transaction();
   let _id = id();
@@ -18,10 +18,10 @@ router.post("/answer", verify, async ctx => {
       create_time: new Date(),
       author: ctx.id as number,
     },
-    { transaction: t }
+    { transaction: t },
   )
     .then(() => true)
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return false;
     });

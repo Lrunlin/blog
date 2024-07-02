@@ -1,37 +1,39 @@
 "use client";
-import { useState, createContext, FC } from "react";
-import axios from "@axios";
-import NoFound from "@/components/page/problem/NoFound";
-import Answer from "@/components/page/problem/Answer";
 
+import { FC, createContext, useState } from "react";
 import { useParams } from "next/navigation";
-import ArticleUserData from "@/components/page/article/UserData";
-import type { problemType } from "@type/model/problem";
 import { message } from "antd";
-import Comments from "@/components/page/problem/Comments";
-import NoFollowLink from "@/components/next/NoFollowLink";
-import useUserData from "@/store/user/user-data";
-import ToolBar from "@/components/page/problem/ToolBar";
-import Head from "@/components/next/Head";
+import axios from "@axios";
+import type { problemType } from "@type/model/problem";
 import StyleLink from "@/components/common/Editor/StyleLink";
-import Editor from "@/components/page/problem/Editor";
+import Head from "@/components/next/Head";
+import NoFollowLink from "@/components/next/NoFollowLink";
+import ArticleUserData from "@/components/page/article/UserData";
+import Answer from "@/components/page/problem/Answer";
+import Comments from "@/components/page/problem/Comments";
 import CommentEditor from "@/components/page/problem/Comments/Editor";
+import Editor from "@/components/page/problem/Editor";
+import NoFound from "@/components/page/problem/NoFound";
+import ToolBar from "@/components/page/problem/ToolBar";
+import useUserData from "@/store/user/user-data";
 import style from "@/styles/content.module.scss";
 
 /** 问答页面数据context*/
-export const Context = createContext<{ data: problemType; reload: Function }>({} as any);
+export const Context = createContext<{ data: problemType; reload: Function }>(
+  {} as any,
+);
 const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
   let params = useParams();
   let id = params.id as string;
   const [data, setData] = useState(_data);
   const [problemReplyShrink, setProblemReplyShrink] = useState(false);
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
 
   function reload() {
     axios
       .get(`/problem/${id}`)
       .then((res: any) => setData(res.data.data))
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         message.error("数据刷新失败");
       });
@@ -39,10 +41,10 @@ const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
   function deleteProblem() {
     axios
       .delete(`/problem/${id}`)
-      .then(res => {
+      .then((res) => {
         message.success("删除成功");
       })
-      .catch(err => {
+      .catch((err) => {
         message.error("删除失败");
         console.log(err);
       });
@@ -54,7 +56,7 @@ const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
           <Head title={data.title} />
           <StyleLink id={0} />
           <div className="bg-white p-8">
-            <h1 className="text-4xl font-semibold break-all">{data.title}</h1>
+            <h1 className="break-all text-4xl font-semibold">{data.title}</h1>
             <ArticleUserData data={data as any} type="problem" />
             <div
               className={`content-body ${style.content_body}`}
@@ -65,21 +67,24 @@ const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
               <ToolBar />
             </div>
             {/* 对问题的回复 */}
-            <div className="flex items-center justify-between text-gray-500 cursor-pointer select-none">
+            <div className="flex cursor-pointer select-none items-center justify-between text-gray-500">
               <div>
-                <span onClick={() => setProblemReplyShrink(state => !state)}>
+                <span onClick={() => setProblemReplyShrink((state) => !state)}>
                   {problemReplyShrink ? "收起" : "回复"}
                 </span>
               </div>
               {userData?.id == data.author && (
                 <div>
                   <NoFollowLink
-                    className="text-gray-500 cursor-pointer mr-4 hover:text-gray-800"
+                    className="mr-4 cursor-pointer text-gray-500 hover:text-gray-800"
                     href={`/problem/editor/${id}`}
                   >
                     编辑
                   </NoFollowLink>
-                  <span className="cursor-pointer hover:text-gray-800" onClick={deleteProblem}>
+                  <span
+                    className="cursor-pointer hover:text-gray-800"
+                    onClick={deleteProblem}
+                  >
                     删除问题
                   </span>
                 </div>
@@ -87,9 +92,19 @@ const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
             </div>
 
             {problemReplyShrink && (
-              <CommentEditor belong_id={+id} reply={null} type="problem" onSuccess={reload} />
+              <CommentEditor
+                belong_id={+id}
+                reply={null}
+                type="problem"
+                onSuccess={reload}
+              />
             )}
-            <Comments type="problem" belong_id={+id} data={data.comment_list} className="mt-2" />
+            <Comments
+              type="problem"
+              belong_id={+id}
+              data={data.comment_list}
+              className="mt-2"
+            />
           </div>
           {!!data.answer_list.length && <Answer />}
           {userData?.id != data.author && <Editor onSuccess={reload} />}

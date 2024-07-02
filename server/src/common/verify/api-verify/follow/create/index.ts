@@ -1,17 +1,17 @@
-import compose from "koa-compose";
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validator";
-import interger from "@/common/verify/integer";
-import auth from "@/common/middleware/auth";
-import { typeFollwoProblem } from "@/common/verify/modules/type";
-import { Next, Context } from "koa";
+import { Context, Next } from "koa";
 import DB from "@/db";
-import map, { type } from "./map";
+import Joi from "joi";
+import compose from "koa-compose";
 import type {
   AnswerAttributes,
   ArticleAttributes,
   ProblemAttributes,
 } from "@/db/models/init-models";
+import auth from "@/common/middleware/auth";
+import validator from "@/common/middleware/verify/validator";
+import interger from "@/common/verify/integer";
+import { typeFollwoProblem } from "@/common/verify/modules/type";
+import map, { type } from "./map";
 
 const schema = Joi.object({
   type: typeFollwoProblem,
@@ -33,7 +33,7 @@ async function verify(ctx: Context, next: Next) {
 
   let authorData = await map(type, userDataMap[type as "user" | "problem"])
     .db(+belong_id)
-    .then(res => res)
+    .then((res) => res)
     .catch(() => false as false);
 
   if (!authorData) {
@@ -44,7 +44,8 @@ async function verify(ctx: Context, next: Next) {
 
   if (
     type != "user" &&
-    (authorData as AnswerAttributes | ArticleAttributes | ProblemAttributes).author == ctx.id
+    (authorData as AnswerAttributes | ArticleAttributes | ProblemAttributes)
+      .author == ctx.id
   ) {
     ctx.status = 401;
     ctx.body = { success: false, message: "禁止关注自己发布的内容" };
@@ -62,4 +63,9 @@ async function verify(ctx: Context, next: Next) {
   await next();
 }
 
-export default compose([interger([], ["belong_id"]), auth(0), validator(schema), verify]);
+export default compose([
+  interger([], ["belong_id"]),
+  auth(0),
+  validator(schema),
+  verify,
+]);

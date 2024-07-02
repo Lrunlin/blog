@@ -1,10 +1,10 @@
-import auth from "@/common/middleware/auth";
-import interger from "@/common/verify/integer";
 import Router from "@koa/router";
 import DB from "@/db";
 import sequelize from "@/db/config";
-import transaction from "@/common/transaction/favorites/delete";
 import stringArrayReplace from "@/db/utils/stringArrayReplace";
+import auth from "@/common/middleware/auth";
+import transaction from "@/common/transaction/favorites/delete";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
 
@@ -13,7 +13,7 @@ router.delete(
   "/collection/favorites/:belong_id",
   auth(0),
   interger(["favorites_id"], ["belong_id"]),
-  async ctx => {
+  async (ctx) => {
     let favorites_id = ctx.query.favorites_id as string;
     let belong_id = ctx.params.belong_id as string;
     let t = await sequelize.transaction();
@@ -26,7 +26,7 @@ router.delete(
         newValue: "",
         whereSql: `and belong_id='${belong_id}' and user_id=${ctx.id}`,
       },
-      { transaction: t }
+      { transaction: t },
     );
     let _t = await transaction(t);
 
@@ -38,6 +38,6 @@ router.delete(
       ctx.body = { success: false, message: "删除失败" };
       t.rollback();
     }
-  }
+  },
 );
 export default router;

@@ -3,7 +3,7 @@ import redis from "@/common/utils/redis";
 
 let router = new Router();
 
-router.get("/ranking/author", async ctx => {
+router.get("/ranking/author", async (ctx) => {
   let data = await redis.get("ranking-author");
 
   ctx.body = {

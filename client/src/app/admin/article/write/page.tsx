@@ -1,14 +1,15 @@
 "use client";
-import Editor from "@/components/common/Editor";
+
+import { useRouter } from "next/navigation";
 // import dynamic from "next/dynamic";
 // const Editor = dynamic(() => import("@/components/common/Editor"), { ssr: false });
-import { Button, Form, Input, message, TreeSelect } from "antd";
+import { Button, Form, Input, TreeSelect, message } from "antd";
 import axios from "@axios";
+import useFetch from "@/common/hooks/useFetch";
+import AdminLayout from "@/layout/Admin/Base";
+import Editor from "@/components/common/Editor";
 import Upload from "@/components/common/UpLoad";
 import getType from "@/request/type/getTag";
-import { useRouter } from "next/navigation";
-import AdminLayout from "@/layout/Admin/Base";
-import useFetch from "@/common/hooks/useFetch";
 
 const Write = () => {
   let { useForm } = Form;
@@ -18,20 +19,20 @@ const Write = () => {
     (values: any) =>
       axios
         .post("/article", { ...values, state: 1 })
-        .then(res => {
+        .then((res) => {
           message.success(res.data.message);
           router.replace("/admin/article/list");
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
         }),
-    { manual: true }
+    { manual: true },
   );
 
   let { data: treeData } = useFetch(() =>
-    getType("tree").then(res => {
-      return res.map(item => ({ ...item, checkable: false }));
-    })
+    getType("tree").then((res) => {
+      return res.map((item) => ({ ...item, checkable: false }));
+    }),
   );
 
   return (
@@ -56,7 +57,12 @@ const Write = () => {
             name="title"
             rules={[
               { required: true, message: "请填写标题" },
-              { type: "string", min: 3, max: 200, message: "标题长度在3-200之间" },
+              {
+                type: "string",
+                min: 3,
+                max: 200,
+                message: "标题长度在3-200之间",
+              },
             ]}
           >
             <Input placeholder="填写网站标题" maxLength={200} />
@@ -88,7 +94,12 @@ const Write = () => {
               { max: 200, message: "最大不得超过200个字符" },
             ]}
           >
-            <Input.TextArea rows={5} placeholder="填写介绍" maxLength={200} showCount />
+            <Input.TextArea
+              rows={5}
+              placeholder="填写介绍"
+              maxLength={200}
+              showCount
+            />
           </Form.Item>
 
           <Form.Item label="封面" name="cover_file_name">
@@ -120,10 +131,10 @@ const Write = () => {
               <Editor
                 theme={true}
                 target="article"
-                onChange={html => {
+                onChange={(html) => {
                   form.setFieldsValue({ content: html });
                 }}
-                onSetTheme={id => {
+                onSetTheme={(id) => {
                   form.setFieldsValue({ theme_id: id });
                 }}
               />

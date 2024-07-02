@@ -1,8 +1,9 @@
 "use client";
-import Head from "@/components/next/Head";
-import { Result, Button } from "antd";
-import Header from "@/components/common/Header";
+
 import { useRouter } from "next/navigation";
+import { Button, Result } from "antd";
+import Header from "@/components/common/Header";
+import Head from "@/components/next/Head";
 
 const NotFound = () => {
   let router = useRouter();

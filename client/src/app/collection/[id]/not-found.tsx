@@ -1,7 +1,8 @@
 "use client";
-import { Result, Button } from "antd";
-import Base from "@/layout/Base";
+
 import { useRouter } from "next/navigation";
+import { Button, Result } from "antd";
+import Base from "@/layout/Base";
 
 const NoFound = () => {
   let router = useRouter();
@@ -9,7 +10,7 @@ const NoFound = () => {
   return (
     <>
       <Base>
-        <main className="w-full p-2 bg-white">
+        <main className="w-full bg-white p-2">
           <Result
             status="404"
             title="404"

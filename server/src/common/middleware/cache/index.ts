@@ -8,7 +8,7 @@ import redis from "@/common/utils/redis";
 async function cache(
   key: (ctx: Context) => string,
   allowSaveValue: (ctx: Context) => any,
-  seconds?: number
+  seconds?: number,
 ) {
   return async (ctx: Context, next: Next) => {
     let _key = key(ctx);

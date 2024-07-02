@@ -2,9 +2,10 @@ import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
 import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
+
 /** 访问量统计*/
 const Visits = () => {
-  let data = userAdminStatisticsData(s => s.data);
+  let data = userAdminStatisticsData((s) => s.data);
   let visits = data.visits;
   let DOM = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -37,7 +38,7 @@ const Visits = () => {
       xAxis: {
         type: "category",
         boundaryGap: false,
-        data: visits.map(item => item.time),
+        data: visits.map((item) => item.time),
       },
       yAxis: {
         type: "value",
@@ -46,7 +47,7 @@ const Visits = () => {
         {
           name: "阅读数",
           type: "line",
-          data: visits.map(item => item.view_count),
+          data: visits.map((item) => item.view_count),
           itemStyle: {
             color: "red",
           },
@@ -54,7 +55,7 @@ const Visits = () => {
         {
           name: "IP数",
           type: "line",
-          data: visits.map(item => item.ip_count),
+          data: visits.map((item) => item.ip_count),
           itemStyle: {
             color: "yellow",
           },
@@ -64,7 +65,7 @@ const Visits = () => {
   }, [data]);
   return (
     <>
-      <div ref={DOM} className="w-[39vw] h-[12.5vw]"></div>
+      <div ref={DOM} className="h-[12.5vw] w-[39vw]"></div>
     </>
   );
 };

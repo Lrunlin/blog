@@ -7,7 +7,7 @@ interface decodeType {
 async function verifySession(session_id: string) {
   let decode = await redis
     .get(session_id)
-    .then(res => (res ? JSON.parse(res) : null))
+    .then((res) => (res ? JSON.parse(res) : null))
     .catch(() => null);
 
   return new Promise<decodeType>((resolve, reject) => {

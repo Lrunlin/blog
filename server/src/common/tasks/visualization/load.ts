@@ -1,7 +1,7 @@
-import os from "os";
 import moment from "moment";
-import redis from "@/common/utils/redis";
 import { getDiskInfoSync } from "node-disk-info";
+import os from "os";
+import redis from "@/common/utils/redis";
 
 const getDistData = () => {
   let isLinux = os.type().toLowerCase().includes("linux");
@@ -11,7 +11,7 @@ const getDistData = () => {
       total.occupied += item.used * (isLinux ? 1000 : 1);
       return total;
     },
-    { occupied: 0, total: 0 }
+    { occupied: 0, total: 0 },
   );
 };
 

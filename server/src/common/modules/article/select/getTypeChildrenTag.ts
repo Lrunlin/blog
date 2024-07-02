@@ -7,7 +7,7 @@ import DB from "@/db";
  */
 async function getTypeChildrenTag(id: number) {
   return await DB.Tag.findAll({ where: { belong_id: id }, attributes: ["id"] })
-    .then(rows => rows.map(item => item.toJSON().id) as unknown as number[])
+    .then((rows) => rows.map((item) => item.toJSON().id) as unknown as number[])
     .catch(() => [] as number[]);
 }
 

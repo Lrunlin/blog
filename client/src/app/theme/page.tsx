@@ -1,13 +1,14 @@
 "use client";
-import Base from "@/layout/Base";
+
 import { Result } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import useUserData from "@/store/user/user-data";
+import Base from "@/layout/Base";
 import CreateTheme from "@/components/common/CreateTheme";
 import Head from "@/components/next/Head";
+import useUserData from "@/store/user/user-data";
 
 const Theme = () => {
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
 
   return (
     <Base>

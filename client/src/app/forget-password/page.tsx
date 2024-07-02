@@ -1,9 +1,10 @@
 "use client";
-import Base from "@/layout/Base";
-import useFetch from "@/common/hooks/useFetch";
-import axios from "@axios";
-import { Button, message, Form, Input } from "antd";
+
 import { useSearchParams } from "next/navigation";
+import { Button, Form, Input, message } from "antd";
+import axios from "@axios";
+import useFetch from "@/common/hooks/useFetch";
+import Base from "@/layout/Base";
 
 const ForgetPassword = () => {
   let searchParams = useSearchParams();
@@ -14,25 +15,25 @@ const ForgetPassword = () => {
           key: searchParams.get("key"),
           password: values.password,
         })
-        .then(res => {
+        .then((res) => {
           message.success(res.data.message);
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
         }),
-    { manual: true }
+    { manual: true },
   );
 
   return (
     <Base>
-      <div className="bg-white w-full">
+      <div className="w-full bg-white">
         <Form
           className="!mx-auto !mt-10"
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 16 }}
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
-          onFinish={params => refetch(params)}
+          onFinish={(params) => refetch(params)}
           autoComplete="off"
         >
           <Form.Item

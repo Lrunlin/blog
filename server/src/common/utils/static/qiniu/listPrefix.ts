@@ -1,6 +1,9 @@
 import bucketManager from "./utils/bucketManager";
 
-let listPrefix = (prefix: string, marker?: string): Promise<{ items: any[]; marker?: string }> =>
+let listPrefix = (
+  prefix: string,
+  marker?: string,
+): Promise<{ items: any[]; marker?: string }> =>
   new Promise((resolve, reject) => {
     bucketManager.listPrefix(
       process.env.OSS_BUCKET,
@@ -23,7 +26,7 @@ let listPrefix = (prefix: string, marker?: string): Promise<{ items: any[]; mark
           })),
           marker: respBody.marker,
         });
-      }
+      },
     );
   });
 export default listPrefix;

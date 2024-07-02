@@ -7,7 +7,9 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_MYSQL_HOST + "",
     dialect: "mysql",
-    port: process.env.DB_MYSQL_PORT ? +(process.env.DB_MYSQL_PORT as string) : 3306,
+    port: process.env.DB_MYSQL_PORT
+      ? +(process.env.DB_MYSQL_PORT as string)
+      : 3306,
     timezone: "+08:00",
     // logging: process.env.ENV == "development",
     logging: false, //不打印日志
@@ -21,6 +23,6 @@ const sequelize = new Sequelize(
       typeCast: true,
     },
     define: {},
-  }
+  },
 );
 export default sequelize;

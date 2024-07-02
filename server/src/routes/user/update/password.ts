@@ -1,8 +1,8 @@
 import Router from "@koa/router";
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validator";
 import DB from "@/db";
+import Joi from "joi";
 import auth from "@/common/middleware/auth";
+import validator from "@/common/middleware/verify/validator";
 import sha256 from "@/common/utils/sha256";
 
 const schema = Joi.object({
@@ -16,7 +16,7 @@ const schema = Joi.object({
 
 let router = new Router();
 // 修改密码
-router.put("/user/password", validator(schema), auth(0), async ctx => {
+router.put("/user/password", validator(schema), auth(0), async (ctx) => {
   let { password } = ctx.request.body;
   let userData = await DB.User.findByPk(ctx.id, { attributes: ["password"] });
   if (userData?.password == sha256(password)) {
@@ -28,7 +28,7 @@ router.put("/user/password", validator(schema), auth(0), async ctx => {
     .then(([res]) => {
       ctx.body = { success: true, message: "修改成功" };
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.body = { success: false, message: "修改失败" };
       console.log(err);
     });

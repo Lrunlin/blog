@@ -7,14 +7,14 @@ let router = new Router();
 
 // 检测是否设置了默认样式
 if ([undefined, "0"].includes(process.env.NODE_APP_INSTANCE)) {
-  DB.Theme.findOne({ where: { id: 0 } }).then(row => {
+  DB.Theme.findOne({ where: { id: 0 } }).then((row) => {
     if (!row) {
       throw new Error("主题表（Theme）需要设置默认样式{id:0}");
     }
   });
 }
 
-router.post("/theme", verify, async ctx => {
+router.post("/theme", verify, async (ctx) => {
   let count = await DB.Theme.count();
 
   await DB.Theme.create({
@@ -26,10 +26,10 @@ router.post("/theme", verify, async ctx => {
     create_time: new Date(),
     indexes: count + 1,
   })
-    .then(res => {
+    .then((res) => {
       ctx.body = { success: true, message: "添加成功" };
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       ctx.body = { success: false, message: "添加失败" };
       ctx.status = 500;

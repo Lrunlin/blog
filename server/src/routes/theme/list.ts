@@ -4,7 +4,7 @@ import auth from "@/common/middleware/auth";
 
 let router = new Router();
 
-router.get("/theme", auth(0), async ctx => {
+router.get("/theme", auth(0), async (ctx) => {
   let isAll = ctx.request.query.all;
 
   await DB.Theme.findAll({
@@ -12,10 +12,10 @@ router.get("/theme", auth(0), async ctx => {
     order: [["indexes", "asc"]],
     where: isAll ? undefined : { state: 1 },
   })
-    .then(rows => {
+    .then((rows) => {
       ctx.body = { success: true, message: "查询成功", data: rows };
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.status = 500;
       ctx.body = { success: false, message: "服务器查询错误" };
     });

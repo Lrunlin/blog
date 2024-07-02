@@ -1,6 +1,7 @@
 import DB from "@/db";
 import type { Transaction } from "sequelize/types";
 import { Op } from "sequelize";
+
 /** 删除答案时的事务处理 */
 async function transaction(answer_id: string, t: Transaction) {
   /** 删除答案引发对问题发起者的通知*/
@@ -12,7 +13,7 @@ async function transaction(answer_id: string, t: Transaction) {
     transaction: t,
   })
     .then(() => true)
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return false;
     });
@@ -26,7 +27,7 @@ async function transaction(answer_id: string, t: Transaction) {
     },
     attributes: ["id"],
   })
-    .then(rows => rows.map(item => item.id))
+    .then((rows) => rows.map((item) => item.id))
     .catch(() => false as false);
   if (!commentList) return false;
 
@@ -41,7 +42,7 @@ async function transaction(answer_id: string, t: Transaction) {
     transaction: t,
   })
     .then(() => true)
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return false;
     });
@@ -52,7 +53,7 @@ async function transaction(answer_id: string, t: Transaction) {
     where: { id: commentList },
     transaction: t,
   })
-    .then(res => true)
+    .then((res) => true)
     .catch(() => false);
   if (!deleteComment) return false;
 
@@ -65,7 +66,7 @@ async function transaction(answer_id: string, t: Transaction) {
     transaction: t,
   })
     .then(() => true)
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return false;
     });
@@ -79,7 +80,7 @@ async function transaction(answer_id: string, t: Transaction) {
     {
       where: { answer_id },
       transaction: t,
-    }
+    },
   )
     .then(() => true)
     .catch(() => false);

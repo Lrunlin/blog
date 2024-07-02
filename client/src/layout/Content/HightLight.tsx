@@ -1,4 +1,5 @@
 "use client";
+
 import type { FC } from "react";
 
 interface propsType {

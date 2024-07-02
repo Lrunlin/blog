@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Select } from "antd";
 import axios from "@axios";
 import type { BytemdPlugin } from "bytemd";
@@ -10,7 +10,7 @@ const LanguageListPlugin = (): BytemdPlugin => {
   useEffect(() => {
     axios
       .get("/language-list")
-      .then(res => {
+      .then((res) => {
         setData(res.data.data);
       })
       .catch(() => {});
@@ -30,13 +30,16 @@ const LanguageListPlugin = (): BytemdPlugin => {
                   style={{ width: "200px" }}
                   showSearch
                   placeholder="输入想要查询的语言"
-                  onChange={val => {
+                  onChange={(val) => {
                     ctx.appendBlock(`\`\`\`\`${val}\n\n\`\`\`\``);
                     Modal.destroyAll();
                   }}
                 >
-                  {data.map(item => (
-                    <Option value={item.language} key={item.language + item.title}>
+                  {data.map((item) => (
+                    <Option
+                      value={item.language}
+                      key={item.language + item.title}
+                    >
                       <em>
                         {item.title}-{item.language}
                       </em>

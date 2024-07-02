@@ -1,21 +1,22 @@
 "use client";
-import { useState, useEffect, useRef, startTransition } from "react";
+
+import { startTransition, useEffect, useRef, useState } from "react";
 import type { FC } from "react";
-import { editorPropsType } from "../Editor";
 import { message } from "antd";
-import { Editor } from "@bytemd/react";
-import { marked } from "marked";
-import zhHans from "bytemd/lib/locales/zh_Hans.json";
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
-import LanguageListPlugin from "./LanguageListPlugin";
-import UseRichTextPlugin from "./UseRichTextPlugin";
-import ThemeSelect from "./ThemeSelect";
-import HTMLToMarkDown from "@/common/utils/HtmlToMarkDown";
+import { Editor } from "@bytemd/react";
 import "bytemd/dist/index.css";
+import zhHans from "bytemd/lib/locales/zh_Hans.json";
+import { marked } from "marked";
+import HTMLToMarkDown from "@/common/utils/HtmlToMarkDown";
+import { editorPropsType } from "../Editor";
 import upload from "../upload";
+import LanguageListPlugin from "./LanguageListPlugin";
+import ThemeSelect from "./ThemeSelect";
+import UseRichTextPlugin from "./UseRichTextPlugin";
 
-const MarkDownEditor: FC<editorPropsType> = props => {
+const MarkDownEditor: FC<editorPropsType> = (props) => {
   const [value, setValue] = useState("");
   let allowChangeValue = useRef(true);
   useEffect(() => {
@@ -29,7 +30,9 @@ const MarkDownEditor: FC<editorPropsType> = props => {
   // 后代选择，防止污染
   let id = `editor-markdown`;
   useEffect(() => {
-    document.querySelector(`#${id} .bytemd-preview`)?.classList.add("content-body");
+    document
+      .querySelector(`#${id} .bytemd-preview`)
+      ?.classList.add("content-body");
   }, []);
 
   /** 主题选择器被选中的主题高亮效果*/
@@ -110,7 +113,7 @@ const MarkDownEditor: FC<editorPropsType> = props => {
         <Editor
           locale={zhHans}
           value={value}
-          onChange={md => {
+          onChange={(md) => {
             let html = marked(md, {
               headerIds: false,
             });
@@ -128,20 +131,20 @@ const MarkDownEditor: FC<editorPropsType> = props => {
             ...(props.theme
               ? [
                   ThemeSelect(
-                    id => {
+                    (id) => {
                       props.onSetTheme && props.onSetTheme(id);
                     },
                     props.defaultTheme!,
-                    styleContent => setStyleContent(styleContent)
+                    (styleContent) => setStyleContent(styleContent),
                   ),
                 ]
               : []),
           ]}
           uploadImages={async (files: File[]) => {
-            return upload(files, props.target, val => {
+            return upload(files, props.target, (val) => {
               props.changePploadProgress(val);
             })
-              .then(res => {
+              .then((res) => {
                 if (res) {
                   return [
                     {
@@ -153,7 +156,7 @@ const MarkDownEditor: FC<editorPropsType> = props => {
                   return [];
                 }
               })
-              .catch(err => {
+              .catch((err) => {
                 message.error("上传失败");
                 console.log(err);
                 return [];

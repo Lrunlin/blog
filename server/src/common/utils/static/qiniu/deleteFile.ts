@@ -3,7 +3,7 @@ import bucketManager from "./utils/bucketManager";
 
 function deleteFile(images: string[]) {
   images = images.slice(0, 1000);
-  const deleteOperations = images.map(item => {
+  const deleteOperations = images.map((item) => {
     return qiniu.rs.deleteOp(process.env.OSS_BUCKET, item);
   });
   return new Promise((success, error) => {
@@ -17,7 +17,7 @@ function deleteFile(images: string[]) {
           error(
             `删除文件错误:${respBody.filter((item: any) => item.code == 200).length}/${
               images.length
-            }`
+            }`,
           );
         } else {
           error("删除错误");

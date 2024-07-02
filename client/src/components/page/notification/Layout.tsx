@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { FC, ReactNode } from "react";
-import Base from "@/layout/Base";
-import Head from "@/components/next/Head";
-import ActiveLink from "@/components/next/ActiveLink";
-import classNames from "classnames";
-import useUserData from "@/store/user/user-data";
 import axios from "@axios";
+import classNames from "classnames";
+import Base from "@/layout/Base";
+import ActiveLink from "@/components/next/ActiveLink";
+import Head from "@/components/next/Head";
+import useUserData from "@/store/user/user-data";
 
 interface propsType {
   children: ReactNode;
 }
-const Layout: FC<propsType> = props => {
+const Layout: FC<propsType> = (props) => {
   let list = [
     {
       label: "通知",
@@ -22,7 +22,7 @@ const Layout: FC<propsType> = props => {
     // },
   ];
 
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   const [noticeList, setNoticeList] = useState<string[] | false>(false);
   useEffect(() => {
     if (userData && !noticeList) {
@@ -38,21 +38,21 @@ const Layout: FC<propsType> = props => {
     <>
       <Base
         brow={
-          <div className="w-full bg-white h-11 shadow-sm">
-            <div className="max-w-[960px] mx-auto flex h-full">
+          <div className="h-11 w-full bg-white shadow-sm">
+            <div className="mx-auto flex h-full max-w-[960px]">
               {list.map((item, index) => {
                 return (
                   <ActiveLink
                     key={`notification-${item.href}`}
                     href={`/notification/${item.href}`}
                     className={classNames([
-                      "text-gray-600 flex items-center relative px-2",
+                      "relative flex items-center px-2 text-gray-600",
                       index && "ml-4",
                     ])}
                     activeClassName="font-bold !text-blue-400 "
                   >
                     {noticeList && noticeList.includes(item.href) && (
-                      <div className="w-1.5 h-1.5 absolute bg-red-400 rounded-full top-3 right-0"></div>
+                      <div className="absolute right-0 top-3 h-1.5 w-1.5 rounded-full bg-red-400"></div>
                     )}
                     {item.label}
                   </ActiveLink>
@@ -63,7 +63,7 @@ const Layout: FC<propsType> = props => {
         }
       >
         <Head title={`通知中心-${process.env.NEXT_PUBLIC_SITE_NAME}`} />
-        <div className="w-[960px] mx-auto">{props.children}</div>
+        <div className="mx-auto w-[960px]">{props.children}</div>
       </Base>
     </>
   );

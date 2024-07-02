@@ -1,9 +1,10 @@
 "use client";
-import { memo, useState, useEffect, useRef } from "react";
+
+import { memo, useEffect, useRef, useState } from "react";
 import type { FC } from "react";
+import dynamic from "next/dynamic";
 import { Spin } from "antd";
 import useEditorMode from "@/store/common/editor-mode";
-import dynamic from "next/dynamic";
 import StyleLink from "./StyleLink";
 import { Skeleton, propsType } from "./index";
 
@@ -21,11 +22,11 @@ export type editorPropsType = propsType & {
   changePploadProgress: (val: string | null) => void;
 };
 
-const MarkDonwEdit: FC<propsType> = memo(props => {
+const MarkDonwEdit: FC<propsType> = memo((props) => {
   const [initValue, setInitValue] = useState<string | undefined>(undefined);
   const [content, setContent] = useState("");
   const [uploadProgress, setPloadProgress] = useState<null | string>(null);
-  let editorMode = useEditorMode(s => s.data);
+  let editorMode = useEditorMode((s) => s.data);
   let firstRender = useRef(true);
 
   // 保证切换编辑器时value不会消失
@@ -71,13 +72,13 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
           {editorMode == "markdown" ? (
             <MarkDownEditor
               {...props}
-              onChange={html => {
+              onChange={(html) => {
                 setContent(html);
                 props.onChange && props.onChange(html);
               }}
-              changePploadProgress={val => setPloadProgress(val)}
+              changePploadProgress={(val) => setPloadProgress(val)}
               initValue={initValue}
-              onSetTheme={id => {
+              onSetTheme={(id) => {
                 if (props.onSetTheme) {
                   setThemeID(id);
                   props.onSetTheme(id);
@@ -88,18 +89,18 @@ const MarkDonwEdit: FC<propsType> = memo(props => {
           ) : (
             <RichTextEditor
               {...props}
-              onChange={html => {
+              onChange={(html) => {
                 setContent(html);
                 props.onChange && props.onChange(html);
               }}
-              onSetTheme={id => {
+              onSetTheme={(id) => {
                 if (props.onSetTheme) {
                   setThemeID(id);
                   props.onSetTheme(id);
                 }
               }}
               initValue={initValue}
-              changePploadProgress={val => setPloadProgress(val)}
+              changePploadProgress={(val) => setPloadProgress(val)}
               defaultTheme={themeID}
             />
           )}

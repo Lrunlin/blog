@@ -1,7 +1,7 @@
 import DB from "@/db";
 import type { Transaction } from "sequelize/types";
-import user from "./user";
 import problem from "./problem";
+import user from "./user";
 
 let map = {
   user,
@@ -17,7 +17,7 @@ async function transaction(belong_id: number, user_id: number, t: Transaction) {
       user_id,
     },
   })
-    .then(row => row?.type as keyof typeof map)
+    .then((row) => row?.type as keyof typeof map)
     .catch(() => false as false);
   if (!type) return;
   return map[type](belong_id, user_id, t);

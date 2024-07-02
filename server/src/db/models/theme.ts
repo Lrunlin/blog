@@ -79,7 +79,7 @@ export class Theme
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Theme;
   }
 }

@@ -1,8 +1,8 @@
-import type { NoticeAttributes } from "@/db/models/notice";
 import DB from "@/db";
 import { load } from "cheerio";
 import Sequelize from "@/db/config";
 import { CommentAttributes } from "@/db/models/comment";
+import type { NoticeAttributes } from "@/db/models/notice";
 
 // 转换 comment_article 类型的通知
 async function switchNoticeCommentArticle(data: NoticeAttributes) {
@@ -11,7 +11,7 @@ async function switchNoticeCommentArticle(data: NoticeAttributes) {
     attributes: ["id", "user_id", "belong_id", "content", "type", "reply"],
     raw: true,
   })
-    .then(row => {
+    .then((row) => {
       if (row) {
         let $ = load(row.content);
         return Object.assign(row, {
@@ -31,20 +31,20 @@ async function switchNoticeCommentArticle(data: NoticeAttributes) {
     DB.User.findByPk(commentData.user_id, {
       attributes: ["id", "name", "avatar_file_name", "avatar_url"],
     })
-      .then(row => row)
+      .then((row) => row)
       .catch(() => {
         console.log("用户信息查询错误");
         return {};
       }),
     Sequelize.query(
-      `select id,title from problem where id in (select problem_id from answer where id=${commentData.belong_id} );`
+      `select id,title from problem where id in (select problem_id from answer where id=${commentData.belong_id} );`,
     ),
     commentData.reply
       ? DB.Comment.findByPk(commentData.reply, {
           attributes: ["content"],
           raw: true,
         })
-          .then(row => {
+          .then((row) => {
             if (row) {
               let $ = load(row.content);
               return { content: $("body").text().trim() };
@@ -58,7 +58,7 @@ async function switchNoticeCommentArticle(data: NoticeAttributes) {
           })
       : null,
   ])
-    .then(row => {
+    .then((row) => {
       return {
         ...data,
         label: {
@@ -73,7 +73,7 @@ async function switchNoticeCommentArticle(data: NoticeAttributes) {
         },
       };
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("promise all查询错误");
       return [];
     });

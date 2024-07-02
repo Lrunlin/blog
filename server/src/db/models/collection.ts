@@ -50,7 +50,7 @@ export class Collection
           get() {
             let favorites_id = this.getDataValue("favorites_id");
             return favorites_id && /^[\s\S]*.*[^\s][\s\S]*$/.test(favorites_id)
-              ? favorites_id.split(",").map(item => +item)
+              ? favorites_id.split(",").map((item) => +item)
               : [];
           },
         },
@@ -81,7 +81,7 @@ export class Collection
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Collection;
   }
 }

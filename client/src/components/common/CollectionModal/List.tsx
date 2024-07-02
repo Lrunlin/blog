@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
-import { Button, Empty, Checkbox } from "antd";
+import { Button, Checkbox, Empty } from "antd";
+import { LockOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import useFetch from "@/common/hooks/useFetch";
 import { response } from "@type/response";
-import { PlusOutlined, LockOutlined } from "@ant-design/icons";
 import classNames from "classnames";
+import useFetch from "@/common/hooks/useFetch";
+import useUserData from "@/store/user/user-data";
 import { favoritesListProps } from "./index";
 import type { propsType } from "./index";
-import useUserData from "@/store/user/user-data";
 
 const List: FC<
   {
@@ -16,13 +16,18 @@ const List: FC<
     isLoading: boolean;
     onSubmit: (checkList: number[]) => any;
   } & Pick<propsType, "defaultChecked">
-> = ({ onSwitchType, isLoading: buttonIsLoading, onSubmit, defaultChecked }) => {
-  let userData = useUserData(s => s.data);
+> = ({
+  onSwitchType,
+  isLoading: buttonIsLoading,
+  onSubmit,
+  defaultChecked,
+}) => {
+  let userData = useUserData((s) => s.data);
   const [checkList, setCheckList] = useState<number[]>([]);
   let { data, error, isLoading, refetch } = useFetch(() =>
     axios
       .get<response<favoritesListProps[]>>(`/favorites/${userData?.id}`)
-      .then(res => res.data.data)
+      .then((res) => res.data.data),
   );
 
   let firstRender = useRef(true);
@@ -47,16 +52,19 @@ const List: FC<
                     <div
                       key={item.id}
                       className={classNames(
-                        "px-2 py-2 flex items-center justify-between",
-                        index && "border-0 border-t border-solid border-gray-200"
+                        "flex items-center justify-between px-2 py-2",
+                        index &&
+                          "border-0 border-t border-solid border-gray-200",
                       )}
                     >
                       <div>
-                        <div className="text-lg cursor-pointer flex items-center">
+                        <div className="flex cursor-pointer items-center text-lg">
                           <span>{item.name}</span>
-                          {!!item.is_private && <LockOutlined className="text-gray-400 ml-2" />}
+                          {!!item.is_private && (
+                            <LockOutlined className="ml-2 text-gray-400" />
+                          )}
                         </div>
-                        <div className="text-sm text-gray-400 cursor-pointer">
+                        <div className="cursor-pointer text-sm text-gray-400">
                           {item.favorites_collection_count}
                           <span className="ml-1">篇文章</span>
                         </div>
@@ -65,12 +73,14 @@ const List: FC<
                       <Checkbox
                         key={`checkbox-key-${defaultChecked?.length}`}
                         defaultChecked={defaultChecked?.includes(item.id)}
-                        onChange={e => {
+                        onChange={(e) => {
                           let value = e.target.checked;
                           if (value) {
-                            setCheckList(list => [...list, item.id]);
+                            setCheckList((list) => [...list, item.id]);
                           } else {
-                            setCheckList(list => list.filter(_item => _item != item.id));
+                            setCheckList((list) =>
+                              list.filter((_item) => _item != item.id),
+                            );
                           }
                         }}
                       />
@@ -86,23 +96,29 @@ const List: FC<
           </div>
         ) : error ? (
           <div className="h-full w-full">
-            <div className="text-blue-700 text-xl text-center">数据加载错误</div>
-            <div className="text-center mt-4">
+            <div className="text-center text-xl text-blue-700">
+              数据加载错误
+            </div>
+            <div className="mt-4 text-center">
               <Button loading={isLoading} type="primary" onClick={refetch}>
                 重新加载
               </Button>
             </div>
           </div>
         ) : (
-          <div className="bg-gray-200 animate-pulse h-full w-full"></div>
+          <div className="h-full w-full animate-pulse bg-gray-200"></div>
         )}
       </div>
       <div className="flex items-center justify-between">
-        <div className="text-blue-500 cursor-pointer" onClick={onSwitchType}>
+        <div className="cursor-pointer text-blue-500" onClick={onSwitchType}>
           <PlusOutlined />
           新建收藏集
         </div>
-        <Button type="primary" loading={buttonIsLoading} onClick={() => onSubmit(checkList)}>
+        <Button
+          type="primary"
+          loading={buttonIsLoading}
+          onClick={() => onSubmit(checkList)}
+        >
           确定
         </Button>
       </div>

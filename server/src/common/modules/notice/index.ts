@@ -1,10 +1,10 @@
 import { NoticeAttributes } from "@/db/models/notice";
+import switchNoticeAnswer from "./answer";
+import switchNoticeCommentAnswer from "./comment/comment-answer";
 import switchNoticeCommentArticle from "./comment/comment-article";
 import switchNoticeCommentProblem from "./comment/comment-problem";
-import switchNoticeCommentAnswer from "./comment/comment-answer";
-import switchNoticeAnswer from "./answer";
-import switchNoticeFollowProblem from "./follow/follow-problem";
 import switchNoticeFollowArtocle from "./follow/follow-article";
+import switchNoticeFollowProblem from "./follow/follow-problem";
 
 let _switch = {
   // 评论相关
@@ -28,13 +28,13 @@ function switchList(data: NoticeAttributes[]) {
   // 对应的类型生成一个数组，然后promise.all
   return Promise.all(
     data
-      .map(item => {
+      .map((item) => {
         return _switch[item.type as keyof typeof _switch](item);
       })
-      .filter(item => item)
+      .filter((item) => item),
   )
-    .then(rows => {
-      return rows.filter(item => item);
+    .then((rows) => {
+      return rows.filter((item) => item);
     })
     .catch(() => {
       return [];

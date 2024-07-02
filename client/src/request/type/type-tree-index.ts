@@ -12,6 +12,8 @@ export interface responseType {
  * 首页用于获取类型树
  */
 function getTypeTreeIndex() {
-  return axios.get<response<responseType[]>>("/tag-tree-client").then(res => res.data.data);
+  return axios
+    .get<response<responseType[]>>("/tag-tree-client")
+    .then((res) => res.data.data);
 }
 export default getTypeTreeIndex;

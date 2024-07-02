@@ -1,23 +1,25 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import { Op } from "sequelize";
-import type { TagAttributes } from "@/db/models/init-models";
 import Sequelize from "@/db/config";
-import interger from "@/common/verify/integer";
-import getTagData from "@/common/modules/article/get/set-tag-data";
+import type { TagAttributes } from "@/db/models/init-models";
 import setDescription from "@/common/modules/article/get/set-description";
+import getTagData from "@/common/modules/article/get/set-tag-data";
+import interger from "@/common/verify/integer";
 
 let articleAttribute = [
   "view_count",
   "update_time",
   [
     Sequelize.literal(
-      `(SELECT COUNT(*) FROM comment WHERE comment.belong_id = article.id and type="article")`
+      `(SELECT COUNT(*) FROM comment WHERE comment.belong_id = article.id and type="article")`,
     ),
     "comment_count",
   ],
   [
-    Sequelize.literal(`(SELECT COUNT(*) FROM likes WHERE likes.belong_id = article.id)`),
+    Sequelize.literal(
+      `(SELECT COUNT(*) FROM likes WHERE likes.belong_id = article.id)`,
+    ),
     "like_count",
   ],
 ];
@@ -36,7 +38,7 @@ let attributes = [
 let router = new Router();
 
 // 根据文章ID返回推荐文章
-router.get("/article/recommend/:id", interger([], ["id"]), async ctx => {
+router.get("/article/recommend/:id", interger([], ["id"]), async (ctx) => {
   let articleID = +ctx.params.id;
 
   let articleType = await DB.Article.findByPk(articleID, {
@@ -54,7 +56,7 @@ router.get("/article/recommend/:id", interger([], ["id"]), async ctx => {
       id: {
         [Op.not]: articleID,
       },
-      [Op.or]: tags.map(item => ({ tag: { [Op.substring]: item } })),
+      [Op.or]: tags.map((item) => ({ tag: { [Op.substring]: item } })),
       state: 1,
     },
     offset: 0,
@@ -68,11 +70,11 @@ router.get("/article/recommend/:id", interger([], ["id"]), async ctx => {
       },
     ],
   })
-    .then(rows => {
+    .then((rows) => {
       ctx.body = {
         success: true,
         message: "根据文章ID搜索同类型文章",
-        data: rows.map(row => {
+        data: rows.map((row) => {
           let item = row.toJSON();
           let description = setDescription(item.content);
           let tag = getTagData(item.tag as unknown as number[], ["name"]);

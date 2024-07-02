@@ -1,18 +1,26 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import auth from "@/common/middleware/auth";
 import { Op } from "sequelize";
+import auth from "@/common/middleware/auth";
 import typeCache from "@/common/modules/cache/type";
 import redis from "@/common/utils/redis";
 
 let router = new Router();
 
-router.get("/statistics/visualization", auth(), async ctx => {
-  let history = JSON.parse((await redis.get("visualization-history")) as string);
-  let systemOccupation = JSON.parse((await redis.get("visualization-load")) as string);
+router.get("/statistics/visualization", auth(), async (ctx) => {
+  let history = JSON.parse(
+    (await redis.get("visualization-history")) as string,
+  );
+  let systemOccupation = JSON.parse(
+    (await redis.get("visualization-load")) as string,
+  );
 
-  let adminID = (await DB.User.findAll({ where: { auth: 1 }, attributes: ["id"], raw: true })
-    .then(rows => rows.map(item => item.id))
+  let adminID = (await DB.User.findAll({
+    where: { auth: 1 },
+    attributes: ["id"],
+    raw: true,
+  })
+    .then((rows) => rows.map((item) => item.id))
     .catch(() => [])) as number[];
 
   /** 管理员发布的原创文章数量*/
@@ -46,7 +54,10 @@ router.get("/statistics/visualization", auth(), async ctx => {
   let userReprintCount = await DB.Article.findAndCountAll({
     attributes: ["id"],
     raw: true,
-    where: { reprint: { [Op.not]: null } as any, author: { [Op.not]: adminID } },
+    where: {
+      reprint: { [Op.not]: null } as any,
+      author: { [Op.not]: adminID },
+    },
   })
     .then(({ count }) => count)
     .catch(() => 0);

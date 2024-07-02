@@ -1,20 +1,20 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import auth from "@/common/middleware/auth";
+import ejs from "ejs";
+import fs from "fs";
 import sequelize from "@/db/config";
+import auth from "@/common/middleware/auth";
 import sendEmail from "@/common/utils/email";
 import interger from "@/common/verify/integer";
-import fs from "fs";
-import ejs from "ejs";
 
 let router = new Router();
 
-router.put("/friendly-link/:id", interger([], ["id"]), auth(), async ctx => {
+router.put("/friendly-link/:id", interger([], ["id"]), auth(), async (ctx) => {
   let id = ctx.params.id;
   let t = await sequelize.transaction();
   let updateResult = await DB.FriendlyLink.update(
     { state: 1 },
-    { where: { id: id }, transaction: t }
+    { where: { id: id }, transaction: t },
   )
     .then(([res]) => !!res)
     .catch(() => false);
@@ -36,13 +36,17 @@ router.put("/friendly-link/:id", interger([], ["id"]), auth(), async ctx => {
     ],
   });
 
-  let { email, name }: { email: string; name: string } = (linkData as any).user_data;
+  let { email, name }: { email: string; name: string } = (linkData as any)
+    .user_data;
 
-  const content = ejs.render(fs.readFileSync("src/views/friendly-apply.ejs").toString(), {
-    site_href: process.env.CLIENT_HOST,
-    site_name: process.env.SITE_NAME,
-    user_name: name,
-  });
+  const content = ejs.render(
+    fs.readFileSync("src/views/friendly-apply.ejs").toString(),
+    {
+      site_href: process.env.CLIENT_HOST,
+      site_name: process.env.SITE_NAME,
+      user_name: name,
+    },
+  );
 
   await sendEmail({
     target: email,

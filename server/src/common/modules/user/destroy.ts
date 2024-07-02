@@ -1,10 +1,10 @@
 import DB from "@/db";
-import { upload } from "@/common/utils/static";
 import Identicon from "identicon.js";
 import sha1 from "sha1";
-import id from "@/common/utils/id";
 import removeSession from "@/common/utils/auth/destroy-session";
+import id from "@/common/utils/id";
 import sha256 from "@/common/utils/sha256";
+import { upload } from "@/common/utils/static";
 
 async function destroy(user_id: number) {
   let data = new Identicon(sha1(user_id + ""), {
@@ -17,14 +17,20 @@ async function destroy(user_id: number) {
     folder: "avatar",
     file_name: `${id()}.webp`,
   })
-    .then(res => ({ success: true, fileName: (res as any).file_name as string }))
-    .catch(err => ({ success: false, errMes: err }));
+    .then((res) => ({
+      success: true,
+      fileName: (res as any).file_name as string,
+    }))
+    .catch((err) => ({ success: false, errMes: err }));
 
   if (!uploadResult.success) {
     return { success: false, message: "注销失败，请稍后再试" };
   }
 
-  let userData = await DB.User.findByPk(user_id, { attributes: ["email"], raw: true });
+  let userData = await DB.User.findByPk(user_id, {
+    attributes: ["email"],
+    raw: true,
+  });
   let decode = sha256(userData!.email);
 
   return DB.User.update(
@@ -43,7 +49,7 @@ async function destroy(user_id: number) {
     },
     {
       where: { id: user_id },
-    }
+    },
   )
     .then(([row]) => {
       if (row) {
@@ -53,7 +59,7 @@ async function destroy(user_id: number) {
         return { success: false, message: "注销失败" };
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return { success: false, message: "注销失败" };
     });

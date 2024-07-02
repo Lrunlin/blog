@@ -1,13 +1,14 @@
 "use client";
+
 import { memo } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { Button, Empty, Form, Popconfirm, Skeleton, message } from "antd";
 import axios from "@axios";
-import { Form, Button, Empty, Skeleton, Popconfirm, message } from "antd";
 import { response } from "@type/response";
 import { TagAttributes } from "@type/type";
+import useFetch from "@/common/hooks/useFetch";
 import AdminLayout from "@/layout/Admin/Base";
 import TypeForm from "@/components/admin/page/type/TypeForm";
-import useFetch from "@/common/hooks/useFetch";
 
 interface ResponseType extends TagAttributes {
   icon_url: string;
@@ -21,11 +22,13 @@ const UpdateType = () => {
   let [form] = useForm();
 
   let { data, error } = useFetch(() =>
-    axios.get<response<ResponseType>>(`/tag/${id}`).then(res => res.data.data)
+    axios
+      .get<response<ResponseType>>(`/tag/${id}`)
+      .then((res) => res.data.data),
   );
 
   const remove = () => {
-    axios.delete(`/tag/${id}`).then(res => {
+    axios.delete(`/tag/${id}`).then((res) => {
       if (res.data.success) {
         message.success(res.data.message);
         router.back();
@@ -38,14 +41,14 @@ const UpdateType = () => {
   const onFinish = (values: any) => {
     axios
       .put(`/tag/${id}`, values)
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
         } else {
           message.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       });
   };
@@ -63,7 +66,7 @@ const UpdateType = () => {
                 okText="确认删除"
                 cancelText="取消"
               >
-                <Button type="primary" danger className="w-32 ml-24">
+                <Button type="primary" danger className="ml-24 w-32">
                   删除
                 </Button>
               </Popconfirm>
@@ -73,9 +76,13 @@ const UpdateType = () => {
             </div>
           </div>
         ) : error ? (
-          <div className="text-center piece">
+          <div className="piece text-center">
             <Empty description="没有找到对应的类型" />
-            <Button type="primary" onClick={() => router.back()} className="mt-12">
+            <Button
+              type="primary"
+              onClick={() => router.back()}
+              className="mt-12"
+            >
               返回
             </Button>
           </div>

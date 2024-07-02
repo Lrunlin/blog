@@ -1,20 +1,22 @@
 import type { FC } from "react";
+import { useRouter } from "next/navigation";
 import { Button, message } from "antd";
-import useUserSignModel from "@/store/user/user-sign-model-state";
 import axios from "@axios";
-import useUserData from "@/store/user/user-data";
 import type { response } from "@type/common/response";
 import type { FollowAttributes } from "@type/model-attribute";
-import { useRouter } from "next/navigation";
-import { follow, unfollow } from "@/request/follow";
 import useFetch from "@/common/hooks/useFetch";
+import useUserData from "@/store/user/user-data";
+import useUserSignModel from "@/store/user/user-sign-model-state";
+import { follow, unfollow } from "@/request/follow";
 
 interface propsType {
   bloggerID: FollowAttributes["belong_id"];
 }
-const SwitchButton: FC<propsType> = props => {
-  let { data, error, refetch } = useFetch( () =>
-    axios.get<response>(`/follow/state/${props.bloggerID}`).then(res => res.data.success)
+const SwitchButton: FC<propsType> = (props) => {
+  let { data, error, refetch } = useFetch(() =>
+    axios
+      .get<response>(`/follow/state/${props.bloggerID}`)
+      .then((res) => res.data.success),
   );
 
   function followUser() {
@@ -44,7 +46,7 @@ const SwitchButton: FC<propsType> = props => {
               ghost
               type="primary"
               size="small"
-              className="rounded text-[#1e80ff] bg-[rgb(30,128,255)]"
+              className="rounded bg-[rgb(30,128,255)] text-[#1e80ff]"
               onClick={followUser}
             >
               +关注
@@ -69,9 +71,9 @@ const SwitchButton: FC<propsType> = props => {
  * 文章页面顶部的关注按钮，传递作者ID判断按钮显示状态
  * @params bloggerID {number} 文章发布者的ID
  */
-const FollowButton: FC<propsType> = props => {
-  let userData = useUserData(s => s.data);
-  let setModalState = useUserSignModel(s => s.setData);
+const FollowButton: FC<propsType> = (props) => {
+  let userData = useUserData((s) => s.data);
+  let setModalState = useUserSignModel((s) => s.setData);
   let router = useRouter();
 
   return (
@@ -83,7 +85,7 @@ const FollowButton: FC<propsType> = props => {
               ghost
               size="small"
               type="primary"
-              className="rounded text-[#1e80ff] bg-[rgb(30,128,255)]"
+              className="rounded bg-[rgb(30,128,255)] text-[#1e80ff]"
               onClick={() => router.push("/user/settings/profile")}
             >
               编辑资料
@@ -97,7 +99,7 @@ const FollowButton: FC<propsType> = props => {
           ghost
           size="small"
           type="primary"
-          className="rounded text-[#1e80ff] bg-[rgb(30,128,255)]"
+          className="rounded bg-[rgb(30,128,255)] text-[#1e80ff]"
           onClick={() => setModalState("LogIn")}
         >
           +关注

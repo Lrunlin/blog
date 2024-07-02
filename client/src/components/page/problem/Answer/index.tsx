@@ -1,36 +1,37 @@
-import { useState, useContext, Suspense } from "react";
+import { Suspense, useContext, useState } from "react";
 import type { FC } from "react";
-import classNames from "classnames";
+import { useParams } from "next/navigation";
 import { Badge, Button, Tooltip, message } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
-import dayjs from "@dayjs";
-import { useParams } from "next/navigation";
 import axios from "@axios";
-import useUserData from "@/store/user/user-data";
-import CommentEditor from "@/components/page/problem/Comments/Editor";
-import Comments from "@/components/page/problem/Comments";
-import { Context } from "@/components/page/problem/ProblemDetail";
-import itemClassName from "../../article/ToolBar/class";
+import dayjs from "@dayjs";
+import classNames from "classnames";
 import Image from "@/components/next/Image";
+import Comments from "@/components/page/problem/Comments";
+import CommentEditor from "@/components/page/problem/Comments/Editor";
+import { Context } from "@/components/page/problem/ProblemDetail";
+import useUserData from "@/store/user/user-data";
+import itemClassName from "../../article/ToolBar/class";
 
 /** 问答页面底部的答案区域*/
 const Answer: FC = () => {
   let { data, reload } = useContext(Context);
 
   // 是否展示回复框
-  const [answerReplyShrinkIndex, setAnswerReplyShrinkIndex] = useState<number>(-1);
+  const [answerReplyShrinkIndex, setAnswerReplyShrinkIndex] =
+    useState<number>(-1);
   let params = useParams();
   let id = params.id as string;
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
 
   /** 采纳答案*/
   function adopt(answer_id: number) {
     axios
       .put(`/problem/adopt/${id}`, { answer_id: answer_id })
-      .then(res => {
+      .then((res) => {
         reload();
       })
-      .catch(err => {
+      .catch((err) => {
         message.error("请求失败");
         console.log(err);
       });
@@ -39,10 +40,10 @@ const Answer: FC = () => {
   function cancel() {
     axios
       .put(`/problem/cancel/${id}`)
-      .then(res => {
+      .then((res) => {
         reload();
       })
-      .catch(err => {
+      .catch((err) => {
         message.error("请求失败");
         console.log(err);
       });
@@ -52,17 +53,17 @@ const Answer: FC = () => {
   function deleteAnswer(id: number) {
     axios
       .delete(`/answer/${id}`)
-      .then(res => {
+      .then((res) => {
         reload();
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message || "删除错误");
         console.log(err);
       });
   }
 
   function like(id: number) {
-    axios.post(`/like/${id}`, { type: "answer" }).then(res => {
+    axios.post(`/like/${id}`, { type: "answer" }).then((res) => {
       if (res.data.success) {
         reload();
       } else {
@@ -71,7 +72,7 @@ const Answer: FC = () => {
     });
   }
   function unLike(id: number) {
-    axios.delete(`/like/${id}`).then(res => {
+    axios.delete(`/like/${id}`).then((res) => {
       if (res.data.success) {
         reload();
       } else {
@@ -82,22 +83,25 @@ const Answer: FC = () => {
 
   return (
     <>
-      <div className="bg-white mt-4">
-        <div className="bg-white p-4 pb-0 text-lg font-bold">{data.answer_list.length}个回答</div>
+      <div className="mt-4 bg-white">
+        <div className="bg-white p-4 pb-0 text-lg font-bold">
+          {data.answer_list.length}个回答
+        </div>
         {/* 单个回答 */}
         {data.answer_list.map((item, index) => (
           <div
             key={item.id}
             className={classNames([
-              "mt-3 p-8 relative border-b-solid border-gray-300",
-              data.answer_id == item.id && "!border-4 !border-solid !border-blue-500",
+              "border-b-solid relative mt-3 border-gray-300 p-8",
+              data.answer_id == item.id &&
+                "!border-4 !border-solid !border-blue-500",
             ])}
           >
             <div className="flex">
               <img
                 src={item.author_data.avatar_url}
                 alt="avatar"
-                className="w-9 h-9 rounded-full"
+                className="h-9 w-9 rounded-full"
               />
               <div className="ml-3">
                 <div className="font-bold">{item.author_data.name}</div>
@@ -105,14 +109,16 @@ const Answer: FC = () => {
               </div>
             </div>
             <div
-              className={classNames(["mt-2 content-body"])}
+              className={classNames(["content-body mt-2"])}
               suppressHydrationWarning={true}
               dangerouslySetInnerHTML={{ __html: item.content }}
             ></div>
             {data.answer_id == item.id ? (
               <Button
                 type="primary"
-                onClick={() => (userData?.id == data.author ? cancel() : undefined)}
+                onClick={() =>
+                  userData?.id == data.author ? cancel() : undefined
+                }
               >
                 <CheckOutlined />
                 已采纳该答案
@@ -124,11 +130,13 @@ const Answer: FC = () => {
             )}
             {/* 单个回答的底部回复 */}
             <div className="mt-4">
-              <div className="text-gray-500 flex justify-between select-none">
+              <div className="flex select-none justify-between text-gray-500">
                 <div
                   className="cursor-pointer"
                   onClick={() => {
-                    setAnswerReplyShrinkIndex(value => (value == index ? -1 : index));
+                    setAnswerReplyShrinkIndex((value) =>
+                      value == index ? -1 : index,
+                    );
                   }}
                 >
                   {answerReplyShrinkIndex == index ? "收起" : "回复"}
@@ -140,7 +148,10 @@ const Answer: FC = () => {
                       <div className="cursor-pointer text-gray-400">删除</div>
                     </Tooltip>
                   ) : (
-                    <div className="cursor-pointer" onClick={() => deleteAnswer(item.id)}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => deleteAnswer(item.id)}
+                    >
                       删除
                     </div>
                   ))}
@@ -159,21 +170,34 @@ const Answer: FC = () => {
                 />
               )}
               <Suspense>
-                <Comments type="answer" belong_id={item.id} data={item.comment_list} />
+                <Comments
+                  type="answer"
+                  belong_id={item.id}
+                  data={item.comment_list}
+                />
               </Suspense>
             </div>
             {/* 左侧点赞 */}
             <div
-              className={classNames([itemClassName, "absolute", "top-1/2", "-left-20"])}
+              className={classNames([
+                itemClassName,
+                "absolute",
+                "top-1/2",
+                "-left-20",
+              ])}
               onClick={
                 !userData || userData.id == item.author
                   ? undefined
                   : item.like_data.like_state
-                  ? () => unLike(item.id)
-                  : () => like(item.id)
+                    ? () => unLike(item.id)
+                    : () => like(item.id)
               }
             >
-              <Badge count={item.like_data.like_count} color="#adb1b8" offset={[10, -10]}>
+              <Badge
+                count={item.like_data.like_count}
+                color="#adb1b8"
+                offset={[10, -10]}
+              >
                 <Image
                   src={
                     item.like_data.like_state

@@ -1,9 +1,10 @@
 "use client";
+
 import type { FC } from "react";
 import ImageNext from "next/image";
 import type { ImageProps } from "next/image";
 
-const Image: FC<ImageProps> = props => {
+const Image: FC<ImageProps> = (props) => {
   return (
     <>
       <ImageNext

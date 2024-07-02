@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState, memo, Suspense } from "react";
+
+import { Suspense, memo, useEffect, useState } from "react";
 import ADS from "./ADS";
 
 /** Google ADS*/
@@ -17,7 +18,7 @@ const AdSense = memo(() => {
 
   if (!process.env.NEXT_PUBLIC_ISPRO) {
     return (
-      <div className="w-full h-[600px] mb-4 bg-gray-200 flex items-center justify-center">
+      <div className="mb-4 flex h-[600px] w-full items-center justify-center bg-gray-200">
         非生产环境不显示广告
       </div>
     );
@@ -28,9 +29,11 @@ const AdSense = memo(() => {
   }
 
   return (
-    <div className="w-full h-[600px] mb-4 flex justify-center bg-white">
+    <div className="mb-4 flex h-[600px] w-full justify-center bg-white">
       {isLoad ? (
-        <div className="w-full h-full bg-gray-100 flex items-center justify-center">请等待...</div>
+        <div className="flex h-full w-full items-center justify-center bg-gray-100">
+          请等待...
+        </div>
       ) : (
         <Suspense>
           <ADS />

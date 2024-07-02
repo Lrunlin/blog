@@ -1,11 +1,14 @@
 import type { FC } from "react";
-import dayjs from "@dayjs";
-import FollwoButton from "@/components/page/article/UserData/FollowButton";
-import type { ArticleAttributes } from "@type/model-attribute";
 import Link from "next/link";
+import dayjs from "@dayjs";
+import type { ArticleAttributes } from "@type/model-attribute";
+import FollwoButton from "@/components/page/article/UserData/FollowButton";
 
 interface propsType {
-  data: Pick<ArticleAttributes, "author_data" | "create_time" | "view_count" | "id">;
+  data: Pick<
+    ArticleAttributes,
+    "author_data" | "create_time" | "view_count" | "id"
+  >;
   type: "article" | "problem";
 }
 
@@ -19,18 +22,24 @@ const ArticleUserData: FC<propsType> = ({ data, type }) => {
             <img
               src={data.author_data.avatar_url}
               alt={`作者${data.author_data.name}头像`}
-              className="w-[30px] h-[30px] rounded-full cursor-pointer"
+              className="h-[30px] w-[30px] cursor-pointer rounded-full"
             />
           </Link>
           <div className="ml-2">
             <div>{data.author_data.name}</div>
             <div>
-              <time>{dayjs(data.create_time).format("YYYY年MM月DD日 HH:mm")}</time>
+              <time>
+                {dayjs(data.create_time).format("YYYY年MM月DD日 HH:mm")}
+              </time>
               <span> · 阅读数 {data.view_count}</span>
             </div>
           </div>
         </div>
-        <FollwoButton type={type} articleID={data.id} bloggerID={data.author_data.id} />
+        <FollwoButton
+          type={type}
+          articleID={data.id}
+          bloggerID={data.author_data.id}
+        />
       </div>
     </>
   );

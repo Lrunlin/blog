@@ -1,10 +1,10 @@
-import axios from "@axios";
-import Head from "@/components/next/Head";
 import { cookies } from "next/headers";
+import axios from "@axios";
 import type { response } from "@type/response";
-import { AdminStatisticsDataStoreProvider } from "@/store/admin/admin-statistics-data";
 import { statisticsDataType } from "@type/statistics-type";
 import Statistics from "@/components/admin/page/statistics/Statistics";
+import Head from "@/components/next/Head";
+import { AdminStatisticsDataStoreProvider } from "@/store/admin/admin-statistics-data";
 
 const Page = async () => {
   const cookie = cookies();
@@ -14,7 +14,7 @@ const Page = async () => {
     .get<response<statisticsDataType>>("/statistics/visualization", {
       headers: { authorization: token?.value },
     })
-    .then(res => res.data.data);
+    .then((res) => res.data.data);
 
   return (
     <AdminStatisticsDataStoreProvider data={data}>
@@ -27,7 +27,7 @@ const Page = async () => {
           backgroundSize: "100vw 100vh",
         }}
       >
-        <div className="text-2xl text-statistics-cyan-color text-center font-black pt-[0.25vw]">
+        <div className="pt-[0.25vw] text-center text-2xl font-black text-statistics-cyan-color">
           数据分析
         </div>
         <Statistics data={data} />

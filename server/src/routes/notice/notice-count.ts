@@ -3,8 +3,10 @@ import DB from "@/db";
 import authMiddleware from "@/common/middleware/auth";
 
 let router = new Router();
-router.get("/notice/count", authMiddleware(0), async ctx => {
-  await DB.Notice.findAndCountAll({ where: { user_id: ctx.id as number, is_read: 0 } })
+router.get("/notice/count", authMiddleware(0), async (ctx) => {
+  await DB.Notice.findAndCountAll({
+    where: { user_id: ctx.id as number, is_read: 0 },
+  })
     .then(({ count }) => {
       ctx.body = {
         success: true,

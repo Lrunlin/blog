@@ -3,7 +3,7 @@ import DB from "@/db";
 
 let router = new Router();
 // 用户页面的用户成就
-router.get("/achievement/:user_id", async ctx => {
+router.get("/achievement/:user_id", async (ctx) => {
   let userID = +ctx.params.user_id;
 
   //该用户发布的文章数量
@@ -24,14 +24,25 @@ router.get("/achievement/:user_id", async ctx => {
   });
 
   //文章的总阅读数量是多少
-  let articleViewCount = (await DB.Article.sum("view_count", { where: { author: userID } })) || 0;
+  let articleViewCount =
+    (await DB.Article.sum("view_count", { where: { author: userID } })) || 0;
 
   //被多少人关注了
   let fansCount = DB.Follow.count({ where: { belong_id: userID } });
 
-  await Promise.all([articleCollectionCount, fansCount, articleList, articleViewCount])
-    .then(result => {
-      let [article_collection_count, funs_count, article_count, article_view_count] = result;
+  await Promise.all([
+    articleCollectionCount,
+    fansCount,
+    articleList,
+    articleViewCount,
+  ])
+    .then((result) => {
+      let [
+        article_collection_count,
+        funs_count,
+        article_count,
+        article_view_count,
+      ] = result;
       ctx.body = {
         success: true,
         message: "查询指定用户的成就数据",
@@ -43,7 +54,7 @@ router.get("/achievement/:user_id", async ctx => {
         },
       };
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.body = {
         success: false,
         message: "查询失败",

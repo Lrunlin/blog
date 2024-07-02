@@ -1,16 +1,16 @@
 import { FC, useEffect } from "react";
-import { Button, Input, Form, message } from "antd";
+import { Button, Form, Input, message } from "antd";
 import useUserWriteArticle from "@/store/user/user-write-article";
-import Type from "./Type";
+import type { modalPropsType } from "../index";
 import Cover from "./Cover";
 import Reprint from "./Reprint";
-import type { modalPropsType } from "../index";
+import Type from "./Type";
 
-const Modal: FC<modalPropsType> = props => {
+const Modal: FC<modalPropsType> = (props) => {
   let { TextArea } = Input;
   let { Item, useForm } = Form;
-  let articleData = useUserWriteArticle(s => s.data);
-  let updateData = useUserWriteArticle(s => s.updateData);
+  let articleData = useUserWriteArticle((s) => s.data);
+  let updateData = useUserWriteArticle((s) => s.updateData);
 
   const [form] = useForm();
 
@@ -19,8 +19,8 @@ const Modal: FC<modalPropsType> = props => {
   }, [articleData]);
 
   return (
-    <div className="w-[560px] bg-white border border-solid border-stone-300 rounded-sm">
-      <div className="h-16 flex items-center border-b-solid border-slate-200">
+    <div className="w-[560px] rounded-sm border border-solid border-stone-300 bg-white">
+      <div className="border-b-solid flex h-16 items-center border-slate-200">
         <span className="ml-5 text-lg">发布文章</span>
       </div>
       <div>
@@ -84,7 +84,7 @@ const Modal: FC<modalPropsType> = props => {
           >
             <TextArea
               value={articleData.description || ""}
-              onChange={e => updateData({ description: e.target.value })}
+              onChange={(e) => updateData({ description: e.target.value })}
               rows={4}
               placeholder="文章简介，最多200字"
               maxLength={200}
@@ -106,7 +106,7 @@ const Modal: FC<modalPropsType> = props => {
             <Reprint />
           </Item>
           <Item>
-            <div className="py-4 border-t-solid border-slate-200 flex justify-end">
+            <div className="border-t-solid flex justify-end border-slate-200 py-4">
               <Button type="primary" htmlType="submit" className="mr-3">
                 确认并发布
               </Button>

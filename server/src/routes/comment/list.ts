@@ -1,12 +1,12 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import interger from "@/common/verify/integer";
 import { load } from "cheerio";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
 
 /** 管理系统查询评论*/
-router.get("/comment/list/page/:page", interger([], ["page"]), async ctx => {
+router.get("/comment/list/page/:page", interger([], ["page"]), async (ctx) => {
   let page = +ctx.params.page;
 
   await DB.Comment.findAndCountAll({
@@ -26,7 +26,7 @@ router.get("/comment/list/page/:page", interger([], ["page"]), async ctx => {
         success: true,
         message: `查询评论`,
         data: {
-          list: rows.map(item => {
+          list: rows.map((item) => {
             let $ = load(item.content);
             return { ...item.toJSON(), content: $("body").text() };
           }),

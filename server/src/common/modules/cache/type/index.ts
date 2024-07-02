@@ -21,7 +21,7 @@ const getTypeData = () =>
     where: {
       belong_id: { [Op.is]: null! },
     },
-  }).then(rows => rows.map(item => item.toJSON()));
+  }).then((rows) => rows.map((item) => item.toJSON()));
 
 const getTagData = () =>
   DB.Tag.findAll({
@@ -29,7 +29,7 @@ const getTagData = () =>
     where: {
       belong_id: { [Op.not]: null! },
     },
-  }).then(rows => rows.map(item => item.toJSON()));
+  }).then((rows) => rows.map((item) => item.toJSON()));
 
 /** 刷新type缓存数据*/
 function setData() {
@@ -39,19 +39,19 @@ function setData() {
       cache.set("tag", tag);
       cache.set(
         "tree",
-        type.map(item => {
+        type.map((item) => {
           return Object.assign(item, {
-            children: tag.filter(_item => _item.belong_id == item.id),
+            children: tag.filter((_item) => _item.belong_id == item.id),
           });
-        })
+        }),
       );
 
       // 执行所有回调函数
-      callbackList.forEach(item => {
+      callbackList.forEach((item) => {
         item();
       });
     })
-    .catch(err => {
+    .catch((err) => {
       throw new Error(err);
     });
 }

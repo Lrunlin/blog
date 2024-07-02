@@ -1,4 +1,5 @@
 import type { FunctionComponent } from "react";
+
 interface props {
   title?: string;
   description?: string;
@@ -7,7 +8,7 @@ interface props {
 }
 
 /**Head组件封装 title keywords  description children*/
-const Head: FunctionComponent<props> = props => {
+const Head: FunctionComponent<props> = (props) => {
   let { title, description, keywords } = props;
   return (
     <>

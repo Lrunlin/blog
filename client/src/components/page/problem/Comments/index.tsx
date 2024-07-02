@@ -1,8 +1,9 @@
 "use client";
-import classNames from "classnames";
+
 import { FC } from "react";
-import Item from "./Item";
 import type { problemCommentType } from "@type/model/problem";
+import classNames from "classnames";
+import Item from "./Item";
 
 interface propsType {
   belong_id: number;
@@ -11,10 +12,15 @@ interface propsType {
   type: "problem" | "answer";
 }
 /** 单个答案的回复组件*/
-const Comments: FC<propsType> = props => {
+const Comments: FC<propsType> = (props) => {
   return (
-    <div className={classNames([props.data.length && "bg-gray-50 p-2 rounded", props.className])}>
-      {props.data.map(item => {
+    <div
+      className={classNames([
+        props.data.length && "rounded bg-gray-50 p-2",
+        props.className,
+      ])}
+    >
+      {props.data.map((item) => {
         return (
           <Item
             key={item.id}

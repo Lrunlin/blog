@@ -11,7 +11,9 @@ const initValue: {
   list: null,
 };
 type actionType = {
-  setData: (data: Partial<{ [K in keyof typeof initValue]: (typeof initValue)[K] }>) => any;
+  setData: (
+    data: Partial<{ [K in keyof typeof initValue]: (typeof initValue)[K] }>,
+  ) => any;
 };
 
 /** 文章评论编辑*/
@@ -19,8 +21,8 @@ const useUserArticleComment = create<
   {
     data: typeof initValue;
   } & actionType
->(set => ({
+>((set) => ({
   data: initValue,
-  setData: data => set(state => ({ data: { ...state.data, ...data } })),
+  setData: (data) => set((state) => ({ data: { ...state.data, ...data } })),
 }));
 export default useUserArticleComment;

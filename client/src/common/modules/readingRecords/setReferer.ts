@@ -19,7 +19,7 @@ function setReferer(referer: string | undefined) {
   if (referer == undefined || !/^[\s\S]*.*[^\s][\s\S]*$/.test(referer)) {
     return 0;
   }
-  let result = list.find(item => referer.includes(item.keyword as string));
+  let result = list.find((item) => referer.includes(item.keyword as string));
   return result?.key || -1;
 }
 export default setReferer;

@@ -1,5 +1,5 @@
-import type { Transaction } from "sequelize/types";
 import DB from "@/db";
+import type { Transaction } from "sequelize/types";
 
 async function transaction(id: number[], t: Transaction) {
   return await DB.Notice.destroy({

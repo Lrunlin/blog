@@ -1,5 +1,5 @@
-import type { Transaction } from "sequelize/types";
 import DB from "@/db";
+import type { Transaction } from "sequelize/types";
 import id from "@/common/utils/id";
 
 /**
@@ -16,7 +16,7 @@ async function transaction(problem_id: number, t: Transaction) {
     raw: true,
     transaction: t,
   })
-    .then(rows => rows.map(item => item.user_id))
+    .then((rows) => rows.map((item) => item.user_id))
     .catch(() => false as false);
   if (!followList) return false;
 
@@ -34,7 +34,7 @@ async function transaction(problem_id: number, t: Transaction) {
 
   /** 创建通知，通知关注问题的用户*/
   let createNoticeResult = await DB.Notice.bulkCreate(
-    followList.map(item => ({
+    followList.map((item) => ({
       id: id(),
       type: "follow_problem",
       is_read: 0,
@@ -42,7 +42,7 @@ async function transaction(problem_id: number, t: Transaction) {
       create_time: new Date(),
       user_id: item,
     })),
-    { transaction: t }
+    { transaction: t },
   )
     .then(() => true)
     .catch(() => false);

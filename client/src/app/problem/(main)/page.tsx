@@ -1,16 +1,19 @@
+import axios from "@axios";
+import type { response } from "@type/common/response";
+import type { ProblemAttributes } from "@type/model-attribute";
 import Head from "@/components/next/Head";
 import ProblemList from "@/components/page/problem/ProblemList";
-import axios from "@axios";
-import type { ProblemAttributes } from "@type/model-attribute";
-import type { response } from "@type/common/response";
 
 function getProblemList(page: number, type: "newest" | "noanswer") {
   return axios
-    .get<response<{ total: number; list: ProblemAttributes[] }>>(`/problem/page/${page}`, {
-      params: { type: type },
-    })
-    .then(res => res.data.data)
-    .catch(err => null);
+    .get<response<{ total: number; list: ProblemAttributes[] }>>(
+      `/problem/page/${page}`,
+      {
+        params: { type: type },
+      },
+    )
+    .then((res) => res.data.data)
+    .catch((err) => null);
 }
 
 const Problem = async () => {

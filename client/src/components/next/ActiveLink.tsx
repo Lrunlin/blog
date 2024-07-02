@@ -17,7 +17,7 @@ interface porpsType extends LinkProps {
 /**
  * 高亮超链接，默认className:active-link
  */
-const ActiveLink: FC<porpsType> = props => {
+const ActiveLink: FC<porpsType> = (props) => {
   let pathname = usePathname();
   let className = useMemo(() => {
     return pathname == props.href ? props.activeClassName || "active-link" : "";

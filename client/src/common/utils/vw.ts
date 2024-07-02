@@ -8,7 +8,10 @@
 function vw(px: number, min?: number, max?: number) {
   // 需要注意是否服务器环境
   let _px =
-    (px / 1920) * (typeof window == "undefined" ? 1200 : document.documentElement.clientWidth);
+    (px / 1920) *
+    (typeof window == "undefined"
+      ? 1200
+      : document.documentElement.clientWidth);
   if (min) {
     return Math.max(_px, min);
   }

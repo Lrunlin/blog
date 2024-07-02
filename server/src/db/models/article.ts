@@ -26,7 +26,10 @@ export type ArticleOptionalAttributes =
   | "reprint"
   | "view_count"
   | "update_time";
-export type ArticleCreationAttributes = Optional<ArticleAttributes, ArticleOptionalAttributes>;
+export type ArticleCreationAttributes = Optional<
+  ArticleAttributes,
+  ArticleOptionalAttributes
+>;
 
 export class Article
   extends Model<ArticleAttributes, ArticleCreationAttributes>
@@ -66,7 +69,10 @@ export class Article
           allowNull: true,
           comment: "文章介绍",
           set(this, val) {
-            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+            if (
+              typeof val == "string" &&
+              /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)
+            ) {
               this.setDataValue("description", val);
             } else {
               this.setDataValue("description", null as any);
@@ -82,7 +88,9 @@ export class Article
           },
           get() {
             let type = this.getDataValue("tag");
-            return type&&/^[\s\S]*.*[^\s][\s\S]*$/.test(type) ? type.split(",").map(item => +item) : [];
+            return type && /^[\s\S]*.*[^\s][\s\S]*$/.test(type)
+              ? type.split(",").map((item) => +item)
+              : [];
           },
         },
         author: {
@@ -103,7 +111,10 @@ export class Article
           allowNull: true,
           comment: "封面图片名称",
           set(this, val) {
-            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+            if (
+              typeof val == "string" &&
+              /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)
+            ) {
               this.setDataValue("cover_file_name", val);
             } else {
               this.setDataValue("cover_file_name", null as any);
@@ -127,7 +138,10 @@ export class Article
           allowNull: true,
           comment: "转载地址，原创为null",
           set(this, val) {
-            if (typeof val == "string" && /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)) {
+            if (
+              typeof val == "string" &&
+              /^[\s\S]*.*[^\s][\s\S]*$/.test(val as string)
+            ) {
               this.setDataValue("reprint", val);
             } else {
               this.setDataValue("reprint", null as any);
@@ -172,7 +186,7 @@ export class Article
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Article;
   }
 }

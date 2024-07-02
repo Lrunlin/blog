@@ -1,9 +1,9 @@
+import DB from "@/db";
 import { Op } from "sequelize";
 import Sequelize from "@/db/config";
-import DB from "@/db";
-import getTagData from "@/common/modules/article/get/set-tag-data";
-import setDescription from "@/common/modules/article/get/set-description";
 import type { TagAttributes, UserAttributes } from "@/db/models/init-models";
+import setDescription from "@/common/modules/article/get/set-description";
+import getTagData from "@/common/modules/article/get/set-tag-data";
 
 export interface sortArticleListType {
   id: number;
@@ -36,17 +36,19 @@ async function getSortArticleList(page: number) {
       include: [
         [
           Sequelize.literal(
-            `(SELECT COUNT(id) FROM comment WHERE comment.belong_id = article.id and type="article")`
+            `(SELECT COUNT(id) FROM comment WHERE comment.belong_id = article.id and type="article")`,
           ),
           "comment_count",
         ],
         [
-          Sequelize.literal(`(SELECT COUNT(id) FROM likes WHERE likes.belong_id = article.id)`),
+          Sequelize.literal(
+            `(SELECT COUNT(id) FROM likes WHERE likes.belong_id = article.id)`,
+          ),
           "like_count",
         ],
         [
           Sequelize.literal(
-            `(SELECT COUNT(id) FROM collection WHERE collection.belong_id = article.id)`
+            `(SELECT COUNT(id) FROM collection WHERE collection.belong_id = article.id)`,
           ),
           "collection_count",
         ],
@@ -70,8 +72,8 @@ async function getSortArticleList(page: number) {
       ],
     },
   })
-    .then(rows => {
-      return rows.map(row => {
+    .then((rows) => {
+      return rows.map((row) => {
         let item = row.toJSON();
         let description = setDescription(item.content);
         let tag = getTagData(item.tag as unknown as number[], ["id", "name"]);
@@ -93,7 +95,7 @@ async function getSortArticleList(page: number) {
         } as unknown as sortArticleListType;
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return [] as sortArticleListType[];
     });

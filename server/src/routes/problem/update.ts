@@ -1,9 +1,10 @@
 import Router from "@koa/router";
-let router = new Router();
-import verify from "@/common/verify/api-verify/problem/create";
 import DB from "@/db";
+import verify from "@/common/verify/api-verify/problem/create";
 
-router.put("/problem/:id", verify, async ctx => {
+let router = new Router();
+
+router.put("/problem/:id", verify, async (ctx) => {
   const { title, tag, content } = ctx.request.body;
   await DB.Problem.update(
     {
@@ -11,12 +12,12 @@ router.put("/problem/:id", verify, async ctx => {
       tag,
       content,
     },
-    { where: { author: ctx.id, id: ctx.params.id } }
+    { where: { author: ctx.id, id: ctx.params.id } },
   )
-    .then(res => {
+    .then((res) => {
       ctx.body = { success: true, message: "发布成功" };
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       ctx.body = { success: false, message: "发布失败" };
     });

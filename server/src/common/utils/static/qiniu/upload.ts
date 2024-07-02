@@ -1,10 +1,9 @@
+import fs from "fs";
 import qiniu from "qiniu";
 import sharp from "sharp";
-import Mac from "./utils/Mac";
-import fs from "fs";
 import { v4 } from "uuid";
 import folderList from "../folderList";
-
+import Mac from "./utils/Mac";
 
 export type FolderItemType = (typeof folderList)[number];
 
@@ -26,18 +25,26 @@ sharp.cache(false); //不缓存
  */
 async function upload(
   buffer: Buffer,
-  option: { folder: FolderItemType["folder"]; file_name: string }
+  option: { folder: FolderItemType["folder"]; file_name: string },
 ): Promise<{ file_name: string; file_href: string } | string> {
   let putPolicy = new qiniu.rs.PutPolicy(options);
   let uploadToken = putPolicy.uploadToken(Mac);
   let formUploader = new qiniu.form_up.FormUploader(config);
   let putExtra = new qiniu.form_up.PutExtra();
   // 根据folder判断sharp对应的配置
-  let sharpOption = folderList.find(item => item.folder == option.folder) as FolderItemType;
+  let sharpOption = folderList.find(
+    (item) => item.folder == option.folder,
+  ) as FolderItemType;
   let sharpInstance = sharp(buffer, { animated: !!sharpOption.animated });
-  let processed = sharpInstance.webp({ lossless: true, quality: sharpOption.quality });
+  let processed = sharpInstance.webp({
+    lossless: true,
+    quality: sharpOption.quality,
+  });
   if (sharpOption.width) {
-    processed = processed.resize({ width: sharpOption.width, height: sharpOption.height });
+    processed = processed.resize({
+      width: sharpOption.width,
+      height: sharpOption.height,
+    });
   }
 
   let fileName = `${v4()}.webp`;
@@ -69,7 +76,7 @@ async function upload(
         } else {
           reject("图片上传错误");
         }
-      }
+      },
     );
   }) as Promise<string | { file_name: string; file_href: string }>;
 }

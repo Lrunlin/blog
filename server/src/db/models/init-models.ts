@@ -1,22 +1,37 @@
 import type { Sequelize } from "sequelize";
 import { Advertisement as _Advertisement } from "./advertisement";
-import type { AdvertisementAttributes, AdvertisementCreationAttributes } from "./advertisement";
+import type {
+  AdvertisementAttributes,
+  AdvertisementCreationAttributes,
+} from "./advertisement";
 import { Answer as _Answer } from "./answer";
 import type { AnswerAttributes, AnswerCreationAttributes } from "./answer";
 import { Article as _Article } from "./article";
 import type { ArticleAttributes, ArticleCreationAttributes } from "./article";
 import { Collection as _Collection } from "./collection";
-import type { CollectionAttributes, CollectionCreationAttributes } from "./collection";
+import type {
+  CollectionAttributes,
+  CollectionCreationAttributes,
+} from "./collection";
 import { Comment as _Comment } from "./comment";
 import type { CommentAttributes, CommentCreationAttributes } from "./comment";
 import { ExternalLink as _ExternalLink } from "./external_link";
-import type { ExternalLinkAttributes, ExternalLinkCreationAttributes } from "./external_link";
+import type {
+  ExternalLinkAttributes,
+  ExternalLinkCreationAttributes,
+} from "./external_link";
 import { Favorites as _Favorites } from "./favorites";
-import type { FavoritesAttributes, FavoritesCreationAttributes } from "./favorites";
+import type {
+  FavoritesAttributes,
+  FavoritesCreationAttributes,
+} from "./favorites";
 import { Follow as _Follow } from "./follow";
 import type { FollowAttributes, FollowCreationAttributes } from "./follow";
 import { FriendlyLink as _FriendlyLink } from "./friendly_link";
-import type { FriendlyLinkAttributes, FriendlyLinkCreationAttributes } from "./friendly_link";
+import type {
+  FriendlyLinkAttributes,
+  FriendlyLinkCreationAttributes,
+} from "./friendly_link";
 import { Likes as _Likes } from "./likes";
 import type { LikesAttributes, LikesCreationAttributes } from "./likes";
 import { Notice as _Notice } from "./notice";
@@ -24,7 +39,10 @@ import type { NoticeAttributes, NoticeCreationAttributes } from "./notice";
 import { Problem as _Problem } from "./problem";
 import type { ProblemAttributes, ProblemCreationAttributes } from "./problem";
 import { Recommend as _Recommend } from "./recommend";
-import type { RecommendAttributes, RecommendCreationAttributes } from "./recommend";
+import type {
+  RecommendAttributes,
+  RecommendCreationAttributes,
+} from "./recommend";
 import { Tag as _Tag } from "./tag";
 import type { TagAttributes, TagCreationAttributes } from "./tag";
 import { Theme as _Theme } from "./theme";

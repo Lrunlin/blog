@@ -1,0 +1,2 @@
+#!/bin/sh
+cd server && yarn prettier --write "src/**/*.{js,ts}" && cd ../client && yarn prettier --write "src/**/*.{js,jsx,ts,tsx}"

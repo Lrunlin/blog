@@ -2,9 +2,10 @@ import Router from "@koa/router";
 import DB from "@/db";
 import moment from "moment";
 import integer from "@/common/verify/integer";
+
 let router = new Router();
 
-router.get("/sitemap/list/:index", integer([], ["index"]), async ctx => {
+router.get("/sitemap/list/:index", integer([], ["index"]), async (ctx) => {
   let index = +ctx.params.index as number;
 
   if (index < 1) {
@@ -19,7 +20,7 @@ router.get("/sitemap/list/:index", integer([], ["index"]), async ctx => {
     attributes: ["id", "title"],
     order: [["id", "asc"]],
     raw: true,
-  }).then(rows => {
+  }).then((rows) => {
     ctx.body = {
       success: true,
       message: "获取sitemap文章列表",

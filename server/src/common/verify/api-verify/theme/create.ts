@@ -1,8 +1,8 @@
+import DB from "@/db";
 import Joi from "joi";
-import validator from "@/common/middleware/verify/validatorAsync";
 import compose from "koa-compose";
 import auth from "@/common/middleware/auth";
-import DB from "@/db";
+import validator from "@/common/middleware/verify/validatorAsync";
 
 let schema = Joi.object({
   name: Joi.string()

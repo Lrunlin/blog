@@ -1,13 +1,23 @@
 "use client";
+
 import { useMemo } from "react";
-import Editor from "@/components/common/Editor";
-import { Button, Form, Input, message, TreeSelect, Skeleton, Result, InputNumber } from "antd";
+import { useParams, useRouter } from "next/navigation";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Result,
+  Skeleton,
+  TreeSelect,
+  message,
+} from "antd";
 import axios from "@axios";
+import useFetch from "@/common/hooks/useFetch";
+import AdminLayout from "@/layout/Admin/Base";
+import Editor from "@/components/common/Editor";
 import Upload from "@/components/common/UpLoad";
 import getType from "@/request/type/getTag";
-import { useParams, useRouter } from "next/navigation";
-import AdminLayout from "@/layout/Admin/Base";
-import useFetch from "@/common/hooks/useFetch";
 
 const Update = () => {
   let { useForm } = Form;
@@ -28,24 +38,24 @@ const Update = () => {
     (values: any) =>
       axios
         .put(`/article/${id}`, { ...values, state: 1 })
-        .then(res => {
+        .then((res) => {
           message.success(res.data.message);
         })
-        .catch(err => {
+        .catch((err) => {
           message.error(err.message);
         }),
-    { manual: true }
+    { manual: true },
   );
 
   //获取typeTree
   let { data: treeData } = useFetch(() =>
-    getType("tree").then(res => {
-      return res.map(item => ({
+    getType("tree").then((res) => {
+      return res.map((item) => ({
         ...item,
         checkable: false,
-        children: item.children?.map(_item => ({ ..._item, key: _item.id })),
+        children: item.children?.map((_item) => ({ ..._item, key: _item.id })),
       }));
-    })
+    }),
   );
 
   let uploadInitVlaue = useMemo(() => {
@@ -88,7 +98,12 @@ const Update = () => {
               name="title"
               rules={[
                 { required: true, message: "请填写标题" },
-                { type: "string", min: 3, max: 200, message: "标题长度在3-200之间" },
+                {
+                  type: "string",
+                  min: 3,
+                  max: 200,
+                  message: "标题长度在3-200之间",
+                },
               ]}
             >
               <Input placeholder="填写网站标题" maxLength={200} />
@@ -120,7 +135,12 @@ const Update = () => {
               name="description"
               rules={[{ max: 200, message: "最大不得超过200个字符" }]}
             >
-              <Input.TextArea rows={5} placeholder="填写介绍" maxLength={200} showCount />
+              <Input.TextArea
+                rows={5}
+                placeholder="填写介绍"
+                maxLength={200}
+                showCount
+              />
             </Form.Item>
 
             <Form.Item
@@ -140,7 +160,7 @@ const Update = () => {
                   onSuccess={({ file_name }) => {
                     form.setFieldsValue({ cover_file_name: file_name });
                   }}
-                  onError={mes => {
+                  onError={(mes) => {
                     message.error(mes);
                   }}
                   onDelete={() => {
@@ -168,10 +188,10 @@ const Update = () => {
                   theme={true}
                   target="article"
                   initValue={response?.data.data.content}
-                  onChange={html => {
+                  onChange={(html) => {
                     form.setFieldsValue({ content: html });
                   }}
-                  onSetTheme={id => {
+                  onSetTheme={(id) => {
                     form.setFieldsValue({ theme_id: id });
                   }}
                   defaultTheme={response?.data.data.theme_id}

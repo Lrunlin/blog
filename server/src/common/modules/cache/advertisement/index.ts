@@ -1,13 +1,13 @@
+import DB from "@/db";
 import redis from "@/common/utils/redis";
 import { imageInfo } from "@/common/utils/static";
-import DB from "@/db";
 
 /** 刷新缓存数据*/
 function setData() {
   DB.Advertisement.findAll({
     attributes: ["id", "poster_file_name", "poster_url", "url", "position"],
-  }).then(async rows => {
-    let data = rows.map(item => item.toJSON());
+  }).then(async (rows) => {
+    let data = rows.map((item) => item.toJSON());
     let list: any = {};
     for (let index = 0; index < data.length; index++) {
       const item = data[index];
@@ -26,9 +26,13 @@ function setData() {
             list[item.position] = [itemData];
           }
         })
-        .catch(err => {
+        .catch((err) => {
           if (process.env.ENV == "production") {
-            console.log("推广海报图片信息获取错误:", item.id, item.poster_file_name);
+            console.log(
+              "推广海报图片信息获取错误:",
+              item.id,
+              item.poster_file_name,
+            );
           }
         });
     }
@@ -48,13 +52,15 @@ type KeyType<T extends "list" | "all"> = T extends "list" ? ListKey : AllKey;
 async function getData<T extends "list" | "all">(type: T, key: KeyType<T>) {
   if (type == "all") {
     return await DB.Advertisement.findAll({ order: [["indexes", "asc"]] })
-      .then(rows => rows)
-      .catch(err => {
+      .then((rows) => rows)
+      .catch((err) => {
         console.log(err);
         return [];
       });
   } else {
-    let data = JSON.parse((await redis.get(`advertisement-list-${key}`)) || "[]");
+    let data = JSON.parse(
+      (await redis.get(`advertisement-list-${key}`)) || "[]",
+    );
     return data;
   }
 }

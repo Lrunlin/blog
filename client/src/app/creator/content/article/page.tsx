@@ -1,9 +1,10 @@
 "use client";
+
 import { useState } from "react";
-import { Input, Tabs } from "antd";
-import Layout from "@/components/page/creator/Layout";
-import ArticleList from "@/components/page/creator/ArticleList";
 import { useParams } from "next/navigation";
+import { Input, Tabs } from "antd";
+import ArticleList from "@/components/page/creator/ArticleList";
+import Layout from "@/components/page/creator/Layout";
 
 // 创作者中心-内容管理-文章管理
 const ContentArticle = () => {
@@ -12,7 +13,7 @@ const ContentArticle = () => {
   let params = useParams();
 
   return (
-    <Layout className="p-4 bg-white">
+    <Layout className="bg-white p-4">
       <div className="shadow-sm">
         <Tabs
           defaultActiveKey={(params.key as string | undefined) || "article"}
@@ -20,7 +21,7 @@ const ContentArticle = () => {
             right: (
               <Search
                 placeholder="标题或摘要关键字"
-                onSearch={val => setKeyword(val)}
+                onSearch={(val) => setKeyword(val)}
                 maxLength={30}
                 style={{ width: 200 }}
               />

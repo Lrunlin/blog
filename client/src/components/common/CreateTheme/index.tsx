@@ -1,32 +1,36 @@
 "use client";
+
+import { Alert, Button, Card, Form, Input, message } from "antd";
+import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
 import CodeEdite from "@/components/admin/page/theme/CodeEdite";
-import { Input, Form, Button, Card, Alert, message } from "antd";
-import axios from "@axios";
 
 const CreateTheme = () => {
   let { useForm } = Form;
   let [form] = useForm();
   let { isLoading, refetch: submit } = useFetch(
-    params =>
+    (params) =>
       axios
         .post("/theme", params)
-        .then(res => {
+        .then((res) => {
           message.success(res.data.message);
           form.resetFields();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           message.error(err.message);
           return err;
         }),
-    { manual: true }
+    { manual: true },
   );
 
   return (
     <>
       <Card>
-        <Alert message="容器className为content-body,请在编写时添加后代选择器。" type="info" />
+        <Alert
+          message="容器className为content-body,请在编写时添加后代选择器。"
+          type="info"
+        />
         <Form
           className="mt-4"
           labelCol={{ span: 2 }}
@@ -52,7 +56,7 @@ const CreateTheme = () => {
           >
             <CodeEdite
               className="mt-2"
-              onChange={content => {
+              onChange={(content) => {
                 form.setFieldsValue({ content: content });
               }}
             />

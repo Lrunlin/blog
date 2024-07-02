@@ -3,9 +3,12 @@ import auth from "@/common/middleware/auth";
 import destroy from "@/common/modules/user/destroy";
 
 let router = new Router();
-router.post("/user/destroy", auth(0), async ctx => {
+router.post("/user/destroy", auth(0), async (ctx) => {
   if (process.env.AUTH_MODE != "session") {
-    ctx.body = { success: false, message: "当前鉴权模式不为Session，不支持注销" };
+    ctx.body = {
+      success: false,
+      message: "当前鉴权模式不为Session，不支持注销",
+    };
     ctx.status = 500;
     return;
   }
@@ -16,13 +19,13 @@ router.post("/user/destroy", auth(0), async ctx => {
   }
 
   await destroy(ctx.id!)
-    .then(params => {
+    .then((params) => {
       ctx.body = params;
       if (!params.success) {
         ctx.status = 500;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.body = { success: false, message: "注销失败" };
       ctx.status = 500;
       console.log(err);

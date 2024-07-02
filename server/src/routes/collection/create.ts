@@ -2,8 +2,9 @@ import Router from "@koa/router";
 import DB from "@/db";
 import id from "@/common/utils/id";
 import verify from "@/common/verify/api-verify/collection/create";
+
 let router = new Router();
-router.post("/collection/:belong_id", verify, async ctx => {
+router.post("/collection/:belong_id", verify, async (ctx) => {
   let belong_id = +ctx.params.belong_id;
 
   await DB.Collection.create({
@@ -17,7 +18,7 @@ router.post("/collection/:belong_id", verify, async ctx => {
     .then(() => {
       ctx.body = { success: true, message: "收藏成功" };
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.status = 500;
       console.log(err);
     });

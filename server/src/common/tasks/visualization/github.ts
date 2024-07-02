@@ -1,11 +1,11 @@
-import redis from "@/common/utils/redis";
 import axios from "axios";
 import moment from "moment";
+import redis from "@/common/utils/redis";
 
 function getGtiHubData() {
   axios
     .get("https://api.github.com/repos/Lrunlin/blog")
-    .then(res => {
+    .then((res) => {
       const data = {
         star_count: res.data.stargazers_count,
         fork_count: res.data.forks_count,
@@ -17,7 +17,7 @@ function getGtiHubData() {
       };
       redis.set("visualization-github", JSON.stringify(data));
     })
-    .catch(err => {
+    .catch((err) => {
       //开发环境经常因为代码更新快而限制请求频率
       if (process.env.ENV == "production") {
         console.log(err);

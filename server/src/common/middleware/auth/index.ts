@@ -26,7 +26,7 @@ function auth(auth?: authCode[] | authCode) {
           ctx.status = 401;
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
 
         ctx.status = 401;

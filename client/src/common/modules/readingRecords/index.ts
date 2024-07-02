@@ -1,8 +1,8 @@
-import redis from "./redis";
+import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 import dayjs from "@dayjs";
+import redis from "./redis";
 import setReferer from "./setReferer";
 import setSpider from "./setSpider";
-import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 
 /**
  * 获取用户端请求IP
@@ -15,7 +15,11 @@ function getClientIp(header: ReadonlyHeaders) {
     return false;
   }
   return ip.split(",").length
-    ? ip.split(",")[0].replaceAll(".", "").replaceAll(":", "").replaceAll(" ", "")
+    ? ip
+        .split(",")[0]
+        .replaceAll(".", "")
+        .replaceAll(":", "")
+        .replaceAll(" ", "")
     : false;
 }
 
@@ -25,7 +29,7 @@ function getClientIp(header: ReadonlyHeaders) {
 async function readingRecords(
   header: ReadonlyHeaders,
   id: string | number,
-  type: "article" | "problem"
+  type: "article" | "problem",
 ) {
   if (typeof window != "undefined") {
     return;
@@ -36,7 +40,10 @@ async function readingRecords(
 
   if (
     ip &&
-    !(await redis.exists([`history-${type}-${ip}-${id}`, `history-${type}-${ip}-${id}-unentered`]))
+    !(await redis.exists([
+      `history-${type}-${ip}-${id}`,
+      `history-${type}-${ip}-${id}-unentered`,
+    ]))
   ) {
     let ua = header.get("user-agent");
     let spiderResult = setSpider(ua!);
@@ -45,7 +52,7 @@ async function readingRecords(
       redis.rpush(
         `history-${type}-${ip}-${id}-unentered`,
         dayjs().format("YYYY-MM-DD"),
-        spiderResult
+        spiderResult,
       );
       redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
       return;
@@ -55,7 +62,7 @@ async function readingRecords(
     redis.rpush(
       `history-${type}-${ip}-${id}-unentered`,
       dayjs().format("YYYY-MM-DD"),
-      refererResult
+      refererResult,
     );
     redis.expire(`history-${type}-${ip}-${id}-unentered`, 604_800);
   }

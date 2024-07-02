@@ -1,5 +1,5 @@
-import { ArticleAttributes } from "@/db/models/article";
 import { load } from "cheerio";
+import { ArticleAttributes } from "@/db/models/article";
 
 /** 设置h1-h6的id*/
 function setTitleId(content: string) {

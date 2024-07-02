@@ -1,12 +1,17 @@
-import { useCallback, type FC } from "react";
-import axios from "@axios";
+import { type FC, useCallback } from "react";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { Skeleton } from "antd";
-import { useRouter, useParams, useSearchParams, usePathname } from "next/navigation";
-import Image from "@/components/next/Image";
+import axios from "@axios";
 import type { UserAttributes } from "@type/model-attribute";
 import useFetch from "@/common/hooks/useFetch";
+import Image from "@/components/next/Image";
 
-const Aside: FC<{ data: UserAttributes }> = props => {
+const Aside: FC<{ data: UserAttributes }> = (props) => {
   let router = useRouter();
   let params = useParams();
   let id = params.id;
@@ -15,7 +20,7 @@ const Aside: FC<{ data: UserAttributes }> = props => {
   const pathname = usePathname();
 
   let { data, error, isLoading } = useFetch(() =>
-    axios.get(`/achievement/${id}`).then(res => res.data.data)
+    axios.get(`/achievement/${id}`).then((res) => res.data.data),
   );
 
   const createQueryString = useCallback(
@@ -25,13 +30,13 @@ const Aside: FC<{ data: UserAttributes }> = props => {
 
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   return (
-    <aside className="w-60 fixed">
-      <div className="bg-white w-60 p-4 shadow-sm">
-        <div className="text-xl font-medium pb-2 text-gray-900 border-b-solid border-gray-200">
+    <aside className="fixed w-60">
+      <div className="w-60 bg-white p-4 shadow-sm">
+        <div className="border-b-solid border-gray-200 pb-2 text-xl font-medium text-gray-900">
           个人成就
         </div>
         {isLoading ? (
@@ -41,18 +46,27 @@ const Aside: FC<{ data: UserAttributes }> = props => {
         ) : (
           <div className="mt-3">
             <div
-              className="h-8 flex items-center cursor-pointer"
+              className="flex h-8 cursor-pointer items-center"
               onClick={() => {
-                router.push(pathname + "?" + createQueryString("key", "article"));
+                router.push(
+                  pathname + "?" + createQueryString("key", "article"),
+                );
               }}
             >
-              <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-50">
-                <Image src="/icon/client/view-blue.png" height={14} width={14} alt="view icon" />
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-50">
+                <Image
+                  src="/icon/client/view-blue.png"
+                  height={14}
+                  width={14}
+                  alt="view icon"
+                />
               </div>
-              <span className="ml-2">文章被阅读 {data.article_view_count.toLocaleString()}</span>
+              <span className="ml-2">
+                文章被阅读 {data.article_view_count.toLocaleString()}
+              </span>
             </div>
-            <div className="h-8 flex items-center">
-              <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-50">
+            <div className="flex h-8 items-center">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-50">
                 <Image
                   src="/icon/client/collection-blue.png"
                   height={14}
@@ -67,9 +81,9 @@ const Aside: FC<{ data: UserAttributes }> = props => {
           </div>
         )}
       </div>
-      <div className="w-60 p-4 mt-3 flex justify-around bg-white shadow-sm">
+      <div className="mt-3 flex w-60 justify-around bg-white p-4 shadow-sm">
         <div
-          className="text-center cursor-pointer"
+          className="cursor-pointer text-center"
           onClick={() => {
             router.push(pathname + "?" + createQueryString("key", "following"));
           }}
@@ -78,7 +92,7 @@ const Aside: FC<{ data: UserAttributes }> = props => {
           <b>{props.data.followee_count}</b>
         </div>
         <div
-          className="text-center cursor-pointer"
+          className="cursor-pointer text-center"
           onClick={() => {
             router.push(pathname + "?" + createQueryString("key", "follower"));
           }}
@@ -89,16 +103,18 @@ const Aside: FC<{ data: UserAttributes }> = props => {
       </div>
       <div className="mt-4">
         <div
-          className="h-8 cursor-pointer flex items-center border-t-solid border-gray-200"
+          className="border-t-solid flex h-8 cursor-pointer items-center border-gray-200"
           onClick={() => {
-            router.push(pathname + "?" + createQueryString("key", "collection"));
+            router.push(
+              pathname + "?" + createQueryString("key", "collection"),
+            );
           }}
         >
           收藏文章 {props.data.collection_count} 篇
         </div>
         {data && (
           <div
-            className="h-8 cursor-pointer flex items-center border-t-solid border-gray-200"
+            className="border-t-solid flex h-8 cursor-pointer items-center border-gray-200"
             onClick={() => {
               router.push(pathname + "?" + createQueryString("key", "article"));
             }}
@@ -106,7 +122,7 @@ const Aside: FC<{ data: UserAttributes }> = props => {
             发布文章 {data.article_count} 篇
           </div>
         )}
-        <div className="h-8 flex items-center border-t-solid border-gray-200">
+        <div className="border-t-solid flex h-8 items-center border-gray-200">
           加入时间: {props.data.create_time.substring(0, 10)}
         </div>
       </div>

@@ -72,7 +72,7 @@ export class Notice
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Notice;
   }
 }

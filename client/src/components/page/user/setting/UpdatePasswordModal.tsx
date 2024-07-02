@@ -1,13 +1,13 @@
-import { useImperativeHandle, useState, useEffect, useRef } from "react";
-import type { MutableRefObject, FC } from "react";
-import { Modal, Form, Input, message } from "antd";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
+import type { FC, MutableRefObject } from "react";
+import { Form, Input, Modal, message } from "antd";
 import axios from "@axios";
 
 export type event = MutableRefObject<{ onOpen: () => void }>;
 interface propsType {
   event: event;
 }
-const UpdatePasswordModal: FC<propsType> = props => {
+const UpdatePasswordModal: FC<propsType> = (props) => {
   let { useForm } = Form;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
@@ -17,7 +17,7 @@ const UpdatePasswordModal: FC<propsType> = props => {
     setIsLoad(true);
     axios
       .put("/user/password", { password: password })
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           message.success(res.data.message);
           setIsModalVisible(false);

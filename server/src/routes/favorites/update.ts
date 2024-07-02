@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import DB from "@/db";
 import verify from "@/common/verify/api-verify/favorites/create";
+
 let router = new Router();
 
-router.put("/favorites/:id", verify, async ctx => {
+router.put("/favorites/:id", verify, async (ctx) => {
   await DB.Favorites.update(
     {
       user_id: ctx.id as number,
@@ -13,12 +14,12 @@ router.put("/favorites/:id", verify, async ctx => {
     },
     {
       where: { id: ctx.params.id, user_id: ctx.id },
-    }
+    },
   )
-    .then(row => {
+    .then((row) => {
       ctx.body = { success: true, message: "修改成功" };
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.status = 500;
       ctx.body = { success: false, message: "修改失败" };
     });

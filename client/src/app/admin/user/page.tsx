@@ -1,24 +1,25 @@
 "use client";
-import { useState, useEffect, startTransition } from "react";
-import {
-  message,
-  Table,
-  Avatar,
-  DatePicker,
-  Popover,
-  Button,
-  Popconfirm,
-  Select,
-  Input,
-  notification,
-  Tooltip,
-} from "antd";
+
+import { startTransition, useEffect, useState } from "react";
 import Link from "next/link";
-import dayjs from "@dayjs";
+import {
+  Avatar,
+  Button,
+  DatePicker,
+  Input,
+  Popconfirm,
+  Popover,
+  Select,
+  Table,
+  Tooltip,
+  message,
+  notification,
+} from "antd";
 import axios from "@axios";
+import dayjs from "@dayjs";
+import type { response } from "@type/response";
 import copy from "copy-to-clipboard";
 import AdminLayout from "@/layout/Admin/Base";
-import type { response } from "@type/response";
 
 const UserList = () => {
   const [total, setTotal] = useState(0);
@@ -75,13 +76,17 @@ const UserList = () => {
                 <img
                   src="/icon/admin/github.svg"
                   alt="github图标"
-                  className="w-5 cursor-pointer mr-4"
+                  className="mr-4 w-5 cursor-pointer"
                 />
               </a>
             )}
             {item.email && (
               <a href={`mailto:${item.email}`}>
-                <img src="/icon/admin/邮箱.svg" alt="email" className="w-5 cursor-pointer mr-4" />
+                <img
+                  src="/icon/admin/邮箱.svg"
+                  alt="email"
+                  className="mr-4 w-5 cursor-pointer"
+                />
               </a>
             )}
             {item.qq && (
@@ -92,7 +97,7 @@ const UserList = () => {
                 }}
                 src="/icon/admin/QQ.svg"
                 alt="qq icon"
-                className="w-5 cursor-pointer mr-4"
+                className="mr-4 w-5 cursor-pointer"
               />
             )}
           </div>
@@ -160,7 +165,8 @@ const UserList = () => {
                 placement="top"
                 title={
                   <span>
-                    注销用户:<span className="font-bold mx-1">{val.name}</span>？
+                    注销用户:<span className="mx-1 font-bold">{val.name}</span>
+                    ？
                   </span>
                 }
                 description={`注销后用户信息无法找回`}
@@ -173,7 +179,10 @@ const UserList = () => {
                 </Button>
               </Popconfirm>
             ) : (
-              <Tooltip placement="top" title={"服务器未使用Session鉴权，禁止用户注销"}>
+              <Tooltip
+                placement="top"
+                title={"服务器未使用Session鉴权，禁止用户注销"}
+              >
                 <Button type="primary" disabled>
                   注销
                 </Button>
@@ -200,13 +209,13 @@ const UserList = () => {
 
     axios
       .get(`/user/list/${page}`, { params: params })
-      .then(res => {
+      .then((res) => {
         setData(res.data.data.list);
         startTransition(() => {
           setTotal(res.data.data.total);
         });
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
       })
       .finally(() => {
@@ -218,11 +227,11 @@ const UserList = () => {
   function destroy(id: number) {
     axios
       .post<response>(`/user/destroy/${id}`)
-      .then(res => {
+      .then((res) => {
         message.success(res.data.message);
-        setKey(val => ++val);
+        setKey((val) => ++val);
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
         console.log(err);
       });
@@ -230,10 +239,12 @@ const UserList = () => {
   /** 恢复账号*/
   function recovery(id: number) {
     axios
-      .post<response<{ email: string; password: string }>>(`/user/recovery/${id}`)
-      .then(res => {
+      .post<response<{ email: string; password: string }>>(
+        `/user/recovery/${id}`,
+      )
+      .then((res) => {
         if (res.data.success) {
-          setKey(val => ++val);
+          setKey((val) => ++val);
           notification.success({
             message: "恢复成功",
             duration: 5,
@@ -252,7 +263,9 @@ const UserList = () => {
                 <Button
                   className="mt-4"
                   onClick={() => {
-                    copy(`邮箱:${res.data.data.email}   密码:${res.data.data.password}`);
+                    copy(
+                      `邮箱:${res.data.data.email}   密码:${res.data.data.password}`,
+                    );
                     message.success("复制成功");
                   }}
                 >
@@ -265,7 +278,7 @@ const UserList = () => {
           message.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         message.error(err.message);
         console.log(err);
       });
@@ -288,19 +301,19 @@ const UserList = () => {
           placeholder="根据用户ID搜索"
           className="!ml-8 !w-56"
           allowClear={true}
-          onChange={val => {
+          onChange={(val) => {
             setUserId(val.target.value);
             // 空的时候重新请求
             if (!/^[\s\S]*.*[^\s][\s\S]*$/.test(userId)) {
               startTransition(() => {
-                setKey(val => ++val);
+                setKey((val) => ++val);
               });
             }
           }}
         />
         <Button
           type="primary"
-          onClick={() => setKey(val => ++val)}
+          onClick={() => setKey((val) => ++val)}
           className="ml-2"
           disabled={!/^[\s\S]*.*[^\s][\s\S]*$/.test(userId)}
         >
@@ -314,7 +327,7 @@ const UserList = () => {
             current: page,
             total: total,
             defaultPageSize: 10,
-            onChange: _page => setPage(_page),
+            onChange: (_page) => setPage(_page),
             position: ["bottomCenter"],
           }}
           columns={columns}

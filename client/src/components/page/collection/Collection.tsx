@@ -1,21 +1,22 @@
 "use client";
+
 import { useMemo } from "react";
 import type { FC } from "react";
 import { useParams } from "next/navigation";
-import { Tabs, Empty, Spin } from "antd";
+import { Empty, Spin, Tabs } from "antd";
 import axios from "@axios";
-import ArticleItem from "@/components/common/ArticleList/ArticleItem";
-import ProblemList from "@/components/page/problem/List";
-import useUserData from "@/store/user/user-data";
 import { RootObject } from "@type/model/favorites-collection-list";
 import { response } from "@type/response";
 import useFetch from "@/common/hooks/useFetch";
+import ArticleItem from "@/components/common/ArticleList/ArticleItem";
 import ToolsBar from "@/components/page/collection/ToolsBar";
+import ProblemList from "@/components/page/problem/List";
+import useUserData from "@/store/user/user-data";
 
 const Collection: FC<{ data: RootObject }> = ({ data: propsData }) => {
   let params = useParams();
   let id = params.id as string;
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
 
   let {
     data: refetchData,
@@ -25,12 +26,12 @@ const Collection: FC<{ data: RootObject }> = ({ data: propsData }) => {
     () =>
       axios
         .get<response<RootObject>>(`/favorites/list/${id}`)
-        .then(res => res.data.data)
-        .catch(err => {
+        .then((res) => res.data.data)
+        .catch((err) => {
           console.log(err);
           return null;
         }),
-    { manual: true }
+    { manual: true },
   );
 
   let data = useMemo(() => refetchData || propsData, [propsData, refetchData]);
@@ -41,7 +42,7 @@ const Collection: FC<{ data: RootObject }> = ({ data: propsData }) => {
       children: (
         <>
           {data.article_list.length ? (
-            data.article_list.map(item => (
+            data.article_list.map((item) => (
               <ArticleItem
                 className="group"
                 key={item.id}
@@ -70,7 +71,7 @@ const Collection: FC<{ data: RootObject }> = ({ data: propsData }) => {
             <ProblemList
               className="group"
               data={data.problem_list}
-              topRight={id =>
+              topRight={(id) =>
                 userData?.id == data.author_data.id && (
                   <div className="hidden group-hover:block">
                     <ToolsBar refetch={refetch} belong_id={id} />
@@ -87,7 +88,7 @@ const Collection: FC<{ data: RootObject }> = ({ data: propsData }) => {
   ];
   return (
     <>
-      <main className="w-full p-2 bg-white">
+      <main className="w-full bg-white p-2">
         <Spin spinning={isLoading} tip="Loading...">
           <Tabs items={items}></Tabs>
         </Spin>

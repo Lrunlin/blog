@@ -1,7 +1,10 @@
-import axios from "@axios";
 import type { NextRequest } from "next/server";
+import axios from "@axios";
 
-export async function GET(res: NextRequest, { params: { id } }: { params: { id: string } }) {
+export async function GET(
+  res: NextRequest,
+  { params: { id } }: { params: { id: string } },
+) {
   if (!(id as string).endsWith(".css")) {
     return new Response(undefined, {
       status: 404,
@@ -10,7 +13,7 @@ export async function GET(res: NextRequest, { params: { id } }: { params: { id: 
 
   let content = await axios
     .get(`/theme/${(id as string).replace(/.css/, "")}`)
-    .then(res => res.data?.data?.content)
+    .then((res) => res.data?.data?.content)
     .catch(() => false);
 
   if (!content) {

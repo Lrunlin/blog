@@ -1,7 +1,7 @@
 import Joi from "joi";
+import verify from "@/common/middleware/verify/validator";
 import { fileName } from "@/common/verify/modules/file-name";
 import { urlAllowNull } from "@/common/verify/modules/url";
-import verify from "@/common/middleware/verify/validator";
 
 const schema = Joi.object({
   poster_file_name: fileName,

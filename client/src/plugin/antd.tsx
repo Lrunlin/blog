@@ -1,11 +1,12 @@
 "use client";
-import { useState, type FC, type ReactNode } from "react";
-import zhCN from "antd/locale/zh_CN";
-import { ConfigProvider } from "antd";
+
+import { type FC, type ReactNode, useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
-import { createCache, StyleProvider } from "@ant-design/cssinjs";
-import { doExtraStyle } from "@/styles/genAntdCss";
+import { ConfigProvider } from "antd";
+import { StyleProvider, createCache } from "@ant-design/cssinjs";
+import zhCN from "antd/locale/zh_CN";
 import useGetRawPath from "@/common/hooks/useGetRawPath";
+import { doExtraStyle } from "@/styles/genAntdCss";
 
 interface propsType {
   children: ReactNode;

@@ -1,10 +1,12 @@
 "use client";
-import axios from "@axios";
-import { Skeleton, Result, Table, Image, Button, message } from "antd";
+
 import { useRouter } from "next/navigation";
+import { Button, Image, Result, Skeleton, Table, message } from "antd";
+import axios from "@axios";
 import dayjs from "@dayjs";
-import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";
+import AdminLayout from "@/layout/Admin/Base";
+
 let positionMapping = {
   index: "首页",
   article: "文章页面",
@@ -15,7 +17,7 @@ function Position(position: keyof typeof positionMapping) {
 }
 const APP = () => {
   let { data, error, isLoading, setData } = useFetch(() =>
-    axios.get("/advertisement").then(res => res.data.data)
+    axios.get("/advertisement").then((res) => res.data.data),
   );
 
   let router = useRouter();
@@ -88,10 +90,10 @@ const APP = () => {
   ];
 
   function remove(id: string) {
-    axios.delete(`/advertisement/${id}`).then(res => {
+    axios.delete(`/advertisement/${id}`).then((res) => {
       if (res.data.success) {
         message.success(res.data.message);
-        setData((_data: any[]) => _data.filter(item => item.id != id));
+        setData((_data: any[]) => _data.filter((item) => item.id != id));
       } else {
         message.error(res.data.message);
       }

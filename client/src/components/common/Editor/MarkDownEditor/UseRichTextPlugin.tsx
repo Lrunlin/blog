@@ -1,8 +1,8 @@
-import useEditorMode from "@/store/common/editor-mode";
 import type { BytemdPlugin } from "bytemd";
+import useEditorMode from "@/store/common/editor-mode";
 
 const UseRichTextPlugin = (): BytemdPlugin => {
-  let setState = useEditorMode(s => s.setData);
+  let setState = useEditorMode((s) => s.setData);
 
   return {
     actions: [

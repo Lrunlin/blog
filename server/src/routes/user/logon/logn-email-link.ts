@@ -1,23 +1,28 @@
 import Router from "@koa/router";
-import { hasKey, removeKey, getUserData } from "@/common/modules/cache/email";
-import sign from "@/common/utils/auth/sign";
-import qs from "qs";
 import DB from "@/db";
+import Identicon from "identicon.js";
+import Joi from "joi";
+import qs from "qs";
+import sha1 from "sha1";
+import validator from "@/common/middleware/verify/validator";
+import { getUserData, hasKey, removeKey } from "@/common/modules/cache/email";
+import sign from "@/common/utils/auth/sign";
 import id from "@/common/utils/id";
 import { upload } from "@/common/utils/static";
-import Identicon from "identicon.js";
-import sha1 from "sha1";
-let router = new Router();
 
-import Joi from "joi";
-import validator from "@/common/middleware/verify/validator";
+let router = new Router();
 
 const schema = Joi.object({
   key: Joi.string().length(40).required().error(new Error("Key的格式错误")),
 });
 
-router.get("/logon/email", validator(schema), async ctx => {
-  function response(success: boolean, title: string, message?: string | string[], token?: string) {
+router.get("/logon/email", validator(schema), async (ctx) => {
+  function response(
+    success: boolean,
+    title: string,
+    message?: string | string[],
+    token?: string,
+  ) {
     let query = qs.stringify(
       {
         success,
@@ -28,7 +33,7 @@ router.get("/logon/email", validator(schema), async ctx => {
       },
       {
         arrayFormat: "repeat", //query中的数组中不携带索引值
-      }
+      },
     );
     ctx.status = 302;
     ctx.redirect(`${process.env.CLIENT_HOST}/result?${query}`);
@@ -58,8 +63,11 @@ router.get("/logon/email", validator(schema), async ctx => {
     folder: "avatar",
     file_name: `${id()}.webp`,
   })
-    .then(res => ({ success: true, fileName: (res as any).file_name as string }))
-    .catch(err => ({ success: false, errMes: err }));
+    .then((res) => ({
+      success: true,
+      fileName: (res as any).file_name as string,
+    }))
+    .catch((err) => ({ success: false, errMes: err }));
 
   if (!uploadResult.success) {
     response(false, `注册失败`, [(uploadResult as any).errMes, "请稍后在试"]);

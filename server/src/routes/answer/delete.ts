@@ -1,11 +1,11 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import verify from "@/common/verify/api-verify/answer/delete";
 import sequelize from "@/db/config";
 import transaction from "@/common/transaction/answer/delete";
+import verify from "@/common/verify/api-verify/answer/delete";
 
 let router = new Router();
-router.delete("/answer/:id", verify, async ctx => {
+router.delete("/answer/:id", verify, async (ctx) => {
   let t = await sequelize.transaction();
   //删除答案
   let result = await DB.Answer.destroy({
@@ -15,8 +15,8 @@ router.delete("/answer/:id", verify, async ctx => {
     },
     transaction: t,
   })
-    .then(row => row)
-    .catch(err => {
+    .then((row) => row)
+    .catch((err) => {
       ctx.status = 500;
       console.log(err);
       return false;

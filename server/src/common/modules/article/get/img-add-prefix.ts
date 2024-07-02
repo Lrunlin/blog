@@ -1,7 +1,11 @@
 import { load } from "cheerio";
 
 /**对于文章中的图片标签进行处理*/
-function setImageTag(content: string, prefix: "article" | "problem" | "answer", alt?: string) {
+function setImageTag(
+  content: string,
+  prefix: "article" | "problem" | "answer",
+  alt?: string,
+) {
   let $ = load(content);
   $("img").each((i, el) => {
     $(el)

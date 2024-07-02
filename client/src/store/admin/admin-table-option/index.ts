@@ -13,11 +13,13 @@ const initValues = {
 };
 
 type actionType = {
-  setData:(data: typeof initValues) =>any
+  setData: (data: typeof initValues) => any;
 };
 
-const useAdminTableOption = create<{ data: typeof initValues } & actionType>(set => ({
-  data: initValues,
-  setData: (data: typeof initValues) => set(() => ({data: data })),
-}));
+const useAdminTableOption = create<{ data: typeof initValues } & actionType>(
+  (set) => ({
+    data: initValues,
+    setData: (data: typeof initValues) => set(() => ({ data: data })),
+  }),
+);
 export default useAdminTableOption;

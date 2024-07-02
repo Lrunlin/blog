@@ -1,8 +1,8 @@
-import compose from "koa-compose";
+import { Context, Next } from "koa";
 import Joi from "joi";
-import validator from "@/common/middleware/verify/validatorAsync";
+import compose from "koa-compose";
 import authMiddleware from "@/common/middleware/auth";
-import { Next, Context } from "koa";
+import validator from "@/common/middleware/verify/validatorAsync";
 
 /** 验证是否存在该采纳*/
 async function verifyParams(ctx: Context, next: Next) {

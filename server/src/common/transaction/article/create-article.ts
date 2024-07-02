@@ -1,9 +1,13 @@
 import DB from "@/db";
-import id from "@/common/utils/id";
 import type { Transaction } from "sequelize/types";
+import id from "@/common/utils/id";
 
 /** 创建文章发布的事务处理*/
-async function transaction(article_id: number, author_id: number, t: Transaction) {
+async function transaction(
+  article_id: number,
+  author_id: number,
+  t: Transaction,
+) {
   /** 获取粉丝列表*/
   let funsList = await DB.Follow.findAll({
     where: {
@@ -16,7 +20,7 @@ async function transaction(article_id: number, author_id: number, t: Transaction
   });
 
   /** 生成批量创建通知的数据数组*/
-  let data = funsList.map(item => ({
+  let data = funsList.map((item) => ({
     id: id(),
     user_id: item.user_id,
     relation_id: article_id,

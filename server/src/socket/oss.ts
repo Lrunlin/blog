@@ -1,16 +1,16 @@
-import { Server } from "socket.io";
-import { server } from "@/index";
-import folderList from "@/common/utils/static/folderList";
-import redis from "@/common/utils/redis";
 import DB from "@/db";
-import { load } from "cheerio";
-import { Op } from "sequelize";
-import { v4 } from "uuid";
-import verify from "@/common/utils/auth/verify";
-import Cookie from "cookie";
+import { server } from "@/index";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
-import { listPrefix, deleteFile } from "@/common/utils/static";
+import { load } from "cheerio";
+import Cookie from "cookie";
+import { Server } from "socket.io";
+import { v4 } from "uuid";
+import { Op } from "sequelize";
+import verify from "@/common/utils/auth/verify";
+import redis from "@/common/utils/redis";
+import { deleteFile, listPrefix } from "@/common/utils/static";
+import folderList from "@/common/utils/static/folderList";
 
 function init() {
   redis.del("oss-key-code");
@@ -18,14 +18,14 @@ function init() {
   redis.set(
     "oss-key-list",
     JSON.stringify(
-      folderList.map(item => ({
+      folderList.map((item) => ({
         id: v4(),
         name: item.folder,
         oss_count: 0,
         database_count: 0,
         delete_count: 0,
-      }))
-    )
+      })),
+    ),
   );
 }
 
@@ -58,7 +58,7 @@ async function getOSSList(prefix: string) {
     const pipeline = await redis.pipeline();
     for (const item of result.items) {
       if (+new Date() - +item.create_time > 2_592_000_000 /*30天*/) {
-      // if (+new Date() - +item.create_time > 2_5 /*30天*/) {
+        // if (+new Date() - +item.create_time > 2_5 /*30天*/) {
         await pipeline.sadd(`imagelist-oss-${prefix}`, item.key);
       }
     }
@@ -92,12 +92,12 @@ async function getDataBaseList() {
         raw: true,
       });
       let valuesCover = rows
-        .filter(item => item.cover_file_name)
-        .map(item => item.cover_file_name!);
+        .filter((item) => item.cover_file_name)
+        .map((item) => item.cover_file_name!);
       pipeline.sadd(`imagelist-database-cover`, valuesCover);
 
       let valuesArticle = rows
-        .map(item => {
+        .map((item) => {
           let $ = load(item.content);
           return $("body img")
             .map((i, el) => $(el).attr("src"))
@@ -129,7 +129,7 @@ async function getDataBaseList() {
         offset: (offset - 1) * 2000,
       });
 
-      let values = rows.map(item => item.comment_pics!);
+      let values = rows.map((item) => item.comment_pics!);
 
       pipeline.sadd(`imagelist-database-comment`, values);
 
@@ -157,7 +157,7 @@ async function getDataBaseList() {
         attributes: ["avatar_file_name"],
       });
 
-      let values = rows.map(item => item.avatar_file_name);
+      let values = rows.map((item) => item.avatar_file_name);
 
       pipeline.sadd(`imagelist-database-avatar`, values);
 
@@ -187,7 +187,7 @@ async function getDataBaseList() {
       });
 
       let values = rows
-        .map(item => {
+        .map((item) => {
           let $ = load(item.content);
           return $("body img")
             .map((i, el) => $(el).attr("src"))
@@ -222,7 +222,7 @@ async function getDataBaseList() {
       });
 
       let values = rows
-        .map(item => {
+        .map((item) => {
           let $ = load(item.content);
           return $("body img")
             .map((i, el) => $(el).attr("src"))
@@ -255,7 +255,7 @@ async function getDataBaseList() {
         offset: (offset - 1) * 2000,
       });
 
-      let values = rows.map(item => item.poster_file_name);
+      let values = rows.map((item) => item.poster_file_name);
 
       pipeline.sadd(`imagelist-database-advertisement`, values);
 
@@ -283,7 +283,7 @@ async function getDataBaseList() {
         offset: (offset - 1) * 2000,
       });
 
-      let values = rows.map(item => item.logo_file_name);
+      let values = rows.map((item) => item.logo_file_name);
       pipeline.sadd(`imagelist-database-friendly-link`, values);
 
       await pipeline.exec();
@@ -340,7 +340,7 @@ io.use(async (socket, next) => {
 
   if (token) {
     verify(token)
-      .then(decode => {
+      .then((decode) => {
         if (decode.auth == 1) {
           next();
         }
@@ -352,8 +352,11 @@ io.use(async (socket, next) => {
     socket.emit("sign-out");
   }
 });
-io.on("connection", async socket => {
-  if ((await redis.get("oss-key-list")) && (await redis.get("oss-key-last_time"))) {
+io.on("connection", async (socket) => {
+  if (
+    (await redis.get("oss-key-list")) &&
+    (await redis.get("oss-key-last_time"))
+  ) {
     socket.emit("list", {
       time: await redis.get("oss-key-last_time"),
       data: JSON.parse((await redis.get("oss-key-list")) as string) as any[],
@@ -367,10 +370,10 @@ io.on("connection", async socket => {
       code == null
         ? "未开始"
         : +code == 0
-        ? "数据对比任务失败"
-        : +code == 1
-        ? "数据对比任务执行成功"
-        : "数据对比任务执行中",
+          ? "数据对比任务失败"
+          : +code == 1
+            ? "数据对比任务执行成功"
+            : "数据对比任务执行中",
     deleteCode: await redis.get("oss-key-delete_code"),
   });
 
@@ -396,22 +399,27 @@ io.on("connection", async socket => {
 
       // 获取完成 开始比对oss_count、database_count、delete_count;
       io.emit("message", { message: `开始比对并统计数量` });
-      let list = JSON.parse((await redis.get("oss-key-list")) as string) as any[];
+      let list = JSON.parse(
+        (await redis.get("oss-key-list")) as string,
+      ) as any[];
       for (const item of folderList) {
         let folder = item.folder;
         if (await redis.exists(`imagelist-oss-${folder}`)) {
           const length = await redis.scard(`imagelist-oss-${folder}`);
-          list.find(item => item.name == folder)!.oss_count = length;
+          list.find((item) => item.name == folder)!.oss_count = length;
         }
         if (await redis.exists(`imagelist-database-${folder}`)) {
           const length = await redis.scard(`imagelist-database-${folder}`);
-          list.find(item => item.name == folder)!.database_count = length;
+          list.find((item) => item.name == folder)!.database_count = length;
         }
       }
       for (const item of list) {
         if (item.oss_count) {
-          list.find(_item => _item.name == item.name)!.delete_count = (
-            await redis.sdiff(`imagelist-oss-${item.name}`, `imagelist-database-${item.name}`)
+          list.find((_item) => _item.name == item.name)!.delete_count = (
+            await redis.sdiff(
+              `imagelist-oss-${item.name}`,
+              `imagelist-database-${item.name}`,
+            )
           ).length;
         }
       }
@@ -460,22 +468,32 @@ io.on("connection", async socket => {
     }
     await redis.set("oss-key-delete_code", 2, "EX", 86400);
     io.emit("message", { message: `开始删除` });
-    io.emit("delete-schedule", { code: await redis.get("oss-key-delete_code") });
+    io.emit("delete-schedule", {
+      code: await redis.get("oss-key-delete_code"),
+    });
     try {
-      for (const item of JSON.parse((await redis.get("oss-key-list")) as string) as any[]) {
+      for (const item of JSON.parse(
+        (await redis.get("oss-key-list")) as string,
+      ) as any[]) {
         let keys = await redis.sdiff(
           `imagelist-oss-${item.name}`,
-          `imagelist-database-${item.name}`
+          `imagelist-database-${item.name}`,
         );
 
         for (let index = 0; index < Math.ceil(keys.length / 1000); index++) {
-          let list = keys.slice(index * 1000, (index + 1) * 1000).map(el => `${item.name}/${el}`);
+          let list = keys
+            .slice(index * 1000, (index + 1) * 1000)
+            .map((el) => `${item.name}/${el}`);
           await deleteFile(list);
-          io.emit("message", { message: `删除:开始 删除 ${item.name} ${index + 1}` });
+          io.emit("message", {
+            message: `删除:开始 删除 ${item.name} ${index + 1}`,
+          });
         }
       }
       await redis.set("oss-key-delete_code", 1, "EX", 86400);
-      io.emit("delete-schedule", { code: await redis.get("oss-key-delete_code") });
+      io.emit("delete-schedule", {
+        code: await redis.get("oss-key-delete_code"),
+      });
       init();
       let redisKeys = await redis.keys("imagelist-*");
       await redis.del(redisKeys);
@@ -483,7 +501,9 @@ io.on("connection", async socket => {
     } catch (error) {
       console.log(error);
       await redis.set("oss-key-delete_code", 0, "EX", 86400);
-      io.emit("delete-schedule", { code: await redis.get("oss-key-delete_code") });
+      io.emit("delete-schedule", {
+        code: await redis.get("oss-key-delete_code"),
+      });
       io.emit("message", { message: `删除失败` });
     }
   });

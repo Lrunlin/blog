@@ -1,5 +1,6 @@
 import Router from "@koa/router";
 import cache, { getDataAfter } from "@/common/modules/cache/type";
+
 let router = new Router();
 
 let data: any = {};
@@ -18,8 +19,8 @@ const defaultType = [
 // 在type缓存更新时重写缓存数据
 getDataAfter(() => {
   let _data = (cache.get("tree") as any[])
-    ?.filter(item => item.children.length)
-    .map(item => {
+    ?.filter((item) => item.children.length)
+    .map((item) => {
       return {
         id: item.id,
         name: item.name,
@@ -27,7 +28,7 @@ getDataAfter(() => {
           item.children.map((_item: any) => ({
             id: _item.id,
             name: _item.name,
-          }))
+          })),
         ),
       };
     });
@@ -35,7 +36,11 @@ getDataAfter(() => {
 });
 
 // 返回前台整个类型栏
-router.get("/tag-tree-client", async ctx => {
-  ctx.body = { success: true, message: "用户查询首页类型信息(树形结构)", data: data };
+router.get("/tag-tree-client", async (ctx) => {
+  ctx.body = {
+    success: true,
+    message: "用户查询首页类型信息(树形结构)",
+    data: data,
+  };
 });
 export default router;

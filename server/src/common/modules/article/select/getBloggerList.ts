@@ -10,7 +10,10 @@ async function getBloggerList(id: number) {
     where: { user_id: id, type: "user" },
     attributes: ["belong_id"],
   })
-    .then(rows => rows.map(item => item.toJSON().belong_id) as unknown as number[])
+    .then(
+      (rows) =>
+        rows.map((item) => item.toJSON().belong_id) as unknown as number[],
+    )
     .catch(() => [] as number[]);
 }
 export default getBloggerList;

@@ -1,19 +1,19 @@
 import { useState } from "react";
-import classNames from "classnames";
-import Image from "@/components/next/Image";
-import useUserData from "@/store/user/user-data";
 import { useParams } from "next/navigation";
-import { message, Badge } from "antd";
-import itemClassName from "../class";
-import { uncollection } from "@/request/collection";
+import { Badge, message } from "antd";
+import classNames from "classnames";
 import Modal from "@/components/common/CollectionModal";
+import Image from "@/components/next/Image";
 import userUserCurrentArticleData from "@/store/user/user-current-article-data";
+import useUserData from "@/store/user/user-data";
+import { uncollection } from "@/request/collection";
+import itemClassName from "../class";
 
 const Collection = () => {
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   let params = useParams();
   let id = params.id as string;
-  let currentArticleData = userUserCurrentArticleData(s => s);
+  let currentArticleData = userUserCurrentArticleData((s) => s);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   function unCollectionArticle() {
@@ -37,11 +37,15 @@ const Collection = () => {
           !userData || userData?.id == currentArticleData.data.author
             ? () => {}
             : currentArticleData.data.collection_state?.length == 1
-            ? unCollectionArticle
-            : () => setIsOpenModal(true)
+              ? unCollectionArticle
+              : () => setIsOpenModal(true)
         }
       >
-        <Badge count={currentArticleData.data.collection_count} color="#adb1b8" offset={[10, -10]}>
+        <Badge
+          count={currentArticleData.data.collection_count}
+          color="#adb1b8"
+          offset={[10, -10]}
+        >
           <Image
             src={
               currentArticleData.data.collection_state?.length
@@ -62,12 +66,12 @@ const Collection = () => {
             collection_state: [],
           });
         }}
-        onUpdate={checkList => {
+        onUpdate={(checkList) => {
           currentArticleData.updateData({
             collection_state: checkList,
           });
         }}
-        onCreate={checkList => {
+        onCreate={(checkList) => {
           currentArticleData.updateData({
             collection_count: currentArticleData.data.collection_count + 1,
             collection_state: checkList,

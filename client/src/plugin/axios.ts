@@ -8,7 +8,7 @@ const apiClient = axiosPlugin.create({
 
 // 请求拦截器
 apiClient.interceptors.request.use(
-  config => {
+  (config) => {
     // 客户端才修改请求头
     if (typeof window !== "undefined") {
       config.headers.authorization = cookie.get("token");
@@ -16,23 +16,26 @@ apiClient.interceptors.request.use(
     config.headers["Cache-Control"] = "no-cache";
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // 响应拦截器
 apiClient.interceptors.response.use(
-  response => {
+  (response) => {
     /**访问成功**/
     return response;
   },
-  error => {
+  (error) => {
     if (axiosPlugin.isCancel(error)) {
       return new Promise(() => {}); // 返回一个空 Promise 取消请求不触发 catch
     }
-    return Promise.reject({ ...error.response?.data, status: error.response?.status });
-  }
+    return Promise.reject({
+      ...error.response?.data,
+      status: error.response?.status,
+    });
+  },
 );
 
 export default apiClient;

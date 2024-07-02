@@ -1,18 +1,19 @@
 "use client";
-import { createContext, useRef, useContext } from "react";
+
+import { createContext, useContext, useRef } from "react";
 import { FC } from "react";
 import { StoreApi, useStore } from "zustand";
-
 import {
   UserDataStore,
-  createUserDataStore,
-  UserInfoType,
-  defaultInitState,
   UserInfoDataType,
+  UserInfoType,
+  createUserDataStore,
+  defaultInitState,
 } from "./store";
 
 export type { UserInfoDataType };
-export const UserDataStoreContext = createContext<StoreApi<UserDataStore> | null>(null);
+export const UserDataStoreContext =
+  createContext<StoreApi<UserDataStore> | null>(null);
 
 export interface UserDataStoreProviderProps {
   children: any;

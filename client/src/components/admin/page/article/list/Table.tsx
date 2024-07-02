@@ -1,17 +1,26 @@
-import axios from "@axios";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Table, Popover, Avatar, Modal, Button, Tooltip, message, DatePicker } from "antd";
 import Link from "next/link";
+import {
+  Avatar,
+  Button,
+  DatePicker,
+  Modal,
+  Popover,
+  Table,
+  Tooltip,
+  message,
+} from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+import axios from "@axios";
+import dayjs from "@dayjs";
+import classNames from "classnames";
 import useAdminArticleList from "@/store/admin/admin-article-list";
 import useAdminTableOption from "@/store/admin/admin-table-option";
-import classNames from "classnames";
-import dayjs from "@dayjs";
 
 const TableCom = () => {
   /** 文章列表数据 */
-  let articleList = useAdminArticleList(s => s.data);
+  let articleList = useAdminArticleList((s) => s.data);
   /** table的选择*/
-  let tableOption = useAdminTableOption(s => s);
+  let tableOption = useAdminTableOption((s) => s);
 
   const { confirm } = Modal;
   const destroyAll = () => {
@@ -25,7 +34,7 @@ const TableCom = () => {
       render: (text: any, item: any) => {
         return (
           <Popover content={text} trigger="hover">
-            <div className="whitespace-nowrap text-ellipsis overflow-hidden w-60">
+            <div className="w-60 overflow-hidden text-ellipsis whitespace-nowrap">
               <a target="_blank" href={`/article/${item.id}`}>
                 {text}
               </a>
@@ -41,7 +50,11 @@ const TableCom = () => {
       render: (author_data: any) => {
         return (
           <Link href={`/admin/user/${author_data.id}`}>
-            <Avatar src={author_data.avatar_url} style={{ verticalAlign: "middle" }} size="large">
+            <Avatar
+              src={author_data.avatar_url}
+              style={{ verticalAlign: "middle" }}
+              size="large"
+            >
               {author_data.name.substring(0, 1).toLocaleUpperCase()}
             </Avatar>
           </Link>
@@ -59,8 +72,8 @@ const TableCom = () => {
               {view_count < 1000
                 ? view_count
                 : view_count > 1000000
-                ? `${Math.ceil(view_count / 1000000)}M`
-                : `${Math.ceil(view_count / 1000)}K`}
+                  ? `${Math.ceil(view_count / 1000000)}M`
+                  : `${Math.ceil(view_count / 1000)}K`}
             </Tooltip>
           </>
         );
@@ -77,13 +90,17 @@ const TableCom = () => {
               return (
                 <div
                   className={classNames([
-                    "flex items-center bg-[#55acee] px-1.5 py-0.5 rounded-sm mb-2",
+                    "mb-2 flex items-center rounded-sm bg-[#55acee] px-1.5 py-0.5",
                     index && "ml-1",
                   ])}
                   key={item.id}
                 >
                   {item?.icon_url && (
-                    <img className="w-4 h-4 mr-1" src={item.icon_url} alt={item.name} />
+                    <img
+                      className="mr-1 h-4 w-4"
+                      src={item.icon_url}
+                      alt={item.name}
+                    />
                   )}
                   <span className="text-sm">{item.name}</span>
                 </div>
@@ -100,7 +117,11 @@ const TableCom = () => {
       className: "break-all",
       render: (text: any) => {
         return (
-          <Popover content={text} trigger="hover" overlayClassName="w-3/12 max-w-[300px] break-all">
+          <Popover
+            content={text}
+            trigger="hover"
+            overlayClassName="w-3/12 max-w-[300px] break-all"
+          >
             <div className="line-clamp-3">{text}</div>
           </Popover>
         );
@@ -133,14 +154,18 @@ const TableCom = () => {
                   maskClosable: true,
                   content: (
                     <div className="break-all">
-                      确定删除作者:<b>{item.author_data.name}</b>的文章:<b>{item.title}</b>
+                      确定删除作者:<b>{item.author_data.name}</b>的文章:
+                      <b>{item.title}</b>
                     </div>
                   ),
                   onOk() {
-                    axios.delete(`/article/${id}`).then(res => {
+                    axios.delete(`/article/${id}`).then((res) => {
                       if (res.data.success) {
                         message.success(res.data.message);
-                        tableOption.setData({ ...tableOption.data, key: +new Date() });
+                        tableOption.setData({
+                          ...tableOption.data,
+                          key: +new Date(),
+                        });
                       } else {
                         message.error(res.data.message);
                       }

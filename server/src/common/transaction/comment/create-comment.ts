@@ -1,5 +1,5 @@
-import type { Transaction } from "sequelize/types";
 import DB from "@/db";
+import type { Transaction } from "sequelize/types";
 import id from "@/common/utils/id";
 import map from "@/common/utils/map";
 
@@ -16,7 +16,7 @@ async function transaction(
   user_id: number,
   belong_id: number,
   type: "article" | "problem" | "answer",
-  t: Transaction
+  t: Transaction,
 ) {
   // 是对于评论的回复
   if (reply) {
@@ -28,8 +28,10 @@ async function transaction(
       transaction: t,
     }).catch(() => false as false);
 
-    if (!replyCommentData) return { success: false, message: "没有找到上级评论" }; // 没有查找到就返回false
-    if (replyCommentData.user_id == user_id) return { success: true, message: "上级评论为自己" }; //自己评论自己就直接返回true，不在创建通知
+    if (!replyCommentData)
+      return { success: false, message: "没有找到上级评论" }; // 没有查找到就返回false
+    if (replyCommentData.user_id == user_id)
+      return { success: true, message: "上级评论为自己" }; //自己评论自己就直接返回true，不在创建通知
 
     let result = await DB.Notice.create(
       {
@@ -40,15 +42,20 @@ async function transaction(
         is_read: 0,
         create_time: new Date(),
       },
-      { transaction: t }
+      { transaction: t },
     ).catch(() => false as false);
-    return { success: !!result, message: result ? "通知创建成功" : "通知创建失败" };
+    return {
+      success: !!result,
+      message: result ? "通知创建成功" : "通知创建失败",
+    };
   } else {
     //用于通知文章作者文章被评论
     let articleData = await map(type, ["author"]).db(belong_id);
 
-    if (!articleData) return { success: false, message: "创建通知时没有找到对应的作者" };
-    if (articleData.author == user_id) return { success: true, message: "本人评论无需创建通知" };
+    if (!articleData)
+      return { success: false, message: "创建通知时没有找到对应的作者" };
+    if (articleData.author == user_id)
+      return { success: true, message: "本人评论无需创建通知" };
     let result = await DB.Notice.create(
       {
         id: id(),
@@ -58,9 +65,12 @@ async function transaction(
         is_read: 0,
         create_time: new Date(),
       },
-      { transaction: t }
+      { transaction: t },
     ).catch(() => false as false);
-    return { success: !!result, message: result ? "通知创建成功" : "通知创建失败" };
+    return {
+      success: !!result,
+      message: result ? "通知创建成功" : "通知创建失败",
+    };
   }
 }
 

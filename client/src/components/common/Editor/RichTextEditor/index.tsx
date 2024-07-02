@@ -1,22 +1,22 @@
 "use client";
-import { useEffect, useRef, useState, memo } from "react";
-import type { FC } from "react";
-import type { editorPropsType } from "../Editor";
-import { message, List } from "antd";
-import useEditorMode from "@/store/common/editor-mode";
-import ReactWEditor from "wangeditor-for-react";
-import upload from "../upload";
-import axios from "@axios";
 
+import { memo, useEffect, useRef, useState } from "react";
+import type { FC } from "react";
+import { List, message } from "antd";
+import axios from "@axios";
 import classNames from "classnames";
+import ReactWEditor from "wangeditor-for-react";
+import useEditorMode from "@/store/common/editor-mode";
+import type { editorPropsType } from "../Editor";
+import upload from "../upload";
 import CodeEditor from "./CodeEditor";
 import type { event } from "./CodeEditor";
 
-const RechTextEditor: FC<editorPropsType> = memo(props => {
+const RechTextEditor: FC<editorPropsType> = memo((props) => {
   // 两个数组，用于记录按钮和下拉菜单是否全部移出
   const [showThemeListLayer, setShowThemeListLayer] = useState([false, false]);
   const editor = useRef<ReactWEditor | null>(null);
-  let setState = useEditorMode(s => s.setData);
+  let setState = useEditorMode((s) => s.setData);
 
   let codeEditorRef = useRef<event>(null);
 
@@ -38,7 +38,7 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
   useEffect(() => {
     axios
       .get("/theme")
-      .then(res => {
+      .then((res) => {
         setThemeList(res.data.data);
       })
       .catch(() => {});
@@ -83,10 +83,10 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
       document.querySelector(".w-e-toolbar")?.append(themeSwitch);
 
       themeSwitch.onmouseenter = () => {
-        setShowThemeListLayer(arr => [true, arr[1]]);
+        setShowThemeListLayer((arr) => [true, arr[1]]);
       };
       themeSwitch.onmouseleave = () => {
-        setShowThemeListLayer(arr => [false, arr[1]]);
+        setShowThemeListLayer((arr) => [false, arr[1]]);
       };
     }
     return () => {
@@ -100,15 +100,18 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
     <>
       <CodeEditor
         ref={codeEditorRef}
-        onFinish={val => {
+        onFinish={(val) => {
           editor.current?.editor?.cmd.do("insertHTML", `${val}<p/>`);
         }}
       />
-      <div className="relative" style={{ border: "1px solid #ccc", zIndex: 10 }}>
+      <div
+        className="relative"
+        style={{ border: "1px solid #ccc", zIndex: 10 }}
+      >
         {(showThemeListLayer[0] || showThemeListLayer[1]) && (
           <div
-            onMouseEnter={() => setShowThemeListLayer(arr => [arr[0], true])}
-            onMouseLeave={() => setShowThemeListLayer(arr => [arr[0], false])}
+            onMouseEnter={() => setShowThemeListLayer((arr) => [arr[0], true])}
+            onMouseLeave={() => setShowThemeListLayer((arr) => [arr[0], false])}
             className="bg-red-900"
           >
             <List
@@ -117,11 +120,11 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
               bordered
               key={props.defaultTheme}
               dataSource={themeList}
-              renderItem={item => (
+              renderItem={(item) => (
                 <List.Item
                   className={classNames(
                     "cursor-pointer hover:bg-gray-100",
-                    item.id == props.defaultTheme ? "bg-gray-100" : "bg-white"
+                    item.id == props.defaultTheme ? "bg-gray-100" : "bg-white",
                   )}
                   onClick={() => {
                     props.onSetTheme && props.onSetTheme(item.id);
@@ -145,13 +148,24 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
             excludeMenus: excludeKeys,
             showLinkImg: false,
             uploadImgMaxLength: 1,
-            uploadImgAccept: ["jpg", "jpeg", "png", "gif", "bmp", "webp", "svg"],
+            uploadImgAccept: [
+              "jpg",
+              "jpeg",
+              "png",
+              "gif",
+              "bmp",
+              "webp",
+              "svg",
+            ],
             uploadImgMaxSize: +process.env.UPLOAD_MAX_SIZE * 1024 * 1024,
-            customUploadImg: (Files: File[], insertImgFn: (val: string) => void) => {
-              upload(Files, props.target, val => {
+            customUploadImg: (
+              Files: File[],
+              insertImgFn: (val: string) => void,
+            ) => {
+              upload(Files, props.target, (val) => {
                 props.changePploadProgress(val);
               })
-                .then(res => {
+                .then((res) => {
                   if (res) {
                     insertImgFn(res.data.data.file_href);
                   }
@@ -164,7 +178,7 @@ const RechTextEditor: FC<editorPropsType> = memo(props => {
                 });
             },
           }}
-          onChange={html => {
+          onChange={(html) => {
             props.onChange && props.onChange(html);
           }}
         />

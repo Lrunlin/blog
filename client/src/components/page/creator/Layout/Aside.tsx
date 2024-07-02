@@ -1,10 +1,10 @@
 import { memo } from "react";
-import useUserData from "@/store/user/user-data";
-import Avatar from "@/components/common/Avatar";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "antd";
-import { useRouter, usePathname } from "next/navigation";
 import { Menu } from "antd";
 import { BookOutlined, HomeOutlined } from "@ant-design/icons";
+import Avatar from "@/components/common/Avatar";
+import useUserData from "@/store/user/user-data";
 
 let items = [
   { label: "首页", key: "", icon: <HomeOutlined /> },
@@ -21,7 +21,7 @@ let items = [
 
 /** 创作者中心的左侧导航*/
 const Aside = () => {
-  let userData = useUserData(s => s.data);
+  let userData = useUserData((s) => s.data);
   let router = useRouter();
   let pathname = usePathname();
 
@@ -31,7 +31,9 @@ const Aside = () => {
       const { key, children } = item;
       flattenedItems.push({ key, belongKey });
       if (children) {
-        flattenedItems = flattenedItems.concat(flattenItemsWithBelongKey(children, key));
+        flattenedItems = flattenedItems.concat(
+          flattenItemsWithBelongKey(children, key),
+        );
       }
     }
     return flattenedItems;
@@ -45,17 +47,26 @@ const Aside = () => {
   let keys = flattenItemsWithBelongKey(items);
 
   let defaultSelectedKeys: string = keys.find(
-    item => item.belongKey + item.key == pathname.replace("creator", "").replace(/\//g, "")
+    (item) =>
+      item.belongKey + item.key ==
+      pathname.replace("creator", "").replace(/\//g, ""),
   )?.key;
-  let defaultOpenKeys: string = keys.find(item => item.key == defaultSelectedKeys)?.belongKey;
+  let defaultOpenKeys: string = keys.find(
+    (item) => item.key == defaultSelectedKeys,
+  )?.belongKey;
 
   return (
-    <aside className="w-60 h-5/6 p-4 fixed shadow-sm bg-white flex flex-col">
+    <aside className="fixed flex h-5/6 w-60 flex-col bg-white p-4 shadow-sm">
       <div className="flex items-center">
-        <Avatar className="w-12 h-12" />
-        <div className="w-20 ml-2 text-lg truncate">{userData?.name}</div>
+        <Avatar className="h-12 w-12" />
+        <div className="ml-2 w-20 truncate text-lg">{userData?.name}</div>
       </div>
-      <Button type="primary" block className="mt-8" onClick={() => router.push("/article/editor")}>
+      <Button
+        type="primary"
+        block
+        className="mt-8"
+        onClick={() => router.push("/article/editor")}
+      >
         写文章
       </Button>
       <Button block className="mt-2" onClick={() => router.push("/theme")}>
@@ -63,7 +74,7 @@ const Aside = () => {
       </Button>
       <Menu
         rootClassName="!border-0"
-        className="flex-1 !mt-4"
+        className="!mt-4 flex-1"
         onClick={onClick}
         defaultSelectedKeys={[defaultSelectedKeys]}
         mode="inline"

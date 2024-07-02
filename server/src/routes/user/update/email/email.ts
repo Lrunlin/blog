@@ -1,9 +1,9 @@
 import Router from "@koa/router";
+import DB from "@/db";
 import Joi from "joi";
+import qs from "qs";
 import validator from "@/common/middleware/verify/validator";
 import { getUserEmail, removeKey } from "@/common/modules/cache/email";
-import qs from "qs";
-import DB from "@/db";
 
 const schema = Joi.object({
   key: Joi.string().length(40).required().error(new Error("干点正事")),
@@ -12,9 +12,13 @@ const schema = Joi.object({
 let router = new Router();
 
 // 接受修改用户邮箱字段的链接
-router.get("/user/update-email", validator(schema), async ctx => {
+router.get("/user/update-email", validator(schema), async (ctx) => {
   let key = ctx.query.key as string;
-  function response(success: boolean, title: string, message?: string | string[]) {
+  function response(
+    success: boolean,
+    title: string,
+    message?: string | string[],
+  ) {
     let query = qs.stringify({
       success: success,
       title: title,
@@ -36,7 +40,9 @@ router.get("/user/update-email", validator(schema), async ctx => {
     return;
   }
 
-  let emailCount = await DB.User.findOne({ where: { email: userData.newEmail } });
+  let emailCount = await DB.User.findOne({
+    where: { email: userData.newEmail },
+  });
   if (emailCount) {
     response(false, "该邮箱已经绑定了用户");
     return;
@@ -51,18 +57,21 @@ router.get("/user/update-email", validator(schema), async ctx => {
     return;
   }
 
-  await DB.User.update({ email: userData.newEmail }, { where: { email: userData.email } })
+  await DB.User.update(
+    { email: userData.newEmail },
+    { where: { email: userData.email } },
+  )
     .then(([res]) => {
       response(
         true,
         "修改成功",
         `用户:${_userData?.name}( ${(userData as any).email} ) 成功将邮箱修改为${
           userData?.newEmail
-        }`
+        }`,
       );
       removeKey(key);
     })
-    .catch(err => {
+    .catch((err) => {
       response(false, "修改失败", [
         `可能发生的情况:`,
         "1.有别的账号成功修改了该邮箱",

@@ -8,10 +8,10 @@ function deleteFile(images: string[]) {
       .deleteMulti(images, {
         quiet: true,
       })
-      .then(res => {
+      .then((res) => {
         success(res);
       })
-      .catch(err => {
+      .catch((err) => {
         error(err);
       });
   });

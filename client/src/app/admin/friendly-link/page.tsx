@@ -1,25 +1,26 @@
 "use client";
-import { useState, startTransition } from "react";
+
+import { startTransition, useState } from "react";
+import Link from "next/link";
 import {
+  Avatar,
+  Button,
+  Image,
+  Input,
+  Modal,
   Result,
   Table,
-  Avatar,
-  Image,
-  Button,
-  Modal,
-  Input,
-  message as messageAlert,
   Tooltip,
+  message as messageAlert,
 } from "antd";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import Link from "next/link";
-import AdminLayout from "@/layout/Admin/Base";
 import useFetch from "@/common/hooks/useFetch";
+import AdminLayout from "@/layout/Admin/Base";
 
 const LinkList = () => {
   let { data, error, isLoading, refetch } = useFetch(() =>
-    axios.get("/friendly-link").then(res => res.data.data)
+    axios.get("/friendly-link").then((res) => res.data.data),
   );
 
   if (error) {
@@ -31,7 +32,7 @@ const LinkList = () => {
   function remove(id: number) {
     axios
       .delete(`/friendly-link/${id}`, { params: { message: message } })
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           messageAlert.success(res.data.message);
           refetch();
@@ -43,7 +44,7 @@ const LinkList = () => {
           messageAlert.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         messageAlert.error(err.message);
       });
   }
@@ -51,7 +52,7 @@ const LinkList = () => {
   function adopt(id: number) {
     axios
       .put(`/friendly-link/${id}`)
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
           messageAlert.success(res.data.message);
           refetch();
@@ -59,7 +60,7 @@ const LinkList = () => {
           messageAlert.error(res.data.message);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         messageAlert.error(err.message);
       });
   }
@@ -82,7 +83,7 @@ const LinkList = () => {
       title: "网址",
       dataIndex: "url",
       render: (url: string) => (
-        <a href={url} target="_blank" className="w-48 block truncate">
+        <a href={url} target="_blank" className="block w-48 truncate">
           {url}
         </a>
       ),
@@ -118,7 +119,7 @@ const LinkList = () => {
             colorClass = "text-red-400";
           }
           return (
-            <div className={`${colorClass} font-bold cursor-pointer`}>
+            <div className={`${colorClass} cursor-pointer font-bold`}>
               {values.response_time}
               <span className="ml-1">ms</span>
             </div>
@@ -128,8 +129,11 @@ const LinkList = () => {
         return values.response_time ? (
           <ResponseTimeIndicator />
         ) : values.response_error ? (
-          <Tooltip placement="top" title={`连续请求错误:${values.response_error}次`}>
-            <span className="text-red-400 font-bold cursor-pointer">
+          <Tooltip
+            placement="top"
+            title={`连续请求错误:${values.response_error}次`}
+          >
+            <span className="cursor-pointer font-bold text-red-400">
               错误
               <span className="ml-1">
                 {values.response_error > 99 ? "99+" : values.response_error}
@@ -151,7 +155,9 @@ const LinkList = () => {
             <Button
               danger
               type="primary"
-              onClick={() => (item.user_data ? setDeleteLinkID(id) : remove(item.id))}
+              onClick={() =>
+                item.user_data ? setDeleteLinkID(id) : remove(item.id)
+              }
               icon={<DeleteOutlined />}
             >
               删除
@@ -175,7 +181,12 @@ const LinkList = () => {
   return (
     <AdminLayout>
       <div className="piece">
-        <Table loading={isLoading} rowKey="id" dataSource={data} columns={columns} />
+        <Table
+          loading={isLoading}
+          rowKey="id"
+          dataSource={data}
+          columns={columns}
+        />
       </div>
       <Modal
         title="确定删除友链"
@@ -187,7 +198,7 @@ const LinkList = () => {
       >
         <Input.TextArea
           value={message}
-          onChange={e => setMessage(e.target.value)}
+          onChange={(e) => setMessage(e.target.value)}
           placeholder="如果你填写了回复消息，系统会发送邮箱通知对应的站长友链已被删除"
           rows={5}
         />

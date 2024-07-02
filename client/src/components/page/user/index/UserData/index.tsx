@@ -1,18 +1,16 @@
 import type { FC } from "react";
+import { Alert } from "antd";
 import type { UserAttributes } from "@type/model-attribute";
-
+import Head from "@/components/next/Head";
+import Aside from "./Aside";
 import Header from "./Header";
 import Main from "./Main";
-import Aside from "./Aside";
-
-import Head from "@/components/next/Head";
-import { Alert } from "antd";
 
 const UserData: FC<{ data: UserAttributes }> = ({ data }) => {
   return (
     <>
       <Head title={`用户中心-${data.name}`} />
-      <div className="w-full mr-4">
+      <div className="mr-4 w-full">
         {data.state == 0 && (
           <Alert
             className="mb-4"
@@ -21,7 +19,7 @@ const UserData: FC<{ data: UserAttributes }> = ({ data }) => {
           />
         )}
         <Header data={data} />
-        <div className="p-7 bg-white mt-2 shadow-sm">
+        <div className="mt-2 bg-white p-7 shadow-sm">
           <Main />
         </div>
       </div>

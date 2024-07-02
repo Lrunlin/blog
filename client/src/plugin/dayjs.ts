@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
-import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
+import relativeTime from "dayjs/plugin/relativeTime";
+import weekday from "dayjs/plugin/weekday";
 
 dayjs.extend(relativeTime);
 dayjs.locale("zh-cn");

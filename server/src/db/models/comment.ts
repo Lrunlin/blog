@@ -17,7 +17,10 @@ export interface CommentAttributes {
 export type CommentPk = "id";
 export type CommentId = Comment[CommentPk];
 export type CommentOptionalAttributes = "reply" | "comment_pics";
-export type CommentCreationAttributes = Optional<CommentAttributes, CommentOptionalAttributes>;
+export type CommentCreationAttributes = Optional<
+  CommentAttributes,
+  CommentOptionalAttributes
+>;
 
 export class Comment
   extends Model<CommentAttributes, CommentCreationAttributes>
@@ -77,7 +80,9 @@ export class Comment
           comment: "评论中使用到的图片",
           get(this) {
             let comment_pics = this.getDataValue("comment_pics");
-            return comment_pics ? `${process.env.CDN}/comment/${comment_pics}` : comment_pics;
+            return comment_pics
+              ? `${process.env.CDN}/comment/${comment_pics}`
+              : comment_pics;
           },
         },
         is_review: {
@@ -102,7 +107,7 @@ export class Comment
             fields: [{ name: "id" }],
           },
         ],
-      }
+      },
     ) as typeof Comment;
   }
 }

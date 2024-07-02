@@ -1,11 +1,11 @@
 import Router from "@koa/router";
-import verify from "@/common/verify/api-verify/problem/list";
 import DB from "@/db";
-import getTagData from "@/common/modules/article/get/set-tag-data";
 import Sequelize from "@/db/config";
+import getTagData from "@/common/modules/article/get/set-tag-data";
+import verify from "@/common/verify/api-verify/problem/list";
 
 let router = new Router();
-router.get("/problem/page/:page", verify, async ctx => {
+router.get("/problem/page/:page", verify, async (ctx) => {
   let page = +ctx.params.page;
 
   await DB.Problem.findAndCountAll({
@@ -21,7 +21,9 @@ router.get("/problem/page/:page", verify, async ctx => {
       "update_time",
       "answer_id",
       [
-        Sequelize.literal(`(SELECT COUNT(id) FROM answer WHERE problem.id = answer.problem_id)`),
+        Sequelize.literal(
+          `(SELECT COUNT(id) FROM answer WHERE problem.id = answer.problem_id)`,
+        ),
         "answer_count",
       ],
     ],
@@ -33,16 +35,18 @@ router.get("/problem/page/:page", verify, async ctx => {
         message: `查询问答成功`,
         data: {
           total: count,
-          list: rows.map(row => {
+          list: rows.map((row) => {
             return {
               ...row.toJSON(),
-              tag: getTagData(row.toJSON().tag as unknown as number[], ["name"]),
+              tag: getTagData(row.toJSON().tag as unknown as number[], [
+                "name",
+              ]),
             };
           }),
         },
       };
     })
-    .catch(err => {
+    .catch((err) => {
       ctx.body = { success: false, message: "请求错误" };
       console.log(err);
     });

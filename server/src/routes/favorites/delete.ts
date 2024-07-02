@@ -1,21 +1,26 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import interger from "@/common/verify/integer";
-import auth from "@/common/middleware/auth";
 import sequelize from "@/db/config";
-import transaction from "@/common/transaction/favorites/delete";
 import stringArrayReplace from "@/db/utils/stringArrayReplace";
+import auth from "@/common/middleware/auth";
+import transaction from "@/common/transaction/favorites/delete";
+import interger from "@/common/verify/integer";
 
 let router = new Router();
 
 // 直接删除收藏夹
-router.delete("/favorites/:id", interger([], ["id"]), auth(0), async ctx => {
+router.delete("/favorites/:id", interger([], ["id"]), auth(0), async (ctx) => {
   let id = +ctx.params.id;
   let t = await sequelize.transaction();
   // 将collocation中的favorites_id置换掉
   let favoritesIDReplace = await stringArrayReplace(
-    { tableName: "Collection", field: "favorites_id", oldValue: id, newValue: "" },
-    { transaction: t }
+    {
+      tableName: "Collection",
+      field: "favorites_id",
+      oldValue: id,
+      newValue: "",
+    },
+    { transaction: t },
   );
   let _t = await transaction(t);
 
@@ -26,8 +31,8 @@ router.delete("/favorites/:id", interger([], ["id"]), auth(0), async ctx => {
     },
     transaction: t,
   })
-    .then(rows => !!rows)
-    .catch(err => {
+    .then((rows) => !!rows)
+    .catch((err) => {
       console.log(err);
       return false;
     });

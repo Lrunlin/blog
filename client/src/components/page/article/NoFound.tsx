@@ -1,8 +1,9 @@
-'use client';
-import Head from "@/components/next/Head";
-import Header from "@/components/common/Header";
-import { Button, Result } from "antd";
+"use client";
+
 import { useRouter } from "next/navigation";
+import { Button, Result } from "antd";
+import Header from "@/components/common/Header";
+import Head from "@/components/next/Head";
 
 /** 文章页面404*/
 const NoFound = () => {

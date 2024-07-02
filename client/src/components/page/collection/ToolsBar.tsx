@@ -1,12 +1,16 @@
 import { useState } from "react";
 import type { FC } from "react";
-import Modal from "@/components/common/CollectionModal";
-import useFetch from "@/common/hooks/useFetch";
-import { response } from "@type/response";
-import axios from "@axios";
-import { message, Popconfirm } from "antd";
 import { useParams } from "next/navigation";
-import { DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";
+import { Popconfirm, message } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import axios from "@axios";
+import { response } from "@type/response";
+import useFetch from "@/common/hooks/useFetch";
+import Modal from "@/components/common/CollectionModal";
 
 interface propsType {
   belong_id: number;
@@ -26,35 +30,38 @@ const ToolsBar: FC<propsType> = ({ belong_id, refetch }) => {
     () =>
       axios
         .get<response<number[]>>(`/collection/favorites/${belong_id}`)
-        .then(res => {
+        .then((res) => {
           setOpen(true);
           return res.data.data;
         })
-        .catch(err => {
+        .catch((err) => {
           message.error("获取失败");
           console.log(err);
           return null;
         }),
-    { manual: true }
+    { manual: true },
   );
 
   // 删除
-  let { isLoading: deleteCollectionIsLoading, refetch: deleteCollectionRefetch } = useFetch(
+  let {
+    isLoading: deleteCollectionIsLoading,
+    refetch: deleteCollectionRefetch,
+  } = useFetch(
     () =>
       axios
         .delete<response<number[]>>(`/collection/favorites/${belong_id}`, {
           params: { favorites_id: id },
         })
-        .then(res => {
+        .then((res) => {
           message.success("删除成功");
           refetch();
         })
-        .catch(err => {
+        .catch((err) => {
           message.error("删除失败");
           console.log(err);
           return null;
         }),
-    { manual: true }
+    { manual: true },
   );
   return (
     <>
@@ -77,7 +84,7 @@ const ToolsBar: FC<propsType> = ({ belong_id, refetch }) => {
         id={belong_id}
         type="article"
       />
-      <div className="flex items-center cursor-pointer">
+      <div className="flex cursor-pointer items-center">
         <div className="mr-4" onClick={favoritesListRefetch}>
           <EditOutlined />
           <span className="ml-0.5">转移</span>

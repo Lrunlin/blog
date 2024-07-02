@@ -1,5 +1,6 @@
-import redis from "@/common/utils/redis";
 import { v4 } from "uuid";
+import redis from "@/common/utils/redis";
+
 interface decodeType {
   id: number;
   auth: number;
