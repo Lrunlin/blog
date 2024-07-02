@@ -203,12 +203,7 @@ router.get("/problem/:id", verify, async ctx => {
               ),
               {
                 answer_list: _data.answer_list.map(item =>
-                  Object.assign(
-                    item,
-                    getCodeBlockLanguage(
-                      setImageTag(setExternalLink(item.content), "answer", data.title)
-                    )
-                  )
+                  Object.assign(item, getCodeBlockLanguage(setExternalLink(item.content)))
                 ),
               }
             )
