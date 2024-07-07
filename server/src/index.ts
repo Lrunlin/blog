@@ -1,8 +1,7 @@
-// 先关闭端口
+import moduleAlias from "module-alias";
 import Koa from "koa";
 import cors from "@koa/cors";
-//socket链接
-import socket from "@/socket";
+// 先关闭端口
 import { kill } from "cross-port-killer";
 //环境变量
 import dotenv from "dotenv";
@@ -10,14 +9,14 @@ import http from "http";
 import BodyParser from "koa-bodyparser";
 import staticFiles from "koa-static";
 // 变量别名
-import moduleAlias from "module-alias";
 import moment from "moment";
 import path from "path";
 //包装app保证http和socket监听同一端口
-import Routers from "@/common/modules/getAllRouter";
+import Routers from "./common/modules/getAllRouter";
 // 执行定时任务
-import start from "@/common/tasks";
-import { refreshUrls } from "./common/utils/static";
+import start from "./common/tasks";
+//socket链接
+import socket from "./socket";
 
 moduleAlias.addAlias("@", __dirname);
 
@@ -85,4 +84,3 @@ setTimeout(() => {
 setTimeout(() => {
   socket();
 }, 0);
-refreshUrls(["http://cdn-test.blogweb.cn/index.css"]);
