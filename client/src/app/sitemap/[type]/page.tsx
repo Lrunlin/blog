@@ -4,33 +4,49 @@ import { response } from "@type/response";
 import Base from "@/layout/Base";
 
 const SiteMap = async ({
-  params: { index },
+  searchParams: { page },
+  params: { type },
 }: {
-  params: { index: string };
+  searchParams: { page: string };
+  params: { type: "article" | "problem" };
 }) => {
-  if (isNaN(+index)) {
+  let index = Math.max(1, page ? +page : 0);
+
+  if (isNaN(+index) || !["article", "problem"].includes(type)) {
     new Response(undefined, { status: 404 });
     return;
   }
 
   let pageCount = await axios
-    .get("/sitemap")
+    .get(`/sitemap/${type}`)
     .then((res) => res.data.data.length);
   let data = await axios
-    .get<response<{ id: number; title: string }[]>>(`/sitemap/list/${index}`)
+    .get<
+      response<{ id: number; title: string }[]>
+    >(`/sitemap/list/${type}/${index}`)
     .then((res) => res.data.data);
 
   return (
     <Base>
       <div>
-        <div className="bg-white p-4">
+        <div className="flex justify-between bg-white p-4">
           <a
             className="text-gray-700"
             target="_blank"
-            href={`${process.env.NEXT_PUBLIC_HOST}/sitemap/index${index}.xml`}
+            href={`${process.env.NEXT_PUBLIC_HOST}/sitemap/${type}/index${index}.xml`}
           >
             SiteMap{index}.xml
           </a>
+          <div>
+            <a
+              className="text-gray-700"
+              target="_blank"
+              href={`${process.env.NEXT_PUBLIC_HOST}/sitemap/${type == "article" ? "problem" : "article"}`}
+            >
+              {type == "article" ? "问答" : "文章"}
+              站点地图
+            </a>
+          </div>
         </div>
         <main className="mt-4 flex w-full flex-wrap bg-white p-6">
           {data.map((item) => (
@@ -48,7 +64,7 @@ const SiteMap = async ({
           {new Array(pageCount).fill(null).map((_, index) => (
             <Link
               key={`sitemap-index-${index}`}
-              href={`/sitemap/${index + 1}`}
+              href={`/sitemap/${type}?page=${index + 1}`}
               className="mb-2 mr-4 w-[calc(100%/13)] rounded border border-solid border-gray-700 text-center text-gray-700"
             >
               {index + 1}页

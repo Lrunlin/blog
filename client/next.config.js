@@ -8,6 +8,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  // reactStrictMode: false,
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -23,7 +24,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  webpack: config => {
+  webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@type": path.resolve(__dirname, "./types"),
@@ -54,18 +55,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/sitemap/index:path*.xml",
-        destination: "/sitemap/index[index].xml",
-      },
-      {
-        source: "/sitemap/:path*",
-        destination: "/sitemap/[index]",
-        has: [
-          {
-            type: "query",
-            key: "index",
-          },
-        ],
+        source: "/sitemap/[type]/index:path*.xml",
+        destination: "/sitemap/[type]/index[index].xml",
       },
     ];
   },

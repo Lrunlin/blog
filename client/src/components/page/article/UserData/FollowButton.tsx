@@ -52,7 +52,7 @@ const SwitchButton: FC<propsType> = (props) => {
           请求错误
         </Button>
       ) : isLoading ? (
-        <div>加载中</div>
+        <Button>加载中</Button>
       ) : (
         <>
           <Button

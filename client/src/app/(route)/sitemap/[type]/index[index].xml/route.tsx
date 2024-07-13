@@ -1,18 +1,21 @@
 import { NextRequest } from "next/server";
 import axios from "@axios";
-import setSiteMap from "@/common/modules/sitemap/sitemap-list";
+import setSiteMap from "@/common/modules/sitemap/sitemap";
 
-export async function GET(res: NextRequest) {
-  let match = res.nextUrl.pathname.match(/\/sitemap\/index(\d+)\.xml/);
+export async function GET(
+  res: NextRequest,
+  { params }: { params: { type: string } },
+) {
+  let match = res.nextUrl.pathname.match(/index(\d+)\.xml/);
 
-  if (!match) {
+  if (!match || !["article", "problem"].includes(params.type)) {
     return new Response(undefined, {
       status: 400,
     });
   }
 
   let sitemap = await axios
-    .get(`/sitemap/${match[1]}`)
+    .get(`/sitemap/${params.type}/${match[1]}`)
     .then((res) => setSiteMap(res.data.data))
     .catch((err) => {
       console.log(err);

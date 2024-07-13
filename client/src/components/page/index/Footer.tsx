@@ -19,7 +19,7 @@ let list: listItemType[][] = [
       label: "友情链接",
     },
     {
-      href: "/sitemap/1",
+      href: "/sitemap/article",
       label: "站点地图",
     },
   ],

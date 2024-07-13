@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const searchParams = res.nextUrl.searchParams;
   const languages = searchParams.get("languages");
-  if (languages && ["js", "css"].includes(String(type))) {
+  if (["js", "css"].includes(String(type))) {
     let content = await axios
       .get(`/high-light/${type}`, {
         params: { languages: languages },

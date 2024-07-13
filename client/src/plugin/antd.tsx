@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, type ReactNode, useState } from "react";
+import { type FC, type ReactNode, useRef, useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import { ConfigProvider } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
@@ -18,8 +18,14 @@ const Antd: FC<propsType> = ({ children }) => {
   const [cache] = useState(() => createCache());
   let pathname = useGetRawPath();
 
+  const isServerInserted = useRef(false); //是否已经插入
   // 在服务器插入HTML
   useServerInsertedHTML(async () => {
+    if (isServerInserted.current) {
+      return;
+    }
+
+    isServerInserted.current = true;
     let fileName = antdFileNameMap[pathname];
 
     // 抽离为单个CSS文件

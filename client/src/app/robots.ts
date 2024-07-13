@@ -44,6 +44,9 @@ export default function robots(): MetadataRoute.Robots {
             "/forget-password",
           ],
         },
-        sitemap: `${process.env.NEXT_PUBLIC_HOST}/sitemap.xml`,
+        sitemap: [
+          `${process.env.NEXT_PUBLIC_HOST}/sitemap/article/index.xml`,
+          `${process.env.NEXT_PUBLIC_HOST}/sitemap/problem/index.xml`,
+        ],
       };
 }

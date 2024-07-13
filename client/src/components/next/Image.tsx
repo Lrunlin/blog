@@ -13,6 +13,7 @@ const Image: FC<ImageProps> = (props) => {
         loader={({ src, width, quality }) => {
           return `${process.env.CDN}${src}?w=${width}&q=${100}`;
         }}
+        priority={true}
       />
     </>
   );

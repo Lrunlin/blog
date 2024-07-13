@@ -1,32 +1,46 @@
 "use client";
 
-import type { FC } from "react";
+import { type FC, useRef } from "react";
+import { useServerInsertedHTML } from "next/navigation";
+import Script from "next/script";
 
 interface propsType {
   language: string[];
 }
 const HightLight: FC<propsType> = ({ language }) => {
+  // 在挂载结束后执行高亮，防止切换CSR页面后高亮效果丢失
   if (typeof window != "undefined" && language) {
-    document.getElementById("highLightScript")?.remove();
-    let script = document.createElement("script");
-    script.id = "highLightScript";
-    script.src = `${process.env.CDN}/static/high-light/js?languages=${language?.join(",")}`;
-    document.head.append(script);
+    setTimeout(() => {
+      // 不组合UI渲染等待栈清空后执行
+      (window as any)?.Prism?.highlightAll();
+    }, 0);
   }
+
+  const isServerInserted = useRef(false); //是否已经插入
+  useServerInsertedHTML(async () => {
+    if (isServerInserted.current) {
+      return;
+    }
+    isServerInserted.current = true;
+
+    return (
+      <link
+        rel="stylesheet"
+        href={`${process.env.CDN}/static/high-light/css`}
+      />
+    );
+  });
 
   return (
     <>
-      {
-        <>
-          <script
-            src={`${process.env.CDN}/static/high-light/js?languages=${language?.join(",")}`}
-          />
-          <link
-            rel="stylesheet"
-            href={`${process.env.CDN}/static/high-light/css?languages=${language.join(",")}`}
-          />
-        </>
-      }
+      <Script
+        id="highLightScript"
+        src={`${process.env.CDN}/static/high-light/js?languages=${language?.join(",")}`}
+      />
+      {/* <link
+        rel="stylesheet"
+        href={`/static/high-light/css?languages=${language.join(",")}`}
+      /> */}
       <style jsx global>
         {`
           .toolbar-item {
