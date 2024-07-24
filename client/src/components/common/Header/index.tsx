@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import Navigation from "./Navigation";
 import Search from "./Search";
@@ -8,6 +8,16 @@ import User from "./User";
 
 const Header = () => {
   let [isShrink, setIsShrink] = useState(false);
+
+  let first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      let scrollY =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      setIsShrink(scrollY > 600);
+      first.current = false;
+    }
+  }, []);
 
   useEffect(() => {
     const scrollSwitch = () => {

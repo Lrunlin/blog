@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 腾讯服务器
  Source Server Type    : MySQL
- Source Server Version : 80027 (8.0.27)
- Source Host           : localhost:3306
+ Source Server Version : 80036 (8.0.36)
+ Source Host           : 120.53.120.124:3306
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80027 (8.0.27)
+ Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 27/05/2024 17:08:44
+ Date: 20/07/2024 23:34:01
 */
 
 SET NAMES utf8mb4;
@@ -62,7 +62,8 @@ CREATE TABLE `article`  (
   `view_count` int NOT NULL DEFAULT 0 COMMENT '阅读次数',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最近一次更新的时间',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `useri_id`(`author` ASC) USING BTREE COMMENT '对作者ID进行所以，方便查询用户列表中的文章发布情况'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -105,7 +106,7 @@ CREATE TABLE `external_link`  (
   `href` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站域名',
   `create_time` datetime NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for favorites
@@ -225,8 +226,8 @@ CREATE TABLE `tag`  (
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'tag名称',
   `belong_id` bigint NULL DEFAULT NULL COMMENT '所属Type的ID',
   `icon_file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ICON文件名称',
-  `indexes` int NOT NULL COMMENT '索引值',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '标签介绍',
+  `indexes` int NOT NULL COMMENT '索引值',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
@@ -245,7 +246,7 @@ CREATE TABLE `theme`  (
   `indexes` int NOT NULL COMMENT '排序',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for user
@@ -254,12 +255,12 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` bigint NOT NULL COMMENT '用户ID',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '昵称',
-  `auth` int NOT NULL COMMENT '身份 0为用户1为管理员',
+  `auth` int NOT NULL COMMENT '身份',
   `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户邮箱',
   `github` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'GitHub ID',
   `qq` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'QQ号',
   `password` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '密码',
-  `state` int NOT NULL DEFAULT 1 COMMENT '状态 1为正常 0为注销',
+  `state` int NOT NULL DEFAULT 1 COMMENT '状态，（权限）',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '自我介绍',
   `site` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '个人网站',
   `unit` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '所属单位',

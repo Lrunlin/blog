@@ -65,6 +65,9 @@ const UserData = () => {
               {data.email && (
                 <Descriptions.Item label="邮箱">{data.email}</Descriptions.Item>
               )}
+              <Descriptions.Item label="文章数量">
+                {data.article_count}
+              </Descriptions.Item>
               <Descriptions.Item label="文章收藏数量">
                 {data.collection_count}
               </Descriptions.Item>

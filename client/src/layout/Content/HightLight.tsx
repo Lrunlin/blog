@@ -37,10 +37,6 @@ const HightLight: FC<propsType> = ({ language }) => {
         id="highLightScript"
         src={`${process.env.CDN}/static/high-light/js?languages=${language?.join(",")}`}
       />
-      {/* <link
-        rel="stylesheet"
-        href={`/static/high-light/css?languages=${language.join(",")}`}
-      /> */}
       <style jsx global>
         {`
           .toolbar-item {
