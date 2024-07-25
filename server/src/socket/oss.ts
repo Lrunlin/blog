@@ -59,7 +59,7 @@ async function getOSSList(prefix: string) {
     const pipeline = await redis.pipeline();
     for (const item of result.items) {
       if (+new Date() - +item.create_time > 2_592_000_000 /*30天*/) {
-      // if (+new Date() - +item.create_time > 1000) {
+        // if (+new Date() - +item.create_time > 1000) {
         await pipeline.sadd(`imagelist-oss-${prefix}`, item.key);
       }
     }
