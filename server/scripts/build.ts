@@ -1,6 +1,7 @@
 import fs from "fs";
+import { globSync } from "glob";
+import path from "path";
 import shell from "shelljs";
-import copyDir from "./modules/copyDir";
 import clearDir from "./modules/deleteDir";
 
 (async () => {
@@ -9,21 +10,35 @@ import clearDir from "./modules/deleteDir";
   fs.mkdirSync("dist");
   shell.exec("tsc");
 
-  await copyDir("public", "dist/public"); //复制public
-  await copyDir("src/views", "dist/src/views"); //复制public
-  fs.writeFileSync(
-    "dist/package.json",
-    fs.readFileSync("package.json").toString(),
-  );
-  fs.writeFileSync("dist/yarn.lock", fs.readFileSync("yarn.lock").toString());
-  fs.writeFileSync(
-    "dist/.env",
-    fs.readFileSync("env/.env.production").toString(),
-  );
-  fs.writeFileSync(
-    "dist/ecosystem.config.js",
-    fs.readFileSync("ecosystem.config.js").toString(),
-  );
+  //复制其他非TS文件（非TS文件tsc无法编译）
+  globSync(
+    [
+      "src/**/*",
+      "package.json",
+      "yarn.lock",
+      "ecosystem.config.js",
+      "public/**/*",
+    ],
+    {
+      ignore: ["src/**/*.ts", "scripts/**/*"],
+    },
+  ).forEach((item) => {
+    let filePath = path.normalize(path.join("dist", item));
+    if (!fs.existsSync(filePath)) {
+      if (fs.statSync(item).isFile()) {
+        // 如果是文件，确保路径中的所有目录都存在
+        const dirPath = path.dirname(filePath);
+        fs.mkdirSync(dirPath, { recursive: true });
+
+        fs.writeFileSync(filePath, fs.readFileSync(item));
+      } else {
+        fs.mkdirSync(filePath, { recursive: true });
+      }
+    }
+  });
+
+  fs.writeFileSync("dist/.env", fs.readFileSync("env/.env.production"));
+
   fs.renameSync("dist", "blog_server");
 
   console.log("打包完成");

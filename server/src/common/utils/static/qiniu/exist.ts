@@ -11,42 +11,38 @@ async function exist(
     qiniu.rs.statOp(process.env.OSS_BUCKET, item),
   );
 
-  return new Promise((resolve, reject) => {
-    bucketManager.batch(
-      statOperations,
-      function (err, respBody: any[], respInfo) {
-        if (err) {
-          reject({
-            success: false,
-            message: "文件系统响应失败，建议您先将文章保存在草稿箱，稍后在试。",
-          });
-          console.log(err);
+  return bucketManager
+    .batch(statOperations)
+    .then(({ data, resp }) => {
+      if (Math.floor(resp.statusCode! / 100) === 2) {
+        if (resp.statusCode === 200) {
+          return { success: true, message: "成功" };
         } else {
-          if (respInfo.statusCode == 200) {
-            resolve({ success: true, message: "成功" });
-          } else if (respInfo.statusCode == 298) {
-            resolve({
-              success: false,
-              message: `有${respBody.reduce((total, item) => {
-                if (item.code != 200) {
-                  return (total += 1);
-                } else {
-                  return total;
-                }
-              }, 0)}个文件不在文件系统内，请检查`,
-            });
-          } else {
-            reject({
-              success: false,
-              message: "文件系统响应失败，请稍后在试。",
-            });
-            console.log(respInfo.statusCode);
-            console.log(respBody);
-          }
+          return {
+            success: false,
+            message: `有${data.reduce((total, item) => {
+              if (item.code != 200) {
+                return (total += 1);
+              } else {
+                return total;
+              }
+            }, 0)}个文件不在文件系统内，请检查`,
+          };
         }
-      },
-    );
-  });
+      } else {
+        return {
+          success: false,
+          message: "文件系统响应失败，建议您先将文章保存在草稿箱，稍后在试。",
+        };
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return {
+        success: false,
+        message: "文件系统响应失败，建议您先将文章保存在草稿箱，稍后在试。",
+      };
+    });
 }
 
 export default exist;

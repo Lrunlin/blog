@@ -9,6 +9,7 @@ import { v4 } from "uuid";
 import { Op } from "sequelize";
 import verify from "@/common/utils/auth/verify";
 import redis from "@/common/utils/redis";
+import sleep from "@/common/utils/sleep";
 import { deleteFile, listPrefix } from "@/common/utils/static";
 import folderList from "@/common/utils/static/folderList";
 
@@ -53,12 +54,12 @@ async function getOSSList(prefix: string) {
     ossMarkerCount++;
     io.emit("message", { message: `OSS:抓取${prefix} 第${ossMarkerCount}` });
 
-    let result = await listPrefix(prefix, marker);
-
+    let result: any = await listPrefix(prefix, marker);
+    await sleep(500);
     const pipeline = await redis.pipeline();
     for (const item of result.items) {
       if (+new Date() - +item.create_time > 2_592_000_000 /*30天*/) {
-        // if (+new Date() - +item.create_time > 2_5 /*30天*/) {
+      // if (+new Date() - +item.create_time > 1000) {
         await pipeline.sadd(`imagelist-oss-${prefix}`, item.key);
       }
     }
@@ -480,10 +481,11 @@ io.on("connection", async (socket) => {
           `imagelist-database-${item.name}`,
         );
 
-        for (let index = 0; index < Math.ceil(keys.length / 1000); index++) {
+        for (let index = 0; index < Math.ceil(keys.length / 100); index++) {
           let list = keys
-            .slice(index * 1000, (index + 1) * 1000)
+            .slice(index * 100, (index + 1) * 100)
             .map((el) => `${item.name}/${el}`);
+          await sleep(200);
           await deleteFile(list);
           io.emit("message", {
             message: `删除:开始 删除 ${item.name} ${index + 1}`,

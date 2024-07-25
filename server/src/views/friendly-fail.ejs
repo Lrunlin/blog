@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
@@ -49,7 +49,9 @@
         <h1>友情链接通知</h1>
       </div>
       <div class="content">
-        <h2><%= state == 1 ? "您的友链链接被删除" : "您的友链链接互换申请失败" %></h2>
+        <h2>
+          <%= state == 1 ? "您的友链链接被删除" : "您的友链链接互换申请失败" %>
+        </h2>
         <div>站名: <%= site_name %> (<%= site_href %>)</div>
         <div>名称: <%= name %></div>
         <div>链接: <%= url %></div>

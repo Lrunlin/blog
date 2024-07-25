@@ -32,20 +32,32 @@ console.log = function () {
 
 dotenv.config({
   path: path.join(__dirname, `../.env`), // 配置文件路径
-  encoding: "utf8", // 编码方式，默认utf8
-  debug: false, // 是否开启debug，默认false
-}).parsed;
+});
 
 const app = new Koa();
 
 app.use(staticFiles("public"));
 app.use(BodyParser());
-
 app.use(cors());
 
 export const server = http.createServer(app.callback()); //包装app保证http和socket监听同一端口
 
 (async () => {
+  // 用于对400状态码的Joi自定义验证的error message 进行处理
+  app.use(async (ctx, next) => {
+    await next();
+    if (ctx.status == 400) {
+      let message = ctx?.body?.message;
+      if (message) {
+        const match = message.match(/^Error: (.*) \(/);
+        if (match && match[1]) {
+          const result = match[1];
+          ctx.body = Object.assign(ctx.body, { message: result });
+        }
+      }
+    }
+  });
+
   let routeCount = 0;
   Routers.forEach((item, index) => {
     import(item)

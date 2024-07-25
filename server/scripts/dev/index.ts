@@ -1,13 +1,12 @@
-import fs from "fs";
-import deleteDir from "../modules/deleteDir";
-import copyDir from "../modules/copyDir";
 import chokidar from "chokidar";
+import fs from "fs";
 import shell from "shelljs";
-
-import change from "./change";
-import remove from "./remove";
+import copyDir from "../modules/copyDir";
+import deleteDir from "../modules/deleteDir";
 import add from "./add";
 import addDir from "./addDir";
+import change from "./change";
+import remove from "./remove";
 import unlinkDir from "./unlinkDir";
 
 (async () => {
@@ -15,7 +14,13 @@ import unlinkDir from "./unlinkDir";
   await deleteDir("blog_server"); //清空blog_server
   fs.mkdirSync("dist"); //创建dist
   await copyDir("public", "dist/public"); //复制public
-  fs.writeFileSync("dist/.env", fs.readFileSync(`env/.env.development`).toString()); //复制环境变量文件
+  fs.writeFileSync(
+    "dist/.env",
+    fs.readFileSync(`env/.env.development`).toString(),
+  ); //复制环境变量文件
+
+  // 设置打包env的模板
+  let fileData = fs.readFileSync(`env/.env.development`).toString();
 
   // 开始执行tsc
   shell.exec("tsc");
@@ -28,18 +33,16 @@ import unlinkDir from "./unlinkDir";
   // 添加监听事件
   chokidar
     .watch("src")
-    .on("add", path => add(path))
-    .on("change", path => change(path))
-    .on("unlink", path => remove(path))
-    .on("addDir", path => addDir(path))
-    .on("unlinkDir", path => unlinkDir(path));
+    .on("add", (path) => add(path))
+    .on("change", (path) => change(path))
+    .on("unlink", (path) => remove(path))
+    .on("addDir", (path) => addDir(path))
+    .on("unlinkDir", (path) => unlinkDir(path));
 
-  // 设置打包env的模板
-  let fileData = fs.readFileSync(`env/.env.development`).toString();
   // 将字符串转为数组，对注释和变量内容进行处理后在转为字符串，写成文件
   let envString = fileData
     .split("\n")
-    .map(item => {
+    .map((item) => {
       if (item.startsWith("# ")) {
         return item;
       } else {
