@@ -53,6 +53,8 @@ export const server = http.createServer(app.callback()); //包装app保证http�
         if (match && match[1]) {
           const result = match[1];
           ctx.body = Object.assign(ctx.body, { message: result });
+        } else {
+          ctx.body.message = ctx.body.message.replace("Error: ", "");
         }
       }
     }
