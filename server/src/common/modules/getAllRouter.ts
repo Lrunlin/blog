@@ -1,10 +1,9 @@
 import { globSync } from "glob";
 import path from "path";
+import getFilePath from "./getFilePath";
 
-let dir = globSync(`**/*.js`, {
-  ignore: ["index.js"],
-  cwd: path.join(__dirname, "../../routes"),
-}).map((item) => {
-  return path.join(__dirname, "../../routes", item);
-});
-export default dir;
+export default getFilePath("getAllRouter", [__dirname, "../../routes"], () =>
+  globSync([`**/*.js`, `**/*.ts`], {
+    cwd: path.join(__dirname, "../../routes"),
+  }),
+);

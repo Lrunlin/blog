@@ -1,11 +1,15 @@
 import { globSync } from "glob";
-import path from "path";
+import getFilePath from "../modules/getFilePath";
 
 function start() {
   if ([undefined, "0"].includes(process.env.NODE_APP_INSTANCE)) {
-    let dir = globSync(`**/*.js`, { ignore: ["index.js"], cwd: __dirname });
-    dir.forEach((item) => {
-      import(path.join(__dirname, item)).then((res) => {
+    getFilePath("getTasks", [__dirname], () =>
+      globSync([`**/*.js`, `**/*.ts`], {
+        ignore: ["index.js", "index.ts"],
+        cwd: __dirname,
+      }),
+    ).forEach((item) => {
+      import(item).then((res) => {
         res.default && res.default();
       });
     });

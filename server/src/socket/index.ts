@@ -1,10 +1,14 @@
 import { globSync } from "glob";
-import path from "path";
+import getFilePath from "../common/modules/getFilePath";
 
 function start() {
-  let dir = globSync(`**/*.js`, { ignore: ["index.js"], cwd: __dirname });
-  dir.forEach((item) => {
-    import(path.join(__dirname, item));
+  getFilePath("getSocket", [__dirname], () =>
+    globSync([`**/*.js`, `**/*.ts`], {
+      ignore: ["index.js", "index.ts"],
+      cwd: __dirname,
+    }),
+  ).forEach((item) => {
+    import(item);
   });
 }
 export default start;

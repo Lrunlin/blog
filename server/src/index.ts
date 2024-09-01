@@ -1,38 +1,16 @@
-import moduleAlias from "module-alias";
 import Koa from "koa";
 import cors from "@koa/cors";
-// 先关闭端口
-import { kill } from "cross-port-killer";
-//环境变量
-import dotenv from "dotenv";
 import http from "http";
 import BodyParser from "koa-bodyparser";
 import staticFiles from "koa-static";
-// 变量别名
-import moment from "moment";
-import path from "path";
+import "./app";
+import { port } from "./app";
 //包装app保证http和socket监听同一端口
 import Routers from "./common/modules/getAllRouter";
 // 执行定时任务
 import start from "./common/tasks";
 //socket链接
 import socket from "./socket";
-
-moduleAlias.addAlias("@", __dirname);
-
-const originalConsoleLog = console.log;
-console.log = function () {
-  const stackTrace = new Error().stack as string;
-  const position = stackTrace.split("\n")[2].trim(); // 提取第三行的代码位置
-  originalConsoleLog(
-    `${moment().format("YYYY-MM-DD HH:mm:ss")}  ${position.replace("at Server.<anonymous>", "")}`,
-  );
-  originalConsoleLog.apply(console, arguments as any);
-};
-
-dotenv.config({
-  path: path.join(__dirname, `../.env`), // 配置文件路径
-});
 
 const app = new Koa();
 
@@ -70,24 +48,17 @@ export const server = http.createServer(app.callback()); //包装app保证http�
         } else {
           console.log(item, _route.default);
         }
-      })
-      .catch((err) => {
-        console.log(item, err);
-      });
-    if (Routers.length == index + 1) {
-      const port = 3000;
-      kill(port)
-        .catch(() => {
-          console.log(`端口3000关闭失败`);
-        })
-        .then(() => {
+        if (Routers.length == index + 1) {
           server.listen(port, function () {
             console.log(
               `项目运行于: ${port} 端口,共${index + 1}个路由文件,${routeCount}个路由`,
             );
           });
-        });
-    }
+        }
+      })
+      .catch((err) => {
+        console.log(item, err);
+      });
   });
 })();
 

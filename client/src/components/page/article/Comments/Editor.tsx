@@ -93,7 +93,6 @@ const Editor: FC<propsType> = (props) => {
       `commentInput-${props.id}`,
     ) as HTMLInputElement;
     let file = (dom.files as FileList)[0];
-    console.log(file);
 
     if (file.size >= 1024 * 1024 * process.env.UPLOAD_MAX_SIZE) {
       message.warning(`上传图片最大${process.env.UPLOAD_MAX_SIZE}MB`);
