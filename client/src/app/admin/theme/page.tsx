@@ -125,7 +125,7 @@ const List = () => {
                 title: "状态",
                 dataIndex: "state",
                 width: 100,
-                render: (state, option) =>
+                render: (state, option: any) =>
                   state ? (
                     <Tag icon={<CheckCircleOutlined />} color="success">
                       使用中

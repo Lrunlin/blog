@@ -1,3 +1,6 @@
+import "./app";
+//要第一行
+import { port } from "./app";
 import Koa from "koa";
 import cors from "@koa/cors";
 //socket链接
@@ -9,8 +12,6 @@ import staticFiles from "koa-static";
 import Routers from "@/common/modules/getAllRouter";
 // 执行定时任务
 import start from "@/common/tasks";
-import "./app";
-import { port } from "./app";
 
 const app = new Koa();
 

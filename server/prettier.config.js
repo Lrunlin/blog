@@ -6,6 +6,7 @@ module.exports = {
   semi: true,
   plugins: ["@trivago/prettier-plugin-sort-imports"],
   importOrder: [
+    "^./app$",//配置要第一行引入
     "^module-alias$", // Ensure module-alias is imported first
     'moduleAlias.addAlias("@", __dirname);', // Ensure any submodules of module-alias are imported next
     "^node$", // Node.js 模块
