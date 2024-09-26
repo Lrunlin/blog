@@ -72,7 +72,7 @@ const UserList = () => {
         return (
           <div>
             {item.github && (
-              <a href={item.github} target="_blank">
+              <a href={`https://github.com/${item.github}`} target="_blank">
                 <img
                   src="/icon/admin/github.svg"
                   alt="github图标"

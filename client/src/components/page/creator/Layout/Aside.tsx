@@ -58,7 +58,7 @@ const Aside = () => {
   return (
     <aside className="fixed flex h-5/6 w-60 flex-col bg-white p-4 shadow-sm">
       <div className="flex items-center">
-        <Avatar className="h-12 w-12" />
+        <Avatar className="h-12 w-12" notOpen={true} />
         <div className="ml-2 w-20 truncate text-lg">{userData?.name}</div>
       </div>
       <Button

@@ -7,6 +7,7 @@ import Menu from "./Menu";
 
 interface propsType {
   className?: string;
+  notOpen?: boolean;
 }
 
 /** 登录用户的头像（根据userData自动获取链接）*/
@@ -21,7 +22,7 @@ const Avatar_: FC<propsType> = memo((props) => {
           </>
         )}
         placement="bottomRight"
-        trigger={["click"]}
+        trigger={props.notOpen ? [] : ["click"]}
       >
         <img
           src={userData?.avatar_url}
@@ -29,7 +30,7 @@ const Avatar_: FC<propsType> = memo((props) => {
             "cursor-pointer",
             "rounded-full",
             "w-[30px]",
-            "h-[30]",
+            "h-[30px]",
             props.className,
           ])}
           alt="头像"

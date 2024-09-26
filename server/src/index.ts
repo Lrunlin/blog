@@ -1,16 +1,16 @@
 import Koa from "koa";
 import cors from "@koa/cors";
+//socket链接
+import socket from "@/socket";
 import http from "http";
 import BodyParser from "koa-bodyparser";
 import staticFiles from "koa-static";
+//包装app保证http和socket监听同一端口
+import Routers from "@/common/modules/getAllRouter";
+// 执行定时任务
+import start from "@/common/tasks";
 import "./app";
 import { port } from "./app";
-//包装app保证http和socket监听同一端口
-import Routers from "./common/modules/getAllRouter";
-// 执行定时任务
-import start from "./common/tasks";
-//socket链接
-import socket from "./socket";
 
 const app = new Koa();
 

@@ -37,7 +37,6 @@ const Layout: FC<propsType> = ({ children, className }) => {
               <main
                 className={classNames(["ml-4 w-[calc(100%-240px)]", className])}
               >
-                {" "}
                 {children}
               </main>
             </div>
