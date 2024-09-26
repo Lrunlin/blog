@@ -13,7 +13,8 @@ function getFilePath(
   const resolvePath = (item: string) => {
     // 动态拼接路径
     const fullPath = path.join(...pathSegments, item);
-    return OS.type().toLocaleLowerCase().includes("windows")
+
+    return process.env.ENV === "development"
       ? pathToFileURL(fullPath).href
       : fullPath;
   };
