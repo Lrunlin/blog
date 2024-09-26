@@ -9,7 +9,7 @@
 **文章针对系统进行简单的说明，并且对管理系统进行了展示
 [https://blogweb.cn/article/5488756264910](https://blogweb.cn/article/5488756264910)** 系统包含论文两篇
 
-**关于前端Next.js (2024/06)**
+**关于前端 Next.js (2024/06)**
 前端由 pages router 切换至 app router，如果想要使用 pages router 的版本,可以克隆[pages router 的最后一个版本](https://github.com/Lrunlin/blog/commit/9d837612d2bbc50b80248ec06b8af04f9c5ecf01)
 
 ```bash
@@ -46,7 +46,6 @@ _系统支持 JWT 和 Session 两种鉴权方式因为系统拥有账号注销�
     <img src="https://disk.blogweb.cn/me/qq.webp"  width=160 alt="QQ">
     <img src="https://disk.blogweb.cn/me/wechat.webp" width=160 alt="微信">
 </div>
-
 
 ## 其他版本
 
@@ -122,7 +121,9 @@ _如果在安装时出现了`sharp`插件安装失败的问题，可以翻墙使
 
 本站使用宝塔 Linux 进行网站部署,对于不同开发者来说生产环境服务器不同。如果你在项目部署时遇到了问题可以通过顶部的联系方式联系我。
 
-项目同时使用了 pm2 和 socket.io 所以 pm2 要替换为@socket.io/pm2，安装过程见 install.bat。详情见[scoket.io 官网相关内容](https://socket.io/zh-CN/docs/v4/pm2/)
+项目同时使用了 pm2 和 socket.io 所以 pm2 要替换为全局安装`@socket.io/pm2`，安装过程见 install.bat。详情见[scoket.io 官网相关内容](https://socket.io/zh-CN/docs/v4/pm2/) ,若在生产环境出现错误无法启动请检查 @socket.io/pm2 的安装情况。
+
+若出现 sharp 插件报错请根据报错信息检查 Node.js 版本或者排除是否需要根据信息安装 os=linux 版本的 sharp 插件。
 
 ## 服务器推荐
 
