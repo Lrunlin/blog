@@ -20,7 +20,7 @@
     "@emoji-mart/react": "^1.0.0",
     "@uiw/codemirror-theme-vscode": "^4.21.11",
     "@uiw/react-codemirror": "^4.21.11",
-    "antd": "5.21.0",
+    "antd": "5.19.0",
     "antd-img-crop": "^4.12.2",
     "axios": "^1.5.0",
     "classnames": "^2.3.1",
