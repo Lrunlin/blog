@@ -3,11 +3,15 @@ import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
 import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 
-function option(data: { value: number; name: string }[]) {
+
+function option(
+  dataCPU: { value: number; name: string }[],
+  dataMemory: { value: number; name: string }[],
+) {
   return {
     title: {
-      text: "文章数量分析",
-      left: 0,
+      text: "实例状况 CPU|内存占用",
+      left: vw(30),
       top: 0,
       textStyle: {
         fontSize: vw(20),
@@ -26,24 +30,36 @@ function option(data: { value: number; name: string }[]) {
       formatter: "{b} <br/> {c} ({d}%)",
     },
     legend: {
-      orient: "vertical",
-      top: vw(30),
-      left: 0,
-      textStyle: {
-        fontSize: vw(13, 12),
-        color: "white",
-      },
+      show: false,
     },
     label: {
-      color: "white", // 改变标示文字的颜色
-      fontSize: vw(13, 12),
+      show: false,
     },
+    color: ["#FF0000", "#00CC00"],
     series: [
       {
         type: "pie",
-        radius: "70%",
-        data: data,
-        top: vw(-10),
+        radius: ["50%", "60%"],
+        data: dataCPU,
+        // top: vw(-10),
+        left: vw(-240),
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: "rgba(0, 0, 0, 0.5)",
+          },
+        },
+        label: {
+          show: false,
+          position: "center",
+        },
+      },
+      {
+        type: "pie",
+        radius: ["50%", "60%"],
+        data: dataMemory,
+        // top: vw(-10),
         left: vw(140),
         emphasis: {
           itemStyle: {
@@ -52,24 +68,37 @@ function option(data: { value: number; name: string }[]) {
             shadowColor: "rgba(0, 0, 0, 0.5)",
           },
         },
+        label: {
+          show: false,
+          position: "center",
+        },
       },
     ],
   };
 }
 
-/** 文章饼状图统计*/
+/** 实例饼状图统计*/
 const Article = () => {
   let _data = userAdminStatisticsData((s) => s.data);
   let DOM = useRef<HTMLDivElement>(null);
-  let data = _data.article;
+  let data = _data.instance_data;
   useEffect(() => {
     echarts.init(DOM.current as HTMLDivElement).setOption(
-      option([
-        { value: data.admin_reprint_count, name: "管理员转载文章" },
-        { value: data.admin_not_reprint_count, name: "管理员原创文章" },
-        { value: data.user_reprint_count, name: "用户转载文章" },
-        { value: data.user_not_reprint_count, name: "用户原创文章" },
-      ]),
+      option(
+        [
+          { value: data.cpu, name: "该项目占用CPU(%)" },
+          { value: 100 - data.cpu, name: "" },
+        ],
+        [
+          { value: data.memory, name: "该项目占用内存(MB)" },
+          {
+            value: +((data.memory_total - data.memory) / 1024 / 1024).toFixed(
+              2,
+            ),
+            name: "",
+          },
+        ],
+      ),
     );
   }, [_data]);
 

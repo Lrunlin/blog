@@ -1,8 +1,10 @@
 export interface Article {
-  admin_reprint_count: number;
-  admin_not_reprint_count: number;
-  user_reprint_count: number;
-  user_not_reprint_count: number;
+  article_count: number;
+}
+export interface Instance_data {
+  cpu: number;
+  memory: number;
+  memory_total: number;
 }
 
 export interface Type {
@@ -53,6 +55,7 @@ export interface Referer {
 }
 
 export interface statisticsDataType {
+  instance_data:Instance_data;
   article: Article;
   type: Type;
   user: User;

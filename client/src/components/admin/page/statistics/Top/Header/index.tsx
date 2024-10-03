@@ -15,13 +15,20 @@ const Header: FC = () => {
   return (
     <div className="flex justify-between">
       <Container
-        title="类型个数"
-        data={<AnimateNumer number={data.type.type_count} />}
+        title="文章个数"
+        data={<AnimateNumer number={data.article.article_count} />}
       />
       <Container
-        title="标签个数"
-        data={<AnimateNumer number={data.type.tag_count} />}
+        title="类型|标签个数"
+        data={
+          <>
+            <AnimateNumer number={data.type.type_count} />
+            <span className="mx-1">|</span>
+            <AnimateNumer number={data.type.tag_count} />
+          </>
+        }
       />
+
       <Container
         title="用户个数"
         data={<AnimateNumer number={data.user.user_count} />}

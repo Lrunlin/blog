@@ -10,12 +10,15 @@ if (!fs.existsSync(logDirectory)) {
 module.exports = {
   apps: [
     {
-      name: "blog-server",
-      args: process.env.npm_lifecycle_event == "start:debug" ? "--inspect=0.0.0.0:9229" : undefined,
+      name: "blog-server", //不要修改
+      args:
+        process.env.npm_lifecycle_event == "start:debug"
+          ? "--inspect=0.0.0.0:9229"
+          : undefined,
       script: "./src/index.js",
       exec_mode: "cluster",
       instances: 2,
-      max_memory_restart: "600M",
+      max_memory_restart: "1500M",
       listen_timeout: 3000,
       min_uptime: "60s",
       max_restarts: 0,

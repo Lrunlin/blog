@@ -1212,6 +1212,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/pidusage@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.npmmirror.com/@types/pidusage/-/pidusage-2.0.5.tgz#ec8477720e390b78e3d88b7b522d9e2d4c7995a8"
+  integrity sha512-MIiyZI4/MK9UGUXWt0jJcCZhVw7YdhBuTOuqP/BjuLDLZ2PmmViMIQgZiWxtaMicQfAz/kMrZ5T7PKxFSkTeUA==
+
 "@types/qs@*":
   version "6.9.15"
   resolved "https://registry.npmmirror.com/@types/qs/-/qs-6.9.15.tgz#adde8a060ec9c305a82de1babc1056e73bd64dce"
@@ -3523,7 +3528,7 @@ pidusage@^2.0.21:
   dependencies:
     safe-buffer "^5.2.1"
 
-pidusage@~3.0:
+pidusage@^3.0.2, pidusage@~3.0:
   version "3.0.2"
   resolved "https://registry.npmmirror.com/pidusage/-/pidusage-3.0.2.tgz#6faa5402b2530b3af2cf93d13bcf202889724a53"
   integrity sha512-g0VU+y08pKw5M8EZ2rIGiEBaB8wrQMjYGFfW2QVIfyT8V+fq8YFLkvlz4bz5ljvFDJYNFCWT3PWqcRr2FKO81w==
