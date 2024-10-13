@@ -51,13 +51,6 @@ const Account = () => {
           </div>
           <div className="flex h-14 items-center justify-between px-4">
             <div className="flex">
-              <div className="w-14">QQ:</div>
-              <div>{data.qq || "未绑定"}</div>
-            </div>
-            <div className="cursor-pointer text-blue-400">换绑</div>
-          </div>
-          <div className="flex h-14 items-center justify-between px-4">
-            <div className="flex">
               <div className="w-14">GitHub:</div>
               <div>{data.github || "未绑定"}</div>
             </div>

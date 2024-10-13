@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Avatar, Divider, Skeleton } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
@@ -35,7 +34,11 @@ const Index = () => {
           <Divider />
           {data ? (
             <div className="flex cursor-pointer justify-between">
-              <Link href="/admin/statistics" className="text-center">
+              <a
+                target="_blank"
+                href="/admin/statistics"
+                className="text-center"
+              >
                 <Image
                   width={48}
                   height={48}
@@ -43,7 +46,7 @@ const Index = () => {
                   alt="data-icon"
                 />
                 <div className="mt-1"> 数据分析</div>
-              </Link>
+              </a>
               <a
                 className="block text-center"
                 href={data?.repository_data?.html_url}

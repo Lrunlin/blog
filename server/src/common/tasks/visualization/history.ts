@@ -5,20 +5,19 @@ interface refererType {
   refererResult: string;
   count: number;
 }
-/** 访问数量*/
-let visits: { time: string; view_count: number; ip_count: number }[] =
-  new Array(7).fill(0);
-/** 访问来源*/
-let referer: { [key: refererType["refererResult"]]: refererType } = {};
-/** 文章排行*/
-let articleRanking: { id: number; title: string; view_count: number }[] | null =
-  [];
+
 /** 通过Redis阅读记录获取七日内访问量、作者排行榜、访问来源统计*/
 async function setVisitsData() {
-  visits.length = 0;
+  /** 访问数量*/
+  let visits: { time: string; view_count: number; ip_count: number }[] =
+    new Array(7).fill(0);
+  /** 访问来源*/
+  let referer: { [key: refererType["refererResult"]]: refererType } = {};
+  /** 文章排行*/
+  let articleRanking:
+    | { id: number; title: string; view_count: number }[]
+    | null = [];
   let _articleRanking: { [key: string]: number } = {};
-  //清空
-  referer = {};
   /** 用来保存IP记录*/
   let ipHistory: { time: string; ip: string[] }[] = [];
   for (const key of await redis.keys("history-article*")) {
@@ -60,6 +59,7 @@ async function setVisitsData() {
   //只保留7日内站点访问量(处理可能会出现的8个日期的问题)
   visits = visits
     .sort((a, b) => +new Date(a.time) - +new Date(b.time))
+    .filter((item) => item)
     .slice(-7)
     .map((item) => ({ ...item, time: item.time.substring(5) }));
   /** 处理统计好的IP数据*/

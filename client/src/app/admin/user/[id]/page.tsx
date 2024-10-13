@@ -72,7 +72,7 @@ const UserData = () => {
                 {data.collection_count}
               </Descriptions.Item>
               <Descriptions.Item label="关注者数量">
-                {data.followee_count}
+                {data.followe_count}
               </Descriptions.Item>
               <Descriptions.Item label="粉丝数量">
                 {data.follower_count}

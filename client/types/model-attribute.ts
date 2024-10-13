@@ -8,7 +8,6 @@ export interface TagAttributes {
   indexes: number;
 }
 
-
 export interface ArticleAttributes {
   id: number;
   title: string;
@@ -41,7 +40,6 @@ export interface UserAttributes {
   auth: number;
   email?: string;
   github?: string;
-  qq?: string;
   password: string;
   state?: number;
   description?: string;
@@ -55,7 +53,7 @@ export interface UserAttributes {
   /** 被多少人关注*/
   follower_count: number;
   /** 关注了多少人*/
-  followee_count: number;
+  followe_count: number;
   create_time: string;
 }
 export interface FollowAttributes {

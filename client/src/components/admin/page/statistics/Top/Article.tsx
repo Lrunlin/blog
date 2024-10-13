@@ -3,7 +3,6 @@ import * as echarts from "echarts";
 import vw from "@/common/utils/vw";
 import userAdminStatisticsData from "@/store/admin/admin-statistics-data";
 
-
 function option(
   dataCPU: { value: number; name: string }[],
   dataMemory: { value: number; name: string }[],

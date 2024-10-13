@@ -53,7 +53,7 @@ const UserList = () => {
     },
     {
       title: "关注",
-      dataIndex: "followee_count",
+      dataIndex: "followe_count",
       width: 40,
     },
     {
@@ -88,17 +88,6 @@ const UserList = () => {
                   className="mr-4 w-5 cursor-pointer"
                 />
               </a>
-            )}
-            {item.qq && (
-              <img
-                onClick={() => {
-                  copy(item.qq);
-                  message.success("复制成功");
-                }}
-                src="/icon/admin/QQ.svg"
-                alt="qq icon"
-                className="mr-4 w-5 cursor-pointer"
-              />
             )}
           </div>
         );

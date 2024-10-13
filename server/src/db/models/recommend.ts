@@ -57,12 +57,12 @@ export class Recommend
           comment: "文章ID",
         },
         title: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING(200),
           allowNull: false,
           comment: "文章标题",
         },
         description: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING(240),
           allowNull: false,
           comment: "文章介绍",
         },

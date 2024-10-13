@@ -33,7 +33,7 @@ router.get("/user/data/:id", interger([], ["id"]), async (ctx) => {
           Sequelize.literal(
             `(SELECT COUNT(*) FROM follow WHERE follow.user_id = user.id)`,
           ),
-          "followee_count",
+          "followe_count",
         ],
       ],
     },

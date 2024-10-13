@@ -49,7 +49,7 @@ export class Problem
           comment: "ID",
         },
         title: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING(200),
           allowNull: false,
           comment: "问题题目",
         },

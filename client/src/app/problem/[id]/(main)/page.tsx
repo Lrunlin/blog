@@ -1,4 +1,5 @@
 import { cookies, headers } from "next/headers";
+import { notFound } from "next/navigation";
 import axios from "@axios";
 import readingRecords from "@/common/modules/readingRecords";
 import HightLight from "@/layout/Content/HightLight";
@@ -16,7 +17,7 @@ const Problem = async ({ params: { id } }: { params: { id: string } }) => {
     .catch((err) => null);
 
   if (!data) {
-    new Response(undefined, { status: 404 });
+    notFound();
   } else {
     readingRecords(header, id, "problem");
   }

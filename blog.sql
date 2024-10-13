@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 腾讯服务器
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80036 (8.0.36)
- Source Host           : 120.53.120.124:3306
+ Source Server Version : 80027 (8.0.27)
+ Source Host           : localhost:3306
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80036 (8.0.36)
+ Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 20/07/2024 23:34:01
+ Date: 08/10/2024 16:26:16
 */
 
 SET NAMES utf8mb4;
@@ -50,8 +50,8 @@ CREATE TABLE `answer`  (
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`  (
   `id` bigint NOT NULL COMMENT '文章ID',
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章介绍',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
+  `description` varchar(240) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章介绍',
   `tag` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标签',
   `author` bigint NOT NULL COMMENT '发布者ID',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章内容',
@@ -63,7 +63,8 @@ CREATE TABLE `article`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '最近一次更新的时间',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `useri_id`(`author` ASC) USING BTREE COMMENT '对作者ID进行所以，方便查询用户列表中的文章发布情况'
+  INDEX `useri_id`(`author` ASC) USING BTREE COMMENT '对作者ID进行索引，方便查询用户列表中的文章发布情况',
+  INDEX `state`(`state` ASC) USING BTREE COMMENT '可以更快查询到文章和草稿数量 用于大屏'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -77,7 +78,9 @@ CREATE TABLE `collection`  (
   `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'article或者problem',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '收藏时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `belong_id`(`belong_id` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '收藏表，对问题和文章进行收藏' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -94,7 +97,9 @@ CREATE TABLE `comment`  (
   `comment_pics` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论中使用到的图片',
   `is_review` tinyint NOT NULL COMMENT '是否已经审查了',
   `create_time` datetime NOT NULL COMMENT '评论时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `belong_id`(`belong_id` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表，存储文章、问题、答案的评论' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -132,7 +137,9 @@ CREATE TABLE `follow`  (
   `belong_id` bigint NOT NULL COMMENT '被关注的ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '关注时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `belong_id`(`belong_id` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '关注表，用来关注问题或者用户' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -185,7 +192,7 @@ CREATE TABLE `notice`  (
 DROP TABLE IF EXISTS `problem`;
 CREATE TABLE `problem`  (
   `id` bigint NOT NULL COMMENT 'ID',
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题题目',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题题目',
   `tag` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'tag类型',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题内容',
   `author` bigint NOT NULL COMMENT '发布人ID',
@@ -203,8 +210,8 @@ CREATE TABLE `problem`  (
 DROP TABLE IF EXISTS `recommend`;
 CREATE TABLE `recommend`  (
   `id` bigint NOT NULL COMMENT '文章ID',
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章介绍',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
+  `description` varchar(240) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章介绍',
   `author` json NOT NULL COMMENT '文章发布者信息',
   `cover` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面地址',
   `tag` json NOT NULL COMMENT '文章类型',
@@ -258,7 +265,6 @@ CREATE TABLE `user`  (
   `auth` int NOT NULL COMMENT '身份',
   `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户邮箱',
   `github` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'GitHub ID',
-  `qq` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'QQ号',
   `password` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '密码',
   `state` int NOT NULL DEFAULT 1 COMMENT '状态，（权限）',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '自我介绍',
@@ -269,8 +275,9 @@ CREATE TABLE `user`  (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `email`(`email` ASC) USING BTREE,
+  UNIQUE INDEX `id`(`id` ASC) USING BTREE,
   UNIQUE INDEX `github`(`github` ASC) USING BTREE,
-  UNIQUE INDEX `qq`(`qq` ASC) USING BTREE
+  INDEX `create_time`(`create_time` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户数据表' ROW_FORMAT = COMPACT;
 
 SET FOREIGN_KEY_CHECKS = 1;

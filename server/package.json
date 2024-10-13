@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node ./scripts/dev &&cross-env ENV=development tsx watch --watch-path=./src --clear-screen=false ./src/index.ts",
+    "dev": "ts-node ./scripts/dev &&cross-env ENV=development tsx watch --include \"./src/**/*\" --clear-screen=false ./src/index.ts",
     "dev:debug": "cross-env debug=true ts-node ./scripts/dev",
     "start": "ts-node ./scripts/start&& pm2 start ecosystem.config.js",
     "start:debug": "ts-node ./scripts/start&&pm2 start ecosystem.config.js",
@@ -86,7 +86,7 @@
     "shelljs": "^0.8.5",
     "ts-loader": "^9.4.4",
     "ts-node": "^10.4.0",
-    "tsx": "^4.17.0",
+    "tsx": "4.19.1",
     "typescript": "5.2.2"
   }
 }

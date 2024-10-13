@@ -56,7 +56,7 @@ router.get(
             Sequelize.literal(
               `(SELECT COUNT(*) FROM follow WHERE follow.user_id = user.id)`,
             ),
-            "followee_count",
+            "followe_count",
           ],
           [
             // 评论数量

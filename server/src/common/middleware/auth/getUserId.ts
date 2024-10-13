@@ -15,6 +15,7 @@ const getUserId = async (ctx: Context, next: Next) => {
     .then(async (decoded: any) => {
       ctx.id = decoded.id;
       ctx.auth = decoded.auth;
+      ctx.token = token;
     })
     .catch(() => {})
     .finally(async () => {

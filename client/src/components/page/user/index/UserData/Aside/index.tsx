@@ -89,7 +89,7 @@ const Aside: FC<{ data: UserAttributes }> = (props) => {
           }}
         >
           <div className="text-base">关注了</div>
-          <b>{props.data.followee_count}</b>
+          <b>{props.data.followe_count}</b>
         </div>
         <div
           className="cursor-pointer text-center"

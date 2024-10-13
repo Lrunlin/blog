@@ -3,6 +3,7 @@ import DB from "@/db";
 import Joi from "joi";
 import auth from "@/common/middleware/auth";
 import validator from "@/common/middleware/verify/validator";
+import redis from "@/common/utils/redis";
 import sha256 from "@/common/utils/sha256";
 
 const schema = Joi.object({
@@ -24,9 +25,19 @@ router.put("/user/password", validator(schema), auth(0), async (ctx) => {
     return;
   }
 
-  await DB.User.update({ password: password }, { where: { id: ctx.id } })
-    .then(([res]) => {
-      ctx.body = { success: true, message: "修改成功" };
+  await DB.User.update(
+    { password: password },
+    { where: { id: ctx.id, state: 1 } },
+  )
+    .then(async ([res]) => {
+      if (res) {
+        ctx.body = { success: true, message: "修改成功" };
+        // 修改密码后将其他token删除，除了本次请求的token
+        let keys = await redis.keys(`auth_${ctx.id}_`);
+        redis.del(keys.filter((item) => item != ctx.token));
+      } else {
+        ctx.body = { success: false, message: "修改失败" };
+      }
     })
     .catch((err) => {
       ctx.body = { success: false, message: "修改失败" };

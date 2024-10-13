@@ -64,41 +64,39 @@ let getInstanceData = () =>
 router.get("/statistics/visualization", auth(), async (ctx) => {
   let instanceData = await getInstanceData();
 
-  let history = JSON.parse(
-    (await redis.get("visualization-history")) as string,
-  );
-  let systemOccupation = JSON.parse(
-    (await redis.get("visualization-load")) as string,
-  );
-
   /** 类型总数*/
   let typeCount = (typeCache.get("type") as any[]).length;
   /** 标签总数*/
   let tagCount = (typeCache.get("tag") as any[]).length;
 
-  /** 文章总数 普通用户数量 友情链接数量*/
-  let [articleCount, userCount, linkCount] = await Promise.all([
-    DB.Article.count({
-      attributes: ["state"],
-      where: { state: 1 },
-    })
-      .then((count) => count)
-      .catch(() => 0),
-    DB.User.findAndCountAll({
-      attributes: ["id"],
-      raw: true,
-      where: { auth: 0 },
-    })
-      .then(({ count }) => count)
-      .catch(() => null),
-    DB.FriendlyLink.findAndCountAll({
-      attributes: ["id"],
-      raw: true,
-      where: { state: 1 },
-    })
-      .then(({ count }) => count)
-      .catch(() => null),
-  ]);
+  /** 文章总数 普通用户数量 友情链接数量 历史信息缓存 系统信息缓存*/
+  let [articleCount, userCount, linkCount, history, systemOccupation] =
+    await Promise.all([
+      DB.Article.count({
+        attributes: ["state"],
+        where: { state: 1 },
+      })
+        .then((count) => count)
+        .catch(() => 0),
+      DB.User.findAndCountAll({
+        attributes: ["id"],
+        raw: true,
+        where: { auth: 0 },
+      })
+        .then(({ count }) => count)
+        .catch(() => null),
+      DB.FriendlyLink.findAndCountAll({
+        attributes: ["id"],
+        raw: true,
+        where: { state: 1 },
+      })
+        .then(({ count }) => count)
+        .catch(() => null),
+      redis.get("visualization-history") as Promise<any>,
+      redis.get("visualization-load"),
+    ]);
+
+  history = JSON.parse(history);
 
   ctx.body = {
     success: true,
@@ -120,7 +118,7 @@ router.get("/statistics/visualization", auth(), async (ctx) => {
       },
       visits: history.visits,
       article_ranking: history.articleRanking,
-      system_occupation: systemOccupation,
+      system_occupation: JSON.parse(systemOccupation!),
       referer: history.referer,
     },
   };

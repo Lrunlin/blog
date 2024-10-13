@@ -1,7 +1,9 @@
 "use client";
 
 import { type FC, type ReactNode, useRef, useState } from "react";
-import { useServerInsertedHTML } from "next/navigation";
+import { usePathname, useServerInsertedHTML } from "next/navigation";
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { ConfigProvider } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import zhCN from "antd/locale/zh_CN";
@@ -15,8 +17,10 @@ interface propsType {
 let antdFileNameMap: { [key: string]: string } = {};
 
 const Antd: FC<propsType> = ({ children }) => {
+  let response = new NextResponse();
+
   const [cache] = useState(() => createCache());
-  let pathname = useGetRawPath();
+  let pathname = response.status + useGetRawPath();
 
   const isServerInserted = useRef(false); //是否已经插入
   // 在服务器插入HTML

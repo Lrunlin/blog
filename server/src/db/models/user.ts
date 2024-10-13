@@ -8,7 +8,6 @@ export interface UserAttributes {
   auth: number;
   email: string;
   github?: string;
-  qq?: string;
   password: string;
   state: number;
   description?: string;
@@ -23,7 +22,6 @@ export type UserPk = "id";
 export type UserId = User[UserPk];
 export type UserOptionalAttributes =
   | "github"
-  | "qq"
   | "state"
   | "description"
   | "site"
@@ -44,7 +42,6 @@ export class User
   auth!: number;
   email!: string;
   github?: string;
-  qq?: string;
   password!: string;
   state!: number;
   description?: string;
@@ -85,12 +82,6 @@ export class User
           allowNull: true,
           comment: "GitHub ID",
           unique: "github",
-        },
-        qq: {
-          type: DataTypes.STRING(40),
-          allowNull: true,
-          comment: "QQ号",
-          unique: "qq",
         },
         password: {
           type: DataTypes.STRING(64),
@@ -206,12 +197,6 @@ export class User
             unique: true,
             using: "BTREE",
             fields: [{ name: "github" }],
-          },
-          {
-            name: "qq",
-            unique: true,
-            using: "BTREE",
-            fields: [{ name: "qq" }],
           },
         ],
       },

@@ -21,6 +21,7 @@ function auth(auth?: authCode[] | authCode) {
         if (authList.includes(decoded.auth)) {
           ctx.id = decoded.id;
           ctx.auth = decoded.auth;
+          ctx.token = token;
           await next();
         } else {
           ctx.status = 401;
@@ -28,7 +29,6 @@ function auth(auth?: authCode[] | authCode) {
       })
       .catch((err) => {
         console.log(ctx.path, err);
-
         ctx.status = 401;
       });
   };

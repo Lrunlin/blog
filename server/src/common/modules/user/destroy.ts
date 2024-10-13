@@ -37,7 +37,6 @@ async function destroy(user_id: number) {
     {
       name: `用户-${user_id}`,
       github: null as any,
-      qq: null as any,
       email: `${decode}@destroy.com`,
       description: null as any,
       location: null as any,

@@ -4304,10 +4304,10 @@ tsscmp@1.0.6:
   resolved "https://registry.npmmirror.com/tsscmp/-/tsscmp-1.0.6.tgz#85b99583ac3589ec4bfef825b5000aa911d605eb"
   integrity sha512-LxhtAkPDTkVCMQjt2h6eBVY28KCjikZqZfMcC15YBeNjkgUpdCfBu5HoiOTDu86v6smE8yOjyEktJ8hlbANHQA==
 
-tsx@^4.17.0:
-  version "4.17.0"
-  resolved "https://registry.npmmirror.com/tsx/-/tsx-4.17.0.tgz#6ffd9851a0c7aa4ecacf4dc19f28d82112af25c5"
-  integrity sha512-eN4mnDA5UMKDt4YZixo9tBioibaMBpoxBkD+rIPAjVmYERSG0/dWEY1CEFuV89CgASlKL499q8AhmkMnnjtOJg==
+tsx@4.19.1:
+  version "4.19.1"
+  resolved "https://registry.npmmirror.com/tsx/-/tsx-4.19.1.tgz#b7bffdf4b565813e4dea14b90872af279cd0090b"
+  integrity sha512-0flMz1lh74BR4wOvBjuh9olbnwqCPc35OOlfyzHba0Dc+QNUeWX/Gq2YTbnwcWPO3BMd8fkzRVrHcsR+a7z7rA==
   dependencies:
     esbuild "~0.23.0"
     get-tsconfig "^4.7.5"
