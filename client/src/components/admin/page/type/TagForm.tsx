@@ -28,7 +28,7 @@ const TagForm: FC<PropsType> = (props) => {
   };
 
   //查询并设置类型选择器（belong）
-  let { data } = useFetch(() => getType("tag"));
+  let { data } = useFetch(() => getType("type"));
   let { Option } = Select;
   return (
     <>
