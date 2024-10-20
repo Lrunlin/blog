@@ -1,9 +1,8 @@
 "use client";
 
 import { type FC, type ReactNode, useRef, useState } from "react";
-import { usePathname, useServerInsertedHTML } from "next/navigation";
+import { useServerInsertedHTML } from "next/navigation";
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
 import { ConfigProvider } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import zhCN from "antd/locale/zh_CN";

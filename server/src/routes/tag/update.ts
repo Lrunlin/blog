@@ -10,18 +10,6 @@ router.put("/tag/:id", interger([], ["id"]), authMiddleware(), async (ctx) => {
     ctx.request.body;
   let { id } = ctx.params;
 
-  let { count } = await DB.Tag.findAndCountAll({
-    where: {
-      belong_id: id,
-    },
-  });
-
-  //如果有子标签则禁止删除
-  if (count) {
-    ctx.body = { success: false, message: "禁止删除包含子标签的标签" };
-    return;
-  }
-
   await DB.Tag.update(
     {
       name,

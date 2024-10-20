@@ -10,6 +10,18 @@ let router = new Router();
 router.delete("/tag/:id", interger([], ["id"]), auth(), async (ctx) => {
   let { id } = ctx.params;
 
+  //如果有子标签则禁止删除
+  let { count } = await DB.Tag.findAndCountAll({
+    where: {
+      belong_id: id,
+    },
+  });
+  if (count) {
+    ctx.status = 409; //请求与服务器的当前状态冲突，无法完成请求
+    ctx.body = { success: false, message: "禁止删除包含子标签的标签" };
+    return;
+  }
+
   //判断是否有文章只有这一个tag
   let allowDelete = await DB.Article.count({
     attributes: ["id"],
@@ -33,6 +45,7 @@ router.delete("/tag/:id", interger([], ["id"]), auth(), async (ctx) => {
     return;
   }
 
+  //开始创建事务 对文章标签进行置换和删除Tag
   const t = await sequelize.transaction();
   let deleteTagCount = await DB.Tag.destroy({
     where: {
