@@ -1,0 +1,10 @@
+.toolbar-item {
+  margin-right: 6px;
+  & > a,
+  & > button,
+  & > span {
+    border: 1px solid #bbb !important;
+    border-radius: 3px !important;
+    cursor: pointer;
+  }
+}

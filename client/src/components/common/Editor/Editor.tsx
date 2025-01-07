@@ -61,14 +61,9 @@ const MarkDonwEdit: FC<propsType> = memo((props) => {
 
   return (
     <>
-      <style jsx global>{`
-        .content-body img {
-          max-width: 60% !important;
-        }
-      `}</style>
       <StyleLink id={themeID} />
       <Spin spinning={!!uploadProgress} tip={uploadProgress}>
-        <div>
+        <div id="articleEditor">
           {editorMode == "markdown" ? (
             <MarkDownEditor
               {...props}

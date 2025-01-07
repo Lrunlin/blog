@@ -3,13 +3,18 @@ import axios from "@axios";
 import { response } from "@type/response";
 import Base from "@/layout/Base";
 
-const SiteMap = async ({
-  searchParams: { page },
-  params: { type },
-}: {
-  searchParams: { page: string };
-  params: { type: "article" | "problem" };
+const SiteMap = async (props: {
+  searchParams: Promise<{ page: string }>;
+  params: Promise<{ type: "article" | "problem" }>;
 }) => {
+  const params = await props.params;
+
+  const { type } = params;
+
+  const searchParams = await props.searchParams;
+
+  const { page } = searchParams;
+
   let index = Math.max(1, page ? +page : 0);
 
   if (isNaN(+index) || !["article", "problem"].includes(type)) {
@@ -76,5 +81,3 @@ const SiteMap = async ({
   );
 };
 export default SiteMap;
-
-export const dynamic = "force-dynamic";

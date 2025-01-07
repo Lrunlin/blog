@@ -12,7 +12,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // user_info
-  const cookie = cookies();
+  const cookie = await cookies();
   const token = cookie.get("token");
   let userInfo = token?.value
     ? await axios
@@ -34,3 +34,4 @@ export default async function RootLayout({
     </html>
   );
 }
+export const dynamic = "force-dynamic";

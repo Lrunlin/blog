@@ -1,23 +1,31 @@
+import type { NextConfig } from "next";
+import { RemotePattern } from "next/dist/shared/lib/image-config";
+
 const path = require("path");
 const { env, buildid } = require("./env/index");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-/**
- * @type {import('next').NextConfig}
- */
-const nextConfig = {
+const nextConfig: NextConfig = {
   // reactStrictMode: false,
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
     // your project has type errors.
-    // !! WARN !!
     // ignoreBuildErrors: true,
   },
   experimental: {
     scrollRestoration: true,
+    // reactCompiler: true,
+    // ppr: true,
+    staleTimes: {
+      dynamic: 0,
+      static: 0,
+    },
+    turbo: {
+      useSwcCss: true,
+    },
   },
   //https://nextjs.org/docs/app/api-reference/next-config-js/output
   output: process.env.output ? "standalone" : undefined,
@@ -66,14 +74,21 @@ const nextConfig = {
     ? {
         remotePatterns: [
           {
-            protocol: new URL(env.CDN).protocol.replace(":", ""), // 获取协议并去掉末尾的冒号
+            protocol: new URL(env.CDN).protocol.replace(
+              ":",
+              "",
+            ) as RemotePattern["protocol"], // 获取协议并去掉末尾的冒号
             hostname: new URL(env.CDN).hostname,
             pathname: "/**",
           },
         ],
-        domains: [new URL(env.CDN).hostname],
       }
     : undefined,
+  //解决编译时sass警告问题
+  sassOptions: {
+    api: "modern",
+    silenceDeprecations: ["legacy-js-api"],
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

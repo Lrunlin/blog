@@ -3,6 +3,7 @@
 import { type FC, useRef } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import Script from "next/script";
+import "./index.scss";
 
 interface propsType {
   language: string[];
@@ -37,20 +38,6 @@ const HightLight: FC<propsType> = ({ language }) => {
         id="highLightScript"
         src={`${process.env.CDN}/static/high-light/js?languages=${language?.join(",")}`}
       />
-      <style jsx global>
-        {`
-          .toolbar-item {
-            margin-right: 6px;
-          }
-          .toolbar-item > a,
-          .toolbar-item > button,
-          .toolbar-item > span {
-            border: 1px solid #bbb !important;
-            border-radius: 3px !important;
-            cursor: pointer;
-          }
-        `}
-      </style>
     </>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Divider, Form, Input, message } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import cookie from "js-cookie";
+import { setToken } from "@/common/modules/cookie";
 import useUserData from "@/store/user/user-data";
 import useUserSignModel from "@/store/user/user-sign-model-state";
 
@@ -11,7 +11,6 @@ const LogIn = () => {
   let setModalState = useUserSignModel((s) => s.setData);
 
   const userDataStore = useUserData((s) => s);
-  let userData = useUserData((s) => s);
   const [isLoad, setIsLoad] = useState(false);
   function logIn(values: any) {
     setIsLoad(true);
@@ -22,10 +21,7 @@ const LogIn = () => {
           message.success(res.data.message);
           setModalState(false);
           userDataStore.setData(res.data.data);
-          cookie.set("token", res.data.token, {
-            expires: 365,
-            domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
-          });
+          setToken(res.data.token);
         } else {
           message.error(res.data.message);
         }

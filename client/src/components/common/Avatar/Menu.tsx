@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar } from "antd";
 import axios from "@axios";
-import cookie from "js-cookie";
 import useFetch from "@/common/hooks/useFetch";
+import { removeToken } from "@/common/modules/cookie";
 import useUserData from "@/store/user/user-data";
 
 interface itemPropsType {
@@ -78,9 +78,7 @@ const Menu: FC = () => {
         <div
           className="cursor-pointer"
           onClick={() => {
-            cookie.remove("token", {
-              domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
-            });
+            removeToken();
             resetUserData();
           }}
         >

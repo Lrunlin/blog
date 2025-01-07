@@ -3,8 +3,12 @@ import axios from "@axios";
 
 export async function GET(
   res: NextRequest,
-  { params: { id } }: { params: { id: string } },
+  props: { params: Promise<{ id: string }> },
 ) {
+  const params = await props.params;
+
+  const { id } = params;
+
   if (!(id as string).endsWith(".css")) {
     return new Response(undefined, {
       status: 404,

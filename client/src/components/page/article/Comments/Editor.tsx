@@ -39,7 +39,7 @@ const Editor: FC<propsType> = (props) => {
 
   let showEditor = props.notHideInput || props.id == editorOption.activeInputID; //编辑器是否显示
 
-  let inputDOM = useRef<any>(); //输入框DOM节点
+  let inputDOM = useRef<any>(null); //输入框DOM节点
 
   let cursorPosition = useRef<number>(-1); //插入表情前光标位置
   const insertEmoji = (emoji: string) => {
@@ -124,7 +124,7 @@ const Editor: FC<propsType> = (props) => {
     axios
       .post("/comment", {
         belong_id: articleID,
-        content: marked.parse(value, { headerIds: false }),
+        content: marked.parse(value) as string,
         comment_pics: picture?.file_name || null,
         reply: props.reply || null,
         type: "article",
@@ -168,7 +168,7 @@ const Editor: FC<propsType> = (props) => {
               ])}
             >
               <TextArea
-                ref={(input) => (inputDOM.current = input)}
+                ref={inputDOM}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder="输入评论"

@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
-import { headers } from "next/headers";
+import { type UnsafeUnwrappedHeaders, headers } from "next/headers";
 
 export default function robots(): MetadataRoute.Robots {
-  const headersList = headers();
+  const headersList = headers() as unknown as UnsafeUnwrappedHeaders;
   const isCDN = headersList.get("x-from-cdn");
   return isCDN
     ? {

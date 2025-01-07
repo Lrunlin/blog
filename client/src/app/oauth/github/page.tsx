@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Result } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import Cookies from "js-cookie";
 import useFetch from "@/common/hooks/useFetch";
+import { setToken } from "@/common/modules/cookie";
 import Layout from "@/layout/Base";
 import Head from "@/components/next/Head";
 
@@ -24,7 +24,7 @@ const Github = () => {
     let timer: NodeJS.Timeout;
     if (data) {
       if (data.token) {
-        Cookies.set("token", data.token);
+        setToken(data.token);
       }
       timer = setTimeout(() => {
         window.close();

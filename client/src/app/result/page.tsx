@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Result } from "antd";
-import cookie from "js-cookie";
+import { setToken } from "@/common/modules/cookie";
 import Base from "@/layout/Base";
 import Head from "@/components/next/Head";
 
@@ -20,11 +20,9 @@ const ResultFC = () => {
   const message = searchParams!.getAll("message");
 
   useEffect(() => {
-    if (typeof token == "string")
-      cookie.set("token", token, {
-        expires: 365,
-        domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
-      });
+    if (typeof token == "string") {
+      setToken(token);
+    }
   }, [token]);
 
   function SubTitle() {

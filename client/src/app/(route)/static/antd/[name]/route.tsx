@@ -5,8 +5,11 @@ type Params = {
   name: string;
 };
 
-export async function GET(res: NextRequest, context: { params: Params }) {
-  let name = context.params!.name as string | undefined;
+export async function GET(
+  res: NextRequest,
+  context: { params: Promise<Params> },
+) {
+  let name = (await context.params)!.name as string | undefined;
   if (typeof name == "string" && name?.endsWith(".css")) {
     try {
       let content = fs.readFileSync(`.next/css/${name}`).toString();

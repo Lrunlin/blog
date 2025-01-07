@@ -7,7 +7,7 @@ import Head from "@/components/next/Head";
 import { AdminStatisticsDataStoreProvider } from "@/store/admin/admin-statistics-data";
 
 const Page = async () => {
-  const cookie = cookies();
+  const cookie = await cookies();
   const token = cookie.get("token");
 
   let data = await axios

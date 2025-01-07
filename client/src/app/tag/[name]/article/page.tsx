@@ -1,5 +1,3 @@
-import axios from "@axios";
-import { response } from "@type/common/response";
 import { ArticleAttributes, TagAttributes } from "@type/model-attribute";
 import Layout from "@/components/page/tag/Layout";
 import List from "@/components/page/tag/List";
@@ -15,7 +13,11 @@ export interface propsType {
   };
 }
 
-const Article = async ({ params: { name } }: { params: { name: string } }) => {
+const Article = async (props: { params: Promise<{ name: string }> }) => {
+  const params = await props.params;
+
+  const { name } = params;
+
   let data = await getTagArticleLData(1, name);
   return (
     <Layout>

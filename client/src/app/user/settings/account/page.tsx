@@ -41,7 +41,7 @@ const Account = () => {
               <div className="w-14">邮箱:</div>
               <div>{data.email || "未绑定"}</div>
             </div>
-            <UpdateEmailModal event={emailModalRef} />
+            <UpdateEmailModal ref={emailModalRef} />
             <div
               className="cursor-pointer text-blue-400"
               onClick={() => emailModalRef.current.onOpen()}
@@ -64,7 +64,7 @@ const Account = () => {
           <div className="flex h-14 items-center justify-between px-4">
             <div className="flex">
               <div className="w-14">密码</div>
-              <UpdatePasswordModal event={passwordModalRef} />
+              <UpdatePasswordModal ref={passwordModalRef} />
             </div>
             <div
               className="cursor-pointer text-blue-400"

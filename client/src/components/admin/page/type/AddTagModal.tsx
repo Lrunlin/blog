@@ -1,5 +1,5 @@
 import { useImperativeHandle, useState } from "react";
-import type { FC, MutableRefObject } from "react";
+import type { FC, Ref } from "react";
 import { Modal } from "antd";
 import TagForm from "./TagForm";
 
@@ -12,7 +12,7 @@ export interface TagFormValueProps {
 export type event = { onOpen: () => void; onClose: () => void };
 interface PropsType {
   onFinish: (value: TagFormValueProps) => void;
-  event?: MutableRefObject<event>;
+  ref?: Ref<event>;
 }
 
 /**
@@ -26,7 +26,7 @@ const AddTypeModal: FC<PropsType> = (props) => {
     props.onFinish(values);
   };
 
-  useImperativeHandle(props.event, () => ({
+  useImperativeHandle(props.ref, () => ({
     onOpen: () => {
       setIsModalVisible(true);
     },

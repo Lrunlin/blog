@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { Divider } from "antd";
 import classNames from "classnames";
-import tocbot from "tocbot";
+import { destroy, init, refresh } from "tocbot";
 import style from "./index.module.scss";
 
 const Catalogue = () => {
   useEffect(() => {
-    tocbot.init({
+    init({
       tocSelector: `.${style["article-page-catalogue"]}`,
       headingSelector: "h1,h2,h3,h4,h5,h6",
       contentSelector: ".content-body",
       activeLinkClass: style["is-active-link"],
       collapsibleClass: style["is-collapsible"],
     });
-    tocbot.refresh();
+    refresh();
     return () => {
-      tocbot.destroy();
+      destroy();
     };
   }, []);
 

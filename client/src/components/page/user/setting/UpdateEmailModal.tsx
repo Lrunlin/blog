@@ -5,7 +5,7 @@ import axios from "@axios";
 
 export type event = MutableRefObject<{ onOpen: () => void }>;
 interface propsType {
-  event: event;
+  ref: event;
 }
 const UpdateEmailModal: FC<propsType> = (props) => {
   let { useForm } = Form;
@@ -38,7 +38,7 @@ const UpdateEmailModal: FC<propsType> = (props) => {
     friestLoad.current++;
   }, [isModalVisible]);
 
-  useImperativeHandle(props.event, () => ({
+  useImperativeHandle(props.ref, () => ({
     onOpen: () => {
       setIsModalVisible(true);
     },

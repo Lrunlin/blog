@@ -7,11 +7,11 @@ import Head from "@/components/next/Head";
 import Brow from "@/components/page/collection/Brow";
 import Collection from "@/components/page/collection/Collection";
 
-const FavoritesList = async ({
-  params: { id },
-}: {
-  params: { id: string };
-}) => {
+const FavoritesList = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
+  const { id } = params;
+
   let data = await axios
     .get<response<RootObject>>(`/favorites/list/${id}`)
     .then((res) => res.data.data)

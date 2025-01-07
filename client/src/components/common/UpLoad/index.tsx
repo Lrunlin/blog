@@ -1,6 +1,6 @@
 // https://codesandbox.io/s/q8q1mnr01w?file=/src/index.js:2821-2837
 import { useEffect, useRef, useState } from "react";
-import type { FC, MutableRefObject } from "react";
+import type { FC } from "react";
 import { type ModalProps, message } from "antd";
 import Picture from "./Image";
 import Modal from "./Modal";
@@ -26,11 +26,11 @@ export interface uploadPropsType {
   aspect?: number;
   /** 弹窗配置*/
   ModalProps?: ModalProps;
-  // /** 弹窗组件ref*/
-  event?: MutableRefObject<{
+  /** 弹窗组件ref*/
+  event?: {
     open: () => void;
     close: () => void;
-  }>;
+  };
   /** 是否剪切*/
   noCorp?: boolean;
   onSuccess?: (data: { file_name: string; file_href: string }) => void;
@@ -53,7 +53,8 @@ const Upload: FC<uploadPropsType> = (
     }
   }, [props.imgURL]);
 
-  let event = useRef(null) as unknown as uploadPropsType["event"];
+  let event = useRef<uploadPropsType["event"]>(null);
+
   return (
     <>
       <Picture
@@ -77,7 +78,7 @@ const Upload: FC<uploadPropsType> = (
                 setIsLoading(false);
               });
           } else {
-            event?.current.open();
+            event?.current?.open();
           }
         }}
         deleteBase64={() => {
@@ -88,11 +89,11 @@ const Upload: FC<uploadPropsType> = (
       />
       {!props.noCorp && (
         <Modal
-          event={event}
+          ref={event}
           {...props}
           imgURL={imgURL}
           onChange={(base64) => {
-            event?.current.close();
+            event?.current?.close();
             setIsLoading(true);
             upload({ target: props.target, base64 })
               .then((res: any) => {

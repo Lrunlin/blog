@@ -1,5 +1,5 @@
 import { useImperativeHandle, useState } from "react";
-import type { FC, MutableRefObject } from "react";
+import type { FC, Ref } from "react";
 import { Modal } from "antd";
 import TypeForm from "./TypeForm";
 
@@ -13,20 +13,20 @@ export type event = { onOpen: () => void; onClose: () => void };
 
 interface PropsType {
   onFinish: (value: TypeFormValueProps) => void;
-  event?: MutableRefObject<event>;
+  ref?: Ref<event>;
 }
 
 /**
  * @params onFinish {(value:object)=>void} 表单提交
  * @params event {useRef} 使用onOpen时间打开弹窗，需要引入组件导出的event类型
  */
-const AddTypeModal: FC<PropsType> = (props) => {
+const AddTypeModal: FC<PropsType> = (props, ref) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const onFinish = (values: any) => {
     props.onFinish(values);
   };
 
-  useImperativeHandle(props.event, () => ({
+  useImperativeHandle(props.ref, () => ({
     onOpen: () => {
       setIsModalVisible(true);
     },

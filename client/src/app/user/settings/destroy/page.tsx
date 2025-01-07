@@ -3,7 +3,7 @@
 import { Alert, Button, Tooltip, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "@axios";
-import cookie from "js-cookie";
+import { removeToken } from "@/common/modules/cookie";
 import useUserData from "@/store/user/user-data";
 
 const Destroy = () => {
@@ -13,10 +13,7 @@ const Destroy = () => {
     axios
       .post("/user/destroy")
       .then((res) => {
-        cookie.remove("token", {
-          expires: 365,
-          domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
-        });
+        removeToken();
         message.success(res.data.message);
         userDataStore.setData(null);
       })

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button, Form, Input, message } from "antd";
 import axios from "@axios";
-import cookie from "js-cookie";
+import { setToken } from "@/common/modules/cookie";
 import Footer from "@/components/admin/common/Footer";
 import Head from "@/components/next/Head";
 import useUserData from "@/store/user/user-data";
@@ -16,11 +16,8 @@ const LognIn = () => {
       .post("/login/email", values)
       .then((res) => {
         if (res.data.success) {
-          message.success(res.data.message);
-          cookie.set("token", res.data.token, {
-            expires: 365,
-            domain: `.${window.location.hostname.split(".").slice(-2).join(".")}`,
-          });
+          // message.success(res.data.message);
+          setToken(res.data.token);
           setUserData(res.data.data);
           router.replace("/admin");
         } else {

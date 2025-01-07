@@ -2,6 +2,7 @@
 
 import { FC } from "react";
 import dynamic from "next/dynamic";
+import "./index.scss";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,

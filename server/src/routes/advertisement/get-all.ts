@@ -1,5 +1,4 @@
 import Router from "@koa/router";
-import DB from "@/db";
 import Joi from "joi";
 import validator from "@/common/middleware/verify/validator";
 import { getData } from "@/common/modules/cache/advertisement";

@@ -1,4 +1,4 @@
-import { useImperativeHandle, useState } from "react";
+import { Ref, useImperativeHandle, useState } from "react";
 import { FC } from "react";
 import { Modal, Slider } from "antd";
 import Cropper from "react-easy-crop";
@@ -9,9 +9,12 @@ import type { uploadPropsType } from "./index";
 /**
  * 弹窗以及图片剪裁
  */
-const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = (
-  props,
-) => {
+const Modal_: FC<
+  uploadPropsType & {
+    onChange?: (base: string) => void;
+    ref: Ref<uploadPropsType["event"]>;
+  }
+> = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   /** 缩放度数*/
@@ -34,7 +37,7 @@ const Modal_: FC<uploadPropsType & { onChange?: (base: string) => void }> = (
       props.onError && props.onError("图片处理错误");
     }
   }
-  useImperativeHandle(props.event, () => ({
+  useImperativeHandle(props.ref, () => ({
     open: () => {
       setIsModalOpen(true);
     },

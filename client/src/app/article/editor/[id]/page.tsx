@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Button, Result, Skeleton, message } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
@@ -9,7 +9,11 @@ import ArticleEditor from "@/components/common/ArticleEditor";
 import Head from "@/components/next/Head";
 import useUserWriteArticle from "@/store/user/user-write-article";
 
-const Write = ({ params: { id } }: { params: { id: string } }) => {
+const Write = () => {
+  let params = useParams<{ id: string }>();
+
+  const { id } = params;
+
   let router = useRouter();
   let updateData = useUserWriteArticle((s) => s.updateData);
 

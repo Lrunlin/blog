@@ -1,5 +1,5 @@
 import axiosPlugin from "axios";
-import cookie from "js-cookie";
+import { getToken } from "@/common/modules/cookie";
 
 // 创建 axios 实例
 const apiClient = axiosPlugin.create({
@@ -11,7 +11,7 @@ apiClient.interceptors.request.use(
   (config) => {
     // 客户端才修改请求头
     if (typeof window !== "undefined") {
-      config.headers.authorization = cookie.get("token");
+      config.headers.authorization = getToken();
     }
     config.headers["Cache-Control"] = "no-cache";
     return config;

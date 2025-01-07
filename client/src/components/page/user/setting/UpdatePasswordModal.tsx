@@ -5,7 +5,7 @@ import axios from "@axios";
 
 export type event = MutableRefObject<{ onOpen: () => void }>;
 interface propsType {
-  event: event;
+  ref: event;
 }
 const UpdatePasswordModal: FC<propsType> = (props) => {
   let { useForm } = Form;
@@ -37,7 +37,7 @@ const UpdatePasswordModal: FC<propsType> = (props) => {
     friestLoad.current++;
   }, [isModalVisible]);
 
-  useImperativeHandle(props.event, () => ({
+  useImperativeHandle(props.ref, () => ({
     onOpen: () => {
       setIsModalVisible(true);
     },
@@ -71,8 +71,8 @@ const UpdatePasswordModal: FC<propsType> = (props) => {
             name="verify_password"
             rules={[
               { required: true, message: "请确认密码" },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
+              ({ getFieldValue }: any) => ({
+                validator(_: any, value: any) {
                   if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }

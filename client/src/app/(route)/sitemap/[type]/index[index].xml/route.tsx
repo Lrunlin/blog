@@ -4,8 +4,9 @@ import setSiteMap from "@/common/modules/sitemap/sitemap";
 
 export async function GET(
   res: NextRequest,
-  { params }: { params: { type: string } },
+  props: { params: Promise<{ type: string }> },
 ) {
+  const params = await props.params;
   let match = res.nextUrl.pathname.match(/index(\d+)\.xml/);
 
   if (!match || !["article", "problem"].includes(params.type)) {
@@ -29,5 +30,3 @@ export async function GET(
     },
   });
 }
-
-export const dynamic = "force-dynamic";

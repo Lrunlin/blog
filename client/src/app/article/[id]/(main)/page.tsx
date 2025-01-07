@@ -16,9 +16,13 @@ import Store from "@/components/page/article/Store";
 import ArticleUserData from "@/components/page/article/UserData";
 import View from "@/components/page/article/View";
 
-const Article = async ({ params: { id } }: { params: { id: string } }) => {
-  const cookie = cookies();
-  const header = headers();
+const Article = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
+  const { id } = params;
+
+  const cookie = await cookies();
+  const header = await headers();
   const token = cookie.get("token");
 
   let data = await axios<response<ArticleAttributes>>(`/article/${id}`, {

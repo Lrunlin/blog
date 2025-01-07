@@ -5,9 +5,13 @@ import readingRecords from "@/common/modules/readingRecords";
 import HightLight from "@/layout/Content/HightLight";
 import ProblemDetail from "@/components/page/problem/ProblemDetail";
 
-const Problem = async ({ params: { id } }: { params: { id: string } }) => {
-  const cookie = cookies();
-  const header = headers();
+const Problem = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
+  const { id } = params;
+
+  const cookie = await cookies();
+  const header = await headers();
   const token = cookie.get("token");
 
   let data = await axios(`/problem/${id}`, {

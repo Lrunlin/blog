@@ -3,8 +3,12 @@ import axios from "@axios";
 
 export async function GET(
   res: NextRequest,
-  { params: { type } }: { params: { type: string } },
+  props: { params: Promise<{ type: string }> },
 ) {
+  const params = await props.params;
+
+  const { type } = params;
+
   const searchParams = res.nextUrl.searchParams;
   const languages = searchParams.get("languages");
   if (["js", "css"].includes(String(type))) {

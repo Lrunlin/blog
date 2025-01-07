@@ -40,26 +40,40 @@ export const server = http.createServer(app.callback()); //包装app保证http�
   });
 
   let routeCount = 0;
-  Routers.forEach((item, index) => {
-    import(item)
-      .then((_route) => {
-        if (_route?.default?.routes()) {
-          routeCount += _route.default.routes().router.stack.length;
-          app.use(_route.default.routes());
-        } else {
-          console.log(item, _route.default);
-        }
-        if (Routers.length == index + 1) {
-          server.listen(port, function () {
-            console.log(
-              `项目运行于: ${port} 端口,共${index + 1}个路由文件,${routeCount}个路由`,
-            );
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(item, err);
-      });
+  // 引入路由文件 同时判断导入函数 (require更快)
+  const routeListPromise =
+    typeof require == "function"
+      ? Routers.map(
+          (item) =>
+            new Promise((r) => {
+              let route = require(item).default?.routes();
+              app.use(route);
+              routeCount += route.router.stack.length;
+              r("");
+            }),
+        )
+      : Routers.map((item) =>
+          import(item)
+            .then((_route) => {
+              if (_route?.default?.routes()) {
+                routeCount += _route.default.routes().router.stack.length;
+                app.use(_route.default.routes());
+              } else {
+                console.log(item, _route.default);
+              }
+            })
+            .catch((err) => {
+              console.log(item, err);
+            }),
+        );
+
+  // 等待所有路由文件加载完毕后启动服务器
+  Promise.all(routeListPromise).then(() => {
+    server.listen(port, function () {
+      console.log(
+        `项目运行于: ${port} 端口,共${Routers.length}个路由文件,${routeCount}个路由`,
+      );
+    });
   });
 })();
 

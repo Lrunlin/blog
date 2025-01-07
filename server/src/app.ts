@@ -17,12 +17,41 @@ dotenv.config({
 });
 
 const originalConsoleLog = console.log;
+
 console.log = function () {
   const stackTrace = new Error().stack as string;
-  const position = stackTrace.split("\n")[2].trim(); // 提取第三行的代码位置
-  originalConsoleLog(
-    `${moment().format("YYYY-MM-DD HH:mm:ss")}  ${position.replace("at Server.<anonymous>", "")}`,
-  );
+  let position = stackTrace
+    .split("\n")[2]
+    .trim()
+    .replace("at Server.<anonymous>", ""); // 提取第三行的代码位置
+
+  const innerContentRegex = /\((.*?)\)/;
+  const innerContentMatch = position.match(innerContentRegex);
+  if (innerContentMatch) {
+    // 获取括号中的 地址:行号
+    const addressAndNumbersRegex = /([^:]+):(\d+):(\d+)/;
+    const addressAndNumbersMatch = innerContentMatch[1].match(
+      addressAndNumbersRegex,
+    );
+
+    if (addressAndNumbersMatch) {
+      // 分离出行号和地址
+      const num1 = addressAndNumbersMatch[2];
+      const num2 = addressAndNumbersMatch[3];
+
+      // 简化地址
+      let relativePath = path.relative(
+        process.cwd(),
+        innerContentMatch[1].replace(`:${num1}:${num2}`, ""),
+      );
+
+      const lastDirName = path.basename(process.cwd());
+
+      // 计算出简化最后的地址后重新添加行号
+      position = path.join(lastDirName, relativePath) + `:${num1}:${num2}`;
+    }
+  }
+  originalConsoleLog(`${moment().format("HH:mm:ss")} ${position}`);
   originalConsoleLog.apply(console, arguments as any);
 };
 

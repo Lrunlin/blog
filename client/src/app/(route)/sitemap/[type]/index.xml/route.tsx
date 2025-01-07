@@ -4,8 +4,9 @@ import setSiteMap from "@/common/modules/sitemap/sitemap-index";
 
 export async function GET(
   res: NextRequest,
-  { params }: { params: { type: string } },
+  props: { params: Promise<{ type: string }> },
 ) {
+  const params = await props.params;
   let xml = await axios
     .get("/sitemap/" + params.type)
     .then((res) => setSiteMap(res.data.data));
@@ -16,5 +17,3 @@ export async function GET(
     },
   });
 }
-
-export const dynamic = "force-dynamic";

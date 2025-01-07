@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import type { FC } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Tree, message } from "antd";
 import axios from "@axios";
@@ -55,14 +56,11 @@ const TypeList = () => {
           添加Tag
         </Button>
       </div>
-      <AddTypeModal
-        onFinish={(values) => createType(values)}
-        event={typeEvent}
-      />
+      <AddTypeModal onFinish={(values) => createType(values)} ref={typeEvent} />
       <AddTagModal
         key={`用于刷新${data?.length}`}
         onFinish={(values) => createTag(values)}
-        event={tagEvent}
+        ref={tagEvent}
       />
       {data && (
         <div className="piece mt-4">

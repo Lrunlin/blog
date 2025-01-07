@@ -5,7 +5,7 @@ const redis = new ioredis({
   port: process.env.DB_REDIS_PORT ? +process.env.DB_REDIS_PORT : 6379,
   password: process.env.DB_REDIS_PASSWORD,
   db: 0,
-  // username: process.env.DB_REDIS_USER,
+  username: process.env.DB_REDIS_USER,
   retryStrategy: function (times) {
     return Math.min(times * 50, 5000);
   },
