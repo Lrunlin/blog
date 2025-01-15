@@ -18,6 +18,7 @@ const Recommend = () => {
       .get<response<articleListItemType[]>>(`/article/recommend/${articleID}`)
       .then((res) => res.data.data),
   );
+
   return (
     <div>
       {data ? (

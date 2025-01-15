@@ -28,6 +28,10 @@ router.delete(
       })
       .catch((err) => {
         ctx.status = 500;
+        ctx.body = {
+          success: false,
+          message: "删除失败",
+        };
         console.log(err);
       });
   },

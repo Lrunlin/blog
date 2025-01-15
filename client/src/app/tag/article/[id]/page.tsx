@@ -1,4 +1,5 @@
 import { ArticleAttributes, TagAttributes } from "@type/model-attribute";
+import Head from "@/components/next/Head";
 import Layout from "@/components/page/tag/Layout";
 import List from "@/components/page/tag/List";
 import getTagArticleLData from "@/request/type/getTagArticleLData";
@@ -13,14 +14,17 @@ export interface propsType {
   };
 }
 
-const Article = async (props: { params: Promise<{ name: string }> }) => {
+const Article = async (props: { params: Promise<{ id: string }> }) => {
   const params = await props.params;
 
-  const { name } = params;
+  const { id } = params;
 
-  let data = await getTagArticleLData(1, name);
+  let data = await getTagArticleLData(1, id);
+
   return (
     <Layout>
+      <Head title={`文章-${data.tag_data.name}`} />
+
       <div className="bg-white p-4">
         <img
           className="w-14"

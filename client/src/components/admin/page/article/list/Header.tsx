@@ -31,29 +31,34 @@ const Header = () => {
         </Form.Item>
 
         <Form.List name="sort">
-          {(fields) =>
-            fields.map((field, index) => (
-              <Form.Item {...field} label={index == 0 ? "排序" : ""}>
-                <Select
-                  value={searchOption.data.sort[index]}
-                  style={{ width: "120px" }}
-                >
-                  {index == 0 ? (
-                    <>
-                      <Option value="create_time">发布时间</Option>
-                      <Option value="update_time">更新时间</Option>
-                      <Option value="view_count">阅读数</Option>
-                    </>
-                  ) : (
-                    <>
-                      <Option value="desc">降序</Option>
-                      <Option value="asc">升序</Option>
-                    </>
-                  )}
-                </Select>
+          {(fields) => {
+            return fields.map((field, index) => (
+              <Form.Item
+                {...field}
+                key={field.key + "form-key" + index}
+                label={index == 0 ? "排序" : ""}
+              >
+                {index == 0 ? (
+                  <Select
+                    value={searchOption.data.sort[index]}
+                    style={{ width: "120px" }}
+                  >
+                    <Option value="create_time">发布时间</Option>
+                    <Option value="update_time">更新时间</Option>
+                    <Option value="view_count">阅读数</Option>
+                  </Select>
+                ) : (
+                  <Select
+                    value={searchOption.data.sort[index]}
+                    style={{ width: "120px" }}
+                  >
+                    <Option value="desc">降序</Option>
+                    <Option value="asc">升序</Option>
+                  </Select>
+                )}
               </Form.Item>
-            ))
-          }
+            ));
+          }}
         </Form.List>
 
         <Form.Item label="仅原创" name="only_original">

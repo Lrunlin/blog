@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { FC, ReactNode } from "react";
 import { Avatar, Button, Dropdown, Input, Result } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
@@ -38,7 +38,7 @@ interface propsType {
   showDraftsButton?: boolean;
 }
 export type modalPropsType = Pick<propsType, "submit">;
-const ArticleEditor: FC<propsType> = (props) => {
+const ArticleEditor: FC<propsType> = memo((props) => {
   let userData = useUserData((s) => s.data);
   let articleData = useUserWriteArticle((s) => s.data);
   let updateData = useUserWriteArticle((s) => s.updateData);
@@ -92,5 +92,5 @@ const ArticleEditor: FC<propsType> = (props) => {
       </div>
     </Base>
   );
-};
+});
 export default ArticleEditor;

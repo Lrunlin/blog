@@ -23,9 +23,9 @@ router.delete("/tag/:id", interger([], ["id"]), auth(), async (ctx) => {
   }
 
   //判断是否有文章只有这一个tag
-  let allowDelete = await DB.Article.count({
+  let allowDelete = await DB.ArticleTag.count({
     attributes: ["id"],
-    where: { tag: id },
+    where: { tag_id: id },
   })
     .then((count) => ({
       success: !count,

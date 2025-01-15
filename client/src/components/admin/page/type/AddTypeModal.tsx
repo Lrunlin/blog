@@ -20,7 +20,7 @@ interface PropsType {
  * @params onFinish {(value:object)=>void} 表单提交
  * @params event {useRef} 使用onOpen时间打开弹窗，需要引入组件导出的event类型
  */
-const AddTypeModal: FC<PropsType> = (props, ref) => {
+const AddTypeModal: FC<PropsType> = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const onFinish = (values: any) => {
     props.onFinish(values);

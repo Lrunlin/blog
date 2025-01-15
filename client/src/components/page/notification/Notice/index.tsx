@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import type {
   noticeAnswerListType,
   noticeCommentListType,
@@ -30,7 +30,7 @@ const Component: FC<{
     },
   ];
   return map.find((_item) => type.startsWith(_item.lable))
-    ?.component as JSX.Element;
+    ?.component as ReactNode;
 };
 
 type listData = (

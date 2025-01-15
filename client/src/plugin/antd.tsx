@@ -1,10 +1,12 @@
 "use client";
 
+//V5对React19临时兼容
 import { type FC, type ReactNode, useRef, useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import { NextResponse } from "next/server";
 import { ConfigProvider } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
+import "@ant-design/v5-patch-for-react-19";
 import zhCN from "antd/locale/zh_CN";
 import useGetRawPath from "@/common/hooks/useGetRawPath";
 import { doExtraStyle } from "@/styles/genAntdCss";

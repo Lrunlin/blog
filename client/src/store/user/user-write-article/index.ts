@@ -14,21 +14,23 @@ export const initValue = {
 type dataType = typeof initValue;
 
 type actionType = {
-  setArticleData: (data: dataType) => any;
-  resetData: () => any;
-  updateData: (
-    data: Partial<{ [K in keyof typeof initValue]: (typeof initValue)[K] }>,
-  ) => any;
+  setArticleData: (data: dataType) => void;
+  resetData: () => void;
+  updateData: (data: Partial<dataType>) => void;
 };
 
-/** 更新用户端文章编辑数据*/
+/** 更新用户端文章编辑数据 */
 const useUserWriteArticle = create<{ data: dataType } & actionType>((set) => ({
   data: initValue,
-  /** 更新整体对象*/
+  /** 更新整体对象 */
   setArticleData: (data: dataType) => set({ data: data }),
-  /** 重置文章数据*/
+  /** 重置文章数据 */
   resetData: () => set({ data: initValue }),
-  /** 更新单一属性*/
-  updateData: (state) => set((s) => ({ data: { ...s.data, ...state } })),
+  /** 更新单一属性 */
+  updateData: (state: Partial<dataType>) =>
+    set((s) => {
+      return { data: { ...s.data, ...state } };
+    }),
 }));
+
 export default useUserWriteArticle;

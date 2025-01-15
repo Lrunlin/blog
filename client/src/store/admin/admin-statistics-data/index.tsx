@@ -26,7 +26,7 @@ export const AdminStatisticsDataStoreProvider: FC<{
   children,
   data = {} as statisticsDataType,
 }: AdminStatisticsDataStoreProviderProps) => {
-  const storeRef = useRef<StoreApi<AdminStatisticsDataStore>>();
+  const storeRef = useRef<StoreApi<AdminStatisticsDataStore>>(null);
   if (!storeRef.current) {
     storeRef.current = createAdminStatisticsDataStore({ data: data });
   }

@@ -50,6 +50,7 @@ router.put("/article/:id", verify, async (ctx) => {
   }
 
   let t = await sequelize.transaction();
+
   let updateResult = await DB.Article.update(
     {
       title: title,
@@ -57,7 +58,6 @@ router.put("/article/:id", verify, async (ctx) => {
       cover_file_name: cover_file_name,
       reprint: reprint,
       content: content,
-      tag: tag,
       state: oldState == 1 ? 1 : state,
       update_time: new Date(),
       theme_id,
@@ -72,10 +72,13 @@ router.put("/article/:id", verify, async (ctx) => {
     .catch(() => false);
 
   // 说明是从草稿箱发布文章(非转载)
-  let _t =
-    (state = 1 && oldState == 0) && !reprint
-      ? await transaction(id, ctx.id as number, t)
-      : true;
+  let _t = await transaction(
+    id,
+    ctx.id as number,
+    tag as number[],
+    (state = 1 && oldState == 0) && !reprint,
+    t,
+  );
 
   if (updateResult && _t) {
     ctx.body = { success: true, message: "修改成功" };

@@ -9,7 +9,7 @@
     "start": "ts-node ./scripts/start&& pm2 start ecosystem.config.js",
     "start:debug": "ts-node ./scripts/start&&pm2 start ecosystem.config.js",
     "build": "ts-node ./scripts/build",
-    "sequelize": "sequelize-auto -d blog -h localhost -u root --useDefine -l ts --noAlias --caseModel p --dialect mysql"
+    "sequelize": "sequelize-auto -d blog -h localhost -u root -x 123456 --useDefine -l ts --noAlias --caseModel p --dialect mysql"
   },
   "dependencies": {
     "@alicloud/cdn20180510": "^3.3.1",

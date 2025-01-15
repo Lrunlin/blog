@@ -1,5 +1,6 @@
 import Router from "@koa/router";
 import DB from "@/db";
+import { Sequelize } from "sequelize";
 
 let router = new Router();
 // 用户页面的用户成就
@@ -13,12 +14,17 @@ router.get("/achievement/:user_id", async (ctx) => {
 
   //判断有多少文章被收藏了
   let articleCollectionCount = await DB.Collection.count({
+    attributes: ["user_id"],
+    distinct: true,
+    col: "user_id", // 指定你想要去重的列
     include: [
       {
+        attributes: ["author"],
         model: DB.Article,
         where: {
           author: userID,
         },
+        as: "article_data",
       },
     ],
   });

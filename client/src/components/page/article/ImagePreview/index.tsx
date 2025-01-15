@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Image } from "antd";
 import style from "./index.module.scss";
 
 /** 文章页面图片预览*/
-const ImagePreview = () => {
-  const [preview, setPreview] = useState("");
+const ImagePreview = memo(() => {
+  const [preview, setPreview] = useState(null as string | null);
   useEffect(() => {
     let imgs = document.querySelectorAll(
       `.content-body img`,
@@ -34,13 +34,13 @@ const ImagePreview = () => {
         <Image
           width={0}
           style={{ display: "none" }}
-          src={preview}
+          src={preview as string}
           alt="预览图"
           preview={{
             mask: false,
             getContainer: "#preview",
             onVisibleChange: (visible) => {
-              if (visible == false) setPreview("");
+              if (visible == false) setPreview(null);
             },
             visible: !!preview,
           }}
@@ -48,5 +48,5 @@ const ImagePreview = () => {
       </div>
     </>
   );
-};
+});
 export default ImagePreview;

@@ -26,7 +26,7 @@ git checkout 9d837612d2bbc50b80248ec06b8af04f9c5ecf01
 
 ## 相关技术
 
-前端:Next.js (React.js 18、app router)  
+前端:Next.js (React.js 19、app router)  
 服务端:Koa2+Sequelize(ORM)  
 数据库:MySQL、Redis
 

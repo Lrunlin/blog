@@ -1,12 +1,13 @@
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
-import type { FC, MutableRefObject } from "react";
+import type { FC, RefObject } from "react";
 import { Form, Input, Modal, message } from "antd";
 import axios from "@axios";
 
-export type event = MutableRefObject<{ onOpen: () => void }>;
+export type event = RefObject<{ onOpen: () => void }>;
 interface propsType {
   ref: event;
 }
+
 const UpdatePasswordModal: FC<propsType> = (props) => {
   let { useForm } = Form;
   const [isModalVisible, setIsModalVisible] = useState(false);

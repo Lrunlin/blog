@@ -30,7 +30,10 @@ function moveDirectory(src, dest) {
 const publicSrc = path.resolve(__dirname, "../../public");
 const publicDest = path.resolve(__dirname, "../../.next/standalone/public");
 const staticSrc = path.resolve(__dirname, "../../.next/static");
-const staticDest = path.resolve(__dirname, "../../.next/standalone/.next/static");
+const staticDest = path.resolve(
+  __dirname,
+  "../../.next/standalone/.next/static",
+);
 
 // Copy public directory
 console.log(`复制 ${publicSrc} 到 ${publicDest}...`);
@@ -40,7 +43,12 @@ console.log("Public复制结束");
 // 复制nodemon
 fs.copyFileSync(
   path.resolve(__dirname, "./nodemon.json"),
-  path.resolve(__dirname, "../../.next/standalone/nodemon.json")
+  path.resolve(__dirname, "../../.next/standalone/nodemon.json"),
+);
+// 复制yarn.lock
+fs.copyFileSync(
+  path.resolve(__dirname, "../../yarn.lock"),
+  path.resolve(__dirname, "../../.next/standalone/yarn.lock"),
 );
 
 // Move static directory
@@ -51,6 +59,6 @@ console.log("Static 移动结束");
 // 文件夹重命名
 moveDirectory(
   path.resolve(__dirname, "../../.next/standalone"),
-  path.resolve(__dirname, "../../.next/blog_client")
+  path.resolve(__dirname, "../../.next/blog_client"),
 );
 console.log("文件夹重命名完成");

@@ -19,7 +19,7 @@ function useWatchEffect<TDeps extends readonly any[]>(
   deps?: TDeps,
 ) {
   const isFirstRun = useRef(true); // 标记是否第一次运行
-  const previousDeps = useRef<TDeps>(); // 保存上一次的依赖项
+  const previousDeps = useRef(null as unknown as TDeps); // 保存上一次的依赖项
 
   useEffect(() => {
     const firstExec = isFirstRun.current; // 是否为第一次执行

@@ -67,8 +67,16 @@ async function transaction(id: number, t: Transaction) {
     .catch(() => false);
 
   /** 删除文章推荐列表中的记录*/
-  let deleteResult = await DB.Recommend.destroy({
+  let deleteRecommendResult = await DB.Recommend.destroy({
     where: { id },
+    transaction: t,
+  })
+    .then(() => true)
+    .catch(() => false);
+
+  /** 删除文章标签表中的记录*/
+  let deleteArticleTagResult = await DB.ArticleTag.destroy({
+    where: { belong_id: id },
     transaction: t,
   })
     .then(() => true)
@@ -81,7 +89,8 @@ async function transaction(id: number, t: Transaction) {
     commentList &&
     deleteCommentNotice &&
     deleteLikes &&
-    deleteResult
+    deleteRecommendResult &&
+    deleteArticleTagResult
   );
 }
 

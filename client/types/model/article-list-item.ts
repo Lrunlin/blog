@@ -1,4 +1,8 @@
-import type { ArticleAttributes, TagAttributes, UserAttributes } from "@type/model-attribute";
+import type {
+  ArticleAttributes,
+  TagAttributes,
+  UserAttributes,
+} from "@type/model-attribute";
 
 /** 文章列表，单个文章主要的字段类型*/
 type articleListItemType = Pick<
@@ -14,7 +18,7 @@ type articleListItemType = Pick<
   | "like_count"
   | "state"
 > & {
-  tag: Pick<TagAttributes, "name">[];
+  tag: Pick<TagAttributes, "id" | "name">[];
   author_data: Pick<UserAttributes, "name">;
 };
 export type { articleListItemType };

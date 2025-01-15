@@ -27,6 +27,10 @@ router.delete(
       .catch((err) => {
         console.log(err);
         ctx.status = 500;
+        ctx.body = {
+          success: false,
+          message: "取消失败",
+        };
       });
   },
 );

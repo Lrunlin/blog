@@ -1,9 +1,9 @@
 import {
-  UserAttributes,
-  CommentAttributes,
   AnswerAttributes,
+  CommentAttributes,
   ProblemAttributes,
   TagAttributes,
+  UserAttributes,
 } from "@type/model-attribute";
 
 /** 问答功能中单个评论的类型*/
@@ -14,8 +14,11 @@ export interface problemCommentType extends Omit<CommentAttributes, "reply"> {
 
 /** 问答功能中单个答案的类型*/
 export interface problemAnswerType extends AnswerAttributes {
-  author_data: Pick<UserAttributes, "id" | "name" | "avatar_file_name" | "avatar_url" | "auth">;
-  comment_list: problemCommentType[];
+  author_data: Pick<
+    UserAttributes,
+    "id" | "name" | "avatar_file_name" | "avatar_url" | "auth"
+  >;
+  comment_data: problemCommentType[];
   like_data: {
     like_count: number;
     like_state: number;
@@ -23,10 +26,13 @@ export interface problemAnswerType extends AnswerAttributes {
 }
 /** 问答功能中的数据请求结果*/
 export interface problemType extends Omit<ProblemAttributes, "tag"> {
-  author_data: Pick<UserAttributes, "id" | "name" | "avatar_file_name" | "avatar_url" | "auth">;
+  author_data: Pick<
+    UserAttributes,
+    "id" | "name" | "avatar_file_name" | "avatar_url" | "auth"
+  >;
   answer_list: problemAnswerType[];
   language: string[] | null;
-  comment_list: problemCommentType[];
+  comment_data: problemCommentType[];
   tag: Pick<TagAttributes, "name">[];
   like_data: {
     like_count: number;

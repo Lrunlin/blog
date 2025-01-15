@@ -27,8 +27,8 @@ const Account = () => {
       "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes",
     );
   }
-  let emailModalRef = useRef() as event;
-  let passwordModalRef = useRef() as updatePasswordEvent;
+  let emailModalRef = useRef(null) as unknown as event;
+  let passwordModalRef = useRef(null) as unknown as updatePasswordEvent;
 
   return (
     <>

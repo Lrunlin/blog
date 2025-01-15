@@ -19,6 +19,8 @@ interface optionType {
   deps?: DependencyList;
   /** 缓存Key*/
   key?: string;
+  /** 回调包装*/
+  callback?: <T>(data: T | null) => any;
 }
 
 let cache: { [key: string]: () => Promise<any> } = {};
@@ -39,7 +41,9 @@ export default function useFetch<T, J>(
     setIsLoading(true);
     try {
       const response = await request(param!);
-      setData(response);
+      setData(
+        option.callback ? option.callback(response) || response : response,
+      );
     } catch (error) {
       setError(error as AxiosError<T>);
     } finally {

@@ -1,25 +1,13 @@
 import DB from "@/db";
 import { Op } from "sequelize";
 import Sequelize from "@/db/config";
-import type { TagAttributes, UserAttributes } from "@/db/models/init-models";
-import setDescription from "@/common/modules/article/get/set-description";
-import getTagData from "@/common/modules/article/get/set-tag-data";
 
 export interface sortArticleListType {
   id: number;
-  title: string;
-  description: string;
-  tag: Pick<TagAttributes, "id" | "name">[];
-  author: Pick<UserAttributes, "id" | "name">;
-  cover: string;
-  update_time: Date | undefined;
-  create_time: Date;
-  view: {
-    view_count: number;
-    like_count: number;
-    comment_count: number;
-    collection_count: number;
-  };
+  view_count: number;
+  like_count: number;
+  comment_count: number;
+  collection_count: number;
 }
 
 /** 查询文章数据函数:文章查询需要的属性以及表关联属性
@@ -54,13 +42,6 @@ async function getSortArticleList(page: number) {
         ],
       ],
     },
-    include: [
-      {
-        model: DB.User,
-        as: "author_data",
-        attributes: ["id", "name"],
-      },
-    ],
     order: [["id", "desc"]],
     where: {
       state: 1,
@@ -75,23 +56,12 @@ async function getSortArticleList(page: number) {
     .then((rows) => {
       return rows.map((row) => {
         let item = row.toJSON();
-        let description = setDescription(item.content);
-        let tag = getTagData(item.tag as unknown as number[], ["id", "name"]);
         return {
           id: item.id,
-          title: item.title,
-          description: description,
-          tag: tag,
-          author: (item as any).author_data,
-          cover: (item as any).cover_url,
-          update_time: item.update_time,
-          create_time: item.create_time,
-          view: {
-            view_count: item.view_count,
-            like_count: (item as any).like_count,
-            comment_count: (item as any).comment_count,
-            collection_count: (item as any).collection_count,
-          },
+          view_count: item.view_count,
+          like_count: (item as any).like_count,
+          comment_count: (item as any).comment_count,
+          collection_count: (item as any).collection_count,
         } as unknown as sortArticleListType;
       });
     })

@@ -17,7 +17,7 @@ let router = new Router();
 function createCommentTree(data: any) {
   /** 获取答案中的的全部评论*/
   let answerCommentList = data.answer_list
-    .map((item: any) => item.comment_list)
+    .map((item: any) => item.comment_data)
     .flat();
   return Object.assign(data, {
     answer_list: data.answer_list
@@ -28,7 +28,7 @@ function createCommentTree(data: any) {
             "answer",
             "answer image",
           ),
-          comment_list: item.comment_list
+          comment_data: item.comment_data
             .map((_item: any) => {
               if (_item.reply) {
                 let target = answerCommentList.find(
@@ -53,10 +53,10 @@ function createCommentTree(data: any) {
       .sort((a: any) => {
         return a.id == data.answer_id ? 1 - 2 : 2 - 1;
       }),
-    comment_list: data.comment_list
+    comment_data: data.comment_data
       .map((_item: any) => {
         if (_item.reply) {
-          let target = data.comment_list.find(
+          let target = data.comment_data.find(
             (_comment: any) => _comment.id == _item.reply,
           );
           return Object.assign(_item, { reply: target.user_data });
@@ -86,21 +86,31 @@ router.get("/problem/:id", verify, async (ctx) => {
       include: [
         [
           Sequelize.literal(
-            `(SELECT COUNT(id) FROM collection WHERE collection.belong_id = problem.id)`,
+            `(SELECT COUNT(DISTINCT user_id) FROM collection WHERE collection.belong_id = article.id)`,
           ),
           "collection_count",
         ],
         [
           Sequelize.literal(
-            `(SELECT favorites_id FROM collection WHERE collection.user_id = ${
-              ctx.id || -1
-            }  and belong_id=${id})`,
+            `(SELECT GROUP_CONCAT(favorites_id) FROM collection WHERE collection.user_id = ${ctx.id || -1} and belong_id = ${id})`,
           ),
           "collection_state",
         ],
       ],
     },
     include: [
+      {
+        model: DB.ArticleTag, // 通过中间表关联标签
+        as: "tag_problem_list", // 使用 Problem 与 ArticleTag 之间关系的别名
+        attributes: ["tag_id"], // 获取 tag_id
+        include: [
+          {
+            model: DB.Tag, // 关联 Tag 表
+            as: "tag_data", // Tag 表的别名
+            attributes: ["id", "name"], // 获取 Tag 的 id 和 name
+          },
+        ],
+      },
       {
         model: DB.Likes,
         as: "like_data",
@@ -148,7 +158,7 @@ router.get("/problem/:id", verify, async (ctx) => {
       },
       {
         model: DB.Comment,
-        as: "comment_list",
+        as: "comment_data",
         attributes: {
           exclude: ["is_review"],
         },
@@ -196,7 +206,7 @@ router.get("/problem/:id", verify, async (ctx) => {
           },
           {
             model: DB.Comment,
-            as: "comment_list",
+            as: "comment_data",
             attributes: {
               exclude: ["is_review"],
             },
@@ -215,7 +225,10 @@ router.get("/problem/:id", verify, async (ctx) => {
     .then((row) => {
       if (row) {
         let data = row.toJSON();
-        let tag = getTagData(data.tag as unknown as number[], ["name"]);
+        let tag = (data as any).tag_problem_list.map((article_tag: any) => ({
+          id: article_tag.tag_data.id,
+          name: article_tag.tag_data.name,
+        }));
         let _data = { ...data, tag } as unknown as {
           answer_list: AnswerAttributes[];
           content: string;
@@ -252,12 +265,6 @@ router.get("/problem/:id", verify, async (ctx) => {
       return null;
     });
 
-  if (data?.collection_state) {
-    data.collection_state = data.collection_state
-      .split(",")
-      .map((item: string) => +item);
-  }
-
   if (data) {
     let language = (data.answer_list || []).reduce(
       (total: any, item: any, index: number) => {
@@ -272,6 +279,12 @@ router.get("/problem/:id", verify, async (ctx) => {
       },
       data.language || [],
     );
+
+    if (data?.collection_state) {
+      data.collection_state = data.collection_state
+        .split(",")
+        .map((item: string) => +item);
+    }
 
     if (language) {
       data.language = [...new Set(language)];

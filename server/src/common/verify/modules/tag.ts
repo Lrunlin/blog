@@ -14,11 +14,9 @@ const tag = Joi.array()
       return helper.message(new Error("禁止重复的tag_id") as any);
     }
 
-    let tags = (cache.get("tag") as Array<TagAttributes>).map(
-      (item) => item.id,
-    );
+    let tag = (cache.get("tag") as Array<TagAttributes>).map((item) => item.id);
 
-    if (value.every((item) => tags.includes(item))) {
+    if (value.every((item) => tag.includes(item))) {
       return true;
     } else {
       return helper.message(new Error("tag_id不在数据表内") as any);

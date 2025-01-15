@@ -173,7 +173,7 @@ const Answer: FC = () => {
                 <Comments
                   type="answer"
                   belong_id={item.id}
-                  data={item.comment_list}
+                  data={item.comment_data}
                 />
               </Suspense>
             </div>

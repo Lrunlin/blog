@@ -1,14 +1,14 @@
-import type { FunctionComponent } from "react";
+import type { FC, ReactNode } from "react";
 
 interface props {
   title?: string;
   description?: string;
   keywords?: string[];
-  children?: JSX.Element;
+  children?: ReactNode;
 }
 
 /**Head组件封装 title keywords  description children*/
-const Head: FunctionComponent<props> = (props) => {
+const Head: FC<props> = (props) => {
   let { title, description, keywords } = props;
   return (
     <>

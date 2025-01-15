@@ -19,8 +19,8 @@ const ToolBar = () => {
       .then((res) => {
         reload();
       })
-      .catch(() => {
-        message.error("取消失败");
+      .catch((err) => {
+        message.error(err.message);
       });
   }
 
@@ -29,8 +29,8 @@ const ToolBar = () => {
       .then(() => {
         reload();
       })
-      .catch(() => {
-        message.error("点赞失败");
+      .catch((err) => {
+        message.error(err.message);
       });
   }
 
@@ -39,8 +39,8 @@ const ToolBar = () => {
       .then(() => {
         reload();
       })
-      .catch(() => {
-        message.error("取消失败");
+      .catch((err) => {
+        message.error(err.message);
       });
   }
 
@@ -50,8 +50,8 @@ const ToolBar = () => {
         reload();
         message.success("关注成功");
       })
-      .catch(() => {
-        message.error("关注失败");
+      .catch((err) => {
+        message.error(err.message);
       });
   }
   function unFollowProblem() {
@@ -59,7 +59,9 @@ const ToolBar = () => {
       .then(() => {
         reload();
       })
-      .catch(() => {});
+      .catch((err) => {
+        message.error(err.message);
+      });
   }
   return (
     <div className="flex">

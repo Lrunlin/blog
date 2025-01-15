@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Dropdown } from "antd";
 import classNames from "classnames";
 import Image from "@/components/next/Image";
@@ -9,7 +10,7 @@ import style from "./index.module.scss";
 interface listItemType {
   key: string;
   href?: string;
-  label: JSX.Element | string;
+  label: ReactNode | string;
   className?: string;
 }
 let list: listItemType[][] = [

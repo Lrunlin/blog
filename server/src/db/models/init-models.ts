@@ -8,6 +8,11 @@ import { Answer as _Answer } from "./answer";
 import type { AnswerAttributes, AnswerCreationAttributes } from "./answer";
 import { Article as _Article } from "./article";
 import type { ArticleAttributes, ArticleCreationAttributes } from "./article";
+import { ArticleTag as _ArticleTag } from "./article_tag";
+import type {
+  ArticleTagAttributes,
+  ArticleTagCreationAttributes,
+} from "./article_tag";
 import { Collection as _Collection } from "./collection";
 import type {
   CollectionAttributes,
@@ -54,6 +59,7 @@ export {
   _Advertisement as Advertisement,
   _Answer as Answer,
   _Article as Article,
+  _ArticleTag as ArticleTag,
   _Collection as Collection,
   _Comment as Comment,
   _ExternalLink as ExternalLink,
@@ -76,6 +82,8 @@ export type {
   AnswerCreationAttributes,
   ArticleAttributes,
   ArticleCreationAttributes,
+  ArticleTagAttributes,
+  ArticleTagCreationAttributes,
   CollectionAttributes,
   CollectionCreationAttributes,
   CommentAttributes,
@@ -108,6 +116,7 @@ export function initModels(sequelize: Sequelize) {
   const Advertisement = _Advertisement.initModel(sequelize);
   const Answer = _Answer.initModel(sequelize);
   const Article = _Article.initModel(sequelize);
+  const ArticleTag = _ArticleTag.initModel(sequelize);
   const Collection = _Collection.initModel(sequelize);
   const Comment = _Comment.initModel(sequelize);
   const ExternalLink = _ExternalLink.initModel(sequelize);
@@ -126,6 +135,7 @@ export function initModels(sequelize: Sequelize) {
     Advertisement: Advertisement,
     Answer: Answer,
     Article: Article,
+    ArticleTag: ArticleTag,
     Collection: Collection,
     Comment: Comment,
     ExternalLink: ExternalLink,

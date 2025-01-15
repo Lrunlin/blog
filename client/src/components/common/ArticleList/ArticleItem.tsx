@@ -40,7 +40,7 @@ const ArticleItem: FC<propsType> = ({
               <a
                 className={classNames(["text-[#86909c]", style.tag])}
                 key={`tag${data.id}${item.name}${index}`}
-                href={`/tag/${item.name}/article`}
+                href={`/tag/article/${item.id}`}
                 target="_blank"
               >
                 {item.name}

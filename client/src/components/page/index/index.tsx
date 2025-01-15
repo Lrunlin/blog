@@ -39,7 +39,7 @@ const Home: FC<propsType> = (props) => {
   let option = useRef<optionType>({ sort: "recommend" });
 
   /** 取消请求函数，每次请求数据时设置上，下次请求时运行*/
-  let cancel = useRef<() => void>();
+  let cancel = useRef<() => void>(null);
   function loadMoreData() {
     cancel.current && cancel.current();
     if (page.current == 1) setIsLoading(true);

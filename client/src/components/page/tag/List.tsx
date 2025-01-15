@@ -3,7 +3,7 @@
 import { FC, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { message } from "antd";
-import { propsType } from "@/app/tag/[name]/article/page";
+import { propsType } from "@/app/tag/article/[id]/page";
 import ArticleList from "@/components/common/ArticleList";
 import getTagArticleLData from "@/request/type/getTagArticleLData";
 
@@ -14,10 +14,10 @@ const List: FC<propsType> = ({ data }) => {
   /** 文章数据信息*/
   let [list, setList] = useState(data.article_data.list);
   let params = useParams();
-  let name = params.name as string;
+  let id = params.id as string;
 
   function loadMoreData() {
-    getTagArticleLData(page.current, name)
+    getTagArticleLData(page.current, id)
       .then((res) => {
         let _list = res.article_data.list;
         if (page.current == 1) {

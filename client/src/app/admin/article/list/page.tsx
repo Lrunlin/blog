@@ -20,7 +20,7 @@ const ArticleList = memo(() => {
   /** 是否加载中*/
   const [isLoading, setIsLoading] = useState(false);
 
-  let cancel = useRef<() => void>();
+  let cancel = useRef<() => void>(null);
   useEffect(() => {
     setIsLoading(true);
     cancel.current && cancel.current();

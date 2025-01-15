@@ -78,6 +78,18 @@ async function transaction(problem_id: number, t: Transaction) {
     .then(() => true)
     .catch(() => false);
   if (!deleteLikeRedult) return false;
+
+  //  删除article-tag中的关联
+  let deleteArticleTagResult = await DB.ArticleTag.destroy({
+    where: {
+      belong_id: problem_id,
+    },
+    transaction: t,
+  })
+    .then(() => true)
+    .catch(() => false);
+  if (!deleteArticleTagResult) return false;
+
   return true;
 }
 export default transaction;

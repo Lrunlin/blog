@@ -8,7 +8,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const nextConfig: NextConfig = {
-  // reactStrictMode: false,
+  reactStrictMode: false,
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -24,7 +24,6 @@ const nextConfig: NextConfig = {
       static: 0,
     },
     turbo: {
-      useSwcCss: true,
     },
   },
   //https://nextjs.org/docs/app/api-reference/next-config-js/output

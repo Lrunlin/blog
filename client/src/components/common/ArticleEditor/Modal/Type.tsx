@@ -67,7 +67,7 @@ const Type = () => {
                   // 点击过了就取消没点过就先判断是否6个了在判断添加和删除
                   if (articleData.tag.includes(item.id)) {
                     updateData({
-                      ...articleData.tag,
+                      ...articleData,
                       tag: articleData.tag.filter((_item) => item.id != _item),
                     });
                   } else {

@@ -10,11 +10,11 @@ import Head from "@/components/next/Head";
 import useUserWriteArticle from "@/store/user/user-write-article";
 
 const Write = () => {
+  let router = useRouter();
   let params = useParams<{ id: string }>();
 
   const { id } = params;
 
-  let router = useRouter();
   let updateData = useUserWriteArticle((s) => s.updateData);
 
   let { data, isLoading, refetch } = useFetch(() =>
@@ -34,6 +34,7 @@ const Write = () => {
         cover_url,
         theme_id,
       } = data;
+
       updateData({
         title,
         content,

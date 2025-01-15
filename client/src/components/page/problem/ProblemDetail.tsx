@@ -102,7 +102,7 @@ const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
             <Comments
               type="problem"
               belong_id={+id}
-              data={data.comment_list}
+              data={data.comment_data}
               className="mt-2"
             />
           </div>

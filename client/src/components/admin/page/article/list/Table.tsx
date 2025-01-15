@@ -120,13 +120,14 @@ const TableCom = () => {
           <Popover
             content={text}
             trigger="hover"
-            overlayClassName="w-3/12 max-w-[300px] break-all"
+            className="w-10/12 max-w-[300px] break-all"
+            overlayStyle={{ maxWidth: "400px" }}
           >
             <div className="line-clamp-3">{text}</div>
           </Popover>
         );
       },
-      width: 200,
+      width: 300,
     },
     {
       title: "发布时间",

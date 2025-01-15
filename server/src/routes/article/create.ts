@@ -18,10 +18,18 @@ router.post("/article", verify, async (ctx) => {
     theme_id,
   } = ctx.request.body;
   let _id = id();
+
   let t = await sequelize.transaction();
+
   // 只有正式发布才创建通知(转载文章不发布通知)
-  let _t =
-    state == 1 && !reprint ? await transaction(_id, ctx.id as number, t) : true;
+  let _t = await transaction(
+    _id,
+    ctx.id as number,
+    tag as number[],
+    state == 1 && !reprint,
+    t,
+  );
+
   let createArticleResult = await DB.Article.create(
     {
       id: _id,
@@ -31,7 +39,6 @@ router.post("/article", verify, async (ctx) => {
       reprint: reprint,
       content: content,
       author: ctx.id as number,
-      tag: tag,
       state: state,
       view_count: 0,
       theme_id,

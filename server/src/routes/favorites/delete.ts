@@ -3,7 +3,6 @@ import DB from "@/db";
 import sequelize from "@/db/config";
 import stringArrayReplace from "@/db/utils/stringArrayReplace";
 import auth from "@/common/middleware/auth";
-import transaction from "@/common/transaction/favorites/delete";
 import interger from "@/common/verify/integer";
 
 let router = new Router();
@@ -13,16 +12,12 @@ router.delete("/favorites/:id", interger([], ["id"]), auth(0), async (ctx) => {
   let id = +ctx.params.id;
   let t = await sequelize.transaction();
   // 将collocation中的favorites_id置换掉
-  let favoritesIDReplace = await stringArrayReplace(
-    {
-      tableName: "Collection",
-      field: "favorites_id",
-      oldValue: id,
-      newValue: "",
-    },
-    { transaction: t },
-  );
-  let _t = await transaction(t);
+  let collectionResult = await DB.Collection.destroy({
+    where: { favorites_id: id },
+    transaction: t,
+  })
+    .then((rows) => !!rows)
+    .catch(() => false);
 
   let result = await DB.Favorites.destroy({
     where: {
@@ -37,7 +32,7 @@ router.delete("/favorites/:id", interger([], ["id"]), auth(0), async (ctx) => {
       return false;
     });
 
-  if (result && _t && favoritesIDReplace) {
+  if (result && collectionResult) {
     ctx.body = { success: true, message: "删除成功" };
     t.commit();
   } else {

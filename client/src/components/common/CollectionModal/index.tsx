@@ -64,8 +64,8 @@ const CollectionModal: FC<propsType> = (props) => {
           return res;
         })
         .catch((err) => {
-          message.error("收藏失败");
           console.log(err);
+          message.error(err.message);
           return err;
         }),
     { manual: true },

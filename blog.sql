@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 08/10/2024 16:26:16
+ Date: 12/01/2025 23:42:37
 */
 
 SET NAMES utf8mb4;
@@ -52,7 +52,6 @@ CREATE TABLE `article`  (
   `id` bigint NOT NULL COMMENT '文章ID',
   `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
   `description` varchar(240) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章介绍',
-  `tag` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标签',
   `author` bigint NOT NULL COMMENT '发布者ID',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章内容',
   `cover_file_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图片名称',
@@ -64,8 +63,23 @@ CREATE TABLE `article`  (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `useri_id`(`author` ASC) USING BTREE COMMENT '对作者ID进行索引，方便查询用户列表中的文章发布情况',
-  INDEX `state`(`state` ASC) USING BTREE COMMENT '可以更快查询到文章和草稿数量 用于大屏'
+  INDEX `state`(`state` ASC) USING BTREE COMMENT '可以更快查询到文章和草稿数量 用于大屏',
+  INDEX `create_time`(`create_time` DESC) USING BTREE COMMENT '加快管理员查询文章列表页面的查询速度',
+  INDEX `reprint`(`reprint`(191) ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Table structure for article_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `article_tag`;
+CREATE TABLE `article_tag`  (
+  `id` bigint NOT NULL COMMENT '记录ID',
+  `article_id` bigint NOT NULL COMMENT '文章ID',
+  `tag_id` bigint NOT NULL COMMENT '标签ID',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `article_id`(`article_id`) USING BTREE,
+  INDEX `tag_id`(`tag_id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Table structure for collection
@@ -169,7 +183,9 @@ CREATE TABLE `likes`  (
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `belong_id` bigint NOT NULL COMMENT '文章ID',
   `create_time` datetime NOT NULL COMMENT '点赞时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `belong_id`(`belong_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '点赞表，用于储存文章点赞、问题点赞、答案点赞' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -210,14 +226,6 @@ CREATE TABLE `problem`  (
 DROP TABLE IF EXISTS `recommend`;
 CREATE TABLE `recommend`  (
   `id` bigint NOT NULL COMMENT '文章ID',
-  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
-  `description` varchar(240) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章介绍',
-  `author` json NOT NULL COMMENT '文章发布者信息',
-  `cover` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面地址',
-  `tag` json NOT NULL COMMENT '文章类型',
-  `create_time` datetime NOT NULL COMMENT '文章发布时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '文章最新更新时间',
-  `view` json NOT NULL COMMENT '存储文章的阅读、点赞、评论数量',
   `recommend` int NULL DEFAULT NULL COMMENT '推荐查询的索引值',
   `newest` int NULL DEFAULT NULL COMMENT '最新查询的索引值',
   `hottest` int NULL DEFAULT NULL COMMENT '最热查询的索引值',

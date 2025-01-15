@@ -28,7 +28,7 @@ function auth(auth?: authCode[] | authCode) {
         }
       })
       .catch((err) => {
-        console.log(ctx.path, err);
+        // console.log(ctx.path, err);
         ctx.status = 401;
       });
   };

@@ -34,8 +34,8 @@ const Write = () => {
         message.success(res.data.message);
         router.back();
       })
-      .catch(() => {
-        message.error("请求失败");
+      .catch((err) => {
+        message.error(err.message);
       });
   }
 

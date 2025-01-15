@@ -6,6 +6,7 @@ export interface Favorites_data {
 }
 
 export interface Tag {
+  id: number;
   name: string;
 }
 

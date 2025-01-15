@@ -24,7 +24,7 @@ export const UserDataStoreProvider: FC<{
   children: any;
   data: UserInfoType;
 }> = ({ children, data = defaultInitState }: UserDataStoreProviderProps) => {
-  const storeRef = useRef<StoreApi<UserDataStore>>();
+  const storeRef = useRef<StoreApi<UserDataStore>>(null);
   if (!storeRef.current) {
     storeRef.current = createUserDataStore(data);
   }

@@ -116,24 +116,18 @@ export const setArticleListWrite = async () => {
   for (let page = 1; page < round; page++) {
     let list = await getSortArticleList(page).then((rows) =>
       rows.map((item) => ({
-        ...item,
-        ...calculateGrades({ ...item.view, id: item.id }),
+        id: item.id,
+        ...calculateGrades({
+          view_count: item.view_count,
+          like_count: item.like_count,
+          comment_count: item.comment_count,
+          collection_count: item.collection_count,
+        }),
       })),
     );
 
     DB.Recommend.bulkCreate(list, {
-      updateOnDuplicate: [
-        "title",
-        "description",
-        "cover",
-        "tag",
-        "create_time",
-        "update_time",
-        "view",
-        "recommend",
-        "newest",
-        "hottest",
-      ],
+      updateOnDuplicate: ["recommend", "newest", "hottest"],
     }).catch((err) => {
       console.log("更新推荐表,批量文章插入发生错误", err);
     });
@@ -142,9 +136,7 @@ export const setArticleListWrite = async () => {
   }
 };
 /** 传入文章信息，返回文章分数*/
-function calculateGrades(
-  option: sortArticleListType["view"] & Pick<sortArticleListType, "id">,
-) {
+function calculateGrades(option: Omit<sortArticleListType, "id">) {
   let [recommend, newest, hottest]:
     | ["recommend", "newest", "hottest"]
     | [number, number, number] = ["recommend", "newest", "hottest"].map(

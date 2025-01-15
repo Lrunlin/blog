@@ -6,7 +6,6 @@ export interface ArticleAttributes {
   id: number;
   title: string;
   description?: string;
-  tag: string;
   author: number;
   content: string;
   cover_file_name?: string;
@@ -38,7 +37,6 @@ export class Article
   id!: number;
   title!: string;
   description?: string;
-  tag!: string;
   author!: number;
   content!: string;
   cover_file_name?: string;
@@ -77,20 +75,6 @@ export class Article
             } else {
               this.setDataValue("description", null as any);
             }
-          },
-        },
-        tag: {
-          type: DataTypes.STRING(150),
-          allowNull: false,
-          comment: "文章标签",
-          set(this, val: string[]) {
-            this.setDataValue("tag", val.join(","));
-          },
-          get() {
-            let type = this.getDataValue("tag");
-            return type && /^[\s\S]*.*[^\s][\s\S]*$/.test(type)
-              ? type.split(",").map((item) => +item)
-              : [];
           },
         },
         author: {

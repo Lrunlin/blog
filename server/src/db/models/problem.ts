@@ -5,7 +5,6 @@ import dehydrate from "@/common/utils/xss/article";
 export interface ProblemAttributes {
   id: number;
   title: string;
-  tag: string;
   content: string;
   author: number;
   answer_id?: number;
@@ -29,7 +28,6 @@ export class Problem
 {
   id!: number;
   title!: string;
-  tag!: string;
   content!: string;
   author!: number;
   answer_id?: number;
@@ -52,22 +50,6 @@ export class Problem
           type: DataTypes.STRING(200),
           allowNull: false,
           comment: "问题题目",
-        },
-        tag: {
-          type: DataTypes.STRING(150),
-          allowNull: false,
-          comment: "tag类型",
-          set(this, val: string[]) {
-            this.setDataValue("tag", val.join(","));
-          },
-          get() {
-            let type = this.getDataValue("tag");
-            if (type) {
-              return /^[\s\S]*.*[^\s][\s\S]*$/.test(type)
-                ? type.split(",").map((item) => +item)
-                : [];
-            }
-          },
         },
         content: {
           type: DataTypes.TEXT,
