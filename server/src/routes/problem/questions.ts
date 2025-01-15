@@ -5,7 +5,6 @@ import type { AnswerAttributes } from "@/db/models/answer";
 import setExternalLink from "@/common/modules/article/get/external-link";
 import setImageTag from "@/common/modules/article/get/img-add-prefix";
 import getCodeBlockLanguage from "@/common/modules/article/get/set-code-block-language";
-import getTagData from "@/common/modules/article/get/set-tag-data";
 import verify from "@/common/verify/api-verify/problem/questions";
 
 let router = new Router();
@@ -86,7 +85,7 @@ router.get("/problem/:id", verify, async (ctx) => {
       include: [
         [
           Sequelize.literal(
-            `(SELECT COUNT(DISTINCT user_id) FROM collection WHERE collection.belong_id = article.id)`,
+            `(SELECT COUNT(DISTINCT user_id) FROM collection WHERE collection.belong_id = problem.id)`,
           ),
           "collection_count",
         ],

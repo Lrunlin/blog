@@ -1,8 +1,5 @@
 import DB from "@/db";
-import { Op, Sequelize } from "sequelize";
-import type { WhereOptions } from "sequelize";
-import { RecommendAttributes } from "@/db/models/init-models";
-import { ArticleAttributes } from "@/db/models/init-models";
+import { Sequelize } from "sequelize";
 
 // 文章表模型
 let sort = {
@@ -27,15 +24,15 @@ let sort = {
 async function getArticleListData(
   page: number,
   _sort: "recommend" | "newest" | "hottest",
-  where?: WhereOptions<RecommendAttributes>,
+  where?: { tag_id?: number | number[]; author?: number },
 ) {
   const order = sort[_sort];
 
   return await DB.Recommend.findAndCountAll({
-    where: where,
     include: [
       {
         model: DB.Article,
+        where: where?.author ? where : {},
         as: "article_data", // 使用关联时定义的别名
         attributes: [
           "id",
@@ -44,6 +41,7 @@ async function getArticleListData(
           "view_count",
           "cover_file_name",
           "cover_url",
+          "author",
           "update_time",
           "create_time",
           [
@@ -69,6 +67,7 @@ async function getArticleListData(
             model: DB.ArticleTag, // 假设 article_tag 表关联 article 和 tag
             as: "tag_article_list", // 为 ArticleTag 设置别名
             attributes: ["tag_id"], // 选择 tag_id 字段
+            where: where?.tag_id ? where : {},
             include: [
               {
                 model: DB.Tag, // 假设 tag 表有 tag 字段
