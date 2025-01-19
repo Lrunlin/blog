@@ -11,7 +11,7 @@
  Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 12/01/2025 23:42:37
+ Date: 19/01/2025 11:27:47
 */
 
 SET NAMES utf8mb4;
@@ -74,10 +74,11 @@ CREATE TABLE `article`  (
 DROP TABLE IF EXISTS `article_tag`;
 CREATE TABLE `article_tag`  (
   `id` bigint NOT NULL COMMENT '记录ID',
-  `article_id` bigint NOT NULL COMMENT '文章ID',
+  `belong_id` bigint NOT NULL COMMENT '对应ID',
   `tag_id` bigint NOT NULL COMMENT '标签ID',
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章还是问题',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `article_id`(`article_id`) USING BTREE,
+  INDEX `article_id`(`belong_id`) USING BTREE,
   INDEX `tag_id`(`tag_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = FIXED;
 
@@ -88,13 +89,14 @@ DROP TABLE IF EXISTS `collection`;
 CREATE TABLE `collection`  (
   `id` bigint NOT NULL COMMENT 'ID',
   `belong_id` bigint NOT NULL COMMENT '文章ID',
-  `favorites_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '所属收藏夹的ID集合',
+  `favorites_id` bigint NOT NULL COMMENT '所属收藏夹的ID',
   `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'article或者problem',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `create_time` datetime NOT NULL COMMENT '收藏时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `belong_id`(`belong_id` ASC) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `favorites_id`(`favorites_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '收藏表，对问题和文章进行收藏' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -209,7 +211,6 @@ DROP TABLE IF EXISTS `problem`;
 CREATE TABLE `problem`  (
   `id` bigint NOT NULL COMMENT 'ID',
   `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题题目',
-  `tag` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'tag类型',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题内容',
   `author` bigint NOT NULL COMMENT '发布人ID',
   `answer_id` bigint NULL DEFAULT NULL COMMENT '采纳答案的ID',
@@ -229,7 +230,10 @@ CREATE TABLE `recommend`  (
   `recommend` int NULL DEFAULT NULL COMMENT '推荐查询的索引值',
   `newest` int NULL DEFAULT NULL COMMENT '最新查询的索引值',
   `hottest` int NULL DEFAULT NULL COMMENT '最热查询的索引值',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `recommend`(`id` DESC, `recommend` DESC) USING BTREE,
+  INDEX `newest`(`id` DESC, `newest` DESC) USING BTREE,
+  INDEX `hottest`(`id` DESC, `hottest` DESC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章推荐表注释' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
