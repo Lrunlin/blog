@@ -3,6 +3,7 @@ import { Literal } from "sequelize/types/utils";
 import { Op } from "sequelize";
 import sequelize from "@/db/config";
 import { Article, ArticleAttributes } from "@/db/models/init-models";
+import setCacheRecommendData from "@/common/tasks/recommend/cache-recommend-data";
 import sleep from "@/common/utils/sleep";
 import getSortArticleList, { sortArticleListType } from "./sortArticleList";
 
@@ -24,7 +25,6 @@ let dataStandards = {
   like_count: [] as number[],
   comment_count: [] as number[],
   view_count: [] as number[],
-  // create_time: [] as string[],
   id: [] as number[],
   collection_count: [] as number[],
 };
@@ -60,8 +60,6 @@ let condition: {
     importance: { recommend: 1.5, newest: 1, hottest: 2.5 },
   },
   {
-    // key: "create_time",
-    // value: "create_time",
     key: "id",
     value: "id",
     importance: { recommend: 1.5, newest: 4, hottest: 1.5 },
@@ -132,7 +130,8 @@ export const setArticleListWrite = async () => {
       console.log("更新推荐表,批量文章插入发生错误", err);
     });
 
-    await sleep(50);
+    await sleep(500);
+    await setCacheRecommendData();
   }
 };
 /** 传入文章信息，返回文章分数*/

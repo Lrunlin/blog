@@ -2,7 +2,7 @@ import DB from "@/db";
 import { Sequelize } from "sequelize";
 
 // 文章表模型
-let sort = {
+export let sort = {
   recommend: [
     ["recommend", "desc"], // 根据推荐的排序值来排序
   ],
