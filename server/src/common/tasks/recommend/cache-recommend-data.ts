@@ -1,10 +1,9 @@
 import DB from "@/db";
 import { where } from "@/routes/article/get-data/article-list";
-import getArticleListData, {
-  sort,
-} from "@/common/modules/article/select/option";
+import getArticleListData, { sort } from "@/common/modules/article/select/option";
 import redis from "@/common/utils/redis";
 import sleep from "@/common/utils/sleep";
+
 
 async function setCacheRecommendData() {
   let list = await redis.keys("recommend-cache-*");
@@ -24,30 +23,36 @@ async function setCacheRecommendData() {
   });
 
   let type = Object.keys(sort);
-  for (let page = 1; page < 51; page++) {
-    for (let index = 0; index < type.length; index++) {
-      const t = type[index] as unknown as keyof typeof sort;
-      let data = await getArticleListData(page, t, {});
+  console.time("a");
 
-      await redis.set(`recommend-cache-${t}-${page}`, JSON.stringify(data));
+  for (let index = 0; index < type.length; index++) {
+    const t = type[index] as unknown as keyof typeof sort;
+    let { total, list } = await getArticleListData(1, t, {}, 1000);
 
-      for (let index = 0; index < tags.length; index++) {
-        const tag = tags[index];
-        let data = await getArticleListData(
-          page,
-          t,
-          await where({
-            tag: tag.belong_id ? tag.id : undefined,
-            type: tag ? tag.id : undefined,
-          }),
-        );
-        await redis.set(
-          `recommend-cache-${t}-${tag.id}-${page}`,
-          JSON.stringify(data),
-        );
-      }
+    for (let index = 0; index < list.length; index += 10) {
+      await redis.set(
+        `recommend-cache-${t}-${index / 10 + 1}`,
+        JSON.stringify({ total, list: list.slice(index, index + 10) }),
+      );
+    }
+    for (let index = 0; index < tags.length; index += 10) {
+      const tag = tags[index];
+      let { total, list } = await getArticleListData(
+        1,
+        t,
+        await where({
+          tag: tag.belong_id ? tag.id : undefined,
+          type: tag ? tag.id : undefined,
+        }),
+        1000,
+      );
+      await redis.set(
+        `recommend-cache-${t}-${tag.id}-${index / 10 + 1}`,
+        JSON.stringify({ total, list: list.slice(index, index + 10) }),
+      );
     }
   }
+  console.timeEnd("a");
 }
 
 export default setCacheRecommendData;

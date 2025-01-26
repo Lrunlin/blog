@@ -25,8 +25,10 @@ async function getArticleListData(
   page: number,
   _sort: "recommend" | "newest" | "hottest",
   where?: { tag_id?: number | number[]; author?: number },
+  pageSize?: number,
 ) {
   const order = sort[_sort];
+  let size = pageSize || 10;
 
   return await DB.Recommend.findAndCountAll({
     include: [
@@ -80,8 +82,8 @@ async function getArticleListData(
       },
     ],
     order: order as any,
-    offset: (page - 1) * 10,
-    limit: 10,
+    offset: (page - 1) * size,
+    limit: size,
   })
     .then(({ count, rows }) => {
       return {
