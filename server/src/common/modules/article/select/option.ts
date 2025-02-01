@@ -19,6 +19,7 @@ export let sort = {
  * @param page {number} 当前页数
  * @param _sort {string} 排序类型：recommend / newest / hottest
  * @param where {WhereOptions<RecommendAttributes>} 过滤条件
+ * @param pageSize {number} 每页数量
  * @return {Promise<{total: number, list: any[]}>} 返回总数和文章列表数据
  */
 async function getArticleListData(

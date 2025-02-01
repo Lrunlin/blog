@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 华为云root
  Source Server Type    : MySQL
- Source Server Version : 80027 (8.0.27)
- Source Host           : localhost:3306
+ Source Server Version : 80036 (8.0.36)
+ Source Host           : 120.46.147.178:3306
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80027 (8.0.27)
+ Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 19/01/2025 11:27:47
+ Date: 30/01/2025 11:17:31
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,9 @@ CREATE TABLE `advertisement`  (
   `poster_file_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '海报文件名称',
   `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '活动地址',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_position_indexes`(`position` ASC, `indexes` ASC) USING BTREE,
+  INDEX `idx_create_time`(`create_time` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告投放' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -41,7 +43,9 @@ CREATE TABLE `answer`  (
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回答内容',
   `author` bigint NOT NULL COMMENT '回答者ID',
   `create_time` datetime NOT NULL COMMENT '回答时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_problem_time`(`problem_id` ASC, `create_time` ASC) USING BTREE,
+  INDEX `idx_author`(`author` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '问答中的答案表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -65,7 +69,10 @@ CREATE TABLE `article`  (
   INDEX `useri_id`(`author` ASC) USING BTREE COMMENT '对作者ID进行索引，方便查询用户列表中的文章发布情况',
   INDEX `state`(`state` ASC) USING BTREE COMMENT '可以更快查询到文章和草稿数量 用于大屏',
   INDEX `create_time`(`create_time` DESC) USING BTREE COMMENT '加快管理员查询文章列表页面的查询速度',
-  INDEX `reprint`(`reprint`(191) ASC) USING BTREE
+  INDEX `reprint`(`reprint`(191) ASC) USING BTREE,
+  INDEX `idx_state_time`(`state` ASC, `create_time` ASC) USING BTREE,
+  INDEX `idx_theme`(`theme_id` ASC) USING BTREE,
+  INDEX `idx_reprint`(`reprint`(191) ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -79,7 +86,8 @@ CREATE TABLE `article_tag`  (
   `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章还是问题',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `article_id`(`belong_id`) USING BTREE,
-  INDEX `tag_id`(`tag_id`) USING BTREE
+  INDEX `tag_id`(`tag_id`) USING BTREE,
+  INDEX `belong_id`(`belong_id`, `tag_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
@@ -96,7 +104,8 @@ CREATE TABLE `collection`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `belong_id`(`belong_id` ASC) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
-  INDEX `favorites_id`(`favorites_id` ASC) USING BTREE
+  INDEX `favorites_id`(`favorites_id` ASC) USING BTREE,
+  INDEX `idx_user_favorites`(`user_id` ASC, `favorites_id` ASC, `create_time` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '收藏表，对问题和文章进行收藏' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -115,7 +124,9 @@ CREATE TABLE `comment`  (
   `create_time` datetime NOT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `belong_id`(`belong_id` ASC) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `idx_belong_time`(`belong_id` ASC, `create_time` ASC) USING BTREE,
+  INDEX `idx_user`(`user_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表，存储文章、问题、答案的评论' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -218,7 +229,9 @@ CREATE TABLE `problem`  (
   `view_count` int NOT NULL COMMENT '阅读量',
   `create_time` datetime NOT NULL COMMENT '发布时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最后更新时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_theme_time`(`theme_id` ASC, `create_time` ASC) USING BTREE,
+  INDEX `idx_view_count`(`view_count` DESC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '问答中的问题表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -233,7 +246,10 @@ CREATE TABLE `recommend`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `recommend`(`id` DESC, `recommend` DESC) USING BTREE,
   INDEX `newest`(`id` DESC, `newest` DESC) USING BTREE,
-  INDEX `hottest`(`id` DESC, `hottest` DESC) USING BTREE
+  INDEX `hottest`(`id` DESC, `hottest` DESC) USING BTREE,
+  INDEX `recommend_2`(`recommend` DESC) USING BTREE,
+  INDEX `newest_2`(`newest` ASC) USING BTREE,
+  INDEX `hottest_2`(`hottest` DESC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章推荐表注释' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -248,8 +264,7 @@ CREATE TABLE `tag`  (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '标签介绍',
   `indexes` int NOT NULL COMMENT '索引值',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `name`(`name` ASC) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -289,7 +304,8 @@ CREATE TABLE `user`  (
   UNIQUE INDEX `email`(`email` ASC) USING BTREE,
   UNIQUE INDEX `id`(`id` ASC) USING BTREE,
   UNIQUE INDEX `github`(`github` ASC) USING BTREE,
-  INDEX `create_time`(`create_time` ASC) USING BTREE
+  INDEX `create_time`(`create_time` ASC) USING BTREE,
+  INDEX `idx_name`(`name` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户数据表' ROW_FORMAT = COMPACT;
 
 SET FOREIGN_KEY_CHECKS = 1;
