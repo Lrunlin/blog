@@ -85,6 +85,8 @@ const Footer = () => {
         <div className="mt-3">
           <Dropdown
             placement="bottom"
+            className="qqDown relative"
+            getPopupContainer={() => document.querySelector(".qqDown")!}
             dropdownRender={() => (
               <div className="h-52 w-40 rounded bg-white pt-2 text-center">
                 <div>QQ:{process.env.QQ}</div>
@@ -99,21 +101,25 @@ const Footer = () => {
               </div>
             )}
           >
-            <NoFollowLink
-              href={`http://wpa.qq.com/msgrd?v=3&uin=${process.env.QQ}&site=qq&menu=yes`}
-            >
-              <Image
-                src="/icon/client/qq.png"
-                width={24}
-                height={24}
-                alt="QQ图标"
-              />
-            </NoFollowLink>
+            <div>
+              <NoFollowLink
+                href={`http://wpa.qq.com/msgrd?v=3&uin=${process.env.QQ}&site=qq&menu=yes`}
+              >
+                <Image
+                  src="/icon/client/qq.png"
+                  width={24}
+                  height={24}
+                  alt="QQ图标"
+                />
+              </NoFollowLink>
+            </div>
           </Dropdown>
         </div>
         <div className="ml-2 mt-3 cursor-pointer">
           <Dropdown
             placement="bottom"
+            className="wxDown relative"
+            getPopupContainer={() => document.querySelector(".wxDown")!}
             dropdownRender={() => (
               <div className="h-52 w-40 rounded bg-white pt-2 text-center">
                 <div>添加站长微信</div>
@@ -128,12 +134,14 @@ const Footer = () => {
               </div>
             )}
           >
-            <Image
-              src="/icon/client/wechat.png"
-              width={24}
-              height={24}
-              alt="微信图标"
-            />
+            <div>
+              <Image
+                src="/icon/client/wechat.png"
+                width={24}
+                height={24}
+                alt="微信图标"
+              />
+            </div>
           </Dropdown>
         </div>
         <div className="ml-2 mt-3">
