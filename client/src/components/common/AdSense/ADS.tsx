@@ -7,6 +7,9 @@ const ADS = () => {
     script.crossOrigin = "anonymous";
     document.head.append(script);
     ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+    return () => {
+      script.remove();
+    };
   }, []);
   return (
     <>
