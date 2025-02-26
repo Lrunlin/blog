@@ -4,11 +4,6 @@
  <img src="https://blogweb.cn/favicon.svg" alt="Logo" title="Logo" />
 </div>
 
-## 系统说明
-
-**文章针对系统进行简单的说明，并且对管理系统进行了展示
-[https://blogweb.cn/article/5488756264910](https://blogweb.cn/article/5488756264910)** 系统包含论文两篇
-
 **关于前端 Next.js (2024/06)**
 前端由 pages router 切换至 app router，如果想要使用 pages router 的版本,可以克隆[pages router 的最后一个版本](https://github.com/Lrunlin/blog/commit/9d837612d2bbc50b80248ec06b8af04f9c5ecf01)
 
@@ -103,7 +98,7 @@ _系统支持 JWT 和 Session 两种鉴权方式因为系统拥有账号注销�
 
 #### 环境
 
-1. Node.js 18.20+
+1. Node.js 20+
 2. MySQL 8.x
 3. Redis
 
