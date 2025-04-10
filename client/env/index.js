@@ -8,25 +8,27 @@ let envObject = dotenv.parse(
   `${fs.readFileSync(path.join(__dirname, "./.env"))}
   \n
   ${fs.readFileSync(
-    path.join(__dirname, `./.env.${process.env.NEXT_PUBLIC_ISPRO ? "production" : "development"}`)
+    path.join(
+      __dirname,
+      `./.env.${process.env.NEXT_PUBLIC_ISPRO ? "production" : "development"}`,
+    ),
   )}
-  `
+  `,
 );
 
 module.exports = {
   buildid: () => {
     return md5(
       globSync(["src/**/*.*", "./**.js", "./**.json", "./**.ts", "./**.lock"])
-        .filter(item => {
-          const filePath = path.resolve(__dirname, item);
+        .filter((item) => {
+          const filePath = path.resolve(process.cwd(), item);
           return fs.existsSync(filePath) && fs.statSync(filePath).isFile();
         })
-        .map(item => {
-          console.log(item);
+        .map((item) => {
           let str = fs.readFileSync(item).toString();
-          return md5(str);
+          return md5(item + str);
         })
-        .join("")
+        .join(""),
     );
   },
   env: envObject,

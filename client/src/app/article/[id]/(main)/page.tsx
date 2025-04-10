@@ -56,7 +56,9 @@ const Article = async (props: { params: Promise<{ id: string }> }) => {
         <h1 className="text-4xl font-semibold">{data.title}</h1>
         <ArticleUserData data={data} type="article" />
         <View content={data.content} />
-        <Reprint reprint={data.reprint} />
+        <Suspense>
+          <Reprint reprint={data.reprint} />
+        </Suspense>
       </article>
       <div className="mt-4 bg-white p-8 pb-10 shadow-sm">
         <Suspense>
