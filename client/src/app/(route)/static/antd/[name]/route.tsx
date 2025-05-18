@@ -22,7 +22,6 @@ export async function GET(
       });
     } catch (error) {
       console.log(error);
-
       return new Response(undefined, {
         status: 404,
       });

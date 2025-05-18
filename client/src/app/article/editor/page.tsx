@@ -20,6 +20,7 @@ const Write = () => {
     <div className="bg-white">
       <ArticleRemoveWarn />
       <ArticleEditor
+        cache={true}
         showDraftsButton={true}
         meta={
           <Head

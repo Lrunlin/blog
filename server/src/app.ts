@@ -55,4 +55,4 @@ console.log = function () {
   originalConsoleLog.apply(console, arguments as any);
 };
 
-moduleAlias.addAlias("@", __dirname);
+moduleAlias.addAlias("@", __dirname);w
