@@ -1,6 +1,5 @@
 import Router from "@koa/router";
 import DB from "@/db";
-import { Op, and } from "sequelize";
 import Sequelize from "@/db/config";
 import getUserId from "@/common/middleware/auth/getUserId";
 import setExternalLink from "@/common/modules/article/get/external-link";
@@ -9,6 +8,8 @@ import getCodeBlockLanguage from "@/common/modules/article/get/set-code-block-la
 import setDescription from "@/common/modules/article/get/set-description";
 import getTitleId from "@/common/modules/article/get/set-title-id";
 import interger from "@/common/verify/integer";
+import HTMLToMarkDown from "@/common/modules/article/get/html-to-markdown";
+
 
 let router = new Router();
 
@@ -113,7 +114,7 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async (ctx) => {
         data = {
           ...data,
           tag,
-          content: imgPrefix(data.content, "article"),
+          content: HTMLToMarkDown(imgPrefix(data.content, "article")),
           tag_article_list: undefined,
         };
       }

@@ -2,13 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { Button, Result } from "antd";
-import AdminLayout from "@/layout/Admin/Base";
 import Head from "@/components/next/Head";
 
 const NoFound = () => {
   let router = useRouter();
   return (
-    <AdminLayout>
+    <>
       <Head title={`404 - ${process.env.NEXT_PUBLIC_SITE_NAME}`} />
       <Result
         status="404"
@@ -20,7 +19,7 @@ const NoFound = () => {
           </Button>
         }
       />
-    </AdminLayout>
+    </>
   );
 };
 export default NoFound;

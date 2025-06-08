@@ -11,7 +11,6 @@ import classNames from "classnames";
 import duration from "dayjs/plugin/duration";
 import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client";
-import AdminLayout from "@/layout/Admin/Base";
 
 dayjs.extend(duration);
 
@@ -113,7 +112,7 @@ const OSS = () => {
   const [connect, setConnect] = useState(false);
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <div className="flex justify-end text-4xl">
           <div
@@ -224,7 +223,7 @@ const OSS = () => {
           </>
         )}
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default OSS;

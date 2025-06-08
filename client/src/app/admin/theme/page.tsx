@@ -15,7 +15,6 @@ import { Select } from "antd";
 import { CheckCircleOutlined, FieldTimeOutlined } from "@ant-design/icons";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 import CodeEdite from "@/components/admin/page/theme/CodeEdite";
 
 const List = () => {
@@ -92,7 +91,7 @@ const List = () => {
   );
 
   return (
-    <AdminLayout>
+    <>
       <Modal
         className="!w-[880px] !max-w-[80vw]"
         title="代码编辑"
@@ -208,7 +207,7 @@ const List = () => {
           ></Result>
         )}
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default List;

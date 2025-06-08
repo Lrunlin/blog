@@ -3,7 +3,6 @@
 import { startTransition } from "react";
 import { Button, Form, Input, message } from "antd";
 import axios from "@axios";
-import AdminLayout from "@/layout/Admin/Base";
 import Upload from "@/components/common/UpLoad";
 
 const Link = () => {
@@ -23,7 +22,7 @@ const Link = () => {
       });
   }
   return (
-    <AdminLayout>
+    <>
       <div className="piece pt-6">
         <Form
           form={form}
@@ -98,7 +97,7 @@ const Link = () => {
           </Form.Item>
         </Form>
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default Link;

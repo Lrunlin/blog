@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { Result, Skeleton, message } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 import AdvertisementForm from "@/components/admin/page/advertisement/AdvertisementForm";
 
 const Advertisement = () => {
@@ -32,7 +31,7 @@ const Advertisement = () => {
   }
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         {isLoading && (
           <div>
@@ -50,7 +49,7 @@ const Advertisement = () => {
         )}
         {error && <Result status="error" title="没找到对应的推广内容" />}
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default Advertisement;

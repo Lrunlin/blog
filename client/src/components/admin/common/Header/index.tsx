@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from "react";
 import type { FC } from "react";
 import { usePathname } from "next/navigation";
 import { Menu } from "antd";
+import classNames from "classnames";
 import items from "./items";
 
 function getKeys(pathname: string) {
@@ -23,12 +24,18 @@ function getKeys(pathname: string) {
   return keys;
 }
 
-const Header: FC = memo(() => {
+interface propsType {
+  collapsed: boolean;
+  toggleCollapsed: Function;
+}
+
+const Header: FC<propsType> = memo((props) => {
   let pathname = usePathname() as string;
   let { openKey: _openKey, selectKey: _selectKey } = getKeys(pathname);
   const [openKey, setOpenKey] = useState(_openKey);
   const [selectKey, setSelectKey] = useState(_selectKey);
 
+  // 根据路径切换导航
   useEffect(() => {
     let { openKey, selectKey } = getKeys(pathname);
     setOpenKey(openKey);
@@ -43,7 +50,11 @@ const Header: FC = memo(() => {
         }
       `}</style>
       <Menu
-        className="fixed left-0 h-screen !w-48"
+        inlineCollapsed={props.collapsed}
+        className={classNames(
+          "fixed left-0 h-screen",
+          props.collapsed ? "!w-20" : "!w-48",
+        )}
         defaultSelectedKeys={selectKey}
         selectedKeys={selectKey}
         defaultOpenKeys={openKey}
@@ -53,6 +64,11 @@ const Header: FC = memo(() => {
         items={items}
         onOpenChange={(keys) => {
           setOpenKey(keys);
+        }}
+        onClick={(e) => {
+          if (e.key.includes("伸缩")) {
+            props.toggleCollapsed();
+          }
         }}
       />
     </>

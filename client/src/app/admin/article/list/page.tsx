@@ -3,7 +3,6 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { Spin, message } from "antd";
 import axios from "@axios";
-import AdminLayout from "@/layout/Admin/Base";
 import Header from "@/components/admin/page/article/list/Header";
 import Table from "@/components/admin/page/article/list/Table";
 import useAdminArticleList from "@/store/admin/admin-article-list";
@@ -46,12 +45,12 @@ const ArticleList = memo(() => {
   }, [tableOption, searchOption]);
   return (
     <>
-      <AdminLayout>
+      <>
         <Header />
         <Spin tip="Loading..." spinning={isLoading}>
           <Table />
         </Spin>
-      </AdminLayout>
+      </>
     </>
   );
 });

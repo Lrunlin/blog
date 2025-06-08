@@ -14,7 +14,6 @@ import {
 } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 import Editor from "@/components/common/Editor";
 import Upload from "@/components/common/UpLoad";
 import getType from "@/request/type/getTag";
@@ -68,7 +67,7 @@ const Update = () => {
   }, [response]);
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         {isGetDataLoading && <Skeleton avatar paragraph={{ rows: 4 }} />}
         {error && (
@@ -207,7 +206,7 @@ const Update = () => {
           </Form>
         )}
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default Update;

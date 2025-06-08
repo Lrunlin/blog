@@ -5,7 +5,6 @@ import { Button, Image, Result, Skeleton, Table, message } from "antd";
 import axios from "@axios";
 import dayjs from "@dayjs";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 
 let positionMapping = {
   index: "首页",
@@ -100,7 +99,7 @@ const APP = () => {
     });
   }
   return (
-    <AdminLayout>
+    <>
       {data && (
         <div className="piece">
           <Table
@@ -121,7 +120,7 @@ const APP = () => {
           <Skeleton />
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 };
 export default APP;

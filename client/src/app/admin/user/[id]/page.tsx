@@ -4,7 +4,6 @@ import { useParams, useRouter } from "next/navigation";
 import { Button, Descriptions, Result, Skeleton } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 
 const UserData = () => {
   let params = useParams();
@@ -15,7 +14,7 @@ const UserData = () => {
   );
 
   return (
-    <AdminLayout>
+    <>
       <div className="bg-white p-2 shadow-sm">
         {isLoading ? (
           <Skeleton paragraph={{ rows: 3 }} active />
@@ -91,7 +90,7 @@ const UserData = () => {
           />
         )}
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default UserData;

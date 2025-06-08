@@ -16,7 +16,6 @@ import {
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 
 const LinkList = () => {
   let { data, error, isLoading, refetch } = useFetch(() =>
@@ -179,7 +178,7 @@ const LinkList = () => {
   ];
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <Table
           loading={isLoading}
@@ -203,7 +202,7 @@ const LinkList = () => {
           rows={5}
         />
       </Modal>
-    </AdminLayout>
+    </>
   );
 };
 export default LinkList;

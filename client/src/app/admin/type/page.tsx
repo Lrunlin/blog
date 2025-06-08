@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Button, Tree, message } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 import AddTagModal, {
   TagFormValueProps,
   event as tagEvent,
@@ -43,7 +42,7 @@ const TypeList = () => {
   };
   let tagEvent = useRef({} as tagEvent);
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <Button type="primary" onClick={() => typeEvent.current.onOpen()}>
           添加Type
@@ -94,7 +93,7 @@ const TypeList = () => {
           />
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 };
 export default TypeList;

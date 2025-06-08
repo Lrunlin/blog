@@ -3,7 +3,6 @@
 import { Avatar, Divider, Skeleton } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 import Notice from "@/components/admin/page/index/notice";
 import Image from "@/components/next/Image";
 import useUserData from "@/store/user/user-data";
@@ -15,7 +14,7 @@ const Index = () => {
     axios.get("/statistics/index").then((res) => res.data.data),
   );
   return (
-    <AdminLayout>
+    <>
       {/* 顶部用户信息 */}
       <div className="flex bg-white p-5 shadow-sm">
         <Avatar size={80} src={userData?.avatar_url} alt="用户头像" />
@@ -139,7 +138,7 @@ const Index = () => {
           )}
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default Index;

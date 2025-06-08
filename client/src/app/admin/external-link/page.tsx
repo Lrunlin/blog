@@ -5,7 +5,6 @@ import { Button, Input, Result, Table, message } from "antd";
 import axios from "@axios";
 import { response } from "@type/response";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 
 const ExternalLink = () => {
   const [value, setValue] = useState("");
@@ -63,7 +62,7 @@ const ExternalLink = () => {
   );
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <Input
           placeholder="输入二级域名"
@@ -129,7 +128,7 @@ const ExternalLink = () => {
           />
         )}
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default ExternalLink;

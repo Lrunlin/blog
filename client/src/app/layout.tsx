@@ -25,7 +25,7 @@ export default async function RootLayout({
 
   return (
     <html lang="zh-CN">
-      <body >
+      <body>
         <UserDataStoreProvider data={userInfo}>
           <Antd>{children}</Antd>
           <Sign />

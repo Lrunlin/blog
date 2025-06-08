@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { message } from "antd";
 import axios from "@axios";
-import AdminLayout from "@/layout/Admin/Base";
 import AdvertisementForm from "@/components/admin/page/advertisement/AdvertisementForm";
 
 const APP = () => {
@@ -20,11 +19,11 @@ const APP = () => {
     });
   }
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <AdvertisementForm key={key} onSubmit={onFinish} />
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default APP;

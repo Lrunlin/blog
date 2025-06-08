@@ -7,7 +7,6 @@ import axios from "@axios";
 import { response } from "@type/response";
 import { TagAttributes } from "@type/type";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 import TagForm from "@/components/admin/page/type/TagForm";
 
 export interface ResponseType extends TagAttributes {
@@ -55,7 +54,7 @@ const UpdateTag = () => {
   };
 
   return (
-    <AdminLayout>
+    <>
       <>
         {data ? (
           <>
@@ -99,7 +98,7 @@ const UpdateTag = () => {
           </div>
         )}
       </>
-    </AdminLayout>
+    </>
   );
 };
 export default memo(UpdateTag);

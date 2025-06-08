@@ -7,6 +7,7 @@ import {
   FileImageOutlined,
   HomeOutlined,
   LinkOutlined,
+  RedoOutlined,
   TagOutlined,
   UserOutlined,
   UsergroupAddOutlined,
@@ -20,6 +21,10 @@ interface MenuItem {
   key: string;
 }
 const items = [
+  {
+    label: "伸缩",
+    icon: <RedoOutlined />,
+  },
   {
     href: "/admin",
     label: "首页",

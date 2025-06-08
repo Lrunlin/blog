@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Button, Form, Input, TreeSelect, message } from "antd";
 import axios from "@axios";
 import useFetch from "@/common/hooks/useFetch";
-import AdminLayout from "@/layout/Admin/Base";
 import Editor from "@/components/common/Editor";
 import Upload from "@/components/common/UpLoad";
 import getType from "@/request/type/getTag";
@@ -36,7 +35,7 @@ const Write = () => {
   );
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <Form
           form={form}
@@ -149,7 +148,7 @@ const Write = () => {
           </Form.Item>
         </Form>
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default Write;

@@ -13,7 +13,6 @@ import {
 } from "antd";
 import axios from "@axios";
 import dayjs from "@dayjs";
-import AdminLayout from "@/layout/Admin/Base";
 
 const Comment = () => {
   const columns = [
@@ -136,7 +135,7 @@ const Comment = () => {
   }, [data]);
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <Table
           pagination={{
@@ -150,7 +149,7 @@ const Comment = () => {
           dataSource={data}
         />
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default Comment;

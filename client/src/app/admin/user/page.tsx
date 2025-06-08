@@ -19,7 +19,6 @@ import axios from "@axios";
 import dayjs from "@dayjs";
 import type { response } from "@type/response";
 import copy from "copy-to-clipboard";
-import AdminLayout from "@/layout/Admin/Base";
 
 const UserList = () => {
   const [total, setTotal] = useState(0);
@@ -274,7 +273,7 @@ const UserList = () => {
   }
 
   return (
-    <AdminLayout>
+    <>
       <div className="piece">
         <Select
           defaultValue={state}
@@ -324,7 +323,7 @@ const UserList = () => {
           dataSource={data}
         />
       </div>
-    </AdminLayout>
+    </>
   );
 };
 export default UserList;
