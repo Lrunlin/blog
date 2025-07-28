@@ -30,7 +30,7 @@ const Update = () => {
     data: response,
     error,
     isLoading: isGetDataLoading,
-  } = useFetch(() => axios.get(`/article/${id}?update=md`));
+  } = useFetch(() => axios.get(`/article/${id}?update=html`));
 
   /** 更新文章，提交*/
   let { isLoading, refetch: onFinish } = useFetch(

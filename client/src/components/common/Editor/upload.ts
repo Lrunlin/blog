@@ -1,11 +1,11 @@
 import { message } from "antd";
 import axios from "@axios";
 import { response } from "@type/response";
-import { EditorProps } from "./index";
+import { editorPropsType } from "./Editor";
 
 async function upload(
   files: File[],
-  target: EditorProps["target"],
+  target: editorPropsType["target"],
   changePploadProgress: (val: string) => void,
 ) {
   let formData = new FormData();

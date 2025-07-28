@@ -8,7 +8,7 @@ import Base from "@/layout/Base";
 import Head from "@/components/next/Head";
 import useUserData from "@/store/user/user-data";
 import useUserWriteArticle from "@/store/user/user-write-article";
-import Editor, { EditorProps } from "../Editor";
+import Editor from "../Editor";
 import DraftsButton from "./DraftsButton";
 import Modal from "./Modal";
 
@@ -36,8 +36,6 @@ interface propsType {
   submit: (values: articleParamsType) => void;
   /** 是否展示保存草稿箱按钮*/
   showDraftsButton?: boolean;
-  /** 编辑器缓存*/
-  cache?: EditorProps["cache"];
 }
 
 export type modalPropsType = Pick<propsType, "submit">;
@@ -80,7 +78,6 @@ const ArticleEditor: FC<propsType> = memo((props) => {
       </header>
       <Editor
         theme={true}
-        cache={props.cache}
         target="article"
         initValue={articleData.content}
         onChange={(html) => updateData({ content: html })}

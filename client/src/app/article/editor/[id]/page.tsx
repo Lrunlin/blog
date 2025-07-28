@@ -18,7 +18,7 @@ const Write = () => {
   let updateData = useUserWriteArticle((s) => s.updateData);
 
   let { data, isLoading, refetch } = useFetch(() =>
-    axios.get(`/article/${id}?update=md`).then((res) => res.data.data),
+    axios.get(`/article/${id}?update=html`).then((res) => res.data.data),
   );
 
   // 为状态设置值

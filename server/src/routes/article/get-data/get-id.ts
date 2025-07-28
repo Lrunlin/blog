@@ -3,13 +3,12 @@ import DB from "@/db";
 import Sequelize from "@/db/config";
 import getUserId from "@/common/middleware/auth/getUserId";
 import setExternalLink from "@/common/modules/article/get/external-link";
+import HTMLToMarkDown from "@/common/modules/article/get/html-to-markdown";
 import imgPrefix from "@/common/modules/article/get/img-add-prefix";
 import getCodeBlockLanguage from "@/common/modules/article/get/set-code-block-language";
 import setDescription from "@/common/modules/article/get/set-description";
 import getTitleId from "@/common/modules/article/get/set-title-id";
 import interger from "@/common/verify/integer";
-import HTMLToMarkDown from "@/common/modules/article/get/html-to-markdown";
-
 
 let router = new Router();
 
@@ -114,7 +113,10 @@ router.get("/article/:id", interger([], ["id"]), getUserId, async (ctx) => {
         data = {
           ...data,
           tag,
-          content: HTMLToMarkDown(imgPrefix(data.content, "article")),
+          content:
+            ctx.query.update == "md"
+              ? HTMLToMarkDown(imgPrefix(data.content, "article"))
+              : imgPrefix(data.content, "article"),
           tag_article_list: undefined,
         };
       }

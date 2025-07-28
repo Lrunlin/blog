@@ -129,7 +129,6 @@ const Write = () => {
             <div>
               <Editor
                 theme={true}
-                cache={true}
                 target="article"
                 onChange={(html) => {
                   form.setFieldsValue({ content: html });

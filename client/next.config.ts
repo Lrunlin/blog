@@ -23,8 +23,6 @@ const nextConfig: NextConfig = {
       dynamic: 0,
       static: 0,
     },
-    turbo: {
-    },
   },
   //https://nextjs.org/docs/app/api-reference/next-config-js/output
   output: process.env.output ? "standalone" : undefined,

@@ -1,14 +1,5 @@
-.content-body,.vditor-reset {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-top: 15px !important;
-    margin-bottom: 8px !important;
-  }
-  img {
+#articleEditor {
+  .bytemd-preview img {
     min-width: 30%;
     max-width: 70%;
   }
@@ -70,5 +61,18 @@
   }
   .bytemd-fullscreen {
     z-index: 99 !important;
+  }
+  .content-body img {
+    max-width: 60% !important;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 15px !important;
+    margin-bottom: 8px !important;
   }
 }
