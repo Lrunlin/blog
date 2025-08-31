@@ -10,7 +10,7 @@ const AdSense = memo(() => {
   useEffect(() => {
     let timer = setTimeout(() => {
       setIsLoad(false);
-    }, 250);
+    }, 200);
     return () => {
       clearInterval(timer);
     };

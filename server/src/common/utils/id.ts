@@ -10,7 +10,7 @@ const BaseTime = +new Date("2022-06-29");
 /** 最后一次设置ID的时间戳*/
 let lastTimeTick: undefined | Number;
 /** 最后一次生成的随机数*/
-let lastRandomNumberTick = random(1, 3);
+let lastRandomNumberTick = random(1, 5);
 
 function id() {
   /** 时间戳*/
