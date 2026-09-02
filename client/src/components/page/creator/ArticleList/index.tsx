@@ -24,11 +24,20 @@ const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
   let [isValidating, setIsValidating] = useState(true);
 
   let _keyword = useRef<string | undefined>(keyword); //保留上一次关键词
+
+  // 当关键词变化时重置页码
   useEffect(() => {
-    let _page = _keyword.current == keyword ? page : 1;
+    if (_keyword.current !== keyword) {
+      setPage(1);
+      _keyword.current = keyword;
+    }
+  }, [keyword]);
+
+  useEffect(() => {
+    setIsValidating(true);
     axios
       .get<response<{ total: number; list: articleListItemType[] }>>(
-        `/article/search/${_page}`,
+        `/article/search/${page}`,
         {
           params: {
             author: userData?.id,
@@ -39,7 +48,7 @@ const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
       )
       .then((res) => {
         let list = res.data.data.list;
-        setData((_data) => (_page == 1 ? list : [...data, ...list]));
+        setData((_data) => (page == 1 ? list : [..._data, ...list]));
         startTransition(() => {
           setTotal(res.data.data.total);
         });
@@ -49,15 +58,12 @@ const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
       })
       .finally(() => {
         setIsValidating(false);
-        _keyword.current = /^[\s\S]*.*[^\s][\s\S]*$/.test(keyword)
-          ? keyword
-          : undefined;
       });
-  }, [page, keyword]);
+  }, [page, keyword, state, userData?.id]);
 
   return (
     <>
-      {isValidating ? (
+      {isValidating && page === 1 ? (
         <Skeleton avatar paragraph={{ rows: 2 }} active />
       ) : data ? (
         <>
@@ -66,7 +72,7 @@ const ContentArticleList: FC<propsType> = ({ state, keyword }) => {
               <InfiniteScroll
                 dataLength={data.length}
                 next={() => {
-                  setPage((_page) => ++page);
+                  setPage((prevPage) => prevPage + 1);
                 }}
                 hasMore={data.length < total}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}

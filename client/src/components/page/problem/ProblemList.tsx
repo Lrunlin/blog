@@ -14,18 +14,27 @@ interface propsType {
 const ProblemList: FC<propsType> = (props) => {
   const [list, setList] = useState(props.list);
   const [total, setTotal] = useState(props.total);
+  const [isLoading, setIsLoading] = useState(false);
   const page = useRef(1);
 
   function loadMore() {
-    page.current++;
+    if (isLoading) return; // 防止重复加载
+
+    setIsLoading(true);
+    const nextPage = page.current + 1;
+
     axios
-      .get(`/problem/page/${page.current}`, { params: { type: "newest" } })
+      .get(`/problem/page/${nextPage}`, { params: { type: "newest" } })
       .then((res) => {
+        page.current = nextPage; // 只在成功后更新页码
         setList((_data) => [..._data, ...res.data.data.list]);
       })
       .catch((err) => {
         message.error("问答列表获取失败");
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
   return (

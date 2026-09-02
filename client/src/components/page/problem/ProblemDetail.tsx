@@ -1,7 +1,7 @@
 "use client";
 
-import { FC, createContext, useState } from "react";
-import { useParams } from "next/navigation";
+import { FC, createContext, useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { message } from "antd";
 import axios from "@axios";
 import type { problemType } from "@type/model/problem";
@@ -25,9 +25,15 @@ export const Context = createContext<{ data: problemType; reload: Function }>(
 const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
   let params = useParams();
   let id = params.id as string;
+  let router = useRouter();
   const [data, setData] = useState(_data);
   const [problemReplyShrink, setProblemReplyShrink] = useState(false);
   let userData = useUserData((s) => s.data);
+
+  // 当 id 或 _data 变化时更新数据
+  useEffect(() => {
+    setData(_data);
+  }, [id, _data]);
 
   function reload() {
     axios
@@ -43,6 +49,7 @@ const ProblemDetail: FC<{ data: any }> = ({ data: _data }) => {
       .delete(`/problem/${id}`)
       .then((res) => {
         message.success("删除成功");
+        router.push("/problem");
       })
       .catch((err) => {
         message.error("删除失败");

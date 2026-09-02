@@ -50,7 +50,7 @@ const Home: FC<propsType> = (props) => {
         if (page.current == 1) {
           setList(data.list);
         } else {
-          setList((_list) => [...list, ...data.list]);
+          setList((_list) => [..._list, ...data.list]);
         }
         setTotal(data.total);
       })

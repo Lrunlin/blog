@@ -121,6 +121,7 @@ const Editor: FC<propsType> = (props) => {
       });
   }
   function comment() {
+    const currentCount = currentArticleData.data.comment_count;
     axios
       .post("/comment", {
         belong_id: articleID,
@@ -133,7 +134,7 @@ const Editor: FC<propsType> = (props) => {
         setValue("");
         setPicture(null);
         currentArticleData.updateData({
-          comment_count: currentArticleData.data.comment_count + 1,
+          comment_count: currentCount + 1,
         });
         refetchKey(`/comment/article/${articleID}`);
       })

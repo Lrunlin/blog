@@ -73,8 +73,10 @@ const Notification = () => {
 
   const [list, setList] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   let type = useRef("");
   let page = useRef(1);
+
   useEffect(() => {
     //暂时未开通系统通知
     if (["notice", "system-notification"].includes(params.type + "")) {
@@ -85,6 +87,9 @@ const Notification = () => {
   }, [params]);
 
   function getNoticeData() {
+    if (isLoadingMore) return; // 防止重复加载
+
+    setIsLoadingMore(true);
     axios
       .get(`/notice/list/${type.current}`, { params: { page: page.current } })
       .then(({ data }) => {
@@ -96,16 +101,33 @@ const Notification = () => {
         } else {
           setList((_list) => [..._list, ...data.data.list]);
         }
+      })
+      .catch((err) => {
+        console.error("加载通知失败", err);
+      })
+      .finally(() => {
+        setIsLoadingMore(false);
       });
   }
 
   /** 标记已读*/
+  const markedIdsRef = useRef(new Set<number>());
   useEffect(() => {
     let noticeList = list
-      .filter((item) => item.is_read == 0)
+      .filter((item) => item.is_read == 0 && !markedIdsRef.current.has(item.id))
       .map((item) => item.id);
+
     if (noticeList.length) {
-      axios.put("/notice/read", { notice_list: noticeList });
+      axios.put("/notice/read", { notice_list: noticeList }).then(() => {
+        // 标记为已处理
+        noticeList.forEach(id => markedIdsRef.current.add(id));
+        // 更新本地状态
+        setList(prevList =>
+          prevList.map(item =>
+            noticeList.includes(item.id) ? { ...item, is_read: 1 } : item
+          )
+        );
+      });
     }
   }, [list]);
 

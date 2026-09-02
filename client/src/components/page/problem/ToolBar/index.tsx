@@ -65,7 +65,7 @@ const ToolBar = () => {
   }
   return (
     <div className="flex">
-      {data.collection_state ? (
+      {(data.collection_state as unknown as number[])?.length > 0 ? (
         <Button
           type="primary"
           className="flex items-center"

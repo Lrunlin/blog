@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { Divider } from "antd";
 import classNames from "classnames";
 import { destroy, init, refresh } from "tocbot";
 import style from "./index.module.scss";
 
 const Catalogue = () => {
+  const params = useParams();
+  const articleId = params.id;
+
   useEffect(() => {
     init({
       tocSelector: `.${style["article-page-catalogue"]}`,
@@ -17,7 +21,7 @@ const Catalogue = () => {
     return () => {
       destroy();
     };
-  }, []);
+  }, [articleId]); // 添加 articleId 依赖
 
   let [isShrink, setIsShrink] = useState(false);
   useEffect(() => {

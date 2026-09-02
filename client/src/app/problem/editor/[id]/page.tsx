@@ -15,6 +15,7 @@ const Write = () => {
   let params = useParams();
   let { data, isLoading } = useFetch(() =>
     axios.get(`/problem/update/${params.id}`).then((res) => res.data.data),
+    { deps: [params.id] }
   );
 
   let [title, setTitle] = useState("");

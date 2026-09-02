@@ -28,12 +28,25 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
+    // 取消请求时直接 reject，让 finally 正常执行
     if (axiosPlugin.isCancel(error)) {
-      return new Promise(() => {}); // 返回一个空 Promise 取消请求不触发 catch
+      return Promise.reject({ cancelled: true });
     }
+
+    // 401 未授权处理
+    if (error.response?.status === 401) {
+      if (typeof window !== "undefined") {
+        // 清除本地 token
+        localStorage.removeItem("token");
+        // 可以触发登录弹窗或跳转登录页
+        // window.location.href = '/login';
+      }
+    }
+
     return Promise.reject({
       ...error.response?.data,
       status: error.response?.status,
+      message: error.response?.data?.message || error.message,
     });
   },
 );

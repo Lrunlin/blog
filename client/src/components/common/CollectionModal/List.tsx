@@ -33,8 +33,8 @@ const List: FC<
   let firstRender = useRef(true);
   useEffect(() => {
     setCheckList(defaultChecked || []);
-    if ((firstRender.current = false)) {
-      firstRender.current = true;
+    if (firstRender.current) {
+      firstRender.current = false;
     } else {
       refetch();
     }
@@ -69,9 +69,9 @@ const List: FC<
                           <span className="ml-1">篇文章</span>
                         </div>
                       </div>
-                      {/* 通过key刷新复选框 */}
+                      {/* 通过key刷新复选框 - 使用 JSON.stringify 确保内容变化时重新渲染 */}
                       <Checkbox
-                        key={`checkbox-key-${defaultChecked?.length}`}
+                        key={`checkbox-key-${item.id}-${JSON.stringify(defaultChecked)}`}
                         defaultChecked={defaultChecked?.includes(item.id)}
                         onChange={(e) => {
                           let value = e.target.checked;

@@ -31,7 +31,7 @@ const Collection: FC<{ data: RootObject }> = ({ data: propsData }) => {
           console.log(err);
           return null;
         }),
-    { manual: true },
+    { manual: true, deps: [id] },
   );
 
   let data = useMemo(() => refetchData || propsData, [propsData, refetchData]);

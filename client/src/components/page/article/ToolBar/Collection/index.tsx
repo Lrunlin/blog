@@ -69,6 +69,7 @@ const Collection = () => {
         onUpdate={(checkList) => {
           currentArticleData.updateData({
             collection_state: checkList,
+            collection_count: checkList.length,
           });
         }}
         onCreate={(checkList) => {
